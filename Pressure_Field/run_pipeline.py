@@ -17,7 +17,7 @@ import logging
 import time
 import pprint
 from datetime import datetime
-from utils import setup_logger
+from utils.utils import setup_logger
 from colorama import Fore, Style
 
 #! alias for colorful output
@@ -49,6 +49,7 @@ def parse_args():
     parser.add_argument('--batch_size', type=int, default=12, help='Batch size per GPU')
     parser.add_argument('--epochs', type=int, default=150, help='Number of epochs')
     parser.add_argument('--lr', type=float, default=0.001, help='Learning rate')
+    parser.add_argument('--test_only', type=int, default=0, help='Only test the model, no training')
     parser.add_argument('--num_workers', type=int, default=4, help='Number of data loading workers')
     parser.add_argument('--gpus', type=str, default="0", help='GPUs to use (comma-separated)')
 
@@ -59,9 +60,14 @@ def parse_args():
     parser.add_argument('--k', type=int, default=40, help='Number of nearest neighbors')
     parser.add_argument('--output_channels', type=int, default=1, help='Number of output channels')
     parser.add_argument('--weight_decay', type=float, default=1e-5)
-    parser.add_argument('--n-hidden', type=int, default=64, help='hidden dim')
-    parser.add_argument('--n-layers', type=int, default=3, help='layers')
-    parser.add_argument('--n-heads', type=int, default=4)
+    parser.add_argument('--n_hidden', type=int, default=64, help='hidden dim')
+    parser.add_argument('--n_layers', type=int, default=3, help='layers')
+    parser.add_argument('--n_heads', type=int, default=4)
+    parser.add_argument('--max_grad_norm', type=float, default=None)
+    parser.add_argument('--slice_num', type=int, default=32)
+    parser.add_argument('--unified_pos', type=int, default=0)
+    parser.add_argument('--ref', type=int, default=8)
+    parser.add_argument('--downsample', type=int, default=5)
 
     # Evaluation settings
     parser.add_argument('--num_eval_samples', type=int, default=5, help='Number of samples to evaluate in detail')
@@ -108,25 +114,36 @@ def preprocess_data(args):
         return False
 
 def train_model(args):
-    logging.info("f{R} *************************Starting model training... {RESET}")
+    logging.info(f"{R} *************************Starting model training... {RESET}")
 
     # Prepare command for training script
     cmd = [
         "python", "train.py",
         "--exp_name", args.exp_name,
+        "--model", args.model,
         "--dataset_path", args.dataset_path,
         "--subset_dir", args.subset_dir,
         "--num_points", str(args.num_points),
         "--batch_size", str(args.batch_size),
         "--epochs", str(args.epochs),
         "--lr", str(args.lr),
+        "--slice_num", str(args.slice_num),
         "--dropout", str(args.dropout),
         "--emb_dims", str(args.emb_dims),
         "--k", str(args.k),
         "--output_channels", str(args.output_channels),
         "--seed", str(args.seed),
         "--num_workers", str(args.num_workers),
-        "--test_only", str(args.test_only)
+        "--test_only", str(args.test_only),
+        "--n_hidden", str(args.n_hidden),
+        "--n_heads", str(args.n_heads),
+        "--n_layers", str(args.n_layers),
+        "--lr", str(args.lr),
+        "--max_grad_norm", str(args.max_grad_norm),
+        "--unified_pos", str(args.unified_pos),
+        "--ref", str(args.ref),
+        "--downsample", str(args.downsample)
+
     ]
 
     if args.cache_dir:
@@ -142,7 +159,7 @@ def train_model(args):
     process.wait()
 
     if process.returncode != 0:
-        logging.error("f{R} Training failed! {RED}")
+        logging.error(f"{R} Training failed! {RESET}")
         return False
 
     elapsed_time = time.time() - start_time
@@ -184,7 +201,7 @@ def main():
         results['train'] = train_model(args)
     else:
         if 'train' not in stages:
-     /train_val_test_splits       results['train'] = True
+            results['train'] = True
             logging.info(f"Training stage skipped.")
     # Evaluate model stage
     if 'evaluate' in stages and results.get('train', False):
