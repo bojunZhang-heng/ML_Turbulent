@@ -2,4 +2,5 @@ Pressure_Field/Pressure_train.lsf
 Pressure_Field/__pycache__/
 Pressure_Field/logs/
 Pressure_Field/model/__pycache__/
+Pressure_Field/utils/__pycache__/
 
