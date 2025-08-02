@@ -66,7 +66,90 @@ def parse_args():
     # Evaluation settings
     parser.add_argument('--num_eval_samples', type=int, default=5, help='Number of samples to evaluate in detail')
 
+    return parser.parse_args()
 
+def preprocess_data(args):
+
+    """
+    Preprocess the dataset to create cached point cloud data.
+
+    Args:
+        True if preprocessing was successful, False otherwise
+    """
+    logging.info("**************************Starting data preprocessing...")
+
+    # Create cache directory if it doesn't exist
+    cache_dir = args.cache_dir or os.path.join(args.dataset_path, "processed_data")
+    os.makedirs(cache_dir, exist_ok=True)
+
+    try:
+        # Import required modules for preprocessing
+        from data_loader import SurfacePressureDataset
+
+        # Create the dataset with preprocessing enabled
+        dataset = SurfacePressureDataset(
+            root_dir = args.dataset_path,
+            num_points = args.num_points,
+            preprocess = True,
+            cache_dir = cache_dir
+            )
+
+        # Process all files
+        logging.info(f"Processing {len(dataset.vtk_files)} VTK files with {args.num_points} points per sample")
+        for ii, vtk_file in enumerate(dataset.vtk_files):
+            logging.info(f"Processing file {ii+1} / {len(dataset.vtk_files)}: {os.path.basename(vtk_file)}")
+            _ = dataset[ii] # This will trigger preprocessing and caching
+
+        logging.info(f"{Fore.MAGENTA}Data preprocessing complete. Cache data saved to {cache_dir}{Style.RESET_ALL}")
+        return True
+
+    except Exception as e:
+        logging.error(f"Preprocessing failed with error: {e}")
+        return False
+
+def train_model(args):
+    logging.info("f{R} *************************Starting model training... {RESET}")
+
+    # Prepare command for training script
+    cmd = [
+        "python", "train.py",
+        "--exp_name", args.exp_name,
+        "--dataset_path", args.dataset_path,
+        "--subset_dir", args.subset_dir,
+        "--num_points", str(args.num_points),
+        "--batch_size", str(args.batch_size),
+        "--epochs", str(args.epochs),
+        "--lr", str(args.lr),
+        "--dropout", str(args.dropout),
+        "--emb_dims", str(args.emb_dims),
+        "--k", str(args.k),
+        "--output_channels", str(args.output_channels),
+        "--seed", str(args.seed),
+        "--num_workers", str(args.num_workers),
+        "--test_only", str(args.test_only)
+    ]
+
+    if args.cache_dir:
+        cmd.extend(["--cache_dir", args.cache_dir])
+
+    # Set up environment variables for distributed training
+    env = os.environ.copy()
+    env["CUDA_VISIBLE_DEVICES"] = args.gpus
+
+    # Run the training script
+    start_time = time.time()
+    process = subprocess.Popen(cmd, env=env)
+    process.wait()
+
+    if process.returncode != 0:
+        logging.error("f{R} Training failed! {RED}")
+        return False
+
+    elapsed_time = time.time() - start_time
+    logging.info(f"**********************Model training completed ")
+    logging.info(f"Model training completed in {elapsed_time:.2f} seconds")
+
+    return True
 
 def main():
     """ main function to run the complete pipeline. """
@@ -74,12 +157,49 @@ def main():
 
     # Set up logging
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    exp_name = "Tran Test"
+    exp_name = "Test"
     log_dir = os.path.join("logs", exp_name)
     os.makedirs(log_dir, exist_ok=True)
     log_file = os.path.join(log_dir, f"pipeline_{timestamp}.log")
     setup_logger(log_file)
-    logging.info(f"{Fore.RED}*************************Benchmark: Start pressure prediction in Darcy flow.{Style.RESET_ALL}")
+    logging.info(f"{R} ************************* Start pressure prediction for 3D automobile geometry.{RESET}")
+    logging.info(f"{G} Arguments: {RESET}\n" + pprint.pformat(vars(args), indent=2))
+
+    # Execute the selected pipeline stages
+    stages = args.stages.split(',') if ',' in args.stages else [args.stages]
+    if 'all' in stages:
+        stages = ['preporcess', 'train', 'evaluate']
+
+    results = {}
+
+    # Preprocess stage
+    if 'preprocess' in stages:
+        results['preprocess'] = preprocess_data(args)
+    else:
+        results['preprocess'] = True
+        logging.info("Preprocessing stage skipped.")
+
+    # Train model stage
+    if 'train' in stages and results['preprocess']:
+        results['train'] = train_model(args)
+    else:
+        if 'train' not in stages:
+     /train_val_test_splits       results['train'] = True
+            logging.info(f"Training stage skipped.")
+    # Evaluate model stage
+    if 'evaluate' in stages and results.get('train', False):
+        results['evaluate'] = evaluate_model(args)
+    else:
+        if 'evaluate' not in stages:
+            results['evaluate'] = True
+            logging.info(f"Evluation stage skipped.")
+
+    # Print Summary
+    logging.info(f"Pipeline execution complete.")
+    logging.info(f"{R} Results summary: {RESET} ")
+    for stage, success in results.items():
+        status = "Success" if success else "Failed"
+        logging.info(f" {stage}: {status}")
 
 
 if __name__=="__main__":
