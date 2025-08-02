@@ -1,10 +1,20 @@
 python ./run_pipeline.py \
     --stages train \
     --exp_name "Test" \
+    --model "Transolver_Irregular_Mesh" \
     --dataset_path "/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Pressure_VTK" \
     --subset_dir "/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits" \
     --cache_dir "/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Cache_data" \
     --num_points 10000 \
+    --n_hidden 128 \
+    --n_heads 8 \
+    --n_layers 8 \
+    --lr 0.001 \
+    --max_grad_norm 0.1 \
+    --slice_num 64 \
+    --unified_pos 1 \
+    --ref 8 \
+    --downsample 5 \
     --num_workers 1 \
     --batch_size 6 \
     --epochs 10 \
