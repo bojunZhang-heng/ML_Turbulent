@@ -2,9 +2,9 @@ python ./run_pipeline.py \
     --stages train \
     --exp_name "Test" \
     --model "Transolver_Irregular_Mesh" \
-    --dataset_path "/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Pressure_VTK" \
+    --dataset_path "/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM" \
     --subset_dir "/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits" \
-    --cache_dir "/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Cache_data" \
+    --cache_dir "/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM/Cache_data" \
     --num_points 10000 \
     --n_hidden 128 \
     --n_heads 8 \
@@ -12,7 +12,7 @@ python ./run_pipeline.py \
     --lr 0.001 \
     --max_grad_norm 0.1 \
     --slice_num 64 \
-    --unified_pos 1 \
+    --unified_pos 0 \
     --ref 8 \
     --downsample 5 \
     --num_workers 1 \
@@ -20,3 +20,24 @@ python ./run_pipeline.py \
     --epochs 10 \
     --test_only 0 \
     --gpus "0" 
+
+
+# ------------------small_samples
+    #--dataset_path "/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Pressure_VTK" \
+    #--subset_dir "/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits" \
+    #--cache_dir "/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Cache_data" \
+
+# ------------------E_S_WWC_WM
+    #--dataset_path "/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM" \
+    #--subset_dir "/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits" \
+    #--cache_dir "/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM/Cache_data" \
+
+# ------------------E_S_WW_WM
+    #--dataset_path "/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WW_WM" \
+    #--subset_dir "/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits" \
+    #--cache_dir "/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WW_WM/Cache_data" \
+
+# ------------------N_S_WWS_WM
+    #--dataset_path "/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/N_S_WWS_WM" \
+    #--subset_dir "/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits" \
+    #--cache_dir "/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/N_S_WWS_WM/Cache_data" \
