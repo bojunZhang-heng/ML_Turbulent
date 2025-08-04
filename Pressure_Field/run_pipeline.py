@@ -63,6 +63,7 @@ def parse_args():
     parser.add_argument('--n_hidden', type=int, default=64, help='hidden dim')
     parser.add_argument('--n_layers', type=int, default=3, help='layers')
     parser.add_argument('--n_heads', type=int, default=4)
+    parser.add_argument('--mlp_ratio', type=int, default=1)
     parser.add_argument('--max_grad_norm', type=float, default=None)
     parser.add_argument('--slice_num', type=int, default=32)
     parser.add_argument('--unified_pos', type=int, default=0)
@@ -142,7 +143,8 @@ def train_model(args):
         "--max_grad_norm", str(args.max_grad_norm),
         "--unified_pos", str(args.unified_pos),
         "--ref", str(args.ref),
-        "--downsample", str(args.downsample)
+        "--downsample", str(args.downsample),
+        "--mlp_ratio", str(args.mlp_ratio)
 
     ]
 
