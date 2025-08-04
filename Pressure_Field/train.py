@@ -18,6 +18,8 @@ import pprint
 from model.model_dict import get_model
 from data_loader import get_dataloaders, PRESSURE_MEAN, PRESSURE_STD
 from utils.utils import setup_logger, setup_seed
+from utils.testloss import TestLoss
+from utils.normalizer import UnitTransformer
 from colorama import Fore, Style
 
 #! alias for colorful output
@@ -65,19 +67,33 @@ def parse_args():
     parser.add_argument('--unified_pos', type=int, default=0)
     parser.add_argument('--ref', type=int, default=8)
     parser.add_argument('--downsample', type=int, default=5)
+    parser.add_argument('--mlp_ratio', type=int, default=1)
 
     return parser.parse_args()
 
 def initialize_model(args, local_rank):
     """ Initialize and return the RegDGCN model. """
    # args = vars(args)
-    model = get_model(args).to(local_rank)
+    model = get_model(args).Model(space_dim=3,
+                                  n_layers=args.n_layers,
+                                  n_hidden=args.n_hidden,
+                                  dropout=args.dropout,
+                                  n_head=args.n_heads,
+                                  Time_Input=False,
+                                  mlp_ratio=args.mlp_ratio,
+                                  fun_dim=1,
+                                  out_dim=1,
+                                  slice_num=args.slice_num,
+                                  ref=args.ref,
+                                  unified_pos=args.unified_pos,
+                                  ).to(local_rank)
     model = torch.nn.parallel.DistributedDataParallel(
             model,
             device_ids=[local_rank],
-            find_unused_parameters=True,
+            find_unused_parameters=False,
             output_device=local_rank
     )
+
     return model
 
 def train_one_epoch(model, train_dataloader, optimizer, criterion, local_rank):
@@ -88,23 +104,17 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, local_rank):
     for data, targets in tqdm(train_dataloader, desc="[Training]"):
         global PRESSURE_MEAN, PRESSURE_STD
 
-        # Right version
-        """
-        PRESSURE_MEAN = torch.tensor(PRESSURE_MEAN, device=data.device)
-        PRESSURE_STD  = torch.tensor(PRESSURE_STD, device=data.device)
-
-        data, targets = data.squeeze(1).to(local_rank), targets.squeeze(1).to(local_rank)
-        targets = (targets - PRESSURE_MEAN) / PRESSURE_STD
-        """
-
-        # Logic bug version
+        # Make data and perssure same shape
         data = data.squeeze(1).to(local_rank)
-        targets = targets.squeeze(1).to(local_rank)
+        data = data.permute(0, 2, 1).contiguous()
+        targets = targets.to(local_rank)
+        targets = targets.permute(0, 2, 1).contiguous()
 
+        # Normalize targets
         targets = (targets - PRESSURE_MEAN) / PRESSURE_STD
 
         optimizer.zero_grad()
-        outputs = model(data)
+        outputs = model(data, targets)
         loss = criterion(outputs.squeeze(1), targets)
 
         loss.backward()
@@ -115,16 +125,23 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, local_rank):
 
 def validate(model, val_dataloader, criterion, local_rank):
     """ Validate the model"""
+
     model.eval()
     total_loss = 0
 
     with torch.no_grad():
         for data, targets in tqdm(val_dataloader, desc="[Validation]"):
-            data    = data.squeeze(1).to(local_rank)
-            targets = targets.squeeze(1).to(local_rank)
+
+            # Make data and perssure same shape
+            data = data.squeeze(1).to(local_rank)
+            data = data.permute(0, 2, 1).contiguous()
+            targets = targets.to(local_rank)
+            targets = targets.permute(0, 2, 1).contiguous()
+
+            # Normalize targets
             targets = (targets - PRESSURE_MEAN) / PRESSURE_STD
 
-            outputs     = model(data)
+            outputs     = model(data, targets)
             loss        = criterion(outputs.squeeze(1), targets)
             total_loss += loss.item()
 
@@ -257,6 +274,101 @@ def train_and_evaluate(rank, world_size, args):
         args.batch_size, world_size, rank, args.cache_dir,
         args.num_workers
     )
+
+    # Log dataset info
+    if local_rank == 0:
+        logging.info(
+            f"Data loaded: {len(train_dataloader)} training batches, {len(val_dataloader)} validation batches, {len(test_dataloader)} test batches")
+
+    # Set up criterion, optimizer, and scheduler
+    #! There is a puzzle!######
+    criterion = torch.nn.MSELoss()
+    optimizer = optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
+    scheduler = optim.lr_scheduler.OneCycleLR(optimizer, max_lr=args.lr, epochs=args.epochs,
+                                                    steps_per_epoch=len(train_dataloader))
+
+    myloss = TestLoss(size_average=False)
+    de_x   = TestLoss(size_average=False)
+    de_y   = TestLoss(size_average=False)
+
+    # Store the model
+    best_model_path  = os.path.join('experiments', args.exp_name, 'best_model.pth')
+    final_model_path = os.path.join('experiments', args.exp_name, 'final_model.pth')
+
+    # Check if test_only and model exists
+    if args.test_only and os.path.exists(best_model_path):
+        if local_rank == 0:
+            logging.info("Loading best model for testing only")
+            print("Testing the best model:")
+        model.load_state_dict(torch.load(best_model_path, map_location=f'cuda:{local_rank}'))
+        test_model(model, test_dataloader, criterion, local_rank, os.path.join('experiments', args.exp_name))
+        dist.destroy_process_group()
+        return
+
+    # Training tracking
+    best_val_loss = float('inf')
+    train_losses = []
+    val_losses = []
+
+    if local_rank == 0:
+        logging.info(f"Staring training for {args.epochs} epochs")
+
+    # Training loop
+    for epoch in range(args.epochs):
+        # Set epoch for the DistributedSampler
+        train_dataloader.sampler.set_epoch(epoch)
+
+        # Training
+        train_loss = train_one_epoch(model, train_dataloader, optimizer, criterion, local_rank)
+
+        # Validation
+        val_loss = validate(model, val_dataloader, criterion, local_rank)
+
+        # Record losses.
+        if local_rank == 0:
+            train_losses.append(train_loss)
+            val_losses.append(val_loss)
+            logging.info(f"Epoch {epoch + 1}/{args.epochs} - Train Loss: {train_loss:.6f}, Val Loss: {val_loss:.6f}")
+
+            # Save the best model
+            if val_loss < best_val_loss:
+                best_val_loss = val_loss
+                torch.save(model.state_dict(), best_model_path)
+                logging.info(f"New best model saved with Val Loss: {best_val_loss:.6f}")
+
+            # Update learning rate scheduler
+            # scheduler.step(val_loss)
+
+            # Save progress rate scheduler
+            if (epoch + 1) % 10 == 0 or epoch == args.epochs - 1:
+                plt.figure(figsize=(10, 5))
+                plt.plot(range(1, epoch + 2), train_losses, label='Training Loss')
+                plt.plot(range(1, epoch + 2), val_losses,   label='Validation Loss')
+                plt.xlabel('Epoch')
+                plt.ylabel('Loss')
+                plt.legend()
+                plt.title(f'Training Progress - RegDGCNN')
+                plt.savefig(os.path.join('experiments', args.exp_name, f'training_progress.png'))
+                plt.close()
+
+    # Save final model
+    if local_rank == 0:
+        torch.save(model.state_dict(), final_model_path)
+        logging.info(f"Final model saved to {final_model_path}")
+
+    # Make sure all processes sync up before testing
+    dist.barrier()
+
+    # Test the final model
+    if local_rank == 0:
+        logging.info("Testing the final model")
+    #test_model(model, test_dataloader, criterion, local_rank, os.path.join('experiments', args.exp_name))
+
+    # Test the best model
+    if local_rank == 0:
+        logging.info("Testing the best model")
+        model.load_state_dict(torch.load(best_model_path, map_location=f'cuda:{local_rank}'))
+    #test_model(model, test_dataloader, criterion, local_rank, os.path.join('experiments', args.exp_name))
 
     # Clean up
     dist.destroy_process_group()
