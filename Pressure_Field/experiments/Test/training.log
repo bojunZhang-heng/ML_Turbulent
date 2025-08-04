@@ -230,3 +230,924 @@
   'unified_pos': 1,
   'weight_decay': 1e-05}
 2025-08-02 16:36:29,452 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-04 09:02:38,717 - INFO - args.exp_name : Test
+2025-08-04 09:02:38,723 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Pressure_VTK',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 10,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 1,
+  'weight_decay': 1e-05}
+2025-08-04 09:02:38,723 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-04 09:05:22,437 - INFO - args.exp_name : Test
+2025-08-04 09:05:22,442 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Pressure_VTK',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 10,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 1,
+  'weight_decay': 1e-05}
+2025-08-04 09:05:22,442 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-04 09:19:48,014 - INFO - args.exp_name : Test
+2025-08-04 09:19:48,019 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Pressure_VTK',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 10,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-04 09:19:48,019 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-04 09:19:48,427 - INFO - Total trainable parameters: 714177
+2025-08-04 09:33:01,715 - INFO - args.exp_name : Test
+2025-08-04 09:33:01,719 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Pressure_VTK',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 10,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-04 09:33:01,719 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-04 09:33:02,090 - INFO - Total trainable parameters: 714177
+2025-08-04 09:33:02,114 - INFO - Data loaded: 3 training batches, 1 validation batches, 1 test batches
+2025-08-04 09:34:43,181 - INFO - args.exp_name : Test
+2025-08-04 09:34:43,185 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Pressure_VTK',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 10,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-04 09:34:43,186 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-04 09:34:43,549 - INFO - Total trainable parameters: 714177
+2025-08-04 09:34:43,573 - INFO - Data loaded: 3 training batches, 1 validation batches, 1 test batches
+2025-08-04 09:41:37,784 - INFO - args.exp_name : Test
+2025-08-04 09:41:37,788 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Pressure_VTK',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 10,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-04 09:41:37,788 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-04 09:41:38,153 - INFO - Total trainable parameters: 714177
+2025-08-04 09:41:38,176 - INFO - Data loaded: 3 training batches, 1 validation batches, 1 test batches
+2025-08-04 09:41:38,177 - INFO - Staring training for 10 epochs
+2025-08-04 10:05:14,498 - INFO - args.exp_name : Test
+2025-08-04 10:05:14,503 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Pressure_VTK',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 10,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-04 10:05:14,503 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-04 10:05:14,865 - INFO - Total trainable parameters: 714177
+2025-08-04 10:08:50,951 - INFO - args.exp_name : Test
+2025-08-04 10:08:50,957 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Pressure_VTK',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 10,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-04 10:08:50,957 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-04 10:08:51,321 - INFO - Total trainable parameters: 714177
+2025-08-04 10:08:51,346 - INFO - Data loaded: 3 training batches, 1 validation batches, 1 test batches
+2025-08-04 10:08:51,347 - INFO - Staring training for 10 epochs
+2025-08-04 10:08:57,965 - INFO - [35m data.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:08:57,971 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:22:16,676 - INFO - args.exp_name : Test
+2025-08-04 10:22:16,682 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Pressure_VTK',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 10,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-04 10:22:16,683 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-04 10:22:17,051 - INFO - Total trainable parameters: 714177
+2025-08-04 10:22:17,077 - INFO - Data loaded: 3 training batches, 1 validation batches, 1 test batches
+2025-08-04 10:22:17,078 - INFO - Staring training for 10 epochs
+2025-08-04 10:23:41,551 - INFO - args.exp_name : Test
+2025-08-04 10:23:41,555 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Pressure_VTK',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 10,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-04 10:23:41,555 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-04 10:23:41,922 - INFO - Total trainable parameters: 714177
+2025-08-04 10:23:41,945 - INFO - Data loaded: 3 training batches, 1 validation batches, 1 test batches
+2025-08-04 10:23:41,946 - INFO - Staring training for 10 epochs
+2025-08-04 10:23:48,733 - INFO - [35m data_point.shape: torch.Size([6, 3, 10000]) [0m
+2025-08-04 10:23:48,739 - INFO - [35m targets.shape: torch.Size([6, 10000]) [0m
+2025-08-04 10:23:48,915 - INFO - [33m batch 0, point 0, coordinate: (tensor(1.6813, device='cuda:0'), tensor(-0.9769, device='cuda:0'), tensor(0.7376, device='cuda:0')) [0m
+2025-08-04 10:33:50,988 - INFO - args.exp_name : Test
+2025-08-04 10:33:50,992 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Pressure_VTK',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 10,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-04 10:33:50,992 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-04 10:33:51,355 - INFO - Total trainable parameters: 714177
+2025-08-04 10:33:51,380 - INFO - Data loaded: 3 training batches, 1 validation batches, 1 test batches
+2025-08-04 10:33:51,384 - INFO - Staring training for 10 epochs
+2025-08-04 10:33:57,824 - INFO - [35m data_point.shape: torch.Size([6, 3, 10000]) [0m
+2025-08-04 10:33:57,828 - INFO - [35m targets.shape: torch.Size([1, 18, 10000]) [0m
+2025-08-04 10:39:51,453 - INFO - args.exp_name : Test
+2025-08-04 10:39:51,457 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Pressure_VTK',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 10,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-04 10:39:51,458 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-04 10:39:51,814 - INFO - Total trainable parameters: 714177
+2025-08-04 10:39:51,840 - INFO - Data loaded: 3 training batches, 1 validation batches, 1 test batches
+2025-08-04 10:39:51,841 - INFO - Staring training for 10 epochs
+2025-08-04 10:39:58,339 - INFO - [35m data_point.shape: torch.Size([6, 3, 10000]) [0m
+2025-08-04 10:39:58,345 - INFO - [35m targets.shape: torch.Size([6, 3, 10000]) [0m
+2025-08-04 10:42:23,452 - INFO - args.exp_name : Test
+2025-08-04 10:42:23,457 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Pressure_VTK',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 10,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-04 10:42:23,457 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-04 10:42:23,814 - INFO - Total trainable parameters: 714177
+2025-08-04 10:42:23,840 - INFO - Data loaded: 3 training batches, 1 validation batches, 1 test batches
+2025-08-04 10:42:23,840 - INFO - Staring training for 10 epochs
+2025-08-04 10:46:31,680 - INFO - args.exp_name : Test
+2025-08-04 10:46:31,685 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Pressure_VTK',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 10,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-04 10:46:31,685 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-04 10:46:32,045 - INFO - Total trainable parameters: 714177
+2025-08-04 10:46:32,070 - INFO - Data loaded: 3 training batches, 1 validation batches, 1 test batches
+2025-08-04 10:46:32,071 - INFO - Staring training for 10 epochs
+2025-08-04 10:46:38,496 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:46:38,501 - INFO - [35m targets.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:50:10,662 - INFO - args.exp_name : Test
+2025-08-04 10:50:10,664 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Pressure_VTK',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 10,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-04 10:50:10,664 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-04 10:50:11,033 - INFO - Total trainable parameters: 714177
+2025-08-04 10:50:11,056 - INFO - Data loaded: 3 training batches, 1 validation batches, 1 test batches
+2025-08-04 10:50:11,056 - INFO - Staring training for 10 epochs
+2025-08-04 10:50:17,659 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:50:17,659 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:50:17,667 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:50:17,667 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:51:41,371 - INFO - args.exp_name : Test
+2025-08-04 10:51:41,376 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Pressure_VTK',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 10,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-04 10:51:41,376 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-04 10:51:41,753 - INFO - Total trainable parameters: 714177
+2025-08-04 10:51:41,781 - INFO - Data loaded: 3 training batches, 1 validation batches, 1 test batches
+2025-08-04 10:51:41,782 - INFO - Staring training for 10 epochs
+2025-08-04 10:51:48,484 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:51:48,489 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:51:48,497 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:51:48,497 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:51:48,712 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:51:48,712 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:51:48,713 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:51:48,713 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:51:48,744 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:51:48,745 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:51:48,779 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:51:48,781 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:51:55,844 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:51:55,852 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:51:55,853 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:51:55,853 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:51:55,878 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:51:55,878 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:51:55,919 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:51:55,919 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:51:55,944 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:51:55,944 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:51:55,984 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:51:55,984 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:52:03,110 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:52:03,110 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:52:03,110 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:52:03,111 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:52:03,146 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:52:03,146 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:52:03,171 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:52:03,172 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:52:03,201 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:52:03,201 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:52:03,232 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:52:03,232 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:52:10,637 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:52:10,637 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:52:10,638 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:52:10,638 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:52:10,666 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:52:10,666 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:52:10,696 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:52:10,696 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:52:10,727 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:52:10,727 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:52:10,755 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:52:10,755 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:52:17,784 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:52:17,784 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:52:17,785 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:52:17,785 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:52:17,816 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:52:17,816 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:52:17,843 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:52:17,844 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:52:17,875 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:52:17,875 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:52:17,904 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:52:17,904 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:52:24,932 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:52:24,932 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:52:24,933 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:52:24,933 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:52:24,963 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:52:24,964 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:52:24,991 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:52:24,991 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:52:25,016 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:52:25,016 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:52:25,050 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:52:25,050 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:52:32,333 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:52:32,333 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:52:32,334 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:52:32,334 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:52:32,367 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:52:32,367 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:52:32,392 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:52:32,392 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:52:32,423 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:52:32,423 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:52:32,451 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:52:32,451 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:52:39,869 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:52:39,869 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:52:39,869 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:52:39,869 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:52:39,898 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:52:39,898 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:52:39,935 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:52:39,935 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:52:39,964 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:52:39,964 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:52:40,000 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:52:40,000 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:52:47,125 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:52:47,125 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:52:47,125 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:52:47,126 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:52:47,158 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:52:47,158 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:52:47,186 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:52:47,186 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:52:47,217 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:52:47,217 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:52:47,247 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:52:47,247 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:52:54,297 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:52:54,297 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:52:54,298 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:52:54,298 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:52:54,332 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:52:54,334 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:52:54,357 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:52:54,357 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:52:54,384 - INFO - [35m data_point.shape: torch.Size([6, 1, 3, 10000]) [0m
+2025-08-04 10:52:54,384 - INFO - [35m targets.shape: torch.Size([6, 1, 10000]) [0m
+2025-08-04 10:52:54,415 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:52:54,415 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:53:51,783 - INFO - args.exp_name : Test
+2025-08-04 10:53:51,787 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Pressure_VTK',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 10,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-04 10:53:51,788 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-04 10:53:52,149 - INFO - Total trainable parameters: 714177
+2025-08-04 10:53:52,177 - INFO - Data loaded: 3 training batches, 1 validation batches, 1 test batches
+2025-08-04 10:53:52,178 - INFO - Staring training for 10 epochs
+2025-08-04 10:53:58,986 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:53:58,991 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:53:59,351 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:53:59,351 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:53:59,494 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:53:59,494 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:54:06,794 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:54:06,799 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:54:06,946 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:54:06,946 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:54:07,087 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:54:07,087 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:54:14,485 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:54:14,490 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:54:14,642 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:54:14,642 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:54:14,787 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:54:14,787 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:54:22,195 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:54:22,200 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:54:22,341 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:54:22,341 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:54:22,482 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:54:22,483 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:54:29,770 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:54:29,770 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:54:29,912 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:54:29,915 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:54:30,056 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:54:30,056 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:54:37,139 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:54:37,139 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:54:37,281 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:54:37,281 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:54:37,422 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:54:37,422 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:54:44,847 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:54:44,847 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:54:44,990 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:54:44,991 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:54:45,131 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:54:45,131 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:54:52,318 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:54:52,318 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:54:52,462 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:54:52,462 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:54:52,603 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:54:52,603 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:55:00,032 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:55:00,032 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:55:00,186 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:55:00,186 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:55:00,331 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:55:00,331 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:55:07,505 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:55:07,506 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:55:07,647 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:55:07,647 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:55:07,788 - INFO - [35m data_point.shape: torch.Size([6, 10000, 3]) [0m
+2025-08-04 10:55:07,788 - INFO - [35m targets.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-04 10:55:43,876 - INFO - args.exp_name : Test
+2025-08-04 10:55:43,881 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Pressure_VTK',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 10,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-04 10:55:43,881 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-04 10:55:44,247 - INFO - Total trainable parameters: 714177
+2025-08-04 10:55:44,273 - INFO - Data loaded: 3 training batches, 1 validation batches, 1 test batches
+2025-08-04 10:55:44,274 - INFO - Staring training for 10 epochs
+2025-08-04 11:15:37,952 - INFO - args.exp_name : Test
+2025-08-04 11:15:37,956 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Pressure_VTK',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 10,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-04 11:15:37,956 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-04 11:15:38,329 - INFO - Total trainable parameters: 714177
+2025-08-04 11:15:38,354 - INFO - Data loaded: 3 training batches, 1 validation batches, 1 test batches
+2025-08-04 11:15:38,355 - INFO - Staring training for 10 epochs
+2025-08-04 11:17:10,305 - INFO - args.exp_name : Test
+2025-08-04 11:17:10,310 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Pressure_VTK',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 10,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-04 11:17:10,310 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-04 11:17:10,678 - INFO - Total trainable parameters: 714177
+2025-08-04 11:17:10,701 - INFO - Data loaded: 3 training batches, 1 validation batches, 1 test batches
+2025-08-04 11:17:10,702 - INFO - Staring training for 10 epochs
+2025-08-04 11:17:26,315 - INFO - Epoch 1/10 - Train Loss: 0.803133, Val Loss: 0.497473
+2025-08-04 11:17:26,341 - INFO - New best model saved with Val Loss: 0.497473
+2025-08-04 11:17:41,721 - INFO - Epoch 2/10 - Train Loss: 0.452560, Val Loss: 0.351013
+2025-08-04 11:17:41,747 - INFO - New best model saved with Val Loss: 0.351013
+2025-08-04 11:17:56,855 - INFO - Epoch 3/10 - Train Loss: 0.333392, Val Loss: 0.292948
+2025-08-04 11:17:56,880 - INFO - New best model saved with Val Loss: 0.292948
+2025-08-04 11:18:11,984 - INFO - Epoch 4/10 - Train Loss: 0.281344, Val Loss: 0.233950
+2025-08-04 11:18:12,008 - INFO - New best model saved with Val Loss: 0.233950
+2025-08-04 11:18:26,915 - INFO - Epoch 5/10 - Train Loss: 0.252313, Val Loss: 0.198070
+2025-08-04 11:18:26,939 - INFO - New best model saved with Val Loss: 0.198070
+2025-08-04 11:18:41,592 - INFO - Epoch 6/10 - Train Loss: 0.218822, Val Loss: 0.187986
+2025-08-04 11:18:41,617 - INFO - New best model saved with Val Loss: 0.187986
+2025-08-04 11:18:56,426 - INFO - Epoch 7/10 - Train Loss: 0.201827, Val Loss: 0.161274
+2025-08-04 11:18:56,451 - INFO - New best model saved with Val Loss: 0.161274
+2025-08-04 11:19:11,215 - INFO - Epoch 8/10 - Train Loss: 0.184439, Val Loss: 0.160605
+2025-08-04 11:19:11,240 - INFO - New best model saved with Val Loss: 0.160605
+2025-08-04 11:19:26,516 - INFO - Epoch 9/10 - Train Loss: 0.174530, Val Loss: 0.144398
+2025-08-04 11:19:26,542 - INFO - New best model saved with Val Loss: 0.144398
+2025-08-04 11:19:41,481 - INFO - Epoch 10/10 - Train Loss: 0.162107, Val Loss: 0.138230
+2025-08-04 11:19:41,506 - INFO - New best model saved with Val Loss: 0.138230
+2025-08-04 11:19:41,752 - INFO - Final model saved to experiments/Test/final_model.pth
+2025-08-04 11:19:41,753 - INFO - Testing the final model
+2025-08-04 11:19:41,753 - INFO - Testing the best model
+2025-08-04 11:30:27,193 - INFO - args.exp_name : Test
+2025-08-04 11:30:27,199 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 10,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-04 11:30:27,199 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-04 11:30:27,568 - INFO - Total trainable parameters: 714177
+2025-08-04 11:30:27,867 - INFO - Data loaded: 77 training batches, 17 validation batches, 19 test batches
+2025-08-04 11:30:27,867 - INFO - Staring training for 10 epochs
+2025-08-04 11:31:38,934 - INFO - Epoch 1/10 - Train Loss: 0.195183, Val Loss: 0.092994
+2025-08-04 11:31:38,982 - INFO - New best model saved with Val Loss: 0.092994
+2025-08-04 11:32:05,965 - INFO - Epoch 2/10 - Train Loss: 0.091444, Val Loss: 0.072784
+2025-08-04 11:32:05,989 - INFO - New best model saved with Val Loss: 0.072784
+2025-08-04 11:32:32,134 - INFO - Epoch 3/10 - Train Loss: 0.073507, Val Loss: 0.059109
+2025-08-04 11:32:32,172 - INFO - New best model saved with Val Loss: 0.059109
+2025-08-04 11:32:58,175 - INFO - Epoch 4/10 - Train Loss: 0.060795, Val Loss: 0.048532
+2025-08-04 11:32:58,200 - INFO - New best model saved with Val Loss: 0.048532
+2025-08-04 11:33:24,491 - INFO - Epoch 5/10 - Train Loss: 0.050783, Val Loss: 0.040491
+2025-08-04 11:33:24,515 - INFO - New best model saved with Val Loss: 0.040491
+2025-08-04 11:33:50,806 - INFO - Epoch 6/10 - Train Loss: 0.043555, Val Loss: 0.034384
+2025-08-04 11:33:50,831 - INFO - New best model saved with Val Loss: 0.034384
+2025-08-04 11:34:17,819 - INFO - Epoch 7/10 - Train Loss: 0.037972, Val Loss: 0.029739
+2025-08-04 11:34:17,866 - INFO - New best model saved with Val Loss: 0.029739
+2025-08-04 11:34:44,179 - INFO - Epoch 8/10 - Train Loss: 0.033721, Val Loss: 0.026144
+2025-08-04 11:34:44,204 - INFO - New best model saved with Val Loss: 0.026144
+2025-08-04 11:35:10,819 - INFO - Epoch 9/10 - Train Loss: 0.030197, Val Loss: 0.023313
+2025-08-04 11:35:10,844 - INFO - New best model saved with Val Loss: 0.023313
+2025-08-04 11:35:37,037 - INFO - Epoch 10/10 - Train Loss: 0.027334, Val Loss: 0.021054
+2025-08-04 11:35:37,062 - INFO - New best model saved with Val Loss: 0.021054
+2025-08-04 11:35:37,292 - INFO - Final model saved to experiments/Test/final_model.pth
+2025-08-04 11:35:37,295 - INFO - Testing the final model
+2025-08-04 11:35:37,295 - INFO - Testing the best model
