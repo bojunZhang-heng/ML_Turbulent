@@ -114,8 +114,9 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, local_rank):
         targets = (targets - PRESSURE_MEAN) / PRESSURE_STD
 
         optimizer.zero_grad()
-        outputs = model(data, targets)
-        loss = criterion(outputs.squeeze(1), targets)
+        outputs = model(data)
+        #logging.info(f"{Y} outputs.shape: {outputs.shape} {RESET}")
+        loss = criterion(outputs, targets)
 
         loss.backward()
         optimizer.step()
@@ -141,14 +142,14 @@ def validate(model, val_dataloader, criterion, local_rank):
             # Normalize targets
             targets = (targets - PRESSURE_MEAN) / PRESSURE_STD
 
-            outputs     = model(data, targets)
-            loss        = criterion(outputs.squeeze(1), targets)
+            outputs     = model(data)
+            loss        = criterion(outputs, targets)
             total_loss += loss.item()
 
     return total_loss / len(val_dataloader)
 
 def test_model(model, test_dataloader, criterion, local_rank, exp_dir):
-    """ Test the model and calculate metrics. """
+    """ Test the model, take postprocess and calculate metrics. """
     model.eval()
     total_mse, total_mae = 0, 0
     total_rel_l2, total_rel_l1 = 0, 0
@@ -161,7 +162,13 @@ def test_model(model, test_dataloader, criterion, local_rank, exp_dir):
         for data, targets in tqdm(test_dataloader, desc="[Testing]"):
             start_time = time.time()
 
-            data, targets = data.squeeze(1).to(local_rank), targets.squeeze(1).to(local_rank)
+            # Make data and perssure same shape
+            data = data.squeeze(1).to(local_rank)
+            data = data.permute(0, 2, 1).contiguous()
+            targets = targets.to(local_rank)
+            targets = targets.permute(0, 2, 1).contiguous()
+
+            # Normalize targets
             normalized_targets = (targets - PRESSURE_MEAN) / PRESSURE_STD
 
             outputs = model(data)
