@@ -97,7 +97,8 @@ class Model(nn.Module):
         if self.unified_pos:
             self.preprocess = MLP(fun_dim + self.ref * self.ref, n_hidden * 2, n_hidden, n_layers=0, res=False, act=act)
         else:
-            self.preprocess = MLP(fun_dim + space_dim, n_hidden * 2, n_hidden, n_layers=0, res=False, act=act)
+            self.preprocess = MLP(space_dim, n_hidden * 2, n_hidden, n_layers=0, res=False, act=act)
+            #self.preprocess = MLP(fun_dim + space_dim, n_hidden * 2, n_hidden, n_layers=0, res=False, act=act)
         if Time_Input:
             self.time_fc = nn.Sequential(nn.Linear(n_hidden, n_hidden), nn.SiLU(), nn.Linear(n_hidden, n_hidden))
 
@@ -137,22 +138,11 @@ class Model(nn.Module):
             reshape(batchsize, x.shape[1], self.ref * self.ref).contiguous()
         return pos
 
-    def forward(self, x, fx, T=None):
-        if self.unified_pos:
-            x = self.get_grid(x, x.shape[0])
-        if fx is not None:
-            fx = torch.cat((x, fx), -1)
-            fx = self.preprocess(fx)
-        else:
-            fx = self.preprocess(x)
-        fx = fx + self.placeholder[None, None, :]
-
-        if T is not None:
-            Time_emb = timestep_embedding(T, self.n_hidden).repeat(1, x.shape[1], 1)
-            Time_emb = self.time_fc(Time_emb)
-            fx = fx + Time_emb
+    def forward(self, x, T=None):
+        x = self.preprocess(x)
+        x = x + self.placeholder[None, None, :]
 
         for block in self.blocks:
-            fx = block(fx)
+            x = block(x)
 
-        return fx
+        return x
