@@ -1151,3 +1151,867 @@
 2025-08-04 11:35:37,292 - INFO - Final model saved to experiments/Test/final_model.pth
 2025-08-04 11:35:37,295 - INFO - Testing the final model
 2025-08-04 11:35:37,295 - INFO - Testing the best model
+2025-08-05 09:48:10,046 - INFO - args.exp_name : Test
+2025-08-05 09:48:10,050 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 10,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 1,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-05 09:48:10,050 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-05 09:48:10,487 - INFO - Total trainable parameters: 714177
+2025-08-05 09:48:10,825 - INFO - Data loaded: 77 training batches, 17 validation batches, 19 test batches
+2025-08-05 09:48:10,826 - INFO - Loading best model for testing only
+2025-08-05 09:51:12,218 - INFO - args.exp_name : Test
+2025-08-05 09:51:12,223 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 10,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 1,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-05 09:51:12,223 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-05 09:51:12,568 - INFO - Total trainable parameters: 714177
+2025-08-05 09:51:12,849 - INFO - Data loaded: 77 training batches, 17 validation batches, 19 test batches
+2025-08-05 09:51:12,854 - INFO - Loading best model for testing only
+2025-08-05 09:51:30,115 - INFO - Total MSE across all processes: 491.1652526855469
+2025-08-05 09:51:30,120 - INFO - mean value for all_targets: {tmp}
+2025-08-05 09:51:30,127 - INFO - Test MSE: 4.308467, Test MAE: 1.800510, Max AE: 28.971830, Test R2: -3.0555
+2025-08-05 09:51:30,129 - INFO - Relative L2 Error: inf, Relative L1 error: inf
+2025-08-05 09:51:30,130 - INFO - Total inference time:  0.44s for 114 samples
+2025-08-05 09:52:48,650 - INFO - args.exp_name : Test
+2025-08-05 09:52:48,655 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Pressure_VTK',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 10,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 1,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-05 09:52:48,655 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-05 09:52:49,044 - INFO - Total trainable parameters: 714177
+2025-08-05 09:52:49,123 - INFO - Data loaded: 3 training batches, 1 validation batches, 1 test batches
+2025-08-05 09:52:49,125 - INFO - Loading best model for testing only
+2025-08-05 09:52:56,888 - INFO - Total MSE across all processes: 27.66598129272461
+2025-08-05 09:52:56,889 - INFO - mean value for all_targets: {tmp}
+2025-08-05 09:52:56,889 - INFO - Test MSE: 4.610997, Test MAE: 1.804709, Max AE: 9.572763, Test R2: -3.0851
+2025-08-05 09:52:56,889 - INFO - Relative L2 Error: 33.887634, Relative L1 error: 33.887634
+2025-08-05 09:52:56,889 - INFO - Total inference time:  0.14s for 6 samples
+2025-08-05 09:53:53,945 - INFO - args.exp_name : Test
+2025-08-05 09:53:53,949 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 150,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-05 09:53:53,950 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-05 09:53:54,288 - INFO - Total trainable parameters: 714177
+2025-08-05 09:53:54,568 - INFO - Data loaded: 77 training batches, 17 validation batches, 19 test batches
+2025-08-05 09:53:54,573 - INFO - Staring training for 150 epochs
+2025-08-05 09:54:21,401 - INFO - Epoch 1/150 - Train Loss: 0.195183, Val Loss: 0.092994
+2025-08-05 09:54:21,428 - INFO - New best model saved with Val Loss: 0.092994
+2025-08-05 09:54:48,369 - INFO - Epoch 2/150 - Train Loss: 0.091444, Val Loss: 0.072784
+2025-08-05 09:54:48,394 - INFO - New best model saved with Val Loss: 0.072784
+2025-08-05 09:55:14,931 - INFO - Epoch 3/150 - Train Loss: 0.073507, Val Loss: 0.059109
+2025-08-05 09:55:14,956 - INFO - New best model saved with Val Loss: 0.059109
+2025-08-05 09:55:41,523 - INFO - Epoch 4/150 - Train Loss: 0.060795, Val Loss: 0.048532
+2025-08-05 09:55:41,549 - INFO - New best model saved with Val Loss: 0.048532
+2025-08-05 09:56:08,566 - INFO - Epoch 5/150 - Train Loss: 0.050783, Val Loss: 0.040491
+2025-08-05 09:56:08,591 - INFO - New best model saved with Val Loss: 0.040491
+2025-08-05 09:56:34,732 - INFO - Epoch 6/150 - Train Loss: 0.043555, Val Loss: 0.034384
+2025-08-05 09:56:34,757 - INFO - New best model saved with Val Loss: 0.034384
+2025-08-05 09:57:01,153 - INFO - Epoch 7/150 - Train Loss: 0.037972, Val Loss: 0.029739
+2025-08-05 09:57:01,178 - INFO - New best model saved with Val Loss: 0.029739
+2025-08-05 09:57:28,139 - INFO - Epoch 8/150 - Train Loss: 0.033721, Val Loss: 0.026144
+2025-08-05 09:57:28,164 - INFO - New best model saved with Val Loss: 0.026144
+2025-08-05 09:57:54,930 - INFO - Epoch 9/150 - Train Loss: 0.030197, Val Loss: 0.023313
+2025-08-05 09:57:54,956 - INFO - New best model saved with Val Loss: 0.023313
+2025-08-05 09:58:21,834 - INFO - Epoch 10/150 - Train Loss: 0.027334, Val Loss: 0.021054
+2025-08-05 09:58:21,859 - INFO - New best model saved with Val Loss: 0.021054
+2025-08-05 09:58:48,884 - INFO - Epoch 11/150 - Train Loss: 0.025580, Val Loss: 0.019247
+2025-08-05 09:58:48,910 - INFO - New best model saved with Val Loss: 0.019247
+2025-08-05 09:59:15,493 - INFO - Epoch 12/150 - Train Loss: 0.023795, Val Loss: 0.017743
+2025-08-05 09:59:15,518 - INFO - New best model saved with Val Loss: 0.017743
+2025-08-05 09:59:41,977 - INFO - Epoch 13/150 - Train Loss: 0.022188, Val Loss: 0.016488
+2025-08-05 09:59:42,003 - INFO - New best model saved with Val Loss: 0.016488
+2025-08-05 10:00:08,718 - INFO - Epoch 14/150 - Train Loss: 0.020958, Val Loss: 0.015360
+2025-08-05 10:00:08,744 - INFO - New best model saved with Val Loss: 0.015360
+2025-08-05 10:00:35,409 - INFO - Epoch 15/150 - Train Loss: 0.019845, Val Loss: 0.014416
+2025-08-05 10:00:35,433 - INFO - New best model saved with Val Loss: 0.014416
+2025-08-05 10:01:01,858 - INFO - Epoch 16/150 - Train Loss: 0.018873, Val Loss: 0.013452
+2025-08-05 10:01:01,884 - INFO - New best model saved with Val Loss: 0.013452
+2025-08-05 10:01:28,310 - INFO - Epoch 17/150 - Train Loss: 0.017931, Val Loss: 0.012651
+2025-08-05 10:01:28,335 - INFO - New best model saved with Val Loss: 0.012651
+2025-08-05 10:01:54,972 - INFO - Epoch 18/150 - Train Loss: 0.017014, Val Loss: 0.011881
+2025-08-05 10:01:54,999 - INFO - New best model saved with Val Loss: 0.011881
+2025-08-05 10:02:21,756 - INFO - Epoch 19/150 - Train Loss: 0.016266, Val Loss: 0.011317
+2025-08-05 10:02:21,781 - INFO - New best model saved with Val Loss: 0.011317
+2025-08-05 10:02:48,626 - INFO - Epoch 20/150 - Train Loss: 0.015474, Val Loss: 0.010878
+2025-08-05 10:02:48,651 - INFO - New best model saved with Val Loss: 0.010878
+2025-08-05 10:07:52,780 - INFO - args.exp_name : Test
+2025-08-05 10:07:52,786 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 150,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-05 10:07:52,786 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-05 10:07:53,135 - INFO - Total trainable parameters: 713921
+2025-08-05 10:07:53,415 - INFO - Data loaded: 77 training batches, 17 validation batches, 19 test batches
+2025-08-05 10:07:53,416 - INFO - Staring training for 150 epochs
+2025-08-05 10:08:00,072 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:00,262 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:00,404 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:00,545 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:00,689 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:00,830 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:00,971 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:01,111 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:01,252 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:01,393 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:01,534 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:01,678 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:01,819 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:01,959 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:02,100 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:02,243 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:02,383 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:02,524 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:02,667 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:02,808 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:02,949 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:03,089 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:03,230 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:03,370 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:03,512 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:03,655 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:03,796 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:03,937 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:04,078 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:04,219 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:04,359 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:04,500 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:04,643 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:04,784 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:04,925 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:05,066 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:05,207 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:05,347 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:05,488 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:05,629 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:05,770 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:05,911 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:06,051 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:06,193 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:06,333 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:06,474 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:06,615 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:06,758 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:06,899 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:07,040 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:07,182 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:07,322 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:07,464 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:07,604 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:07,745 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:07,886 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:08,027 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:08,168 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:08,309 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:08,449 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:08,590 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:08,731 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:08,872 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:09,013 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:09,154 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:09,295 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:09,436 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:09,576 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:09,717 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:09,858 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:09,999 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:10,140 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:10,280 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:10,421 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:10,562 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:10,703 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:08:10,844 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:44,586 - INFO - args.exp_name : Test
+2025-08-05 10:12:44,590 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 150,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-05 10:12:44,591 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-05 10:12:44,956 - INFO - Total trainable parameters: 713921
+2025-08-05 10:12:45,234 - INFO - Data loaded: 77 training batches, 17 validation batches, 19 test batches
+2025-08-05 10:12:45,235 - INFO - Staring training for 150 epochs
+2025-08-05 10:12:51,532 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:51,713 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:51,856 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:51,997 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:52,138 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:52,279 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:52,420 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:52,560 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:52,701 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:52,842 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:52,983 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:53,124 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:53,265 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:53,405 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:53,546 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:53,687 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:53,828 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:53,969 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:54,111 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:54,251 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:54,392 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:54,533 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:54,674 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:54,814 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:54,955 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:55,096 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:55,237 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:55,378 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:55,518 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:55,659 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:55,801 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:55,942 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:56,082 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:56,223 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:56,364 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:56,505 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:56,646 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:56,787 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:56,927 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:57,068 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:57,209 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:57,350 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:57,491 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:57,632 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:57,772 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:57,913 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:58,054 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:58,195 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:58,336 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:58,477 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:58,617 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:58,758 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:58,900 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:59,042 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:59,182 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:59,323 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:59,464 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:59,604 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:59,746 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:12:59,886 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:13:00,027 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:13:00,168 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:13:00,309 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:13:00,450 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:13:00,591 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:13:00,732 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:13:00,873 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:13:01,014 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:13:01,154 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:13:01,295 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:13:01,436 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:13:01,577 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:13:01,718 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:13:01,859 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:13:02,000 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:13:02,140 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:13:02,281 - INFO - [33m outputs.shape: torch.Size([6, 10000, 1]) [0m
+2025-08-05 10:13:57,335 - INFO - args.exp_name : Test
+2025-08-05 10:13:57,338 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 150,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-05 10:13:57,338 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-05 10:13:57,693 - INFO - Total trainable parameters: 713921
+2025-08-05 10:13:57,971 - INFO - Data loaded: 77 training batches, 17 validation batches, 19 test batches
+2025-08-05 10:13:57,972 - INFO - Staring training for 150 epochs
+2025-08-05 10:23:54,682 - INFO - args.exp_name : Test
+2025-08-05 10:23:54,688 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/small_samples/Pressure_VTK',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 150,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-05 10:23:54,688 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-05 10:23:55,065 - INFO - Total trainable parameters: 713921
+2025-08-05 10:23:55,090 - INFO - Data loaded: 3 training batches, 1 validation batches, 1 test batches
+2025-08-05 10:23:55,091 - INFO - Staring training for 150 epochs
+2025-08-05 10:24:10,794 - INFO - Epoch 1/150 - Train Loss: 1.217155, Val Loss: 1.129727
+2025-08-05 10:24:10,822 - INFO - New best model saved with Val Loss: 1.129727
+2025-08-05 10:24:25,442 - INFO - Epoch 2/150 - Train Loss: 1.162042, Val Loss: 1.104278
+2025-08-05 10:24:25,467 - INFO - New best model saved with Val Loss: 1.104278
+2025-08-05 10:24:39,440 - INFO - Epoch 3/150 - Train Loss: 1.136828, Val Loss: 1.074645
+2025-08-05 10:24:39,465 - INFO - New best model saved with Val Loss: 1.074645
+2025-08-05 10:24:53,671 - INFO - Epoch 4/150 - Train Loss: 1.111161, Val Loss: 1.054567
+2025-08-05 10:24:53,696 - INFO - New best model saved with Val Loss: 1.054567
+2025-08-05 10:25:08,432 - INFO - Epoch 5/150 - Train Loss: 1.092947, Val Loss: 1.018665
+2025-08-05 10:25:08,459 - INFO - New best model saved with Val Loss: 1.018665
+2025-08-05 10:25:23,206 - INFO - Epoch 6/150 - Train Loss: 1.058124, Val Loss: 0.982657
+2025-08-05 10:25:23,234 - INFO - New best model saved with Val Loss: 0.982657
+2025-08-05 10:25:37,815 - INFO - Epoch 7/150 - Train Loss: 1.030523, Val Loss: 0.948917
+2025-08-05 10:25:37,840 - INFO - New best model saved with Val Loss: 0.948917
+2025-08-05 10:26:09,968 - INFO - args.exp_name : Test
+2025-08-05 10:26:09,974 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 10,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-05 10:26:09,974 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-05 10:26:10,401 - INFO - Total trainable parameters: 713921
+2025-08-05 10:26:10,677 - INFO - Data loaded: 77 training batches, 17 validation batches, 19 test batches
+2025-08-05 10:26:10,681 - INFO - Staring training for 10 epochs
+2025-08-05 10:26:38,460 - INFO - Epoch 1/10 - Train Loss: 0.872728, Val Loss: 0.770381
+2025-08-05 10:26:38,498 - INFO - New best model saved with Val Loss: 0.770381
+2025-08-05 10:27:06,640 - INFO - Epoch 2/10 - Train Loss: 0.746029, Val Loss: 0.714486
+2025-08-05 10:27:06,669 - INFO - New best model saved with Val Loss: 0.714486
+2025-08-05 10:27:34,867 - INFO - Epoch 3/10 - Train Loss: 0.689046, Val Loss: 0.652508
+2025-08-05 10:27:34,896 - INFO - New best model saved with Val Loss: 0.652508
+2025-08-05 10:28:03,203 - INFO - Epoch 4/10 - Train Loss: 0.596089, Val Loss: 0.517790
+2025-08-05 10:28:03,233 - INFO - New best model saved with Val Loss: 0.517790
+2025-08-05 10:28:31,463 - INFO - Epoch 5/10 - Train Loss: 0.487988, Val Loss: 0.471622
+2025-08-05 10:28:31,490 - INFO - New best model saved with Val Loss: 0.471622
+2025-08-05 10:28:59,622 - INFO - Epoch 6/10 - Train Loss: 0.457196, Val Loss: 0.443875
+2025-08-05 10:28:59,652 - INFO - New best model saved with Val Loss: 0.443875
+2025-08-05 10:29:27,799 - INFO - Epoch 7/10 - Train Loss: 0.438555, Val Loss: 0.427619
+2025-08-05 10:29:27,827 - INFO - New best model saved with Val Loss: 0.427619
+2025-08-05 10:30:27,164 - INFO - args.exp_name : Test
+2025-08-05 10:30:27,168 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 150,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-05 10:30:27,168 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-05 10:30:27,527 - INFO - Total trainable parameters: 713921
+2025-08-05 10:30:27,807 - INFO - Data loaded: 77 training batches, 17 validation batches, 19 test batches
+2025-08-05 10:30:27,811 - INFO - Staring training for 150 epochs
+2025-08-05 10:30:54,678 - INFO - Epoch 1/150 - Train Loss: 0.872728, Val Loss: 0.770381
+2025-08-05 10:30:54,707 - INFO - New best model saved with Val Loss: 0.770381
+2025-08-05 10:31:20,914 - INFO - Epoch 2/150 - Train Loss: 0.746029, Val Loss: 0.714486
+2025-08-05 10:31:20,939 - INFO - New best model saved with Val Loss: 0.714486
+2025-08-05 10:31:47,080 - INFO - Epoch 3/150 - Train Loss: 0.689046, Val Loss: 0.652508
+2025-08-05 10:31:47,105 - INFO - New best model saved with Val Loss: 0.652508
+2025-08-05 10:32:13,642 - INFO - Epoch 4/150 - Train Loss: 0.596089, Val Loss: 0.517790
+2025-08-05 10:32:13,667 - INFO - New best model saved with Val Loss: 0.517790
+2025-08-05 10:32:40,391 - INFO - Epoch 5/150 - Train Loss: 0.487988, Val Loss: 0.471622
+2025-08-05 10:32:40,415 - INFO - New best model saved with Val Loss: 0.471622
+2025-08-05 10:33:06,627 - INFO - Epoch 6/150 - Train Loss: 0.457196, Val Loss: 0.443875
+2025-08-05 10:33:06,653 - INFO - New best model saved with Val Loss: 0.443875
+2025-08-05 10:33:33,570 - INFO - Epoch 7/150 - Train Loss: 0.438555, Val Loss: 0.427619
+2025-08-05 10:33:33,596 - INFO - New best model saved with Val Loss: 0.427619
+2025-08-05 10:34:00,086 - INFO - Epoch 8/150 - Train Loss: 0.426537, Val Loss: 0.443644
+2025-08-05 10:34:27,199 - INFO - Epoch 9/150 - Train Loss: 0.420910, Val Loss: 0.407189
+2025-08-05 10:34:27,226 - INFO - New best model saved with Val Loss: 0.407189
+2025-08-05 10:34:53,819 - INFO - Epoch 10/150 - Train Loss: 0.405058, Val Loss: 0.395317
+2025-08-05 10:34:53,844 - INFO - New best model saved with Val Loss: 0.395317
+2025-08-05 10:35:20,707 - INFO - Epoch 11/150 - Train Loss: 0.396889, Val Loss: 0.394301
+2025-08-05 10:35:20,733 - INFO - New best model saved with Val Loss: 0.394301
+2025-08-05 10:35:47,261 - INFO - Epoch 12/150 - Train Loss: 0.393854, Val Loss: 0.398666
+2025-08-05 10:36:13,800 - INFO - Epoch 13/150 - Train Loss: 0.393448, Val Loss: 0.395053
+2025-08-05 10:36:40,496 - INFO - Epoch 14/150 - Train Loss: 0.393088, Val Loss: 0.382051
+2025-08-05 10:36:40,521 - INFO - New best model saved with Val Loss: 0.382051
+2025-08-05 10:37:07,681 - INFO - Epoch 15/150 - Train Loss: 0.380370, Val Loss: 0.376395
+2025-08-05 10:37:07,709 - INFO - New best model saved with Val Loss: 0.376395
+2025-08-05 10:37:34,198 - INFO - Epoch 16/150 - Train Loss: 0.384243, Val Loss: 0.382050
+2025-08-05 10:38:00,874 - INFO - Epoch 17/150 - Train Loss: 0.377425, Val Loss: 0.366214
+2025-08-05 10:38:00,900 - INFO - New best model saved with Val Loss: 0.366214
+2025-08-05 10:38:27,777 - INFO - Epoch 18/150 - Train Loss: 0.371412, Val Loss: 0.371318
+2025-08-05 10:38:54,525 - INFO - Epoch 19/150 - Train Loss: 0.363831, Val Loss: 0.358968
+2025-08-05 10:38:54,552 - INFO - New best model saved with Val Loss: 0.358968
+2025-08-05 10:39:20,623 - INFO - Epoch 20/150 - Train Loss: 0.355873, Val Loss: 0.345916
+2025-08-05 10:39:20,649 - INFO - New best model saved with Val Loss: 0.345916
+2025-08-05 10:39:47,297 - INFO - Epoch 21/150 - Train Loss: 0.348938, Val Loss: 0.328994
+2025-08-05 10:39:47,323 - INFO - New best model saved with Val Loss: 0.328994
+2025-08-05 10:40:13,928 - INFO - Epoch 22/150 - Train Loss: 0.328250, Val Loss: 0.317762
+2025-08-05 10:40:13,953 - INFO - New best model saved with Val Loss: 0.317762
+2025-08-05 10:40:40,890 - INFO - Epoch 23/150 - Train Loss: 0.309963, Val Loss: 0.297027
+2025-08-05 10:40:40,919 - INFO - New best model saved with Val Loss: 0.297027
+2025-08-05 10:41:07,854 - INFO - Epoch 24/150 - Train Loss: 0.306142, Val Loss: 0.289150
+2025-08-05 10:41:07,879 - INFO - New best model saved with Val Loss: 0.289150
+2025-08-05 10:41:34,956 - INFO - Epoch 25/150 - Train Loss: 0.298667, Val Loss: 0.288754
+2025-08-05 10:41:34,982 - INFO - New best model saved with Val Loss: 0.288754
+2025-08-05 10:42:01,641 - INFO - Epoch 26/150 - Train Loss: 0.292320, Val Loss: 0.282417
+2025-08-05 10:42:01,666 - INFO - New best model saved with Val Loss: 0.282417
+2025-08-05 10:42:28,103 - INFO - Epoch 27/150 - Train Loss: 0.286816, Val Loss: 0.280205
+2025-08-05 10:42:28,130 - INFO - New best model saved with Val Loss: 0.280205
+2025-08-05 10:42:54,803 - INFO - Epoch 28/150 - Train Loss: 0.281554, Val Loss: 0.275352
+2025-08-05 10:42:54,828 - INFO - New best model saved with Val Loss: 0.275352
+2025-08-05 10:43:21,547 - INFO - Epoch 29/150 - Train Loss: 0.273313, Val Loss: 0.259936
+2025-08-05 10:43:21,573 - INFO - New best model saved with Val Loss: 0.259936
+2025-08-05 10:43:48,391 - INFO - Epoch 30/150 - Train Loss: 0.264080, Val Loss: 0.253437
+2025-08-05 10:43:48,417 - INFO - New best model saved with Val Loss: 0.253437
+2025-08-05 10:44:14,992 - INFO - Epoch 31/150 - Train Loss: 0.259967, Val Loss: 0.255636
+2025-08-05 10:44:41,906 - INFO - Epoch 32/150 - Train Loss: 0.257382, Val Loss: 0.256045
+2025-08-05 10:49:02,255 - INFO - args.exp_name : Test
+2025-08-05 10:49:02,259 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 150,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 0,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-05 10:49:02,259 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-05 10:49:02,627 - INFO - Total trainable parameters: 713921
+2025-08-05 10:49:02,911 - INFO - Data loaded: 77 training batches, 17 validation batches, 19 test batches
+2025-08-05 10:49:02,911 - INFO - Staring training for 150 epochs
+2025-08-05 10:49:29,479 - INFO - Epoch 1/150 - Train Loss: 0.872728, Val Loss: 0.770381
+2025-08-05 10:49:29,506 - INFO - New best model saved with Val Loss: 0.770381
+2025-08-05 10:49:55,880 - INFO - Epoch 2/150 - Train Loss: 0.746029, Val Loss: 0.714486
+2025-08-05 10:49:55,905 - INFO - New best model saved with Val Loss: 0.714486
+2025-08-05 10:50:22,616 - INFO - Epoch 3/150 - Train Loss: 0.689046, Val Loss: 0.652508
+2025-08-05 10:50:22,642 - INFO - New best model saved with Val Loss: 0.652508
+2025-08-05 10:50:49,350 - INFO - Epoch 4/150 - Train Loss: 0.596089, Val Loss: 0.517790
+2025-08-05 10:50:49,376 - INFO - New best model saved with Val Loss: 0.517790
+2025-08-05 10:51:16,113 - INFO - Epoch 5/150 - Train Loss: 0.487988, Val Loss: 0.471622
+2025-08-05 10:51:16,139 - INFO - New best model saved with Val Loss: 0.471622
+2025-08-05 10:51:42,755 - INFO - Epoch 6/150 - Train Loss: 0.457196, Val Loss: 0.443875
+2025-08-05 10:51:42,783 - INFO - New best model saved with Val Loss: 0.443875
+2025-08-05 10:52:09,178 - INFO - Epoch 7/150 - Train Loss: 0.438555, Val Loss: 0.427619
+2025-08-05 10:52:09,204 - INFO - New best model saved with Val Loss: 0.427619
+2025-08-05 10:52:35,599 - INFO - Epoch 8/150 - Train Loss: 0.426537, Val Loss: 0.443644
+2025-08-05 10:53:01,826 - INFO - Epoch 9/150 - Train Loss: 0.420910, Val Loss: 0.407189
+2025-08-05 10:53:01,851 - INFO - New best model saved with Val Loss: 0.407189
+2025-08-05 10:53:28,323 - INFO - Epoch 10/150 - Train Loss: 0.405058, Val Loss: 0.395317
+2025-08-05 10:53:28,348 - INFO - New best model saved with Val Loss: 0.395317
+2025-08-05 10:53:54,890 - INFO - Epoch 11/150 - Train Loss: 0.396889, Val Loss: 0.394301
+2025-08-05 10:53:54,916 - INFO - New best model saved with Val Loss: 0.394301
+2025-08-05 10:54:21,844 - INFO - Epoch 12/150 - Train Loss: 0.393854, Val Loss: 0.398666
+2025-08-05 10:54:48,439 - INFO - Epoch 13/150 - Train Loss: 0.393448, Val Loss: 0.395053
+2025-08-05 10:55:15,166 - INFO - Epoch 14/150 - Train Loss: 0.393088, Val Loss: 0.382051
+2025-08-05 10:55:15,192 - INFO - New best model saved with Val Loss: 0.382051
+2025-08-05 10:55:42,005 - INFO - Epoch 15/150 - Train Loss: 0.380370, Val Loss: 0.376395
+2025-08-05 10:55:42,031 - INFO - New best model saved with Val Loss: 0.376395
+2025-08-05 10:56:08,972 - INFO - Epoch 16/150 - Train Loss: 0.384243, Val Loss: 0.382050
+2025-08-05 10:56:35,913 - INFO - Epoch 17/150 - Train Loss: 0.377425, Val Loss: 0.366214
+2025-08-05 10:56:35,938 - INFO - New best model saved with Val Loss: 0.366214
+2025-08-05 10:57:02,185 - INFO - Epoch 18/150 - Train Loss: 0.371412, Val Loss: 0.371318
+2025-08-05 10:57:29,059 - INFO - Epoch 19/150 - Train Loss: 0.363831, Val Loss: 0.358968
+2025-08-05 10:57:29,084 - INFO - New best model saved with Val Loss: 0.358968
+2025-08-05 10:57:55,300 - INFO - Epoch 20/150 - Train Loss: 0.355873, Val Loss: 0.345916
+2025-08-05 10:57:55,325 - INFO - New best model saved with Val Loss: 0.345916
+2025-08-05 10:58:22,181 - INFO - Epoch 21/150 - Train Loss: 0.348938, Val Loss: 0.328994
+2025-08-05 10:58:22,207 - INFO - New best model saved with Val Loss: 0.328994
+2025-08-05 10:58:48,171 - INFO - Epoch 22/150 - Train Loss: 0.328250, Val Loss: 0.317762
+2025-08-05 10:58:48,197 - INFO - New best model saved with Val Loss: 0.317762
+2025-08-05 10:59:14,643 - INFO - Epoch 23/150 - Train Loss: 0.309963, Val Loss: 0.297027
+2025-08-05 10:59:14,669 - INFO - New best model saved with Val Loss: 0.297027
+2025-08-05 10:59:41,378 - INFO - Epoch 24/150 - Train Loss: 0.306142, Val Loss: 0.289150
+2025-08-05 10:59:41,404 - INFO - New best model saved with Val Loss: 0.289150
+2025-08-05 11:00:08,057 - INFO - Epoch 25/150 - Train Loss: 0.298667, Val Loss: 0.288754
+2025-08-05 11:00:08,082 - INFO - New best model saved with Val Loss: 0.288754
+2025-08-05 11:00:34,955 - INFO - Epoch 26/150 - Train Loss: 0.292320, Val Loss: 0.282417
+2025-08-05 11:00:34,981 - INFO - New best model saved with Val Loss: 0.282417
+2025-08-05 11:01:01,602 - INFO - Epoch 27/150 - Train Loss: 0.286816, Val Loss: 0.280205
+2025-08-05 11:01:01,628 - INFO - New best model saved with Val Loss: 0.280205
+2025-08-05 11:01:28,285 - INFO - Epoch 28/150 - Train Loss: 0.281554, Val Loss: 0.275352
+2025-08-05 11:01:28,311 - INFO - New best model saved with Val Loss: 0.275352
+2025-08-05 11:01:55,033 - INFO - Epoch 29/150 - Train Loss: 0.273313, Val Loss: 0.259936
+2025-08-05 11:01:55,058 - INFO - New best model saved with Val Loss: 0.259936
+2025-08-05 11:02:21,590 - INFO - Epoch 30/150 - Train Loss: 0.264080, Val Loss: 0.253437
+2025-08-05 11:02:21,617 - INFO - New best model saved with Val Loss: 0.253437
+2025-08-05 11:02:48,395 - INFO - Epoch 31/150 - Train Loss: 0.259967, Val Loss: 0.255636
+2025-08-05 11:03:15,252 - INFO - Epoch 32/150 - Train Loss: 0.257382, Val Loss: 0.256045
+2025-08-05 11:03:41,960 - INFO - Epoch 33/150 - Train Loss: 0.252600, Val Loss: 0.253996
+2025-08-05 11:04:08,790 - INFO - Epoch 34/150 - Train Loss: 0.256595, Val Loss: 0.255327
+2025-08-05 11:04:35,199 - INFO - Epoch 35/150 - Train Loss: 0.252030, Val Loss: 0.235432
+2025-08-05 11:04:35,226 - INFO - New best model saved with Val Loss: 0.235432
+2025-08-05 11:05:02,116 - INFO - Epoch 36/150 - Train Loss: 0.250305, Val Loss: 0.243129
+2025-08-05 11:05:28,437 - INFO - Epoch 37/150 - Train Loss: 0.243904, Val Loss: 0.244168
+2025-08-05 11:05:54,632 - INFO - Epoch 38/150 - Train Loss: 0.244118, Val Loss: 0.228261
+2025-08-05 11:05:54,657 - INFO - New best model saved with Val Loss: 0.228261
+2025-08-05 11:06:20,881 - INFO - Epoch 39/150 - Train Loss: 0.239221, Val Loss: 0.248252
+2025-08-05 11:06:47,292 - INFO - Epoch 40/150 - Train Loss: 0.240437, Val Loss: 0.230236
+2025-08-05 11:07:14,240 - INFO - Epoch 41/150 - Train Loss: 0.237910, Val Loss: 0.234242
+2025-08-05 11:07:41,378 - INFO - Epoch 42/150 - Train Loss: 0.239524, Val Loss: 0.225113
+2025-08-05 11:07:41,403 - INFO - New best model saved with Val Loss: 0.225113
+2025-08-05 11:08:07,958 - INFO - Epoch 43/150 - Train Loss: 0.235790, Val Loss: 0.231976
+2025-08-05 11:08:34,546 - INFO - Epoch 44/150 - Train Loss: 0.232867, Val Loss: 0.226040
+2025-08-05 11:09:00,785 - INFO - Epoch 45/150 - Train Loss: 0.232822, Val Loss: 0.230853
+2025-08-05 11:09:27,843 - INFO - Epoch 46/150 - Train Loss: 0.232508, Val Loss: 0.234469
+2025-08-05 11:09:54,811 - INFO - Epoch 47/150 - Train Loss: 0.228633, Val Loss: 0.230019
+2025-08-05 11:10:21,686 - INFO - Epoch 48/150 - Train Loss: 0.230986, Val Loss: 0.226691
+2025-08-05 11:10:48,974 - INFO - Epoch 49/150 - Train Loss: 0.228577, Val Loss: 0.230252
+2025-08-05 11:11:16,280 - INFO - Epoch 50/150 - Train Loss: 0.225610, Val Loss: 0.224138
+2025-08-05 11:11:16,305 - INFO - New best model saved with Val Loss: 0.224138
+2025-08-05 11:11:43,916 - INFO - Epoch 51/150 - Train Loss: 0.226096, Val Loss: 0.220608
+2025-08-05 11:11:43,941 - INFO - New best model saved with Val Loss: 0.220608
+2025-08-05 11:12:11,362 - INFO - Epoch 52/150 - Train Loss: 0.220978, Val Loss: 0.229232
+2025-08-05 11:12:38,878 - INFO - Epoch 53/150 - Train Loss: 0.224083, Val Loss: 0.214109
+2025-08-05 11:12:38,903 - INFO - New best model saved with Val Loss: 0.214109
+2025-08-05 11:13:06,060 - INFO - Epoch 54/150 - Train Loss: 0.219357, Val Loss: 0.213314
+2025-08-05 11:13:06,084 - INFO - New best model saved with Val Loss: 0.213314
+2025-08-05 11:13:33,649 - INFO - Epoch 55/150 - Train Loss: 0.213263, Val Loss: 0.210136
+2025-08-05 11:13:33,674 - INFO - New best model saved with Val Loss: 0.210136
+2025-08-05 11:14:01,262 - INFO - Epoch 56/150 - Train Loss: 0.211504, Val Loss: 0.208160
+2025-08-05 11:14:01,286 - INFO - New best model saved with Val Loss: 0.208160
+2025-08-05 11:14:28,851 - INFO - Epoch 57/150 - Train Loss: 0.210533, Val Loss: 0.201559
+2025-08-05 11:14:28,876 - INFO - New best model saved with Val Loss: 0.201559
+2025-08-05 11:14:56,476 - INFO - Epoch 58/150 - Train Loss: 0.212218, Val Loss: 0.210462
+2025-08-05 11:15:24,146 - INFO - Epoch 59/150 - Train Loss: 0.213248, Val Loss: 0.202650
+2025-08-05 11:15:51,662 - INFO - Epoch 60/150 - Train Loss: 0.206235, Val Loss: 0.199456
+2025-08-05 11:15:51,686 - INFO - New best model saved with Val Loss: 0.199456
+2025-08-05 11:16:19,374 - INFO - Epoch 61/150 - Train Loss: 0.207568, Val Loss: 0.199422
+2025-08-05 11:16:19,399 - INFO - New best model saved with Val Loss: 0.199422
+2025-08-05 11:16:46,603 - INFO - Epoch 62/150 - Train Loss: 0.208362, Val Loss: 0.208728
+2025-08-05 11:17:14,462 - INFO - Epoch 63/150 - Train Loss: 0.204394, Val Loss: 0.201039
+2025-08-05 11:17:42,499 - INFO - Epoch 64/150 - Train Loss: 0.208318, Val Loss: 0.198614
+2025-08-05 11:17:42,539 - INFO - New best model saved with Val Loss: 0.198614
+2025-08-05 11:18:09,890 - INFO - Epoch 65/150 - Train Loss: 0.202805, Val Loss: 0.199201
+2025-08-05 11:18:37,347 - INFO - Epoch 66/150 - Train Loss: 0.201434, Val Loss: 0.198030
+2025-08-05 11:18:37,372 - INFO - New best model saved with Val Loss: 0.198030
+2025-08-05 11:19:04,693 - INFO - Epoch 67/150 - Train Loss: 0.203481, Val Loss: 0.191895
+2025-08-05 11:19:04,718 - INFO - New best model saved with Val Loss: 0.191895
+2025-08-05 11:19:31,669 - INFO - Epoch 68/150 - Train Loss: 0.203677, Val Loss: 0.199056
+2025-08-05 11:19:59,017 - INFO - Epoch 69/150 - Train Loss: 0.202387, Val Loss: 0.186813
+2025-08-05 11:19:59,041 - INFO - New best model saved with Val Loss: 0.186813
+2025-08-05 11:20:26,208 - INFO - Epoch 70/150 - Train Loss: 0.198160, Val Loss: 0.192520
+2025-08-05 11:20:53,543 - INFO - Epoch 71/150 - Train Loss: 0.199944, Val Loss: 0.184624
+2025-08-05 11:20:53,568 - INFO - New best model saved with Val Loss: 0.184624
+2025-08-05 11:21:21,501 - INFO - Epoch 72/150 - Train Loss: 0.197394, Val Loss: 0.186144
+2025-08-05 11:21:48,542 - INFO - Epoch 73/150 - Train Loss: 0.196352, Val Loss: 0.181895
+2025-08-05 11:21:48,567 - INFO - New best model saved with Val Loss: 0.181895
+2025-08-05 11:22:15,989 - INFO - Epoch 74/150 - Train Loss: 0.193869, Val Loss: 0.180310
+2025-08-05 11:22:16,016 - INFO - New best model saved with Val Loss: 0.180310
+2025-08-05 11:22:43,845 - INFO - Epoch 75/150 - Train Loss: 0.200038, Val Loss: 0.186844
+2025-08-05 11:23:11,235 - INFO - Epoch 76/150 - Train Loss: 0.192535, Val Loss: 0.191764
+2025-08-05 11:23:38,500 - INFO - Epoch 77/150 - Train Loss: 0.194147, Val Loss: 0.196323
+2025-08-05 11:24:05,160 - INFO - Epoch 78/150 - Train Loss: 0.196658, Val Loss: 0.189077
+2025-08-05 11:24:32,216 - INFO - Epoch 79/150 - Train Loss: 0.193587, Val Loss: 0.184888
+2025-08-05 11:24:59,205 - INFO - Epoch 80/150 - Train Loss: 0.190023, Val Loss: 0.187345
+2025-08-05 11:25:25,945 - INFO - Epoch 81/150 - Train Loss: 0.190995, Val Loss: 0.200955
+2025-08-05 11:25:53,043 - INFO - Epoch 82/150 - Train Loss: 0.193073, Val Loss: 0.175856
+2025-08-05 11:25:53,068 - INFO - New best model saved with Val Loss: 0.175856
+2025-08-05 11:26:20,090 - INFO - Epoch 83/150 - Train Loss: 0.187177, Val Loss: 0.173618
+2025-08-05 11:26:20,115 - INFO - New best model saved with Val Loss: 0.173618
+2025-08-05 11:26:47,164 - INFO - Epoch 84/150 - Train Loss: 0.190742, Val Loss: 0.185113
+2025-08-05 11:27:14,243 - INFO - Epoch 85/150 - Train Loss: 0.189131, Val Loss: 0.186732
+2025-08-05 11:27:41,134 - INFO - Epoch 86/150 - Train Loss: 0.187560, Val Loss: 0.182538
+2025-08-05 11:28:08,294 - INFO - Epoch 87/150 - Train Loss: 0.185677, Val Loss: 0.179216
+2025-08-05 11:28:35,262 - INFO - Epoch 88/150 - Train Loss: 0.187251, Val Loss: 0.177919
+2025-08-05 11:29:02,385 - INFO - Epoch 89/150 - Train Loss: 0.186919, Val Loss: 0.176347
+2025-08-05 11:29:29,149 - INFO - Epoch 90/150 - Train Loss: 0.187990, Val Loss: 0.177680
+2025-08-05 11:29:56,126 - INFO - Epoch 91/150 - Train Loss: 0.186254, Val Loss: 0.184298
+2025-08-05 11:30:22,568 - INFO - Epoch 92/150 - Train Loss: 0.185842, Val Loss: 0.180589
+2025-08-05 11:30:49,630 - INFO - Epoch 93/150 - Train Loss: 0.189019, Val Loss: 0.185677
+2025-08-05 11:31:16,335 - INFO - Epoch 94/150 - Train Loss: 0.180291, Val Loss: 0.173412
+2025-08-05 11:31:16,360 - INFO - New best model saved with Val Loss: 0.173412
+2025-08-05 11:31:43,552 - INFO - Epoch 95/150 - Train Loss: 0.181950, Val Loss: 0.173773
+2025-08-05 11:32:10,672 - INFO - Epoch 96/150 - Train Loss: 0.181616, Val Loss: 0.173494
+2025-08-05 11:32:37,252 - INFO - Epoch 97/150 - Train Loss: 0.180635, Val Loss: 0.173400
+2025-08-05 11:32:37,277 - INFO - New best model saved with Val Loss: 0.173400
+2025-08-05 11:33:04,631 - INFO - Epoch 98/150 - Train Loss: 0.180529, Val Loss: 0.166746
+2025-08-05 11:33:04,656 - INFO - New best model saved with Val Loss: 0.166746
+2025-08-05 11:33:31,107 - INFO - Epoch 99/150 - Train Loss: 0.177881, Val Loss: 0.169999
+2025-08-05 11:33:57,454 - INFO - Epoch 100/150 - Train Loss: 0.181925, Val Loss: 0.178844
+2025-08-05 11:34:24,463 - INFO - Epoch 101/150 - Train Loss: 0.179741, Val Loss: 0.173282
+2025-08-05 11:34:50,992 - INFO - Epoch 102/150 - Train Loss: 0.175484, Val Loss: 0.166298
+2025-08-05 11:34:51,018 - INFO - New best model saved with Val Loss: 0.166298
+2025-08-05 11:35:17,610 - INFO - Epoch 103/150 - Train Loss: 0.182369, Val Loss: 0.180797
+2025-08-05 11:35:44,520 - INFO - Epoch 104/150 - Train Loss: 0.175286, Val Loss: 0.178063
+2025-08-05 11:36:11,122 - INFO - Epoch 105/150 - Train Loss: 0.179769, Val Loss: 0.176597
+2025-08-05 11:36:38,052 - INFO - Epoch 106/150 - Train Loss: 0.178734, Val Loss: 0.171249
+2025-08-05 11:37:05,048 - INFO - Epoch 107/150 - Train Loss: 0.175057, Val Loss: 0.169115
+2025-08-05 11:37:31,337 - INFO - Epoch 108/150 - Train Loss: 0.171155, Val Loss: 0.161660
+2025-08-05 11:37:31,362 - INFO - New best model saved with Val Loss: 0.161660
+2025-08-05 11:37:58,063 - INFO - Epoch 109/150 - Train Loss: 0.168656, Val Loss: 0.156935
+2025-08-05 11:37:58,089 - INFO - New best model saved with Val Loss: 0.156935
+2025-08-05 11:38:24,909 - INFO - Epoch 110/150 - Train Loss: 0.174492, Val Loss: 0.171248
+2025-08-05 11:38:51,875 - INFO - Epoch 111/150 - Train Loss: 0.173698, Val Loss: 0.157079
+2025-08-05 11:39:18,519 - INFO - Epoch 112/150 - Train Loss: 0.173057, Val Loss: 0.171179
+2025-08-05 11:39:45,373 - INFO - Epoch 113/150 - Train Loss: 0.171933, Val Loss: 0.158344
+2025-08-05 11:40:12,146 - INFO - Epoch 114/150 - Train Loss: 0.168685, Val Loss: 0.160595
+2025-08-05 11:40:38,943 - INFO - Epoch 115/150 - Train Loss: 0.172755, Val Loss: 0.163555
+2025-08-05 11:41:05,711 - INFO - Epoch 116/150 - Train Loss: 0.168799, Val Loss: 0.160622
+2025-08-05 11:41:32,781 - INFO - Epoch 117/150 - Train Loss: 0.167079, Val Loss: 0.155232
+2025-08-05 11:41:32,806 - INFO - New best model saved with Val Loss: 0.155232
+2025-08-05 11:41:59,315 - INFO - Epoch 118/150 - Train Loss: 0.164205, Val Loss: 0.167679
+2025-08-05 11:42:25,867 - INFO - Epoch 119/150 - Train Loss: 0.169456, Val Loss: 0.159380
+2025-08-05 11:42:52,153 - INFO - Epoch 120/150 - Train Loss: 0.166856, Val Loss: 0.155844
+2025-08-05 11:43:18,487 - INFO - Epoch 121/150 - Train Loss: 0.162645, Val Loss: 0.150523
+2025-08-05 11:43:18,511 - INFO - New best model saved with Val Loss: 0.150523
+2025-08-05 11:43:45,378 - INFO - Epoch 122/150 - Train Loss: 0.160670, Val Loss: 0.156735
+2025-08-05 11:44:11,933 - INFO - Epoch 123/150 - Train Loss: 0.166765, Val Loss: 0.157434
+2025-08-05 11:44:38,821 - INFO - Epoch 124/150 - Train Loss: 0.162084, Val Loss: 0.152554
+2025-08-05 11:45:05,850 - INFO - Epoch 125/150 - Train Loss: 0.161687, Val Loss: 0.164457
+2025-08-05 11:45:32,217 - INFO - Epoch 126/150 - Train Loss: 0.167346, Val Loss: 0.153950
+2025-08-05 11:45:58,805 - INFO - Epoch 127/150 - Train Loss: 0.161249, Val Loss: 0.151141
+2025-08-05 11:46:25,357 - INFO - Epoch 128/150 - Train Loss: 0.161787, Val Loss: 0.153222
+2025-08-05 11:46:52,245 - INFO - Epoch 129/150 - Train Loss: 0.159798, Val Loss: 0.158385
+2025-08-05 11:47:18,909 - INFO - Epoch 130/150 - Train Loss: 0.160324, Val Loss: 0.153991
+2025-08-05 11:47:45,802 - INFO - Epoch 131/150 - Train Loss: 0.161151, Val Loss: 0.157029
+2025-08-05 11:48:11,711 - INFO - Epoch 132/150 - Train Loss: 0.165424, Val Loss: 0.153071
+2025-08-05 11:48:38,267 - INFO - Epoch 133/150 - Train Loss: 0.162374, Val Loss: 0.159798
+2025-08-05 11:49:04,376 - INFO - Epoch 134/150 - Train Loss: 0.159582, Val Loss: 0.149246
+2025-08-05 11:49:04,402 - INFO - New best model saved with Val Loss: 0.149246
+2025-08-05 11:49:31,215 - INFO - Epoch 135/150 - Train Loss: 0.160795, Val Loss: 0.154453
+2025-08-05 11:49:57,714 - INFO - Epoch 136/150 - Train Loss: 0.159031, Val Loss: 0.147768
+2025-08-05 11:49:57,739 - INFO - New best model saved with Val Loss: 0.147768
+2025-08-05 11:50:24,421 - INFO - Epoch 137/150 - Train Loss: 0.157372, Val Loss: 0.150005
+2025-08-05 11:50:51,155 - INFO - Epoch 138/150 - Train Loss: 0.158123, Val Loss: 0.150963
+2025-08-05 11:51:18,106 - INFO - Epoch 139/150 - Train Loss: 0.157200, Val Loss: 0.146379
+2025-08-05 11:51:18,131 - INFO - New best model saved with Val Loss: 0.146379
+2025-08-05 11:51:45,128 - INFO - Epoch 140/150 - Train Loss: 0.162747, Val Loss: 0.161523
+2025-08-05 11:52:12,050 - INFO - Epoch 141/150 - Train Loss: 0.159889, Val Loss: 0.150652
+2025-08-05 11:52:38,595 - INFO - Epoch 142/150 - Train Loss: 0.152182, Val Loss: 0.154791
+2025-08-05 11:53:05,583 - INFO - Epoch 143/150 - Train Loss: 0.157511, Val Loss: 0.150151
+2025-08-05 11:53:32,543 - INFO - Epoch 144/150 - Train Loss: 0.149904, Val Loss: 0.138871
+2025-08-05 11:53:32,568 - INFO - New best model saved with Val Loss: 0.138871
+2025-08-05 11:53:59,019 - INFO - Epoch 145/150 - Train Loss: 0.149150, Val Loss: 0.141733
+2025-08-05 11:54:25,672 - INFO - Epoch 146/150 - Train Loss: 0.153972, Val Loss: 0.141633
+2025-08-05 11:54:52,745 - INFO - Epoch 147/150 - Train Loss: 0.152560, Val Loss: 0.154813
+2025-08-05 11:55:19,398 - INFO - Epoch 148/150 - Train Loss: 0.153007, Val Loss: 0.153307
+2025-08-05 11:55:45,812 - INFO - Epoch 149/150 - Train Loss: 0.152381, Val Loss: 0.146191
+2025-08-05 11:56:12,557 - INFO - Epoch 150/150 - Train Loss: 0.148153, Val Loss: 0.138824
+2025-08-05 11:56:12,582 - INFO - New best model saved with Val Loss: 0.138824
+2025-08-05 11:56:12,764 - INFO - Final model saved to experiments/Test/final_model.pth
+2025-08-05 11:56:12,765 - INFO - Testing the final model
+2025-08-05 11:56:12,765 - INFO - Testing the best model
