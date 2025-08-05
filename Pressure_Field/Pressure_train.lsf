@@ -39,6 +39,7 @@ find ./logs/ -name '*.log' ! -name "*_${LSB_JOBID}*.log" -delete
 # Run your Visualize script(only in the local computer)
 # sh ./Model_Script/Model_Visualize.sh
 
-
+# Backup train log file
+cp ./logs/Test/pipeline*.log  ./backup_logs
 
 
