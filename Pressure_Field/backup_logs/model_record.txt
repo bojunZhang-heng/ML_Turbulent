@@ -1,0 +1,1 @@
+Transolver + pure pointNet:            val_loss: 0.138824 Test R2: 0.8714
