@@ -214,3 +214,419 @@ indices=tensor([[[0, 1],
 2025-08-07 15:07:23,375 - INFO - point 3: (tensor([ 0., -8.]), tensor([3, 1]))
 2025-08-07 15:07:23,376 - INFO - idx.shape: torch.Size([1, 4, 2])
 2025-08-07 15:07:23,376 - INFO - idx point 0 : tensor([0, 1])
+2025-08-07 15:42:06,894 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 15:42:06,894 - INFO - x.shape: torch.Size([1, 4, 2])
+2025-08-07 15:42:06,914 - INFO - x value: tensor([[[ 0.,  0.],
+         [ 1.,  1.],
+         [-2., -2.],
+         [ 3.,  3.]]])
+2025-08-07 15:42:06,945 - INFO - idx_base: torch.Size([1])
+2025-08-07 15:42:06,945 - INFO - idx_base: torch.Size([1, 1, 1])
+2025-08-07 15:42:06,959 - INFO - idx_base: torch.Size([1, 1, 1])
+2025-08-07 15:42:21,469 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 15:42:21,470 - INFO - x.shape: torch.Size([1, 4, 2])
+2025-08-07 15:42:21,490 - INFO - x value: tensor([[[ 0.,  0.],
+         [ 1.,  1.],
+         [-2., -2.],
+         [ 3.,  3.]]])
+2025-08-07 15:42:21,491 - INFO - idx_base: torch.Size([1])
+2025-08-07 15:42:21,491 - INFO - idx_base: torch.Size([1, 1, 1])
+2025-08-07 15:42:21,491 - INFO - idx_base: torch.Size([1, 1, 1])
+2025-08-07 15:42:47,364 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 15:42:47,364 - INFO - x.shape: torch.Size([1, 4, 2])
+2025-08-07 15:42:47,386 - INFO - x value: tensor([[[ 0.,  0.],
+         [ 1.,  1.],
+         [-2., -2.],
+         [ 3.,  3.]]])
+2025-08-07 15:42:47,387 - INFO - idx_base: torch.Size([1])
+2025-08-07 15:42:47,387 - INFO - idx_base: torch.Size([1, 1, 1])
+2025-08-07 15:42:47,387 - INFO - idx_base: torch.Size([1, 1, 1])
+2025-08-07 15:44:44,000 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 15:44:44,000 - INFO - x.shape: torch.Size([1, 4, 2])
+2025-08-07 15:44:44,022 - INFO - x value: tensor([[[ 0.,  0.],
+         [ 1.,  1.],
+         [-2., -2.],
+         [ 3.,  3.]]])
+2025-08-07 15:44:44,022 - INFO - idx_base: torch.Size([1])
+2025-08-07 15:44:44,023 - INFO - idx_base: tensor([0])
+2025-08-07 15:44:44,023 - INFO - idx_base: torch.Size([1, 1, 1])
+2025-08-07 15:44:44,023 - INFO - idx_base: tensor([[[0]]])
+2025-08-07 15:44:44,023 - INFO - idx_base: torch.Size([1, 1, 1])
+2025-08-07 15:44:44,023 - INFO - idx_base: tensor([[[0]]])
+2025-08-07 15:45:16,025 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 15:45:16,026 - INFO - x.shape: torch.Size([1, 4, 2])
+2025-08-07 15:45:16,046 - INFO - x value: tensor([[[ 0.,  0.],
+         [ 1.,  1.],
+         [-2., -2.],
+         [ 3.,  3.]]])
+2025-08-07 15:46:05,495 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 15:46:05,495 - INFO - x.shape: torch.Size([1, 4, 2])
+2025-08-07 15:46:05,514 - INFO - x value: tensor([[[ 0.,  0.],
+         [ 1.,  1.],
+         [-2., -2.],
+         [ 3.,  3.]]])
+2025-08-07 15:46:05,514 - INFO - idx_base: torch.Size([4])
+2025-08-07 15:46:05,515 - INFO - idx_base: tensor([0, 1, 2, 3])
+2025-08-07 15:46:05,515 - INFO - idx_base: torch.Size([4, 1, 1])
+2025-08-07 15:46:05,515 - INFO - idx_base: tensor([[[0]],
+
+        [[1]],
+
+        [[2]],
+
+        [[3]]])
+2025-08-07 15:46:05,515 - INFO - idx_base: torch.Size([4, 1, 1])
+2025-08-07 15:46:05,515 - INFO - idx_base: tensor([[[ 0]],
+
+        [[ 4]],
+
+        [[ 8]],
+
+        [[12]]])
+2025-08-07 15:50:34,091 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 15:50:34,110 - INFO - idx_base: torch.Size([2, 1, 1])
+2025-08-07 15:50:34,111 - INFO - idx_base: tensor([[[0]],
+
+        [[4]]])
+2025-08-07 15:52:51,234 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 15:52:51,254 - INFO - idx_base: torch.Size([2, 4, 2])
+2025-08-07 15:52:51,255 - INFO - idx_base: tensor([[[0, 1],
+         [1, 0],
+         [2, 0],
+         [3, 1]],
+
+        [[4, 5],
+         [5, 4],
+         [6, 4],
+         [7, 5]]])
+2025-08-07 15:53:02,041 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 15:53:02,062 - INFO - idx: torch.Size([2, 4, 2])
+2025-08-07 15:53:02,063 - INFO - idx: tensor([[[0, 1],
+         [1, 0],
+         [2, 0],
+         [3, 1]],
+
+        [[4, 5],
+         [5, 4],
+         [6, 4],
+         [7, 5]]])
+2025-08-07 15:56:43,626 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 15:56:43,646 - INFO - idx: torch.Size([2, 4, 2])
+2025-08-07 15:56:43,647 - INFO - idx: tensor([[[0, 1],
+         [1, 0],
+         [2, 0],
+         [3, 1]],
+
+        [[0, 1],
+         [1, 0],
+         [2, 0],
+         [3, 1]]])
+2025-08-07 15:56:43,647 - INFO - idx_base: torch.Size([2, 1, 1])
+2025-08-07 15:56:43,647 - INFO - idx_base: tensor([[[0]],
+
+        [[4]]])
+2025-08-07 15:56:43,647 - INFO - idx: torch.Size([2, 4, 2])
+2025-08-07 15:56:43,648 - INFO - idx: tensor([[[0, 1],
+         [1, 0],
+         [2, 0],
+         [3, 1]],
+
+        [[4, 5],
+         [5, 4],
+         [6, 4],
+         [7, 5]]])
+2025-08-07 15:57:30,192 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 15:57:30,210 - INFO - idx: torch.Size([2, 4, 2])
+2025-08-07 15:57:30,211 - INFO - idx: tensor([[[0, 1],
+         [1, 0],
+         [2, 0],
+         [3, 1]],
+
+        [[0, 1],
+         [1, 0],
+         [2, 0],
+         [3, 1]]])
+2025-08-07 15:57:30,211 - INFO - idx_base: torch.Size([2, 1, 1])
+2025-08-07 15:57:30,211 - INFO - idx_base: tensor([[[0]],
+
+        [[4]]])
+2025-08-07 15:57:30,211 - INFO - idx: torch.Size([2, 4, 2])
+2025-08-07 15:57:30,211 - INFO - idx: tensor([[[0, 1],
+         [1, 0],
+         [2, 0],
+         [3, 1]],
+
+        [[4, 5],
+         [5, 4],
+         [6, 4],
+         [7, 5]]])
+2025-08-07 15:57:30,211 - INFO - idx: torch.Size([16])
+2025-08-07 15:57:30,211 - INFO - idx: tensor([0, 1, 1, 0, 2, 0, 3, 1, 4, 5, 5, 4, 6, 4, 7, 5])
+2025-08-07 15:59:46,059 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 15:59:46,078 - INFO - idx: torch.Size([16])
+2025-08-07 15:59:46,079 - INFO - idx: tensor([0, 1, 1, 0, 2, 0, 3, 1, 4, 5, 5, 4, 6, 4, 7, 5])
+2025-08-07 15:59:46,079 - INFO - feature.shape: torch.Size([16, 2])
+2025-08-07 15:59:46,080 - INFO - feature: tensor([[ 0.,  0.],
+        [ 1.,  1.],
+        [ 1.,  1.],
+        [ 0.,  0.],
+        [-2., -2.],
+        [ 0.,  0.],
+        [ 3.,  3.],
+        [ 1.,  1.],
+        [ 0.,  0.],
+        [ 1.,  1.],
+        [ 1.,  1.],
+        [ 0.,  0.],
+        [-2., -2.],
+        [ 0.,  0.],
+        [ 3.,  3.],
+        [ 1.,  1.]])
+2025-08-07 16:04:14,164 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 16:05:14,064 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 16:05:14,082 - INFO - x.shape: torch.Size([2, 4, 2])
+2025-08-07 16:05:14,082 - INFO - feature.shape: torch.Size([16, 2])
+2025-08-07 16:05:14,083 - INFO - feature: tensor([[ 0.,  0.],
+        [ 1.,  1.],
+        [ 1.,  1.],
+        [ 0.,  0.],
+        [-2., -2.],
+        [ 0.,  0.],
+        [ 3.,  3.],
+        [ 1.,  1.],
+        [ 0.,  0.],
+        [ 1.,  1.],
+        [ 1.,  1.],
+        [ 0.,  0.],
+        [-2., -2.],
+        [ 0.,  0.],
+        [ 3.,  3.],
+        [ 1.,  1.]])
+2025-08-07 16:07:11,628 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 16:07:11,650 - INFO - x.shape: torch.Size([2, 4, 2])
+2025-08-07 16:07:11,650 - INFO - feature.shape: torch.Size([8, 2])
+2025-08-07 16:07:11,652 - INFO - feature: tensor([[ 0.,  0.],
+        [ 1.,  1.],
+        [-2., -2.],
+        [ 3.,  3.],
+        [ 0.,  0.],
+        [ 1.,  1.],
+        [-2., -2.],
+        [ 3.,  3.]])
+2025-08-07 16:13:42,446 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 16:13:42,467 - INFO - idx: tensor([0, 1, 1, 0, 2, 0, 3, 1, 4, 5, 5, 4, 6, 4, 7, 5])
+2025-08-07 16:13:42,467 - INFO - feature.shape: torch.Size([16, 2])
+2025-08-07 16:13:42,468 - INFO - feature: tensor([[ 0.,  0.],
+        [ 1.,  1.],
+        [ 1.,  1.],
+        [ 0.,  0.],
+        [-2., -2.],
+        [ 0.,  0.],
+        [ 3.,  3.],
+        [ 1.,  1.],
+        [ 0.,  0.],
+        [ 1.,  1.],
+        [ 1.,  1.],
+        [ 0.,  0.],
+        [-2., -2.],
+        [ 0.,  0.],
+        [ 3.,  3.],
+        [ 1.,  1.]])
+2025-08-07 16:14:06,338 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 16:14:06,359 - INFO - idx: tensor([0, 1, 1, 0, 2, 0, 3, 1, 4, 5, 5, 4, 6, 4, 7, 5])
+2025-08-07 16:14:06,359 - INFO - feature.shape: torch.Size([8, 2])
+2025-08-07 16:14:06,360 - INFO - feature: tensor([[ 0.,  0.],
+        [ 1.,  1.],
+        [-2., -2.],
+        [ 3.,  3.],
+        [ 0.,  0.],
+        [ 1.,  1.],
+        [-2., -2.],
+        [ 3.,  3.]])
+2025-08-07 16:14:06,360 - INFO - feature.shape: torch.Size([16, 2])
+2025-08-07 16:14:06,360 - INFO - feature: tensor([[ 0.,  0.],
+        [ 1.,  1.],
+        [ 1.,  1.],
+        [ 0.,  0.],
+        [-2., -2.],
+        [ 0.,  0.],
+        [ 3.,  3.],
+        [ 1.,  1.],
+        [ 0.,  0.],
+        [ 1.,  1.],
+        [ 1.,  1.],
+        [ 0.,  0.],
+        [-2., -2.],
+        [ 0.,  0.],
+        [ 3.,  3.],
+        [ 1.,  1.]])
+2025-08-07 16:15:03,623 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 16:15:03,643 - INFO - feature: tensor([[ 0.,  0.],
+        [ 1.,  1.],
+        [ 1.,  1.],
+        [ 0.,  0.],
+        [-2., -2.],
+        [ 0.,  0.],
+        [ 3.,  3.],
+        [ 1.,  1.],
+        [ 0.,  0.],
+        [ 1.,  1.],
+        [ 1.,  1.],
+        [ 0.,  0.],
+        [-2., -2.],
+        [ 0.,  0.],
+        [ 3.,  3.],
+        [ 1.,  1.]])
+2025-08-07 16:15:03,643 - INFO - feature.shape: torch.Size([2, 4, 2, 2])
+2025-08-07 16:15:03,644 - INFO - feature: tensor([[[[ 0.,  0.],
+          [ 1.,  1.]],
+
+         [[ 1.,  1.],
+          [ 0.,  0.]],
+
+         [[-2., -2.],
+          [ 0.,  0.]],
+
+         [[ 3.,  3.],
+          [ 1.,  1.]]],
+
+
+        [[[ 0.,  0.],
+          [ 1.,  1.]],
+
+         [[ 1.,  1.],
+          [ 0.,  0.]],
+
+         [[-2., -2.],
+          [ 0.,  0.]],
+
+         [[ 3.,  3.],
+          [ 1.,  1.]]]])
+2025-08-07 16:15:29,112 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 16:15:29,131 - INFO - feature: tensor([[ 0.,  0.],
+        [ 1.,  1.],
+        [ 1.,  1.],
+        [ 0.,  0.],
+        [-2., -2.],
+        [ 0.,  0.],
+        [ 3.,  3.],
+        [ 1.,  1.],
+        [ 0.,  0.],
+        [ 1.,  1.],
+        [ 1.,  1.],
+        [ 0.,  0.],
+        [-2., -2.],
+        [ 0.,  0.],
+        [ 3.,  3.],
+        [ 1.,  1.]])
+2025-08-07 16:15:29,131 - INFO - feature.shape: torch.Size([16, 2])
+2025-08-07 16:15:29,131 - INFO - feature.shape: torch.Size([2, 4, 2, 2])
+2025-08-07 16:15:29,132 - INFO - feature: tensor([[[[ 0.,  0.],
+          [ 1.,  1.]],
+
+         [[ 1.,  1.],
+          [ 0.,  0.]],
+
+         [[-2., -2.],
+          [ 0.,  0.]],
+
+         [[ 3.,  3.],
+          [ 1.,  1.]]],
+
+
+        [[[ 0.,  0.],
+          [ 1.,  1.]],
+
+         [[ 1.,  1.],
+          [ 0.,  0.]],
+
+         [[-2., -2.],
+          [ 0.,  0.]],
+
+         [[ 3.,  3.],
+          [ 1.,  1.]]]])
+2025-08-07 16:17:55,773 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 16:17:55,794 - INFO - feature.shape: torch.Size([2, 4, 2, 2])
+2025-08-07 16:17:55,796 - INFO - feature: tensor([1., 1.])
+2025-08-07 16:18:12,537 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 16:18:12,558 - INFO - feature.shape: torch.Size([2, 4, 2, 2])
+2025-08-07 16:18:12,560 - INFO - feature: tensor([[[ 0.,  0.],
+         [ 1.,  1.]],
+
+        [[ 1.,  1.],
+         [ 0.,  0.]],
+
+        [[-2., -2.],
+         [ 0.,  0.]],
+
+        [[ 3.,  3.],
+         [ 1.,  1.]]])
+2025-08-07 16:21:37,453 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 16:21:37,475 - INFO - idx: tensor([0, 1, 1, 0, 2, 0, 3, 1, 4, 5, 5, 4, 6, 4, 7, 5])
+2025-08-07 16:21:37,475 - INFO - feature.shape: torch.Size([2, 4, 2, 2])
+2025-08-07 16:21:37,476 - INFO - feature: tensor([[[ 0.,  0.],
+         [ 1.,  1.]],
+
+        [[ 1.,  1.],
+         [ 0.,  0.]],
+
+        [[-2., -2.],
+         [ 0.,  0.]],
+
+        [[ 3.,  3.],
+         [ 1.,  1.]]])
+2025-08-07 16:23:35,942 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 16:23:35,963 - INFO - idx: tensor([0, 1, 1, 0, 2, 0, 3, 1])
+2025-08-07 16:23:35,963 - INFO - feature.shape: torch.Size([1, 4, 2, 2])
+2025-08-07 16:23:35,964 - INFO - feature: tensor([[[ 0.,  0.],
+         [ 1.,  1.]],
+
+        [[ 1.,  1.],
+         [ 0.,  0.]],
+
+        [[-2., -2.],
+         [ 0.,  0.]],
+
+        [[ 3.,  3.],
+         [ 1.,  1.]]])
+2025-08-07 16:30:15,360 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 16:30:15,378 - INFO - idx: tensor([0, 1, 1, 0, 2, 0, 3, 1])
+2025-08-07 16:30:15,379 - INFO - feature batch 0, point 0, k 1: tensor([1., 1.])
+2025-08-07 16:30:37,312 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 16:30:37,330 - INFO - idx: tensor([0, 1, 1, 0, 2, 0, 3, 1])
+2025-08-07 16:30:37,331 - INFO - feature batch 0, point 0, k 1: tensor([1., 1.])
+2025-08-07 16:30:37,331 - INFO - feature batch 0, point 0, k 0: tensor([0., 0.])
+2025-08-07 16:30:47,432 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 16:30:47,450 - INFO - idx: tensor([0, 1, 1, 0, 2, 0, 3, 1])
+2025-08-07 16:30:47,451 - INFO - feature batch 0, point 0, k 0: tensor([0., 0.])
+2025-08-07 16:30:47,451 - INFO - feature batch 0, point 0, k 1: tensor([1., 1.])
+2025-08-07 16:31:09,200 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 16:31:09,218 - INFO - idx: tensor([0, 1, 1, 0, 2, 0, 3, 1])
+2025-08-07 16:31:09,219 - INFO - feature batch 0, point 0, k 0: tensor([0., 0.])
+2025-08-07 16:31:09,219 - INFO - feature batch 0, point 0, k 1: tensor([1., 1.])
+2025-08-07 16:31:09,219 - INFO - feature batch 0, point 1, k 0: tensor([0., 0.])
+2025-08-07 16:31:09,219 - INFO - feature batch 0, point 1, k 1: tensor([1., 1.])
+2025-08-07 16:31:22,188 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 16:31:22,211 - INFO - idx: tensor([0, 1, 1, 0, 2, 0, 3, 1])
+2025-08-07 16:31:22,212 - INFO - feature batch 0, point 0, k 0: tensor([0., 0.])
+2025-08-07 16:31:22,213 - INFO - feature batch 0, point 0, k 1: tensor([1., 1.])
+2025-08-07 16:31:22,213 - INFO - feature batch 0, point 2, k 0: tensor([0., 0.])
+2025-08-07 16:31:22,213 - INFO - feature batch 0, point 2, k 1: tensor([1., 1.])
+2025-08-07 16:31:37,591 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 16:31:37,610 - INFO - idx: tensor([0, 1, 1, 0, 2, 0, 3, 1])
+2025-08-07 16:31:37,610 - INFO - feature batch 0, point 0, k 0: tensor([0., 0.])
+2025-08-07 16:31:37,611 - INFO - feature batch 0, point 0, k 1: tensor([1., 1.])
+2025-08-07 16:31:37,611 - INFO - feature batch 0, point 2, k 0: tensor([-2., -2.])
+2025-08-07 16:31:37,611 - INFO - feature batch 0, point 2, k 1: tensor([0., 0.])
+2025-08-07 18:15:29,454 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 18:15:29,475 - INFO - idx: tensor([0, 1, 1, 0, 2, 0, 3, 1])
+2025-08-07 18:15:29,501 - INFO - feature.shape: torch.Size([1, 4, 2, 4])
+2025-08-07 18:16:57,565 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 18:16:57,587 - INFO - idx: tensor([0, 1, 1, 0, 2, 0, 3, 1])
+2025-08-07 18:16:57,587 - INFO - feature.shape: torch.Size([1, 4, 2, 4])
+2025-08-07 18:16:57,587 - INFO - feature batch 0, point 0, k 1, : tensor([-2., -2.,  3.,  3.])
+2025-08-07 18:19:38,919 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 18:19:38,939 - INFO - idx: tensor([0, 1, 1, 0, 2, 0, 3, 1])
+2025-08-07 18:20:34,784 - INFO - [31m*******************************Starting Test knn() and get_graph_feature() function. [0m
+2025-08-07 18:20:34,802 - INFO - idx: tensor([0, 1, 1, 0, 2, 0, 3, 1])
+2025-08-07 18:20:34,803 - INFO - feature.shape: torch.Size([1, 4, 4, 2])
