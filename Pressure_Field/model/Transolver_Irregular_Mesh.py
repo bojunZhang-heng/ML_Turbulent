@@ -40,7 +40,7 @@ def get_graph_feature(x, k=20, idx=None, dim9=False):
         x: Input tensor of shape (batch_size, feature_dim, num_points)
         k: Number of neighbors to use for graph construction
         idx: Optional pre-computed nearest neighbor indices
-        dim: Whether to use additional dimensional features
+        dim9: Whether to use additional dimensional features
 
     Returns:
         Edge features for graph convolution
