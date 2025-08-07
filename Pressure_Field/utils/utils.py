@@ -70,18 +70,12 @@ def get_graph_feature(x, k=20, idx=None, dim9=False):
 
     _, _ , point_dims= x.size()
     feature = x.view(batch_size * num_points, -1)[idx, :]
-    feature = feature.view(batch_size, num_points, k, point_dims)
-    logging.info(f"feature batch 0, point 0, k 0: {feature[0, 0, 0,:]}")
-    logging.info(f"feature batch 0, point 0, k 1: {feature[0, 0, 1,:]}")
-    logging.info(f"feature batch 0, point 2, k 0: {feature[0, 2, 0,:]}")
-    logging.info(f"feature batch 0, point 2, k 1: {feature[0, 2, 1,:]}")
-
-'''
-    x = x.view(batch_size, num_points, 1, num_dims).repeat(1, 1, k, 1)
+    feature = feature.view(batch_size, num_points, k, point_dims)                        # [batch_size, num_points, k, point_dims]
+    x = x.view(batch_size, num_points, 1, point_dims).repeat(1, 1, k, 1)                 # [batch_size, num_points, k, point_dims]
 
     feature = torch.cat((feature - x, x), dim=3).permute(0, 3, 1, 2).contiguous()
-    return feature  # (batch_size, 2*num_dims, num_points, k)
-'''
+    return feature                                                                       # (batch_size, 2*num_dims, num_points, k)
+    # The last confusion: Why had a permuate() for the last line
 
 def setup_seed(seed):
     """
