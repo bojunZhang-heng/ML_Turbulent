@@ -24,15 +24,15 @@ def main():
     setup_logger(log_file)
     logging.info(f"{Fore.RED}*******************************Starting Test knn() and get_graph_feature() function. {Style.RESET_ALL}")
 
+    kk = 2
     x = torch.tensor([[
         [0., 0.],
         [1., 1.],
         [-2, -2],
         [3., 3.]
     ]], dtype=torch.float32)                      # x.shape = [1, 4, 2]
-    kk = 2
-    logging.info(f"x.shape: {x.shape}")
-    logging.info(f"x value: {x}")
+
+#    x = x.repeat(2, 1, 1)
 
 
     idx = knn(x, kk)
