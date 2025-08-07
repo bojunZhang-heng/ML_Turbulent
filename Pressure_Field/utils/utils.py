@@ -48,7 +48,7 @@ def get_graph_feature(x, k=20, idx=None, dim9=False):
     Then Enlarge it meeting the physical need
 
     Args:
-        x: Input tensor of shape (batch_size, feature_dim, num_points)
+        x: Input tensor of shape (batch_size, num_points, feature_dim)
         k: Number of neighbors to use for graph construction
         idx: Optional pre-computed nearest neighbor indices
         dim9: Whether to use additional dimensional features
@@ -57,24 +57,31 @@ def get_graph_feature(x, k=20, idx=None, dim9=False):
         Edge features for graph convolution
     """
     batch_size = x.size(0)
-    num_points = x.size(2)
-    x = x.view(batch_size, -1, num_points)
+    num_points = x.size(1)
+    x = x.view(batch_size, num_points, -1)
     if idx is None:
         idx = knn(x, k=k)  # (batch_size, num_points, k)
 
     device = x.device
-    idx_base = torch.arange(0, batch_size, device=device).view(-1, 1, 1) * num_points
+    idx_base = torch.arange(0, batch_size, device=device).view(-1, 1, 1) * num_points    # idx_base.shape = [2, 1, 1]
     idx = idx + idx_base
-    idx = idx.view(-1)
+    idx = idx.view(-1)                                                                   # [batch_size * num_points * k]
+    logging.info(f"idx: {idx}")
 
-    _, num_dims, _ = x.size()
-    x = x.transpose(2, 1).contiguous()  # (batch_size, num_points, num_dims)
+    _, _ , point_dims= x.size()
     feature = x.view(batch_size * num_points, -1)[idx, :]
-    feature = feature.view(batch_size, num_points, k, num_dims)
+    feature = feature.view(batch_size, num_points, k, point_dims)
+    logging.info(f"feature batch 0, point 0, k 0: {feature[0, 0, 0,:]}")
+    logging.info(f"feature batch 0, point 0, k 1: {feature[0, 0, 1,:]}")
+    logging.info(f"feature batch 0, point 2, k 0: {feature[0, 2, 0,:]}")
+    logging.info(f"feature batch 0, point 2, k 1: {feature[0, 2, 1,:]}")
+
+'''
     x = x.view(batch_size, num_points, 1, num_dims).repeat(1, 1, k, 1)
 
     feature = torch.cat((feature - x, x), dim=3).permute(0, 3, 1, 2).contiguous()
     return feature  # (batch_size, 2*num_dims, num_points, k)
+'''
 
 def setup_seed(seed):
     """
