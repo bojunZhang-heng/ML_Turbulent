@@ -32,11 +32,10 @@ def main():
         [3., 3.]
     ]], dtype=torch.float32)                      # x.shape = [1, 4, 2]
 
-#    x = x.repeat(2, 1, 1)
-
-
     idx = knn(x, kk)
     feature = get_graph_feature(x, kk, idx, )
+    logging.info(f"feature.shape: {feature.shape}")
+    # The last confusion: Why had a permuate() for the last line
 
 if __name__=="__main__":
     main()
