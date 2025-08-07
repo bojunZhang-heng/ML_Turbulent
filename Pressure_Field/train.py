@@ -105,17 +105,17 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, local_rank):
         global PRESSURE_MEAN, PRESSURE_STD
 
         # Make data and perssure same shape
-        data = data.squeeze(1).to(local_rank)
-        data = data.permute(0, 2, 1).contiguous()
+        data = data.squeeze(1).to(local_rank)                          # [B, 1, point_dim, num_points] -> [B, point_dim, num_points]
+        data = data.permute(0, 2, 1).contiguous()                      # [B, point_dim, num_points]    -> [B, num_points, point_dim]
+
         targets = targets.to(local_rank)
-        targets = targets.permute(0, 2, 1).contiguous()
+        targets = targets.permute(0, 2, 1).contiguous()                # [B, pressure_dim, num_points] -> [B, num_points, pressure_dim]
 
         # Normalize targets
         targets = (targets - PRESSURE_MEAN) / PRESSURE_STD
 
         optimizer.zero_grad()
-        outputs = model(data)
-        #logging.info(f"{Y} outputs.shape: {outputs.shape} {RESET}")
+        outputs = model(data)                                          # [B, num_points, point_dim]    -> [B, num_points, pressure_dim]
         loss = criterion(outputs, targets)
 
         loss.backward()
@@ -369,13 +369,13 @@ def train_and_evaluate(rank, world_size, args):
     # Test the final model
     if local_rank == 0:
         logging.info("Testing the final model")
-    #test_model(model, test_dataloader, criterion, local_rank, os.path.join('experiments', args.exp_name))
+    test_model(model, test_dataloader, criterion, local_rank, os.path.join('experiments', args.exp_name))
 
     # Test the best model
     if local_rank == 0:
         logging.info("Testing the best model")
         model.load_state_dict(torch.load(best_model_path, map_location=f'cuda:{local_rank}'))
-    #test_model(model, test_dataloader, criterion, local_rank, os.path.join('experiments', args.exp_name))
+    test_model(model, test_dataloader, criterion, local_rank, os.path.join('experiments', args.exp_name))
 
     # Clean up
     dist.destroy_process_group()
