@@ -8,6 +8,62 @@ from model.Physics_Attention import Physics_Attention_Irregular_Mesh
 ACTIVATION = {'gelu': nn.GELU, 'tanh': nn.Tanh, 'sigmoid': nn.Sigmoid, 'relu': nn.ReLU, 'leaky_relu': nn.LeakyReLU(0.1),
               'softplus': nn.Softplus, 'ELU': nn.ELU, 'silu': nn.SiLU}
 
+def knn(x, k):
+    """
+    k-nearest neighbors algorithm.
+
+    Args:
+        x: Input tensor of shape (batch_size, feature_dim, num_points)
+        k: Number of neighbors to consider
+
+    Returns:
+        Indices of k-nearest neighbors for each point
+    """
+    inner = -2 * torch.matmul(x.transpose(2, 1), x)
+    xx = torch.sum(x ** 2, dim=1, keepdim=True)
+    pairwise_distance = -xx - inner - xx.transpose(2, 1)
+
+    idx = pairwise_distance.topk(k=k, dim=-1)[1]  # (batch_size, num_points, k)
+    return idx
+
+
+def get_graph_feature(x, k=20, idx=None, dim9=False):
+    """
+    Construct edge features for graph convolution.
+
+    When you create this function first, Just use 1 batch_size, 2 dims, 2 points
+    to Understand this code
+
+    Then Enlarge it meeting the physical need
+
+    Args:
+        x: Input tensor of shape (batch_size, feature_dim, num_points)
+        k: Number of neighbors to use for graph construction
+        idx: Optional pre-computed nearest neighbor indices
+        dim: Whether to use additional dimensional features
+
+    Returns:
+        Edge features for graph convolution
+    """
+    batch_size = x.size(0)
+    num_points = x.size(2)
+    x = x.view(batch_size, -1, num_points)
+    if idx is None:
+        idx = knn(x, k=k)  # (batch_size, num_points, k)
+
+    device = x.device
+    idx_base = torch.arange(0, batch_size, device=device).view(-1, 1, 1) * num_points
+    idx = idx + idx_base
+    idx = idx.view(-1)
+
+    _, num_dims, _ = x.size()
+    x = x.transpose(2, 1).contiguous()  # (batch_size, num_points, num_dims)
+    feature = x.view(batch_size * num_points, -1)[idx, :]
+    feature = feature.view(batch_size, num_points, k, num_dims)
+    x = x.view(batch_size, num_points, 1, num_dims).repeat(1, 1, k, 1)
+
+    feature = torch.cat((feature - x, x), dim=3).permute(0, 3, 1, 2).contiguous()
+    return feature  # (batch_size, 2*num_dims, num_points, k)
 
 class MLP(nn.Module):
     def __init__(self, n_input, n_hidden, n_output, n_layers=1, act='gelu', res=True):
@@ -18,7 +74,7 @@ class MLP(nn.Module):
         else:
             raise NotImplementedError
         self.n_input = n_input
-        self.n_hidden = n_hidden
+        self.n_hidden = n_hidden                    # n_hidden = 256
         self.n_output = n_output
         self.n_layers = n_layers
         self.res = res
@@ -27,13 +83,13 @@ class MLP(nn.Module):
         self.linears = nn.ModuleList([nn.Sequential(nn.Linear(n_hidden, n_hidden), act()) for _ in range(n_layers)])
 
     def forward(self, x):
-        x = self.linear_pre(x)
+        x = self.linear_pre(x)                      # [B, num_points, point_dim]      -> [B, num_points, 256]
         for i in range(self.n_layers):
             if self.res:
                 x = self.linears[i](x) + x
             else:
                 x = self.linears[i](x)
-        x = self.linear_post(x)
+        x = self.linear_post(x)                     # [B, num_points, 256]            -> [B, num_points, 128]
         return x
 
 
@@ -63,7 +119,7 @@ class Transolver_block(nn.Module):
             self.mlp2 = nn.Linear(hidden_dim, out_dim)
 
     def forward(self, fx):
-        fx = self.Attn(self.ln_1(fx)) + fx
+        fx = self.Attn(self.ln_1(fx)) + fx     #[B, num_points, 128] -> [B, num_points, 128] -> [B, num_points, 128]
         fx = self.mlp(self.ln_2(fx)) + fx
         if self.last_layer:
             return self.mlp2(self.ln_3(fx))
@@ -98,7 +154,6 @@ class Model(nn.Module):
             self.preprocess = MLP(fun_dim + self.ref * self.ref, n_hidden * 2, n_hidden, n_layers=0, res=False, act=act)
         else:
             self.preprocess = MLP(space_dim, n_hidden * 2, n_hidden, n_layers=0, res=False, act=act)
-            #self.preprocess = MLP(fun_dim + space_dim, n_hidden * 2, n_hidden, n_layers=0, res=False, act=act)
         if Time_Input:
             self.time_fc = nn.Sequential(nn.Linear(n_hidden, n_hidden), nn.SiLU(), nn.Linear(n_hidden, n_hidden))
 
@@ -139,7 +194,7 @@ class Model(nn.Module):
         return pos
 
     def forward(self, x, T=None):
-        x = self.preprocess(x)
+        x = self.preprocess(x)                                   # [B, num_points, point_dim]   -> [B, num_points, 128]
         x = x + self.placeholder[None, None, :]
 
         for block in self.blocks:
