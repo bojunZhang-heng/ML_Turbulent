@@ -1,0 +1,80 @@
+2025-08-07 10:41:39,569 - INFO - [31m ************************* Start pressure prediction for 3D automobile geometry.[0m
+2025-08-07 10:41:39,571 - INFO - [32m Arguments: [0m
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 150,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_eval_samples': 5,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'stages': 'train',
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 1,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-07 10:41:39,571 - INFO - Preprocessing stage skipped.
+2025-08-07 10:41:39,571 - INFO - [31m *************************Starting model training... [0m
+2025-08-07 10:42:06,398 - INFO - args.exp_name : Test
+2025-08-07 10:42:06,401 - INFO - Arguments:
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 150,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 1,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-07 10:42:06,402 - INFO - [31m*******************************Starting training with 1 GPUs[0m
+2025-08-07 10:42:06,828 - INFO - Total trainable parameters: 713921
+2025-08-07 10:42:07,329 - INFO - Data loaded: 77 training batches, 17 validation batches, 19 test batches
+2025-08-07 10:42:07,346 - INFO - Loading best model for testing only
+[Testing]:   0%|          | 0/19 [00:00<?, ?it/s][Testing]:   5%|▌         | 1/19 [00:08<02:29,  8.33s/it][Testing]:  16%|█▌        | 3/19 [00:08<00:35,  2.24s/it][Testing]:  21%|██        | 4/19 [00:08<00:22,  1.51s/it][Testing]:  26%|██▋       | 5/19 [00:08<00:14,  1.06s/it][Testing]:  32%|███▏      | 6/19 [00:08<00:09,  1.31it/s][Testing]:  37%|███▋      | 7/19 [00:09<00:06,  1.72it/s][Testing]:  42%|████▏     | 8/19 [00:09<00:04,  2.24it/s][Testing]:  47%|████▋     | 9/19 [00:09<00:03,  2.86it/s][Testing]:  53%|█████▎    | 10/19 [00:09<00:02,  3.46it/s][Testing]:  58%|█████▊    | 11/19 [00:09<00:01,  4.14it/s][Testing]:  63%|██████▎   | 12/19 [00:09<00:01,  4.76it/s][Testing]:  68%|██████▊   | 13/19 [00:09<00:01,  5.24it/s][Testing]:  74%|███████▎  | 14/19 [00:10<00:00,  5.30it/s][Testing]:  79%|███████▉  | 15/19 [00:10<00:00,  6.02it/s][Testing]:  84%|████████▍ | 16/19 [00:10<00:00,  6.43it/s][Testing]:  89%|████████▉ | 17/19 [00:10<00:00,  6.91it/s][Testing]:  95%|█████████▍| 18/19 [00:10<00:00,  6.98it/s][Testing]: 100%|██████████| 19/19 [00:11<00:00,  1.66it/s]
+2025-08-07 10:42:18,875 - INFO - Total MSE across all processes: 15.575870513916016
+2025-08-07 10:42:18,881 - INFO - mean value for all_targets: {tmp}
+2025-08-07 10:42:18,890 - INFO - Test MSE: 0.136630, Test MAE: 0.207219, Max AE: 26.918663, Test R2: 0.8714
+2025-08-07 10:42:18,891 - INFO - Relative L2 Error: inf, Relative L1 error: inf
+2025-08-07 10:42:18,891 - INFO - Total inference time:  0.46s for 114 samples
+2025-08-07 10:42:20,874 - INFO - **********************Model training completed 
+2025-08-07 10:42:20,876 - INFO - Model training completed in 41.30 seconds
+2025-08-07 10:42:20,876 - INFO - Evluation stage skipped.
+2025-08-07 10:42:20,876 - INFO - Pipeline execution complete.
+2025-08-07 10:42:20,876 - INFO - [31m Results summary: [0m 
+2025-08-07 10:42:20,876 - INFO -  preprocess: Success
+2025-08-07 10:42:20,876 - INFO -  train: Success
+2025-08-07 10:42:20,876 - INFO -  evaluate: Success
