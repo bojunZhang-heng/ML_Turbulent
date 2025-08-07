@@ -17,7 +17,7 @@ python ./run_pipeline.py \
     --downsample 5 \
     --num_workers 1 \
     --batch_size 6 \
-    --epochs 150 \
+    --epochs 250 \
     --test_only 0 \
     --gpus "0" 
 
