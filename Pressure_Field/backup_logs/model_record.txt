@@ -1,2 +1,3 @@
-Transolver + pure pointNet:           epoch=150  val_loss: 0.138824 Test R2: 0.8714  
-Transolver + pure pointNet:           epoch=250  val_loss: 0.102590 Test R2: 0.9021
+Transolver + pure pointNet:           epoch=150   val_loss: 0.138824 Test R2: 0.8714  
+Transolver + pure pointNet:           epoch=250   val_loss: 0.102590 Test R2: 0.9021
+Transolver + pure pointNet:           epoch=1000  val_loss: 0.053966 Test R2: 0.9480
