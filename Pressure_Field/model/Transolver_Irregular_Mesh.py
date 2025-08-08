@@ -65,6 +65,54 @@ def get_graph_feature(x, k=20, idx=None, dim9=False):
     feature = torch.cat((feature - x, x), dim=3).permute(0, 3, 1, 2).contiguous()
     return feature  # (batch_size, 2*num_dims, num_points, k)
 
+class Transform_Net(nn.Module):
+    def __init__(self, args):
+        super(Transform_Net, self).__init__()
+        self.args = args
+        self.k = 3
+
+        self.bn1 = nn.BatchNorm2d(64)
+        self.bn2 = nn.BatchNorm2d(128)
+        self.bn3 = nn.BatchNorm1d(1024)
+
+        self.conv1 = nn.Sequential(nn.Conv2d(6, 64, kernel_size=1, bias=False),
+                                   self.bn1,
+                                   nn.LeakyReLU(negative_slope=0.2))
+        self.conv2 = nn.Sequential(nn.Conv2d(64, 128, kernel_size=1, bias=False),
+                                   self.bn2,
+                                   nn.LeakyReLU(negative_slope=0.2))
+        self.conv3 = nn.Sequential(nn.Conv1d(128, 1024, kernel_size=1, bias=False),
+                                   self.bn3,
+                                   nn.LeakyReLU(negative_slope=0.2))
+
+        self.linear1 = nn.Linear(1024, 512, bias=False)
+        self.bn4 = nn.BatchNorm1d(512)
+        self.linear2 = nn.Linear(512, 256, bias=False)
+        self.bn5 = nn.BatchNorm1d(256)
+
+        self.transform = nn.Linear(256, 3*3)
+        init.constant_(self.transform.weight, 0)
+        init.eye_(self.transform.bias.view(3, 3))
+
+    def forward(self, x):
+        batch_size = x.size(0)
+
+        x = self.conv1(x)                       # (batch_size, 3*2, num_points, k) -> (batch_size, 64, num_points, k)
+        x = self.conv2(x)                       # (batch_size, 64, num_points, k)  -> (batch_size, 128, num_points, k)
+        x = x.max(dim=-1, keepdim=False)[0]     # (batch_size, 128, num_points, k) -> (batch_size, 128, num_points)
+
+        x = self.conv3(x)                       # (batch_size, 128, num_points)  -> (batch_size, 1024, num_points)
+        x = x.max(dim=-1, keepdim=False)[0]     # (batch_size, 1024, num_points) -> (batch_size, 1024)
+
+        x = F.leaky_relu(self.bn4(self.linear1(x)), negative_slope=0.2)     # (batch_size, 1024) -> (batch_size, 512)
+        x = F.leaky_relu(self.bn5(self.linear2(x)), negative_slope=0.2)     # (batch_size, 512) -> (batch_size, 256)
+
+        x = self.transform(x)                   # (batch_size, 256) -> (batch_size, 3*3)
+        x = x.view(batch_size, 3, 3)            # (batch_size, 3*3) -> (batch_size, 3, 3)
+
+        return x
+
+
 class MLP(nn.Module):
     def __init__(self, n_input, n_hidden, n_output, n_layers=1, act='gelu', res=True):
         super(MLP, self).__init__()
@@ -83,13 +131,13 @@ class MLP(nn.Module):
         self.linears = nn.ModuleList([nn.Sequential(nn.Linear(n_hidden, n_hidden), act()) for _ in range(n_layers)])
 
     def forward(self, x):
-        x = self.linear_pre(x)                      # [B, num_points, point_dim]      -> [B, num_points, 256]
+        x = self.linear_pre(x)                      # [B, num_points, point_dim] -> [B, num_points, 256]
         for i in range(self.n_layers):
             if self.res:
                 x = self.linears[i](x) + x
             else:
                 x = self.linears[i](x)
-        x = self.linear_post(x)                     # [B, num_points, 256]            -> [B, num_points, 128]
+        x = self.linear_post(x)                     # [B, num_points, 256] -> [B, num_points, 128]
         return x
 
 
