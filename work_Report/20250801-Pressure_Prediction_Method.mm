@@ -89,14 +89,14 @@
     </p>
   </body>
 </html></richcontent>
-<node TEXT="利用Transolver模型对MIT所提供的压强场点云文件进行预测，三维切片" ID="ID_781122816" CREATED="1754028479707" MODIFIED="1754029161694"><richcontent TYPE="DETAILS">
+<node TEXT="利用Transolver模型对MIT所提供的压强场点云文件进行预测，三维切片" ID="ID_781122816" CREATED="1754028479707" MODIFIED="1754103386413"><richcontent TYPE="DETAILS">
 <html>
   <head>
     
   </head>
   <body>
     <p>
-      由Wu2024中提到2D模型的点云文件，利用Transolver模型进行预测
+      Wu2024中提到了对2D模型的点云文件，利用Transolver模型进行切片预测
     </p>
   </body>
 </html></richcontent>
