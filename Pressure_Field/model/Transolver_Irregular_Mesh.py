@@ -148,18 +148,20 @@ class MLP(nn.Module):
        # self.linears = nn.ModuleList([nn.Sequential(nn.Linear(n_hidden, n_hidden), act()) for _ in range(n_layers)])
         self.bn1 = nn.BatchNorm2d(n_hidden)
         self.bn2 = nn.BatchNorm2d(n_hidden)
-        self.bn3 = nn.BatchNorm2d(n_hidden)
+        self.bn3 = nn.BatchNorm2d(n_output)
 
-        self.conv1 = nn.Sequential(nn.Conv2d(n_input, n_hidden, kernel_size=ks, bias=False),
+        self.conv1 = nn.Sequential(nn.Conv2d(n_input, n_hidden, kernel_size=ks, stride=1, padding=ks // 2, bias=False),
                                    self.bn1,
                                    nn.LeakyReLU(negative_slope=0.2))
-        self.conv2 = nn.Sequential(nn.Conv2d(n_hidden, n_hidden, kernel_size=ks, bias=False),
+        self.conv2 = nn.Sequential(nn.Conv2d(n_hidden, n_hidden, kernel_size=ks, stride=1, padding=ks // 2, bias=False),
                                    self.bn2,
                                    nn.LeakyReLU(negative_slope=0.2))
-        self.conv3 = nn.Sequential(nn.Conv2d(n_hidden, n_output, kernel_size=ks, bias=False),
+        self.conv3 = nn.Sequential(nn.Conv2d(n_hidden, n_output, kernel_size=ks, stride=1, padding=ks // 2, bias=False),
                                    self.bn3,
                                    nn.LeakyReLU(negative_slope=0.2))
 
+        logging.info(f"{M} n_hidden: {n_hidden} {RESET}")
+        logging.info(f"{M} n_output: {n_output} {RESET}")
     def forward(self, x):
         x0 = get_graph_feature(x, k=self.k)   # (batch_size, num_points, p_dim) -> (batch_size, p_dim+d_dim, num_points, k)
         t = self.transform_net(x0)            # (batch_size, 3, 3)
@@ -167,7 +169,8 @@ class MLP(nn.Module):
 
         x = get_graph_feature(x, k=self.k)    # (batch_size, num_points, p_dim) -> (batch_size, p_dim+d_dim, num_points, k)
         x = self.conv1(x)                     # (batch_size, p_dim+d_dim, num_points, k) -> (batch_size, n_hidden, num_points, k)
-        x = self.conv2(x)                     # (batch_size, n_hidden, num_points, k) -> (batch_size, n_output, num_points, k)
+        x = self.conv2(x)                     # (batch_size, n_hidden, num_points, k) -> (batch_size, n_hidden, num_points, k)
+        x = self.conv3(x)                     # (batch_size, n_hidden, num_points, k) -> (batch_size, n_output, num_points, k)
         x = x.max(dim=-1, keepdim=False)[0]   # (batch_size, n_output, num_points, k) -> (batch_size, n_output, num_points)
 
 #        x = self.linear_pre(x)                      # [B, num_points, point_dim] -> [B, num_points, 256]
@@ -221,7 +224,7 @@ class Model(nn.Module):
     def __init__(self,
                  space_dim=1,
                  n_layers=5,
-                 n_hidden=256,
+                 n_hidden=128,
                  dropout=0.0,
                  n_head=8,
                  Time_Input=False,
@@ -259,7 +262,6 @@ class Model(nn.Module):
                                      for _ in range(n_layers)])
         self.initialize_weights()
 
-        logging.info(f"{M} n_hidden: {n_hidden} {RESET}")
         self.placeholder = nn.Parameter((1 / (n_hidden)) * torch.rand(n_hidden, dtype=torch.float))
 
     def initialize_weights(self):
