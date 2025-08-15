@@ -166,7 +166,7 @@ def train_model(args):
 
     elapsed_time = time.time() - start_time
     logging.info(f"**********************Model training completed ")
-    logging.info(f"Model training completed in {elapsed_time:.2f} seconds")
+   # logging.info(f"Model training completed in {elapsed_time:.2f} seconds")
 
     return True
 
