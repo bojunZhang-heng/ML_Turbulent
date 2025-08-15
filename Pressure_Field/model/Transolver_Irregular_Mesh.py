@@ -5,7 +5,18 @@ import torch.nn.functional as F
 from timm.models.layers import trunc_normal_
 from model.Embedding import timestep_embedding
 import numpy as np
+import logging
 from model.Physics_Attention import Physics_Attention_Irregular_Mesh
+from colorama import Fore, Style
+
+#! alias for colorful output
+R = Fore.RED
+Y = Fore.YELLOW
+G = Fore.GREEN
+M = Fore.MAGENTA
+C = Fore.CYAN
+RESET = Style.RESET_ALL
+
 
 ACTIVATION = {'gelu': nn.GELU, 'tanh': nn.Tanh, 'sigmoid': nn.Sigmoid, 'relu': nn.ReLU, 'leaky_relu': nn.LeakyReLU(0.1),
               'softplus': nn.Softplus, 'ELU': nn.ELU, 'silu': nn.SiLU}
@@ -234,7 +245,7 @@ class Model(nn.Module):
         if self.unified_pos:
             self.preprocess = MLP(fun_dim + self.ref * self.ref, n_hidden * 2, n_hidden, n_layers=0, res=False, act=act, k=self.k)
         else:
-            self.preprocess = MLP(space_dim, n_hidden * 2, n_hidden, n_layers=0, res=False, act=act, k=self.k)
+            self.preprocess = MLP(6, n_hidden * 2, n_hidden, n_layers=0, res=False, act=act, k=self.k)
         if Time_Input:
             self.time_fc = nn.Sequential(nn.Linear(n_hidden, n_hidden), nn.SiLU(), nn.Linear(n_hidden, n_hidden))
 
@@ -247,6 +258,8 @@ class Model(nn.Module):
                                                       last_layer=(_ == n_layers - 1))
                                      for _ in range(n_layers)])
         self.initialize_weights()
+
+        logging.info(f"{M} n_hidden: {n_hidden} {RESET}")
         self.placeholder = nn.Parameter((1 / (n_hidden)) * torch.rand(n_hidden, dtype=torch.float))
 
     def initialize_weights(self):
