@@ -86,6 +86,7 @@ def initialize_model(args, local_rank):
                                   slice_num=args.slice_num,
                                   ref=args.ref,
                                   unified_pos=args.unified_pos,
+                                  k=args.k
                                   ).to(local_rank)
     model = torch.nn.parallel.DistributedDataParallel(
             model,
