@@ -73,9 +73,9 @@ def get_graph_feature(x, k=20, idx=None, dim9=False):
     feature = feature.view(batch_size, num_points, k, point_dims)                        # [batch_size, num_points, k, point_dims]
     x = x.view(batch_size, num_points, 1, point_dims).repeat(1, 1, k, 1)                 # [batch_size, num_points, k, point_dims]
 
-    feature = torch.cat((feature - x, x), dim=3).permute(0, 3, 1, 2).contiguous()
-    return feature                                                                       # (batch_size, 2*num_dims, num_points, k)
-    # The last confusion: Why had a permuate() for the last line
+    #feature = torch.cat((feature - x, x), dim=3).permute(0, 3, 1, 2).contiguous()
+    feature = torch.cat((feature - x, x), dim=3).permute(0, 1, 3, 2).contiguous()
+    return feature                                                                       # (batch_size, num_points, p_dim+d_dim , k)
 
 def setup_seed(seed):
     """
@@ -97,7 +97,7 @@ def setup_logger(log_file=None, level=logging.INFO):
     """
     Set up the logger for the application.
 
-    Args:
+    grgs:
         log_file: Path to the log file
         level: Logging level
     """
