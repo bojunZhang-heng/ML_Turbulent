@@ -74,8 +74,8 @@ def get_graph_feature(x, k=20, idx=None, dim9=False):
     feature = feature.view(batch_size, num_points, k, point_dims)                        # [batch_size, num_points, k, point_dims]
     x = x.view(batch_size, num_points, 1, point_dims).repeat(1, 1, k, 1)                 # [batch_size, num_points, k, point_dims]
 
-    feature = torch.cat((feature - x, x), dim=3).permute(0, 3, 1, 2).contiguous()
-    return feature                                                                       # (batch_size, num_points, p_dim+d_dim , k)
+    feature = torch.cat((feature - x, x), dim=3).permute(0, 3, 1, 2).contiguous()        # (batch_size, p_dim*2, num_points, k)
+    return feature
 
 class Transform_Net(nn.Module):
     #def __init__(self, args):
@@ -154,9 +154,9 @@ class MLP(nn.Module):
         self.bn5 = nn.BatchNorm2d(n_hidden)
         self.bn6 = nn.BatchNorm1d(1024)
         self.bn7 = nn.BatchNorm1d(64)
-        self.bn8 = nn.BatchNorm1d(256)
-        self.bn9 = nn.BatchNorm1d(256)
-        self.bn10 = nn.BatchNorm1d(128)
+        self.bn8 = nn.BatchNorm1d(n_hidden)
+        self.bn9 = nn.BatchNorm1d(n_hidden)
+        self.bn10 = nn.BatchNorm1d(n_output)
 
 
         self.conv1 = nn.Sequential(nn.Conv2d(n_input, n_hidden, kernel_size=ks, stride=1, padding=ks // 2, bias=False),
@@ -165,13 +165,13 @@ class MLP(nn.Module):
         self.conv2 = nn.Sequential(nn.Conv2d(n_hidden, n_hidden, kernel_size=ks, stride=1, padding=ks // 2, bias=False),
                                    self.bn2,
                                    nn.LeakyReLU(negative_slope=0.2))
-        self.conv3 = nn.Sequential(nn.Conv2d(n_hidden, n_hidden, kernel_size=ks, stride=1, padding=ks // 2, bias=False),
+        self.conv3 = nn.Sequential(nn.Conv2d(n_hidden*2, n_hidden, kernel_size=ks, stride=1, padding=ks // 2, bias=False),
                                    self.bn3,
                                    nn.LeakyReLU(negative_slope=0.2))
         self.conv4 = nn.Sequential(nn.Conv2d(n_hidden, n_hidden, kernel_size=ks, stride=1, padding=ks // 2, bias=False),
                                    self.bn4,
                                    nn.LeakyReLU(negative_slope=0.2))
-        self.conv5 = nn.Sequential(nn.Conv2d(n_hidden, n_hidden, kernel_size=ks, stride=1, padding=ks // 2, bias=False),
+        self.conv5 = nn.Sequential(nn.Conv2d(n_hidden*2, n_hidden, kernel_size=ks, stride=1, padding=ks // 2, bias=False),
                                    self.bn5,
                                    nn.LeakyReLU(negative_slope=0.2))
         self.conv6 = nn.Sequential(nn.Conv1d(n_hidden*3, 1024, kernel_size=ks, stride=1, padding=ks // 2, bias=False),
@@ -180,7 +180,7 @@ class MLP(nn.Module):
         self.conv7 = nn.Sequential(nn.Conv1d(n_hidden*3, 1024, kernel_size=ks, stride=1, padding=ks // 2, bias=False),
                                    self.bn7,
                                    nn.LeakyReLU(negative_slope=0.2))
-        self.conv8 = nn.Sequential(nn.Conv1d(n_hidden*3, 1024, kernel_size=ks, stride=1, padding=ks // 2, bias=False),
+        self.conv8 = nn.Sequential(nn.Conv1d(n_hidden*3+1024, n_hidden, kernel_size=ks, stride=1, padding=ks // 2, bias=False),
                                    self.bn8,
                                    nn.LeakyReLU(negative_slope=0.2))
         self.dp1 = nn.Dropout(p=dropout)
@@ -196,26 +196,30 @@ class MLP(nn.Module):
         logging.info(f"{M} n_output: {n_output} {RESET}")
     def forward(self, x):
         batch_size = x.size(0)
-        num_points = x.size(2)
+        num_points = x.size(1)
 
         x0 = get_graph_feature(x, k=self.k)   # (batch_size, num_points, p_dim) -> (batch_size, p_dim+d_dim, num_points, k)
         t = self.transform_net(x0)            # (batch_size, 3, 3)
         x = torch.bmm(x, t)                   # (batch_size, num_points, 3) * (batch_size, 3, 3) -> (batch_size, num_points, 3)
 
-        x = get_graph_feature(x, k=self.k)    # (batch_size, num_points, p_dim) -> (batch_size, p_dim+d_dim, num_points, k)
+        x = get_graph_feature(x, k=self.k)    # (batch_size, num_points, 3) -> (batch_size, 3*2, num_points, k)
         x = self.conv1(x)                     # (batch_size, p_dim+d_dim, num_points, k) -> (batch_size, n_hidden, num_points, k)
         x = self.conv2(x)                     # (batch_size, n_hidden, num_points, k) -> (batch_size, n_hidden, num_points, k)
         x1 = x.max(dim=-1, keepdim=False)[0]   # (batch_size, n_hidden, num_points, k) -> (batch_size, n_hidden, num_points)
 
+        x1 = x1.transpose(2, 1).contiguous()                  # (batch_size, n_hidden, num_points) -> (batch_size, num_points, n_hidden)
         x = get_graph_feature(x1, k=self.k)    # (batch_size, num_points, n_hidden) -> (batch_size, n_hidden*2, num_points, k)
         x = self.conv3(x)                     # (batch_size, n_hidden*2, num_points, k) -> (batch_size, n_hidden, num_points, k)
         x = self.conv4(x)                     # (batch_size, n_hidden, num_points, k) -> (batch_size, n_hidden, num_points, k)
-        x2 = x.max(dim=-1, keepdim=False)[0]  # (batch_size, 64, num_points, k) -> (batch_size, 64, num_points)
+        x2 = x.max(dim=-1, keepdim=False)[0]  # (batch_size, n_hidden, num_points, k) -> (batch_size, n_hidden, num_points)
 
+        x2 = x2.transpose(2, 1).contiguous()      # (batch_size, n_hidden, num_points) -> (batch_size, num_points, n_hidden)
         x = get_graph_feature(x2, k=self.k)    # (batch_size, num_points, n_hidden) -> (batch_size, n_hidden*2, num_points, k)
         x = self.conv5(x)                     # (batch_size, n_hidden*2, num_points, k) -> (batch_size, n_hidden, num_points, k)
-        x3 = x.max(dim=-1, keepdim=False)[0]  # (batch_size, 64, num_points, k) -> (batch_size, 64, num_points)
+        x3 = x.max(dim=-1, keepdim=False)[0]  # (batch_size, n_hidden, num_points, k) -> (batch_size, n_hidden, num_points)
 
+        x1 = x1.transpose(2, 1).contiguous()      # (batch_size, num_points, n_hidden) -> (batch_size, n_hidden, num_points)
+        x2 = x2.transpose(2, 1).contiguous()      # (batch_size, num_points, n_hidden) -> (batch_size, n_hidden, num_points)
         x = torch.cat((x1, x2, x3), dim=1)  # (batch_size, n_hidden*3, num_points)
 
         x = self.conv6(x)                   # (batch_size, n_hidden*3, num_points) -> (batch_size, 1024, num_points)
@@ -223,6 +227,7 @@ class MLP(nn.Module):
 
         x = x.repeat(1, 1, num_points)  # (batch_size, 1024, num_points)
 
+     #   logging.info(f"{M} x.shape: {x.shape} {RESET}")
         x = torch.cat((x, x1, x2, x3), dim=1)  # (batch_size, 1024+n_hidden*3, num_points)
 
         x = self.conv8(x)  # (batch_size, 1024+n_hidden*3, num_points) -> (batch_size, 256, num_points)
