@@ -1,0 +1,41 @@
+2025-08-07 10:22:44,648 - INFO - [31m ************************* Start pressure prediction for 3D automobile geometry.[0m
+2025-08-07 10:22:44,650 - INFO - [32m Arguments: [0m
+{ 'batch_size': 6,
+  'cache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM/Cache_data',
+  'dataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WWC_WM',
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 150,
+  'exp_name': 'Test',
+  'gpus': '0',
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'model': 'Transolver_Irregular_Mesh',
+  'n_heads': 8,
+  'n_hidden': 128,
+  'n_layers': 8,
+  'num_eval_samples': 5,
+  'num_points': 10000,
+  'num_workers': 1,
+  'output_channels': 1,
+  'ref': 8,
+  'seed': 1,
+  'slice_num': 64,
+  'stages': 'train',
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/Pressure_Field/train_val_test_splits',
+  'test_only': 1,
+  'unified_pos': 0,
+  'weight_decay': 1e-05}
+2025-08-07 10:22:44,650 - INFO - Preprocessing stage skipped.
+2025-08-07 10:22:44,650 - INFO - [31m *************************Starting model training... [0m
+2025-08-07 10:23:29,367 - INFO - **********************Model training completed 
+2025-08-07 10:23:29,369 - INFO - Model training completed in 44.72 seconds
+2025-08-07 10:23:29,369 - INFO - Evluation stage skipped.
+2025-08-07 10:23:29,369 - INFO - Pipeline execution complete.
+2025-08-07 10:23:29,369 - INFO - [31m Results summary: [0m 
+2025-08-07 10:23:29,369 - INFO -  preprocess: Success
+2025-08-07 10:23:29,369 - INFO -  train: Success
+2025-08-07 10:23:29,369 - INFO -  evaluate: Success
