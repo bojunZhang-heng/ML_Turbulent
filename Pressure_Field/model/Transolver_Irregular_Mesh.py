@@ -141,106 +141,26 @@ class MLP(nn.Module):
         self.n_output = n_output                    # n_output = 128
         self.n_layers = n_layers
         self.res = res
-        self.transform_net = Transform_Net()
-        self.k = k
-        ks = 3
-        dropout = 0.4
-       # self.linear_pre = nn.Sequential(nn.Linear(n_input, n_hidden), act())
-       # self.linear_post = nn.Linear(n_hidden, n_output)
-       # self.linears = nn.ModuleList([nn.Sequential(nn.Linear(n_hidden, n_hidden), act()) for _ in range(n_layers)])
-        self.bn1 = nn.BatchNorm2d(n_hidden)
-        self.bn2 = nn.BatchNorm2d(n_hidden)
-        self.bn3 = nn.BatchNorm2d(n_hidden)
-        self.bn4 = nn.BatchNorm2d(n_hidden)
-        self.bn5 = nn.BatchNorm2d(n_hidden)
-        self.bn6 = nn.BatchNorm1d(1024)
-        self.bn7 = nn.BatchNorm1d(64)
-        self.bn8 = nn.BatchNorm1d(n_hidden)
-        self.bn9 = nn.BatchNorm1d(n_hidden)
-        self.bn10 = nn.BatchNorm1d(n_output)
-
-
-        self.conv1 = nn.Sequential(nn.Conv2d(n_input, n_hidden, kernel_size=ks, stride=1, padding=ks // 2, bias=False),
-                                   self.bn1,
-                                   nn.LeakyReLU(negative_slope=0.2))
-        self.conv2 = nn.Sequential(nn.Conv2d(n_hidden, n_hidden, kernel_size=ks, stride=1, padding=ks // 2, bias=False),
-                                   self.bn2,
-                                   nn.LeakyReLU(negative_slope=0.2))
-        self.conv3 = nn.Sequential(nn.Conv2d(n_hidden*2, n_hidden, kernel_size=ks, stride=1, padding=ks // 2, bias=False),
-                                   self.bn3,
-                                   nn.LeakyReLU(negative_slope=0.2))
-        self.conv4 = nn.Sequential(nn.Conv2d(n_hidden, n_hidden, kernel_size=ks, stride=1, padding=ks // 2, bias=False),
-                                   self.bn4,
-                                   nn.LeakyReLU(negative_slope=0.2))
-        self.conv5 = nn.Sequential(nn.Conv2d(n_hidden*2, n_hidden, kernel_size=ks, stride=1, padding=ks // 2, bias=False),
-                                   self.bn5,
-                                   nn.LeakyReLU(negative_slope=0.2))
-        self.conv6 = nn.Sequential(nn.Conv1d(n_hidden*3, 1024, kernel_size=ks, stride=1, padding=ks // 2, bias=False),
-                                   self.bn6,
-                                   nn.LeakyReLU(negative_slope=0.2))
-        self.conv7 = nn.Sequential(nn.Conv1d(n_hidden*3, 1024, kernel_size=ks, stride=1, padding=ks // 2, bias=False),
-                                   self.bn7,
-                                   nn.LeakyReLU(negative_slope=0.2))
-        self.conv8 = nn.Sequential(nn.Conv1d(n_hidden*3+1024, n_hidden, kernel_size=ks, stride=1, padding=ks // 2, bias=False),
-                                   self.bn8,
-                                   nn.LeakyReLU(negative_slope=0.2))
-        self.dp1 = nn.Dropout(p=dropout)
-        self.conv9 = nn.Sequential(nn.Conv1d(256, 256, kernel_size=1, bias=False),
-                                   self.bn9,
-                                   nn.LeakyReLU(negative_slope=0.2))
-        self.dp2 = nn.Dropout(p=dropout)
-        self.conv10 = nn.Sequential(nn.Conv1d(256, 128, kernel_size=1, bias=False),
-                                    self.bn10,
-                                    nn.LeakyReLU(negative_slope=0.2))
+        self.linear_pre = nn.Sequential(nn.Linear(n_input, n_hidden*5), act())
+        self.linear_post_1 = nn.Linear(n_hidden*5, n_hidden*3)
+        self.linear_post_2 = nn.Linear(n_hidden*3, n_hidden)
+        self.linear_post_3 = nn.Linear(n_hidden, n_output)
+        self.linears = nn.ModuleList([nn.Sequential(nn.Linear(n_hidden*5, n_hidden*5), act()) for _ in range(n_layers)])
 
         logging.info(f"{M} n_hidden: {n_hidden} {RESET}")
         logging.info(f"{M} n_output: {n_output} {RESET}")
     def forward(self, x):
-        batch_size = x.size(0)
-        num_points = x.size(1)
 
-        x0 = get_graph_feature(x, k=self.k)   # (batch_size, num_points, p_dim) -> (batch_size, p_dim+d_dim, num_points, k)
-        t = self.transform_net(x0)            # (batch_size, 3, 3)
-        x = torch.bmm(x, t)                   # (batch_size, num_points, 3) * (batch_size, 3, 3) -> (batch_size, num_points, 3)
-
-        x = get_graph_feature(x, k=self.k)    # (batch_size, num_points, 3) -> (batch_size, 3*2, num_points, k)
-        x = self.conv1(x)                     # (batch_size, p_dim+d_dim, num_points, k) -> (batch_size, n_hidden, num_points, k)
-        x = self.conv2(x)                     # (batch_size, n_hidden, num_points, k) -> (batch_size, n_hidden, num_points, k)
-        x1 = x.max(dim=-1, keepdim=False)[0]   # (batch_size, n_hidden, num_points, k) -> (batch_size, n_hidden, num_points)
-
-        x1 = x1.transpose(2, 1).contiguous()                  # (batch_size, n_hidden, num_points) -> (batch_size, num_points, n_hidden)
-        x = get_graph_feature(x1, k=self.k)    # (batch_size, num_points, n_hidden) -> (batch_size, n_hidden*2, num_points, k)
-        x = self.conv3(x)                     # (batch_size, n_hidden*2, num_points, k) -> (batch_size, n_hidden, num_points, k)
-        x = self.conv4(x)                     # (batch_size, n_hidden, num_points, k) -> (batch_size, n_hidden, num_points, k)
-        x2 = x.max(dim=-1, keepdim=False)[0]  # (batch_size, n_hidden, num_points, k) -> (batch_size, n_hidden, num_points)
-
-        x2 = x2.transpose(2, 1).contiguous()      # (batch_size, n_hidden, num_points) -> (batch_size, num_points, n_hidden)
-        x = get_graph_feature(x2, k=self.k)    # (batch_size, num_points, n_hidden) -> (batch_size, n_hidden*2, num_points, k)
-        x = self.conv5(x)                     # (batch_size, n_hidden*2, num_points, k) -> (batch_size, n_hidden, num_points, k)
-        x3 = x.max(dim=-1, keepdim=False)[0]  # (batch_size, n_hidden, num_points, k) -> (batch_size, n_hidden, num_points)
-
-        x1 = x1.transpose(2, 1).contiguous()      # (batch_size, num_points, n_hidden) -> (batch_size, n_hidden, num_points)
-        x2 = x2.transpose(2, 1).contiguous()      # (batch_size, num_points, n_hidden) -> (batch_size, n_hidden, num_points)
-        x = torch.cat((x1, x2, x3), dim=1)  # (batch_size, n_hidden*3, num_points)
-
-        x = self.conv6(x)                   # (batch_size, n_hidden*3, num_points) -> (batch_size, 1024, num_points)
-        x = x.max(dim=-1, keepdim=True)[0]  # (batch_size, 1024, num_points) -> (batch_size, 1024, 1)
-
-        x = x.repeat(1, 1, num_points)  # (batch_size, 1024, num_points)
-
-     #   logging.info(f"{M} x.shape: {x.shape} {RESET}")
-        x = torch.cat((x, x1, x2, x3), dim=1)  # (batch_size, 1024+n_hidden*3, num_points)
-
-        x = self.conv8(x)  # (batch_size, 1024+n_hidden*3, num_points) -> (batch_size, 256, num_points)
-        x = self.dp1(x)
-        x = self.conv9(x)  # (batch_size, 256, num_points) -> (batch_size, 256, num_points)
-        x = self.dp2(x)
-        x = self.conv10(x)  # (batch_size, 256, num_points) -> (batch_size, 128, num_points)
-
-        x = x.permute(0, 2, 1).contiguous()   # (batch_size, n_output, num_points) -> (batch_size, num_points, n_output)
-
+        x = self.linear_pre(x)
+        for ii in range(self.n_layers):
+            if self.res:
+                x = self.linears[ii](x) + x
+            else:
+                x = self.linears[ii](x)
+        x = self.linear_post_1(x)
+        x = self.linear_post_2(x)
+        x = self.linear_post_3(x)
         return x
-
 
 class Transolver_block(nn.Module):
     """Transformer encoder block."""
@@ -337,11 +257,11 @@ class Model(nn.Module):
         # x: B N 3
         # grid_ref: B, self.ref^3
         gridx = torch.tensor(np.linspace(0, 1, self.ref), dtype=torch.float)
-        gridx = gridx.reshape(1, self.ref, 1, 1).repeat([batchsize, 1, self.ref, 1, 1])
+        gridx = gridx.reshape(1, self.ref, 1, 1, 1).repeat([batchsize, 1, self.ref, self.ref, 1])
         gridy = torch.tensor(np.linspace(0, 1, self.ref), dtype=torch.float)
-        gridy = gridy.reshape(1, 1, self.ref, 1).repeat([batchsize, self.ref, 1, 1, 1])
+        gridy = gridy.reshape(1, 1, self.ref, 1, 1).repeat([batchsize, self.ref, 1, self.ref, 1])
         gridz = torch.tensor(np.linspace(0, 1, self.ref), dtype=torch.float)
-        gridz = gridz.reshape(1, 1, self.ref, 1).repeat([batchsize, 1, 1, self.ref, 1])
+        gridz = gridz.reshape(1, 1, 1, self.ref, 1).repeat([batchsize, self.ref, self.ref, 1, 1])
         grid_ref = torch.cat((gridx, gridy, gridz), dim=-1).cuda().reshape(batchsize, self.ref**3 , 3)
 
         pos = torch.sqrt(torch.sum((x[:, :, None, :] - grid_ref[:, None, :, :]) ** 2, dim=-1)). \
@@ -351,7 +271,7 @@ class Model(nn.Module):
     def forward(self, x, T=None):
         if self.unified_pos:
             #x = self.pos.repeat(x.shape[0], 1, 1, 1).reshape(x.shape[0], x.shape[1], self.ref**3)
-            x = self.pos                                         # [B, num_points, point_dim] -> [B, num_points, ref**3]
+            x = self.get_grid(x, x.shape[0])                                         # [B, num_points, point_dim] -> [B, num_points, ref**3]
         x = self.preprocess(x)                                   # [B, num_points, point_dim] -> [B, num_points, 128]
         x = x + self.placeholder[None, None, :]
 
