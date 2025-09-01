@@ -85,6 +85,7 @@ class Transform_Net(nn.Module):
         ks=3
        # self.k = 3
 
+
         self.bn1 = nn.BatchNorm2d(64)
         self.bn2 = nn.BatchNorm2d(128)
         self.bn3 = nn.BatchNorm1d(1024)
