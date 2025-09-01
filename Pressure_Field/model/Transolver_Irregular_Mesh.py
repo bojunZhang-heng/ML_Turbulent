@@ -303,9 +303,9 @@ class Model(nn.Module):
         self.space_dim = space_dim
         self.k = k
         if self.unified_pos:
-            self.preprocess = MLP(fun_dim + self.ref * self.ref, n_hidden * 2, n_hidden, n_layers=0, res=False, act=act, k=self.k)
-        else:
-            self.preprocess = MLP(6, n_hidden * 2, n_hidden, n_layers=0, res=False, act=act, k=self.k)
+         #   self.preprocess = MLP(fun_dim + self.ref**3, n_hidden * 2, n_hidden, n_layers=0, res=False, act=act, k=self.k)
+        #else:
+            self.preprocess = MLP(self.ref**3, n_hidden * 2, n_hidden, n_layers=0, res=False, act=act, k=self.k)
         if Time_Input:
             self.time_fc = nn.Sequential(nn.Linear(n_hidden, n_hidden), nn.SiLU(), nn.Linear(n_hidden, n_hidden))
 
@@ -334,20 +334,25 @@ class Model(nn.Module):
             nn.init.constant_(m.weight, 1.0)
 
     def get_grid(self, x, batchsize=1):
-        # x: B N 2
-        # grid_ref
+        # x: B N 3
+        # grid_ref: B, self.ref^3
         gridx = torch.tensor(np.linspace(0, 1, self.ref), dtype=torch.float)
-        gridx = gridx.reshape(1, self.ref, 1, 1).repeat([batchsize, 1, self.ref, 1])
+        gridx = gridx.reshape(1, self.ref, 1, 1).repeat([batchsize, 1, self.ref, 1, 1])
         gridy = torch.tensor(np.linspace(0, 1, self.ref), dtype=torch.float)
-        gridy = gridy.reshape(1, 1, self.ref, 1).repeat([batchsize, self.ref, 1, 1])
-        grid_ref = torch.cat((gridx, gridy), dim=-1).cuda().reshape(batchsize, self.ref * self.ref, 2)  # B H W 8 8 2
+        gridy = gridy.reshape(1, 1, self.ref, 1).repeat([batchsize, self.ref, 1, 1, 1])
+        gridz = torch.tensor(np.linspace(0, 1, self.ref), dtype=torch.float)
+        gridz = gridz.reshape(1, 1, self.ref, 1).repeat([batchsize, 1, 1, self.ref, 1])
+        grid_ref = torch.cat((gridx, gridy, gridz), dim=-1).cuda().reshape(batchsize, self.ref**3 , 3)
 
         pos = torch.sqrt(torch.sum((x[:, :, None, :] - grid_ref[:, None, :, :]) ** 2, dim=-1)). \
-            reshape(batchsize, x.shape[1], self.ref * self.ref).contiguous()
+            reshape(batchsize, x.shape[1], self.ref**3).contiguous()
         return pos
 
     def forward(self, x, T=None):
-        x = self.preprocess(x)                                   # [B, num_points, point_dim]   -> [B, num_points, 128]
+        if self.unified_pos:
+            #x = self.pos.repeat(x.shape[0], 1, 1, 1).reshape(x.shape[0], x.shape[1], self.ref**3)
+            x = self.pos                                         # [B, num_points, point_dim] -> [B, num_points, ref**3]
+        x = self.preprocess(x)                                   # [B, num_points, point_dim] -> [B, num_points, 128]
         x = x + self.placeholder[None, None, :]
 
         for block in self.blocks:
