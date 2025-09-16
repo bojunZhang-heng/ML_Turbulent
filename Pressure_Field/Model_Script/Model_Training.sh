@@ -12,12 +12,12 @@ python ./run_pipeline.py \
     --lr 0.001 \
     --max_grad_norm 0.1 \
     --slice_num 64 \
-    --unified_pos 0 \
+    --unified_pos 1 \
     --ref 8 \
     --downsample 5 \
     --num_workers 1 \
     --batch_size 6 \
-    --epochs 1000 \
+    --epochs 5000 \
     --test_only 0 \
     --gpus "0" 
 
