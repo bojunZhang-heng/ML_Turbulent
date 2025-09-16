@@ -1,7 +1,7 @@
-Test MSE: 0.055276
-Test MAE: 0.134337
-Max MAE: 26.824375
-Test R2: 0.9480
+Test MSE: 0.060327
+Test MAE: 0.142507
+Max MAE: 27.106272
+Test R2: 0.9432
 Relative L2 Error: inf
 Relative L1 error: inf
-Total inference time:  0.18s for 114 samples
+Total inference time:  0.29s for 114 samples
