@@ -147,8 +147,6 @@ class MLP(nn.Module):
         self.linear_post_3 = nn.Linear(n_hidden, n_output)
         self.linears = nn.ModuleList([nn.Sequential(nn.Linear(n_hidden*5, n_hidden*5), act()) for _ in range(n_layers)])
 
-        logging.info(f"{M} n_hidden: {n_hidden} {RESET}")
-        logging.info(f"{M} n_output: {n_output} {RESET}")
     def forward(self, x):
 
         x = self.linear_pre(x)
@@ -189,8 +187,7 @@ class Transolver_block(nn.Module):
 
     def forward(self, fx):
         fx = self.Attn(self.ln_1(fx)) + fx     #[B, num_points, 128] -> [B, num_points, 128] -> [B, num_points, 128]
-       # fx = self.mlp(self.ln_2(fx)) + fx      #[B, num_points, 128] -> [B, num_points, 128] -> [B, num_points, 128]
-        fx = self.ln_2(fx) + fx                #[B, num_points, 128] -> [B, num_points, 128]
+        fx = self.mlp(self.ln_2(fx)) + fx      #[B, num_points, 128] -> [B, num_points, 128] -> [B, num_points, 128]
         if self.last_layer:
             return self.mlp2(self.ln_3(fx))
         else:
@@ -225,7 +222,7 @@ class Model(nn.Module):
         if self.unified_pos:
          #   self.preprocess = MLP(fun_dim + self.ref**3, n_hidden * 2, n_hidden, n_layers=0, res=False, act=act, k=self.k)
         #else:
-            self.preprocess = MLP(self.ref**3, n_hidden * 2, n_hidden, n_layers=0, res=False, act=act, k=self.k)
+            self.preprocess = MLP(3 + self.ref**3, n_hidden * 2, n_hidden, n_layers=0, res=False, act=act, k=self.k)
         if Time_Input:
             self.time_fc = nn.Sequential(nn.Linear(n_hidden, n_hidden), nn.SiLU(), nn.Linear(n_hidden, n_hidden))
 
@@ -266,12 +263,14 @@ class Model(nn.Module):
 
         pos = torch.sqrt(torch.sum((x[:, :, None, :] - grid_ref[:, None, :, :]) ** 2, dim=-1)). \
             reshape(batchsize, x.shape[1], self.ref**3).contiguous()
-        return pos
+        x = torch.cat((x, pos), dim=-1)
+        #logging.info(f"{M} x.shape: {x.shape} {RESET}")
+        return x
 
     def forward(self, x, T=None):
         if self.unified_pos:
             #x = self.pos.repeat(x.shape[0], 1, 1, 1).reshape(x.shape[0], x.shape[1], self.ref**3)
-            x = self.get_grid(x, x.shape[0])                                         # [B, num_points, point_dim] -> [B, num_points, ref**3]
+            x = self.get_grid(x, x.shape[0])                                         # [B, num_points, point_dim] -> [B, num_points, ref**3 + p_dim]
         x = self.preprocess(x)                                   # [B, num_points, point_dim] -> [B, num_points, 128]
         x = x + self.placeholder[None, None, :]
 
