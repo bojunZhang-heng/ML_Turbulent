@@ -74,14 +74,17 @@ class SurfaceWSSDataset(Dataset):
         Returns:
             A tuple containing the sampled point cloud and corresponding WallShearStress.
         """
-        if mesh.n_points > n_points:
-            indices = np.random.choice(mesh.n_points, n_points, replace=False)
-        else:
-            indices = np.arange(mesh.n_points)
-            logging.info(f"Mesh has only {mesh.n_points} points. Using all available points.")
 
-        sampled_points = mesh.points[indices]
-        sampled_WallShearStress = mesh.point_data['wall'][indices]  # Assuming WallShearStress data is stored under key 'w'
+        mesh_pt = mesh.cell_data_to_point_data(pass_cell_data=False)
+        total_points = mesh_pt.n_points
+        if total_points > n_points:
+            indices = np.random.choice(total_points, n_points, replace=False)
+        else:
+            indices = np.arange(total_points)
+            logging.info(f"Mesh has only {total_points} points. Using all available points.")
+
+        sampled_points = mesh_pt.points[indices]
+        sampled_WallShearStress = mesh_pt.point_data['wallShearStress'][indices]  # Assuming WallShearStress data is stored under key 'w'
         sampled_WallShearStress = sampled_WallShearStress.flatten()  # Ensure it's a flat array
 
         return pv.PolyData(sampled_points), sampled_WallShearStress
@@ -117,3 +120,86 @@ class SurfaceWSSDataset(Dataset):
 
         return point_cloud_tensor, WallShearStress
 
+def create_subset(dataset, ids_file):
+    """
+    Create a subset of the dataset based on design IDs from a file.
+
+    Args:
+        dataset: The full dataset
+        ids_file: Path to a file containing design IDs, one per line
+
+    Returns:
+        A Subset of the dataset containing only the specified designs
+    """
+    try:
+        with open(ids_file, 'r') as file:
+            subset_ids = [id_.strip() for id_ in file.readlines()]
+        subset_files   = [f for f in dataset.stl_files if any(id_ in f for id_ in subset_ids)]
+        subset_indices = [dataset.stl_files.index(f) for f in subset_files]
+        if not subset_indices:
+            logging.error(f"No matching STL files found for IDs in {ids_file}.")
+        return Subset(dataset, subset_indices)
+    except FileNotFoundError as e:
+        logging.error(f"Error loading subset file {ids_file}: {e}")
+        return None
+
+
+def get_dataloaders(dataset_path: str, subset_dir: str, num_points: int, batch_size: int,
+                    world_size: int, rank: int, cache_dir: str = None, num_workers: int = 4) -> tuple:
+    """
+    Prepare and return the training, validation, and test DataLoader objects.
+
+    Args:
+        dataset_path: Path to the directory containing STL files
+        subset_dir: Directory containing train/val/test split files
+        num_points: Number of points to sample from each mesh
+        batch_size: Batch size for dataloaders
+        world_size: Total number of processes for distributed training
+        rank: Current process rank
+        cache_dir: Directory to store processed data
+        num_workers: Number of workers for data loading
+
+    Returns:
+        A tuple of (train_dataloader, val_dataloader, test_dataloader)
+    """
+    full_dataset = GeometrySTLDataset(
+        root_dir=dataset_path,
+        num_points=num_points,
+        preprocess=True,
+        cache_dir=cache_dir
+    )
+
+    train_dataset = create_subset(full_dataset, os.path.join(subset_dir, 'train_design_ids.txt'))
+    val_dataset   = create_subset(full_dataset, os.path.join(subset_dir, 'val_design_ids.txt'))
+    test_dataset  = create_subset(full_dataset, os.path.join(subset_dir, 'test_design_ids.txt'))
+
+    # Distributed samplers for DDP
+    train_sampler = torch.utils.data.distributed.DistributedSampler(
+        train_dataset, num_replicas=world_size, rank=rank
+    )
+    val_sampler = torch.utils.data.distributed.DistributedSampler(
+        val_dataset, num_replicas=world_size, rank=rank
+    )
+    test_sampler = torch.utils.data.distributed.DistributedSampler(
+        test_dataset, num_replicas=world_size, rank=rank
+    )
+
+    train_dataloader = DataLoader(
+        train_dataset, batch_size=batch_size, sampler=train_sampler,
+        drop_last=True, num_workers=num_workers
+    )
+    val_dataloader = DataLoader(
+        val_dataset, batch_size=batch_size, sampler=val_sampler,
+        drop_last=True, num_workers=num_workers
+    )
+    test_dataloader = DataLoader(
+        test_dataset, batch_size=batch_size, sampler=test_sampler,
+        drop_last=True, num_workers=num_workers
+    )
+
+    return train_dataloader, val_dataloader, test_dataloader
+
+
+# Constants for normalization
+PRESSURE_MEAN = -94.5
+PRESSURE_STD = 117.25
