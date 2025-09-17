@@ -108,7 +108,7 @@ def preprocess_data(args):
     try:
         # Import required modules for preprocessing
         from data_loader import SurfacePressureDataset
-        from WSS_data_loader import SurfaceWSSDataset
+        from WSSdata_loader import SurfaceWSSDataset
         from CADdata_loader import GeometrySTLDataset
 
         if 0 :
