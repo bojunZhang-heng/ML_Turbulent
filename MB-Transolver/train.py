@@ -11,12 +11,15 @@ import time
 import argparse
 import matplotlib.pyplot as plt
 from tqdm import tqdm
+from torch.utils.data import DataLoader
 import logging
 import pprint
 
 # Import modules
 from model.model_dict import get_model
 from data_loader import get_dataloaders, PRESSURE_MEAN, PRESSURE_STD
+from WSSdata_loader import get_WSSdataloaders
+from CADdata_loader import get_CADdataloaders
 from utils.utils import setup_logger, setup_seed
 from utils.testloss import TestLoss
 from utils.normalizer import UnitTransformer
@@ -43,11 +46,11 @@ def parse_args():
     parser.add_argument('--Pdataset_path', type=str,  help='Path to dataset')
     parser.add_argument('--Wdataset_path', type=str,  help='Path to dataset')
     parser.add_argument('--Vdataset_path', type=str,  help='Path to dataset')
-    parser.add_argument('--subset_dir', type=str, help='Path to train/val/test splits')
     parser.add_argument('--Ccache_dir', type=str, help='Path to cache directory')
     parser.add_argument('--Pcache_dir', type=str, help='Path to cache directory')
     parser.add_argument('--Wcache_dir', type=str, help='Path to cache directory')
     parser.add_argument('--Vcache_dir', type=str, help='Path to cache directory')
+    parser.add_argument('--subset_dir', type=str, help='Path to train/val/test splits')
     parser.add_argument('--num_points', type=int, default=10000, help='Number of points to sample')
 
     # Training settings
@@ -79,7 +82,6 @@ def parse_args():
 
 def initialize_model(args, local_rank):
     """ Initialize and return the RegDGCN model. """
-   # args = vars(args)
     model = get_model(args).Model(space_dim=3,
                                   n_layers=args.n_layers,
                                   n_hidden=args.n_hidden,
@@ -108,21 +110,30 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, local_rank):
     model.train()
     total_loss = 0
 
-    for data, targets in tqdm(train_dataloader, desc="[Training]"):
+    for tmp in tqdm(train_dataloader, desc="[Training]"):
         global PRESSURE_MEAN, PRESSURE_STD
 
-        # Make data and perssure same shape
-        data = data.squeeze(1).to(local_rank)                          # [B, 1, point_dim, num_points] -> [B, point_dim, num_points]
-        data = data.permute(0, 2, 1).contiguous()                      # [B, point_dim, num_points]    -> [B, num_points, point_dim]
+        data = dict(
+            geometry_position = tmp["cad"].points,
+            wss_position = tmp["WallShearStress"].points,
+            pressure_position = tmp["pressure"].points
+        )
 
-        targets = targets.to(local_rank)
-        targets = targets.permute(0, 2, 1).contiguous()                # [B, pressure_dim, num_points] -> [B, num_points, pressure_dim]
+        logging.info(f"geometry_position.shape : {data['geometry_position'].shape}")
+        logging.info(f"cad points the first 5 points: {data['geometry_position'][:5]}")
+
+        # Make data and perssure same shape
+  #      data = data.squeeze(1).to(local_rank)                          # [B, 1, point_dim, num_points] -> [B, point_dim, num_points]
+  #      data = data.permute(0, 2, 1).contiguous()                      # [B, point_dim, num_points]    -> [B, num_points, point_dim]
+
+  #      targets = targets.to(local_rank)
+  #      targets = targets.permute(0, 2, 1).contiguous()                # [B, pressure_dim, num_points] -> [B, num_points, pressure_dim]
 
         # Normalize targets
-        targets = (targets - PRESSURE_MEAN) / PRESSURE_STD
+  #      targets = (targets - PRESSURE_MEAN) / PRESSURE_STD
 
         optimizer.zero_grad()
-        outputs = model(data)                                          # [B, num_points, point_dim]    -> [B, num_points, pressure_dim]
+        outputs = model(**data)                                          # [B, num_points, point_dim]    -> [B, num_points, pressure_dim]
         loss = criterion(outputs, targets)
 
         loss.backward()
@@ -282,11 +293,27 @@ def train_and_evaluate(rank, world_size, args):
         total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
         logging.info(f"Total trainable parameters: {total_params}")
 
-    # Prepare DataLoaders
-    train_dataloader, val_dataloader, test_dataloader = get_dataloaders(
-        args.Pdataset_path, args.Pcache_dir, args.subset_dir, args.num_points,
-        args.batch_size, world_size, rank, args.num_workers
+    # Prepare Pressure DataLoaders
+    Ptrain_dataloader, Pval_dataloader, Ptest_dataloader = get_dataloaders(
+        args.Pdataset_path, args.subset_dir, args.num_points,
+        args.batch_size, world_size, rank, args.Pcache_dir, args.num_workers
         )
+
+    # Prepare wall shear stress  DataLoaders
+    WSStrain_dataloader, WSSval_dataloader, WSStest_dataloader = get_WSSdataloaders(
+        args.Wdataset_path, args.subset_dir, args.num_points,
+        args.batch_size, world_size, rank, args.Wcache_dir, args.num_workers
+        )
+
+    # Prepare geometry DataLoaders
+    Ctrain_dataloader, Cval_dataloader, Ctest_dataloader = get_CADdataloaders(
+        args.Cdataset_path, args.subset_dir, args.num_points,
+        args.batch_size, world_size, rank, args.Ccache_dir, args.num_workers
+        )
+
+    # Combined them
+    Combined_TrainDataset = CombinedDataset(Ptrain_dataloader.dataset, WSStrain_dataloader.dataset, Ctrain_dataloader.dataset)
+    train_dataloader = DataLoader(Combined_TrainDataset, batch_size=args.batch_size, shuffle=True, num_worker=args.num_workers)
 
     # Log dataset info
     if local_rank == 0:
