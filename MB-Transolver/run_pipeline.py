@@ -109,39 +109,58 @@ def preprocess_data(args):
         # Import required modules for preprocessing
         from data_loader import SurfacePressureDataset
         from WSS_data_loader import SurfaceWSSDataset
+        from CADdata_loader import GeometrySTLDataset
 
+        if 0 :
+            # Create the WallShearStress dataset with preprocessing enabled
+            WSSdataset = SurfaceWSSDataset(
+                root_dir = args.Wdataset_path,
+                num_points = args.num_points,
+                preprocess = True,
+                cache_dir = Wcache_dir
+                )
 
-        # Create the WallShearStress dataset with preprocessing enabled
-        WSSdataset = SurfaceWSSDataset(
-            root_dir = args.Wdataset_path,
-            num_points = args.num_points,
-            preprocess = True,
-            cache_dir = Wcache_dir
-            )
+            # Process all files
+            logging.info(f"Processing {len(WSSdataset.vtk_files)} VTK files with {args.num_points} points per sample")
+            for ii, vtk_file in enumerate(WSSdataset.vtk_files):
+                logging.info(f"Processing file {ii+1} / {len(WSSdataset.vtk_files)}: {os.path.basename(vtk_file)}")
+                _ = WSSdataset[ii] # This will trigger preprocessing and caching
 
-        # Process all files
-        logging.info(f"Processing {len(WSSdataset.vtk_files)} VTK files with {args.num_points} points per sample")
-        for ii, vtk_file in enumerate(WSSdataset.vtk_files):
-            logging.info(f"Processing file {ii+1} / {len(WSSdataset.vtk_files)}: {os.path.basename(vtk_file)}")
-            _ = WSSdataset[ii] # This will trigger preprocessing and caching
+            logging.info(f"{Fore.MAGENTA}Data preprocessing complete. Cache data saved to {Wcache_dir}{Style.RESET_ALL}")
 
-        logging.info(f"{Fore.MAGENTA}Data preprocessing complete. Cache data saved to {Wcache_dir}{Style.RESET_ALL}")
+        if 0 :
+            # Create the Pressure dataset with preprocessing enabled
+            Pdataset = SurfacePressureDataset(
+                root_dir = args.Pdataset_path,
+                num_points = args.num_points,
+                preprocess = True,
+                cache_dir = Pcache_dir
+                )
 
-        # Create the Pressure dataset with preprocessing enabled
-        Pdataset = SurfacePressureDataset(
-            root_dir = args.Pdataset_path,
-            num_points = args.num_points,
-            preprocess = True,
-            cache_dir = Pcache_dir
-            )
+            # Process all files
+            logging.info(f"Processing {len(Pdataset.vtk_files)} VTK files with {args.num_points} points per sample")
+            for ii, vtk_file in enumerate(Pdataset.vtk_files):
+                logging.info(f"Processing file {ii+1} / {len(Pdataset.vtk_files)}: {os.path.basename(vtk_file)}")
+                _ = Pdataset[ii] # This will trigger preprocessing and caching
 
-        # Process all files
-        logging.info(f"Processing {len(Pdataset.vtk_files)} VTK files with {args.num_points} points per sample")
-        for ii, vtk_file in enumerate(Pdataset.vtk_files):
-            logging.info(f"Processing file {ii+1} / {len(Pdataset.vtk_files)}: {os.path.basename(vtk_file)}")
-            _ = Pdataset[ii] # This will trigger preprocessing and caching
+            logging.info(f"{Fore.MAGENTA}Data preprocessing complete. Cache data saved to {Pcache_dir}{Style.RESET_ALL}")
 
-        logging.info(f"{Fore.MAGENTA}Data preprocessing complete. Cache data saved to {Pcache_dir}{Style.RESET_ALL}")
+        if 1 :
+            # Create the Geometry dataset with preprocessing enabled
+            Cdataset = GeometrySTLDataset(
+                root_dir = args.Cdataset_path,
+                num_points = args.num_points,
+                preprocess = True,
+                cache_dir = Ccache_dir
+                )
+
+            # Process all files
+            logging.info(f"Processing {len(Cdataset.stl_files)} STL files with {args.num_points} points per sample")
+            for ii, stl_file in enumerate(Cdataset.stl_files):
+                logging.info(f"Processing file {ii+1} / {len(Cdataset.stl_files)}: {os.path.basename(stl_file)}")
+                _ = Cdataset[ii] # This will trigger preprocessing and caching
+
+            logging.info(f"{Fore.MAGENTA}Data preprocessing complete. Cache data saved to {Ccache_dir}{Style.RESET_ALL}")
 
         return True
 
