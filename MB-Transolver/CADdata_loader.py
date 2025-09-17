@@ -139,7 +139,7 @@ def create_subset(dataset, ids_file):
         return None
 
 
-def get_dataloaders(dataset_path: str, subset_dir: str, num_points: int, batch_size: int,
+def get_CADdataloaders(dataset_path: str, subset_dir: str, num_points: int, batch_size: int,
                     world_size: int, rank: int, cache_dir: str = None, num_workers: int = 4) -> tuple:
     """
     Prepare and return the training, validation, and test DataLoader objects.
@@ -194,7 +194,3 @@ def get_dataloaders(dataset_path: str, subset_dir: str, num_points: int, batch_s
 
     return train_dataloader, val_dataloader, test_dataloader
 
-
-# Constants for normalization
-PRESSURE_MEAN = -94.5
-PRESSURE_STD = 117.25
