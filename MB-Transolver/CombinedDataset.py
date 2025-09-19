@@ -18,9 +18,11 @@ class CombinedDataset(Dataset):
 
         # Combine the data into a single dictionary
         combined_data = {
-            'pressure': pressure_data,
-            'WallShearStress': wss_data,
-            'cad': cad_data
+            'pressure_point': pressure_data[0],
+            'pressure_value': pressure_data[1],
+            'wss_point': wss_data[0],
+            'wss_value': wss_data[1],
+            'geometry': cad_data,
         }
         return combined_data
 
