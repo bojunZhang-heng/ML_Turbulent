@@ -16,10 +16,12 @@ import logging
 import pprint
 
 # Import modules
+from torch.utils.data.distributed import DistributedSampler
 from model.model_dict import get_model
 from data_loader import get_dataloaders, PRESSURE_MEAN, PRESSURE_STD
 from WSSdata_loader import get_WSSdataloaders
 from CADdata_loader import get_CADdataloaders
+from CombinedDataset import CombinedDataset
 from utils.utils import setup_logger, setup_seed
 from utils.testloss import TestLoss
 from utils.normalizer import UnitTransformer
@@ -110,19 +112,21 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, local_rank):
     model.train()
     total_loss = 0
 
-    for tmp in tqdm(train_dataloader, desc="[Training]"):
+    for combined_data in tqdm(train_dataloader, desc="[Training]"):
         global PRESSURE_MEAN, PRESSURE_STD
 
         data = dict(
-            geometry_position = tmp["cad"].points,
-            wss_position = tmp["WallShearStress"].points,
-            pressure_position = tmp["pressure"].points
+            geometry_position = combined_data["geometry"],
+            wss_point = combined_data["wss_point"],
+            wss_value = combined_data["wss_value"],
+            pressure_point = combined_data["pressure_point"],
+            pressure_value = combined_data["pressure_value"]
         )
 
-        logging.info(f"geometry_position.shape : {data['geometry_position'].shape}")
-        logging.info(f"cad points the first 5 points: {data['geometry_position'][:5]}")
+        logging.info(f"pressure_value: {data['pressure_value'].shape}")
+        logging.info(f"pressure_point: {data['pressure_point'].shape}")
 
-        # Make data and perssure same shape
+# Make data and perssure same shape
   #      data = data.squeeze(1).to(local_rank)                          # [B, 1, point_dim, num_points] -> [B, point_dim, num_points]
   #      data = data.permute(0, 2, 1).contiguous()                      # [B, point_dim, num_points]    -> [B, num_points, point_dim]
 
@@ -283,8 +287,8 @@ def train_and_evaluate(rank, world_size, args):
         log_file = os.path.join(exp_dir, 'training.log')
         setup_logger(log_file)
         logging.info(f"args.exp_name : {args.exp_name}")
-        logging.info(f"Arguments:\n" + pprint.pformat(vars(args), indent=2))
-        logging.info(f"{Fore.RED}*******************************Starting training with {world_size} GPUs{Style.RESET_ALL}")
+        #logging.info(f"Arguments:\n" + pprint.pformat(vars(args), indent=2))
+        logging.info(f"Starting training with {world_size} GPUs")
 
     # Initialize model
     model = initialize_model(args, local_rank)
@@ -313,12 +317,24 @@ def train_and_evaluate(rank, world_size, args):
 
     # Combined them
     Combined_TrainDataset = CombinedDataset(Ptrain_dataloader.dataset, WSStrain_dataloader.dataset, Ctrain_dataloader.dataset)
-    train_dataloader = DataLoader(Combined_TrainDataset, batch_size=args.batch_size, shuffle=True, num_worker=args.num_workers)
+    train_sampler = DistributedSampler(
+            Combined_TrainDataset,
+            num_replicas=world_size,   # usually torch.distributed.get_world_size()
+            rank=rank,                      # usually torch.distributed.get_rank()
+            shuffle=True
+    )
+    train_dataloader = DataLoader(
+            Combined_TrainDataset,
+            batch_size=args.batch_size,
+            sampler=train_sampler,
+            num_workers=args.num_workers,
+            drop_last=True)
 
     # Log dataset info
     if local_rank == 0:
         logging.info(
-            f"Data loaded: {len(train_dataloader)} training batches, {len(val_dataloader)} validation batches, {len(test_dataloader)} test batches")
+           # f"Data loaded: {len(train_dataloader)} training batches, {len(val_dataloader)} validation batches, {len(test_dataloader)} test batches")
+            f"Data loaded: {len(train_dataloader)} training batches ")
 
     # Set up criterion, optimizer, and scheduler
     #! There is a puzzle!######
