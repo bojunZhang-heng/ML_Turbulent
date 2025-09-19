@@ -134,10 +134,10 @@ def create_subset(dataset, ids_file):
     try:
         with open(ids_file, 'r') as file:
             subset_ids = [id_.strip() for id_ in file.readlines()]
-        subset_files   = [f for f in dataset.stl_files if any(id_ in f for id_ in subset_ids)]
-        subset_indices = [dataset.stl_files.index(f) for f in subset_files]
+        subset_files   = [f for f in dataset.vtk_files if any(id_ in f for id_ in subset_ids)]
+        subset_indices = [dataset.vtk_files.index(f) for f in subset_files]
         if not subset_indices:
-            logging.error(f"No matching STL files found for IDs in {ids_file}.")
+            logging.error(f"No matching VTK files found for IDs in {ids_file}.")
         return Subset(dataset, subset_indices)
     except FileNotFoundError as e:
         logging.error(f"Error loading subset file {ids_file}: {e}")
@@ -150,7 +150,7 @@ def get_WSSdataloaders(dataset_path: str, subset_dir: str, num_points: int, batc
     Prepare and return the training, validation, and test DataLoader objects.
 
     Args:
-        dataset_path: Path to the directory containing STL files
+        dataset_path: Path to the directory containing VTK files
         subset_dir: Directory containing train/val/test split files
         num_points: Number of points to sample from each mesh
         batch_size: Batch size for dataloaders
@@ -162,7 +162,7 @@ def get_WSSdataloaders(dataset_path: str, subset_dir: str, num_points: int, batc
     Returns:
         A tuple of (train_dataloader, val_dataloader, test_dataloader)
     """
-    full_dataset = GeometrySTLDataset(
+    full_dataset = SurfaceWSSDataset(
         root_dir=dataset_path,
         num_points=num_points,
         preprocess=True,
