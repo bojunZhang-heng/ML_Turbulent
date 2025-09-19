@@ -11,7 +11,7 @@ python ./run_pipeline.py \
     --Ccache_dir "/work/mae-zhangbj/DrivAriNet_dataset/CAD/Cache_data-E_S_WW_WM" \
     --Vdataset_path "/work/mae-zhangbj/DrivAriNet_dataset/WallShearStress/E_S_WW_WM" \
     --Vcache_dir "/work/mae-zhangbj/DrivAriNet_dataset/WallShearStress/Cache_data-E_S_WW_WM" \
-    --subset_dir "/work/mae-zhangbj/ML_Turbulent/Current_Work/MB-Transolver/train_val_test_splits" \
+    --subset_dir "/work/mae-zhangbj/ML_Turbulent/Current_work/MB-Transolver/train_val_test_splits" \
     --n_hidden 128 \
     --n_heads 8 \
     --n_layers 8 \
