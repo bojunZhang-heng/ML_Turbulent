@@ -61,21 +61,29 @@ def parse_args():
     parser.add_argument('--gpus', type=str, default="0", help='GPUs to use (comma-separated)')
 
     # Model settings
-    parser.add_argument('--model', type=str, default='Transolver_2D')
     parser.add_argument('--dropout', type=float, default=0.4, help='Dropout rate')
     parser.add_argument('--emb_dims', type=int, default=1024, help='Embedding dimensions')
     parser.add_argument('--k', type=int, default=40, help='Number of nearest neighbors')
     parser.add_argument('--output_channels', type=int, default=1, help='Number of output channels')
     parser.add_argument('--weight_decay', type=float, default=1e-5)
-    parser.add_argument('--n_hidden', type=int, default=64, help='hidden dim')
-    parser.add_argument('--n_layers', type=int, default=3, help='layers')
-    parser.add_argument('--n_heads', type=int, default=4)
     parser.add_argument('--mlp_ratio', type=int, default=1)
     parser.add_argument('--max_grad_norm', type=float, default=None)
     parser.add_argument('--slice_num', type=int, default=32)
-    parser.add_argument('--unified_pos', type=int, default=0)
     parser.add_argument('--ref', type=int, default=8)
     parser.add_argument('--downsample', type=int, default=5)
+    parser.add_argument('--n_input', type=int, default=128)
+    parser.add_argument('--n_hidden', type=int, default=128)
+    parser.add_argument('--n_layers', type=int, default=3, help='layers')
+    parser.add_argument('--n_heads', type=int, default=4)
+    parser.add_argument('--n_dim', type=int, default=3)
+    parser.add_argument('--output_dim_surface', type=int, default=4)
+    parser.add_argument('--output_dim_volume', type=int, default=7)
+    parser.add_argument('--input_dim', type=int, default=3)
+    parser.add_argument('--geometry_depth', type=int, default=1)
+    parser.add_argument('--num_volume_blocks', type=int, default=6)
+    parser.add_argument('--num_surface_blocks', type=int, default=6)
+    parser.add_argument('--blocks', type=str, default="pscscs")
+    parser.add_argument('--res', type=str, default="res")
 
     # Evaluation settings
     parser.add_argument('--num_eval_samples', type=int, default=5, help='Number of samples to evaluate in detail')
@@ -175,7 +183,6 @@ def train_model(args):
     cmd = [
         "python", "train.py",
         "--exp_name", args.exp_name,
-        "--model", args.model,
         "--Cdataset_path", args.Cdataset_path,
         "--Pdataset_path", args.Pdataset_path,
         "--Wdataset_path", args.Wdataset_path,
@@ -194,15 +201,23 @@ def train_model(args):
         "--num_workers", str(args.num_workers),
         "--test_only", str(args.test_only),
         "--n_hidden", str(args.n_hidden),
-        "--n_heads", str(args.n_heads),
         "--n_layers", str(args.n_layers),
         "--lr", str(args.lr),
         "--max_grad_norm", str(args.max_grad_norm),
-        "--unified_pos", str(args.unified_pos),
         "--ref", str(args.ref),
         "--downsample", str(args.downsample),
-        "--mlp_ratio", str(args.mlp_ratio)
-
+        "--mlp_ratio", str(args.mlp_ratio),
+        "--n_dim", str(args.n_dim),
+        "--input_dim", str(args.input_dim),
+        "--output_dim_surface", str(args.output_dim_surface),
+        "--output_dim_volume", str(args.output_dim_volume),
+        "--geometry_depth", str(args.geometry_depth),
+        "--num_surface_blocks", str(args.num_surface_blocks),
+        "--num_volume_blocks", str(args.num_volume_blocks),
+        "--blocks", str(args.blocks),
+        "--res", str(args.res),
+        "--n_heads", str(args.n_heads),
+        "--n_input", str(args.n_input)
     ]
 
     if args.Pcache_dir:
