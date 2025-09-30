@@ -19,7 +19,7 @@ class Model(nn.Module):
         super().__init__()
     #    self.rope = RopeFrequency(dim=dim // num_heads, ndim=input_dim)
         # geometry
-        self.preprocess = MLP(args)
+        self.preprocess = MLP(n_input=args.n_dim, n_hidden=args.n_hidden, n_output=args.n_hidden, n_layers=args.n_layers, res=args.res)
         self.geometry_blocks = nn.ModuleList(
             [
                 Transolver_block(args, last_layer=(_ == args.geometry_depth - 1))
