@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 from model.Physics_Attention import Physics_Attention
-from model.MLP_geometry import MLP_geometry
+from model.MLP import MLP
 
 class Transolver_block(nn.Module):
     """Transformer encoder block."""
@@ -12,7 +12,7 @@ class Transolver_block(nn.Module):
         self.ln_1 = nn.LayerNorm(args.n_hidden)                  # C = 128
         self.Attn = Physics_Attention(args)                      # C = 4*64 = 256
         self.ln_2 = nn.LayerNorm(args.n_hidden)
-        self.mlp = MLP_geometry(args)
+        self.mlp = MLP(n_input=args.n_hidden, n_hidden=args.n_hidden, n_output=args.n_hidden, n_layers=3, res=args.res)
         if self.last_layer:
             self.ln_3 = nn.LayerNorm(args.n_hidden)
             self.mlp2 = nn.Linear(args.n_hidden, args.n_dim)
