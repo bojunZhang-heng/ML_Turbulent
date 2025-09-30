@@ -2,6 +2,5 @@ backup_logs/
 logs/
 __pycache__/
 experiments/
-model
 model_MB-UBT.py
 modules
