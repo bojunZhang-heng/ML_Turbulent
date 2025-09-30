@@ -14,17 +14,10 @@ import pprint
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 from torch.utils.data import DataLoader
-from src.train_one_epoch import train_one_epoch
-from src.test_model import test_model
 from src.train_and_evaluate import train_and_evaluate
 
 # Import modules
 from torch.utils.data.distributed import DistributedSampler
-from model.Driver_MBTransolver import Model
-from data_loader import get_dataloaders, PRESSURE_MEAN, PRESSURE_STD
-from WSSdata_loader import get_WSSdataloaders
-from CADdata_loader import get_CADdataloaders
-from CombinedDataset import CombinedDataset
 from utils.utils import setup_logger, setup_seed
 from utils.testloss import TestLoss
 from utils.normalizer import UnitTransformer
@@ -90,21 +83,10 @@ def parse_args():
     parser.add_argument('--num_surface_blocks', type=int, default=6)
     parser.add_argument('--blocks', type=str, default="pscscs")
     parser.add_argument('--res', type=str, default="True")
+    parser.add_argument('--dim_head', type=int, default="64")
 
     return parser.parse_args()
 
-def initialize_model(args, local_rank):
-    """ Initialize and return the RegDGCN model. """
-
-    model = Model(args).to(local_rank)
-    model = torch.nn.parallel.DistributedDataParallel(
-            model,
-            device_ids=[local_rank],
-            find_unused_parameters=True,
-            output_device=local_rank
-    )
-
-    return model
 
 def validate(model, val_dataloader, criterion, local_rank):
     """ Validate the model"""
