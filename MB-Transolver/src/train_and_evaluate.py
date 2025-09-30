@@ -14,13 +14,33 @@ import pprint
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 from torch.utils.data import DataLoader
+from torch.utils.data.distributed import DistributedSampler
 
 # Import modules
-from torch.utils.data.distributed import DistributedSampler
+from data_loader import get_dataloaders
+from WSSdata_loader import get_WSSdataloaders
+from CADdata_loader import get_CADdataloaders
+from CombinedDataset import CombinedDataset
+from model.Driver_MBTransolver import Model
+from src.test_model import test_model
+from src.train_one_epoch import train_one_epoch
 from utils.utils import setup_logger, setup_seed
 from utils.testloss import TestLoss
 from utils.normalizer import UnitTransformer
 from colorama import Fore, Style
+
+def initialize_model(args, local_rank):
+    """ Initialize and return the RegDGCN model. """
+
+    model = Model(args).to(local_rank)
+    model = torch.nn.parallel.DistributedDataParallel(
+            model,
+            device_ids=[local_rank],
+            find_unused_parameters=True,
+            output_device=local_rank
+    )
+
+    return model
 
 def train_and_evaluate(rank, world_size, args):
     """ main function for Distributed training and evaluation. """

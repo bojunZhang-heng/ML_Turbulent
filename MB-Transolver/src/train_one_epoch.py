@@ -23,6 +23,7 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, local_rank):
 
         optimizer.zero_grad()
         outputs = model(**data)
+
         loss = criterion(outputs, targets)
 
         loss.backward()
