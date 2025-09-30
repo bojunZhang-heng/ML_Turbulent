@@ -84,6 +84,7 @@ def parse_args():
     parser.add_argument('--num_surface_blocks', type=int, default=6)
     parser.add_argument('--blocks', type=str, default="pscscs")
     parser.add_argument('--res', type=str, default="res")
+    parser.add_argument('--dim_head', type=int, default="64")
 
     # Evaluation settings
     parser.add_argument('--num_eval_samples', type=int, default=5, help='Number of samples to evaluate in detail')
@@ -217,7 +218,8 @@ def train_model(args):
         "--blocks", str(args.blocks),
         "--res", str(args.res),
         "--n_heads", str(args.n_heads),
-        "--n_input", str(args.n_input)
+        "--n_input", str(args.n_input),
+        "--dim_head", str(args.dim_head)
     ]
 
     if args.Pcache_dir:
