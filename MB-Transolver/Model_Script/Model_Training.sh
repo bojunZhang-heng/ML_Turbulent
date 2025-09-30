@@ -33,7 +33,8 @@ python ./run_pipeline.py \
     --n_input 128 \
     --n_hidden 128 \
     --n_layers 8 \
-    --res "True" 
+    --res "True" \
+    --dim_head 64 
 
 #    --n_dim 3 \                       number of coordinates (typicaly 3 for 3D geometries)
 #    --input_dim 3 \                   we only use coordinates as inputs
