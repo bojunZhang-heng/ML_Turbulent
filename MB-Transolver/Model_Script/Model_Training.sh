@@ -8,8 +8,8 @@ python ./run_pipeline.py \
     --Pcache_dir "/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/Cache_data-E_S_WW_WM" \
     --Cdataset_path "/work/mae-zhangbj/DrivAriNet_dataset/CAD/E_S_WW_WM" \
     --Ccache_dir "/work/mae-zhangbj/DrivAriNet_dataset/CAD/Cache_data-E_S_WW_WM" \
-    --Vdataset_path "/work/mae-zhangbj/DrivAriNet_dataset/WallShearStress/E_S_WW_WM" \
-    --Vcache_dir "/work/mae-zhangbj/DrivAriNet_dataset/WallShearStress/Cache_data-E_S_WW_WM" \
+    --Vdataset_path "/work/mae-zhangbj/DrivAriNet_dataset/Volumetric_Field/E_S_WW_WM" \
+    --Vcache_dir "/work/mae-zhangbj/DrivAriNet_dataset/Volumetric_Field/Cache_data-E_S_WW_WM" \
     --subset_dir "/work/mae-zhangbj/ML_Turbulent/Current_work/MB-Transolver/train_val_test_splits" \
     --lr 0.001 \
     --max_grad_norm 0.1 \
@@ -27,7 +27,7 @@ python ./run_pipeline.py \
     --output_dim_volume  7 \
     --geometry_depth 1 \
     --n_heads 4 \
-    --blocks "pscscs" \
+    --blocks "s" \
     --num_volume_blocks 6 \
     --num_surface_blocks 6 \
     --n_input 128 \
@@ -36,6 +36,7 @@ python ./run_pipeline.py \
     --res "True" \
     --dim_head 64 
 
+#    --blocks "pscscs" \
 #    --n_dim 3 \                       number of coordinates (typicaly 3 for 3D geometries)
 #    --input_dim 3 \                   we only use coordinates as inputs
 #    --output_dim_surface 4 \          surface pressure (1D) and wallshearstress (3D)

@@ -119,8 +119,9 @@ def preprocess_data(args):
         from data_loader import SurfacePressureDataset
         from WSSdata_loader import SurfaceWSSDataset
         from CADdata_loader import GeometrySTLDataset
+        from Volume_data_loader import VolumeDataset
 
-        if 0 :
+        if 1 :
             # Create the WallShearStress dataset with preprocessing enabled
             WSSdataset = SurfaceWSSDataset(
                 root_dir = args.Wdataset_path,
@@ -154,7 +155,7 @@ def preprocess_data(args):
 
             logging.info(f"{Fore.MAGENTA}Data preprocessing complete. Cache data saved to {Pcache_dir}{Style.RESET_ALL}")
 
-        if 1 :
+        if 0 :
             # Create the Geometry dataset with preprocessing enabled
             Cdataset = GeometrySTLDataset(
                 root_dir = args.Cdataset_path,
@@ -170,6 +171,23 @@ def preprocess_data(args):
                 _ = Cdataset[ii] # This will trigger preprocessing and caching
 
             logging.info(f"{Fore.MAGENTA}Data preprocessing complete. Cache data saved to {Ccache_dir}{Style.RESET_ALL}")
+
+        if 1 :
+            # Create the Geometry dataset with preprocessing enabled
+            Vdataset = VolumeDataset(
+                root_dir = args.Vdataset_path,
+                num_points = args.num_points,
+                preprocess = True,
+                cache_dir = Vcache_dir
+                )
+
+            # Process all files
+            logging.info(f"Processing {len(Vdataset.vtk_files)} VTK files with {args.num_points} points per sample")
+            for ii, vtk_file in enumerate(Vdataset.vtk_files):
+                logging.info(f"Processing file {ii+1} / {len(Vdataset.vtk_files)}: {os.path.basename(vtk_file)}")
+                _ = Vdataset[ii] # This will trigger preprocessing and caching
+
+            logging.info(f"{Fore.MAGENTA}Data preprocessing complete. Cache data saved to {Vcache_dir}{Style.RESET_ALL}")
 
         return True
 
