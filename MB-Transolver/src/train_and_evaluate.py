@@ -20,6 +20,7 @@ from torch.utils.data.distributed import DistributedSampler
 from data_loader import get_dataloaders
 from WSSdata_loader import get_WSSdataloaders
 from CADdata_loader import get_CADdataloaders
+from Volume_data_loader import get_Volume_dataloaders
 from CombinedDataset import CombinedDataset
 from model.Driver_MBTransolver import Model
 from src.test_model import test_model
@@ -87,8 +88,19 @@ def train_and_evaluate(rank, world_size, args):
         args.batch_size, world_size, rank, args.Ccache_dir, args.num_workers
         )
 
+    # Prepare volume DataLoaders
+    Vtrain_dataloader, Vval_dataloader, Vtest_dataloader = get_Volume_dataloaders(
+        args.Vdataset_path, args.subset_dir, args.num_points,
+        args.batch_size, world_size, rank, args.Vcache_dir, args.num_workers
+        )
+
     # Combined them
-    Combined_TrainDataset = CombinedDataset(Ptrain_dataloader.dataset, WSStrain_dataloader.dataset, Ctrain_dataloader.dataset)
+    Combined_TrainDataset = CombinedDataset(
+            Ptrain_dataloader.dataset,
+            WSStrain_dataloader.dataset,
+            Ctrain_dataloader.dataset,
+            Vtrain_dataloader.dataset
+    )
     train_sampler = DistributedSampler(
             Combined_TrainDataset,
             num_replicas=world_size,   # usually torch.distributed.get_world_size()
