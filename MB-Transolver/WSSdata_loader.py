@@ -85,7 +85,6 @@ class SurfaceWSSDataset(Dataset):
 
         sampled_points = mesh_pt.points[indices]
         sampled_WallShearStress = mesh_pt.point_data['wallShearStress'][indices]  # Assuming WallShearStress data is stored under key 'w'
-        sampled_WallShearStress = sampled_WallShearStress.flatten()  # Ensure it's a flat array
 
         return pv.PolyData(sampled_points), sampled_WallShearStress
 
