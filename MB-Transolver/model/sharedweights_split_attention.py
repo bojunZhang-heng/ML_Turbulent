@@ -36,23 +36,26 @@ class SharedweightsSplitAttention(PhysicsAttention):
             .permute(0, 2, 1, 3).contiguous()  # B H N C (batch_size, num_heads, num_points, dim_head)
 
         x_mid_split = x_mid.split(split_size, dim=2)
-        x0_mid_split = x_mid_split[0]
-        x1_mid_split = x_mid_split[1]
+        x0_mid_split = x_mid_split[0]                    # Suface position
+        x1_mid_split = x_mid_split[1]                    # Volume position
 
         fx_mid_split = fx_mid.split(split_size, dim=2)
         fx0_mid_split = fx_mid_split[0]
         fx1_mid_split = fx_mid_split[1]
 
+        # surf+vol slice
         slice_weights = self.softmax(self.in_project_slice(x_mid) / self.temperature)  # B H N G (batch_size, num_heads, num_points, slice_token)
         slice_norm = slice_weights.sum(2)      # B H G (batch_size, num_heads, slice_token)
         slice_token = torch.einsum("bhnc,bhng->bhgc", fx_mid, slice_weights)
         slice_token = slice_token / ((slice_norm + 1e-5)[:, :, :, None].repeat(1, 1, 1, self.dim_head))
 
+        # surface slice
         slice_weights_0 = self.softmax(self.in_project_slice(x0_mid_split) / self.temperature)  # B H N G (batch_size, num_heads, num_points, slice_token)
         slice_norm_0 = slice_weights_0.sum(2)      # B H G (batch_size, num_heads, slice_token)
         slice_token_0 = torch.einsum("bhnc,bhng->bhgc", fx0_mid_split, slice_weights_0)
         slice_token_0 = slice_token_0 / ((slice_norm_0 + 1e-5)[:, :, :, None].repeat(1, 1, 1, self.dim_head))
 
+        # volume slice
         slice_weights_1 = self.softmax(self.in_project_slice(x1_mid_split) / self.temperature)  # B H N G (batch_size, num_heads, num_points, slice_token)
         slice_norm_1 = slice_weights_1.sum(2)      # B H G (batch_size, num_heads, slice_token)
         slice_token_1 = torch.einsum("bhnc,bhng->bhgc", fx1_mid_split, slice_weights_1)
@@ -91,7 +94,6 @@ class SharedweightsSplitAttention(PhysicsAttention):
         out_x_1 = rearrange(out_x_1, 'b h n d -> b n (h d)')     # 4*64 = 256
 
         out_x = torch.concat([out_x_0, out_x_1], dim=1)
-        logging.info(f"out_x.shape: {out_x.shape}")
         return self.to_out(out_x)
 
 
