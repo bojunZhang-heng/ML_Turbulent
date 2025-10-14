@@ -3,15 +3,7 @@ import torch
 import logging
 from einops import rearrange, repeat
 
-
 class PhysicsAttention(nn.Module):
-    def __init__(self, args):
-        super().__init__(args)
-
-        self.to_out = nn.Sequential(
-            nn.Linear(self.inner_dim, args.n_hidden, bias=False),
-            nn.Dropout(args.dropout)
-        )
     def __init__(self, args):
         super().__init__()
         self.n_heads = args.n_heads
