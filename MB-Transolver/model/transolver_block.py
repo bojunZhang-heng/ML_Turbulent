@@ -10,7 +10,7 @@ class TransolverBlock(nn.Module):
     def __init__(self, args, last_layer, attn_ctor: type[nn.Module]=PhysicsAttention):
         super().__init__()
         self.last_layer = last_layer
-        self.ln_1 = nn.LayerNorm(args.n_hidden)                  # C = 128
+        self.ln_1 = nn.LayerNorm(args.n_hidden)                      # C = 128
         self.Attn = attn_ctor(args)                                  # C = 4*64 = 256
         self.ln_2 = nn.LayerNorm(args.n_hidden)
         self.mlp = MLP(n_input=args.n_hidden, n_hidden=args.n_hidden, n_output=args.n_hidden, n_layers=3, res=args.res)
