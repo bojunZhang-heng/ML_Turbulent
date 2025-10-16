@@ -72,19 +72,20 @@ def parse_args():
     parser.add_argument('--ref', type=int, default=8)
     parser.add_argument('--downsample', type=int, default=5)
     parser.add_argument('--n_input', type=int, default=128)
-    parser.add_argument('--n_hidden', type=int, default=128)
+    parser.add_argument('--dim', type=int, default=128)
     parser.add_argument('--n_layers', type=int, default=3, help='layers')
-    parser.add_argument('--n_heads', type=int, default=4)
-    parser.add_argument('--n_dim', type=int, default=3)
+    parser.add_argument('--num_heads', type=int, default=4)
+    parser.add_argument('--ndim', type=int, default=3)
     parser.add_argument('--output_dim_surface', type=int, default=4)
     parser.add_argument('--output_dim_volume', type=int, default=7)
     parser.add_argument('--input_dim', type=int, default=3)
     parser.add_argument('--geometry_depth', type=int, default=1)
+    parser.add_argument('--num_surf_blocks', type=int, default=6)
     parser.add_argument('--num_volume_blocks', type=int, default=6)
-    parser.add_argument('--num_surface_blocks', type=int, default=6)
     parser.add_argument('--blocks', type=str, default="pscscs")
     parser.add_argument('--res', type=str, default="res")
     parser.add_argument('--dim_head', type=int, default="64")
+    parser.add_argument('--radius', type=float, default="0.25")
 
     # Evaluation settings
     parser.add_argument('--num_eval_samples', type=int, default=5, help='Number of samples to evaluate in detail')
@@ -138,7 +139,7 @@ def preprocess_data(args):
 
             logging.info(f"{Fore.MAGENTA}Data preprocessing complete. Cache data saved to {Wcache_dir}{Style.RESET_ALL}")
 
-        if 0 :
+        if 1 :
             # Create the Pressure dataset with preprocessing enabled
             Pdataset = SurfacePressureDataset(
                 root_dir = args.Pdataset_path,
@@ -155,7 +156,7 @@ def preprocess_data(args):
 
             logging.info(f"{Fore.MAGENTA}Data preprocessing complete. Cache data saved to {Pcache_dir}{Style.RESET_ALL}")
 
-        if 0 :
+        if 1 :
             # Create the Geometry dataset with preprocessing enabled
             Cdataset = GeometrySTLDataset(
                 root_dir = args.Cdataset_path,
@@ -219,25 +220,26 @@ def train_model(args):
         "--seed", str(args.seed),
         "--num_workers", str(args.num_workers),
         "--test_only", str(args.test_only),
-        "--n_hidden", str(args.n_hidden),
+        "--dim", str(args.dim),
         "--n_layers", str(args.n_layers),
         "--lr", str(args.lr),
         "--max_grad_norm", str(args.max_grad_norm),
         "--ref", str(args.ref),
         "--downsample", str(args.downsample),
         "--mlp_ratio", str(args.mlp_ratio),
-        "--n_dim", str(args.n_dim),
+        "--ndim", str(args.ndim),
         "--input_dim", str(args.input_dim),
         "--output_dim_surface", str(args.output_dim_surface),
         "--output_dim_volume", str(args.output_dim_volume),
         "--geometry_depth", str(args.geometry_depth),
-        "--num_surface_blocks", str(args.num_surface_blocks),
+        "--num_surf_blocks", str(args.num_surf_blocks),
         "--num_volume_blocks", str(args.num_volume_blocks),
         "--blocks", str(args.blocks),
         "--res", str(args.res),
-        "--n_heads", str(args.n_heads),
+        "--num_heads", str(args.num_heads),
         "--n_input", str(args.n_input),
-        "--dim_head", str(args.dim_head)
+        "--dim_head", str(args.dim_head),
+        "--radius", str(args.radius)
     ]
 
     if args.Pcache_dir:
@@ -264,7 +266,7 @@ def train_model(args):
 
     elapsed_time = time.time() - start_time
     logging.info(f"**********************Model training completed ")
-   # logging.info(f"Model training completed in {elapsed_time:.2f} seconds")
+    logging.info(f"Model training completed in {elapsed_time:.2f} seconds")
 
     return True
 
