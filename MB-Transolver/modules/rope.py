@@ -13,3 +13,7 @@ def rope(x: torch.Tensor, freqs: torch.Tensor) -> torch.Tensor:
     freqs = einops.rearrange(freqs, "batch_size seqlen head_dim -> batch_size 1 seqlen head_dim")
     x_out = torch.view_as_real(x_ * freqs).flatten(start_dim=3)
     return x_out.type_as(x)
+
+
+
+
