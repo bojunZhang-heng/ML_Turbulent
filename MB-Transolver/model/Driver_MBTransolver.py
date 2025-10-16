@@ -1,4 +1,3 @@
-
 import einops
 import torch
 import logging
@@ -44,6 +43,7 @@ class Model(nn.Module):
         )
 
         # weight-shared blocks
+        x = block(q=x, kv=geometry_encoding, attn_kwargs=geometry_perceiver_attn_kwargs)
         self.perceiver = PerceiverBlock(args=args, attn_ctor=PerceiverAttention)
         self.blocks = nn.ModuleList()
         for block in args.blocks:
@@ -84,6 +84,7 @@ class Model(nn.Module):
             self,
             # Geometry
             geometry_position: torch.Tensor,
+            geometry_batch_idx: torch.Tensor | None,
             # Surface
             surf_position: torch.Tensor,
             surf_position_2: torch.Tensor,
@@ -107,10 +108,24 @@ class Model(nn.Module):
         volume_position = surf_position_2
         split_size = [surf_position.size(1), volume_position.size(1)]
 
+        # rope frequencies
+        assert geometry_batch_idx is None or geometry_batch_idx.unique().numel() == 1, "batch_size > 1 not supported"
+        geometry_rope = self.rope(geometry_position.unsqueeze(0))
+        geometry_attn_kwargs["freqs"] = geometry_rope
+        rope_surface_all = self.rope(surf_position)
+        rope_volume_all = self.rope(volume_position)
+        rope_all = torch.concat([rope_surface_all, rope_volume_all], dim=1)
+
+        geometry_perceiver_attn_kwargs["q_freqs"] = rope_all
+        geometry_perceiver_attn_kwargs["k_freqs"] = geometry_rope
+        surface_decoder_attn_kwargs["freqs"] = rope_surface_all
+        volume_decoder_attn_kwargs["freqs"] = rope_volume_all
+        shared_attn_kwargs["freqs"] = rope_all
+
         # Encode geometry
         geometry_position = self.preprocess(geometry_position)
         for geometry_block in self.geometry_blocks:
-            geometry_position = geometry_block(geometry_position)
+            geometry_position = geometry_block(geometry_position, attn_kwargs=geometry_attn_kwargs)
         geometry_encoding = geometry_position
 
         # Shared-weights model (all tokens are concatenated into a single sequence for high GPU utilization)
@@ -121,14 +136,10 @@ class Model(nn.Module):
         surface_pos_embed = self.surface_bias(self.pos_embed(surf_position))
         volume_pos_embed = self.volume_bias(self.pos_embed(volume_position))
 
-#        logging.info(f"surface_pos_embed: {surface_pos_embed.shape}")
-#        logging.info(f"volume_pos_embed: {volume_pos_embed.shape}")
-#        logging.info(f"geometry_encoding: {geometry_encoding.shape}")
-
         # perceiver_block
-        x_surf, x_volume = self.perceiver(surface_pos_embed, volume_pos_embed, geometry_encoding)
+        x_surf, x_volume = self.perceiver(surface_pos_embed, volume_pos_embed, geometry_encoding,
+                                          attn_kwargs=geometry_perceiver_attn_kwargs)
         x = torch.concat([x_surf, x_volume], dim=1)
-#        logging.info(f"x.shape: {x.shape}")
 
         for block in self.blocks:
             x = block(x, attn_kwargs=dict(split_size=split_size))
@@ -142,8 +153,6 @@ class Model(nn.Module):
 
         outputs = {}
         outputs["surf_pressure"] = x_surf                # (B, N, pressure_dim)
-#        outputs["surf_pressure"] = x_surf[..., 0]
-#        outputs["surf_wss"] = x_surf[..., 1:]
 
         # volume blocks
         for block in self.volume_blocks:
@@ -151,9 +160,6 @@ class Model(nn.Module):
         x_volume = self.volume_decoder(x_volume)             #(6, 10000, 3)
 
         outputs["surf_wss"] = x_volume                       #(6, 10000, 3)
-#        outputs["volume_pressure"] = x_volume[..., 0]
-#        outputs["volume_wss"] = x_volume[..., 1:3]
-#        outputs["volume_vel"] = x_volume[..., 4:]
 
 
         return outputs
