@@ -10,7 +10,7 @@ python run_pipeline.py \
     --Vdataset_path "/work/mae-zhangbj/DrivAriNet_dataset/Volumetric_Field/E_S_WW_WM" \
     --Vcache_dir "/work/mae-zhangbj/DrivAriNet_dataset/Volumetric_Field/Cache_data-E_S_WW_WM" \
     --subset_dir "/work/mae-zhangbj/ML_Turbulent/Current_Work/MB-Transolver/train_val_test_splits" \
-    --num_points 10000
+    --num_points 5000000
 
 #######################################################
 # Wall Shear Stress
@@ -20,4 +20,3 @@ python run_pipeline.py \
 # E_S_WW_WM
 # --Wdataset_path "/work/mae-zhangbj/DrivAriNet_dataset/WallShearStress/E_S_WW_WM"
 # --Wcache_dir "/work/mae-zhangbj/DrivAriNet_dataset/WallShearStress/Cache_data-E_S_WW_WM"
-

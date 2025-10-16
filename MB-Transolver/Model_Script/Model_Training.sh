@@ -17,24 +17,25 @@ python ./run_pipeline.py \
     --ref 8 \
     --downsample 5 \
     --num_workers 1 \
-    --batch_size 6 \
+    --batch_size 1 \
     --epochs 500 \
     --test_only 0 \
     --gpus "0" \
-    --n_dim 3  \
+    --ndim 3  \
     --input_dim 3 \
-    --output_dim_surface 4 \
-    --output_dim_volume  7 \
+    --output_dim_surface 1 \
+    --output_dim_volume  3 \
     --geometry_depth 1 \
-    --n_heads 4 \
-    --blocks "s" \
+    --num_surf_blocks 6 \
     --num_volume_blocks 6 \
-    --num_surface_blocks 6 \
-    --n_input 128 \
-    --n_hidden 128 \
+    --num_heads 3 \
+    --blocks "pscsc" \
+    --n_input 192 \
+    --dim 192 \
     --n_layers 8 \
     --res "True" \
-    --dim_head 64 
+    --dim_head 64 \
+    --radius 0.25
 
 #    --blocks "pscscs" \
 #    --n_dim 3 \                       number of coordinates (typicaly 3 for 3D geometries)

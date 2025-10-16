@@ -1,6 +1,7 @@
 #!/bin/bash
+
 #BSUB -J MB-Transolver      # Job name
-#BSUB -q 2v100-32-sc       # Queue name (change if needed)
+#BSUB -q 4v100-16-e5        # Queue name (change if needed)
 #BSUB -n 1                            # Number of CPU cores
 #BSUB -R "span[ptile=1]"
 #BSUB -gpu "num=1"
@@ -17,7 +18,7 @@ echo "Running on host: $(hostname)"
 echo "Job ID: $LSB_JOBID"
 echo "Requested GPUs: $LSB_GPU_REQ"
 
-# Activate d2l 
+# Activate d2l
 source ~/lib/miniconda3/etc/profile.d/conda.sh
 conda activate d2l
 
@@ -28,7 +29,7 @@ nvidia-smi
 find ./logs/ -name '*.log' ! -name "*_${LSB_JOBID}*.log" -delete
 
 # Run your Preprocess script
-# sh ./Model_Script/Model_Preprocess.sh 
+# sh ./Model_Script/Model_Preprocess.sh
 
 # Run your training script
  sh ./Model_Script/Model_Training.sh
@@ -41,5 +42,3 @@ find ./logs/ -name '*.log' ! -name "*_${LSB_JOBID}*.log" -delete
 
 # Backup train log file
 cp ./logs/err*.log  ./backup_logs
-
-
