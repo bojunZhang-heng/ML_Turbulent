@@ -20,10 +20,10 @@ class CombinedDataset(Dataset):
 
         # Combine the data into a single dictionary
         combined_data = {
-            'surf_position_1': pressure_data[0],
-            'surf_pressure': pressure_data[1],
-            'surf_position_2': wss_data[0],
-            'surf_wss': wss_data[1],
+            'surface_position_1': pressure_data[0],
+            'surface_pressure': pressure_data[1],
+            'surface_position_2': wss_data[0],
+            'surface_wss': wss_data[1],
             'geometry_position': cad_data,
             'volume_position': volume_data[0],
             'volume_pressure': volume_data[1],
