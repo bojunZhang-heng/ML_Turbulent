@@ -1,5 +1,6 @@
 # train.py
 import os
+import sys
 import torch
 import torch.distributed as dist
 import torch.multiprocessing as mp
@@ -25,15 +26,19 @@ from CombinedDataset import CombinedDataset
 from model.Driver_MBTransolver import Model
 from src.test_model import test_model
 from src.train_one_epoch import train_one_epoch
+from src.validate import validate
 from utils.utils import setup_logger, setup_seed
 from utils.testloss import TestLoss
 from utils.normalizer import UnitTransformer
 from colorama import Fore, Style
 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from model_ab_ubt import AnchoredBranchedUPT
+
 def initialize_model(args, local_rank):
     """ Initialize and return the RegDGCN model. """
 
-    model = Model(args).to(local_rank)
+    model = AnchoredBranchedUPT(args).to(local_rank)
     model = torch.nn.parallel.DistributedDataParallel(
             model,
             device_ids=[local_rank],
@@ -94,7 +99,7 @@ def train_and_evaluate(rank, world_size, args):
         args.batch_size, world_size, rank, args.Vcache_dir, args.num_workers
         )
 
-    # Combined them
+    # Combined train dataset
     Combined_TrainDataset = CombinedDataset(
             Ptrain_dataloader.dataset,
             WSStrain_dataloader.dataset,
@@ -114,11 +119,31 @@ def train_and_evaluate(rank, world_size, args):
             num_workers=args.num_workers,
             drop_last=True)
 
+    # Combined validate dataset
+    combined_valDataset = CombinedDataset(
+            Pval_dataloader.dataset,
+            WSSval_dataloader.dataset,
+            Cval_dataloader.dataset,
+            Vval_dataloader.dataset
+    )
+    val_sampler = DistributedSampler(
+            combined_valDataset,
+            num_replicas=world_size,   # usually torch.distributed.get_world_size()
+            rank=rank,                      # usually torch.distributed.get_rank()
+            shuffle=True
+    )
+    val_dataloader = DataLoader(
+            combined_valDataset,
+            batch_size=args.batch_size,
+            sampler=val_sampler,
+            num_workers=args.num_workers,
+            drop_last=True)
+
     # Log dataset info
     if local_rank == 0:
         logging.info(
-           # f"Data loaded: {len(train_dataloader)} training batches, {len(val_dataloader)} validation batches, {len(test_dataloader)} test batches")
-            f"Data loaded: {len(train_dataloader)} training batches ")
+          #  f"Data loaded: {len(train_dataloader)} training batches, {len(val_dataloader)} validation batches, {len(test_dataloader)} test batches")
+            f"Data loaded: {len(train_dataloader)} training batches, {len(val_dataloader)} validation batches")
 
     # Set up criterion, optimizer, and scheduler
     #! There is a puzzle!######
