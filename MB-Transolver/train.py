@@ -65,52 +65,30 @@ def parse_args():
     parser.add_argument('--k', type=int, default=40, help='Number of nearest neighbors')
     parser.add_argument('--output_channels', type=int, default=1, help='Number of output channels')
     parser.add_argument('--weight_decay', type=float, default=1e-5)
-    parser.add_argument('--n_hidden', type=int, default=128, help='hidden dim')
+    parser.add_argument('--dim', type=int, default=128, help='hidden dim')
     parser.add_argument('--n_layers', type=int, default=3, help='layers')
-    parser.add_argument('--n_heads', type=int, default=4)
+    parser.add_argument('--num_heads', type=int, default=4)
     parser.add_argument('--max_grad_norm', type=float, default=None)
     parser.add_argument('--slice_num', type=int, default=32)
     parser.add_argument('--ref', type=int, default=8)
     parser.add_argument('--downsample', type=int, default=5)
     parser.add_argument('--mlp_ratio', type=int, default=1)
-    parser.add_argument('--n_dim', type=int, default=3)
+    parser.add_argument('--ndim', type=int, default=3)
     parser.add_argument('--n_input', type=int, default=128)
     parser.add_argument('--input_dim', type=int, default=3)
     parser.add_argument('--output_dim_surface', type=int, default=4)
     parser.add_argument('--output_dim_volume', type=int, default=7)
     parser.add_argument('--geometry_depth', type=int, default=1)
+    parser.add_argument('--num_surf_blocks', type=int, default=6)
     parser.add_argument('--num_volume_blocks', type=int, default=6)
-    parser.add_argument('--num_surface_blocks', type=int, default=6)
     parser.add_argument('--blocks', type=str, default="pscscs")
     parser.add_argument('--res', type=str, default="True")
     parser.add_argument('--dim_head', type=int, default="64")
+    parser.add_argument('--radius', type=float, default="0.25")
 
     return parser.parse_args()
 
 
-def validate(model, val_dataloader, criterion, local_rank):
-    """ Validate the model"""
-
-    model.eval()
-    total_loss = 0
-
-    with torch.no_grad():
-        for data, targets in tqdm(val_dataloader, desc="[Validation]"):
-
-            # Make data and perssure same shape
-            data = data.squeeze(1).to(local_rank)
-            data = data.permute(0, 2, 1).contiguous()
-            targets = targets.to(local_rank)
-            targets = targets.permute(0, 2, 1).contiguous()
-
-            # Normalize targets
-            targets = (targets - PRESSURE_MEAN) / PRESSURE_STD
-
-            outputs     = model(data)
-            loss        = criterion(outputs, targets)
-            total_loss += loss.item()
-
-    return total_loss / len(val_dataloader)
 
 def main():
     """ main function to parse arguments and start training."""
