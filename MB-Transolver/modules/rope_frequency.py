@@ -5,6 +5,7 @@ from torch import nn
 
 class RopeFrequency(nn.Module):
     """Creates frequencies for rotary embeddings (RoPE) from https://arxiv.org/abs/2104.09864 for variable positions.
+    x.shape = (123,3)
 
     Args:
         dim: Dimensionality of frequencies (in transformers this should be the head dimension).
@@ -55,3 +56,4 @@ class RopeFrequency(nn.Module):
         assert self.padding % 2 == 0
         out = torch.concat([out, torch.zeros(*out.shape[:-1], self.padding // 2, device=coords.device)], dim=-1)
         return torch.polar(torch.ones_like(out), out)
+
