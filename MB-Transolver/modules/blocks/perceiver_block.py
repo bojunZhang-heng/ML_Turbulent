@@ -15,11 +15,18 @@ class PerceiverBlock(nn.Module):
         num_heads: Number of attention heads.
     """
 
-    def __init__(self, dim: int, num_heads: int):
+    def __init__(
+            self,
+            dim: int,
+            num_heads: int,
+            patch_size: int = 20,
+            shift: int = 2,
+            dropout: int = 0.1,
+            ):
         super().__init__()
         self.norm1q = nn.LayerNorm(dim, eps=1e-6)
         self.norm1kv = nn.LayerNorm(dim, eps=1e-6)
-        self.attn = PerceiverAttention(dim=dim, num_heads=num_heads)
+        self.attn = PerceiverAttention(dim=dim, num_heads=num_heads, patch_size=patch_size, shift=shift, dropout=dropout)
         self.norm2 = nn.LayerNorm(dim, eps=1e-6)
         self.mlp = Mlp(dim)
 
@@ -27,8 +34,8 @@ class PerceiverBlock(nn.Module):
         """Forward pass of the PerceiverBlock.
 
         Args:
-            q: Input tensor with shape (batch_size, num_q_tokens, dim) for the query representations.
-            kv: Input tensor with shape (batch_size, num_kv_tokens, dim) for the key and value representations.
+            q: Input tensor with shape (batch_size, num_q_tokens, dim) for the query representations.surface and volume stuff
+            kv: Input tensor with shape (batch_size, num_kv_tokens, dim) for the key and value representations. geometry stuff
             attn_kwargs: Dict with arguments for the attention (such as rope frequencies). Defaults to None.
 
         Returns:
