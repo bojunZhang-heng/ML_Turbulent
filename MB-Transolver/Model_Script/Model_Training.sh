@@ -2,6 +2,7 @@ python ./run_pipeline.py \
     --stages train \
     --exp_name "Test" \
     --num_points 10000 \
+    --root_dir "/work/mae-zhangbj/drivaerml" \
     --Wdataset_path "/work/mae-zhangbj/DrivAriNet_dataset/WallShearStress/E_S_WW_WM" \
     --Wcache_dir "/work/mae-zhangbj/DrivAriNet_dataset/WallShearStress/Cache_data-E_S_WW_WM" \
     --Pdataset_path "/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WW_WM" \
@@ -10,7 +11,7 @@ python ./run_pipeline.py \
     --Ccache_dir "/work/mae-zhangbj/DrivAriNet_dataset/CAD/Cache_data-E_S_WW_WM" \
     --Vdataset_path "/work/mae-zhangbj/DrivAriNet_dataset/Volumetric_Field/E_S_WW_WM" \
     --Vcache_dir "/work/mae-zhangbj/DrivAriNet_dataset/Volumetric_Field/Cache_data-E_S_WW_WM" \
-    --subset_dir "/work/mae-zhangbj/ML_Turbulent/Current_work/MB-Transolver/train_val_test_splits" \
+    --subset_dir "/work/mae-zhangbj/ML_Turbulent/Current_Work/MB-Transolver/train_val_test_splits" \
     --lr 0.001 \
     --max_grad_norm 0.1 \
     --slice_num 64 \
