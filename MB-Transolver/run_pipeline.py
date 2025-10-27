@@ -18,7 +18,7 @@ import logging
 import time
 import pprint
 from datetime import datetime
-from utils.utils import setup_logger
+from utils_v1 import setup_logger
 from colorama import Fore, Style
 
 #! alias for colorful output
@@ -50,6 +50,7 @@ def parse_args():
     parser.add_argument('--Pcache_dir', type=str, help='Path to cache directory')
     parser.add_argument('--Wcache_dir', type=str, help='Path to cache directory')
     parser.add_argument('--Vcache_dir', type=str, help='Path to cache directory')
+    parser.add_argument('--root_dir', type=str, help='Path to cache directory')
     parser.add_argument('--num_points', type=int, default=10000, help='Number of points to sample')
 
     # Training settings
@@ -122,7 +123,7 @@ def preprocess_data(args):
         from CADdata_loader import GeometrySTLDataset
         from Volume_data_loader import VolumeDataset
 
-        if 1 :
+        if 0 :
             # Create the WallShearStress dataset with preprocessing enabled
             WSSdataset = SurfaceWSSDataset(
                 root_dir = args.Wdataset_path,
@@ -139,7 +140,7 @@ def preprocess_data(args):
 
             logging.info(f"{Fore.MAGENTA}Data preprocessing complete. Cache data saved to {Wcache_dir}{Style.RESET_ALL}")
 
-        if 1 :
+        if 0 :
             # Create the Pressure dataset with preprocessing enabled
             Pdataset = SurfacePressureDataset(
                 root_dir = args.Pdataset_path,
@@ -156,7 +157,7 @@ def preprocess_data(args):
 
             logging.info(f"{Fore.MAGENTA}Data preprocessing complete. Cache data saved to {Pcache_dir}{Style.RESET_ALL}")
 
-        if 1 :
+        if 0 :
             # Create the Geometry dataset with preprocessing enabled
             Cdataset = GeometrySTLDataset(
                 root_dir = args.Cdataset_path,
@@ -173,7 +174,7 @@ def preprocess_data(args):
 
             logging.info(f"{Fore.MAGENTA}Data preprocessing complete. Cache data saved to {Ccache_dir}{Style.RESET_ALL}")
 
-        if 1 :
+        if 0 :
             # Create the Geometry dataset with preprocessing enabled
             Vdataset = VolumeDataset(
                 root_dir = args.Vdataset_path,
@@ -208,6 +209,7 @@ def train_model(args):
         "--Wdataset_path", args.Wdataset_path,
         "--Vdataset_path", args.Vdataset_path,
         "--subset_dir", args.subset_dir,
+        "--root_dir", args.root_dir,
         "--num_points", str(args.num_points),
         "--batch_size", str(args.batch_size),
         "--epochs", str(args.epochs),
