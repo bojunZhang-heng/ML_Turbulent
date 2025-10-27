@@ -4,13 +4,17 @@ import torch.nn.functional as F
 
 from modules.attention import DotProductAttention
 from modules.rope import rope
+from typing import Optional
 
 class SharedweightsSplitattnAttention(DotProductAttention):
     def forward(
         self,
         x: torch.Tensor,
-        split_size: list[int],
-        freqs: torch.Tensor,
+        order: Optional[torch.Tensor] = None,
+        inverse: Optional[torch.Tensor] = None,
+        geometry: Optional[bool] = False,
+        split_size: list[int] = None,
+        freqs: Optional[torch.Tensor] = None,
     ) -> torch.Tensor:
         """Attention between:
         - q=surface_anchors -> kv=surface_anchors
