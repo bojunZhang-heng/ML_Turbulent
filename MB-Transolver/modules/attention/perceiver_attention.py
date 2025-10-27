@@ -1,7 +1,9 @@
 import einops
+import logging
 import torch
 import torch.nn.functional as F
 from torch import nn
+from modules.attention.serialized_attention import Serialized_Attention
 
 from modules.rope import rope
 
@@ -14,15 +16,27 @@ class PerceiverAttention(nn.Module):
         num_heads: Number of attention heads. Defaults to 8.
     """
 
-    def __init__(self, dim: int, num_heads: int = 8):
+    def __init__(
+            self,
+            dim: int = 192,
+            num_heads: int = 8,
+            patch_size: int = 20,
+            shift: int = 2,
+            dropout: int = 0.1,
+            ):
         super().__init__()
         assert dim % num_heads == 0, "dim should be divisible by num_heads"
+
         self.num_heads = num_heads
         self.head_dim = dim // num_heads
+        self.patch_size = patch_size
+        self.shift = shift
+        self.dropout = dropout
 
         self.q = nn.Linear(dim, dim)
         self.kv = nn.Linear(dim, dim * 2)
         self.proj = nn.Linear(dim, dim)
+
 
     def forward(
         self,
@@ -65,8 +79,10 @@ class PerceiverAttention(nn.Module):
         q = rope(q, freqs=q_freqs)
         k = rope(k, freqs=k_freqs)
 
-        # attn
+        # global attention
         x = F.scaled_dot_product_attention(q, k, v)
+
         x = einops.rearrange(x, "bs num_heads seqlen head_dim -> bs seqlen (num_heads head_dim)")
-        x = self.proj(x)
+        x = self.proj(x)   # dim = 192
+
         return x
