@@ -239,18 +239,3 @@ class DrivAerMLDataset(Dataset):
 #    def getitem_volume_vorticity(self, idx: int) -> torch.Tensor:
 #        """Retrieves volume vorticity (num_volume_points, 3)"""
 #        return self._load(idx=idx, filename="volume_cell_vorticity.npy")
-
-def pos_to_order_inverse_index(pos, tensor=False):
-    data_dict = dict(coord=pos, grid_size = torch.tensor([0.05,0.05,0.05]))
-    B,N,C = data_dict['coord'].shape
-    data_dict['batch'] = torch.arange(B).repeat_interleave(N).cuda()
-    data_dict['coord'] = data_dict['coord'].view(B*N,C).cuda()
-    point = Point(data_dict)
-    point.serialization(order=["z", "z-trans", "hilbert", "hilbert-trans"], shuffle_orders=False)
-    if torch == False:
-        order = point['serialized_order'][None, ...].cpu().numpy()
-        inverse = point['serialized_inverse'][None, ...].cpu().numpy()
-    else:
-        order = point['serialized_order'][None, ...]
-        inverse = point['serialized_inverse'][None, ...]
-    return order, inverse
