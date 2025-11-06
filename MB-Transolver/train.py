@@ -1,4 +1,5 @@
 # train.py
+import warnings
 import os
 import torch
 import torch.distributed as dist
@@ -25,7 +26,7 @@ from preprocessors import (
     MomentNormalizationPreprocessor,
     PositionNormalizationPreprocessor,
 )
-from drivaerml_dataset import pos_to_order_inverse_index
+warnings.filterwarnings("ignore", category=UserWarning)
 
 # ! alias for colorful output
 R = Fore.RED
@@ -98,8 +99,8 @@ def parse_args():
     parser.add_argument("--ndim", type=int, default=3)
     parser.add_argument("--n_input", type=int, default=128)
     parser.add_argument("--input_dim", type=int, default=3)
-    parser.add_argument("--output_dim_surface", type=int, default=4)
-    parser.add_argument("--output_dim_volume", type=int, default=7)
+    parser.add_argument("--output_dim_surface", type=int, default=1)
+    parser.add_argument("--output_dim_volume", type=int, default=3)
     parser.add_argument("--geometry_depth", type=int, default=1)
     parser.add_argument("--num_surf_blocks", type=int, default=6)
     parser.add_argument("--num_volume_blocks", type=int, default=6)
@@ -154,6 +155,7 @@ def train_and_evaluate(rank, world_size, args):
         logging.info(f"Total trainable parameters: {total_params}")
 
     # Dataload
+    # BUG is here
     train_dataloader, val_dataloader, test_dataloader = create_data_loaders(
         args.root_dir, args.batch_size, num_sample_frac=0.001, num_workers=1
     )
@@ -161,8 +163,7 @@ def train_and_evaluate(rank, world_size, args):
     # Log dataset info
     if local_rank == 0:
         logging.info(
-            #  f"Data loaded: {len(train_dataloader)} training batches, {len(val_dataloader)} validation batches, {len(test_dataloader)} test batches")
-            f"Data loaded: {len(train_dataloader)} training batches, {len(val_dataloader)} validation batches"
+            f"Data loaded: {len(train_dataloader)} training batches, {len(val_dataloader)} validation batches, {len(test_dataloader)} test batches"
         )
 
     # Set up criterion, optimizer, and scheduler
@@ -235,7 +236,7 @@ def train_and_evaluate(rank, world_size, args):
             train_losses.append(train_loss)
             val_losses.append(val_loss)
             logging.info(
-                f"Epoch {epoch + 1}/{args.epochs} - Train Loss: {train_loss:.6f}, Val Loss: {val_loss:.6f}"
+                f"Epoch {epoch + 1}/{args.epochs} - Train Loss: {train_loss:.6f}, Val Loss: {val_loss:.6f}{RESET}"
             )
 
             # Save the best model
@@ -272,7 +273,13 @@ def train_and_evaluate(rank, world_size, args):
     # Test the final model
     if local_rank == 0:
         logging.info("Testing the final model")
-    # test_model(model, test_dataloader, criterion, local_rank, os.path.join('experiments', args.exp_name))
+    test_model(
+        model,
+        test_dataloader,
+        criterion,
+        local_rank,
+        os.path.join("experiments", args.exp_name),
+    )
 
     # Test the best model
     if local_rank == 0:
@@ -280,75 +287,81 @@ def train_and_evaluate(rank, world_size, args):
         model.load_state_dict(
             torch.load(best_model_path, map_location=f"cuda:{local_rank}")
         )
-    # test_model(model, test_dataloader, criterion, local_rank, os.path.join('experiments', args.exp_name))
+    test_model(
+        model,
+        test_dataloader,
+        criterion,
+        local_rank,
+        os.path.join("experiments", args.exp_name),
+    )
 
     # Clean up
     dist.destroy_process_group()
 
+batch_keys = [
+           "surface_anchor_pressure",
+           "surface_anchor_wallshearstress",
+           "volume_anchor_totalpcoeff",
+           "volume_anchor_velocity",
+           "surface_query_pressure",
+           "surface_query_wallshearstress",
+           "volume_query_totalpcoeff",
+           "volume_query_velocity",
+         ]
 
 def train_one_epoch(model, train_dataloader, optimizer, criterion, local_rank):
     """Train for one epoch."""
     model.train()
     total_loss = 0
 
+    total_batches = 0
+    total_samples = 0
+    total_time = 0.0  # seconds
+    mse_loss = {k: [] for k in batch_keys}
+
     for batch in tqdm(train_dataloader, desc="[Training]"):
-        batch = {k: v.to(local_rank, non_blocking=True) if torch.is_tensor(v) else v
-                 for k, v in batch.items()}
+        batch = {key: value.to(local_rank) for key, value in batch.items()}
 
-        # extract target variables for anchor
-        target_surface_anchor_pressure = batch.pop("surface_anchor_pressure")
-        target_surface_anchor_wallshearstress = batch.pop(
-            "surface_anchor_wallshearstress"
-        )
-        target_volume_anchor_totalpcoeff = batch.pop("volume_anchor_totalpcoeff")
-        target_volume_anchor_velocity = batch.pop("volume_anchor_velocity")
+        # extract target variables for anchor and query
+        targets = {k: batch.pop(k) for k in batch_keys if k in batch}
 
-        # extract target variables for queries
-        target_surface_query_pressure = batch.pop("surface_query_pressure")
-        target_surface_query_wallshearstress = batch.pop(
-            "surface_query_wallshearstress"
-        )
-        target_volume_query_totalpcoeff = batch.pop("volume_query_totalpcoeff")
-        target_volume_query_velocity = batch.pop("volume_query_velocity")
+        batch_size = 1
+        # timing start (make sure GPU kernels are finished before starting timer)
+        if torch.cuda.is_available():
+            torch.cuda.synchronize()  # sync prior async work
+        t0 = time.time()
 
-        volume_anchor_query_positiuon = torch.concat(
-            [batch["volume_query_position"], batch["volume_anchor_position"]], dim=1
-        )
-        surface_anchor_query_positiuon = torch.concat(
-            [batch["surface_query_position"], batch["surface_anchor_position"]], dim=1
-        )
 
-        volume_order, volume_inverse = pos_to_order_inverse_index(
-            volume_anchor_query_positiuon, tensor=True
-        )
-        surface_order, surface_inverse = pos_to_order_inverse_index(
-            surface_anchor_query_positiuon, tensor=True
-        )
-        logging.info(
-            f"*************************surface_order.shape: {surface_order.shape}"
-        )
-        logging.info(
-            f"*************************surface_inverse.shape: {surface_inverse.shape}"
-        )
-        logging.info(
-            f"*************************volume_order.shape: {volume_order.shape}"
-        )
-        logging.info(
-            f"*************************volume_inverse.shape: {volume_inverse.shape}"
-        )
         optimizer.zero_grad()
-        prediction = model(
-            volume_order, volume_inverse, surface_order, surface_inverse, **batch
-        )
-        #    prediction = model(**batch)
+        prediction = model(**batch)
 
-        loss = criterion(
-            prediction["volume_query_velocity"], target_volume_query_velocity
-        )
+        for k in targets:
+            if k in prediction:
+                loss_k = criterion(prediction[k], targets[k])
+                mse_loss[k].append(loss_k.item())
 
         loss.backward()
         optimizer.step()
         total_loss += loss.item()
+
+        # timing end (sync to ensure all GPU work finished)
+        if torch.cuda.is_available():
+            torch.cuda.synchronize()
+        t1 = time.time()
+
+        batch_time = t1 - t0
+        total_time += batch_time
+        total_batches += 1
+        total_samples += batch_size
+
+    avg_time_per_sample = total_time / total_samples if total_samples > 0 else 0.0
+    avg_time_per_batch = total_time / total_batches if total_batches > 0 else 0.0
+    logging.info(
+        f"[Timing][Epoch] total_samples={total_samples}, "
+        f"total_time={total_time:.4f}s, "
+        f"avg_time_per_sample={avg_time_per_sample:.6f}s, "
+        f"avg_time_per_batch={avg_time_per_batch:.4f}s{RESET}"
+    )
 
     return total_loss / len(train_dataloader)
 
@@ -361,8 +374,7 @@ def validate(model, val_dataloader, criterion, local_rank):
 
     with torch.no_grad():
         for batch in tqdm(val_dataloader, desc="[Validation]"):
-            batch = {k: v.to(local_rank, non_blocking=True) if torch.is_tensor(v) else v
-                     for k, v in batch.items()}
+            batch = {key: value.to(local_rank) for key, value in batch.items()}
 
             # extract target variables for anchor
             target_surface_anchor_pressure = batch.pop("surface_anchor_pressure")
@@ -373,154 +385,161 @@ def validate(model, val_dataloader, criterion, local_rank):
             target_volume_anchor_velocity = batch.pop("volume_anchor_velocity")
 
             # extract target variables for queries
-            target_surface_query_pressure = batch.pop("surface_query_pressure")
-            target_surface_query_wallshearstress = batch.pop(
-                "surface_query_wallshearstress"
-            )
-            target_volume_query_totalpcoeff = batch.pop("volume_query_totalpcoeff")
-            target_volume_query_velocity = batch.pop("volume_query_velocity")
+            #            target_surface_query_pressure = batch.pop("surface_query_pressure")
+            #            target_surface_query_wallshearstress = batch.pop(
+            #                "surface_query_wallshearstress"
+            #            )
+            #            target_volume_query_totalpcoeff = batch.pop("volume_query_totalpcoeff")
+            #            target_volume_query_velocity = batch.pop("volume_query_velocity")
 
             prediction = model(**batch)
-            pre_surface_pressure = outputs["surface_pressure"]  # (B, N, pressure_dim)
-
             loss = criterion(
-                prediction["volume_query_velocity"], target_volume_query_velocity
+                prediction["volume_anchor_velocity"], target_volume_anchor_velocity
             )
             total_loss += loss.item()
 
     return total_loss / len(val_dataloader)
 
 
+# ================================
+# Normalizers
+# ================================
+def try_get_normalizer_from_collator(dataloader, predicate):
+    """尝试从 dataloader.collate_fn（即 collator）获取 preprocessor/normalizer"""
+    coll = getattr(dataloader, "collate_fn", None)
+    if coll is None:
+        return RuntimeError("No collate_fn")
+    get_pre = getattr(coll, "get_preprocessor", None)
+    if get_pre is None:
+        return RuntimeError("No get_preprocessor")
+    return get_pre(predicate)
+
+
+class PreprocessorSelector:
+    def __init__(self, target_items):
+        self.target_items = target_items
+
+    def __call__(self, c):
+        return (
+            isinstance(c, MomentNormalizationPreprocessor)
+            and c.items == self.target_items
+        )
+
+
+def get_norm(dataloader, items):
+    selector = PreprocessorSelector(items)
+    return try_get_normalizer_from_collator(dataloader, selector)
+
+
 def test_model(model, test_dataloader, criterion, local_rank, exp_dir):
     """Test the model, take postprocess and calculate metrics."""
     model.eval()
-    total_mse, total_mae = 0, 0
-    total_rel_l2, total_rel_l1 = 0, 0
     total_inference_time = 0
     total_samples = 0
     all_outputs = []
     all_targets = []
 
+    normalizers = {
+        "surface_anchor_pressure": get_norm(test_dataloader, {"surface_pressure"}),
+        "volume_anchor_velocity": get_norm(test_dataloader, {"volume_velocity"}),
+        #    "surface_anchor_wallshearstress": get_norm(test_dataloader, {"surface_wallshearstress"}),
+        #    "volume_anchor_totalpcoeff": get_norm(test_dataloader, {"volume_totalpcoeff"}),
+    }
+    L2_errors = {k: [] for k in normalizers.keys()}
+    mse_sums = {k: [] for k in normalizers.keys()}
+    mse_counts = {k: 0 for k in normalizers.keys()}
+
     with torch.no_grad():
-        for data in tqdm(test_dataloader, desc="[Testing]"):
+        for batch in tqdm(test_dataloader, desc="[Testing]"):
             start_time = time.time()
+            batch = {key: value.to(local_rank) for key, value in batch.items()}
+            # extract target variables for anchor
+            targets = {k: batch.pop(k) for k in normalizers.keys()}
 
             # extract target variables for anchor
-            target_surface_anchor_pressure = batch.pop("surface_anchor_pressure")
             target_surface_anchor_wallshearstress = batch.pop(
                 "surface_anchor_wallshearstress"
             )
             target_volume_anchor_totalpcoeff = batch.pop("volume_anchor_totalpcoeff")
-            target_volume_anchor_velocity = batch.pop("volume_anchor_velocity")
+            # target_surface_anchor_pressure = batch.pop("surface_anchor_pressure")
+            # target_volume_anchor_velocity = batch.pop("volume_anchor_velocity")
 
-            # extract target variables for queries
-            target_surface_query_pressure = batch.pop("surface_query_pressure")
-            target_surface_query_wallshearstress = batch.pop(
-                "surface_query_wallshearstress"
-            )
-            target_volume_query_totalpcoeff = batch.pop("volume_query_totalpcoeff")
-            target_volume_query_velocity = batch.pop("volume_query_velocity")
-
-            prediction = abupt(**batch)
+            prediction = model(**batch)
             inference_time = time.time() - start_time
             total_inference_time += inference_time
 
-            # Calculate metrics
-
-            mse = criterion(
-                prediction["volume_query_velocity"], target_volume_query_velocity
-            )
-            mae = F.l1_loss(
-                prediction["volume_query_velocity"], target_volume_query_velocity
-            )
-
             # denormalize
-            volume_normalizer = collator.get_preprocessor(
-                lambda c: isinstance(c, MomentNormalizationPreprocessor)
-                and c.items == {"volume_velocity"}
-            )
-            target_volume_query_velocity_denorm = volume_normalizer.denormalize(
-                target_surface_query_pressure
-            )
-            pres_volume_query_velocity_denorm = volume_normalizer.denormalize(
-                prediction["volume_query_velocity"]
-            )
+            for key in normalizers.keys():
+                pred_den = normalizers[key].denormalize(prediction[key])
+                targ_den = normalizers[key].denormalize(targets[key])
 
-            # L2 error
-            delta = (
-                target_volume_query_velocity_denorm - pres_volume_query_velocity_denorm
-            )
-            l2_error = delta.norm() / target_volume_query_velocity.norm()
-            # print(l2_error)
+                # MAE loss
+                mse_loss = criterion(pred_den, targ_den)
+                mse_sums[key].append(mse_loss.item())
+                mse_counts[key] += 1
 
-            batch_size = targets.size(0)
-            total_mse += mse.item() * batch_size
-            total_mae += mae.item() * batch_size
-            total_rel_l2 += rel_l2.item() * batch_size
-            total_rel_l1 += rel_l1.item() * batch_size
-            total_samples += batch_size
+                # L2 relative error
+                L2_error = (pred_den - targ_den).norm() / targ_den.norm()
+                L2_errors[key].append(L2_error.item())
 
-            # Store normalized predictions and targets for R² calculation
-            all_outputs.append(normalized_outputs.cpu())
-            all_targets.append(normalized_targets.cpu())
+        avg_L2 = {k: sum(v) / len(v) for k, v in L2_errors.items()}
+        avg_mse = {k: sum(mse_sums[k]) / len(mse_sums[k]) for k in normalizers.keys()}
 
-    # Aggregate results across all processes
-    total_mse_tensor = torch.tensor(total_mse).to(local_rank)
-    total_mae_tensor = torch.tensor(total_mae).to(local_rank)
-    total_rel_l2_tensor = torch.tensor(total_rel_l2).to(local_rank)
-    total_rel_l1_tensor = torch.tensor(total_rel_l1).to(local_rank)
-    total_samples_tensor = torch.tensor(total_samples).to(local_rank)
+        logging.info(f"*******************{M}avg_L2:{RESET}")
+        for key, val in avg_L2.items():
+            logging.info(f"{key}: {val:.6f}")
 
-    dist.reduce(total_mse_tensor, dst=0, op=dist.ReduceOp.SUM)
-    dist.reduce(total_mae_tensor, dst=0, op=dist.ReduceOp.SUM)
-    dist.reduce(total_rel_l2_tensor, dst=0, op=dist.ReduceOp.SUM)
-    dist.reduce(total_rel_l1_tensor, dst=0, op=dist.ReduceOp.SUM)
-    dist.reduce(total_samples_tensor, dst=0, op=dist.ReduceOp.SUM)
+        logging.info(f"*******************{M}avg_mse:{RESET}")
+        for key, val in avg_mse.items():
+            logging.info(f"{key}: {val:.6f}")
 
     # Checkout the value
-    if dist.get_rank() == 0:
-        logging.info(f"Total MSE across all processes: {total_mse_tensor.item()}")
 
-    if local_rank == 0:
-        # Calculate aggregated metrics
-        avg_mse = total_mse_tensor.item() / total_samples_tensor.item()
-        avg_mae = total_mae_tensor.item() / total_samples_tensor.item()
-        avg_rel_l2 = total_rel_l2_tensor.item() / total_samples_tensor.item()
-        avg_rel_l1 = total_rel_l1_tensor.item() / total_samples_tensor.item()
 
-        # Calculate R² score - only on rank 0 with locally collected data
-        all_outputs = torch.cat(all_outputs, dim=0).numpy()
-        all_targets = torch.cat(all_targets, dim=0).numpy()
-        tmp = np.mean(all_targets)
-        logging.info("mean value for all_targets: {tmp}")
-        ss_tot = np.sum((all_targets - np.mean(all_targets)) ** 2)
-        ss_res = np.sum((all_targets - all_outputs) ** 2)
-        r_squared = 1 - (ss_res / ss_tot) if ss_tot > 0 else 0
-
-        # Calculate max AE
-        max_ae = np.max(np.abs(all_targets - all_outputs))
-        logging.info(
-            f"Test MSE: {avg_mse:.6f}, Test MAE: {avg_mae:.6f}, Max AE: {max_ae:.6f}, Test R2: {r_squared:.4f}"
-        )
-        logging.info(
-            f"Relative L2 Error: {avg_rel_l2:.6f}, Relative L1 error: {avg_rel_l1:.6f}"
-        )
-        logging.info(
-            f"Total inference time: {total_inference_time: .2f}s for {total_samples_tensor.item()} samples"
-        )
-
-        # Save metrics to a text file
-        metrics_file = os.path.join(exp_dir, "test_metrics.txt")
-        with open(metrics_file, "w") as f:
-            f.write(f"Test MSE: {avg_mse:.6f}\n")
-            f.write(f"Test MAE: {avg_mae:.6f}\n")
-            f.write(f"Max MAE: {max_ae:.6f}\n")
-            f.write(f"Test R2: {r_squared:.4f}\n")
-            f.write(f"Relative L2 Error: {avg_rel_l2:.6f}\n")
-            f.write(f"Relative L1 error: {avg_rel_l1:.6f}\n")
-            f.write(
-                f"Total inference time: {total_inference_time: .2f}s for {total_samples_tensor.item()} samples\n"
-            )
+#    if dist.get_rank() == 0:
+#        logging.info(f"Total MSE across all processes: {total_mse_tensor.item()}")
+#
+#    if local_rank == 0:
+#        # Calculate aggregated metrics
+#        avg_mse = total_mse_tensor.item() / total_samples_tensor.item()
+#        avg_mae = total_mae_tensor.item() / total_samples_tensor.item()
+#        avg_rel_l2 = total_rel_l2_tensor.item() / total_samples_tensor.item()
+#        avg_rel_l1 = total_rel_l1_tensor.item() / total_samples_tensor.item()
+#
+#        # Calculate R² score - only on rank 0 with locally collected data
+#        all_outputs = torch.cat(all_outputs, dim=0).numpy()
+#        all_targets = torch.cat(all_targets, dim=0).numpy()
+#        tmp = np.mean(all_targets)
+#        logging.info("mean value for all_targets: {tmp}")
+#        ss_tot = np.sum((all_targets - np.mean(all_targets)) ** 2)
+#        ss_res = np.sum((all_targets - all_outputs) ** 2)
+#        r_squared = 1 - (ss_res / ss_tot) if ss_tot > 0 else 0
+#
+#        # Calculate max AE
+#        max_ae = np.max(np.abs(all_targets - all_outputs))
+#        logging.info(
+#            f"Test MSE: {avg_mse:.6f}, Test MAE: {avg_mae:.6f}, Max AE: {max_ae:.6f}, Test R2: {r_squared:.4f}"
+#        )
+#        logging.info(
+#            f"Relative L2 Error: {avg_rel_l2:.6f}, Relative L1 error: {avg_rel_l1:.6f}"
+#        )
+#        logging.info(
+#            f"Total inference time: {total_inference_time: .2f}s for {total_samples_tensor.item()} samples"
+#        )
+#
+#        # Save metrics to a text file
+#        metrics_file = os.path.join(exp_dir, "test_metrics.txt")
+#        with open(metrics_file, "w") as f:
+#            f.write(f"Test MSE: {avg_mse:.6f}\n")
+#            f.write(f"Test MAE: {avg_mae:.6f}\n")
+#            f.write(f"Max MAE: {max_ae:.6f}\n")
+#            f.write(f"Test R2: {r_squared:.4f}\n")
+#            f.write(f"Relative L2 Error: {avg_rel_l2:.6f}\n")
+#            f.write(f"Relative L1 error: {avg_rel_l1:.6f}\n")
+#            f.write(
+#                f"Total inference time: {total_inference_time: .2f}s for {total_samples_tensor.item()} samples\n"
+#            )
+#
 
 
 def main():
@@ -529,7 +548,7 @@ def main():
 
     # Set the master address and port for DDP
     os.environ["MASTER_ADDR"] = "localhost"
-    os.environ["MASTER_PORT"] = "29500"    #1024~65535
+    os.environ["MASTER_PORT"] = "29500"  # 1024~65535
 
     # Set visible GPUS
     gpu_list = args.gpus
