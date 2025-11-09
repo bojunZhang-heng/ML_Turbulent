@@ -12,7 +12,7 @@ import logging
 
 from abupt_collator import AbuptCollator
 from drivaerml_dataset import DrivAerMLDataset
-from model import AnchoredBranchedUPT
+from model_ab_ubt import AnchoredBranchedUPT
 from preprocessors import MomentNormalizationPreprocessor, PositionNormalizationPreprocessor
 from streamline_visualization import plot_streamlines
 from utils import plot_pointcloud_single, plot_pointcloud_double, set_seed
@@ -48,7 +48,7 @@ raw_sample = dict(
     # volume_vorticity=dataset.getitem_volume_vorticity(0),
 )
 
-logger.info(f"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~raw_sample")
+logger.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~raw_sample")
 for key, value in raw_sample.items():
     logger.info(f"{key}: {value.shape}")
 
@@ -67,7 +67,7 @@ collator = AbuptCollator(
 # convert a list of samples to a preprocessed batch
 batch = collator([raw_sample])
 
-logger.info(f"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~batch")
+logger.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~batch")
 for key, value in batch.items():
     logger.info(f"{key}: {value.shape}")
 
@@ -80,14 +80,14 @@ os.makedirs(local_dir, exist_ok=True)
 # ============================================================
 # Model setup
 # ============================================================
-abupt = AnchoredBranchedUPT().to("cuda").eval()
-checkpoint = torch.load("./checkpoints/ab-upt-drivaerml-tutorial.th", map_location="cuda", weights_only=True)
+abupt = AnchoredBranchedUPT().to("cpu").eval()
+checkpoint = torch.load("./checkpoints/ab-upt-drivaerml-tutorial.th", map_location="cpu", weights_only=True)
 abupt.load_state_dict(checkpoint["state_dict"])
 
 # ============================================================
 # Move batch to GPU
 # ============================================================
-batch = {key: value.to("cuda") for key, value in batch.items()}
+batch = {key: value.to("cpu") for key, value in batch.items()}
 
 # extract target variables for anchor
 target_surface_anchor_pressure = batch.pop("surface_anchor_pressure")
@@ -107,14 +107,14 @@ batch["surface_query_position"] = batch["surface_query_position"][:, :num_surfac
 target_surface_query_pressure = target_surface_query_pressure[:num_surface_queries]
 target_surface_query_wallshearstress = target_surface_query_wallshearstress[:num_surface_queries]
 
-logger.info(f"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~input")
+logger.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~input")
 for key, value in batch.items():
     logger.info(f"{key}: {value.shape}")
 
 # ============================================================
 # Inference
 # ============================================================
-with torch.autocast(device_type="cuda", dtype=torch.float16), torch.no_grad():
+with torch.autocast(device_type="cpu", dtype=torch.float16), torch.no_grad():
     prediction = abupt(**batch)
 
 for key, value in prediction.items():
