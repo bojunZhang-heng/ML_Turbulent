@@ -1,0 +1,30 @@
+exp_name: "RTformer_s_pressure"
+
+model:
+    input_dim: 3
+    output_dim: 1
+    head_num: 4
+    hidden: 256
+    res: true
+    head_dim: 64
+    slice_num: 64
+    layers: 8
+    mlp_ratio: 2
+
+training:
+    batch_size: 1
+    epochs: 150
+    lr: 0.001
+    scheduler_step: 50
+    scheduler_gamma: 0.7
+    max_grad_norm: 0.1
+    num_workers: 1
+    weight_decay: 0.00001
+    test_only: 0  
+    gpus: "0"
+    root_dir: "~/drivaerML_N100_000"
+    seed: 42
+
+
+
+
