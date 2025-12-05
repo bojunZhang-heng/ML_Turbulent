@@ -1,0 +1,30 @@
+2025-12-05 10:30:10,764 - INFO - args.exp_name : RTformer_v_velocity
+2025-12-05 10:30:10,764 - INFO - Starting training with 1 GPUs
+2025-12-05 10:30:11,858 - INFO - Total trainable parameters: 4524867
+2025-12-05 10:30:11,859 - INFO - Data loaded: 384 training batches, 33 validation batches, 48 test batches
+2025-12-05 10:30:11,860 - INFO - Staring training for 150 epochs
+2025-12-05 10:31:13,115 - INFO - args.exp_name : RTformer_v_velocity
+2025-12-05 10:31:13,116 - INFO - Starting training with 1 GPUs
+2025-12-05 10:31:13,802 - INFO - Total trainable parameters: 4524867
+2025-12-05 10:31:13,803 - INFO - Data loaded: 384 training batches, 33 validation batches, 48 test batches
+2025-12-05 10:31:13,804 - INFO - Staring training for 150 epochs
+2025-12-05 10:32:22,978 - INFO - Epoch 1/150 - Train Loss: 0.841931, Val Loss: 0.671070[0m
+2025-12-05 10:32:23,061 - INFO - New best model saved with Val Loss: 0.671070
+2025-12-05 10:32:29,793 - INFO - Epoch 1/150 - Train Loss: 0.841931, Val Loss: 0.671070[0m
+2025-12-05 10:32:29,860 - INFO - New best model saved with Val Loss: 0.671070
+2025-12-05 10:33:43,355 - INFO - Epoch 2/150 - Train Loss: 0.618122, Val Loss: 0.564468[0m
+2025-12-05 10:33:43,459 - INFO - New best model saved with Val Loss: 0.564468
+2025-12-05 10:33:45,943 - INFO - Epoch 2/150 - Train Loss: 0.618122, Val Loss: 0.564468[0m
+2025-12-05 10:33:46,013 - INFO - New best model saved with Val Loss: 0.564468
+2025-12-05 10:35:07,345 - INFO - Epoch 3/150 - Train Loss: 0.485888, Val Loss: 0.455495[0m
+2025-12-05 10:35:07,441 - INFO - New best model saved with Val Loss: 0.455495
+2025-12-05 10:35:09,014 - INFO - Epoch 3/150 - Train Loss: 0.485888, Val Loss: 0.455495[0m
+2025-12-05 10:35:09,095 - INFO - New best model saved with Val Loss: 0.455495
+2025-12-05 10:36:28,023 - INFO - Epoch 4/150 - Train Loss: 0.432620, Val Loss: 0.381549[0m
+2025-12-05 10:36:28,133 - INFO - New best model saved with Val Loss: 0.381549
+2025-12-05 10:36:33,976 - INFO - Epoch 4/150 - Train Loss: 0.432620, Val Loss: 0.381549[0m
+2025-12-05 10:36:34,078 - INFO - New best model saved with Val Loss: 0.381549
+2025-12-05 10:37:44,720 - INFO - Epoch 5/150 - Train Loss: 0.388457, Val Loss: 0.351980[0m
+2025-12-05 10:37:44,794 - INFO - New best model saved with Val Loss: 0.351980
+2025-12-05 10:37:56,233 - INFO - Epoch 5/150 - Train Loss: 0.388457, Val Loss: 0.351980[0m
+2025-12-05 10:37:56,370 - INFO - New best model saved with Val Loss: 0.351980

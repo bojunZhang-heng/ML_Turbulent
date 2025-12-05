@@ -1,0 +1,24 @@
+2025-12-04 17:06:07,192 - INFO - Data loaded: 3 training batches, 1 validation batches, 1 test batches
+[Training]:   0%|          | 0/3 [00:00<?, ?it/s][Training]:   0%|          | 0/3 [00:01<?, ?it/s]
+Traceback (most recent call last):
+  File "/work/mae-zhangbj/ML_Turbulent/Current_work/RopeTransolver/main_cpu.py", line 196, in <module>
+    pred_velocity = model(data_volume)
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/work/mae-zhangbj/ML_Turbulent/Current_work/RopeTransolver/model_transolver.py", line 221, in forward
+    fx = block(fx,
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/work/mae-zhangbj/ML_Turbulent/Current_work/RopeTransolver/model_transolver.py", line 139, in forward
+    fx = self.Attn(self.ln_1(fx), **(attn_kwargs or {})) + fx
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/work/mae-zhangbj/ML_Turbulent/Current_work/RopeTransolver/model_transolver.py", line 63, in forward
+    slice_token = slice_token / ((slice_norm + 1e-5)[:, :, :, None].einpops.repeat(1, 1, 1, self.head_dim))
+AttributeError: 'Tensor' object has no attribute 'einpops'

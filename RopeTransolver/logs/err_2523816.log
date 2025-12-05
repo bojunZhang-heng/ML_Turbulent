@@ -1,0 +1,12 @@
+2025-12-05 10:09:16,857 - INFO - Data loaded: 3 training batches, 1 validation batches, 1 test batches
+[Testing]:   0%|          | 0/1 [00:00<?, ?it/s]2025-12-05 10:09:17,396 - INFO - *******************[35mL2_error:[0m
+2025-12-05 10:09:17,396 - INFO -  0.076505
+2025-12-05 10:09:17,396 - INFO - *******************[35mmse_loss:[0m
+2025-12-05 10:09:17,396 - INFO -  0.012541
+[Testing]: 100%|██████████| 1/1 [00:00<00:00,  3.20it/s][Testing]: 100%|██████████| 1/1 [00:00<00:00,  3.05it/s]
+Traceback (most recent call last):
+  File "/work/mae-zhangbj/ML_Turbulent/Current_work/RopeTransolver/main_cpu.py", line 293, in <module>
+    plot_pointcloud_double(
+  File "/work/mae-zhangbj/ML_Turbulent/Current_work/RopeTransolver/utils_ab_ubt.py", line 59, in plot_pointcloud_double
+    delta = color[1] - color[0]
+RuntimeError: The size of tensor a (3) must match the size of tensor b (16384) at non-singleton dimension 1

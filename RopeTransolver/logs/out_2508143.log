@@ -1,0 +1,83 @@
+Starting DrivAerNet training on CPU nodes...
+Running on host: b03u38a
+Job ID: 2508143
+Requested CPUs: 
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@b03u38a>
+Subject: Job 2508143: <cpu_transolver> in cluster <qmhpc> Done
+
+Job <cpu_transolver> was submitted from host <a04u28l> by user <mae-zhangbj> in cluster <qmhpc> at Thu Dec  4 15:04:51 2025
+Job was executed on host(s) <36*b03u38a>, in queue <1t75c>, as user <mae-zhangbj> in cluster <qmhpc> at Thu Dec  4 15:04:52 2025
+</work/mae-zhangbj> was used as the home directory.
+</work/mae-zhangbj/ML_Turbulent/Current_work/Transolver_zbj/zbj> was used as the working directory.
+Started at Thu Dec  4 15:04:52 2025
+Terminated at Thu Dec  4 15:11:14 2025
+Results reported at Thu Dec  4 15:11:14 2025
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+
+#BSUB -J cpu_transolver      # Job name
+#BSUB -q 1t75c       # Queue name (change if needed)
+#BSUB -n 36                           # Number of CPU cores
+#BSUB -R "span[ptile=36]"
+#BSUB -oo logs/out_%J.log             # Standard output (%J = job ID)
+#BSUB -eo logs/err_%J.log             # Standard error
+#BSUB -env "all"                      # Export your current environment
+
+# -------------------------------
+# Load environment and run script
+# -------------------------------
+
+echo "Starting DrivAerNet training on CPU nodes..."
+echo "Running on host: $(hostname)"
+echo "Job ID: $LSB_JOBID"
+echo "Requested CPUs: $LSB_CPU_REQ"
+
+# Activate d2l
+source ~/lib/miniconda3/etc/profile.d/conda.sh
+conda activate d2l
+
+
+# Launch .py file
+#python ~/tmp/ab-ubt_v2/test_model.py
+python main_cpu.py
+#python train.py
+
+# Remove old logs but keep the ones for this job
+# find ./logs/ -name '*.log' ! -name "*_${LSB_JOBID}*.log" -delete
+#1t81c
+#2t50c
+#1t75c
+#v3-6t
+#73x
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   357.42 sec.
+    Max Memory :                                 4434 MB
+    Average Memory :                             438.40 MB
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              6
+    Max Threads :                                132
+    Run time :                                   380 sec.
+    Turnaround time :                            383 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <logs/err_2508143.log> for stderr output of this job.
+

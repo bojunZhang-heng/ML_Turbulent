@@ -1,0 +1,30 @@
+2025-12-04 15:01:52,366 - INFO - Data loaded: 3 training batches, 1 validation batches, 1 test batches
+[Training]:   0%|          | 0/3 [00:00<?, ?it/s][Training]:   0%|          | 0/3 [00:01<?, ?it/s]
+Traceback (most recent call last):
+  File "/work/mae-zhangbj/ML_Turbulent/Current_work/Transolver_zbj/zbj/main_cpu.py", line 196, in <module>
+    pred_velocity = model(data_volume)
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/work/mae-zhangbj/ML_Turbulent/Current_work/Transolver_zbj/zbj/model_transolver.py", line 183, in forward
+    fx = self.preprocess(x)
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/work/mae-zhangbj/ML_Turbulent/Current_work/Transolver_zbj/zbj/model_transolver.py", line 82, in forward
+    x = self.linear_pre(x)
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/nn/modules/container.py", line 250, in forward
+    input = module(input)
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/nn/modules/linear.py", line 125, in forward
+    return F.linear(input, self.weight, self.bias)
+RuntimeError: mat1 and mat2 shapes cannot be multiplied (16384x3 and 7x512)

@@ -1,0 +1,26 @@
+2025-12-05 11:01:18,179 - INFO - args.exp_name : RTformer_s_pressure
+2025-12-05 11:01:18,182 - INFO - Starting training with 1 GPUs
+2025-12-05 11:01:19,319 - INFO - Total trainable parameters: 4524867
+2025-12-05 11:01:19,322 - INFO - Data loaded: 384 training batches, 33 validation batches, 48 test batches
+2025-12-05 11:01:19,322 - INFO - Staring training for 3 epochs
+2025-12-05 11:03:20,968 - INFO - Epoch 1/3 - Train Loss: 0.669227, Val Loss: 0.534058[0m
+2025-12-05 11:03:21,068 - INFO - New best model saved with Val Loss: 0.534058
+2025-12-05 11:04:33,192 - INFO - Epoch 2/3 - Train Loss: 0.488493, Val Loss: 0.457704[0m
+2025-12-05 11:04:33,264 - INFO - New best model saved with Val Loss: 0.457704
+2025-12-05 11:05:45,772 - INFO - Epoch 3/3 - Train Loss: 0.404320, Val Loss: 0.387516[0m
+2025-12-05 11:05:45,835 - INFO - New best model saved with Val Loss: 0.387516
+2025-12-05 11:05:46,307 - INFO - Final model saved to experiments/RTformer_s_pressure/final_model.pth
+2025-12-05 11:05:46,316 - INFO - Testing the final model
+2025-12-05 11:06:04,382 - INFO - *******************[35mL2_erro:[0m
+2025-12-05 11:06:04,382 - INFO -  0.801787
+2025-12-05 11:06:04,382 - INFO - *******************[35mmse_loss:[0m
+2025-12-05 11:06:04,382 - INFO -  0.366346
+2025-12-05 11:06:04,382 - INFO - *******************[35minference_time:[0m
+2025-12-05 11:06:04,382 - INFO -  0.011800
+2025-12-05 11:06:04,382 - INFO - Testing the best model
+2025-12-05 11:06:16,131 - INFO - *******************[35mL2_erro:[0m
+2025-12-05 11:06:16,131 - INFO -  0.801787
+2025-12-05 11:06:16,131 - INFO - *******************[35mmse_loss:[0m
+2025-12-05 11:06:16,131 - INFO -  0.366346
+2025-12-05 11:06:16,131 - INFO - *******************[35minference_time:[0m
+2025-12-05 11:06:16,131 - INFO -  0.011852

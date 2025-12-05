@@ -1,0 +1,2 @@
+2025-12-04 15:10:47,038 - INFO - Data loaded: 3 training batches, 1 validation batches, 1 test batches
+[Training]:   0%|          | 0/3 [00:00<?, ?it/s][Training]:  33%|███▎      | 1/3 [00:05<00:11,  5.91s/it][Training]:  67%|██████▋   | 2/3 [00:08<00:03,  3.83s/it][Training]: 100%|██████████| 3/3 [00:10<00:00,  3.18s/it][Training]: 100%|██████████| 3/3 [00:10<00:00,  3.56s/it]
