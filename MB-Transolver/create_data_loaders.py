@@ -2,13 +2,13 @@ from drivaerml_dataset import DrivAerMLDataset
 from abupt_collator import AbuptCollator
 from torch.utils.data import DataLoader
 
-def create_data_loaders(root_dir, batch_size, num_sample_frac=0.001, num_workers=1):
+def create_data_loaders(root_dir, batch_size, use_query_positions=False, num_workers=1):
     """创建训练、验证和测试数据加载器"""
 
     # 创建数据集
-    train_dataset = DrivAerMLDataset(root=root_dir, split="train", num_sample_frac=num_sample_frac)
-    val_dataset = DrivAerMLDataset(root=root_dir, split="val", num_sample_frac=num_sample_frac)
-    test_dataset = DrivAerMLDataset(root=root_dir, split="test", num_sample_frac=num_sample_frac)
+    train_dataset = DrivAerMLDataset(root=root_dir, split="train")
+    val_dataset = DrivAerMLDataset(root=root_dir, split="val")
+    test_dataset = DrivAerMLDataset(root=root_dir, split="test")
 
     # 设置采样参数 - 根据你的需求调整这些参数
     num_geometry_points = 65536  # 几何点数量
@@ -23,7 +23,7 @@ def create_data_loaders(root_dir, batch_size, num_sample_frac=0.001, num_workers
         num_volume_anchor_points=num_volume_anchor_points,
         num_geometry_supernodes=num_geometry_supernodes,
         dataset=train_dataset,
-        use_query_positions=True,  # 根据你的模型需求设置
+        use_query_positions=use_query_positions,  # 根据你的模型需求设置
         seed=42  # 为了可重现性
     )
 
@@ -34,7 +34,7 @@ def create_data_loaders(root_dir, batch_size, num_sample_frac=0.001, num_workers
         num_volume_anchor_points=num_volume_anchor_points,
         num_geometry_supernodes=num_geometry_supernodes,
         dataset=val_dataset,
-        use_query_positions=True,
+        use_query_positions=use_query_positions,
         seed=42
     )
 

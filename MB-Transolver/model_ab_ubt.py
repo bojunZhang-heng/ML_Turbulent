@@ -1,3 +1,6 @@
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
+
 import logging
 from functools import partial
 
@@ -14,10 +17,13 @@ from modules.blocks import TransformerBlock, PerceiverBlock
 from modules.continuous_sincos_embed import ContinuousSincosEmbed
 from modules.rope_frequency import RopeFrequency
 from modules.supernode_pooling_posonly import SupernodePoolingPosonly
-
+from create_data_loaders import create_data_loaders
 
 class AnchoredBranchedUPT(nn.Module):
-    def __init__(self, args, **kwargs):
+    def __init__(
+            self,
+            args,
+            **kwargs):
 
 #        # problem dimensions
 #        ndim: int = 3,  # number of coordinates (typicaly 3 for 3D geometries)
@@ -46,7 +52,7 @@ class AnchoredBranchedUPT(nn.Module):
         )
         self.geometry_blocks = nn.ModuleList(
             [
-                TransformerBlock(dim=args.dim, num_heads=args.num_heads)
+                TransformerBlock(dim=args.dim, num_heads=args.num_heads, slice_num=args.slice_num)
                 for _ in range(args.geometry_depth)
             ],
         )
@@ -77,7 +83,7 @@ class AnchoredBranchedUPT(nn.Module):
                 block_ctor = PerceiverBlock
             else:
                 raise NotImplementedError
-            self.blocks.append(block_ctor(dim=args.dim, num_heads=args.num_heads))
+            self.blocks.append(block_ctor(dim=args.dim, num_heads=args.num_heads, slice_num=args.slice_num))
 
         # surface-specific blocks
         self.surface_blocks = nn.ModuleList(
@@ -85,6 +91,7 @@ class AnchoredBranchedUPT(nn.Module):
                 TransformerBlock(
                     dim=args.dim,
                     num_heads=args.num_heads,
+                    slice_num=args.slice_num,
                     attn_ctor=AnchorAttention,
                 )
                 for _ in range(args.num_surf_blocks)
@@ -97,6 +104,7 @@ class AnchoredBranchedUPT(nn.Module):
                 TransformerBlock(
                     dim=args.dim,
                     num_heads=args.num_heads,
+                    slice_num=args.slice_num,
                     attn_ctor=AnchorAttention,
                 )
                 for _ in range(args.num_volume_blocks)
@@ -162,12 +170,13 @@ class AnchoredBranchedUPT(nn.Module):
 
         # rope frequencies
         assert geometry_batch_idx is None or geometry_batch_idx.unique().numel() == 1, "batch_size > 1 not supported"
-        #logging
         geometry_rope = self.rope(geometry_position[geometry_supernode_idx].unsqueeze(0))
+ #       logging.info(f"********************After rope, geometry_rope.shape: {geometry_rope.shape}")
         geometry_attn_kwargs["freqs"] = geometry_rope
         rope_surface_all = self.rope(surface_position_all)
         rope_volume_all = self.rope(volume_position_all)
         rope_all = torch.concat([rope_surface_all, rope_volume_all], dim=1)
+ #       logging.info(f"********************After rope, surface+volume_rope.shape: {rope_all.shape}")
 
         geometry_perceiver_attn_kwargs["q_freqs"] = rope_all
         geometry_perceiver_attn_kwargs["k_freqs"] = geometry_rope
@@ -181,15 +190,21 @@ class AnchoredBranchedUPT(nn.Module):
             supernode_idx=geometry_supernode_idx,
             batch_idx=geometry_batch_idx,
         )
+#        logging.info(f"********************After encoder, geometry: x.shape: {x.shape}")
         for block in self.geometry_blocks:
             x = block(x, attn_kwargs=geometry_attn_kwargs)
         geometry_encoding = x
+#        logging.info(f"********************After self attention, geometry: x.shape: {x.shape}")
 
         # shared-weights model (all tokens are concatenated into a single sequence for high GPU utilization)
         assert surface_position_all.ndim == 3 and volume_position_all.ndim == 3
         surface_all_pos_embed = self.surface_bias(self.pos_embed(surface_position_all))
         volume_all_pos_embed = self.volume_bias(self.pos_embed(volume_position_all))
+#        logging.info(f"********************After encoder, surface: surface_all_pos_embed.shape: {surface_all_pos_embed.shape}")
+#        logging.info(f"********************After encoder, volume: volume_all_pos_embed.shape: {volume_all_pos_embed.shape}")
+
         x = torch.concat([surface_all_pos_embed, volume_all_pos_embed], dim=1)
+#        logging.info(f"********************After encoder, volume+surface: x.shape: {x.shape}")
         for block in self.blocks:
             if isinstance(block, TransformerBlock):
                 if len(split_size) == 4:
@@ -221,21 +236,31 @@ class AnchoredBranchedUPT(nn.Module):
         assert x_surface.size(1) == surface_position_all.size(1)
         assert x_volume.size(1) == volume_position_all.size(1)
 
+#        logging.info(f"********************After perceiver and corss attention, volume: x_volume.shape: {x_volume.shape}")
+#        logging.info(f"********************After perceiver and corss attention, surface: x_surface.shape: {x_surface.shape}")
+
         # surface blocks
         x = x_surface
-        for block in self.surface_blocks:
-            x = block(x, attn_kwargs=dict(**surface_decoder_attn_kwargs))
+        for ii, block in enumerate(self.surface_blocks):
+            x = block(
+                x,
+                attn_kwargs=dict(**surface_decoder_attn_kwargs)
+            )
         x = self.surface_decoder(x)
+#        logging.info(f"********************After decoder, surface: x.shape: {x.shape}")
         # convert to sparse tensor
         if surface_query_position is None:
             outputs["surface_anchor_pressure"] = einops.rearrange(x[:, :, :1], "bs seqlen dim -> (bs seqlen) dim")
-            outputs["surface_anchor_wallshearstress"] = einops.rearrange(
-                x[:, :, 1:],
-                "bs seqlen dim -> (bs seqlen) dim",
-            )
+#            outputs["surface_anchor_wallshearstress"] = einops.rearrange(
+#                x[:, :, 1:],
+#                "bs seqlen dim -> (bs seqlen) dim",
+#            )
         else:
             x_surface_anchor = x[:, :num_surface_anchor_positions]
             x_surface_query = x[:, num_surface_anchor_positions:]
+
+#            logging.info(f"******************** surface_anchor_*, volume: x_surface_anchor.shape: {x_surface_anchor.shape}")
+#            logging.info(f"******************** surface_query_*, volume: x_surface_query.shape: {x_surface_query.shape}")
             outputs["surface_anchor_pressure"] = einops.rearrange(
                 x_surface_anchor[:, :, :1],
                 "bs seqlen dim -> (bs seqlen) dim",
@@ -255,53 +280,69 @@ class AnchoredBranchedUPT(nn.Module):
 
         # volume
         x = x_volume
-        for block in self.volume_blocks:
-            x = block(x, attn_kwargs=dict(**volume_decoder_attn_kwargs))
+        for ii, block in enumerate(self.volume_blocks):
+            x = block(
+                x,
+                attn_kwargs=dict(**volume_decoder_attn_kwargs)
+            )
         x = self.volume_decoder(x)
+#        logging.info(f"********************After decoder, volume: x.shape: {x.shape}")
         # convert to sparse tensor
         if volume_query_position is None:
             # anchors only
-            outputs["volume_anchor_totalpcoeff"] = einops.rearrange(x[:, :, :1], "bs seqlen dim -> (bs seqlen) dim")
-            outputs["volume_anchor_velocity"] = einops.rearrange(x[:, :, 1:4], "bs seqlen dim -> (bs seqlen) dim")
-            outputs["volume_anchor_vorticity"] = einops.rearrange(x[:, :, 4:], "bs seqlen dim -> (bs seqlen) dim")
+            outputs["volume_anchor_velocity"] = einops.rearrange(x[:, :, :], "bs seqlen dim -> (bs seqlen) dim")
+#            outputs["volume_anchor_totalpcoeff"] = einops.rearrange(x[:, :, :1], "bs seqlen dim -> (bs seqlen) dim")
+#            outputs["volume_anchor_velocity"] = einops.rearrange(x[:, :, 1:4], "bs seqlen dim -> (bs seqlen) dim")
+#            outputs["volume_anchor_vorticity"] = einops.rearrange(x[:, :, 4:], "bs seqlen dim -> (bs seqlen) dim")
         else:
             # queries + anchors
             x1 = x[:, :num_volume_anchor_positions]
             x2 = x[:, num_volume_anchor_positions:]
-            outputs["volume_anchor_totalpcoeff"] = einops.rearrange(x1[:, :, :1], "bs seqlen dim -> (bs seqlen) dim")
-            outputs["volume_anchor_velocity"] = einops.rearrange(x1[:, :, 1:4], "bs seqlen dim -> (bs seqlen) dim")
-            outputs["volume_anchor_vorticity"] = einops.rearrange(x1[:, :, 4:], "bs seqlen dim -> (bs seqlen) dim")
-            outputs["volume_query_totalpcoeff"] = einops.rearrange(x2[:, :, :1], "bs seqlen dim -> (bs seqlen) dim")
-            outputs["volume_query_velocity"] = einops.rearrange(x2[:, :, 1:4], "bs seqlen dim -> (bs seqlen) dim")
-            outputs["volume_query_vorticity"] = einops.rearrange(x2[:, :, 4:], "bs seqlen dim -> (bs seqlen) dim")
-
+#            logging.info(f"******************** volume_anchor_*, volume: x1.shape: {x1.shape}")
+#            logging.info(f"******************** volume_query_*, volume: x2.shape: {x2.shape}")
+#            outputs["volume_anchor_totalpcoeff"] = einops.rearrange(x1[:, :, :1], "bs seqlen dim -> (bs seqlen) dim")
+#            outputs["volume_anchor_velocity"] = einops.rearrange(x1[:, :, 1:4], "bs seqlen dim -> (bs seqlen) dim")
+#            outputs["volume_anchor_vorticity"] = einops.rearrange(x1[:, :, 4:], "bs seqlen dim -> (bs seqlen) dim")
+#            outputs["volume_query_totalpcoeff"] = einops.rearrange(x2[:, :, :1], "bs seqlen dim -> (bs seqlen) dim")
+#            outputs["volume_query_velocity"] = einops.rearrange(x2[:, :, 1:4], "bs seqlen dim -> (bs seqlen) dim")
+#            outputs["volume_query_vorticity"] = einops.rearrange(x2[:, :, 4:], "bs seqlen dim -> (bs seqlen) dim")
+            outputs["volume_anchor_velocity"] = einops.rearrange(x1, "bs seqlen dim -> (bs seqlen) dim")
+            outputs["volume_query_velocity"] = einops.rearrange(x2, "bs seqlen dim -> (bs seqlen) dim")
         return outputs
 
 
-def main():
-    torch.manual_seed(0)
-    num_geometry_positions = 655
-    num_geometry_supernodes = 123
-    num_surface_anchors = 234
-    num_volume_anchors = 280
-    num_surface_queries = 301
-    num_volume_queries = 321
-    data = dict(
-        geometry_position=torch.rand(num_geometry_positions, 3) * 1000,
-        geometry_supernode_idx=torch.randperm(num_geometry_positions)[:num_geometry_supernodes],
-        geometry_batch_idx=None,
-        # anchors
-        surface_anchor_position=torch.rand(1, num_surface_anchors, 3) * 1000,
-        volume_anchor_position=torch.rand(1, num_volume_anchors, 3) * 1000,
-        # queries
-        surface_query_position=torch.rand(1, num_surface_queries, 3) * 1000,
-        volume_query_position=torch.rand(1, num_volume_queries, 3) * 1000,
-    )
-    model = AnchoredBranchedUPT()
-    outputs = model(**data)
-    for key, value in outputs.items():
-        print(f"{key}: {value.shape}")
-
-
-if __name__ == "__main__":
-    main()
+#def main():
+#
+#    root_dir = "/work/mae-zhangbj/drivaerml"
+#
+#    batch_size = 1
+#    train_dataloader, val_dataloader, test_dataloader = create_data_loaders(
+#        root_dir, batch_size
+#    )
+#
+#    torch.manual_seed(0)
+#    num_geometry_positions = 655
+#    num_geometry_supernodes = 123
+#    num_surface_anchors = 234
+#    num_volume_anchors = 280
+#    num_surface_queries = 301
+#    num_volume_queries = 321
+#    data = dict(
+#        geometry_position=torch.rand(num_geometry_positions, 3) * 1000,
+#        geometry_supernode_idx=torch.randperm(num_geometry_positions)[:num_geometry_supernodes],
+#        geometry_batch_idx=None,
+#        # anchors
+#        surface_anchor_position=torch.rand(1, num_surface_anchors, 3) * 1000,
+#        volume_anchor_position=torch.rand(1, num_volume_anchors, 3) * 1000,
+#        # queries
+#        surface_query_position=torch.rand(1, num_surface_queries, 3) * 1000,
+#        volume_query_position=torch.rand(1, num_volume_queries, 3) * 1000,
+#    )
+#    model = AnchoredBranchedUPT()
+#    outputs = model(**data)
+#    for key, value in outputs.items():
+#        print(f"{key}: {value.shape}")
+#
+#
+#if __name__ == "__main__":
+#    main()

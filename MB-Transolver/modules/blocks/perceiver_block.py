@@ -15,7 +15,12 @@ class PerceiverBlock(nn.Module):
         num_heads: Number of attention heads.
     """
 
-    def __init__(self, dim: int, num_heads: int):
+    def __init__(
+        self,
+        dim: int,
+        num_heads: int,
+        slice_num: int,
+    ):
         super().__init__()
         self.norm1q = nn.LayerNorm(dim, eps=1e-6)
         self.norm1kv = nn.LayerNorm(dim, eps=1e-6)

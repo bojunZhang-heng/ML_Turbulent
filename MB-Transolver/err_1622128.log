@@ -1,0 +1,433 @@
+/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch_geometric/__init__.py:4: UserWarning: An issue occurred while importing 'pyg-lib'. Disabling its usage. Stacktrace: /lib64/libm.so.6: version `GLIBC_2.29' not found (required by /work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/libpyg.so)
+  import torch_geometric.typing
+/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch_geometric/__init__.py:4: UserWarning: An issue occurred while importing 'torch-sparse'. Disabling its usage. Stacktrace: /lib64/libm.so.6: version `GLIBC_2.29' not found (required by /work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/libpyg.so)
+  import torch_geometric.typing
+2025-10-27 18:02:01,392 - INFO - [31m ************************* Start pressure prediction for 3D automobile geometry.[0m
+2025-10-27 18:02:01,395 - INFO - [32m Arguments: [0m
+{ 'Ccache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/CAD/Cache_data-E_S_WW_WM',
+  'Cdataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/CAD/E_S_WW_WM',
+  'Pcache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/Cache_data-E_S_WW_WM',
+  'Pdataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Pressure_Field/E_S_WW_WM',
+  'Vcache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/Volumetric_Field/Cache_data-E_S_WW_WM',
+  'Vdataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/Volumetric_Field/E_S_WW_WM',
+  'Wcache_dir': '/work/mae-zhangbj/DrivAriNet_dataset/WallShearStress/Cache_data-E_S_WW_WM',
+  'Wdataset_path': '/work/mae-zhangbj/DrivAriNet_dataset/WallShearStress/E_S_WW_WM',
+  'batch_size': 1,
+  'blocks': 'pscsc',
+  'dim': 192,
+  'dim_head': 64,
+  'downsample': 5,
+  'dropout': 0.4,
+  'emb_dims': 1024,
+  'epochs': 500,
+  'exp_name': 'Test',
+  'geometry_depth': 1,
+  'gpus': '0',
+  'input_dim': 3,
+  'k': 40,
+  'lr': 0.001,
+  'max_grad_norm': 0.1,
+  'mlp_ratio': 1,
+  'n_input': 192,
+  'n_layers': 8,
+  'ndim': 3,
+  'num_eval_samples': 5,
+  'num_heads': 3,
+  'num_points': 10000,
+  'num_surf_blocks': 6,
+  'num_volume_blocks': 6,
+  'num_workers': 1,
+  'output_channels': 1,
+  'output_dim_surface': 1,
+  'output_dim_volume': 3,
+  'radius': 0.25,
+  'ref': 8,
+  'res': 'True',
+  'root_dir': '/work/mae-zhangbj/drivaerml',
+  'seed': 1,
+  'slice_num': 64,
+  'stages': 'train',
+  'subset_dir': '/work/mae-zhangbj/ML_Turbulent/Current_Work/MB-Transolver/train_val_test_splits',
+  'test_only': 0,
+  'weight_decay': 1e-05}
+2025-10-27 18:02:01,395 - INFO - Preprocessing stage skipped.
+2025-10-27 18:02:01,395 - INFO - [31m *************************Starting model training... [0m
+/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch_geometric/__init__.py:4: UserWarning: An issue occurred while importing 'pyg-lib'. Disabling its usage. Stacktrace: /lib64/libm.so.6: version `GLIBC_2.29' not found (required by /work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/libpyg.so)
+  import torch_geometric.typing
+/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch_geometric/__init__.py:4: UserWarning: An issue occurred while importing 'torch-sparse'. Disabling its usage. Stacktrace: /lib64/libm.so.6: version `GLIBC_2.29' not found (required by /work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/libpyg.so)
+  import torch_geometric.typing
+/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch_geometric/__init__.py:4: UserWarning: An issue occurred while importing 'pyg-lib'. Disabling its usage. Stacktrace: /lib64/libm.so.6: version `GLIBC_2.29' not found (required by /work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/libpyg.so)
+  import torch_geometric.typing
+/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch_geometric/__init__.py:4: UserWarning: An issue occurred while importing 'torch-sparse'. Disabling its usage. Stacktrace: /lib64/libm.so.6: version `GLIBC_2.29' not found (required by /work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/libpyg.so)
+  import torch_geometric.typing
+2025-10-27 18:02:26,906 - INFO - args.exp_name : Test
+2025-10-27 18:02:26,921 - INFO - Starting training with 1 GPUs
+2025-10-27 18:02:27,883 - INFO - Total trainable parameters: 10834581
+2025-10-27 18:02:27,886 - INFO - Data loaded: 16 training batches, 27 validation batches
+2025-10-27 18:02:27,887 - INFO - Staring training for 500 epochs
+[Training]:   0%|          | 0/16 [00:00<?, ?it/s]/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch_geometric/__init__.py:4: UserWarning: An issue occurred while importing 'pyg-lib'. Disabling its usage. Stacktrace: /lib64/libm.so.6: version `GLIBC_2.29' not found (required by /work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/libpyg.so)
+  import torch_geometric.typing
+/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch_geometric/__init__.py:4: UserWarning: An issue occurred while importing 'torch-sparse'. Disabling its usage. Stacktrace: /lib64/libm.so.6: version `GLIBC_2.29' not found (required by /work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/libpyg.so)
+  import torch_geometric.typing
+2025-10-27 18:09:50,544 - INFO - *************************surface_order.shape: torch.Size([1, 4, 83165])
+2025-10-27 18:09:50,546 - INFO - *************************surface_inverse.shape: torch.Size([1, 4, 83165])
+2025-10-27 18:09:50,546 - INFO - *************************volume_order.shape: torch.Size([1, 4, 139947])
+2025-10-27 18:09:50,546 - INFO - *************************volume_inverse.shape: torch.Size([1, 4, 139947])
+2025-10-27 18:09:50,969 - INFO - ********************After rope, geometry_rope.shape: torch.Size([1, 16384, 32])
+2025-10-27 18:09:50,987 - INFO - ********************After rope, surface+volume_rope.shape: torch.Size([1, 223112, 32])
+2025-10-27 18:09:51,170 - INFO - ********************After encoder, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 18:09:51,267 - INFO - ********************After self attention, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 18:09:51,476 - INFO - ********************After encoder, surface: surface_all_pos_embed.shape: torch.Size([1, 83165, 192])
+2025-10-27 18:09:51,647 - INFO - ********************After encoder, volume: volume_all_pos_embed.shape: torch.Size([1, 139947, 192])
+2025-10-27 18:09:51,897 - INFO - ********************After encoder, volume+surface: x.shape: torch.Size([1, 223112, 192])
+2025-10-27 18:09:52,077 - INFO - ********************After perceiver and corss attention, volume: x_volume.shape: torch.Size([1, 139947, 192])
+2025-10-27 18:09:52,235 - INFO - ********************After perceiver and corss attention, surface: x_surface.shape: torch.Size([1, 83165, 192])
+2025-10-27 18:09:55,199 - INFO - ********************After decoder, surface: x.shape: torch.Size([1, 83165, 1])
+2025-10-27 18:09:55,201 - INFO - ******************** surface_anchor_*, volume: x_surface_anchor.shape: torch.Size([1, 16384, 1])
+2025-10-27 18:09:55,201 - INFO - ******************** surface_query_*, volume: x_surface_query.shape: torch.Size([1, 66781, 1])
+2025-10-27 18:09:57,120 - INFO - ********************After decoder, volume: x.shape: torch.Size([1, 139947, 3])
+2025-10-27 18:09:57,121 - INFO - ******************** volume_anchor_*, volume: x1.shape: torch.Size([1, 16384, 3])
+2025-10-27 18:09:57,121 - INFO - ******************** volume_query_*, volume: x2.shape: torch.Size([1, 123563, 3])
+[Training]:   6%|▋         | 1/16 [07:36<1:54:03, 456.26s/it]2025-10-27 18:14:53,774 - INFO - *************************surface_order.shape: torch.Size([1, 4, 84093])
+2025-10-27 18:14:53,788 - INFO - *************************surface_inverse.shape: torch.Size([1, 4, 84093])
+2025-10-27 18:14:53,788 - INFO - *************************volume_order.shape: torch.Size([1, 4, 137384])
+2025-10-27 18:14:53,788 - INFO - *************************volume_inverse.shape: torch.Size([1, 4, 137384])
+2025-10-27 18:14:53,802 - INFO - ********************After rope, geometry_rope.shape: torch.Size([1, 16384, 32])
+2025-10-27 18:14:53,803 - INFO - ********************After rope, surface+volume_rope.shape: torch.Size([1, 221477, 32])
+2025-10-27 18:14:53,861 - INFO - ********************After encoder, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 18:14:53,863 - INFO - ********************After self attention, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 18:14:53,891 - INFO - ********************After encoder, surface: surface_all_pos_embed.shape: torch.Size([1, 84093, 192])
+2025-10-27 18:14:53,891 - INFO - ********************After encoder, volume: volume_all_pos_embed.shape: torch.Size([1, 137384, 192])
+2025-10-27 18:14:53,891 - INFO - ********************After encoder, volume+surface: x.shape: torch.Size([1, 221477, 192])
+2025-10-27 18:14:53,897 - INFO - ********************After perceiver and corss attention, volume: x_volume.shape: torch.Size([1, 137384, 192])
+2025-10-27 18:14:53,897 - INFO - ********************After perceiver and corss attention, surface: x_surface.shape: torch.Size([1, 84093, 192])
+2025-10-27 18:14:56,876 - INFO - ********************After decoder, surface: x.shape: torch.Size([1, 84093, 1])
+2025-10-27 18:14:56,886 - INFO - ******************** surface_anchor_*, volume: x_surface_anchor.shape: torch.Size([1, 16384, 1])
+2025-10-27 18:14:56,886 - INFO - ******************** surface_query_*, volume: x_surface_query.shape: torch.Size([1, 67709, 1])
+2025-10-27 18:14:58,725 - INFO - ********************After decoder, volume: x.shape: torch.Size([1, 137384, 3])
+2025-10-27 18:14:58,726 - INFO - ******************** volume_anchor_*, volume: x1.shape: torch.Size([1, 16384, 3])
+2025-10-27 18:14:58,726 - INFO - ******************** volume_query_*, volume: x2.shape: torch.Size([1, 121000, 3])
+[Training]:  12%|█▎        | 2/16 [12:37<1:25:11, 365.09s/it]2025-10-27 18:21:03,938 - INFO - *************************surface_order.shape: torch.Size([1, 4, 79379])
+2025-10-27 18:21:03,940 - INFO - *************************surface_inverse.shape: torch.Size([1, 4, 79379])
+2025-10-27 18:21:03,940 - INFO - *************************volume_order.shape: torch.Size([1, 4, 133987])
+2025-10-27 18:21:03,940 - INFO - *************************volume_inverse.shape: torch.Size([1, 4, 133987])
+2025-10-27 18:21:03,943 - INFO - ********************After rope, geometry_rope.shape: torch.Size([1, 16384, 32])
+2025-10-27 18:21:03,968 - INFO - ********************After rope, surface+volume_rope.shape: torch.Size([1, 213366, 32])
+2025-10-27 18:21:04,032 - INFO - ********************After encoder, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 18:21:04,033 - INFO - ********************After self attention, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 18:21:04,060 - INFO - ********************After encoder, surface: surface_all_pos_embed.shape: torch.Size([1, 79379, 192])
+2025-10-27 18:21:04,061 - INFO - ********************After encoder, volume: volume_all_pos_embed.shape: torch.Size([1, 133987, 192])
+2025-10-27 18:21:04,061 - INFO - ********************After encoder, volume+surface: x.shape: torch.Size([1, 213366, 192])
+2025-10-27 18:21:04,067 - INFO - ********************After perceiver and corss attention, volume: x_volume.shape: torch.Size([1, 133987, 192])
+2025-10-27 18:21:04,067 - INFO - ********************After perceiver and corss attention, surface: x_surface.shape: torch.Size([1, 79379, 192])
+2025-10-27 18:21:06,849 - INFO - ********************After decoder, surface: x.shape: torch.Size([1, 79379, 1])
+2025-10-27 18:21:06,851 - INFO - ******************** surface_anchor_*, volume: x_surface_anchor.shape: torch.Size([1, 16384, 1])
+2025-10-27 18:21:06,851 - INFO - ******************** surface_query_*, volume: x_surface_query.shape: torch.Size([1, 62995, 1])
+2025-10-27 18:21:08,463 - INFO - ********************After decoder, volume: x.shape: torch.Size([1, 133987, 3])
+2025-10-27 18:21:08,465 - INFO - ******************** volume_anchor_*, volume: x1.shape: torch.Size([1, 16384, 3])
+2025-10-27 18:21:08,465 - INFO - ******************** volume_query_*, volume: x2.shape: torch.Size([1, 117603, 3])
+[Training]:  19%|█▉        | 3/16 [18:47<1:19:32, 367.12s/it]2025-10-27 18:28:48,646 - INFO - *************************surface_order.shape: torch.Size([1, 4, 77927])
+2025-10-27 18:28:48,648 - INFO - *************************surface_inverse.shape: torch.Size([1, 4, 77927])
+2025-10-27 18:28:48,648 - INFO - *************************volume_order.shape: torch.Size([1, 4, 134143])
+2025-10-27 18:28:48,648 - INFO - *************************volume_inverse.shape: torch.Size([1, 4, 134143])
+2025-10-27 18:28:48,651 - INFO - ********************After rope, geometry_rope.shape: torch.Size([1, 16384, 32])
+2025-10-27 18:28:48,652 - INFO - ********************After rope, surface+volume_rope.shape: torch.Size([1, 212070, 32])
+2025-10-27 18:28:48,706 - INFO - ********************After encoder, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 18:28:48,707 - INFO - ********************After self attention, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 18:28:48,738 - INFO - ********************After encoder, surface: surface_all_pos_embed.shape: torch.Size([1, 77927, 192])
+2025-10-27 18:28:48,738 - INFO - ********************After encoder, volume: volume_all_pos_embed.shape: torch.Size([1, 134143, 192])
+2025-10-27 18:28:48,738 - INFO - ********************After encoder, volume+surface: x.shape: torch.Size([1, 212070, 192])
+2025-10-27 18:28:48,744 - INFO - ********************After perceiver and corss attention, volume: x_volume.shape: torch.Size([1, 134143, 192])
+2025-10-27 18:28:48,744 - INFO - ********************After perceiver and corss attention, surface: x_surface.shape: torch.Size([1, 77927, 192])
+2025-10-27 18:28:51,491 - INFO - ********************After decoder, surface: x.shape: torch.Size([1, 77927, 1])
+2025-10-27 18:28:51,493 - INFO - ******************** surface_anchor_*, volume: x_surface_anchor.shape: torch.Size([1, 16384, 1])
+2025-10-27 18:28:51,493 - INFO - ******************** surface_query_*, volume: x_surface_query.shape: torch.Size([1, 61543, 1])
+2025-10-27 18:28:53,098 - INFO - ********************After decoder, volume: x.shape: torch.Size([1, 134143, 3])
+2025-10-27 18:28:53,100 - INFO - ******************** volume_anchor_*, volume: x1.shape: torch.Size([1, 16384, 3])
+2025-10-27 18:28:53,100 - INFO - ******************** volume_query_*, volume: x2.shape: torch.Size([1, 117759, 3])
+[Training]:  25%|██▌       | 4/16 [26:31<1:21:07, 405.61s/it]2025-10-27 18:33:35,959 - INFO - *************************surface_order.shape: torch.Size([1, 4, 79494])
+2025-10-27 18:33:35,974 - INFO - *************************surface_inverse.shape: torch.Size([1, 4, 79494])
+2025-10-27 18:33:35,975 - INFO - *************************volume_order.shape: torch.Size([1, 4, 132349])
+2025-10-27 18:33:35,975 - INFO - *************************volume_inverse.shape: torch.Size([1, 4, 132349])
+2025-10-27 18:33:35,977 - INFO - ********************After rope, geometry_rope.shape: torch.Size([1, 16384, 32])
+2025-10-27 18:33:35,978 - INFO - ********************After rope, surface+volume_rope.shape: torch.Size([1, 211843, 32])
+2025-10-27 18:33:36,041 - INFO - ********************After encoder, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 18:33:36,042 - INFO - ********************After self attention, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 18:33:36,070 - INFO - ********************After encoder, surface: surface_all_pos_embed.shape: torch.Size([1, 79494, 192])
+2025-10-27 18:33:36,218 - INFO - ********************After encoder, volume: volume_all_pos_embed.shape: torch.Size([1, 132349, 192])
+2025-10-27 18:33:36,376 - INFO - ********************After encoder, volume+surface: x.shape: torch.Size([1, 211843, 192])
+2025-10-27 18:33:36,535 - INFO - ********************After perceiver and corss attention, volume: x_volume.shape: torch.Size([1, 132349, 192])
+2025-10-27 18:33:36,680 - INFO - ********************After perceiver and corss attention, surface: x_surface.shape: torch.Size([1, 79494, 192])
+2025-10-27 18:33:39,280 - INFO - ********************After decoder, surface: x.shape: torch.Size([1, 79494, 1])
+2025-10-27 18:33:39,320 - INFO - ******************** surface_anchor_*, volume: x_surface_anchor.shape: torch.Size([1, 16384, 1])
+2025-10-27 18:33:39,325 - INFO - ******************** surface_query_*, volume: x_surface_query.shape: torch.Size([1, 63110, 1])
+2025-10-27 18:33:41,043 - INFO - ********************After decoder, volume: x.shape: torch.Size([1, 132349, 3])
+2025-10-27 18:33:41,044 - INFO - ******************** volume_anchor_*, volume: x1.shape: torch.Size([1, 16384, 3])
+2025-10-27 18:33:41,045 - INFO - ******************** volume_query_*, volume: x2.shape: torch.Size([1, 115965, 3])
+[Training]:  31%|███▏      | 5/16 [31:19<1:06:34, 363.16s/it]2025-10-27 18:41:13,555 - INFO - *************************surface_order.shape: torch.Size([1, 4, 84532])
+2025-10-27 18:41:13,557 - INFO - *************************surface_inverse.shape: torch.Size([1, 4, 84532])
+2025-10-27 18:41:13,557 - INFO - *************************volume_order.shape: torch.Size([1, 4, 140397])
+2025-10-27 18:41:13,557 - INFO - *************************volume_inverse.shape: torch.Size([1, 4, 140397])
+2025-10-27 18:41:13,560 - INFO - ********************After rope, geometry_rope.shape: torch.Size([1, 16384, 32])
+2025-10-27 18:41:13,561 - INFO - ********************After rope, surface+volume_rope.shape: torch.Size([1, 224929, 32])
+2025-10-27 18:41:13,615 - INFO - ********************After encoder, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 18:41:13,616 - INFO - ********************After self attention, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 18:41:13,648 - INFO - ********************After encoder, surface: surface_all_pos_embed.shape: torch.Size([1, 84532, 192])
+2025-10-27 18:41:13,648 - INFO - ********************After encoder, volume: volume_all_pos_embed.shape: torch.Size([1, 140397, 192])
+2025-10-27 18:41:13,648 - INFO - ********************After encoder, volume+surface: x.shape: torch.Size([1, 224929, 192])
+2025-10-27 18:41:14,802 - INFO - ********************After perceiver and corss attention, volume: x_volume.shape: torch.Size([1, 140397, 192])
+2025-10-27 18:41:14,803 - INFO - ********************After perceiver and corss attention, surface: x_surface.shape: torch.Size([1, 84532, 192])
+2025-10-27 18:41:17,011 - INFO - ********************After decoder, surface: x.shape: torch.Size([1, 84532, 1])
+2025-10-27 18:41:17,016 - INFO - ******************** surface_anchor_*, volume: x_surface_anchor.shape: torch.Size([1, 16384, 1])
+2025-10-27 18:41:17,016 - INFO - ******************** surface_query_*, volume: x_surface_query.shape: torch.Size([1, 68148, 1])
+2025-10-27 18:41:18,844 - INFO - ********************After decoder, volume: x.shape: torch.Size([1, 140397, 3])
+2025-10-27 18:41:18,891 - INFO - ******************** volume_anchor_*, volume: x1.shape: torch.Size([1, 16384, 3])
+2025-10-27 18:41:18,892 - INFO - ******************** volume_query_*, volume: x2.shape: torch.Size([1, 124013, 3])
+[Training]:  38%|███▊      | 6/16 [38:57<1:05:54, 395.49s/it]2025-10-27 18:48:10,586 - INFO - *************************surface_order.shape: torch.Size([1, 4, 93576])
+2025-10-27 18:48:10,605 - INFO - *************************surface_inverse.shape: torch.Size([1, 4, 93576])
+2025-10-27 18:48:10,805 - INFO - *************************volume_order.shape: torch.Size([1, 4, 151551])
+2025-10-27 18:48:10,979 - INFO - *************************volume_inverse.shape: torch.Size([1, 4, 151551])
+2025-10-27 18:48:11,160 - INFO - ********************After rope, geometry_rope.shape: torch.Size([1, 16384, 32])
+2025-10-27 18:48:11,322 - INFO - ********************After rope, surface+volume_rope.shape: torch.Size([1, 245127, 32])
+2025-10-27 18:48:11,526 - INFO - ********************After encoder, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 18:48:11,719 - INFO - ********************After self attention, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 18:48:11,986 - INFO - ********************After encoder, surface: surface_all_pos_embed.shape: torch.Size([1, 93576, 192])
+2025-10-27 18:48:12,176 - INFO - ********************After encoder, volume: volume_all_pos_embed.shape: torch.Size([1, 151551, 192])
+2025-10-27 18:48:12,358 - INFO - ********************After encoder, volume+surface: x.shape: torch.Size([1, 245127, 192])
+2025-10-27 18:48:14,704 - INFO - ********************After perceiver and corss attention, volume: x_volume.shape: torch.Size([1, 151551, 192])
+2025-10-27 18:48:14,706 - INFO - ********************After perceiver and corss attention, surface: x_surface.shape: torch.Size([1, 93576, 192])
+2025-10-27 18:48:16,206 - INFO - ********************After decoder, surface: x.shape: torch.Size([1, 93576, 1])
+2025-10-27 18:48:16,208 - INFO - ******************** surface_anchor_*, volume: x_surface_anchor.shape: torch.Size([1, 16384, 1])
+2025-10-27 18:48:16,208 - INFO - ******************** surface_query_*, volume: x_surface_query.shape: torch.Size([1, 77192, 1])
+2025-10-27 18:48:18,044 - INFO - ********************After decoder, volume: x.shape: torch.Size([1, 151551, 3])
+2025-10-27 18:48:18,046 - INFO - ******************** volume_anchor_*, volume: x1.shape: torch.Size([1, 16384, 3])
+2025-10-27 18:48:18,046 - INFO - ******************** volume_query_*, volume: x2.shape: torch.Size([1, 135167, 3])
+[Training]:  44%|████▍     | 7/16 [45:57<1:00:30, 403.41s/it]2025-10-27 19:04:22,905 - INFO - *************************surface_order.shape: torch.Size([1, 4, 82716])
+2025-10-27 19:04:22,907 - INFO - *************************surface_inverse.shape: torch.Size([1, 4, 82716])
+2025-10-27 19:04:22,908 - INFO - *************************volume_order.shape: torch.Size([1, 4, 137731])
+2025-10-27 19:04:22,908 - INFO - *************************volume_inverse.shape: torch.Size([1, 4, 137731])
+2025-10-27 19:04:22,910 - INFO - ********************After rope, geometry_rope.shape: torch.Size([1, 16384, 32])
+2025-10-27 19:04:22,911 - INFO - ********************After rope, surface+volume_rope.shape: torch.Size([1, 220447, 32])
+2025-10-27 19:04:22,965 - INFO - ********************After encoder, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 19:04:22,966 - INFO - ********************After self attention, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 19:04:22,993 - INFO - ********************After encoder, surface: surface_all_pos_embed.shape: torch.Size([1, 82716, 192])
+2025-10-27 19:04:22,993 - INFO - ********************After encoder, volume: volume_all_pos_embed.shape: torch.Size([1, 137731, 192])
+2025-10-27 19:04:22,993 - INFO - ********************After encoder, volume+surface: x.shape: torch.Size([1, 220447, 192])
+2025-10-27 19:04:22,999 - INFO - ********************After perceiver and corss attention, volume: x_volume.shape: torch.Size([1, 137731, 192])
+2025-10-27 19:04:23,017 - INFO - ********************After perceiver and corss attention, surface: x_surface.shape: torch.Size([1, 82716, 192])
+2025-10-27 19:04:25,821 - INFO - ********************After decoder, surface: x.shape: torch.Size([1, 82716, 1])
+2025-10-27 19:04:25,823 - INFO - ******************** surface_anchor_*, volume: x_surface_anchor.shape: torch.Size([1, 16384, 1])
+2025-10-27 19:04:25,823 - INFO - ******************** surface_query_*, volume: x_surface_query.shape: torch.Size([1, 66332, 1])
+2025-10-27 19:04:27,472 - INFO - ********************After decoder, volume: x.shape: torch.Size([1, 137731, 3])
+2025-10-27 19:04:27,474 - INFO - ******************** volume_anchor_*, volume: x1.shape: torch.Size([1, 16384, 3])
+2025-10-27 19:04:27,474 - INFO - ******************** volume_query_*, volume: x2.shape: torch.Size([1, 121347, 3])
+[Training]:  50%|█████     | 8/16 [1:02:06<1:17:47, 583.38s/it]2025-10-27 19:14:59,345 - INFO - *************************surface_order.shape: torch.Size([1, 4, 82702])
+2025-10-27 19:14:59,365 - INFO - *************************surface_inverse.shape: torch.Size([1, 4, 82702])
+2025-10-27 19:14:59,365 - INFO - *************************volume_order.shape: torch.Size([1, 4, 139242])
+2025-10-27 19:14:59,365 - INFO - *************************volume_inverse.shape: torch.Size([1, 4, 139242])
+2025-10-27 19:14:59,368 - INFO - ********************After rope, geometry_rope.shape: torch.Size([1, 16384, 32])
+2025-10-27 19:14:59,369 - INFO - ********************After rope, surface+volume_rope.shape: torch.Size([1, 221944, 32])
+2025-10-27 19:14:59,423 - INFO - ********************After encoder, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 19:14:59,424 - INFO - ********************After self attention, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 19:14:59,451 - INFO - ********************After encoder, surface: surface_all_pos_embed.shape: torch.Size([1, 82702, 192])
+2025-10-27 19:14:59,452 - INFO - ********************After encoder, volume: volume_all_pos_embed.shape: torch.Size([1, 139242, 192])
+2025-10-27 19:14:59,452 - INFO - ********************After encoder, volume+surface: x.shape: torch.Size([1, 221944, 192])
+2025-10-27 19:14:59,457 - INFO - ********************After perceiver and corss attention, volume: x_volume.shape: torch.Size([1, 139242, 192])
+2025-10-27 19:14:59,458 - INFO - ********************After perceiver and corss attention, surface: x_surface.shape: torch.Size([1, 82702, 192])
+2025-10-27 19:15:02,298 - INFO - ********************After decoder, surface: x.shape: torch.Size([1, 82702, 1])
+2025-10-27 19:15:02,299 - INFO - ******************** surface_anchor_*, volume: x_surface_anchor.shape: torch.Size([1, 16384, 1])
+2025-10-27 19:15:02,300 - INFO - ******************** surface_query_*, volume: x_surface_query.shape: torch.Size([1, 66318, 1])
+2025-10-27 19:15:04,027 - INFO - ********************After decoder, volume: x.shape: torch.Size([1, 139242, 3])
+2025-10-27 19:15:04,029 - INFO - ******************** volume_anchor_*, volume: x1.shape: torch.Size([1, 16384, 3])
+2025-10-27 19:15:04,029 - INFO - ******************** volume_query_*, volume: x2.shape: torch.Size([1, 122858, 3])
+[Training]:  56%|█████▋    | 9/16 [1:12:42<1:10:00, 600.03s/it]2025-10-27 19:25:35,476 - INFO - *************************surface_order.shape: torch.Size([1, 4, 73160])
+2025-10-27 19:25:35,478 - INFO - *************************surface_inverse.shape: torch.Size([1, 4, 73160])
+2025-10-27 19:25:35,478 - INFO - *************************volume_order.shape: torch.Size([1, 4, 124295])
+2025-10-27 19:25:35,478 - INFO - *************************volume_inverse.shape: torch.Size([1, 4, 124295])
+2025-10-27 19:25:35,481 - INFO - ********************After rope, geometry_rope.shape: torch.Size([1, 16384, 32])
+2025-10-27 19:25:35,482 - INFO - ********************After rope, surface+volume_rope.shape: torch.Size([1, 197455, 32])
+2025-10-27 19:25:35,535 - INFO - ********************After encoder, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 19:25:35,537 - INFO - ********************After self attention, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 19:25:35,575 - INFO - ********************After encoder, surface: surface_all_pos_embed.shape: torch.Size([1, 73160, 192])
+2025-10-27 19:25:35,575 - INFO - ********************After encoder, volume: volume_all_pos_embed.shape: torch.Size([1, 124295, 192])
+2025-10-27 19:25:35,575 - INFO - ********************After encoder, volume+surface: x.shape: torch.Size([1, 197455, 192])
+2025-10-27 19:25:35,581 - INFO - ********************After perceiver and corss attention, volume: x_volume.shape: torch.Size([1, 124295, 192])
+2025-10-27 19:25:35,581 - INFO - ********************After perceiver and corss attention, surface: x_surface.shape: torch.Size([1, 73160, 192])
+2025-10-27 19:25:38,097 - INFO - ********************After decoder, surface: x.shape: torch.Size([1, 73160, 1])
+2025-10-27 19:25:38,099 - INFO - ******************** surface_anchor_*, volume: x_surface_anchor.shape: torch.Size([1, 16384, 1])
+2025-10-27 19:25:38,099 - INFO - ******************** surface_query_*, volume: x_surface_query.shape: torch.Size([1, 56776, 1])
+2025-10-27 19:25:39,591 - INFO - ********************After decoder, volume: x.shape: torch.Size([1, 124295, 3])
+2025-10-27 19:25:39,592 - INFO - ******************** volume_anchor_*, volume: x1.shape: torch.Size([1, 16384, 3])
+2025-10-27 19:25:39,592 - INFO - ******************** volume_query_*, volume: x2.shape: torch.Size([1, 107911, 3])
+[Training]:  62%|██████▎   | 10/16 [1:23:17<1:01:04, 610.77s/it]2025-10-27 19:43:24,315 - INFO - *************************surface_order.shape: torch.Size([1, 4, 96807])
+2025-10-27 19:43:24,333 - INFO - *************************surface_inverse.shape: torch.Size([1, 4, 96807])
+2025-10-27 19:43:24,333 - INFO - *************************volume_order.shape: torch.Size([1, 4, 155923])
+2025-10-27 19:43:24,333 - INFO - *************************volume_inverse.shape: torch.Size([1, 4, 155923])
+2025-10-27 19:43:24,335 - INFO - ********************After rope, geometry_rope.shape: torch.Size([1, 16384, 32])
+2025-10-27 19:43:24,336 - INFO - ********************After rope, surface+volume_rope.shape: torch.Size([1, 252730, 32])
+2025-10-27 19:43:24,390 - INFO - ********************After encoder, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 19:43:24,391 - INFO - ********************After self attention, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 19:43:24,419 - INFO - ********************After encoder, surface: surface_all_pos_embed.shape: torch.Size([1, 96807, 192])
+2025-10-27 19:43:24,419 - INFO - ********************After encoder, volume: volume_all_pos_embed.shape: torch.Size([1, 155923, 192])
+2025-10-27 19:43:24,420 - INFO - ********************After encoder, volume+surface: x.shape: torch.Size([1, 252730, 192])
+2025-10-27 19:43:25,586 - INFO - ********************After perceiver and corss attention, volume: x_volume.shape: torch.Size([1, 155923, 192])
+2025-10-27 19:43:25,589 - INFO - ********************After perceiver and corss attention, surface: x_surface.shape: torch.Size([1, 96807, 192])
+2025-10-27 19:43:28,216 - INFO - ********************After decoder, surface: x.shape: torch.Size([1, 96807, 1])
+2025-10-27 19:43:28,229 - INFO - ******************** surface_anchor_*, volume: x_surface_anchor.shape: torch.Size([1, 16384, 1])
+2025-10-27 19:43:28,230 - INFO - ******************** surface_query_*, volume: x_surface_query.shape: torch.Size([1, 80423, 1])
+2025-10-27 19:43:30,313 - INFO - ********************After decoder, volume: x.shape: torch.Size([1, 155923, 3])
+2025-10-27 19:43:30,346 - INFO - ******************** volume_anchor_*, volume: x1.shape: torch.Size([1, 16384, 3])
+2025-10-27 19:43:30,346 - INFO - ******************** volume_query_*, volume: x2.shape: torch.Size([1, 139539, 3])
+[Training]:  69%|██████▉   | 11/16 [1:41:10<1:02:40, 752.03s/it]2025-10-27 20:00:49,501 - INFO - *************************surface_order.shape: torch.Size([1, 4, 85546])
+2025-10-27 20:00:49,503 - INFO - *************************surface_inverse.shape: torch.Size([1, 4, 85546])
+2025-10-27 20:00:49,504 - INFO - *************************volume_order.shape: torch.Size([1, 4, 142228])
+2025-10-27 20:00:49,504 - INFO - *************************volume_inverse.shape: torch.Size([1, 4, 142228])
+2025-10-27 20:00:49,533 - INFO - ********************After rope, geometry_rope.shape: torch.Size([1, 16384, 32])
+2025-10-27 20:00:49,534 - INFO - ********************After rope, surface+volume_rope.shape: torch.Size([1, 227774, 32])
+2025-10-27 20:00:49,587 - INFO - ********************After encoder, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 20:00:49,588 - INFO - ********************After self attention, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 20:00:49,616 - INFO - ********************After encoder, surface: surface_all_pos_embed.shape: torch.Size([1, 85546, 192])
+2025-10-27 20:00:49,616 - INFO - ********************After encoder, volume: volume_all_pos_embed.shape: torch.Size([1, 142228, 192])
+2025-10-27 20:00:49,616 - INFO - ********************After encoder, volume+surface: x.shape: torch.Size([1, 227774, 192])
+2025-10-27 20:00:49,622 - INFO - ********************After perceiver and corss attention, volume: x_volume.shape: torch.Size([1, 142228, 192])
+2025-10-27 20:00:49,622 - INFO - ********************After perceiver and corss attention, surface: x_surface.shape: torch.Size([1, 85546, 192])
+2025-10-27 20:00:52,541 - INFO - ********************After decoder, surface: x.shape: torch.Size([1, 85546, 1])
+2025-10-27 20:00:52,543 - INFO - ******************** surface_anchor_*, volume: x_surface_anchor.shape: torch.Size([1, 16384, 1])
+2025-10-27 20:00:52,543 - INFO - ******************** surface_query_*, volume: x_surface_query.shape: torch.Size([1, 69162, 1])
+2025-10-27 20:00:54,259 - INFO - ********************After decoder, volume: x.shape: torch.Size([1, 142228, 3])
+2025-10-27 20:00:54,261 - INFO - ******************** volume_anchor_*, volume: x1.shape: torch.Size([1, 16384, 3])
+2025-10-27 20:00:54,261 - INFO - ******************** volume_query_*, volume: x2.shape: torch.Size([1, 125844, 3])
+[Training]:  75%|███████▌  | 12/16 [1:58:33<56:02, 840.61s/it]  2025-10-27 20:26:35,053 - INFO - *************************surface_order.shape: torch.Size([1, 4, 86636])
+2025-10-27 20:26:35,077 - INFO - *************************surface_inverse.shape: torch.Size([1, 4, 86636])
+2025-10-27 20:26:35,077 - INFO - *************************volume_order.shape: torch.Size([1, 4, 144848])
+2025-10-27 20:26:35,077 - INFO - *************************volume_inverse.shape: torch.Size([1, 4, 144848])
+2025-10-27 20:26:35,079 - INFO - ********************After rope, geometry_rope.shape: torch.Size([1, 16384, 32])
+2025-10-27 20:26:35,080 - INFO - ********************After rope, surface+volume_rope.shape: torch.Size([1, 231484, 32])
+2025-10-27 20:26:35,134 - INFO - ********************After encoder, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 20:26:35,135 - INFO - ********************After self attention, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 20:26:35,163 - INFO - ********************After encoder, surface: surface_all_pos_embed.shape: torch.Size([1, 86636, 192])
+2025-10-27 20:26:35,163 - INFO - ********************After encoder, volume: volume_all_pos_embed.shape: torch.Size([1, 144848, 192])
+2025-10-27 20:26:35,163 - INFO - ********************After encoder, volume+surface: x.shape: torch.Size([1, 231484, 192])
+2025-10-27 20:26:35,169 - INFO - ********************After perceiver and corss attention, volume: x_volume.shape: torch.Size([1, 144848, 192])
+2025-10-27 20:26:35,169 - INFO - ********************After perceiver and corss attention, surface: x_surface.shape: torch.Size([1, 86636, 192])
+2025-10-27 20:26:38,132 - INFO - ********************After decoder, surface: x.shape: torch.Size([1, 86636, 1])
+2025-10-27 20:26:38,134 - INFO - ******************** surface_anchor_*, volume: x_surface_anchor.shape: torch.Size([1, 16384, 1])
+2025-10-27 20:26:38,134 - INFO - ******************** surface_query_*, volume: x_surface_query.shape: torch.Size([1, 70252, 1])
+2025-10-27 20:26:39,873 - INFO - ********************After decoder, volume: x.shape: torch.Size([1, 144848, 3])
+2025-10-27 20:26:39,875 - INFO - ******************** volume_anchor_*, volume: x1.shape: torch.Size([1, 16384, 3])
+2025-10-27 20:26:39,875 - INFO - ******************** volume_query_*, volume: x2.shape: torch.Size([1, 128464, 3])
+[Training]:  81%|████████▏ | 13/16 [2:24:18<52:42, 1054.21s/it]2025-10-27 20:33:25,419 - INFO - *************************surface_order.shape: torch.Size([1, 4, 97815])
+2025-10-27 20:33:25,466 - INFO - *************************surface_inverse.shape: torch.Size([1, 4, 97815])
+2025-10-27 20:33:25,466 - INFO - *************************volume_order.shape: torch.Size([1, 4, 159251])
+2025-10-27 20:33:25,466 - INFO - *************************volume_inverse.shape: torch.Size([1, 4, 159251])
+2025-10-27 20:33:25,469 - INFO - ********************After rope, geometry_rope.shape: torch.Size([1, 16384, 32])
+2025-10-27 20:33:25,636 - INFO - ********************After rope, surface+volume_rope.shape: torch.Size([1, 257066, 32])
+2025-10-27 20:33:25,876 - INFO - ********************After encoder, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 20:33:26,054 - INFO - ********************After self attention, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 20:33:26,221 - INFO - ********************After encoder, surface: surface_all_pos_embed.shape: torch.Size([1, 97815, 192])
+2025-10-27 20:33:26,378 - INFO - ********************After encoder, volume: volume_all_pos_embed.shape: torch.Size([1, 159251, 192])
+2025-10-27 20:33:26,531 - INFO - ********************After encoder, volume+surface: x.shape: torch.Size([1, 257066, 192])
+2025-10-27 20:33:27,756 - INFO - ********************After perceiver and corss attention, volume: x_volume.shape: torch.Size([1, 159251, 192])
+2025-10-27 20:33:27,758 - INFO - ********************After perceiver and corss attention, surface: x_surface.shape: torch.Size([1, 97815, 192])
+2025-10-27 20:33:30,587 - INFO - ********************After decoder, surface: x.shape: torch.Size([1, 97815, 1])
+2025-10-27 20:33:30,612 - INFO - ******************** surface_anchor_*, volume: x_surface_anchor.shape: torch.Size([1, 16384, 1])
+2025-10-27 20:33:30,613 - INFO - ******************** surface_query_*, volume: x_surface_query.shape: torch.Size([1, 81431, 1])
+2025-10-27 20:33:32,768 - INFO - ********************After decoder, volume: x.shape: torch.Size([1, 159251, 3])
+2025-10-27 20:33:32,770 - INFO - ******************** volume_anchor_*, volume: x1.shape: torch.Size([1, 16384, 3])
+2025-10-27 20:33:32,770 - INFO - ******************** volume_query_*, volume: x2.shape: torch.Size([1, 142867, 3])
+[Training]:  88%|████████▊ | 14/16 [2:31:13<28:41, 860.91s/it] 2025-10-27 20:41:20,944 - INFO - *************************surface_order.shape: torch.Size([1, 4, 91304])
+2025-10-27 20:41:20,947 - INFO - *************************surface_inverse.shape: torch.Size([1, 4, 91304])
+2025-10-27 20:41:20,947 - INFO - *************************volume_order.shape: torch.Size([1, 4, 150173])
+2025-10-27 20:41:20,947 - INFO - *************************volume_inverse.shape: torch.Size([1, 4, 150173])
+2025-10-27 20:41:20,950 - INFO - ********************After rope, geometry_rope.shape: torch.Size([1, 16384, 32])
+2025-10-27 20:41:20,951 - INFO - ********************After rope, surface+volume_rope.shape: torch.Size([1, 241477, 32])
+2025-10-27 20:41:21,005 - INFO - ********************After encoder, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 20:41:21,006 - INFO - ********************After self attention, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 20:41:21,041 - INFO - ********************After encoder, surface: surface_all_pos_embed.shape: torch.Size([1, 91304, 192])
+2025-10-27 20:41:21,041 - INFO - ********************After encoder, volume: volume_all_pos_embed.shape: torch.Size([1, 150173, 192])
+2025-10-27 20:41:21,041 - INFO - ********************After encoder, volume+surface: x.shape: torch.Size([1, 241477, 192])
+2025-10-27 20:41:21,047 - INFO - ********************After perceiver and corss attention, volume: x_volume.shape: torch.Size([1, 150173, 192])
+2025-10-27 20:41:21,047 - INFO - ********************After perceiver and corss attention, surface: x_surface.shape: torch.Size([1, 91304, 192])
+2025-10-27 20:41:24,159 - INFO - ********************After decoder, surface: x.shape: torch.Size([1, 91304, 1])
+2025-10-27 20:41:24,185 - INFO - ******************** surface_anchor_*, volume: x_surface_anchor.shape: torch.Size([1, 16384, 1])
+2025-10-27 20:41:24,208 - INFO - ******************** surface_query_*, volume: x_surface_query.shape: torch.Size([1, 74920, 1])
+2025-10-27 20:41:26,067 - INFO - ********************After decoder, volume: x.shape: torch.Size([1, 150173, 3])
+2025-10-27 20:41:26,070 - INFO - ******************** volume_anchor_*, volume: x1.shape: torch.Size([1, 16384, 3])
+2025-10-27 20:41:26,070 - INFO - ******************** volume_query_*, volume: x2.shape: torch.Size([1, 133789, 3])
+[Training]:  94%|█████████▍| 15/16 [2:39:05<12:23, 743.76s/it]2025-10-27 20:48:32,787 - INFO - *************************surface_order.shape: torch.Size([1, 4, 88506])
+2025-10-27 20:48:32,814 - INFO - *************************surface_inverse.shape: torch.Size([1, 4, 88506])
+2025-10-27 20:48:32,814 - INFO - *************************volume_order.shape: torch.Size([1, 4, 146071])
+2025-10-27 20:48:32,814 - INFO - *************************volume_inverse.shape: torch.Size([1, 4, 146071])
+2025-10-27 20:48:32,817 - INFO - ********************After rope, geometry_rope.shape: torch.Size([1, 16384, 32])
+2025-10-27 20:48:32,818 - INFO - ********************After rope, surface+volume_rope.shape: torch.Size([1, 234577, 32])
+2025-10-27 20:48:32,872 - INFO - ********************After encoder, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 20:48:32,873 - INFO - ********************After self attention, geometry: x.shape: torch.Size([1, 16384, 192])
+2025-10-27 20:48:32,901 - INFO - ********************After encoder, surface: surface_all_pos_embed.shape: torch.Size([1, 88506, 192])
+2025-10-27 20:48:32,901 - INFO - ********************After encoder, volume: volume_all_pos_embed.shape: torch.Size([1, 146071, 192])
+2025-10-27 20:48:32,901 - INFO - ********************After encoder, volume+surface: x.shape: torch.Size([1, 234577, 192])
+2025-10-27 20:48:32,907 - INFO - ********************After perceiver and corss attention, volume: x_volume.shape: torch.Size([1, 146071, 192])
+2025-10-27 20:48:32,907 - INFO - ********************After perceiver and corss attention, surface: x_surface.shape: torch.Size([1, 88506, 192])
+2025-10-27 20:48:35,918 - INFO - ********************After decoder, surface: x.shape: torch.Size([1, 88506, 1])
+2025-10-27 20:48:35,928 - INFO - ******************** surface_anchor_*, volume: x_surface_anchor.shape: torch.Size([1, 16384, 1])
+2025-10-27 20:48:35,928 - INFO - ******************** surface_query_*, volume: x_surface_query.shape: torch.Size([1, 72122, 1])
+2025-10-27 20:48:37,677 - INFO - ********************After decoder, volume: x.shape: torch.Size([1, 146071, 3])
+2025-10-27 20:48:37,679 - INFO - ******************** volume_anchor_*, volume: x1.shape: torch.Size([1, 16384, 3])
+2025-10-27 20:48:37,679 - INFO - ******************** volume_query_*, volume: x2.shape: torch.Size([1, 129687, 3])
+[Training]: 100%|██████████| 16/16 [2:46:16<00:00, 649.73s/it][Training]: 100%|██████████| 16/16 [2:46:21<00:00, 623.84s/it]
+[Validation]:   0%|          | 0/27 [00:00<?, ?it/s]/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch_geometric/__init__.py:4: UserWarning: An issue occurred while importing 'pyg-lib'. Disabling its usage. Stacktrace: /lib64/libm.so.6: version `GLIBC_2.29' not found (required by /work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/libpyg.so)
+  import torch_geometric.typing
+/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch_geometric/__init__.py:4: UserWarning: An issue occurred while importing 'torch-sparse'. Disabling its usage. Stacktrace: /lib64/libm.so.6: version `GLIBC_2.29' not found (required by /work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/libpyg.so)
+  import torch_geometric.typing
+[Validation]:   0%|          | 0/27 [06:25<?, ?it/s]
+[rank0]:[W1027 20:55:15.117329873 ProcessGroupNCCL.cpp:1496] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+Traceback (most recent call last):
+  File "/work/mae-zhangbj/ML_Turbulent/Current_work/MB-Transolver/train.py", line 550, in <module>
+    main()
+  File "/work/mae-zhangbj/ML_Turbulent/Current_work/MB-Transolver/train.py", line 546, in main
+    mp.spawn(train_and_evaluate, args=(world_size, args), nprocs=world_size, join=True)
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/multiprocessing/spawn.py", line 340, in spawn
+    return start_processes(fn, args, nprocs, join, daemon, start_method="spawn")
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/multiprocessing/spawn.py", line 296, in start_processes
+    while not context.join():
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/multiprocessing/spawn.py", line 215, in join
+    raise ProcessRaisedException(msg, error_index, failed_process.pid)
+torch.multiprocessing.spawn.ProcessRaisedException: 
+
+-- Process 0 terminated with the following error:
+Traceback (most recent call last):
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/multiprocessing/spawn.py", line 90, in _wrap
+    fn(i, *args)
+  File "/work/mae-zhangbj/ML_Turbulent/Current_work/MB-Transolver/train.py", line 231, in train_and_evaluate
+    val_loss = validate(model, val_dataloader, criterion, local_rank)
+  File "/work/mae-zhangbj/ML_Turbulent/Current_work/MB-Transolver/train.py", line 363, in validate
+    for batch in tqdm(val_dataloader, desc="[Validation]"):
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/tqdm/std.py", line 1181, in __iter__
+    for obj in iterable:
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 708, in __next__
+    data = self._next_data()
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 1480, in _next_data
+    return self._process_data(data)
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 1505, in _process_data
+    data.reraise()
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/_utils.py", line 733, in reraise
+    raise exception
+RuntimeError: Caught RuntimeError in DataLoader worker process 0.
+Original Traceback (most recent call last):
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/utils/data/_utils/worker.py", line 349, in _worker_loop
+    data = fetcher.fetch(index)  # type: ignore[possibly-undefined]
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/utils/data/_utils/fetch.py", line 55, in fetch
+    return self.collate_fn(data)
+  File "/work/mae-zhangbj/ML_Turbulent/Current_work/MB-Transolver/collators/multi_stage_collator.py", line 79, in __call__
+    samples = pre_collator(samples)
+  File "/work/mae-zhangbj/ML_Turbulent/Current_work/MB-Transolver/preprocessors/moment_normalization_preprocessor.py", line 99, in __call__
+    sample[item] = (sample[item] - self.mean_tensor).div_(self.std_tensor)
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+
+
+2025-10-27 20:55:17,731 - ERROR - [31m Training failed! [0m
+2025-10-27 20:55:17,748 - INFO - Evluation stage skipped.
+2025-10-27 20:55:17,748 - INFO - Pipeline execution complete.
+2025-10-27 20:55:17,748 - INFO - [31m Results summary: [0m 
+2025-10-27 20:55:17,748 - INFO -  preprocess: Success
+2025-10-27 20:55:17,749 - INFO -  train: Failed
+2025-10-27 20:55:17,749 - INFO -  evaluate: Success

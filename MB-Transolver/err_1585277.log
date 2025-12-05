@@ -1,0 +1,60 @@
+/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch_geometric/__init__.py:4: UserWarning: An issue occurred while importing 'pyg-lib'. Disabling its usage. Stacktrace: /lib64/libm.so.6: version `GLIBC_2.29' not found (required by /work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/libpyg.so)
+  import torch_geometric.typing
+/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch_geometric/__init__.py:4: UserWarning: An issue occurred while importing 'torch-spline-conv'. Disabling its usage. Stacktrace: /work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch_spline_conv/_basis_cuda.so: undefined symbol: _ZN5torch8autograd12VariableInfoC1ERKN2at6TensorE
+  import torch_geometric.typing
+/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch_geometric/__init__.py:4: UserWarning: An issue occurred while importing 'torch-sparse'. Disabling its usage. Stacktrace: /work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch_sparse/_spmm_cuda.so: undefined symbol: _ZN5torch8autograd12VariableInfoC1ERKN2at6TensorE
+  import torch_geometric.typing
+/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/requests/__init__.py:86: RequestsDependencyWarning: Unable to find acceptable character detection dependency (chardet or charset_normalizer).
+  warnings.warn(
+/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch_geometric/__init__.py:4: UserWarning: An issue occurred while importing 'pyg-lib'. Disabling its usage. Stacktrace: /lib64/libm.so.6: version `GLIBC_2.29' not found (required by /work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/libpyg.so)
+  import torch_geometric.typing
+/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch_geometric/__init__.py:4: UserWarning: An issue occurred while importing 'torch-spline-conv'. Disabling its usage. Stacktrace: /work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch_spline_conv/_basis_cuda.so: undefined symbol: _ZN5torch8autograd12VariableInfoC1ERKN2at6TensorE
+  import torch_geometric.typing
+/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch_geometric/__init__.py:4: UserWarning: An issue occurred while importing 'torch-sparse'. Disabling its usage. Stacktrace: /work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch_sparse/_spmm_cuda.so: undefined symbol: _ZN5torch8autograd12VariableInfoC1ERKN2at6TensorE
+  import torch_geometric.typing
+/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/requests/__init__.py:86: RequestsDependencyWarning: Unable to find acceptable character detection dependency (chardet or charset_normalizer).
+  warnings.warn(
+2025-10-25 13:19:42,654 - INFO - ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~raw_sample
+2025-10-25 13:19:42,656 - INFO - surface_position_vtp: torch.Size([8828095, 3])
+2025-10-25 13:19:42,656 - INFO - surface_pressure: torch.Size([8828095, 1])
+2025-10-25 13:19:42,656 - INFO - surface_wallshearstress: torch.Size([8828095, 3])
+2025-10-25 13:19:42,656 - INFO - volume_position: torch.Size([1474496, 3])
+2025-10-25 13:19:42,656 - INFO - volume_totalpcoeff: torch.Size([1474496, 1])
+2025-10-25 13:19:42,656 - INFO - volume_velocity: torch.Size([1474496, 3])
+2025-10-25 13:19:45,056 - INFO - ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~batch
+2025-10-25 13:19:45,058 - INFO - geometry_position: torch.Size([65536, 3])
+2025-10-25 13:19:45,058 - INFO - geometry_batch_idx: torch.Size([65536])
+2025-10-25 13:19:45,058 - INFO - geometry_supernode_idx: torch.Size([16384])
+2025-10-25 13:19:45,058 - INFO - surface_anchor_position: torch.Size([1, 16384, 3])
+2025-10-25 13:19:45,058 - INFO - surface_anchor_pressure: torch.Size([16384, 1])
+2025-10-25 13:19:45,058 - INFO - surface_anchor_wallshearstress: torch.Size([16384, 3])
+2025-10-25 13:19:45,058 - INFO - volume_anchor_position: torch.Size([1, 16384, 3])
+2025-10-25 13:19:45,061 - INFO - volume_anchor_totalpcoeff: torch.Size([16384, 1])
+2025-10-25 13:19:45,061 - INFO - volume_anchor_velocity: torch.Size([16384, 3])
+2025-10-25 13:19:45,062 - INFO - surface_query_position: torch.Size([1, 8811711, 3])
+2025-10-25 13:19:45,062 - INFO - surface_query_pressure: torch.Size([8811711, 1])
+2025-10-25 13:19:45,062 - INFO - surface_query_wallshearstress: torch.Size([8811711, 3])
+2025-10-25 13:19:45,062 - INFO - volume_query_position: torch.Size([1, 1458112, 3])
+2025-10-25 13:19:45,062 - INFO - volume_query_totalpcoeff: torch.Size([1458112, 1])
+2025-10-25 13:19:45,062 - INFO - volume_query_velocity: torch.Size([1458112, 3])
+2025-10-25 13:19:46,011 - INFO - ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~input
+2025-10-25 13:19:46,093 - INFO - geometry_position: torch.Size([65536, 3])
+2025-10-25 13:19:46,246 - INFO - geometry_batch_idx: torch.Size([65536])
+2025-10-25 13:19:46,397 - INFO - geometry_supernode_idx: torch.Size([16384])
+2025-10-25 13:19:46,549 - INFO - surface_anchor_position: torch.Size([1, 16384, 3])
+2025-10-25 13:19:46,704 - INFO - volume_anchor_position: torch.Size([1, 16384, 3])
+2025-10-25 13:19:46,859 - INFO - surface_query_position: torch.Size([1, 16384, 3])
+2025-10-25 13:19:47,011 - INFO - volume_query_position: torch.Size([1, 1458112, 3])
+2025-10-25 13:19:50,488 - INFO - surface_anchor_pressure: torch.Size([16384, 1])
+2025-10-25 13:19:50,489 - INFO - surface_anchor_wallshearstress: torch.Size([16384, 3])
+2025-10-25 13:19:50,489 - INFO - surface_query_pressure: torch.Size([16384, 1])
+2025-10-25 13:19:50,489 - INFO - surface_query_wallshearstress: torch.Size([16384, 3])
+2025-10-25 13:19:50,490 - INFO - volume_anchor_totalpcoeff: torch.Size([16384, 1])
+2025-10-25 13:19:50,490 - INFO - volume_anchor_velocity: torch.Size([16384, 3])
+2025-10-25 13:19:50,490 - INFO - volume_anchor_vorticity: torch.Size([16384, 3])
+2025-10-25 13:19:50,490 - INFO - volume_query_totalpcoeff: torch.Size([1458112, 1])
+2025-10-25 13:19:50,490 - INFO - volume_query_velocity: torch.Size([1458112, 3])
+2025-10-25 13:19:50,490 - INFO - volume_query_vorticity: torch.Size([1458112, 3])
+2025-10-25 13:19:53,792 - INFO - ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~error metrics
+2025-10-25 13:19:53,803 - INFO - MSE (volume query pressure): 0.005195499397814274
+2025-10-25 13:19:53,809 - INFO - L2 error (denormalized volume velocity): 0.04731938987970352

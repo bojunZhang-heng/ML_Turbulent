@@ -9,16 +9,22 @@ from modules.mlp import Mlp
 
 class TransformerBlock(nn.Module):
     """A transformer block with a single attention layer and a feedforward layer.
-    
+
     Args:
         dim: hidden Dimension of the transformer block.
         num_heads: Number of attention heads.
     """
 
-    def __init__(self, dim: int, num_heads: int, attn_ctor: type[nn.Module] = DotProductAttention):
+    def __init__(
+        self,
+        dim: int,
+        num_heads: int,
+        slice_num: int,
+        attn_ctor: type[nn.Module] = DotProductAttention
+    ):
         super().__init__()
         self.norm1 = nn.LayerNorm(dim, eps=1e-6)
-        self.attn = attn_ctor(dim=dim, num_heads=num_heads)
+        self.attn = attn_ctor(dim=dim, num_heads=num_heads, slice_num=slice_num)
         self.norm2 = nn.LayerNorm(dim, eps=1e-6)
         self.mlp = Mlp(dim)
 

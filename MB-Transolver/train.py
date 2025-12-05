@@ -1,12 +1,11 @@
 # train.py
 import warnings
 import os
+import random
 import torch
 import torch.distributed as dist
 import torch.multiprocessing as mp
-import torch.nn.functional as F
 import torch.optim as optim
-import numpy as np
 import time
 import argparse
 import logging
@@ -16,7 +15,6 @@ from tqdm import tqdm
 # Import modules
 # from torch.utils.data.distributed import DistributedSampler
 from utils_v1 import setup_logger, setup_seed
-from testloss import TestLoss
 from colorama import Fore, Style
 from model_ab_ubt import AnchoredBranchedUPT
 
@@ -24,7 +22,6 @@ from model_ab_ubt import AnchoredBranchedUPT
 from create_data_loaders import create_data_loaders
 from preprocessors import (
     MomentNormalizationPreprocessor,
-    PositionNormalizationPreprocessor,
 )
 warnings.filterwarnings("ignore", category=UserWarning)
 
@@ -157,7 +154,7 @@ def train_and_evaluate(rank, world_size, args):
     # Dataload
     # BUG is here
     train_dataloader, val_dataloader, test_dataloader = create_data_loaders(
-        args.root_dir, args.batch_size, num_sample_frac=0.001, num_workers=1
+        args.root_dir, args.batch_size, use_query_positions=True, num_workers=1
     )
 
     # Log dataset info
@@ -179,10 +176,6 @@ def train_and_evaluate(rank, world_size, args):
         steps_per_epoch=len(train_dataloader),
     )
 
-    myloss = TestLoss(size_average=False)
-    de_x = TestLoss(size_average=False)
-    de_y = TestLoss(size_average=False)
-
     # Store the model
     best_model_path = os.path.join("experiments", args.exp_name, "best_model.pth")
     final_model_path = os.path.join("experiments", args.exp_name, "final_model.pth")
@@ -191,22 +184,9 @@ def train_and_evaluate(rank, world_size, args):
     if args.test_only and os.path.exists(best_model_path):
         if local_rank == 0:
             logging.info("Loading best model for testing only")
-        # model.load_state_dict(torch.load(best_model_path, map_location=f'cuda:{local_rank}'))
-
-        local_dir = "./checkpoints"
-        os.makedirs(local_dir, exist_ok=True)
-        hf_hub_download(
-            repo_id="EmmiAI/AB-UPT",
-            filename="ab-upt-drivaerml-tutorial.th",
-            local_dir=local_dir,
-        )
-        checkpoint = torch.load(
-            "./checkpoints/ab-upt-drivaerml-tutorial.th",
-            map_location=f"cuda:{local_rank}",
-            weights_only=True,
-        )
-        abupt.load_state_dict(checkpoint["state_dict"])
-        # test_model(abupt, test_dataloader, criterion, local_rank, os.path.join('experiments', args.exp_name))
+        model.load_state_dict(torch.load(best_model_path, map_location=f'cuda:{local_rank}'))
+        logging.info(f"*******************{M} Best model: {RESET}")
+        test_model(model, test_dataloader, criterion, local_rank, os.path.join('experiments', args.exp_name))
         dist.destroy_process_group()
         return
 
@@ -224,9 +204,7 @@ def train_and_evaluate(rank, world_size, args):
         # train_dataloader.sampler.set_epoch(epoch)
 
         # Training
-        train_loss = train_one_epoch(
-            model, train_dataloader, optimizer, criterion, local_rank
-        )
+        train_loss = train_one_epoch(model, train_dataloader, optimizer, criterion, local_rank)
 
         # Validation
         val_loss = validate(model, val_dataloader, criterion, local_rank)
@@ -256,9 +234,9 @@ def train_and_evaluate(rank, world_size, args):
                 plt.xlabel("Epoch")
                 plt.ylabel("Loss")
                 plt.legend()
-                plt.title(f"Training Progress - AB-UBT")
+                plt.title("Training Progress - AB-UBT")
                 plt.savefig(
-                    os.path.join("experiments", args.exp_name, f"training_progress.png")
+                    os.path.join("experiments", args.exp_name, "training_progress.png")
                 )
                 plt.close()
 
@@ -273,6 +251,7 @@ def train_and_evaluate(rank, world_size, args):
     # Test the final model
     if local_rank == 0:
         logging.info("Testing the final model")
+    logging.info(f"*******************{M} Best model: {RESET}")
     test_model(
         model,
         test_dataloader,
@@ -287,6 +266,7 @@ def train_and_evaluate(rank, world_size, args):
         model.load_state_dict(
             torch.load(best_model_path, map_location=f"cuda:{local_rank}")
         )
+    logging.info(f"*******************{M} Final model: {RESET}")
     test_model(
         model,
         test_dataloader,
@@ -298,32 +278,70 @@ def train_and_evaluate(rank, world_size, args):
     # Clean up
     dist.destroy_process_group()
 
-batch_keys = [
-           "surface_anchor_pressure",
-           "surface_anchor_wallshearstress",
-           "volume_anchor_totalpcoeff",
-           "volume_anchor_velocity",
-           "surface_query_pressure",
-           "surface_query_wallshearstress",
-           "volume_query_totalpcoeff",
-           "volume_query_velocity",
-         ]
+target_keys = [
+    "surface_anchor_pressure",
+    "surface_anchor_wallshearstress",
+    "volume_anchor_totalpcoeff",
+    "volume_anchor_velocity",
+    "surface_query_pressure",
+    "surface_query_wallshearstress",
+    "volume_query_totalpcoeff",
+    "volume_query_velocity",
+]
+
+enabled_target_keys = [
+    "volume_anchor_velocity",
+    "surface_anchor_pressure",
+]
+
+enabled_position_keys = [
+    "geometry_position",
+    "geometry_batch_idx",
+    "geometry_supernode_idx",
+    "surface_anchor_position",
+    "volume_anchor_position",
+#    "surface_query_position",
+#    "volume_query_position",
+]
+
+def compute_weights(target_keys, enabled_target_keys):
+    weights = {k: 0.0 for k in target_keys}
+
+    # 有效数量
+    n = len(enabled_target_keys)
+    if n == 0:
+        raise ValueError("enabled_target_keys 不能为空，否则无法计算 loss 权重。")
+
+    # 每个激活的 key 分配 1/n
+    w = 1.0 / n
+    for k in enabled_target_keys:
+        if k not in weights:
+            raise KeyError(f"{k} 不在 batch_keys 中！")
+        weights[k] = w
+
+    return weights
+
+weights = compute_weights(target_keys, enabled_target_keys)
+
 
 def train_one_epoch(model, train_dataloader, optimizer, criterion, local_rank):
     """Train for one epoch."""
     model.train()
     total_loss = 0
-
     total_batches = 0
     total_samples = 0
     total_time = 0.0  # seconds
-    mse_loss = {k: [] for k in batch_keys}
+
+    mse_loss = {k: [] for k in enabled_target_keys}
 
     for batch in tqdm(train_dataloader, desc="[Training]"):
         batch = {key: value.to(local_rank) for key, value in batch.items()}
 
         # extract target variables for anchor and query
-        targets = {k: batch.pop(k) for k in batch_keys if k in batch}
+        targets = {k: batch.pop(k) for k in target_keys if k in batch}
+
+        # extract target variables for anchor and query
+        batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
 
         batch_size = 1
         # timing start (make sure GPU kernels are finished before starting timer)
@@ -331,14 +349,15 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, local_rank):
             torch.cuda.synchronize()  # sync prior async work
         t0 = time.time()
 
-
         optimizer.zero_grad()
-        prediction = model(**batch)
+        prediction = model(**batch_filtered)
 
-        for k in targets:
-            if k in prediction:
-                loss_k = criterion(prediction[k], targets[k])
-                mse_loss[k].append(loss_k.item())
+        loss_dict = {}
+        for k in enabled_target_keys:
+            loss_k = criterion(prediction[k], targets[k])
+            loss_dict[k] = loss_k
+            mse_loss[k].append(loss_k.item())
+        loss = sum(weights[k] * loss_dict[k] for k in enabled_target_keys)
 
         loss.backward()
         optimizer.step()
@@ -356,11 +375,15 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, local_rank):
 
     avg_time_per_sample = total_time / total_samples if total_samples > 0 else 0.0
     avg_time_per_batch = total_time / total_batches if total_batches > 0 else 0.0
+
+    for k, v in mse_loss.items():
+        key_loss = sum(v) / len(train_dataloader)
+        logging.info(f"{k}_loss: {key_loss}")
     logging.info(
         f"[Timing][Epoch] total_samples={total_samples}, "
         f"total_time={total_time:.4f}s, "
         f"avg_time_per_sample={avg_time_per_sample:.6f}s, "
-        f"avg_time_per_batch={avg_time_per_batch:.4f}s{RESET}"
+        f"avg_time_per_batch={avg_time_per_batch:.4f}s"
     )
 
     return total_loss / len(train_dataloader)
@@ -371,32 +394,30 @@ def validate(model, val_dataloader, criterion, local_rank):
 
     model.eval()
     total_loss = 0
-
+    mse_loss = {k: [] for k in enabled_target_keys}
     with torch.no_grad():
         for batch in tqdm(val_dataloader, desc="[Validation]"):
             batch = {key: value.to(local_rank) for key, value in batch.items()}
 
-            # extract target variables for anchor
-            target_surface_anchor_pressure = batch.pop("surface_anchor_pressure")
-            target_surface_anchor_wallshearstress = batch.pop(
-                "surface_anchor_wallshearstress"
-            )
-            target_volume_anchor_totalpcoeff = batch.pop("volume_anchor_totalpcoeff")
-            target_volume_anchor_velocity = batch.pop("volume_anchor_velocity")
+            # extract target variables for anchor and query
+            targets = {k: batch.pop(k) for k in target_keys if k in batch}
 
-            # extract target variables for queries
-            #            target_surface_query_pressure = batch.pop("surface_query_pressure")
-            #            target_surface_query_wallshearstress = batch.pop(
-            #                "surface_query_wallshearstress"
-            #            )
-            #            target_volume_query_totalpcoeff = batch.pop("volume_query_totalpcoeff")
-            #            target_volume_query_velocity = batch.pop("volume_query_velocity")
+            # extract target variables for anchor and query
+            batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
+            prediction = model(**batch_filtered)
 
-            prediction = model(**batch)
-            loss = criterion(
-                prediction["volume_anchor_velocity"], target_volume_anchor_velocity
-            )
+            loss_dict = {}
+            for k in enabled_target_keys:
+                loss_k = criterion(prediction[k], targets[k])
+                loss_dict[k] = loss_k
+                mse_loss[k].append(loss_k.item())
+            loss = sum(weights[k] * loss_dict[k] for k in enabled_target_keys)
+
             total_loss += loss.item()
+
+        for k, v in mse_loss.items():
+            key_loss = sum(v) / len(val_dataloader)
+            logging.info(f"{k}_loss: {key_loss}")
 
     return total_loss / len(val_dataloader)
 
@@ -435,55 +456,50 @@ def test_model(model, test_dataloader, criterion, local_rank, exp_dir):
     """Test the model, take postprocess and calculate metrics."""
     model.eval()
     total_inference_time = 0
-    total_samples = 0
-    all_outputs = []
-    all_targets = []
 
     normalizers = {
         "surface_anchor_pressure": get_norm(test_dataloader, {"surface_pressure"}),
         "volume_anchor_velocity": get_norm(test_dataloader, {"volume_velocity"}),
-        #    "surface_anchor_wallshearstress": get_norm(test_dataloader, {"surface_wallshearstress"}),
-        #    "volume_anchor_totalpcoeff": get_norm(test_dataloader, {"volume_totalpcoeff"}),
+        "surface_anchor_wallshearstress": get_norm(test_dataloader, {"surface_wallshearstress"}),
+        "volume_anchor_totalpcoeff": get_norm(test_dataloader, {"volume_totalpcoeff"}),
+        "surface_query_pressure": get_norm(test_dataloader, {"surface_pressure"}),
+        "volume_query_velocity": get_norm(test_dataloader, {"volume_velocity"}),
+        "surface_query_wallshearstress": get_norm(test_dataloader, {"surface_wallshearstress"}),
+        "volume_query_totalpcoeff": get_norm(test_dataloader, {"volume_totalpcoeff"}),
     }
     L2_errors = {k: [] for k in normalizers.keys()}
     mse_sums = {k: [] for k in normalizers.keys()}
-    mse_counts = {k: 0 for k in normalizers.keys()}
 
     with torch.no_grad():
         for batch in tqdm(test_dataloader, desc="[Testing]"):
             start_time = time.time()
             batch = {key: value.to(local_rank) for key, value in batch.items()}
             # extract target variables for anchor
-            targets = {k: batch.pop(k) for k in normalizers.keys()}
 
-            # extract target variables for anchor
-            target_surface_anchor_wallshearstress = batch.pop(
-                "surface_anchor_wallshearstress"
-            )
-            target_volume_anchor_totalpcoeff = batch.pop("volume_anchor_totalpcoeff")
-            # target_surface_anchor_pressure = batch.pop("surface_anchor_pressure")
-            # target_volume_anchor_velocity = batch.pop("volume_anchor_velocity")
+            targets = {k: batch.pop(k) for k in target_keys if k in batch}
 
-            prediction = model(**batch)
+            batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
+            prediction = model(**batch_filtered)
+
             inference_time = time.time() - start_time
             total_inference_time += inference_time
 
             # denormalize
             for key in normalizers.keys():
-                pred_den = normalizers[key].denormalize(prediction[key])
-                targ_den = normalizers[key].denormalize(targets[key])
+                if key in enabled_target_keys:
+                    pred_den = normalizers[key].denormalize(prediction[key])
+                    targ_den = normalizers[key].denormalize(targets[key])
 
-                # MAE loss
-                mse_loss = criterion(pred_den, targ_den)
-                mse_sums[key].append(mse_loss.item())
-                mse_counts[key] += 1
+                    # MAE loss
+                    mse_loss = criterion(prediction[key], targets[key])
+                    mse_sums[key].append(mse_loss.item())
 
-                # L2 relative error
-                L2_error = (pred_den - targ_den).norm() / targ_den.norm()
-                L2_errors[key].append(L2_error.item())
+                    # L2 relative error
+                    L2_error = (pred_den - targ_den).norm() / targ_den.norm()
+                    L2_errors[key].append(L2_error.item())
 
-        avg_L2 = {k: sum(v) / len(v) for k, v in L2_errors.items()}
-        avg_mse = {k: sum(mse_sums[k]) / len(mse_sums[k]) for k in normalizers.keys()}
+        avg_L2 = {k: sum(v) / len(test_dataloader) for k, v in L2_errors.items()}
+        avg_mse = {k: sum(mse_sums[k]) / len(test_dataloader) for k in enabled_target_keys}
 
         logging.info(f"*******************{M}avg_L2:{RESET}")
         for key, val in avg_L2.items():
@@ -548,7 +564,9 @@ def main():
 
     # Set the master address and port for DDP
     os.environ["MASTER_ADDR"] = "localhost"
-    os.environ["MASTER_PORT"] = "29500"  # 1024~65535
+    port = random.randint(1024, 65535)
+    os.environ["MASTER_PORT"] = str(port)
+
 
     # Set visible GPUS
     gpu_list = args.gpus

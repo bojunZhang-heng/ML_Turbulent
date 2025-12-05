@@ -1,0 +1,82 @@
+#!/bin/bash
+
+#BSUB -J AB_UBT_v1      # Job name
+#BSUB -q 8v100-32-sc      # Queue name (change if needed)
+#BSUB -n 1                            # Number of CPU cores
+#BSUB -R "span[ptile=1]"
+#BSUB -gpu "num=1"
+#BSUB -oo logs/out_%J.log             # Standard output (%J = job ID)
+#BSUB -eo logs/err_%J.log             # Standard error
+#BSUB -env "all"                      # Export your current environment
+
+# -------------------------------
+# Load environment and run script
+# -------------------------------
+
+echo "Starting DrivAerNet training on GPU nodes..."
+echo "Running on host: $(hostname)"
+echo "Job ID: $LSB_JOBID"
+echo "Requested GPUs: $LSB_GPU_REQ"
+
+# Activate d2l
+source ~/lib/miniconda3/etc/profile.d/conda.sh || source /work/mae-zhangbj/lib/miniconda3/etc/profile.d/conda.sh
+#conda activate pyg_gpu || { echo "conda activate failed"; exit 1; }
+conda activate d2l || { echo "conda activate failed"; exit 1; }
+
+module load cuda/12.4 || echo "module load cuda/12.4 failed or module not available"
+
+# Optional: verify GPU is available
+# Debug prints to confirm environment
+echo "=== environment diagnostics ==="
+which python
+python -c "import sys; print('python:', sys.version.splitlines()[0])"
+python -c "import torch; print('torch', torch.__version__, 'torch.version.cuda', torch.version.cuda, 'cuda_available', torch.cuda.is_available())"
+echo "nvidia-smi output:"
+nvidia-smi || echo "nvidia-smi failed or no GPU visible"
+
+# Try importing key C-extensions to see if they load
+python - <<'PY'
+import importlib, sys
+mods = ["torch_scatter","torch_sparse","torch_cluster","torch_spline_conv","torch_geometric"]
+for m in mods:
+    try:
+        mod = importlib.import_module(m)
+        print(m, "OK", getattr(mod, "__version__", None))
+    except Exception as e:
+        print(m, "FAILED:", e)
+PY
+
+#python test_model.py
+
+# Remove old logs but keep the ones for this job
+
+# Run your Preprocess script
+# sh ./Model_Script/Model_Preprocess.sh
+
+# Run your training script
+ sh ./Model_Script/Model_Training.sh
+
+# Run your Evaluation script
+# sh ./Model_Script/Model_Evaluate.sh
+
+# Run your Visualize script(only in the local computer)
+# sh ./Model_Script/Model_Visualize.sh
+
+
+# Backup train log file
+#find ./logs/ -name '*.log' ! -name "*_${LSB_JOBID}*.log" -delete
+cp ./logs/err*.log  ./backup_logs
+
+echo "=== job end ==="
+
+#4v100-16-sc
+#2v100-32-sc
+#2v100-32-e5
+#2v100-16-sc
+#4v100-16-e5
+#4v100-16-sc
+#8v100-32-sc
+#4v100-16-sc
+#4-4080-e5
+#4a6000-e5
+#2a100-40

@@ -28,30 +28,56 @@ class AnchorAttention(DotProductAttention):
         if num_anchor_tokens is None:
             return super().forward(x=x, freqs=freqs)
         else:
-            x, anchor = x.split([num_anchor_tokens, x.size(1) - num_anchor_tokens], dim=1)
+            # x1 is anchor
+            # anchor is query
+            #x1, _ = x.split([num_anchor_tokens, x.size(1) - num_anchor_tokens], dim=1)
+            anchor, _ = x.split([num_anchor_tokens, x.size(1) - num_anchor_tokens], dim=1)
 
-        q, k, v = einops.rearrange(
-            self.qkv(x),
-            "bs seqlen (three num_heads head_dim) -> three bs num_heads seqlen head_dim",
-            three=3,
-            num_heads=self.num_heads,
-            head_dim=self.head_dim,
-        ).unbind(0)
-        anchor = einops.rearrange(
-            F.linear(
-                anchor,
-                weight=self.qkv.weight[: self.dim],
-                bias=None if self.qkv.bias is None else self.qkv.bias[: self.dim],
-            ),
-            "bs seqlen (num_heads head_dim) -> bs num_heads seqlen head_dim",
-            num_heads=self.num_heads,
-            head_dim=self.head_dim,
-        )
-        q = torch.concat([q, anchor], dim=2)
-        q = rope(q, freqs=freqs)
-        k = rope(k, freqs=freqs[:, :num_anchor_tokens])
-        x = F.scaled_dot_product_attention(q, k, v)
-        x = einops.rearrange(x, "bs num_heads seqlen head_dim -> bs seqlen (num_heads head_dim)")
+        # B N C
+        B, N, C = x.shape
+        B_anchor, N_anchor, C_anchor = anchor.shape
+
+        # head_dim = 64 C
+        # heads = 3 H
+        # slice_num = 64 G
+
+        ### (1) anchor+query Slice
+        fx_mid = self.in_project_fx(x).reshape(B, N, self.heads, self.head_dim) \
+            .permute(0, 2, 1, 3).contiguous()  # B H N C
+        x_mid = self.in_project_x(x).reshape(B, N, self.heads, self.head_dim) \
+            .permute(0, 2, 1, 3).contiguous()  # B H N C
+        slice_weights = self.softmax(self.in_project_slice(x_mid) / self.temperature)  # B H N G
+        slice_norm = slice_weights.sum(2)  # B H G
+        slice_token = torch.einsum("bhnc,bhng->bhgc", fx_mid, slice_weights)
+        slice_token = slice_token / ((slice_norm + 1e-5)[:, :, :, None].repeat(1, 1, 1, self.head_dim)) # B H G C
+
+        ### (1) anchor Slice
+        fx_mid_anchor = self.in_project_fx(anchor).reshape(B_anchor, N_anchor, self.heads, self.head_dim) \
+            .permute(0, 2, 1, 3).contiguous()  # B H N C
+        x_mid_anchor = self.in_project_x(anchor).reshape(B_anchor, N_anchor, self.heads, self.head_dim) \
+            .permute(0, 2, 1, 3).contiguous()  # B H N C
+        slice_weights_anchor = self.softmax(self.in_project_slice(x_mid_anchor) / self.temperature)  # B H N G
+        slice_norm_anchor = slice_weights_anchor.sum(2)  # B H G
+        slice_token_anchor = torch.einsum("bhnc,bhng->bhgc", fx_mid_anchor, slice_weights_anchor)
+        slice_token_anchor = slice_token_anchor / ((slice_norm_anchor + 1e-5)[:, :, :, None].repeat(1, 1, 1, self.head_dim)) # B H G C
+
+
+        ### (2) Attention among anchor+query slice tokens
+        q_slice_token = self.to_q(slice_token) # B H G C
+#        k_slice_token = self.to_k(slice_token)
+#        v_slice_token = self.to_v(slice_token)
+
+        ### (2) Attention among anchor slice tokens
+#        q_slice_token_ancor = self.to_q(slice_token_anchor) # B H G C
+        k_slice_token_anchor = self.to_k(slice_token_anchor)
+        v_slice_token_anchor = self.to_v(slice_token_anchor)
+
+        out_slice_token = F.scaled_dot_product_attention(q_slice_token, k_slice_token_anchor, v_slice_token_anchor) # B H G D
+
+
+        ### (3) Deslice
+        out_x = torch.einsum("bhgc,bhng->bhnc", out_slice_token, slice_weights)
+        out_x = einops.rearrange(out_x, 'b h n c -> b n (h c)')
+
         x = self.proj(x)
-
         return x

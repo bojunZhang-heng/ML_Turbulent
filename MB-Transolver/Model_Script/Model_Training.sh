@@ -1,6 +1,6 @@
 python ./run_pipeline.py \
     --stages train \
-    --exp_name "Test" \
+    --exp_name "epoch300_anchor_pressureANDvelocity" \
     --num_points 10000 \
     --root_dir "/work/mae-zhangbj/drivaerml" \
     --Wdataset_path "/work/mae-zhangbj/DrivAriNet_dataset/WallShearStress/E_S_WW_WM" \
@@ -19,7 +19,7 @@ python ./run_pipeline.py \
     --downsample 5 \
     --num_workers 1 \
     --batch_size 1 \
-    --epochs 500 \
+    --epochs 300 \
     --test_only 0 \
     --gpus "0" \
     --ndim 3  \

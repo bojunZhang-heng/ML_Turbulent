@@ -29,39 +29,53 @@ class DrivAerMLStats:
 class DrivAerMLDefaultSplitIDs:
     # fmt: off
 #    train = {
-#        1, 2, 3, 5, 6, 7, 8, 9, 10, 13, 14, 15, 16, 17, 18, 21, 23, 25, 27, 28, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
-#        40, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 57, 58, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71,
-#        72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99,
-#        100, 101, 102, 103, 104, 105, 106, 107, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123,
-#        125, 126, 128, 129, 130, 131, 132, 134, 135, 136, 137, 138, 139, 140, 141, 143, 144, 145, 146, 147, 148, 149,
-#        151, 152, 153, 154, 155, 156, 157, 159, 160, 161, 162, 163, 164, 166, 168, 169, 170, 171, 172, 174, 175, 176,
-#        178, 179, 181, 182, 183, 184, 185, 186, 189, 190, 192, 193, 194, 195, 196, 198, 200, 201, 202, 204, 206, 209,
-#        212, 213, 214, 216, 217, 219, 220, 223, 224, 225, 227, 229, 230, 231, 232, 233, 235, 236, 237, 238, 239, 240,
-#        242, 243, 244, 245, 246, 249, 250, 251, 254, 255, 256, 257, 259, 261, 262, 264, 265, 266, 267, 268, 269, 270,
-#        272, 273, 274, 276, 277, 278, 279, 281, 283, 285, 286, 287, 288, 289, 292, 293, 294, 296, 297, 299, 300, 301,
-#        302, 304, 305, 306, 307, 308, 309, 310, 312, 313, 314, 315, 317, 318, 319, 320, 323, 326, 327, 330, 331, 332,
-#        333, 334, 335, 336, 338, 339, 340, 342, 343, 344, 345, 346, 347, 348, 349, 351, 353, 355, 356, 357, 358, 359,
-#        360, 361, 362, 365, 367, 368, 369, 371, 373, 374, 375, 377, 378, 379, 381, 383, 384, 385, 386, 388, 389, 391,
-#        392, 393, 394, 395, 396, 397, 398, 399, 400, 402, 404, 406, 407, 408, 409, 411, 412, 413, 414, 415, 416, 417,
-#        418, 419, 420, 421, 422, 425, 426, 427, 430, 431, 432, 433, 434, 435, 437, 438, 439, 440, 442, 443, 444, 445,
-#        446, 448, 449, 450, 451, 452, 453, 455, 456, 457, 458, 459, 460, 461, 462, 463, 464, 465, 466, 467, 468, 469,
-#        470, 471, 474, 475, 476, 477, 478, 479, 480, 481, 482, 483, 484, 485, 486, 488, 489, 490, 491, 492, 493, 494,
-#        495, 496, 497, 498, 499, 500,
+#        110, 111, 112, 113, 114, 115, 117, 118, 119,
+#        130, 131, 132, 133, 134, 135, 136, 137, 138, 139,
+#        140, 141, 142, 143, 144, 145, 146, 147, 148, 149,
+#        150, 151, 152, 153, 154, 155, 156, 157, 158, 159,
+#        160, 161, 162, 163, 164, 165, 166, 168, 169,
+#        170, 171, 172, 173, 174, 175, 176, 177, 178, 179,
+#        180, 181, 182, 183, 184, 185, 186, 187, 188, 189,
+#        230, 231, 232, 233, 234, 235, 236, 237, 238, 239,
+#        240, 241, 242, 243, 244, 245, 246, 247, 249,
+#        190, 191, 192, 193, 194, 195, 196, 197,
 #    }
-    train = {10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25}
-    val   = {100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120,
-             121, 122, 123, 123, 124, 125, 126
-    }
-    test  = {1}
+#
 #    val = {
-#        4, 22, 56, 109, 150, 165, 177, 191, 228, 234, 241, 247, 252, 253, 260, 271, 275, 298, 303, 311, 321, 324, 328,
-#        341, 352, 366, 380, 390, 401, 423, 441, 447, 454, 487,
+#        10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+#        20, 21, 22, 23, 24, 25,
+#        120, 121, 122, 123, 125, 126, 127, 129,
+#        200, 201, 202, 203, 204, 205, 206, 207, 208, 209,
+#        210, 212, 213, 214, 215, 216, 217, 219,
 #    }
+#
 #    test = {
-#        11, 12, 19, 20, 24, 26, 29, 41, 55, 59, 108, 124, 127, 133, 142, 158, 173, 180, 187, 188, 197, 199, 203, 205,
-#        207, 208, 210, 215, 222, 226, 258, 263, 280, 284, 290, 322, 337, 350, 354, 363, 372, 382, 387, 405, 410, 424,
-#        428, 429, 436, 472,
+#        100, 101, 102, 103, 104, 105, 106, 107, 108, 109,
+#        220, 222, 223, 224, 225, 226, 227, 228, 229,
 #    }
+    train = {
+        115, 141, 144, 150, 154, 162, 176, 183, 232, 242,
+        111, 119, 122, 129, 135, 140, 146, 151, 155, 159,
+        164, 169, 177, 184, 189, 230, 233, 235, 240, 244,
+        110, 113, 118, 123, 130, 134, 137, 142, 147, 152,
+        156, 160, 165, 170, 172, 178, 180, 185, 188, 231,
+        234, 236, 238, 241, 244, 246, 249, 112, 117, 121,
+        125, 126, 131, 133, 136, 138, 143, 145, 148, 149,
+        153, 157, 158, 161, 163, 166, 168, 171, 173, 174,
+        175, 179, 181, 182, 186, 187, 237, 239, 245, 247,
+        114, 120, 127, 132, 139,
+    }
+
+    val = {
+        10, 13, 16, 19, 22, 25, 190, 193, 196, 200,
+        203, 206, 209, 212, 215, 217,
+    }
+
+    test = {
+        11, 14, 17, 20, 23, 191, 194, 197, 201, 204,
+        207, 210, 213, 216, 219,
+    }
+
     tutorial = {11}
     # The following design IDs are not available in the dataset. They are held back by the authors for testing purposes.
     hidden_val = {167, 211, 218, 221, 248, 282, 291, 295, 316, 325, 329, 364, 370, 376, 403, 473}
@@ -76,7 +90,7 @@ class DrivAerMLDataset(Dataset):
         root: path to the processed dataset, e.g. .../drivaerml_processed/subsampled_10x.
     """
 
-    def __init__(self, root: str, split: str, num_sample_frac: Optional[float] = 0.001):
+    def __init__(self, root: str, split: str):
         super().__init__()
         self.root = Path(root).expanduser()
         if split == "train":
@@ -91,12 +105,6 @@ class DrivAerMLDataset(Dataset):
             raise NotImplementedError
         # convert sets to list
         self.design_ids = sorted(design_ids)
-
-        if num_sample_frac is None:
-            self.num_sample_frac = None
-        else:
-            assert 0 < num_sample_frac <= 1.0, "num_sample_frac must be in (0,1]"
-            self.num_sample_frac = float(num_sample_frac)
 
     def __len__(self):
         return len(self.design_ids)
@@ -120,82 +128,47 @@ class DrivAerMLDataset(Dataset):
 
     def _load(self, idx: int, filename_base: str) -> torch.Tensor:
         """
-        filename_base: 不包含后缀的基名，例如 "volume_cell_position" 或 "surface_pressure"
-        行为:
-          - 优先尝试 {filename_base}.npy（支持 mmap_mode='r'），按需采样（仅当 num_sample_frac 在 (0,1) 且 文件属于 volume 或 surface 时）
-          - 回退到 {filename_base}.pt（torch.load）
-        采样策略:
-          - volume 文件使用 self.num_sample_frac
-          - surface 文件使用 min(1.0, 10 * self.num_sample_frac)
-          - 其它文件不采样
-        返回:
-          - torch.Tensor（对于 scalar/1D/2D 均可）
+        仅保留预抽样优先加载 + 回退到完整文件的逻辑（已移除所有随机采样代码）。
+
+        行为：
+          - 优先尝试 {filename_base}_v2.npy / {filename_base}_v2.pt（若存在直接返回）
+          - 否则尝试 {filename_base}.npy（一次性读入并返回）
+          - 否则尝试 {filename_base}.pt（torch.load 并返回）
+          - 三者都不存在则抛出 FileNotFoundError
+
+        注意：返回的是 CPU tensor（caller 若需 GPU 请自行 .to(device)）。
         """
         design_id = self.design_ids[idx]
-        design_uri = self.root / f"run_{design_id}"
+        design_uri = Path(self.root) / f"run_{design_id}"
         assert design_uri.exists(), f"{design_uri.as_posix()} does not exist"
 
-        # 构造可能的路径（优先 npy）
+        # 先查找预抽样文件（优先）
+#        v2_np_path = design_uri / f"{filename_base}_v2.npy"
+#        v2_pt_path = design_uri / f"{filename_base}_v2.pt"
         np_path = design_uri / f"{filename_base}.npy"
         pt_path = design_uri / f"{filename_base}.pt"
 
-        # 判断文件类别
-        fname_lower = filename_base.lower()
-        is_volume = "volume" in fname_lower
-        is_surface = "surface" in fname_lower
+        # 如果存在预抽样的 .npy，直接读入并返回
+#        if v2_np_path.exists():
+#            arr = np.load(v2_np_path, mmap_mode=None)   # 预抽样文件通常较小，直接读入
+#            return torch.from_numpy(np.array(arr)).contiguous().clone()
 
-        # 决定是否采样以及采样比例
-        sample_frac = None
-        if self.num_sample_frac is not None and 0.0 < self.num_sample_frac < 1.0:
-            if is_volume:
-                sample_frac = float(self.num_sample_frac)
-            elif is_surface:
-                # surface 使用 volume 的 10 倍，但不超过 1.0
-                sample_frac = min(1.0, float(10.0 * self.num_sample_frac))
-            # 其它文件不采样 => sample_frac 保持 None
+        # 如果存在预抽样的 .pt，直接加载并返回
+#        if v2_pt_path.exists():
+#            tensor = torch.load(v2_pt_path, map_location="cpu")
+#            return tensor.contiguous().clone()
 
-        # 如果存在 .npy -> 使用 memmap 读取并按需采样
+        # 回退到完整的 .npy（一次性载入）
         if np_path.exists():
-            arr = np.load(np_path, mmap_mode="r")
-            # 对于一维或多维，按第0维行数来做采样
-            n = int(arr.shape[0]) if hasattr(arr, "shape") and len(arr.shape) > 0 else 1
+            arr = np.load(np_path, mmap_mode=None)
+            return torch.from_numpy(np.array(arr)).contiguous().clone()
 
-            # 不采样或行数 <=1，直接把 memmap 全部 materialize 成 numpy 再转 torch
-            if sample_frac is None or n <= 1:
-                return torch.from_numpy(np.array(arr)).contiguous().clone()
-
-            # 计算采样数 m
-            m = int(max(1, round(n * sample_frac)))
-            if m >= n:
-                return torch.from_numpy(np.array(arr)).contiguous().clone()
-
-            # 可复现的随机索引（基于 design_id）
-            rng = torch.Generator().manual_seed(int(design_id))
-            idxs = torch.randperm(n, generator=rng)[:m].numpy()
-            sampled = arr[idxs]   # 只把被选中的行载入内存
-            return torch.from_numpy(np.array(sampled)).contiguous().clone()
-
-        # 回退：读取 .pt（注意这会一次性把整个 tensor 加载进内存）
+        # 回退到完整的 .pt
         if pt_path.exists():
-            tensor = torch.load(pt_path, map_location="cuda:0", weights_only=True)
-            # 不采样，直接返回
-            if sample_frac is None:
-                return tensor
-            # 若需要采样，确保可索引
-            if not hasattr(tensor, "__len__") or tensor.ndim == 0:
-                return tensor
-            n = int(tensor.shape[0])
-            m = int(max(1, round(n * sample_frac)))
-            if m >= n:
-                return tensor
-            rng = torch.Generator().manual_seed(int(design_id))
-            perm = torch.randperm(n, generator=rng)[:m]
-            sampled = tensor[perm].contiguous().clone()
-            del tensor
-            gc.collect()
-            return sampled
+            tensor = torch.load(pt_path, map_location="cpu")
+            return tensor.contiguous().clone()
 
-        raise FileNotFoundError(f"Neither {np_path} nor {pt_path} found for run_{design_id}")
+        raise FileNotFoundError(f"Neither {np_path} nor {pt_path} (nor _v2 versions) found for run_{design_id}")
 
 #    def _load(self, idx: int, filename: str) -> torch.Tensor:
 #        design_uri = self.root / f"run_{self.design_ids[idx]}"

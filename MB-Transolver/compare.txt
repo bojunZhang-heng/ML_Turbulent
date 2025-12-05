@@ -1,0 +1,16 @@
+# -----------------------------------------------------------------------
+# Author: Bojun Zhang
+# Date  : 2025-10-30 18:32:46
+# File  : compare.txt
+# -----------------------------------------------------------------------
+
+###########################################
+# version 1 add slice 
+AB_UBT: position_points = 65534
+        surface and volume = 50_000
+
+AB_UBT_v1: position_points = 65534
+        surface and volume = 50_000
+        add slice on surface_block and volume_block, maybe in geometry block
+faster 35%
+
