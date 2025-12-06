@@ -147,12 +147,13 @@ def run_train(cfg):
 
     # --- model ---
     model = Model(
-        n_hidden=cfg.model.hidden,
-        n_layers=cfg.model.layers,
+        hidden_dim=cfg.model.hidden_dim,
+        layer_num=cfg.model.layer_num,
         space_dim=cfg.model.input_dim,
         mlp_ratio=cfg.model.mlp_ratio,
         slice_num=cfg.model.slice_num,
         out_dim=cfg.model.output_dim,
+        dropout=cfg.model.dropout
     ).to(device)
 
     # --- training loop ---
@@ -200,12 +201,13 @@ def run_test(cfg):
     logging.info(f"Using device: {device}")
 
     model = Model(
-        n_hidden=cfg.model.hidden,
-        n_layers=cfg.model.layers,
+        hidden_dim=cfg.model.hidden_dim,
+        layer_num=cfg.model.layer_num,
         space_dim=cfg.model.input_dim,
         mlp_ratio=cfg.model.mlp_ratio,
         slice_num=cfg.model.slice_num,
         out_dim=cfg.model.output_dim,
+        dropout=cfg.model.dropout,
     ).to(device).eval()
 
     cwd = os.getcwd()
@@ -301,6 +303,14 @@ def main():
 
     # load config (hardcoded path as before)
     cfg = load_config(CONFIG_PATH)
+
+    def namespace_to_dict(ns):
+        return {
+            k: namespace_to_dict(v) if isinstance(v, SimpleNamespace) else v
+            for k, v in vars(ns).items()
+        }
+
+    logging.info("Config:\n" + yaml.dump(namespace_to_dict(cfg), sort_keys=False))
 
     if args.mode == "train":
         run_train(cfg)
