@@ -44,7 +44,7 @@ def load_config(path):
         cfg = yaml.safe_load(f)
     return dict_to_namespace(cfg)  # ← 必须用这个
 
-args = load_config("config_train.yml")
+args = load_config("config_train_s_wss.yml")
 
 # ============================================================
 # Logging setup
@@ -91,6 +91,7 @@ target_keys = [
 enabled_target_keys = [
     "volume_anchor_velocity",
     "surface_anchor_pressure",
+    "surface_anchor_wallshearstress",
 #    "volume_query_velocity",
 #    "surface_query_pressure",
 ]
@@ -243,16 +244,16 @@ with torch.no_grad():
     for batch in tqdm(test_dataloader, desc="[Testing]"):
         batch = {key: value.to(device) for key, value in batch.items()}
         targets = {k: batch.pop(k) for k in target_keys if k in batch}
-        targets_velocity = targets["volume_anchor_velocity"]
+        targets_velocity = targets["surface_anchor_wallshearstress"]
 
         batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
-        data_volume = batch_filtered["volume_anchor_position"]
+        data_volume = batch_filtered["surface_anchor_position"]
 
         pred_velocity = model(data_volume)
 
         mse_loss = criterion(pred_velocity, targets_velocity)
-        pred_den = normalizers["volume_anchor_velocity"].denormalize(pred_velocity)
-        targ_den = normalizers["volume_anchor_velocity"].denormalize(targets_velocity)
+        pred_den = normalizers["surface_anchor_wallshearstress"].denormalize(pred_velocity)
+        targ_den = normalizers["surface_anchor_wallshearstress"].denormalize(targets_velocity)
         L2_error = (pred_den - targ_den).norm() / targ_den.norm()
         logging.info(f"*******************{M}L2_error:{RESET}")
         logging.info(f" {L2_error:.6f}")

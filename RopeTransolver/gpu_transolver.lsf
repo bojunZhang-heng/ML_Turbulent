@@ -55,7 +55,8 @@ PY
 
 # Run your training script
 #python train_velocity.py
-python train_s_pressure.py
+#python train_s_pressure.py
+python train_s_wss.py
 
 # Run your Evaluation script
 # sh ./Model_Script/Model_Evaluate.sh
