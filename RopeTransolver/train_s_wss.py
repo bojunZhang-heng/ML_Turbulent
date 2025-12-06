@@ -51,14 +51,24 @@ def load_config(path):
 
 args = load_config("config_train_s_wss.yml")
 
+def namespace_to_dict(ns):
+    return {
+        k: namespace_to_dict(v) if isinstance(v, SimpleNamespace) else v
+        for k, v in vars(ns).items()
+    }
+
+logging.info("Config:\n" + yaml.dump(namespace_to_dict(args), sort_keys=False))
+
+
 def initialize_model(args, local_rank):
 
-    model = Model(n_hidden=args.model.hidden,
-                  n_layers=args.model.layers,
+    model = Model(hidden_dim=args.model.hidden_dim,
+                  layer_num=args.model.layer_num,
                   space_dim=args.model.input_dim,
                   mlp_ratio=args.model.mlp_ratio,
                   slice_num=args.model.slice_num,
                   out_dim=args.model.output_dim,
+                  dropout=args.model.dropout,
             ).to(local_rank)
     model = torch.nn.parallel.DistributedDataParallel(
         model,
