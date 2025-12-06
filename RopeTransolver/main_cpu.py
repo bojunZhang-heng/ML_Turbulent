@@ -64,7 +64,7 @@ logger = logging.getLogger(__name__)
 # Load dataset
 # ============================================================
 root_shuguang="~/drivaerml_N_30_000"
-root_qiming="~/drivaerml_N_30_000"
+root_qiming="~/drivaerML_N100_000"
 batch_size = 1
 train_dataloader, val_dataloader, test_dataloader = create_data_loaders(
     root_qiming, batch_size, use_query_positions=True, num_workers=1,

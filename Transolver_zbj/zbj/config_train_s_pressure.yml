@@ -1,4 +1,4 @@
-exp_name: "RTformer_s_pressure"
+exp_name: "Transolver_s_pressure"
 
 model:
     input_dim: 3

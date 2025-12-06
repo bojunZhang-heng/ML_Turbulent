@@ -1,4 +1,4 @@
-exp_name: "RTformer_s_wss"
+exp_name: "Transolver_s_wss"
 
 model:
     input_dim: 3
