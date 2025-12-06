@@ -13,8 +13,8 @@ ACTIVATION = {'gelu': nn.GELU, 'tanh': nn.Tanh, 'sigmoid': nn.Sigmoid, 'relu': n
 class Model(nn.Module):
     def __init__(self,
                  space_dim=3,
-                 n_layers=5,
-                 n_hidden=256,
+                 layer_num=5,
+                 hidden_dim=256,
                  dropout=0,
                  head_num=8,
                  act='gelu',
@@ -22,42 +22,37 @@ class Model(nn.Module):
                  fun_dim=0,
                  out_dim=1,
                  slice_num=32,
-                 ref=8,
-                 unified_pos=False
                  ):
         super(Model, self).__init__()
         self.__name__ = 'UniPDE_3D'
-        self.ref = ref
-        self.unified_pos = unified_pos
         self.preprocess = MLP(mlp_input=space_dim,
-                              mlp_hidden=n_hidden * 2,
-                              mlp_output=n_hidden,
-                              n_layers=0, act=act, res=False
-                              )
+                              mlp_hidden=hidden_dim * 2,
+                              mlp_output=hidden_dim,
+                              layer_num=0, act=act, res=False)
 
-        self.n_hidden = n_hidden
+        self.hidden_dim = hidden_dim
         self.head_num = head_num
         self.space_dim = space_dim
-        self.rope = RopeFrequency(dim=n_hidden // head_num, ndim=space_dim)
+        self.rope = RopeFrequency(dim=hidden_dim // head_num, ndim=space_dim)
 
         # pos_embed with MLP for volume
-        self.pos_embed = ContinuousSincosEmbed(dim=n_hidden, ndim=space_dim)
+        self.pos_embed = ContinuousSincosEmbed(dim=hidden_dim, ndim=space_dim)
         self.volume_bias = nn.Sequential(
-            nn.Linear(n_hidden, n_hidden),
+            nn.Linear(hidden_dim, hidden_dim),
             nn.GELU(),
-            nn.Linear(n_hidden, n_hidden),
+            nn.Linear(hidden_dim, hidden_dim),
         )
 
-        self.blocks = nn.ModuleList([Transolver_block(head_num=head_num, hidden_dim=n_hidden,
+        self.blocks = nn.ModuleList([Transolver_block(head_num=head_num, hidden_dim=hidden_dim,
                                                       dropout=dropout,
                                                       act=act,
                                                       mlp_ratio=mlp_ratio,
                                                       out_dim=out_dim,
                                                       slice_num=slice_num,
-                                                      last_layer=(_ == n_layers - 1))
-                                     for _ in range(n_layers)])
+                                                      last_layer=(_ == layer_num - 1))
+                                     for _ in range(layer_num)])
         self.initialize_weights()
-        self.placeholder = nn.Parameter((1 / (n_hidden)) * torch.rand(n_hidden, dtype=torch.float))
+        self.placeholder = nn.Parameter((1 / (hidden_dim)) * torch.rand(hidden_dim, dtype=torch.float))
 
     def initialize_weights(self):
         self.apply(self._init_weights)
