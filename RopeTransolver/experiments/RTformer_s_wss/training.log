@@ -202,3 +202,22 @@
 2025-12-06 13:07:51,419 - INFO - Epoch 5/150 - Train Loss: 0.826309, Val Loss: 0.798918[0m
 2025-12-06 13:12:02,709 - INFO - Epoch 6/150 - Train Loss: 0.786494, Val Loss: 0.787240[0m
 2025-12-06 13:16:19,646 - INFO - Epoch 7/150 - Train Loss: 0.845332, Val Loss: 0.860373[0m
+2025-12-06 13:26:28,642 - INFO - args.exp_name : RTformer_s_wss
+2025-12-06 13:26:28,658 - INFO - Starting training with 1 GPUs
+2025-12-06 13:26:33,705 - INFO - Total trainable parameters: 4524867
+2025-12-06 13:26:33,707 - INFO - Data loaded: 384 training batches, 33 validation batches, 48 test batches
+2025-12-06 13:26:33,708 - INFO - Staring training for 150 epochs
+2025-12-06 13:30:49,155 - INFO - Epoch 1/150 - Train Loss: 0.919740, Val Loss: 0.818135[0m
+2025-12-06 13:30:49,397 - INFO - New best model saved with Val Loss: 0.818135
+2025-12-06 13:34:53,376 - INFO - Epoch 2/150 - Train Loss: 0.770625, Val Loss: 0.747871[0m
+2025-12-06 13:34:53,653 - INFO - New best model saved with Val Loss: 0.747871
+2025-12-06 13:39:08,694 - INFO - Epoch 3/150 - Train Loss: 0.790198, Val Loss: 0.789874[0m
+2025-12-06 13:43:15,185 - INFO - Epoch 4/150 - Train Loss: 0.849324, Val Loss: 0.850210[0m
+2025-12-06 13:47:26,153 - INFO - Epoch 5/150 - Train Loss: 0.826309, Val Loss: 0.798918[0m
+2025-12-06 13:51:28,975 - INFO - Epoch 6/150 - Train Loss: 0.786494, Val Loss: 0.787240[0m
+2025-12-06 13:55:32,286 - INFO - Epoch 7/150 - Train Loss: 0.845332, Val Loss: 0.860373[0m
+2025-12-06 13:59:30,919 - INFO - Epoch 8/150 - Train Loss: 0.840438, Val Loss: 0.818575[0m
+2025-12-06 14:03:31,343 - INFO - Epoch 9/150 - Train Loss: 0.823441, Val Loss: 0.780120[0m
+2025-12-06 14:07:37,571 - INFO - Epoch 10/150 - Train Loss: 0.780272, Val Loss: 0.777811[0m
+2025-12-06 14:11:50,361 - INFO - Epoch 11/150 - Train Loss: 0.763090, Val Loss: 0.776601[0m
+2025-12-06 14:16:06,653 - INFO - Epoch 12/150 - Train Loss: 0.765050, Val Loss: 0.770034[0m
