@@ -438,6 +438,9 @@ def test_model(model, test_dataloader, criterion, local_rank, exp_dir):
         logging.info(f"*******************{M}mse_loss:{RESET}")
         logging.info(f" {total_loss / len(test_dataloader):.6f}")
 
+        logging.info(f"*******************{M}inference_time:{RESET}")
+        logging.info(f" {total_inference_time / len(test_dataloader):.6f}")
+
     # Checkout the value
 
 
