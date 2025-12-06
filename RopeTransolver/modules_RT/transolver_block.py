@@ -24,15 +24,14 @@ class Transolver_block(nn.Module):
         super().__init__()
         self.last_layer = last_layer
         self.ln_1 = nn.LayerNorm(hidden_dim)
-        self.Attn = Physics_Attention_Irregular_Mesh(hidden_dim, head_num=head_num, head_dim=hidden_dim // head_num ,
+        self.Attn = Physics_Attention_Irregular_Mesh(dim=hidden_dim, head_num=head_num, head_dim=hidden_dim // head_num ,
                                                      dropout=dropout, slice_num=slice_num)
         self.ln_2 = nn.LayerNorm(hidden_dim)
 
         self.mlp = MLP(mlp_input=hidden_dim,
                        mlp_hidden=hidden_dim * mlp_ratio,
                        mlp_output=hidden_dim,
-                       n_layers=0, act=act, res=False
-                       )
+                       layer_num=0, act=act, res=False)
         if self.last_layer:
             self.ln_3 = nn.LayerNorm(hidden_dim)
             self.mlp2 = nn.Linear(hidden_dim, out_dim)
