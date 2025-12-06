@@ -51,15 +51,24 @@ def load_config(path):
 
 args = load_config("config_train_s_pressure.yml")
 
-def initialize_model(args, local_rank):
-    """Initialize and return the RegDGCN model."""
+def namespace_to_dict(ns):
+    return {
+        k: namespace_to_dict(v) if isinstance(v, SimpleNamespace) else v
+        for k, v in vars(ns).items()
+    }
 
-    model = Model(n_hidden=args.model.hidden,
-                  n_layers=args.model.layers,
+logging.info("Config:\n" + yaml.dump(namespace_to_dict(args), sort_keys=False))
+
+
+def initialize_model(args, local_rank):
+
+    model = Model(hidden_dim=args.model.hidden_dim,
+                  layer_num=args.model.layer_num,
                   space_dim=args.model.input_dim,
                   mlp_ratio=args.model.mlp_ratio,
                   slice_num=args.model.slice_num,
                   out_dim=args.model.output_dim,
+                  dropout=args.model.dropout,
             ).to(local_rank)
     model = torch.nn.parallel.DistributedDataParallel(
         model,
@@ -259,6 +268,7 @@ target_keys = [
 enabled_target_keys = [
     "volume_anchor_velocity",      # torch.Size([16384, 3])
     "surface_anchor_pressure",
+    "surface_anchor_wallshearstress",
     #    "volume_query_velocity",
     #    "surface_query_pressure",
 ]
