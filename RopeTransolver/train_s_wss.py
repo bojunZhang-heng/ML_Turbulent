@@ -407,7 +407,7 @@ def test_model(model, test_dataloader, criterion, local_rank, exp_dir):
             targets_wss = targets["surface_anchor_wallshearstress"]
 
             batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
-            data_surface = batch_filtered["surface_anchor_wallshearstress"]
+            data_surface = batch_filtered["surface_anchor_position"]
 
             pred_wss = model(data_surface)
 
