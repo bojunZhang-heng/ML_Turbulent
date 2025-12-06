@@ -4,7 +4,7 @@ ACTIVATION = {'gelu': nn.GELU, 'tanh': nn.Tanh, 'sigmoid': nn.Sigmoid, 'relu': n
 
 
 class MLP(nn.Module):
-    def __init__(self, mlp_input, mlp_hidden, mlp_output, n_layers=1, act='gelu', res=True):
+    def __init__(self, mlp_input, mlp_hidden, mlp_output, layer_num=1, act='gelu', res=True):
         super(MLP, self).__init__()
 
         if act in ACTIVATION.keys():
@@ -14,15 +14,15 @@ class MLP(nn.Module):
         self.n_input = mlp_input
         self.n_hidden = mlp_hidden
         self.n_output = mlp_output
-        self.n_layers = n_layers
+        self.layer_num = layer_num
         self.res = res
         self.linear_pre = nn.Sequential(nn.Linear(self.n_input, self.n_hidden), act())
         self.linear_post = nn.Linear(self.n_hidden, self.n_output)
-        self.linears = nn.ModuleList([nn.Sequential(nn.Linear(self.n_hidden, self.n_hidden), act()) for _ in range(n_layers)])
+        self.linears = nn.ModuleList([nn.Sequential(nn.Linear(self.n_hidden, self.n_hidden), act()) for _ in range(layer_num)])
 
     def forward(self, x):
         x = self.linear_pre(x)
-        for i in range(self.n_layers):
+        for i in range(self.layer_num):
             if self.res:
                 x = self.linears[i](x) + x
             else:
