@@ -24,4 +24,4 @@ echo "CPUs per task: $SLURM_CPUS_ON_NODE"
 nvidia-smi
 
 # 推荐用 srun 来启动程序（更符合 SLURM 调度）
-python train_s_wss.py
+python train_velocity.py
