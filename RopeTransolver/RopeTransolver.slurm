@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -J RT_velocity            # 作业名
+#SBATCH -J RT_DrivAerNet            # 作业名
 #SBATCH -p dzagnormal            # 分区（你当前的分区）
 #SBATCH --nodes=1                # 节点数
 #SBATCH --ntasks-per-node=1      # 每个节点任务数（通常为1）
@@ -24,4 +24,4 @@ echo "CPUs per task: $SLURM_CPUS_ON_NODE"
 nvidia-smi
 
 # 推荐用 srun 来启动程序（更符合 SLURM 调度）
-python train_velocity.py
+python train_drivaernet.py
