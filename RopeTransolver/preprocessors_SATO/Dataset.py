@@ -86,10 +86,10 @@ class VTKDataset():
         with open(os.path.join(directory, 'train_val_test_splits/val_design_ids.txt'), 'r') as file:
             val_index = [line.strip()[-4:] for line in file]
 
-        with open(os.path.join(directory, 'norm', 'mean.pkl'), 'rb') as f:
-            mean_data = pickle.load(f)
-        with open(os.path.join(directory, 'norm', 'std.pkl'), 'rb') as f:
-            std_data = pickle.load(f)
+       # with open(os.path.join(directory, 'norm', 'mean.pkl'), 'rb') as f:
+       #     mean_data = pickle.load(f)
+       # with open(os.path.join(directory, 'norm', 'std.pkl'), 'rb') as f:
+       #     std_data = pickle.load(f)
 
         train_data_lst, test_data_lst, val_data_lst = [], [], []
         for file_path in SurfacePressure_file_paths:
@@ -116,7 +116,7 @@ class VTKDataset():
             else:
                 val_data_lst.append(data)
 
-        return train_data_lst, test_data_lst, val_data_lst, mean_data, std_data
+        return train_data_lst, test_data_lst, val_data_lst#, mean_data, std_data
 
 # Constants for normalization
 POS_MIN = -2.0
