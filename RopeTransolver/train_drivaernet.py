@@ -111,7 +111,7 @@ def train_and_evaluate(rank, world_size, args):
 
     # Set up logging (only on rank 0)
     if local_rank == 0:
-        exp_dir = os.path.join("experiments", args.exp_name)
+        exp_dir = os.path.join("experiments_DrivAerNet", args.exp_name)
         os.makedirs(exp_dir, exist_ok=True)
         log_file = os.path.join(exp_dir, "training.log")
         setup_logger(log_file)
@@ -127,13 +127,16 @@ def train_and_evaluate(rank, world_size, args):
 
     # get data
     Dataset = VTKDataset()
-    train_data_lst, test_data_lst, val_data_lst, mean_data, std_data = Dataset.get_data_dict(args.dataload.directory)
+#    train_data_lst, test_data_lst, val_data_lst, mean_data, std_data = Dataset.get_data_dict(args.dataload.directory)
+    train_data_lst, test_data_lst, val_data_lst = Dataset.get_data_dict(args.dataload.directory)
 
     # Create DataLoaders
     train_dataset = SATO_Dataset(train_data_lst, args, is_train=True)
+    val_dataset = SATO_Dataset(val_data_lst, args, is_train=True)
     test_dataset = SATO_Dataset(test_data_lst, args, is_train=False)
 
     train_dataloader = DataLoader(train_dataset, batch_size=args.training.batch_size, shuffle=True, num_workers=4, pin_memory=True, collate_fn=sato_collate_fn)
+    val_dataloader = DataLoader(val_dataset, batch_size=args.training.batch_size, shuffle=True, num_workers=4, pin_memory=True, collate_fn=sato_collate_fn)
     test_dataloader = DataLoader(test_dataset, batch_size=args.training.batch_size, shuffle=False, num_workers=2, pin_memory=True, collate_fn=sato_collate_fn)
 
     # Log dataset info
@@ -154,15 +157,15 @@ def train_and_evaluate(rank, world_size, args):
     )
 
     # Store the model
-    best_model_path = os.path.join("experiments", args.exp_name, "best_model.pth")
-    final_model_path = os.path.join("experiments", args.exp_name, "final_model.pth")
+    best_model_path = os.path.join("experiments_DrivAerNet", args.exp_name, "best_model.pth")
+    final_model_path = os.path.join("experiments_DrivAerNet", args.exp_name, "final_model.pth")
 
     # Check if test_only and model exists
     if args.training.test_only and os.path.exists(best_model_path):
         if local_rank == 0:
             logging.info("Loading best model for testing only")
         model.load_state_dict(torch.load(best_model_path, map_location=f'cuda:{local_rank}'))
-        test_model(model, test_dataloader, criterion, local_rank, os.path.join('experiments', args.exp_name))
+        test_model(model, test_dataloader, criterion, local_rank, os.path.join('experiments_DrivAerNet', args.exp_name))
         dist.destroy_process_group()
         return
 
@@ -216,7 +219,7 @@ def train_and_evaluate(rank, world_size, args):
                 plt.legend()
                 plt.title("Training Progress - AB-UBT")
                 plt.savefig(
-                    os.path.join("experiments", args.exp_name, "training_progress.png")
+                    os.path.join("experiments_DrivAerNet", args.exp_name, "training_progress.png")
                 )
                 plt.close()
 
@@ -235,7 +238,7 @@ def train_and_evaluate(rank, world_size, args):
         test_dataloader,
         criterion,
         local_rank,
-        os.path.join("experiments", args.exp_name),
+        os.path.join("experiments_DrivAerNet", args.exp_name),
     )
 
     # Test the best model
@@ -248,7 +251,7 @@ def train_and_evaluate(rank, world_size, args):
         test_dataloader,
         criterion,
         local_rank,
-        os.path.join("experiments", args.exp_name),
+        os.path.join("experiments_DrivAerNet", args.exp_name),
     )
 
     # Clean up
@@ -311,13 +314,12 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, local_rank):
     for data, targets in tqdm(train_dataloader, desc="[Training]"):
         logging.info(f"data.shape: {data.shape}")
         logging.info(f"targets.shape: {targets.shape}")
-        data = data.squeeze(1).to(local_rank).permute(0, 2, 1)
-        targets = targets.squeeze(1).to(local_rank).permute(1,0)
-        targets = (targets - PRESSURE_MEAN) / PRESSURE_STD
+        data = data.unsqueeze(0).to(local_rank)
+        targets = targets.to(local_rank)
 
         optimizer.zero_grad()
         outputs = model(data)
-        loss = criterion(outputs.squeeze(1), targets)
+        loss = criterion(outputs, targets)
 
         loss.backward()
         optimizer.step()
@@ -334,21 +336,16 @@ def validate(model, val_dataloader, criterion, local_rank):
     total_loss = 0
 
     with torch.no_grad():
-        for batch in tqdm(val_dataloader, desc="[Validation]"):
-            batch = {key: value.to(local_rank) for key, value in batch.items()}
+        for data, targets in tqdm(val_dataloader, desc="[Validation]"):
+            logging.info(f"data.shape: {data.shape}")
+            logging.info(f"targets.shape: {targets.shape}")
+            data = data.unsqueeze(0).to(local_rank)
+            targets = targets.to(local_rank)
 
-            # extract target variables for anchor and query
-            targets = {k: batch.pop(k) for k in target_keys if k in batch}
-            targets_s_pressure = targets["surface_anchor_pressure"]
+            outputs = model(data)
+            loss = criterion(outputs, targets)
 
-            # extract target variables for anchor and query
-            batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
-            data_volume = batch_filtered["surface_anchor_position"]
-
-            pred_s_pressure = model(data_volume)
-            loss = criterion(pred_s_pressure, targets_s_pressure)
-
-
+            loss.backward()
             total_loss += loss.item()
 
 
