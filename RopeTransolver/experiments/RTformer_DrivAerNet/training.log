@@ -36,3 +36,6 @@
 2025-12-08 13:13:50,879 - INFO - Staring training for 150 epochs
 2025-12-08 13:13:58,983 - INFO - data.shape: torch.Size([1, 1, 3, 10000])
 2025-12-08 13:13:58,983 - INFO - targets.shape: torch.Size([1, 1, 10000])
+2025-12-08 18:59:12,319 - INFO - args.exp_name : RTformer_DrivAerNet
+2025-12-08 18:59:12,340 - INFO - Starting training with 1 GPUs
+2025-12-08 18:59:14,027 - INFO - Total trainable parameters: 4524353
