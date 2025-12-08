@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -J RT_s_wss            # 作业名
+#SBATCH -J RT_velocity            # 作业名
 #SBATCH -p dzagnormal            # 分区（你当前的分区）
 #SBATCH --nodes=1                # 节点数
 #SBATCH --ntasks-per-node=1      # 每个节点任务数（通常为1）

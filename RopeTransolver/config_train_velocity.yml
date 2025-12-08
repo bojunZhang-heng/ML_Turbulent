@@ -1,4 +1,4 @@
-exp_name: "RTformer_v_velocity"
+exp_name: "RTformer_v_velocity_N3w_e300"
 
 model:
     input_dim: 3
@@ -14,7 +14,7 @@ model:
 
 training:
     batch_size: 1
-    epochs: 150
+    epochs: 300
     lr: 0.001
     scheduler_step: 50
     scheduler_gamma: 0.7
