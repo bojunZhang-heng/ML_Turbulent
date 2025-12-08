@@ -1,5 +1,0 @@
-2025-12-04 14:58:24,215 - INFO - Data loaded: 3 training batches, 1 validation batches, 1 test batches
-Traceback (most recent call last):
-  File "/work/mae-zhangbj/ML_Turbulent/Current_work/Transolver_zbj/zbj/main_cpu.py", line 158, in <module>
-    model = Model(n_hideen=args.model.hidden,
-TypeError: Model.__init__() got an unexpected keyword argument 'n_hideen'

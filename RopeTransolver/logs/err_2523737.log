@@ -1,10 +1,0 @@
-2025-12-05 10:06:37,257 - INFO - Data loaded: 3 training batches, 1 validation batches, 1 test batches
-[Testing]:   0%|          | 0/1 [00:00<?, ?it/s]2025-12-05 10:06:38,261 - INFO - *******************[35mL2_erro:[0m
-2025-12-05 10:06:38,266 - INFO -  0.076505
-2025-12-05 10:06:38,266 - INFO - *******************[35mmse_loss:[0m
-2025-12-05 10:06:38,266 - INFO -  0.012541
-[Testing]: 100%|██████████| 1/1 [00:00<00:00,  1.27it/s][Testing]: 100%|██████████| 1/1 [00:00<00:00,  1.24it/s]
-Traceback (most recent call last):
-  File "/work/mae-zhangbj/ML_Turbulent/Current_work/RopeTransolver/main_cpu.py", line 276, in <module>
-    color=[targets["surface_anchor_pressure"].cpu().clamp(-2, 2), prediction["surface_anchor_pressure"].cpu().clamp(-2, 2)],
-NameError: name 'prediction' is not defined

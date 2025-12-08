@@ -1,5 +1,0 @@
-2025-12-04 14:52:03,952 - INFO - Data loaded: 3 training batches, 1 validation batches, 1 test batches
-Traceback (most recent call last):
-  File "/work/mae-zhangbj/ML_Turbulent/Current_work/Transolver_zbj/zbj/main_cpu.py", line 158, in <module>
-    model = Model(n_hideen=args.model.hidden,
-AttributeError: 'dict' object has no attribute 'hidden'
