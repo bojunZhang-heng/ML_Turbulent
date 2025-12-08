@@ -1,12 +1,12 @@
 #!/bin/bash
 
 #BSUB -J gpu_transolver      # Job name
-#BSUB -q 8v100-32-sc       # Queue name (change if needed)
+#BSUB -q 4v100-16-e5       # Queue name (change if needed)
 #BSUB -n 1                            # Number of CPU cores
 #BSUB -R "span[ptile=1]"
 #BSUB -gpu "num=1"
-#BSUB -oo logs/out_%J.log             # Standard output (%J = job ID)
-#BSUB -eo logs/err_%J.log             # Standard error
+#BSUB -oo logs/%J.out            # Standard output (%J = job ID)
+#BSUB -eo logs/%J.err            # Standard error
 #BSUB -env "all"                      # Export your current environment
 
 # -------------------------------
@@ -54,7 +54,7 @@ PY
 # sh ./Model_Script/Model_Preprocess.sh
 
 # Run your training script
-python train_velocity.py
+python train_drivaernet.py
 #python train_s_wss.py
 #@python train_s_pressure.py
 
