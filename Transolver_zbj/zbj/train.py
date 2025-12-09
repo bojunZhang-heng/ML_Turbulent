@@ -1,14 +1,12 @@
 # train.py
 import warnings
 import os
-import random
 import yaml
+import argparse
 import torch
 import torch.distributed as dist
-import torch.multiprocessing as mp
 import torch.optim as optim
 import time
-import argparse
 import logging
 import matplotlib.pyplot as plt
 from tqdm import tqdm
@@ -35,39 +33,18 @@ M = Fore.MAGENTA
 C = Fore.CYAN
 RESET = Style.RESET_ALL
 
-# ============================================================
-# Load hyperparam
-# ============================================================
-def dict_to_namespace(d):
-    for k, v in d.items():
-        if isinstance(v, dict):
-            d[k] = dict_to_namespace(v)
-    return SimpleNamespace(**d)
 
-def load_config(path):
-    with open(path, "r") as f:
-        cfg = yaml.safe_load(f)
-    return dict_to_namespace(cfg)
-
-args = load_config("config_train.yml")
-
-def initialize_model(args, local_rank):
+def initialize_model(args, device):
     """Initialize and return the RegDGCN model."""
 
-    model = Model(n_hidden=args.model.hidden,
-                  n_layers=args.model.layers,
+    model = Model(hidden_dim=args.model.hidden_dim,
+                  layer_num=args.model.layer_num,
                   space_dim=args.model.input_dim,
                   mlp_ratio=args.model.mlp_ratio,
                   slice_num=args.model.slice_num,
                   out_dim=args.model.output_dim,
-            ).to(local_rank)
-    model = torch.nn.parallel.DistributedDataParallel(
-        model,
-        device_ids=[local_rank],
-        find_unused_parameters=True,
-        output_device=local_rank,
-    )
-
+                  dropout=args.model.dropout,
+            ).to(device)
 
     return model
 
@@ -92,33 +69,23 @@ def print_memory_stats(device=None, message=""):
     logging.info("-" * 50)
 
 
-def train_and_evaluate(rank, world_size, args):
+def train_and_evaluate(args, device):
     """main function for Distributed training and evaluation."""
     setup_seed(args.training.seed)
 
-    # Initialize process group for DDP
-    dist.init_process_group(
-        backend="nccl", init_method="env://", world_size=world_size, rank=rank
-    )
-
-    local_rank = rank
-    torch.cuda.set_device(local_rank)
-
-    # Set up logging (only on rank 0)
-    if local_rank == 0:
-        exp_dir = os.path.join("experiments", args.exp_name)
-        os.makedirs(exp_dir, exist_ok=True)
-        log_file = os.path.join(exp_dir, "training.log")
-        setup_logger(log_file)
-        logging.info(f"args.exp_name : {args.exp_name}")
-        logging.info(f"Starting training with {world_size} GPUs")
+    exp_dir = os.path.join("experiments", args.exp_name)
+    os.makedirs(exp_dir, exist_ok=True)
+    log_file = os.path.join(exp_dir, "training.log")
+    setup_logger(log_file)
+    logging.info("Config:\n" + yaml.dump(namespace_to_dict(args), sort_keys=False))
+    logging.info(f"args.exp_name : {args.exp_name}")
+    logging.info("Starting training with 1 GPUs")
 
     # Initialize model
-    model = initialize_model(args, local_rank)
+    model = initialize_model(args, device)
 
-    if local_rank == 0:
-        total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-        logging.info(f"Total trainable parameters: {total_params}")
+    total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    logging.info(f"Total trainable parameters: {total_params}")
 
     # Dataload
     # BUG is here
@@ -128,10 +95,9 @@ def train_and_evaluate(rank, world_size, args):
     )
 
     # Log dataset info
-    if local_rank == 0:
-        logging.info(
-            f"Data loaded: {len(train_dataloader)} training batches, {len(val_dataloader)} validation batches, {len(test_dataloader)} test batches"
-        )
+    logging.info(
+        f"Data loaded: {len(train_dataloader)} training batches, {len(val_dataloader)} validation batches, {len(test_dataloader)} test batches"
+    )
 
     # Set up criterion, optimizer, and scheduler
     criterion = torch.nn.MSELoss()
@@ -150,10 +116,9 @@ def train_and_evaluate(rank, world_size, args):
 
     # Check if test_only and model exists
     if args.training.test_only and os.path.exists(best_model_path):
-        if local_rank == 0:
-            logging.info("Loading best model for testing only")
-        model.load_state_dict(torch.load(best_model_path, map_location=f'cuda:{local_rank}'))
-        test_model(model, test_dataloader, criterion, local_rank, os.path.join('experiments', args.exp_name))
+        logging.info("Loading best model for testing only")
+        model.load_state_dict(torch.load(best_model_path, map_location=device))
+        test_model(model, test_dataloader, criterion, device, os.path.join('experiments', args.exp_name), args)
         dist.destroy_process_group()
         return
 
@@ -162,8 +127,7 @@ def train_and_evaluate(rank, world_size, args):
     train_losses = []
     val_losses = []
 
-    if local_rank == 0:
-        logging.info(f"Staring training for {args.training.epochs} epochs")
+    logging.info(f"Staring training for {args.training.epochs} epochs")
 
     # Training loop
     for epoch in range(args.training.epochs):
@@ -172,52 +136,47 @@ def train_and_evaluate(rank, world_size, args):
 
         # Training
         torch.cuda.empty_cache()
-        train_loss = train_one_epoch(model, train_dataloader, optimizer, criterion, local_rank)
+        train_loss = train_one_epoch(model, train_dataloader, optimizer, criterion, device, args)
         torch.cuda.empty_cache()
 
         # Validation
         torch.cuda.empty_cache()
-        val_loss = validate(model, val_dataloader, criterion, local_rank)
+        val_loss = validate(model, val_dataloader, criterion, device, args)
         torch.cuda.empty_cache()
 
         # Record losses.
-        if local_rank == 0:
-            train_losses.append(train_loss)
-            val_losses.append(val_loss)
-            logging.info(
-                f"Epoch {epoch + 1}/{args.training.epochs} - Train Loss: {train_loss:.6f}, Val Loss: {val_loss:.6f}{RESET}"
+        train_losses.append(train_loss)
+        val_losses.append(val_loss)
+        logging.info(
+            f"Epoch {epoch + 1}/{args.training.epochs} - Train Loss: {train_loss:.6f}, Val Loss: {val_loss:.6f}{RESET}"
+        )
+
+        # Save the best model
+        if val_loss < best_val_loss:
+            best_val_loss = val_loss
+            torch.save(model.state_dict(), best_model_path)
+            logging.info(f"New best model saved with Val Loss: {best_val_loss:.6f}")
+
+        # Update learning rate scheduler
+        scheduler.step()
+
+        # Save progress rate scheduler
+        if (epoch + 1) % 10 == 0 or epoch == args.training.epochs - 1:
+            plt.figure(figsize=(10, 5))
+            plt.plot(range(1, epoch + 2), train_losses, label="Training Loss")
+            plt.plot(range(1, epoch + 2), val_losses, label="Validation Loss")
+            plt.xlabel("Epoch")
+            plt.ylabel("Loss")
+            plt.legend()
+            plt.title("Training Progress - AB-UBT")
+            plt.savefig(
+                os.path.join("experiments", args.exp_name, "training_progress.png")
             )
-
-            # Save the best model
-            if val_loss < best_val_loss:
-                best_val_loss = val_loss
-                torch.save(model.state_dict(), best_model_path)
-                logging.info(f"New best model saved with Val Loss: {best_val_loss:.6f}")
-
-            # Update learning rate scheduler
-            scheduler.step()
-
-            # Save progress rate scheduler
-            if (epoch + 1) % 10 == 0 or epoch == args.training.epochs - 1:
-                plt.figure(figsize=(10, 5))
-                plt.plot(range(1, epoch + 2), train_losses, label="Training Loss")
-                plt.plot(range(1, epoch + 2), val_losses, label="Validation Loss")
-                plt.xlabel("Epoch")
-                plt.ylabel("Loss")
-                plt.legend()
-                plt.title("Training Progress - AB-UBT")
-                plt.savefig(
-                    os.path.join("experiments", args.exp_name, "training_progress.png")
-                )
-                plt.close()
+            plt.close()
 
     # Save final model
-    if local_rank == 0:
-        torch.save(model.state_dict(), final_model_path)
-        logging.info(f"Final model saved to {final_model_path}")
-
-    # Make sure all processes sync up before testing
-    dist.barrier()
+    torch.save(model.state_dict(), final_model_path)
+    logging.info(f"Final model saved to {final_model_path}")
 
     # Test the final model
     logging.info("Testing the final model")
@@ -225,21 +184,23 @@ def train_and_evaluate(rank, world_size, args):
         model,
         test_dataloader,
         criterion,
-        local_rank,
+        device,
         os.path.join("experiments", args.exp_name),
+        args,
     )
 
     # Test the best model
     logging.info("Testing the best model")
     model.load_state_dict(
-        torch.load(best_model_path, map_location=f"cuda:{local_rank}")
+        torch.load(best_model_path, map_location=f"cuda:{device}")
     )
     test_model(
         model,
         test_dataloader,
         criterion,
-        local_rank,
+        device,
         os.path.join("experiments", args.exp_name),
+        args,
     )
 
     # Clean up
@@ -259,6 +220,7 @@ target_keys = [
 enabled_target_keys = [
     "volume_anchor_velocity",      # torch.Size([16384, 3])
     "surface_anchor_pressure",
+    "surface_anchor_wallshearstress",
     #    "volume_query_velocity",
     #    "surface_query_pressure",
 ]
@@ -293,21 +255,21 @@ def compute_weights(target_keys, enabled_target_keys):
 weights = compute_weights(target_keys, enabled_target_keys)
 
 
-def train_one_epoch(model, train_dataloader, optimizer, criterion, local_rank):
+def train_one_epoch(model, train_dataloader, optimizer, criterion, device, args):
     """Train for one epoch."""
     model.train()
     total_loss = 0
 
     for batch in tqdm(train_dataloader, desc="[Training]"):
-        batch = {key: value.to(local_rank, dtype=torch.float32) for key, value in batch.items()}
+        batch = {key: value.to(device, dtype=torch.float32) for key, value in batch.items()}
 
         # extract target variables for anchor and query
         targets = {k: batch.pop(k) for k in target_keys if k in batch}
-        targets_velocity = targets["volume_anchor_velocity"]
+        targets_velocity = targets[args.training.target]
 
         # extract target variables for anchor and query
         batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
-        data_volume = batch_filtered["volume_anchor_position"]
+        data_volume = batch_filtered[args.training.input]
 
         pred_velocity = model(data_volume)
 
@@ -321,7 +283,7 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, local_rank):
     return total_loss / len(train_dataloader)
 
 
-def validate(model, val_dataloader, criterion, local_rank):
+def validate(model, val_dataloader, criterion, device, args):
     """Validate the model"""
 
     model.eval()
@@ -329,15 +291,15 @@ def validate(model, val_dataloader, criterion, local_rank):
 
     with torch.no_grad():
         for batch in tqdm(val_dataloader, desc="[Validation]"):
-            batch = {key: value.to(local_rank) for key, value in batch.items()}
+            batch = {key: value.to(device, dtype=torch.float32) for key, value in batch.items()}
 
             # extract target variables for anchor and query
             targets = {k: batch.pop(k) for k in target_keys if k in batch}
-            targets_velocity = targets["volume_anchor_velocity"]
+            targets_velocity = targets[args.training.target]
 
             # extract target variables for anchor and query
             batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
-            data_volume = batch_filtered["volume_anchor_position"]
+            data_volume = batch_filtered[args.training.input]
 
             pred_velocity = model(data_volume)
             loss = criterion(pred_velocity, targets_velocity)
@@ -379,7 +341,7 @@ def get_norm(dataloader, items):
     return try_get_normalizer_from_collator(dataloader, selector)
 
 
-def test_model(model, test_dataloader, criterion, local_rank, exp_dir):
+def test_model(model, test_dataloader, criterion, device, exp_dir, args):
     """Test the model, take postprocess and calculate metrics."""
     model.eval()
     total_inference_time = 0
@@ -400,14 +362,14 @@ def test_model(model, test_dataloader, criterion, local_rank, exp_dir):
     with torch.no_grad():
         for batch in tqdm(test_dataloader, desc="[Testing]"):
             start_time = time.time()
-            batch = {key: value.to(local_rank) for key, value in batch.items()}
+            batch = {key: value.to(device, dtype=torch.float32) for key, value in batch.items()}
             # extract target variables for anchor
 
             targets = {k: batch.pop(k) for k in target_keys if k in batch}
-            targets_velocity = targets["volume_anchor_velocity"]
+            targets_velocity = targets[args.training.target]
 
             batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
-            data_volume = batch_filtered["volume_anchor_position"]
+            data_volume = batch_filtered[args.training.input]
 
             pred_velocity = model(data_volume)
 
@@ -416,10 +378,11 @@ def test_model(model, test_dataloader, criterion, local_rank, exp_dir):
 
             mse_loss = criterion(pred_velocity, targets_velocity)
             total_loss += mse_loss.item()
-            pred_den = normalizers["volume_anchor_velocity"].denormalize(pred_velocity)
-            targ_den = normalizers["volume_anchor_velocity"].denormalize(targets_velocity)
+            pred_den = normalizers[args.training.target].denormalize(pred_velocity)
+            targ_den = normalizers[args.training.target].denormalize(targets_velocity)
             L2_error = (pred_den - targ_den).norm() / targ_den.norm()
             total_L2_error += L2_error.item()
+
 
         logging.info(f"*******************{M}L2_erro:{RESET}")
         logging.info(f" {total_L2_error / len(test_dataloader):.6f}")
@@ -427,13 +390,16 @@ def test_model(model, test_dataloader, criterion, local_rank, exp_dir):
         logging.info(f"*******************{M}mse_loss:{RESET}")
         logging.info(f" {total_loss / len(test_dataloader):.6f}")
 
+        logging.info(f"*******************{M}inference_time:{RESET}")
+        logging.info(f" {total_inference_time / len(test_dataloader):.6f}")
+
     # Checkout the value
 
 
 #    if dist.get_rank() == 0:
 #        logging.info(f"Total MSE across all processes: {total_mse_tensor.item()}")
 #
-#    if local_rank == 0:
+#    if device == 0:
 #        # Calculate aggregated metrics
 #        avg_mse = total_mse_tensor.item() / total_samples_tensor.item()
 #        avg_mae = total_mae_tensor.item() / total_samples_tensor.item()
@@ -475,28 +441,48 @@ def test_model(model, test_dataloader, criterion, local_rank, exp_dir):
 #            )
 #
 
+# ============================================================
+# Load hyperparam
+# ============================================================
+def dict_to_namespace(d):
+    for k, v in d.items():
+        if isinstance(v, dict):
+            d[k] = dict_to_namespace(v)
+    return SimpleNamespace(**d)
+
+def load_config(path):
+    with open(path, "r") as f:
+        cfg = yaml.safe_load(f)
+    return dict_to_namespace(cfg)
+
+def namespace_to_dict(ns):
+    return {
+        k: namespace_to_dict(v) if isinstance(v, SimpleNamespace) else v
+        for k, v in vars(ns).items()
+    }
+
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "config",
+        type=str,
+        help="Path to config yaml file (e.g. config_train_velocity.yml)"
+    )
+    return parser.parse_args()
 
 def main():
     """main function to parse arguments and start training."""
 
-    # Set the master address and port for DDP
-    os.environ["MASTER_ADDR"] = "localhost"
-    port = random.randint(1024, 65535)
-    os.environ["MASTER_PORT"] = str(port)
+    args_cmd = parse_args()
+    args = load_config(args_cmd.config)
 
-    # Set visible GPUS
-    gpu_list = args.training.gpus
-    os.environ["CUDA_VISIBLE_DEVICES"] = gpu_list
-
-    # Count number of GPUs to use
-    world_size = len(gpu_list.split(","))
-
-    # Create experiment directory
     exp_dir = os.path.join("experiments", args.exp_name)
     os.makedirs(exp_dir, exist_ok=True)
 
-    # Start distributed training
-    mp.spawn(train_and_evaluate, args=(world_size, args), nprocs=world_size, join=True)
+
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    train_and_evaluate(args, device)
 
 
 if __name__ == "__main__":
