@@ -2,6 +2,7 @@
 import warnings
 import os
 import yaml
+import argparse
 import torch
 import torch.distributed as dist
 import torch.optim as optim
@@ -32,29 +33,6 @@ M = Fore.MAGENTA
 C = Fore.CYAN
 RESET = Style.RESET_ALL
 
-# ============================================================
-# Load hyperparam
-# ============================================================
-def dict_to_namespace(d):
-    for k, v in d.items():
-        if isinstance(v, dict):
-            d[k] = dict_to_namespace(v)
-    return SimpleNamespace(**d)
-
-def load_config(path):
-    with open(path, "r") as f:
-        cfg = yaml.safe_load(f)
-    return dict_to_namespace(cfg)
-
-args = load_config("config_train_velocity.yml")
-
-def namespace_to_dict(ns):
-    return {
-        k: namespace_to_dict(v) if isinstance(v, SimpleNamespace) else v
-        for k, v in vars(ns).items()
-    }
-
-logging.info("Config:\n" + yaml.dump(namespace_to_dict(args), sort_keys=False))
 
 def initialize_model(args, device):
     """Initialize and return the RegDGCN model."""
@@ -99,6 +77,7 @@ def train_and_evaluate(args, device):
     os.makedirs(exp_dir, exist_ok=True)
     log_file = os.path.join(exp_dir, "training.log")
     setup_logger(log_file)
+    logging.info("Config:\n" + yaml.dump(namespace_to_dict(args), sort_keys=False))
     logging.info(f"args.exp_name : {args.exp_name}")
     logging.info("Starting training with 1 GPUs")
 
@@ -139,7 +118,7 @@ def train_and_evaluate(args, device):
     if args.training.test_only and os.path.exists(best_model_path):
         logging.info("Loading best model for testing only")
         model.load_state_dict(torch.load(best_model_path, map_location=device))
-        test_model(model, test_dataloader, criterion, device, os.path.join('experiments', args.exp_name))
+        test_model(model, test_dataloader, criterion, device, os.path.join('experiments', args.exp_name), args)
         dist.destroy_process_group()
         return
 
@@ -157,12 +136,12 @@ def train_and_evaluate(args, device):
 
         # Training
         torch.cuda.empty_cache()
-        train_loss = train_one_epoch(model, train_dataloader, optimizer, criterion, device)
+        train_loss = train_one_epoch(model, train_dataloader, optimizer, criterion, device, args)
         torch.cuda.empty_cache()
 
         # Validation
         torch.cuda.empty_cache()
-        val_loss = validate(model, val_dataloader, criterion, device)
+        val_loss = validate(model, val_dataloader, criterion, device, args)
         torch.cuda.empty_cache()
 
         # Record losses.
@@ -210,6 +189,7 @@ def train_and_evaluate(args, device):
         criterion,
         device,
         os.path.join("experiments", args.exp_name),
+        args,
     )
 
     # Test the best model
@@ -223,6 +203,7 @@ def train_and_evaluate(args, device):
         criterion,
         device,
         os.path.join("experiments", args.exp_name),
+        args,
     )
 
     # Clean up
@@ -277,7 +258,7 @@ def compute_weights(target_keys, enabled_target_keys):
 weights = compute_weights(target_keys, enabled_target_keys)
 
 
-def train_one_epoch(model, train_dataloader, optimizer, criterion, device):
+def train_one_epoch(model, train_dataloader, optimizer, criterion, device, args):
     """Train for one epoch."""
     model.train()
     total_loss = 0
@@ -287,11 +268,11 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, device):
 
         # extract target variables for anchor and query
         targets = {k: batch.pop(k) for k in target_keys if k in batch}
-        targets_velocity = targets["volume_anchor_velocity"]
+        targets_velocity = targets[args.training.target]
 
         # extract target variables for anchor and query
         batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
-        data_volume = batch_filtered["volume_anchor_position"]
+        data_volume = batch_filtered[args.training.input]
 
         pred_velocity = model(data_volume)
 
@@ -305,7 +286,7 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, device):
     return total_loss / len(train_dataloader)
 
 
-def validate(model, val_dataloader, criterion, device):
+def validate(model, val_dataloader, criterion, device, args):
     """Validate the model"""
 
     model.eval()
@@ -317,11 +298,11 @@ def validate(model, val_dataloader, criterion, device):
 
             # extract target variables for anchor and query
             targets = {k: batch.pop(k) for k in target_keys if k in batch}
-            targets_velocity = targets["volume_anchor_velocity"]
+            targets_velocity = targets[args.training.target]
 
             # extract target variables for anchor and query
             batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
-            data_volume = batch_filtered["volume_anchor_position"]
+            data_volume = batch_filtered[args.training.input]
 
             pred_velocity = model(data_volume)
             loss = criterion(pred_velocity, targets_velocity)
@@ -363,7 +344,7 @@ def get_norm(dataloader, items):
     return try_get_normalizer_from_collator(dataloader, selector)
 
 
-def test_model(model, test_dataloader, criterion, device, exp_dir):
+def test_model(model, test_dataloader, criterion, device, exp_dir, args):
     """Test the model, take postprocess and calculate metrics."""
     model.eval()
     total_inference_time = 0
@@ -388,10 +369,10 @@ def test_model(model, test_dataloader, criterion, device, exp_dir):
             # extract target variables for anchor
 
             targets = {k: batch.pop(k) for k in target_keys if k in batch}
-            targets_velocity = targets["volume_anchor_velocity"]
+            targets_velocity = targets[args.training.target]
 
             batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
-            data_volume = batch_filtered["volume_anchor_position"]
+            data_volume = batch_filtered[args.training.input]
 
             pred_velocity = model(data_volume)
 
@@ -400,8 +381,8 @@ def test_model(model, test_dataloader, criterion, device, exp_dir):
 
             mse_loss = criterion(pred_velocity, targets_velocity)
             total_loss += mse_loss.item()
-            pred_den = normalizers["volume_anchor_velocity"].denormalize(pred_velocity)
-            targ_den = normalizers["volume_anchor_velocity"].denormalize(targets_velocity)
+            pred_den = normalizers[args.training.target].denormalize(pred_velocity)
+            targ_den = normalizers[args.training.target].denormalize(targets_velocity)
             L2_error = (pred_den - targ_den).norm() / targ_den.norm()
             total_L2_error += L2_error.item()
 
@@ -463,12 +444,45 @@ def test_model(model, test_dataloader, criterion, device, exp_dir):
 #            )
 #
 
+# ============================================================
+# Load hyperparam
+# ============================================================
+def dict_to_namespace(d):
+    for k, v in d.items():
+        if isinstance(v, dict):
+            d[k] = dict_to_namespace(v)
+    return SimpleNamespace(**d)
+
+def load_config(path):
+    with open(path, "r") as f:
+        cfg = yaml.safe_load(f)
+    return dict_to_namespace(cfg)
+
+def namespace_to_dict(ns):
+    return {
+        k: namespace_to_dict(v) if isinstance(v, SimpleNamespace) else v
+        for k, v in vars(ns).items()
+    }
+
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "config",
+        type=str,
+        help="Path to config yaml file (e.g. config_train_velocity.yml)"
+    )
+    return parser.parse_args()
 
 def main():
     """main function to parse arguments and start training."""
 
+    args_cmd = parse_args()
+    args = load_config(args_cmd.config)
+
     exp_dir = os.path.join("experiments", args.exp_name)
     os.makedirs(exp_dir, exist_ok=True)
+
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     train_and_evaluate(args, device)

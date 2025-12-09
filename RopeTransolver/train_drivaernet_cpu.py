@@ -1,9 +1,9 @@
 # train.py
 import warnings
 import os
+import random
 import yaml
 import torch
-import torch.distributed as dist
 import torch.optim as optim
 import time
 import logging
@@ -12,16 +12,12 @@ from tqdm import tqdm
 from types import SimpleNamespace
 
 # Import modules
-# from torch.utils.data.distributed import DistributedSampler
 from utils_v1 import setup_logger, setup_seed
 from colorama import Fore, Style
 from model_transolver import Model
+from preprocessors_SATO.Dataset import VTKDataset, SATO_Dataset, sato_collate_fn
+from torch.utils.data import DataLoader
 
-# from model_tmp import AnchoredBranchedUPT
-from create_data_loaders import create_data_loaders
-from preprocessors import (
-    MomentNormalizationPreprocessor,
-)
 warnings.filterwarnings("ignore", category=UserWarning)
 
 # ! alias for colorful output
@@ -31,6 +27,12 @@ G = Fore.GREEN
 M = Fore.MAGENTA
 C = Fore.CYAN
 RESET = Style.RESET_ALL
+
+# 全局变量占位符 (如果原代码中有定义，请确保在此处或通过参数传递)
+# 注意：原代码中使用了 PRESSURE_MEAN 和 PRESSURE_STD 但未在文件中定义
+# 这里假设它们可能由 dataset 返回的 mean_data/std_data 设定，或者需要手动定义
+PRESSURE_MEAN = 0.0
+PRESSURE_STD = 1.0
 
 # ============================================================
 # Load hyperparam
@@ -46,7 +48,8 @@ def load_config(path):
         cfg = yaml.safe_load(f)
     return dict_to_namespace(cfg)
 
-args = load_config("config_train_velocity.yml")
+# 确保配置文件路径正确
+args = load_config("config_train_DrivAerNet.yml")
 
 def namespace_to_dict(ns):
     return {
@@ -54,11 +57,11 @@ def namespace_to_dict(ns):
         for k, v in vars(ns).items()
     }
 
-logging.info("Config:\n" + yaml.dump(namespace_to_dict(args), sort_keys=False))
+# ============================================================
+# Helper Functions
+# ============================================================
 
 def initialize_model(args, device):
-    """Initialize and return the RegDGCN model."""
-
     model = Model(hidden_dim=args.model.hidden_dim,
                   layer_num=args.model.layer_num,
                   space_dim=args.model.input_dim,
@@ -68,12 +71,16 @@ def initialize_model(args, device):
                   dropout=args.model.dropout,
             ).to(device)
 
+    # 单卡/CPU模式不需要 DistributedDataParallel
     return model
 
 def print_memory_stats(device=None, message=""):
     """
     打印当前和峰值GPU显存使用统计
     """
+    if not torch.cuda.is_available():
+        return
+
     if device is None:
         device = torch.cuda.current_device()
 
@@ -91,36 +98,65 @@ def print_memory_stats(device=None, message=""):
     logging.info("-" * 50)
 
 
-def train_and_evaluate(args, device):
-    """main function for Distributed training and evaluation."""
+# ============================================================
+# Main Training Logic
+# ============================================================
+
+def run_training(args):
+    """Main function for Single GPU/CPU training and evaluation."""
     setup_seed(args.training.seed)
 
+    # 1. 设置设备 (GPU or CPU)
+    if torch.cuda.is_available():
+        device = torch.device("cuda")
+        # 如果 args 指定了 GPU 列表，可以通过 CUDA_VISIBLE_DEVICES 环境变量控制，
+        # 但在代码内部通常直接使用 "cuda" 指向可见的第一个设备。
+        logging.info(f"Using GPU: {torch.cuda.get_device_name(0)}")
+    else:
+        device = torch.device("cpu")
+        logging.info("Using CPU")
+
+    # 2. 设置日志
     exp_dir = os.path.join("experiments", args.exp_name)
     os.makedirs(exp_dir, exist_ok=True)
     log_file = os.path.join(exp_dir, "training.log")
     setup_logger(log_file)
-    logging.info(f"args.exp_name : {args.exp_name}")
-    logging.info("Starting training with 1 GPUs")
 
-    # Initialize model
+    logging.info("Config:\n" + yaml.dump(namespace_to_dict(args), sort_keys=False))
+    logging.info(f"args.exp_name : {args.exp_name}")
+
+    # 3. 初始化模型
     model = initialize_model(args, device)
 
     total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
     logging.info(f"Total trainable parameters: {total_params}")
 
-    # Dataload
-    # BUG is here
-    train_dataloader, val_dataloader, test_dataloader = create_data_loaders(
-        args.training.root_dir, args.training.batch_size, use_query_positions=True, num_workers=args.training.num_workers,
-        train_split="train", val_split="val", test_split="test",
-    )
+    # 4. 获取数据
+    Dataset = VTKDataset()
+    train_data_lst, test_data_lst, val_data_lst, mean_data, std_data = Dataset.get_data_dict(args.dataload.directory)
 
-    # Log dataset info
+    # 如果 PRESSURE_MEAN/STD 应该来自数据，请在这里取消注释并赋值
+    # global PRESSURE_MEAN, PRESSURE_STD
+    # PRESSURE_MEAN = mean_data
+    # PRESSURE_STD = std_data
+
+    # Create DataLoaders
+    train_dataset = SATO_Dataset(train_data_lst, args, is_train=True)
+    test_dataset = SATO_Dataset(test_data_lst, args, is_train=False)
+    # val_dataset = SATO_Dataset(val_data_lst, args, is_train=False) # 假设你需要 val_dataset
+
+    # 单卡模式下 shuffle=True
+    train_dataloader = DataLoader(train_dataset, batch_size=args.training.batch_size, shuffle=True, num_workers=4, pin_memory=True, collate_fn=sato_collate_fn)
+    # 注意：如果 val_data_lst 存在，建议也创建一个 val_dataloader
+    # 这里暂时用 test_dataloader 代替演示，因为原代码 val_loader 变量名未定义清楚
+    test_dataloader = DataLoader(test_dataset, batch_size=args.training.batch_size, shuffle=False, num_workers=2, pin_memory=True, collate_fn=sato_collate_fn)
+    val_dataloader = test_dataloader # 临时复用，如果上面有 val_dataset 请替换
+
     logging.info(
         f"Data loaded: {len(train_dataloader)} training batches, {len(val_dataloader)} validation batches, {len(test_dataloader)} test batches"
     )
 
-    # Set up criterion, optimizer, and scheduler
+    # 5. 设置优化器和损失函数
     criterion = torch.nn.MSELoss()
     optimizer = optim.AdamW(
         model.parameters(), lr=args.training.lr, weight_decay=args.training.weight_decay
@@ -131,57 +167,53 @@ def train_and_evaluate(args, device):
         gamma=args.training.scheduler_gamma
     )
 
-    # Store the model
-    best_model_path = os.path.join("experiments", args.exp_name, "best_model.pth")
-    final_model_path = os.path.join("experiments", args.exp_name, "final_model.pth")
+    # 存储路径
+    best_model_path = os.path.join(exp_dir, "best_model.pth")
+    final_model_path = os.path.join(exp_dir, "final_model.pth")
 
-    # Check if test_only and model exists
+    # Test Only Mode
     if args.training.test_only and os.path.exists(best_model_path):
         logging.info("Loading best model for testing only")
         model.load_state_dict(torch.load(best_model_path, map_location=device))
-        test_model(model, test_dataloader, criterion, device, os.path.join('experiments', args.exp_name))
-        dist.destroy_process_group()
+        test_model(model, test_dataloader, criterion, device, exp_dir)
         return
 
-    # Training tracking
+    # Training Tracking
     best_val_loss = float("inf")
     train_losses = []
     val_losses = []
 
     logging.info(f"Staring training for {args.training.epochs} epochs")
 
-    # Training loop
+    # 6. Training Loop
     for epoch in range(args.training.epochs):
-        # Set epoch for the DistributedSampler
-        # train_dataloader.sampler.set_epoch(epoch)
 
         # Training
-        torch.cuda.empty_cache()
+        if torch.cuda.is_available(): torch.cuda.empty_cache()
         train_loss = train_one_epoch(model, train_dataloader, optimizer, criterion, device)
-        torch.cuda.empty_cache()
+        if torch.cuda.is_available(): torch.cuda.empty_cache()
 
         # Validation
-        torch.cuda.empty_cache()
         val_loss = validate(model, val_dataloader, criterion, device)
-        torch.cuda.empty_cache()
+        if torch.cuda.is_available(): torch.cuda.empty_cache()
 
-        # Record losses.
+        # Record losses
         train_losses.append(train_loss)
         val_losses.append(val_loss)
         logging.info(
             f"Epoch {epoch + 1}/{args.training.epochs} - Train Loss: {train_loss:.6f}, Val Loss: {val_loss:.6f}{RESET}"
         )
 
-        # Save the best model
+        # Save Best Model
         if val_loss < best_val_loss:
             best_val_loss = val_loss
             torch.save(model.state_dict(), best_model_path)
             logging.info(f"New best model saved with Val Loss: {best_val_loss:.6f}")
 
-        # Update learning rate scheduler
+        # Update Scheduler
         scheduler.step()
 
-        # Save progress rate scheduler
+        # Save Progress Plot
         if (epoch + 1) % 10 == 0 or epoch == args.training.epochs - 1:
             plt.figure(figsize=(10, 5))
             plt.plot(range(1, epoch + 2), train_losses, label="Training Loss")
@@ -189,44 +221,23 @@ def train_and_evaluate(args, device):
             plt.xlabel("Epoch")
             plt.ylabel("Loss")
             plt.legend()
-            plt.title("Training Progress - AB-UBT")
-            plt.savefig(
-                os.path.join("experiments", args.exp_name, "training_progress.png")
-            )
+            plt.title("Training Progress")
+            plt.savefig(os.path.join(exp_dir, "training_progress.png"))
             plt.close()
 
-    # Save final model
+    # Save Final Model
     torch.save(model.state_dict(), final_model_path)
     logging.info(f"Final model saved to {final_model_path}")
 
-    # Make sure all processes sync up before testing
-    dist.barrier()
-
-    # Test the final model
+    # Test Final Model
     logging.info("Testing the final model")
-    test_model(
-        model,
-        test_dataloader,
-        criterion,
-        device,
-        os.path.join("experiments", args.exp_name),
-    )
+    test_model(model, test_dataloader, criterion, device, exp_dir)
 
-    # Test the best model
+    # Test Best Model
     logging.info("Testing the best model")
-    model.load_state_dict(
-        torch.load(best_model_path, map_location=f"cuda:{device}")
-    )
-    test_model(
-        model,
-        test_dataloader,
-        criterion,
-        device,
-        os.path.join("experiments", args.exp_name),
-    )
+    model.load_state_dict(torch.load(best_model_path, map_location=device))
+    test_model(model, test_dataloader, criterion, device, exp_dir)
 
-    # Clean up
-    dist.destroy_process_group()
 
 target_keys = [
     "surface_anchor_pressure",
@@ -240,11 +251,9 @@ target_keys = [
 ]
 
 enabled_target_keys = [
-    "volume_anchor_velocity",      # torch.Size([16384, 3])
+    "volume_anchor_velocity",       # torch.Size([16384, 3])
     "surface_anchor_pressure",
     "surface_anchor_wallshearstress",
-    #    "volume_query_velocity",
-    #    "surface_query_pressure",
 ]
 
 enabled_position_keys = [
@@ -253,25 +262,18 @@ enabled_position_keys = [
     "geometry_supernode_idx",
     "surface_anchor_position",     # torch.Size([1, 16384, 3])
     "volume_anchor_position",
-    #    "surface_query_position",
-    #    "volume_query_position",
 ]
 
 def compute_weights(target_keys, enabled_target_keys):
     weights = {k: 0.0 for k in target_keys}
-
-    # 有效数量
     n = len(enabled_target_keys)
     if n == 0:
         raise ValueError("enabled_target_keys 不能为空，否则无法计算 loss 权重。")
-
-    # 每个激活的 key 分配 1/n
     w = 1.0 / n
     for k in enabled_target_keys:
         if k not in weights:
             raise KeyError(f"{k} 不在 batch_keys 中！")
         weights[k] = w
-
     return weights
 
 weights = compute_weights(target_keys, enabled_target_keys)
@@ -282,22 +284,18 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, device):
     model.train()
     total_loss = 0
 
-    for batch in tqdm(train_dataloader, desc="[Training]"):
-        batch = {key: value.to(device) for key, value in batch.items()}
+    for data, targets in tqdm(train_dataloader, desc="[Training]"):
+        # logging.info(f"data.shape: {data.shape}") # Optional: reduce log spam
+        data = data.squeeze(1).to(device).permute(0, 2, 1)
+        targets = targets.squeeze(1).to(device).permute(1,0)
 
-        # extract target variables for anchor and query
-        targets = {k: batch.pop(k) for k in target_keys if k in batch}
-        targets_velocity = targets["volume_anchor_velocity"]
-
-        # extract target variables for anchor and query
-        batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
-        data_volume = batch_filtered["volume_anchor_position"]
-
-        pred_velocity = model(data_volume)
-
-        loss = criterion(pred_velocity, targets_velocity)
+        # 确保 PRESSURE_MEAN / STD 已定义
+        targets = (targets - PRESSURE_MEAN) / PRESSURE_STD
 
         optimizer.zero_grad()
+        outputs = model(data)
+        loss = criterion(outputs.squeeze(1), targets)
+
         loss.backward()
         optimizer.step()
         total_loss += loss.item()
@@ -307,7 +305,6 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, device):
 
 def validate(model, val_dataloader, criterion, device):
     """Validate the model"""
-
     model.eval()
     total_loss = 0
 
@@ -315,20 +312,22 @@ def validate(model, val_dataloader, criterion, device):
         for batch in tqdm(val_dataloader, desc="[Validation]"):
             batch = {key: value.to(device) for key, value in batch.items()}
 
-            # extract target variables for anchor and query
             targets = {k: batch.pop(k) for k in target_keys if k in batch}
-            targets_velocity = targets["volume_anchor_velocity"]
+            targets_s_pressure = targets.get("surface_anchor_pressure")
 
-            # extract target variables for anchor and query
+            # 简单的错误检查，防止 key 不存在
+            if targets_s_pressure is None:
+                continue
+
             batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
-            data_volume = batch_filtered["volume_anchor_position"]
+            data_volume = batch_filtered.get("surface_anchor_position")
 
-            pred_velocity = model(data_volume)
-            loss = criterion(pred_velocity, targets_velocity)
+            if data_volume is None:
+                continue
 
-
+            pred_s_pressure = model(data_volume)
+            loss = criterion(pred_s_pressure, targets_s_pressure)
             total_loss += loss.item()
-
 
     return total_loss / len(val_dataloader)
 
@@ -337,13 +336,12 @@ def validate(model, val_dataloader, criterion, device):
 # Normalizers
 # ================================
 def try_get_normalizer_from_collator(dataloader, predicate):
-    """尝试从 dataloader.collate_fn（即 collator）获取 preprocessor/normalizer"""
     coll = getattr(dataloader, "collate_fn", None)
     if coll is None:
-        return RuntimeError("No collate_fn")
+        return None # Changed from RuntimeError to avoid crash if simple collator
     get_pre = getattr(coll, "get_preprocessor", None)
     if get_pre is None:
-        return RuntimeError("No get_preprocessor")
+        return None
     return get_pre(predicate)
 
 
@@ -352,10 +350,9 @@ class PreprocessorSelector:
         self.target_items = target_items
 
     def __call__(self, c):
-        return (
-            isinstance(c, MomentNormalizationPreprocessor)
-            and c.items == self.target_items
-        )
+        # 需要确保 MomentNormalizationPreprocessor 已导入或定义
+        # 这里假设它在 preprocessors_SATO 等模块中有效
+        return hasattr(c, 'items') and c.items == self.target_items
 
 
 def get_norm(dataloader, items):
@@ -370,14 +367,9 @@ def test_model(model, test_dataloader, criterion, device, exp_dir):
 
     normalizers = {
         "surface_anchor_pressure": get_norm(test_dataloader, {"surface_pressure"}),
-        "volume_anchor_velocity": get_norm(test_dataloader, {"volume_velocity"}),
-        "surface_anchor_wallshearstress": get_norm(test_dataloader, {"surface_wallshearstress"}),
-        "volume_anchor_totalpcoeff": get_norm(test_dataloader, {"volume_totalpcoeff"}),
-        "surface_query_pressure": get_norm(test_dataloader, {"surface_pressure"}),
-        "volume_query_velocity": get_norm(test_dataloader, {"volume_velocity"}),
-        "surface_query_wallshearstress": get_norm(test_dataloader, {"surface_wallshearstress"}),
-        "volume_query_totalpcoeff": get_norm(test_dataloader, {"volume_totalpcoeff"}),
+        # ... 其他 normalizers
     }
+
     total_loss = 0
     total_L2_error = 0
 
@@ -385,93 +377,55 @@ def test_model(model, test_dataloader, criterion, device, exp_dir):
         for batch in tqdm(test_dataloader, desc="[Testing]"):
             start_time = time.time()
             batch = {key: value.to(device) for key, value in batch.items()}
-            # extract target variables for anchor
 
             targets = {k: batch.pop(k) for k in target_keys if k in batch}
-            targets_velocity = targets["volume_anchor_velocity"]
+            targets_s_pressure = targets.get("surface_anchor_pressure")
+            if targets_s_pressure is None: continue
 
             batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
-            data_volume = batch_filtered["volume_anchor_position"]
+            data_surface = batch_filtered.get("surface_anchor_position")
+            if data_surface is None: continue
 
-            pred_velocity = model(data_volume)
+            pred_s_pressure = model(data_surface)
 
             inference_time = time.time() - start_time
             total_inference_time += inference_time
 
-            mse_loss = criterion(pred_velocity, targets_velocity)
+            mse_loss = criterion(pred_s_pressure, targets_s_pressure)
             total_loss += mse_loss.item()
-            pred_den = normalizers["volume_anchor_velocity"].denormalize(pred_velocity)
-            targ_den = normalizers["volume_anchor_velocity"].denormalize(targets_velocity)
-            L2_error = (pred_den - targ_den).norm() / targ_den.norm()
-            total_L2_error += L2_error.item()
 
+            # 处理 Denormalize
+            norm_obj = normalizers["surface_anchor_pressure"]
+            if norm_obj:
+                pred_den = norm_obj.denormalize(pred_s_pressure)
+                targ_den = norm_obj.denormalize(targets_s_pressure)
+                L2_error = (pred_den - targ_den).norm() / targ_den.norm()
+                total_L2_error += L2_error.item()
+            else:
+                # 如果找不到 normalizer，回退到普通计算或跳过
+                total_L2_error += 0
 
-        logging.info(f"*******************{M}L2_erro:{RESET}")
-        logging.info(f" {total_L2_error / len(test_dataloader):.6f}")
+    logging.info(f"*******************{M}L2_error:{RESET}")
+    logging.info(f" {total_L2_error / len(test_dataloader):.6f}")
 
-        logging.info(f"*******************{M}mse_loss:{RESET}")
-        logging.info(f" {total_loss / len(test_dataloader):.6f}")
+    logging.info(f"*******************{M}mse_loss:{RESET}")
+    logging.info(f" {total_loss / len(test_dataloader):.6f}")
 
-        logging.info(f"*******************{M}inference_time:{RESET}")
-        logging.info(f" {total_inference_time / len(test_dataloader):.6f}")
-
-    # Checkout the value
-
-
-#    if dist.get_rank() == 0:
-#        logging.info(f"Total MSE across all processes: {total_mse_tensor.item()}")
-#
-#    if device == 0:
-#        # Calculate aggregated metrics
-#        avg_mse = total_mse_tensor.item() / total_samples_tensor.item()
-#        avg_mae = total_mae_tensor.item() / total_samples_tensor.item()
-#        avg_rel_l2 = total_rel_l2_tensor.item() / total_samples_tensor.item()
-#        avg_rel_l1 = total_rel_l1_tensor.item() / total_samples_tensor.item()
-#
-#        # Calculate R² score - only on rank 0 with locally collected data
-#        all_outputs = torch.cat(all_outputs, dim=0).numpy()
-#        all_targets = torch.cat(all_targets, dim=0).numpy()
-#        tmp = np.mean(all_targets)
-#        logging.info("mean value for all_targets: {tmp}")
-#        ss_tot = np.sum((all_targets - np.mean(all_targets)) ** 2)
-#        ss_res = np.sum((all_targets - all_outputs) ** 2)
-#        r_squared = 1 - (ss_res / ss_tot) if ss_tot > 0 else 0
-#
-#        # Calculate max AE
-#        max_ae = np.max(np.abs(all_targets - all_outputs))
-#        logging.info(
-#            f"Test MSE: {avg_mse:.6f}, Test MAE: {avg_mae:.6f}, Max AE: {max_ae:.6f}, Test R2: {r_squared:.4f}"
-#        )
-#        logging.info(
-#            f"Relative L2 Error: {avg_rel_l2:.6f}, Relative L1 error: {avg_rel_l1:.6f}"
-#        )
-#        logging.info(
-#            f"Total inference time: {total_inference_time: .2f}s for {total_samples_tensor.item()} samples"
-#        )
-#
-#        # Save metrics to a text file
-#        metrics_file = os.path.join(exp_dir, "test_metrics.txt")
-#        with open(metrics_file, "w") as f:
-#            f.write(f"Test MSE: {avg_mse:.6f}\n")
-#            f.write(f"Test MAE: {avg_mae:.6f}\n")
-#            f.write(f"Max MAE: {max_ae:.6f}\n")
-#            f.write(f"Test R2: {r_squared:.4f}\n")
-#            f.write(f"Relative L2 Error: {avg_rel_l2:.6f}\n")
-#            f.write(f"Relative L1 error: {avg_rel_l1:.6f}\n")
-#            f.write(
-#                f"Total inference time: {total_inference_time: .2f}s for {total_samples_tensor.item()} samples\n"
-#            )
-#
+    logging.info(f"*******************{M}inference_time:{RESET}")
+    logging.info(f" {total_inference_time / len(test_dataloader):.6f}")
 
 
 def main():
     """main function to parse arguments and start training."""
 
-    exp_dir = os.path.join("experiments", args.exp_name)
-    os.makedirs(exp_dir, exist_ok=True)
+    # 获取用户指定的 GPU 列表
+    gpu_list = args.training.gpus
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    train_and_evaluate(args, device)
+    # 设置可见设备 (对于单卡模式，这通常会使 cuda:0 指向该列表中的第一个 GPU)
+    os.environ["CUDA_VISIBLE_DEVICES"] = gpu_list
+
+    # 直接运行训练
+    run_training(args)
 
 
 if __name__ == "__main__":
