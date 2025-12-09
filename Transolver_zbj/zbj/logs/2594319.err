@@ -1,0 +1,30 @@
+/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch_geometric/__init__.py:4: UserWarning: An issue occurred while importing 'pyg-lib'. Disabling its usage. Stacktrace: /lib64/libm.so.6: version `GLIBC_2.29' not found (required by /work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/libpyg.so)
+  import torch_geometric.typing
+/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch_geometric/__init__.py:4: UserWarning: An issue occurred while importing 'torch-sparse'. Disabling its usage. Stacktrace: /lib64/libm.so.6: version `GLIBC_2.29' not found (required by /work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/libpyg.so)
+  import torch_geometric.typing
+2025-12-08 13:23:52,034 - INFO - args.exp_name : RTformer_DrivAerNet
+2025-12-08 13:23:52,034 - INFO - Starting training with 1 GPUs
+[rank0]:[W1208 13:23:52.161255619 ProcessGroupNCCL.cpp:1496] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+Traceback (most recent call last):
+  File "/work/mae-zhangbj/ML_Turbulent/Transolver_zbj/zbj/train_drivaernet.py", line 509, in <module>
+    main()
+  File "/work/mae-zhangbj/ML_Turbulent/Transolver_zbj/zbj/train_drivaernet.py", line 505, in main
+    mp.spawn(train_and_evaluate, args=(world_size, args), nprocs=world_size, join=True)
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/multiprocessing/spawn.py", line 340, in spawn
+    return start_processes(fn, args, nprocs, join, daemon, start_method="spawn")
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/multiprocessing/spawn.py", line 296, in start_processes
+    while not context.join():
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/multiprocessing/spawn.py", line 215, in join
+    raise ProcessRaisedException(msg, error_index, failed_process.pid)
+torch.multiprocessing.spawn.ProcessRaisedException: 
+
+-- Process 0 terminated with the following error:
+Traceback (most recent call last):
+  File "/work/mae-zhangbj/lib/miniconda3/envs/d2l/lib/python3.10/site-packages/torch/multiprocessing/spawn.py", line 90, in _wrap
+    fn(i, *args)
+  File "/work/mae-zhangbj/ML_Turbulent/Transolver_zbj/zbj/train_drivaernet.py", line 121, in train_and_evaluate
+    model = initialize_model(args, local_rank)
+  File "/work/mae-zhangbj/ML_Turbulent/Transolver_zbj/zbj/train_drivaernet.py", line 60, in initialize_model
+    model = Model(hidden_dim=args.model.hidden_dim,
+TypeError: Model.__init__() got an unexpected keyword argument 'hidden_dim'
+
