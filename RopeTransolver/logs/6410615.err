@@ -1,0 +1,27 @@
+2025-12-08 19:47:15,399 - INFO - args.exp_name : RTformer_DrivAerNet
+2025-12-08 19:47:15,402 - INFO - Starting training with 1 GPUs
+2025-12-08 19:47:22,746 - INFO - Total trainable parameters: 4524353
+[rank0]:[W1208 19:47:23.450141007 ProcessGroupNCCL.cpp:1496] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+Traceback (most recent call last):
+  File "/work/home/mae_zhangbj/ML_Turbulent/RopeTransolver/train_drivaernet.py", line 513, in <module>
+    main()
+  File "/work/home/mae_zhangbj/ML_Turbulent/RopeTransolver/train_drivaernet.py", line 509, in main
+    mp.spawn(train_and_evaluate, args=(world_size, args), nprocs=world_size, join=True)
+  File "/work/home/mae_zhangbj/miniconda3/envs/ab-ubt/lib/python3.10/site-packages/torch/multiprocessing/spawn.py", line 340, in spawn
+    return start_processes(fn, args, nprocs, join, daemon, start_method="spawn")
+  File "/work/home/mae_zhangbj/miniconda3/envs/ab-ubt/lib/python3.10/site-packages/torch/multiprocessing/spawn.py", line 296, in start_processes
+    while not context.join():
+  File "/work/home/mae_zhangbj/miniconda3/envs/ab-ubt/lib/python3.10/site-packages/torch/multiprocessing/spawn.py", line 215, in join
+    raise ProcessRaisedException(msg, error_index, failed_process.pid)
+torch.multiprocessing.spawn.ProcessRaisedException: 
+
+-- Process 0 terminated with the following error:
+Traceback (most recent call last):
+  File "/work/home/mae_zhangbj/miniconda3/envs/ab-ubt/lib/python3.10/site-packages/torch/multiprocessing/spawn.py", line 90, in _wrap
+    fn(i, *args)
+  File "/work/home/mae_zhangbj/ML_Turbulent/RopeTransolver/train_drivaernet.py", line 130, in train_and_evaluate
+    train_data_lst, test_data_lst, val_data_lst, mean_data, std_data = Dataset.get_data_dict(args.dataload.directory)
+  File "/work/home/mae_zhangbj/ML_Turbulent/RopeTransolver/preprocessors_SATO/Dataset.py", line 82, in get_data_dict
+    with open(os.path.join(directory, 'train_val_test_splits/train_design_ids.txt'), 'r') as file:
+FileNotFoundError: [Errno 2] No such file or directory: '~/DrivAerNet_dataset/train_val_test_splits/train_design_ids.txt'
+
