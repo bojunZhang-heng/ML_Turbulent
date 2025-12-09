@@ -264,7 +264,7 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, device, args)
     total_loss = 0
 
     for batch in tqdm(train_dataloader, desc="[Training]"):
-        batch = {key: value.to(device) for key, value in batch.items()}
+        batch = {key: value.to(device, dtype=torch.float32) for key, value in batch.items()}
 
         # extract target variables for anchor and query
         targets = {k: batch.pop(k) for k in target_keys if k in batch}
@@ -365,7 +365,7 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
     with torch.no_grad():
         for batch in tqdm(test_dataloader, desc="[Testing]"):
             start_time = time.time()
-            batch = {key: value.to(device) for key, value in batch.items()}
+            batch = {key: value.to(device, dtype=torch.float32) for key, value in batch.items()}
             # extract target variables for anchor
 
             targets = {k: batch.pop(k) for k in target_keys if k in batch}
