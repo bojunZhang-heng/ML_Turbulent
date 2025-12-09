@@ -19,7 +19,7 @@ class RopeFrequency(nn.Module):
         dim: int,
         ndim: int,
         max_wavelength: int = 10000.0,
-        assert_positive: bool = True,
+        assert_positive: bool = False,
     ):
         super().__init__()
         self.dim = dim
