@@ -9,7 +9,7 @@
 #SBATCH -e logs/%j.err                # 标准错误文件
 
 source ~/miniconda3/etc/profile.d/conda.sh 
-conda activate ab-ubt
+conda activate Rope
 
 # 指定使用 gpu16 上的 GPU 0
 #export CUDA_VISIBLE_DEVICES=0
