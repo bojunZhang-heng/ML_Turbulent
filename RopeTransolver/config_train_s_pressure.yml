@@ -1,4 +1,4 @@
-exp_name: "RTformer_s_pressure"
+exp_name: "RTformer_s_pressure_without_pos_nor"
 
 model:
     input_dim: 3
