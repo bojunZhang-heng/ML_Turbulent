@@ -40,12 +40,12 @@ class AbuptCollator(MultiStageCollator):
         super().__init__(
             preprocessors=[
                 # normalize positions (these are the stats for the volume positions)
-                PositionNormalizationPreprocessor(
-                    items={"surface_position_vtp", "volume_position"},
-                    raw_pos_min=stats.raw_pos_min,
-                    raw_pos_max=stats.raw_pos_max,
-                    scale=1000,
-                ),
+#                PositionNormalizationPreprocessor(
+#                    items={"surface_position_vtp", "volume_position"},
+#                    raw_pos_min=stats.raw_pos_min,
+#                    raw_pos_max=stats.raw_pos_max,
+#                    scale=1000,
+#                ),
                 # normalize surface pressures
                 MomentNormalizationPreprocessor(
                     item="surface_pressure",
