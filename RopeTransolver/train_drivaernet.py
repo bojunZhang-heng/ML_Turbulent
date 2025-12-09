@@ -265,11 +265,13 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, device, args)
     model.train()
     total_loss = 0
 
-    for data, targets in tqdm(train_dataloader, desc="[Training]"):
-        logging.info(f"data.shape: {data.shape}")
-        logging.info(f"targets.shape: {targets.shape}")
-        data = data.unsqueeze(0).to(device)
-        targets = targets.to(device)
+    for data in tqdm(train_dataloader, desc="[Training]"):
+        x = data['x']
+        y = data['y']
+        logging.info(f"data.shape: {x.shape}")
+        logging.info(f"targets.shape: {y.shape}")
+        data = x.unsqueeze(0).to(device)
+        targets = y.to(device)
         targets_norm = (targets - PRESSURE_MEAN) / PRESSURE_STD
 
         optimizer.zero_grad()
@@ -290,11 +292,13 @@ def validate(model, val_dataloader, criterion, device, args):
     total_loss = 0
 
     with torch.no_grad():
-        for data, targets in tqdm(val_dataloader, desc="[Validation]"):
-            logging.info(f"data.shape: {data.shape}")
-            logging.info(f"targets.shape: {targets.shape}")
-            data = data.unsqueeze(0).to(device)
-            targets = targets.to(device)
+        for data in tqdm(val_dataloader, desc="[Validation]"):
+            x = data['x']
+            y = data['y']
+            logging.info(f"data.shape: {x.shape}")
+            logging.info(f"targets.shape: {y.shape}")
+            data = x.unsqueeze(0).to(device)
+            targets = y.to(device)
             targets_norm = (targets - PRESSURE_MEAN) / PRESSURE_STD
 
             outputs = model(data)
@@ -329,9 +333,11 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
     total_L2_error = 0
 
     with torch.no_grad():
-        for data, targets in tqdm(test_dataloader, desc="[test_dataloader]"):
-            data = data.unsqueeze(0).to(device)
-            targets = targets.to(device)
+        for data in tqdm(test_dataloader, desc="[test_dataloader]"):
+            x = data['x']
+            y = data['y']
+            data = x.unsqueeze(0).to(device)
+            targets = y.to(device)
             targets = (targets - PRESSURE_MEAN) / PRESSURE_STD
 
             outputs = model(data)
