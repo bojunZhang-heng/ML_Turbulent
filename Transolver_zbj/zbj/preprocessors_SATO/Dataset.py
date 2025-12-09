@@ -1,0 +1,126 @@
+import os
+import torch
+import numpy as np
+import logging
+
+from torch.utils.data import Dataset
+
+def sato_collate_fn(batch):
+    lengths = [item['x'].shape[0] for item in batch]
+    min_len = min(lengths)
+
+    batch_x = []
+    batch_y = []
+
+    for item in batch:
+        x = item['x']
+        y = item['y']
+
+        if x.shape[0] > min_len:
+            # Randomly sample min_len indices
+            idx = torch.randperm(x.shape[0])[:min_len]
+            x = x[idx]
+            y = y[idx]
+
+        batch_x.append(x)
+        batch_y.append(y)
+
+    return {
+        'x': torch.stack(batch_x),
+        'y': torch.stack(batch_y)
+    }
+
+
+class SATO_Dataset(Dataset):
+    def __init__(self, data_list, config=None, is_train=True):
+        self.data_list = data_list
+        self.config = config
+        self.is_train = is_train
+
+    def __len__(self):
+        return len(self.data_list)
+
+    def __getitem__(self, idx):
+        data = self.data_list[idx]
+        x = data['Surface_data']['Surface_points']
+        y = data['Surface_data']['Surface_pressure']
+
+        # Move downsample logic here to allow parallel processing by DataLoader workers
+        if self.config is not None and hasattr(self.config.model, 'down_sample'):
+            # Use numpy random generation which is process-safe in workers
+            num_points = x.shape[0]
+            sample_size = int(num_points * self.config.model.down_sample)
+
+            # Generate indices (on CPU)
+            sampled_indices = np.random.choice(num_points, sample_size, replace=False)
+
+            x = x[sampled_indices]
+            y = y[sampled_indices]
+
+        return {'x': x, 'y': y}
+
+
+class VTKDataset():
+    def __init__(self):
+        pass
+
+    def get_all_file_paths(self, directory):
+        file_paths = []
+        points_dir = os.path.join(directory, "SurfacePressure", "points")
+        for file in os.listdir(points_dir):
+            full_path = os.path.join(points_dir, file)
+            if os.path.isfile(full_path):  # 只保留文件
+                file_paths.append(full_path)
+
+        return file_paths
+
+    # generate data dictionary
+    def get_data_dict(self, directory):
+        # read all SurfacePressure file names
+        SurfacePressure_file_paths = self.get_all_file_paths(directory)
+
+        # load train/test/val index
+        with open(os.path.join(directory, 'train_val_test_splits/train_design_ids.txt'), 'r') as file:
+            train_index = [line.strip()[-4:] for line in file]
+        with open(os.path.join(directory, 'train_val_test_splits/test_design_ids.txt'), 'r') as file:
+            test_index = [line.strip()[-4:] for line in file]
+        with open(os.path.join(directory, 'train_val_test_splits/val_design_ids.txt'), 'r') as file:
+            val_index = [line.strip()[-4:] for line in file]
+
+       # with open(os.path.join(directory, 'norm', 'mean.pkl'), 'rb') as f:
+       #     mean_data = pickle.load(f)
+       # with open(os.path.join(directory, 'norm', 'std.pkl'), 'rb') as f:
+       #     std_data = pickle.load(f)
+
+        train_data_lst, test_data_lst, val_data_lst = [], [], []
+        for file_path in SurfacePressure_file_paths:
+            index = file_path.split("_")[-1].split(".")[0]
+            Surface_points = np.load(os.path.join(directory, 'SurfacePressure', 'points', f'points_{index}.npy'))
+            Surface_pressure = np.load(os.path.join(directory, 'SurfacePressure', 'pressure', f'pressure_{index}.npy'))
+
+            Surface_points = torch.Tensor(Surface_points).float()
+#            Surface_points = (Surface_points - POS_MIN) / (POS_MAX - POS_MIN) * 1000
+            Surface_pressure = torch.Tensor(Surface_pressure).float()
+#            Surface_pressure = (Surface_pressure - PRESSURE_MEAN) / PRESSURE_STD
+
+            Surface_data = {
+                'Surface_points': Surface_points,
+                'Surface_pressure': Surface_pressure
+            }
+
+            data = {'index': index, 'Surface_data': Surface_data}
+
+            if index in train_index:
+                train_data_lst.append(data)
+            elif index in test_index:
+                test_data_lst.append(data)
+            else:
+                val_data_lst.append(data)
+
+        return train_data_lst, test_data_lst, val_data_lst#, mean_data, std_data
+
+# Constants for normalization
+POS_MIN = -2.0
+POS_MAX = 5.0
+PRESSURE_MEAN = -94.5
+PRESSURE_STD = 117.25
