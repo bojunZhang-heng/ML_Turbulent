@@ -294,7 +294,7 @@ def validate(model, val_dataloader, criterion, device, args):
 
     with torch.no_grad():
         for batch in tqdm(val_dataloader, desc="[Validation]"):
-            batch = {key: value.to(device) for key, value in batch.items()}
+            batch = {key: value.to(device, dtype=torch.float32) for key, value in batch.items()}
 
             # extract target variables for anchor and query
             targets = {k: batch.pop(k) for k in target_keys if k in batch}
