@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #BSUB -J gpu_transolver      # Job name
-#BSUB -q 4v100-16-e5       # Queue name (change if needed)
+#BSUB -q 8v100-32-sc       # Queue name (change if needed)
 #BSUB -n 1                            # Number of CPU cores
 #BSUB -R "span[ptile=1]"
 #BSUB -gpu "num=1"
@@ -54,9 +54,9 @@ PY
 # sh ./Model_Script/Model_Preprocess.sh
 
 # Run your training script
-python train_drivaernet.py
+#python train_drivaernet.py
 #python train_s_wss.py
-#@python train_s_pressure.py
+python train_s_pressure.py
 
 # Run your Evaluation script
 # sh ./Model_Script/Model_Evaluate.sh
