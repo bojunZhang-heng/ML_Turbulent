@@ -178,9 +178,6 @@ def train_and_evaluate(args, device):
     torch.save(model.state_dict(), final_model_path)
     logging.info(f"Final model saved to {final_model_path}")
 
-    # Make sure all processes sync up before testing
-    dist.barrier()
-
     # Test the final model
     logging.info("Testing the final model")
     test_model(
