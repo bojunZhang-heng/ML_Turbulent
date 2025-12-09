@@ -1,9 +1,7 @@
 import os
-import vtk
-import pickle
 import torch
 import numpy as np
-from vtk.util.numpy_support import numpy_to_vtk, vtk_to_numpy
+import logging
 
 from torch.utils.data import Dataset
 
@@ -68,9 +66,12 @@ class VTKDataset():
 
     def get_all_file_paths(self, directory):
         file_paths = []
-        for root, dirs, files in os.walk(directory):
-            for file in files:
-                file_paths.append(os.path.join(root, file))
+        points_dir = os.path.join(directory, "SurfacePressure", "points")
+        for file in os.listdir(points_dir):
+            full_path = os.path.join(points_dir, file)
+            if os.path.isfile(full_path):  # 只保留文件
+                file_paths.append(full_path)
+
         return file_paths
 
     # generate data dictionary
@@ -98,9 +99,9 @@ class VTKDataset():
             Surface_pressure = np.load(os.path.join(directory, 'SurfacePressure', 'pressure', f'pressure_{index}.npy'))
 
             Surface_points = torch.Tensor(Surface_points).float()
-            Surface_points = (Surface_points - POS_MIN) / (POS_MAX - POS_MIN) * 1000
+#            Surface_points = (Surface_points - POS_MIN) / (POS_MAX - POS_MIN) * 1000
             Surface_pressure = torch.Tensor(Surface_pressure).float()
-            Surface_pressure = (Surface_pressure - PRESSURE_MEAN) / PRESSURE_STD
+#            Surface_pressure = (Surface_pressure - PRESSURE_MEAN) / PRESSURE_STD
 
             Surface_data = {
                 'Surface_points': Surface_points,
