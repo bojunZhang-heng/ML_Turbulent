@@ -31,6 +31,9 @@ M = Fore.MAGENTA
 C = Fore.CYAN
 RESET = Style.RESET_ALL
 
+PRESSURE_MEAN = -94.5
+PRESSURE_STD = 117.25
+
 
 def initialize_model(args, device):
     """Initialize and return the RegDGCN model."""
@@ -405,5 +408,3 @@ def main():
 if __name__ == "__main__":
     main()
 
-PRESSURE_MEAN = -94.5
-PRESSURE_STD = 117.25
