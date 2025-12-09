@@ -27,11 +27,7 @@ training:
     seed: 42
 
 dataload:
-    dataset_path: "/work/mae-zhangbj/DrivAriNet_dataset/SurfacePressureVTK" 
-    subset_dir: "/work/mae-zhangbj/ML_Turbulent/RopeTransolver/preprocessors_drivaernet/train_val_test_splits/" 
-    cache_dir:  "/work/mae-zhangbj/DrivAriNet_dataset/SurfacePressureVTK/cache_F_D_WM_WW"
-    num_points: 10_000
-
+    directory: "~/DrivAerNet_dataset/"
 
 
 
