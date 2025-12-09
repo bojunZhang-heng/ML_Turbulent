@@ -27,8 +27,7 @@ training:
     seed: 42
 
 dataload:
-    directory: "/work/home/mae_zhangbj/DrivAerNet_dataset"
-
+    directory: "~/DrivAerNet_dataset/"
 
 
 
