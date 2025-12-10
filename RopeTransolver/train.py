@@ -39,6 +39,7 @@ def initialize_model(args, device):
 
     model = Model(hidden_dim=args.model.hidden_dim,
                   layer_num=args.model.layer_num,
+                  head_num=args.model.head_num,
                   space_dim=args.model.input_dim,
                   mlp_ratio=args.model.mlp_ratio,
                   slice_num=args.model.slice_num,
