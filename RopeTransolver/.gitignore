@@ -3,3 +3,13 @@ __pycache__/
 *.pyc
 *.lsf
 *.slurm
+
+# logs
+logs/
+**/logs/
+
+# common junk
+*.log
+nohup.out
+output.txt
+
