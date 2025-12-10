@@ -37,8 +37,9 @@ RESET = Style.RESET_ALL
 def initialize_model(args, device):
     """Initialize and return the RegDGCN model."""
 
-    model = Model(hidden_dim=args.model.hidden_dim,
-                  layer_num=args.model.layer_num,
+    model = Model(n_hidden=args.model.hidden_dim,
+                  n_layers=args.model.layer_num,
+                  n_head=args.model.head_num,
                   space_dim=args.model.input_dim,
                   mlp_ratio=args.model.mlp_ratio,
                   slice_num=args.model.slice_num,
