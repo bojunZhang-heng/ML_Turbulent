@@ -1,0 +1,9 @@
+# logs
+logs/
+**/logs/
+
+# common junk
+*.log
+nohup.out
+output.txt
+
