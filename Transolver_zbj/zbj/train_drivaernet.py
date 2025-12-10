@@ -129,7 +129,6 @@ def train_and_evaluate(args, device):
         logging.info("Loading best model for testing only")
         model.load_state_dict(torch.load(best_model_path, map_location=device))
         test_model(model, test_dataloader, criterion, device, os.path.join('experiments_DrivAerNet', args.exp_name), args)
-        dist.destroy_process_group()
         return
 
     # Training tracking
@@ -202,7 +201,7 @@ def train_and_evaluate(args, device):
     # Test the best model
     logging.info("Testing the best model")
     model.load_state_dict(
-        torch.load(best_model_path, map_location=f"cuda:{device}")
+        torch.load(best_model_path, map_location={device})
     )
     test_model(
         model,
@@ -214,7 +213,6 @@ def train_and_evaluate(args, device):
     )
 
     # Clean up
-    dist.destroy_process_group()
 
 target_keys = [
     "surface_anchor_pressure",
