@@ -10,6 +10,7 @@ visualization, and other common operations.
 """
 
 import os
+import sys
 import random
 import numpy as np
 import torch
@@ -101,30 +102,29 @@ def setup_logger(log_file=None, level=logging.INFO):
         log_file: Path to the log file
         level: Logging level
     """
-    # Create logger
     logger = logging.getLogger()
     logger.setLevel(level)
 
-    # Remove existing handlers to avoid duplicate logs
-    for handler in logger.handlers[:]:
-        logger.removeHandler(handler)
+    # 防止重复 handler
+    for h in logger.handlers[:]:
+        logger.removeHandler(h)
 
-    # Create console handler
-    console_handler = logging.StreamHandler()
-    console_handler.setLevel(level)
-    console_format = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-    console_handler.setFormatter(console_format)
-    logger.addHandler(console_handler)
+    fmt = '%(asctime)s | %(levelname)-8s | %(message)s'
+    formatter = logging.Formatter(fmt)
 
-    # Create file handler if log_file is provided
+    # 控制台 → stdout → nohup
+    ch = logging.StreamHandler(sys.stdout)
+    ch.setLevel(level)
+    ch.setFormatter(formatter)
+    logger.addHandler(ch)
+
+    # 文件日志
     if log_file:
         os.makedirs(os.path.dirname(log_file), exist_ok=True)
-        file_handler = logging.FileHandler(log_file)
-        file_handler.setLevel(level)
-        file_format = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-        file_handler.setFormatter(file_format)
-        logger.addHandler(file_handler)
-
+        fh = logging.FileHandler(log_file, mode='a')
+        fh.setLevel(level)
+        fh.setFormatter(formatter)
+        logger.addHandler(fh)
 
 def visualize_pressure_field(points, true_pressure, pred_pressure, output_path):
     """
