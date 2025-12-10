@@ -33,6 +33,8 @@ RESET = Style.RESET_ALL
 
 PRESSURE_MEAN = -94.5
 PRESSURE_STD = 117.25
+POS_MEAN = [1.575143, -0.0188374, 0.6046101]
+POS_STD = [1.3669719, 0.6226963, 0.39627418]
 
 
 def initialize_model(args, device):
@@ -271,12 +273,15 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, device, args)
     for data in tqdm(train_dataloader, desc="[Training]"):
         x = data['x'].to(device)
         y = data['y'].permute(1,0).to(device)
+        POS_MEAN_T = torch.tensor(POS_MEAN, dtype=x.dtype, device=x.device)
+        POS_STD_T  = torch.tensor(POS_STD, dtype=x.dtype, device=x.device)
+        x = (x - POS_MEAN_T) / POS_STD_T
         y = (y - PRESSURE_MEAN) / PRESSURE_STD
 
-        optimizer.zero_grad()
-        y_hat = model(x)
+        y_hat = model(x).squeeze(0)
+        #y_hat = y_hat * PRESSURE_STD + PRESSURE_MEAN
         loss = criterion(y_hat, y)
-
+        optimizer.zero_grad()
         loss.backward()
         optimizer.step()
         total_loss += loss.item()
@@ -294,9 +299,13 @@ def validate(model, val_dataloader, criterion, device, args):
         for data in tqdm(val_dataloader, desc="[Validation]"):
             x = data['x'].to(device)
             y = data['y'].permute(1,0).to(device)
+            POS_MEAN_T = torch.tensor(POS_MEAN, dtype=x.dtype, device=x.device)
+            POS_STD_T  = torch.tensor(POS_STD, dtype=x.dtype, device=x.device)
+            x = (x - POS_MEAN_T) / POS_STD_T
             y = (y - PRESSURE_MEAN) / PRESSURE_STD
 
-            y_hat = model(x)
+            y_hat = model(x).squeeze(0)
+            #y_hat = y_hat * PRESSURE_STD + PRESSURE_MEAN
             loss = criterion(y_hat, y)
 
             total_loss += loss.item()
@@ -330,15 +339,18 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
         for data in tqdm(test_dataloader, desc="[test_dataloader]"):
             x = data['x'].to(device)
             y = data['y'].permute(1,0).to(device)
+            POS_MEAN_T = torch.tensor(POS_MEAN, dtype=x.dtype, device=x.device)
+            POS_STD_T  = torch.tensor(POS_STD, dtype=x.dtype, device=x.device)
+            x = (x - POS_MEAN_T) / POS_STD_T
             y = (y - PRESSURE_MEAN) / PRESSURE_STD
 
-            y_hat = model(x)
+            y_hat = model(x).squeeze(0)
 
             loss = criterion(y_hat, y)
             total_loss += loss.item()
 
-            y_hat = y_hat * PRESSURE_STD + PRESSURE_MEAN
             y = y * PRESSURE_STD + PRESSURE_MEAN
+            y_hat = y_hat * PRESSURE_STD + PRESSURE_MEAN
             rel_l2 = torch.mean(torch.norm(y_hat - y, p=2, dim=-1) /
                                 torch.norm(y, p=2, dim=-1))
             total_L2_error += rel_l2.item()
