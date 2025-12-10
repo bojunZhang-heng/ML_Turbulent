@@ -95,8 +95,8 @@ class VTKDataset():
         train_data_lst, test_data_lst, val_data_lst = [], [], []
         for file_path in SurfacePressure_file_paths:
             index = file_path.split("_")[-1].split(".")[0]
-            Surface_points = np.load(os.path.join(directory, 'SurfacePressure', 'points', f'points_{index}.npy'))
-            Surface_pressure = np.load(os.path.join(directory, 'SurfacePressure', 'pressure', f'pressure_{index}.npy'))
+            Surface_points = np.load(os.path.join(directory, 'SurfacePressure', 'points_v2', f'points_{index}.npy'))
+            Surface_pressure = np.load(os.path.join(directory, 'SurfacePressure', 'pressure_v2', f'pressure_{index}.npy'))
 
             Surface_points = torch.Tensor(Surface_points).float()
 #            Surface_points = (Surface_points - POS_MIN) / (POS_MAX - POS_MIN) * 1000
