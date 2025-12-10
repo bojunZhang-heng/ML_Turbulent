@@ -273,10 +273,10 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, device, args)
         y = data['y'].permute(1,0).to(device)
         y = (y - PRESSURE_MEAN) / PRESSURE_STD
 
-        optimizer.zero_grad()
-        y_hat = model(x)
+        y_hat = model(x).unsqueeze(0)
         loss = criterion(y_hat, y)
 
+        optimizer.zero_grad()
         loss.backward()
         optimizer.step()
         total_loss += loss.item()
