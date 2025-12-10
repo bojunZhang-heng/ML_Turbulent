@@ -1,4 +1,4 @@
-exp_name: "Transolver_s_pressure"
+exp_name: "Transolver_s_pressure_e300"
 
 model:
     input_dim: 3
