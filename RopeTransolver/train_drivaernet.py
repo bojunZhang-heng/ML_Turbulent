@@ -269,17 +269,13 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, device, args)
     total_loss = 0
 
     for data in tqdm(train_dataloader, desc="[Training]"):
-        x = data['x']
-        y = data['y']
-        logging.info(f"data.shape: {x.shape}")
-        logging.info(f"targets.shape: {y.shape}")
-        data = x.unsqueeze(0).to(device)
-        targets = y.to(device)
-        targets_norm = (targets - PRESSURE_MEAN) / PRESSURE_STD
+        x = data['x'].to(device)
+        y = data['y'].permute(1,0).to(device)
+        y = (y - PRESSURE_MEAN) / PRESSURE_STD
 
         optimizer.zero_grad()
-        outputs = model(data)
-        loss = criterion(outputs, targets_norm)
+        y_hat = model(x)
+        loss = criterion(y_hat, y)
 
         loss.backward()
         optimizer.step()
@@ -296,18 +292,13 @@ def validate(model, val_dataloader, criterion, device, args):
 
     with torch.no_grad():
         for data in tqdm(val_dataloader, desc="[Validation]"):
-            x = data['x']
-            y = data['y']
-            logging.info(f"data.shape: {x.shape}")
-            logging.info(f"targets.shape: {y.shape}")
-            data = x.unsqueeze(0).to(device)
-            targets = y.to(device)
-            targets_norm = (targets - PRESSURE_MEAN) / PRESSURE_STD
+            x = data['x'].to(device)
+            y = data['y'].permute(1,0).to(device)
+            y = (y - PRESSURE_MEAN) / PRESSURE_STD
 
-            outputs = model(data)
-            loss = criterion(outputs, targets_norm)
+            y_hat = model(x)
+            loss = criterion(y_hat, y)
 
-            loss.backward()
             total_loss += loss.item()
 
     return total_loss / len(val_dataloader)
@@ -337,18 +328,19 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
 
     with torch.no_grad():
         for data in tqdm(test_dataloader, desc="[test_dataloader]"):
-            x = data['x']
-            y = data['y']
-            data = x.unsqueeze(0).to(device)
-            targets = y.to(device)
-            targets = (targets - PRESSURE_MEAN) / PRESSURE_STD
+            x = data['x'].to(device)
+            y = data['y'].permute(1,0).to(device)
+            y = (y - PRESSURE_MEAN) / PRESSURE_STD
 
-            outputs = model(data)
+            y_hat = model(x)
 
-            loss = criterion(outputs, targets)
+            loss = criterion(y_hat, y)
             total_loss += loss.item()
-            rel_l2 = torch.mean(torch.norm(outputs - targets, p=2, dim=-1) /
-                                torch.norm(targets, p=2, dim=-1))
+
+            y_hat = y_hat * PRESSURE_STD + PRESSURE_MEAN
+            y = y * PRESSURE_STD + PRESSURE_MEAN
+            rel_l2 = torch.mean(torch.norm(y_hat - y, p=2, dim=-1) /
+                                torch.norm(y, p=2, dim=-1))
             total_L2_error += rel_l2.item()
 
         logging.info(f"*******************{M}L2_erro:{RESET}")
@@ -390,6 +382,29 @@ def parse_args():
     )
     return parser.parse_args()
 
+def setup_device():
+    if torch.cuda.is_available():
+        # 总是使用 cuda:0，因为 PyTorch 会对可见 GPU 重新编号
+        device = torch.device("cuda:0")
+
+        # 打印调试信息
+        print(f"CUDA available GPUs: {torch.cuda.device_count()}")
+        print(f"Current device index: {torch.cuda.current_device()}")
+        print(f"Device name: {torch.cuda.get_device_name(0)}")
+
+        # 如果设置了环境变量，显示物理 GPU 编号
+        cuda_visible = os.environ.get('CUDA_VISIBLE_DEVICES', '')
+        if cuda_visible:
+            visible_gpus = [x.strip() for x in cuda_visible.split(',') if x.strip()]
+            print(f"Physical GPU(s) specified in CUDA_VISIBLE_DEVICES: {visible_gpus}")
+            if visible_gpus:
+                print(f"Using physical GPU {visible_gpus[0]} (visible as cuda:0 in PyTorch)")
+    else:
+        device = torch.device("cpu")
+        print("CUDA is not available. Using CPU.")
+
+    return device
+
 def main():
     """main function to parse arguments and start training."""
 
@@ -400,8 +415,8 @@ def main():
     exp_dir = os.path.join("experiments_DrivAerNet", args.exp_name)
     os.makedirs(exp_dir, exist_ok=True)
 
-
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = setup_device()
+#    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     train_and_evaluate(args, device)
 
 
