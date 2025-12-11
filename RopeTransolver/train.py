@@ -208,11 +208,11 @@ def train_and_evaluate(args, device):
 target_keys = [
     "surface_anchor_pressure",
     "surface_anchor_wallshearstress",
-    "volume_anchor_totalpcoeff",
+    "volume_anchor_pMeanTrim",
     "volume_anchor_velocity",
     "surface_query_pressure",
     "surface_query_wallshearstress",
-    "volume_query_totalpcoeff",
+    "volume_query_pMeanTrim",
     "volume_query_velocity",
 ]
 
@@ -349,11 +349,11 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
         "surface_anchor_pressure": get_norm(test_dataloader, {"surface_pressure"}),
         "volume_anchor_velocity": get_norm(test_dataloader, {"volume_velocity"}),
         "surface_anchor_wallshearstress": get_norm(test_dataloader, {"surface_wallshearstress"}),
-        "volume_anchor_totalpcoeff": get_norm(test_dataloader, {"volume_totalpcoeff"}),
+        "volume_anchor_pMeanTrim": get_norm(test_dataloader, {"volume_pMeanTrim"}),
         "surface_query_pressure": get_norm(test_dataloader, {"surface_pressure"}),
         "volume_query_velocity": get_norm(test_dataloader, {"volume_velocity"}),
         "surface_query_wallshearstress": get_norm(test_dataloader, {"surface_wallshearstress"}),
-        "volume_query_totalpcoeff": get_norm(test_dataloader, {"volume_totalpcoeff"}),
+        "volume_query_pMeanTrim": get_norm(test_dataloader, {"volume_pMeanTrim"}),
     }
     total_loss = 0
     total_L2_error = 0
