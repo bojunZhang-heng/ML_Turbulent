@@ -188,11 +188,10 @@ def train_and_evaluate(args, device):
         os.path.join("experiments", args.exp_name),
         args,
     )
-
     # Test the best model
     logging.info("Testing the best model")
     model.load_state_dict(
-        torch.load(best_model_path, map_location={device})
+        torch.load(best_model_path, map_location='cuda:0')
     )
     test_model(
         model,
