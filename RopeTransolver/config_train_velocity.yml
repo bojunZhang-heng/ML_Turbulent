@@ -1,4 +1,4 @@
-exp_name: "RTformer_v_velocity_N3w_e300"
+exp_name: "DrivAerML_velocity_N3w_lr5e-4_e300"
 
 model:
     input_dim: 3
@@ -17,7 +17,7 @@ training:
     target: "volume_anchor_velocity"
     batch_size: 1
     epochs: 300
-    lr: 0.001
+    lr: 0.0005
     scheduler_step: 50
     scheduler_gamma: 0.7
     max_grad_norm: 0.1
@@ -25,9 +25,12 @@ training:
     weight_decay: 0.00001
     test_only: 0  
     gpus: "0"
-    root_dir: "~/drivaerML_N100_000"
+    root_dir: "/mnt/wjc_group/mae-zhangbj/drivaerML_N100_000"
     seed: 42
 
 
 
+
+
+    
 
