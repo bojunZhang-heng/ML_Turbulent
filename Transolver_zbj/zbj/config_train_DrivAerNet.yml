@@ -1,4 +1,4 @@
-exp_name: "RTformer_DrivAerNet"
+exp_name: "DrivAerNet_pressure_N3w_lr5e-4_e300"
 
 model:
     input_dim: 3
@@ -15,7 +15,7 @@ model:
 training:
     batch_size: 1
     epochs: 150
-    lr: 0.0001
+    lr: 0.0005
     scheduler_step: 50
     scheduler_gamma: 0.7
     max_grad_norm: 0.1
@@ -23,11 +23,10 @@ training:
     weight_decay: 0.00001
     test_only: 0  
     gpus: "0"
-    root_dir: "~/drivaerML_N100_000"
     seed: 42
 
 dataload:
-    directory: "~/DrivAerNet_dataset/"
+    directory: "/mnt/wjc_group/mae-zhangbj/DrivAerNet_dataset/"
 
 
 
