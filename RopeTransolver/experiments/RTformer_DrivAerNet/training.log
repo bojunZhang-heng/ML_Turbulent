@@ -39,3 +39,37 @@
 2025-12-08 18:59:12,319 - INFO - args.exp_name : RTformer_DrivAerNet
 2025-12-08 18:59:12,340 - INFO - Starting training with 1 GPUs
 2025-12-08 18:59:14,027 - INFO - Total trainable parameters: 4524353
+2025-12-09 19:24:41,728 - INFO - Config:
+exp_name: RTformer_DrivAerNet
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 4
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 64
+  layer_num: 8
+  mlp_ratio: 2
+  dropout: 0.1
+training:
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.7
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  gpus: '0'
+  root_dir: ~/drivaerML_N100_000
+  seed: 42
+dataload:
+  directory: ~/DrivAerNet_dataset/
+
+2025-12-09 19:24:41,728 - INFO - args.exp_name : RTformer_DrivAerNet
+2025-12-09 19:24:41,728 - INFO - Starting training with 1 GPUs
+2025-12-09 19:24:42,015 - INFO - Total trainable parameters: 4524353
+2025-12-09 19:24:42,016 - INFO - Data loaded: 384 training batches, 33 validation batches, 48 test batches
+2025-12-09 19:24:42,017 - INFO - Staring training for 150 epochs
