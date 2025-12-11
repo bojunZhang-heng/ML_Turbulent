@@ -13,8 +13,8 @@ class DrivAerMLStats:
     surface_pressure_std: tuple[float] = (2.69345e02,)
     surface_wallshearstress_mean: tuple[float, float, float] = (-1.20054e00, 1.49358e-03, -7.20107e-02)
     surface_wallshearstress_std: tuple[float, float, float] = (2.07670e00, 1.35628e00, 1.11426e00)
-    volume_totalpcoeff_mean: tuple[float] = (1.71387e-01,)
-    volume_totalpcoeff_std: tuple[float] = (5.00826e-01,)
+    volume_pMeanTrim_mean: tuple[float] = (1.71387e-01,)
+    volume_pMeanTrim_std: tuple[float] = (5.00826e-01,)
     volume_velocity_mean: tuple[float, float, float] = (1.67909e01, -3.82238e-02, 4.07968e-01)
     volume_velocity_std: tuple[float, float, float] = (1.64115e01, 8.63614e00, 6.64996e00)
     volume_vorticity_logscale_mean: tuple[float, float, float] = (-1.47814e-02, 7.87642e-01, 2.81023e-03)
@@ -114,9 +114,9 @@ class DrivAerMLDataset(Dataset):
         """Retrieves volume position (num_volume_points, 3)"""
         return self._load(idx=idx, filename="volume_cell_position.pt")
 
-    def getitem_volume_totalpcoeff(self, idx: int) -> torch.Tensor:
+    def getitem_volume_pMeanTrim(self, idx: int) -> torch.Tensor:
         """Retrieves volume pressures (num_volume_points, 1)"""
-        return self._load(idx=idx, filename="volume_cell_totalpcoeff.pt").unsqueeze(1)
+        return self._load(idx=idx, filename="volume_cell_pMeanTrim.pt").unsqueeze(1)
 
     def getitem_volume_velocity(self, idx: int) -> torch.Tensor:
         """Retrieves volume velocity (num_volume_points, 3)"""
