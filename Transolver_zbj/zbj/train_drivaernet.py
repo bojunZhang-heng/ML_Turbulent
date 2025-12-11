@@ -4,7 +4,6 @@ import os
 import yaml
 import argparse
 import torch
-import torch.distributed as dist
 import torch.optim as optim
 import time
 import logging
@@ -13,7 +12,6 @@ from tqdm import tqdm
 from types import SimpleNamespace
 
 # Import modules
-# from torch.utils.data.distributed import DistributedSampler
 from utils_v1 import setup_logger, setup_seed
 from colorama import Fore, Style
 from model_transolver import Model
@@ -42,6 +40,7 @@ def initialize_model(args, device):
 
     model = Model(n_hidden=args.model.hidden_dim,
                   n_layers=args.model.layer_num,
+                  n_head=args.model.head_num,
                   space_dim=args.model.input_dim,
                   mlp_ratio=args.model.mlp_ratio,
                   slice_num=args.model.slice_num,
@@ -73,7 +72,7 @@ def print_memory_stats(device=None, message=""):
 
 
 def train_and_evaluate(args, device):
-    """main function for Distributed training and evaluation."""
+    """main function for training and evaluation."""
     setup_seed(args.training.seed)
 
     exp_dir = os.path.join("experiments_DrivAerNet", args.exp_name)
@@ -140,8 +139,6 @@ def train_and_evaluate(args, device):
 
     # Training loop
     for epoch in range(args.training.epochs):
-        # Set epoch for the DistributedSampler
-        # train_dataloader.sampler.set_epoch(epoch)
 
         # Training
         torch.cuda.empty_cache()
@@ -201,7 +198,7 @@ def train_and_evaluate(args, device):
     # Test the best model
     logging.info("Testing the best model")
     model.load_state_dict(
-        torch.load(best_model_path, map_location={device})
+        torch.load(best_model_path, map_location=device)
     )
     test_model(
         model,
@@ -212,7 +209,6 @@ def train_and_evaluate(args, device):
         args,
     )
 
-    # Clean up
 
 target_keys = [
     "surface_anchor_pressure",
@@ -270,13 +266,13 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, device, args)
 
     for data in tqdm(train_dataloader, desc="[Training]"):
         x = data['x'].to(device)
-        y = data['y'].permute(1,0).to(device)
+        y = data['y'].permute(1,0).unsqueeze(0).to(device)
         POS_MEAN_T = torch.tensor(POS_MEAN, dtype=x.dtype, device=x.device)
         POS_STD_T  = torch.tensor(POS_STD, dtype=x.dtype, device=x.device)
         x = (x - POS_MEAN_T) / POS_STD_T
         y = (y - PRESSURE_MEAN) / PRESSURE_STD
 
-        y_hat = model(x).squeeze(0)
+        y_hat = model(x)
         #y_hat = y_hat * PRESSURE_STD + PRESSURE_MEAN
         loss = criterion(y_hat, y)
         optimizer.zero_grad()
@@ -296,13 +292,13 @@ def validate(model, val_dataloader, criterion, device, args):
     with torch.no_grad():
         for data in tqdm(val_dataloader, desc="[Validation]"):
             x = data['x'].to(device)
-            y = data['y'].permute(1,0).to(device)
+            y = data['y'].permute(1,0).unsqueeze(0).to(device)
             POS_MEAN_T = torch.tensor(POS_MEAN, dtype=x.dtype, device=x.device)
             POS_STD_T  = torch.tensor(POS_STD, dtype=x.dtype, device=x.device)
             x = (x - POS_MEAN_T) / POS_STD_T
             y = (y - PRESSURE_MEAN) / PRESSURE_STD
 
-            y_hat = model(x).squeeze(0)
+            y_hat = model(x)
             #y_hat = y_hat * PRESSURE_STD + PRESSURE_MEAN
             loss = criterion(y_hat, y)
 
@@ -336,13 +332,13 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
     with torch.no_grad():
         for data in tqdm(test_dataloader, desc="[test_dataloader]"):
             x = data['x'].to(device)
-            y = data['y'].permute(1,0).to(device)
+            y = data['y'].permute(1,0).unsqueeze(0).to(device)
             POS_MEAN_T = torch.tensor(POS_MEAN, dtype=x.dtype, device=x.device)
             POS_STD_T  = torch.tensor(POS_STD, dtype=x.dtype, device=x.device)
             x = (x - POS_MEAN_T) / POS_STD_T
             y = (y - PRESSURE_MEAN) / PRESSURE_STD
 
-            y_hat = model(x).squeeze(0)
+            y_hat = model(x)
 
             loss = criterion(y_hat, y)
             total_loss += loss.item()
