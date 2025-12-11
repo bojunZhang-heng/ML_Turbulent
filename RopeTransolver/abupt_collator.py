@@ -60,9 +60,9 @@ class AbuptCollator(MultiStageCollator):
                 ),
                 # normalize volume pressures
                 MomentNormalizationPreprocessor(
-                    item="volume_totalpcoeff",
-                    mean=stats.volume_totalpcoeff_mean,
-                    std=stats.volume_totalpcoeff_std,
+                    item="volume_pMeanTrim",
+                    mean=stats.volume_pMeanTrim_mean,
+                    std=stats.volume_pMeanTrim_std,
                 ),
                 # normalize volume velocity
                 MomentNormalizationPreprocessor(
@@ -113,8 +113,8 @@ class AbuptCollator(MultiStageCollator):
                  ),
                 # subsample volume data
 #                AnchorPointSamplingPreprocessor(
-#                   # items={"volume_position", "volume_totalpcoeff", "volume_velocity", "volume_vorticity"},
-#                    items={"volume_position", "volume_totalpcoeff", "volume_velocity"},
+#                   # items={"volume_position", "volume_pMeanTrim", "volume_velocity", "volume_vorticity"},
+#                    items={"volume_position", "volume_pMeanTrim", "volume_velocity"},
 #                    num_points=num_volume_anchor_points,
 #                    keep_queries=use_query_positions,
 #                    to_prefix_and_postfix=lambda item: item.split("_"),
@@ -122,7 +122,7 @@ class AbuptCollator(MultiStageCollator):
 #                    seed=None if seed is None else seed + 4,
 #                ),
                 AnchorPointSamplingPreprocessor(
-                    items={"volume_position", "volume_totalpcoeff", "volume_velocity"},
+                    items={"volume_position", "volume_pMeanTrim", "volume_velocity"},
                     num_points=num_volume_anchor_points,
                     keep_queries=use_query_positions,
                     to_prefix_and_postfix=to_prefix_and_postfix,  # 使用定义的函数
@@ -146,8 +146,8 @@ class AbuptCollator(MultiStageCollator):
                 # collate volume data
                 FieldDecoderCollator(
                     position_item="volume_anchor_position",
-                #    target_items=["volume_anchor_totalpcoeff", "volume_anchor_velocity", "volume_anchor_vorticity"],
-                    target_items=["volume_anchor_totalpcoeff", "volume_anchor_velocity"],
+                #    target_items=["volume_anchor_pMeanTrim", "volume_anchor_velocity", "volume_anchor_vorticity"],
+                    target_items=["volume_anchor_pMeanTrim", "volume_anchor_velocity"],
                 ),
                 # collate auxiliary data
                 FieldDecoderCollator(
@@ -157,8 +157,8 @@ class AbuptCollator(MultiStageCollator):
                 ),
                 FieldDecoderCollator(
                     position_item="volume_query_position",
-             #       target_items=["volume_query_totalpcoeff", "volume_query_velocity", "volume_query_vorticity"],
-                    target_items=["volume_query_totalpcoeff", "volume_query_velocity"],
+             #       target_items=["volume_query_pMeanTrim", "volume_query_velocity", "volume_query_vorticity"],
+                    target_items=["volume_query_pMeanTrim", "volume_query_velocity"],
                     optional=True,
                 ),
             ],
@@ -169,6 +169,6 @@ class AbuptCollator(MultiStageCollator):
     def preprocess_inputs_only(self, samples):
         batch = self(samples)
         for key in list(batch.keys()):
-            if "pressure" in key or "wallshear" in key or "totalpcoeff" in key or "velocity" in key or "vorticity" in key:
+            if "pressure" in key or "wallshear" in key or "pMeanTrim" in key or "velocity" in key or "vorticity" in key:
                 batch.pop(key)
         return batch
