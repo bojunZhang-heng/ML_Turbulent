@@ -1,7 +1,6 @@
 import os
 import torch
 import numpy as np
-import logging
 
 from torch.utils.data import Dataset
 
@@ -27,7 +26,7 @@ def sato_collate_fn(batch):
 
     return {
         'x': torch.stack(batch_x),
-        'y': torch.stack(batch_y)
+        'y': torch.stack(batch_y),
     }
 
 
@@ -81,16 +80,11 @@ class VTKDataset():
 
         # load train/test/val index
         with open(os.path.join(directory, 'train_val_test_splits/train_design_ids.txt'), 'r') as file:
-            train_index = [line.strip()[-4:] for line in file]
+            train_index = [line.strip().split("_")[-1] for line in file]
         with open(os.path.join(directory, 'train_val_test_splits/test_design_ids.txt'), 'r') as file:
-            test_index = [line.strip()[-4:] for line in file]
+            test_index = [line.strip().split("_")[-1] for line in file]
         with open(os.path.join(directory, 'train_val_test_splits/val_design_ids.txt'), 'r') as file:
-            val_index = [line.strip()[-4:] for line in file]
-
-       # with open(os.path.join(directory, 'norm', 'mean.pkl'), 'rb') as f:
-       #     mean_data = pickle.load(f)
-       # with open(os.path.join(directory, 'norm', 'std.pkl'), 'rb') as f:
-       #     std_data = pickle.load(f)
+            val_index = [line.strip().split("_")[-1] for line in file]
 
         train_data_lst, test_data_lst, val_data_lst = [], [], []
         for file_path in SurfacePressure_file_paths:
@@ -99,9 +93,7 @@ class VTKDataset():
             Surface_pressure = np.load(os.path.join(directory, 'SurfacePressure', 'pressure_s', f'pressure_{index}.npy'))
 
             Surface_points = torch.Tensor(Surface_points).float()
-#            Surface_points = (Surface_points - POS_MIN) / (POS_MAX - POS_MIN) * 1000
             Surface_pressure = torch.Tensor(Surface_pressure).float()
-#            Surface_pressure = (Surface_pressure - PRESSURE_MEAN) / PRESSURE_STD
 
             Surface_data = {
                 'Surface_points': Surface_points,
@@ -114,10 +106,10 @@ class VTKDataset():
                 train_data_lst.append(data)
             elif index in test_index:
                 test_data_lst.append(data)
-            else:
+            elif index in val_index:
                 val_data_lst.append(data)
 
-        return train_data_lst, test_data_lst, val_data_lst#, mean_data, std_data
+        return train_data_lst, test_data_lst, val_data_lst
 
 # Constants for normalization
 POS_MIN = -2.0
