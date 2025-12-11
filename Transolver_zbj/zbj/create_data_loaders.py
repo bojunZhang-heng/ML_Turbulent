@@ -18,9 +18,10 @@ def create_data_loaders(
 
     # 设置采样参数 - 根据你的需求调整这些参数
     num_geometry_points = 65536  # 几何点数量
-    num_surface_anchor_points = 16384  # 表面锚点数量
-    num_volume_anchor_points =  16384 # 体积锚点数量
-    num_geometry_supernodes = 16384  # 几何超节点数量
+    anchor_points = 30_000
+    num_surface_anchor_points = anchor_points  # 表面锚点数量
+    num_volume_anchor_points =  anchor_points # 体积锚点数量
+    num_geometry_supernodes = anchor_points  # 几何超节点数量
 
     # 创建collator
     train_collator = AbuptCollator(
