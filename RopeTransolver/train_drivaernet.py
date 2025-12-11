@@ -140,7 +140,6 @@ def train_and_evaluate(args, device):
     # Training loop
     for epoch in range(args.training.epochs):
         # Set epoch for the DistributedSampler
-        # train_dataloader.sampler.set_epoch(epoch)
 
         # Training
         torch.cuda.empty_cache()
