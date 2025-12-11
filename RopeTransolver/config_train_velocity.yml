@@ -25,8 +25,12 @@ training:
     weight_decay: 0.00001
     test_only: 0  
     gpus: "0"
-    root_dir: "/mnt/wjc_group/mae-zhangbj/drivaerML_N100_000"
+    root_dir: "/work/mae-zhangbj/Data_ab_ubt/drivaerml"
     seed: 42
 
 
+
+
+
+    
 
