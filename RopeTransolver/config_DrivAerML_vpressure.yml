@@ -1,0 +1,33 @@
+exp_name: "DrivAerML_vpressure_N3w_lr5e-4_e300"
+
+model:
+    input_dim: 3
+    output_dim: 3
+    head_num: 4
+    hidden_dim: 256
+    res: true
+    head_dim: 64
+    slice_num: 64
+    layer_num: 8
+    mlp_ratio: 2
+    dropout: 0.1
+
+training:
+    input: "volume_anchor_position"
+    target: "volume_anchor_pressure"
+    batch_size: 1
+    epochs: 300
+    lr: 0.0005
+    scheduler_step: 50
+    scheduler_gamma: 0.7
+    max_grad_norm: 0.1
+    num_workers: 1
+    weight_decay: 0.00001
+    test_only: 0  
+    gpus: "0"
+    root_dir: "/mnt/wjc_group/mae-zhangbj/drivaerML_N100_000"
+    seed: 42
+
+
+
+
