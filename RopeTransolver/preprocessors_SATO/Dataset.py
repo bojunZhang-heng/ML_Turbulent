@@ -91,6 +91,8 @@ class VTKDataset():
             index = file_path.split("_")[-1].split(".")[0]
             Surface_points = np.load(os.path.join(directory, 'SurfacePressure', 'points_s', f'points_{index}.npy'))
             Surface_pressure = np.load(os.path.join(directory, 'SurfacePressure', 'pressure_s', f'pressure_{index}.npy'))
+            Surface_points = np.load(os.path.join(directory, 'SurfaceWSS', 'points_s', f'points_{index}.npy'))
+            Surface_pressure = np.load(os.path.join(directory, 'SurfaceWSS', 'pressure_s', f'pressure_{index}.npy'))
 
             Surface_points = torch.Tensor(Surface_points).float()
             Surface_pressure = torch.Tensor(Surface_pressure).float()
