@@ -345,8 +345,7 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
 
             y = y * PRESSURE_STD + PRESSURE_MEAN
             y_hat = y_hat * PRESSURE_STD + PRESSURE_MEAN
-            rel_l2 = torch.mean(torch.norm(y_hat - y, p=2, dim=-1) /
-                                torch.norm(y, p=2, dim=-1))
+            rel_l2 = (y_hat - y).norm() / y.norm()
             total_L2_error += rel_l2.item()
 
         logging.info(f"*******************{M}L2_erro:{RESET}")
