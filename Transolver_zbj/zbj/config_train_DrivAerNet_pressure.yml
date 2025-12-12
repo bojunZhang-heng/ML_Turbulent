@@ -21,7 +21,7 @@ training:
     max_grad_norm: 0.1
     num_workers: 1
     weight_decay: 0.00001
-    test_only: 0  
+    test_only: 1  
     gpus: "0"
     seed: 42
 
