@@ -11,8 +11,11 @@ mkdir -p $LOG_DIR
 TIMESTAMP=$(date "+%Y_%m%d_%H%M")
 
 # 启动训练（后台）
+# DrivAerML
 #nohup python train.py config_train_s_pressure.yml > ${LOG_DIR}/DrivAerML_pressure_${TIMESTAMP}.log 2>&1 &
 #nohup python train.py config_train_velocity.yml > ${LOG_DIR}/DrivAerML_velocity_${TIMESTAMP}.log 2>&1 &
+
+# DrivAerNet
 nohup python train_drivaernet.py config_train_DrivAerNet_pressure.yml > ${LOG_DIR}/DrivAerNet_pressure_${TIMESTAMP}.log 2>&1 &
 #nohup python train_drivaernet.py config_train_DrivAerNet_wss.yml > ${LOG_DIR}/DrivAerNet_wss_${TIMESTAMP}.log 2>&1 &
 
