@@ -7,10 +7,10 @@ model:
     hidden_dim: 256
     res: true
     head_dim: 64
-    slice_num: 32
-    layer_num: 5
-    mlp_ratio: 1
-    dropout: 0.0
+    slice_num: 64
+    layer_num: 8
+    mlp_ratio: 2
+    dropout: 0.1
 
 training:
     input: "volume_anchor_position"
@@ -23,7 +23,7 @@ training:
     max_grad_norm: 0.1
     num_workers: 1
     weight_decay: 0.00000
-    test_only: 1  
+    test_only: 0  
     gpus: "0"
     root_dir: "/mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small"
     seed: 42
