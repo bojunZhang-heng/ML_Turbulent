@@ -202,8 +202,6 @@ def train_and_evaluate(args, device):
         args,
     )
 
-    # Clean up
-    dist.destroy_process_group()
 
 target_keys = [
     "surface_anchor_pressure",
