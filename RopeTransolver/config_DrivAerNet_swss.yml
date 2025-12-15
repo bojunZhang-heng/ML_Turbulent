@@ -1,4 +1,4 @@
-exp_name: "DrivAerNet_wss_N3w_lr5e-4_e300"
+exp_name: "wss_N3w_lr5e-4_e300"
 
 model:
     input_dim: 3
