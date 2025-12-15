@@ -2,8 +2,6 @@
 __pycache__/
 *.pyc
 *.lsf
-*.slurm
-*.sh
 
 # logs
 logs/
