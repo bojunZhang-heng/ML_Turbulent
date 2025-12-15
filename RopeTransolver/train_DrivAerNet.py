@@ -110,7 +110,7 @@ def train_and_evaluate(args, device):
 
     # Set up criterion, optimizer, and scheduler
     criterion = torch.nn.MSELoss()
-    optimizer = optim.AdamW(
+    optimizer = optim.Adam(
         model.parameters(), lr=args.training.lr, weight_decay=args.training.weight_decay
     )
     scheduler = torch.optim.lr_scheduler.StepLR(
@@ -210,7 +210,6 @@ def train_and_evaluate(args, device):
         args,
     )
 
-    # Clean up
 
 target_keys = [
     "surface_anchor_pressure",
