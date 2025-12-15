@@ -12,12 +12,12 @@ TIMESTAMP=$(date "+%Y_%m%d_%H%M")
 
 # 启动训练（后台）
 # DrivAerML
-#nohup python train.py config_train_s_pressure.yml > ${LOG_DIR}/DrivAerML_pressure_${TIMESTAMP}.log 2>&1 &
+#nohup python train_DrivAerML.py config_DrivAerML_spressure.yml > ${LOG_DIR}/DrivAerML_spressure_${TIMESTAMP}.log 2>&1 &
 nohup python train_DrivAerML.py config_DrivAerML_velocity.yml > ${LOG_DIR}/DrivAerML_velocity_${TIMESTAMP}.log 2>&1 &
 
 # DrivAerNet
-#nohup python train_drivaernet.py config_train_DrivAerNet_pressure.yml > ${LOG_DIR}/DrivAerNet_pressure_${TIMESTAMP}.log 2>&1 &
-#nohup python train_drivaernet.py config_train_DrivAerNet_wss.yml > ${LOG_DIR}/DrivAerNet_wss_${TIMESTAMP}.log 2>&1 &
+#nohup python train_drivaernet.py config_DrivAerNet_spressure.yml > ${LOG_DIR}/DrivAerNet_spressure_${TIMESTAMP}.log 2>&1 &
+#nohup python train_drivaernet.py config_DrivAerNet_swss.yml > ${LOG_DIR}/DrivAerNet_swss_${TIMESTAMP}.log 2>&1 &
 
 
 # 获取训练脚本 PID
