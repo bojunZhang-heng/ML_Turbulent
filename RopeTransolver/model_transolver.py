@@ -73,8 +73,8 @@ class Model(nn.Module):
         volume_rope = self.rope(x)
         volume_decoder_attn_kwargs["freqs"] = volume_rope
 
-        #fx = self.volume_bias(self.pos_embed(x))
-        fx = self.preprocess(x)
+        fx = self.volume_bias(self.pos_embed(x))
+        #fx = self.preprocess(x)
         fx = fx + self.placeholder[None, None, :]
 
 
