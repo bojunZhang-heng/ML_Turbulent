@@ -32,7 +32,7 @@ class DotProductAttention(nn.Module):
         self.dropout = nn.Dropout(dropout)
         self.temperature = nn.Parameter(torch.ones([1, num_heads, 1, 1]) * 0.5)
 
- #       self.qkv = nn.Linear(dim, 3*dim)
+        self.qkv = nn.Linear(dim, 3*dim)
         self.rope_x = nn.Linear(dim, dim)
         self.proj = nn.Sequential(nn.Linear(dim, dim), nn.Dropout(dropout))
         self.in_project_x = nn.Linear(dim, dim)
