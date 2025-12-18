@@ -1,4 +1,4 @@
-exp_name: "velocity_N10k_lr1e-3_e250"
+exp_name: "velocity_N10k_lr5e-4_e250"
 
 model:
     input_dim: 3
@@ -6,10 +6,9 @@ model:
     head_num: 8
     hidden_dim: 256
     res: true
-    head_dim: 64
-    slice_num: 64
-    layer_num: 8
-    mlp_ratio: 2
+    slice_num: 32
+    layer_num: 5
+    mlp_ratio: 1.5
     dropout: 0.1
 
 training:
@@ -17,7 +16,7 @@ training:
     target: "volume_anchor_velocity"
     batch_size: 1
     epochs: 250
-    lr: 0.001
+    lr: 0.0005
     scheduler_step: 50
     scheduler_gamma: 0.5
     max_grad_norm: 0.1
