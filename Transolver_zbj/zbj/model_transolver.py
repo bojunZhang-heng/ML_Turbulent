@@ -112,7 +112,7 @@ class Transolver_block(nn.Module):
         self.ln_2 = nn.LayerNorm(hidden_dim)
 
         self.mlp = MLP(mlp_input=hidden_dim,
-                       mlp_hidden=hidden_dim * mlp_ratio,
+                       mlp_hidden=int(hidden_dim * mlp_ratio),
                        mlp_output=hidden_dim,
                        n_layers=0, act=act, res=False
                        )
@@ -149,7 +149,8 @@ class Model(nn.Module):
         self.ref = ref
         self.unified_pos = unified_pos
         self.preprocess = MLP(mlp_input=space_dim,
-                              mlp_hidden=n_hidden * 2,
+                           #   mlp_hidden=int(n_hidden * mlp_ratio),
+                              mlp_hidden=n_hidden,
                               mlp_output=n_hidden,
                               n_layers=0, act=act, res=False
                               )
