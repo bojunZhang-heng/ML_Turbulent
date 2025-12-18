@@ -2,7 +2,11 @@ exp_name: "velocity_N10k_lr5e-4_e150"
 
 model:
     input_dim: 3
-    output_dim: 3
+    output_dim_surface: 1
+    output_dim_volume: 3
+    geometry_depth: 1
+    num_surf_blocks: 6
+    num_volume_blocks: 6
     head_num: 8
     hidden_dim: 256
     res: true

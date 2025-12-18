@@ -1,6 +1,6 @@
 exp_name: "v5_epoch300_N50_000_drop01_lr_query"
 
-slice_num: 64
+slice_num: 32
 ref: 8
 downsample: 5
 
@@ -25,7 +25,7 @@ num_heads: 3
 blocks: "pscsc"
 n_input: 192
 dim: 192
-n_layers: 8
+n_layers: 5
 res: true
 dim_head: 64
 radius: 0.25
@@ -34,4 +34,4 @@ test_only: 0
 
 gpus: "0"
 
-root_dir: "/work/home/mae_zhangbj/tmp_data"
+root_dir: "/mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small"
