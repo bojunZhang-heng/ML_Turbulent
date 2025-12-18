@@ -277,39 +277,3 @@ class AnchoredBranchedUPT(nn.Module):
             outputs["volume_query_velocity"] = einops.rearrange(x2, "bs seqlen dim -> (bs seqlen) dim")
         return outputs
 
-
-#def main():
-#
-#    root_dir = "/work/mae-zhangbj/drivaerml"
-#
-#    batch_size = 1
-#    train_dataloader, val_dataloader, test_dataloader = create_data_loaders(
-#        root_dir, batch_size
-#    )
-#
-#    torch.manual_seed(0)
-#    num_geometry_positions = 655
-#    num_geometry_supernodes = 123
-#    num_surface_anchors = 234
-#    num_volume_anchors = 280
-#    num_surface_queries = 301
-#    num_volume_queries = 321
-#    data = dict(
-#        geometry_position=torch.rand(num_geometry_positions, 3) * 1000,
-#        geometry_supernode_idx=torch.randperm(num_geometry_positions)[:num_geometry_supernodes],
-#        geometry_batch_idx=None,
-#        # anchors
-#        surface_anchor_position=torch.rand(1, num_surface_anchors, 3) * 1000,
-#        volume_anchor_position=torch.rand(1, num_volume_anchors, 3) * 1000,
-#        # queries
-#        surface_query_position=torch.rand(1, num_surface_queries, 3) * 1000,
-#        volume_query_position=torch.rand(1, num_volume_queries, 3) * 1000,
-#    )
-#    model = AnchoredBranchedUPT()
-#    outputs = model(**data)
-#    for key, value in outputs.items():
-#        print(f"{key}: {value.shape}")
-#
-#
-#if __name__ == "__main__":
-#    main()
