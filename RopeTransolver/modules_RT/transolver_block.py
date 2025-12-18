@@ -29,7 +29,7 @@ class Transolver_block(nn.Module):
         self.ln_2 = nn.LayerNorm(hidden_dim)
 
         self.mlp = MLP(mlp_input=hidden_dim,
-                       mlp_hidden=hidden_dim * mlp_ratio,
+                       mlp_hidden=int(hidden_dim * mlp_ratio),
                        mlp_output=hidden_dim,
                        layer_num=0, act=act, res=False)
         if self.last_layer:
