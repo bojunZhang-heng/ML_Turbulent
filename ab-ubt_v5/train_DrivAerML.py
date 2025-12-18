@@ -4,7 +4,6 @@ import os
 import yaml
 import argparse
 import torch
-import torch.distributed as dist
 import torch.optim as optim
 import time
 import logging
@@ -16,9 +15,8 @@ from types import SimpleNamespace
 # from torch.utils.data.distributed import DistributedSampler
 from utils_v1 import setup_logger, setup_seed
 from colorama import Fore, Style
-from model_transolver import Model
+from model_ab_ubt import AnchoredBranchedUPT
 
-# from model_tmp import AnchoredBranchedUPT
 from preprocessors_DrivAerML import (
     MomentNormalizationPreprocessor,
 )
@@ -37,15 +35,7 @@ RESET = Style.RESET_ALL
 def initialize_model(args, device):
     """Initialize and return the RegDGCN model."""
 
-    model = Model(hidden_dim=args.model.hidden_dim,
-                  layer_num=args.model.layer_num,
-                  head_num=args.model.head_num,
-                  space_dim=args.model.input_dim,
-                  mlp_ratio=args.model.mlp_ratio,
-                  slice_num=args.model.slice_num,
-                  out_dim=args.model.output_dim,
-                  dropout=args.model.dropout,
-            ).to(device)
+    model = AnchoredBranchedUPT(args).to(device)
 
     return model
 
@@ -72,7 +62,7 @@ def print_memory_stats(device=None, message=""):
 
 def train_and_evaluate(args, device):
     """main function for Distributed training and evaluation."""
-    setup_seed(args.training.seed)
+    setup_seed(args.seed)
 
     exp_dir = os.path.join("experiments_DrivAerML", args.exp_name)
     os.makedirs(exp_dir, exist_ok=True)
@@ -91,7 +81,7 @@ def train_and_evaluate(args, device):
     # Dataload
     # BUG is here
     train_dataloader, val_dataloader, test_dataloader = create_data_loaders(
-        args.training.root_dir, args.training.batch_size, use_query_positions=True, num_workers=args.training.num_workers,
+        args.root_dir, args.batch_size, use_query_positions=True, num_workers=args.num_workers,
         train_split="train", val_split="val", test_split="test",
     )
 
@@ -103,12 +93,12 @@ def train_and_evaluate(args, device):
     # Set up criterion, optimizer, and scheduler
     criterion = torch.nn.MSELoss()
     optimizer = optim.AdamW(
-        model.parameters(), lr=args.training.lr, weight_decay=args.training.weight_decay
+        model.parameters(), lr=args.lr, weight_decay=args.weight_decay
     )
     scheduler = torch.optim.lr_scheduler.StepLR(
         optimizer,
-        step_size=args.training.scheduler_step,
-        gamma=args.training.scheduler_gamma
+        step_size=args.scheduler_step,
+        gamma=args.scheduler_gamma
     )
 
     # Store the model
@@ -116,7 +106,7 @@ def train_and_evaluate(args, device):
     final_model_path = os.path.join("experiments_DrivAerML", args.exp_name, "final_model.pth")
 
     # Check if test_only and model exists
-    if args.training.test_only and os.path.exists(best_model_path):
+    if args.test_only and os.path.exists(best_model_path):
         logging.info("Loading best model for testing only")
         model.load_state_dict(torch.load(best_model_path, map_location=device))
         test_model(model, test_dataloader, criterion, device, os.path.join('experiments_DrivAerML', args.exp_name), args)
@@ -127,10 +117,10 @@ def train_and_evaluate(args, device):
     train_losses = []
     val_losses = []
 
-    logging.info(f"Staring training for {args.training.epochs} epochs")
+    logging.info(f"Staring training for {args.epochs} epochs")
 
     # Training loop
-    for epoch in range(args.training.epochs):
+    for epoch in range(args.epochs):
         # Set epoch for the DistributedSampler
         # train_dataloader.sampler.set_epoch(epoch)
 
@@ -148,7 +138,7 @@ def train_and_evaluate(args, device):
         train_losses.append(train_loss)
         val_losses.append(val_loss)
         logging.info(
-            f"Epoch {epoch + 1}/{args.training.epochs} - Train Loss: {train_loss:.6f}, Val Loss: {val_loss:.6f}{RESET}"
+            f"Epoch {epoch + 1}/{args.epochs} - Train Loss: {train_loss:.6f}, Val Loss: {val_loss:.6f}{RESET}"
         )
 
         # Save the best model
@@ -161,7 +151,7 @@ def train_and_evaluate(args, device):
         scheduler.step()
 
         # Save progress rate scheduler
-        if (epoch + 1) % 10 == 0 or epoch == args.training.epochs - 1:
+        if (epoch + 1) % 10 == 0 or epoch == args.epochs - 1:
             plt.figure(figsize=(10, 5))
             plt.plot(range(1, epoch + 2), train_losses, label="Training Loss")
             plt.plot(range(1, epoch + 2), val_losses, label="Validation Loss")
@@ -206,18 +196,18 @@ def train_and_evaluate(args, device):
 target_keys = [
     "surface_anchor_pressure",
     "surface_anchor_wallshearstress",
-    "volume_anchor_pMeanTrim",
+    "volume_anchor_totalpcoeff",
     "volume_anchor_velocity",
     "surface_query_pressure",
     "surface_query_wallshearstress",
-    "volume_query_pMeanTrim",
+    "volume_query_totalpcoeff",
     "volume_query_velocity",
 ]
 
 enabled_target_keys = [
     "volume_anchor_velocity",      # torch.Size([16384, 3])
     "surface_anchor_pressure",
-    "surface_anchor_wallshearstress",
+    #"surface_anchor_wallshearstress",
     #    "volume_query_velocity",
     #    "surface_query_pressure",
 ]
@@ -256,21 +246,28 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, device, args)
     """Train for one epoch."""
     model.train()
     total_loss = 0
+    mse_loss = {k: [] for k in enabled_target_keys}
 
     for batch in tqdm(train_dataloader, desc="[Training]"):
-        batch = {key: value.to(device, dtype=torch.float32) for key, value in batch.items()}
+      #  batch = {key: value.to(device, dtype=torch.float32) for key, value in batch.items()}
+        batch = {key: value.to(device) for key, value in batch.items()}
 
         # extract target variables for anchor and query
         targets = {k: batch.pop(k) for k in target_keys if k in batch}
-        targets_velocity = targets[args.training.target]
 
         # extract target variables for anchor and query
         batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
-        data_volume = batch_filtered[args.training.input]
+        for k, v in batch_filtered.items():
+            logging.info(f"{k}: shape = {tuple(v.shape)}")
 
-        pred_velocity = model(data_volume)
+        prediction = model(**batch_filtered)
 
-        loss = criterion(pred_velocity, targets_velocity)
+        loss_dict = {}
+        for k in enabled_target_keys:
+            loss_k = criterion(prediction[k], targets[k])
+            loss_dict[k] = loss_k
+            mse_loss[k].append(loss_k.item())
+        loss = sum(weights[k] * loss_dict[k] for k in enabled_target_keys)
 
         optimizer.zero_grad()
         loss.backward()
@@ -285,23 +282,27 @@ def validate(model, val_dataloader, criterion, device, args):
 
     model.eval()
     total_loss = 0
+    mse_loss = {k: [] for k in enabled_target_keys}
 
     with torch.no_grad():
         for batch in tqdm(val_dataloader, desc="[Validation]"):
-            batch = {key: value.to(device, dtype=torch.float32) for key, value in batch.items()}
+            #batch = {key: value.to(device, dtype=torch.float32) for key, value in batch.items()}
+            batch = {key: value.to(device) for key, value in batch.items()}
 
             # extract target variables for anchor and query
             targets = {k: batch.pop(k) for k in target_keys if k in batch}
-            targets_velocity = targets[args.training.target]
 
             # extract target variables for anchor and query
             batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
-            data_volume = batch_filtered[args.training.input]
 
-            pred_velocity = model(data_volume)
-            loss = criterion(pred_velocity, targets_velocity)
+            prediction = model(**batch_filtered)
 
-
+            loss_dict = {}
+            for k in enabled_target_keys:
+                loss_k = criterion(prediction[k], targets[k])
+                loss_dict[k] = loss_k
+                mse_loss[k].append(loss_k.item())
+            loss = sum(weights[k] * loss_dict[k] for k in enabled_target_keys)
             total_loss += loss.item()
 
 
@@ -347,96 +348,57 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
         "surface_anchor_pressure": get_norm(test_dataloader, {"surface_pressure"}),
         "volume_anchor_velocity": get_norm(test_dataloader, {"volume_velocity"}),
         "surface_anchor_wallshearstress": get_norm(test_dataloader, {"surface_wallshearstress"}),
-        "volume_anchor_pMeanTrim": get_norm(test_dataloader, {"volume_pMeanTrim"}),
+        "volume_anchor_totalpcoeff": get_norm(test_dataloader, {"volume_totalpcoeff"}),
         "surface_query_pressure": get_norm(test_dataloader, {"surface_pressure"}),
         "volume_query_velocity": get_norm(test_dataloader, {"volume_velocity"}),
         "surface_query_wallshearstress": get_norm(test_dataloader, {"surface_wallshearstress"}),
-        "volume_query_pMeanTrim": get_norm(test_dataloader, {"volume_pMeanTrim"}),
+        "volume_query_totalpcoeff": get_norm(test_dataloader, {"volume_totalpcoeff"}),
     }
-    total_loss = 0
-    total_L2_error = 0
+    L2_errors = {k: [] for k in normalizers.keys()}
+    mse_sums = {k: [] for k in normalizers.keys()}
 
     with torch.no_grad():
         for batch in tqdm(test_dataloader, desc="[Testing]"):
             start_time = time.time()
-            batch = {key: value.to(device, dtype=torch.float32) for key, value in batch.items()}
+            #batch = {key: value.to(device, dtype=torch.float32) for key, value in batch.items()}
+            batch = {key: value.to(device) for key, value in batch.items()}
             # extract target variables for anchor
 
             targets = {k: batch.pop(k) for k in target_keys if k in batch}
-            targets_velocity = targets[args.training.target]
 
             batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
-            data_volume = batch_filtered[args.training.input]
 
-            pred_velocity = model(data_volume)
+            prediction = model(**batch_filtered)
 
             inference_time = time.time() - start_time
             total_inference_time += inference_time
 
-            mse_loss = criterion(pred_velocity, targets_velocity)
-            total_loss += mse_loss.item()
-            pred_den = normalizers[args.training.target].denormalize(pred_velocity)
-            targ_den = normalizers[args.training.target].denormalize(targets_velocity)
-            L2_error = (pred_den - targ_den).norm() / targ_den.norm()
-            total_L2_error += L2_error.item()
+            # denormalize
+            for key in normalizers.keys():
+                if key in enabled_target_keys:
+                    pred_den = normalizers[key].denormalize(prediction[key])
+                    targ_den = normalizers[key].denormalize(targets[key])
+
+                    # MAE loss
+                    mse_loss = criterion(prediction[key], targets[key])
+                    mse_sums[key].append(mse_loss.item())
+
+                    # L2 relative error
+                    L2_error = (pred_den - targ_den).norm() / targ_den.norm()
+                    L2_errors[key].append(L2_error.item())
+
+        avg_L2 = {k: sum(v) / len(test_dataloader) for k, v in L2_errors.items()}
+        avg_mse = {k: sum(mse_sums[k]) / len(test_dataloader) for k in normalizers.keys()}
+
+        logging.info(f"*******************{M}avg_L2:{RESET}")
+        for key, val in avg_L2.items():
+            logging.info(f"{key}: {val:.6f}")
+
+        logging.info(f"*******************{M}avg_mse:{RESET}")
+        for key, val in avg_mse.items():
+            logging.info(f"{key}: {val:.6f}")
 
 
-        logging.info(f"*******************{M}L2_erro:{RESET}")
-        logging.info(f" {total_L2_error / len(test_dataloader):.6f}")
-
-        logging.info(f"*******************{M}mse_loss:{RESET}")
-        logging.info(f" {total_loss / len(test_dataloader):.6f}")
-
-        logging.info(f"*******************{M}inference_time:{RESET}")
-        logging.info(f" {total_inference_time / len(test_dataloader):.6f}")
-
-    # Checkout the value
-
-
-#    if dist.get_rank() == 0:
-#        logging.info(f"Total MSE across all processes: {total_mse_tensor.item()}")
-#
-#    if device == 0:
-#        # Calculate aggregated metrics
-#        avg_mse = total_mse_tensor.item() / total_samples_tensor.item()
-#        avg_mae = total_mae_tensor.item() / total_samples_tensor.item()
-#        avg_rel_l2 = total_rel_l2_tensor.item() / total_samples_tensor.item()
-#        avg_rel_l1 = total_rel_l1_tensor.item() / total_samples_tensor.item()
-#
-#        # Calculate R² score - only on rank 0 with locally collected data
-#        all_outputs = torch.cat(all_outputs, dim=0).numpy()
-#        all_targets = torch.cat(all_targets, dim=0).numpy()
-#        tmp = np.mean(all_targets)
-#        logging.info("mean value for all_targets: {tmp}")
-#        ss_tot = np.sum((all_targets - np.mean(all_targets)) ** 2)
-#        ss_res = np.sum((all_targets - all_outputs) ** 2)
-#        r_squared = 1 - (ss_res / ss_tot) if ss_tot > 0 else 0
-#
-#        # Calculate max AE
-#        max_ae = np.max(np.abs(all_targets - all_outputs))
-#        logging.info(
-#            f"Test MSE: {avg_mse:.6f}, Test MAE: {avg_mae:.6f}, Max AE: {max_ae:.6f}, Test R2: {r_squared:.4f}"
-#        )
-#        logging.info(
-#            f"Relative L2 Error: {avg_rel_l2:.6f}, Relative L1 error: {avg_rel_l1:.6f}"
-#        )
-#        logging.info(
-#            f"Total inference time: {total_inference_time: .2f}s for {total_samples_tensor.item()} samples"
-#        )
-#
-#        # Save metrics to a text file
-#        metrics_file = os.path.join(exp_dir, "test_metrics.txt")
-#        with open(metrics_file, "w") as f:
-#            f.write(f"Test MSE: {avg_mse:.6f}\n")
-#            f.write(f"Test MAE: {avg_mae:.6f}\n")
-#            f.write(f"Max MAE: {max_ae:.6f}\n")
-#            f.write(f"Test R2: {r_squared:.4f}\n")
-#            f.write(f"Relative L2 Error: {avg_rel_l2:.6f}\n")
-#            f.write(f"Relative L1 error: {avg_rel_l1:.6f}\n")
-#            f.write(
-#                f"Total inference time: {total_inference_time: .2f}s for {total_samples_tensor.item()} samples\n"
-#            )
-#
 
 # ============================================================
 # Load hyperparam
