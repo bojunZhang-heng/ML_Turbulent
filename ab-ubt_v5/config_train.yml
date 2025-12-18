@@ -1,0 +1,37 @@
+exp_name: "v5_epoch300_N50_000_drop01_lr_query"
+
+slice_num: 64
+ref: 8
+downsample: 5
+
+batch_size: 1
+epochs: 300
+lr: 0.001
+scheduler_step: 100
+scheduler_gamma: 0.1
+max_grad_norm: 0.1
+num_workers: 1
+weight_decay: 0.00001
+
+ndim: 3
+input_dim: 3
+output_dim_surface: 1
+output_dim_volume: 3
+
+geometry_depth: 1
+num_surf_blocks: 6
+num_volume_blocks: 6
+num_heads: 3
+blocks: "pscsc"
+n_input: 192
+dim: 192
+n_layers: 8
+res: true
+dim_head: 64
+radius: 0.25
+seed : 1  
+test_only: 0  
+
+gpus: "0"
+
+root_dir: "/work/home/mae_zhangbj/tmp_data"
