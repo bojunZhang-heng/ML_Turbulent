@@ -1,0 +1,66 @@
+/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch_geometric/__init__.py:4: UserWarning: An issue occurred while importing 'pyg-lib'. Disabling its usage. Stacktrace: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.33' not found (required by /home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/libpyg.so)
+  import torch_geometric.typing
+/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch_geometric/__init__.py:4: UserWarning: An issue occurred while importing 'torch-sparse'. Disabling its usage. Stacktrace: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.33' not found (required by /home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/libpyg.so)
+  import torch_geometric.typing
+2025-12-18 18:07:29,400 | INFO     | Config:
+exp_name: v5_epoch300_N50_000_drop01_lr_query
+slice_num: 64
+ref: 8
+downsample: 5
+batch_size: 1
+epochs: 300
+lr: 0.001
+scheduler_step: 100
+scheduler_gamma: 0.1
+max_grad_norm: 0.1
+num_workers: 1
+weight_decay: 1.0e-05
+ndim: 3
+input_dim: 3
+output_dim_surface: 1
+output_dim_volume: 3
+geometry_depth: 1
+num_surf_blocks: 6
+num_volume_blocks: 6
+num_heads: 3
+blocks: pscsc
+n_input: 192
+dim: 192
+n_layers: 8
+res: true
+dim_head: 64
+radius: 0.25
+seed: 1
+test_only: 0
+gpus: '0'
+root_dir: /mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small
+
+2025-12-18 18:07:29,401 | INFO     | args.exp_name : v5_epoch300_N50_000_drop01_lr_query
+2025-12-18 18:07:29,401 | INFO     | Starting training with 1 GPUs
+2025-12-18 18:07:31,158 | INFO     | Total trainable parameters: 21190455
+2025-12-18 18:07:31,160 | INFO     | Data loaded: 380 training batches, 33 validation batches, 44 test batches
+2025-12-18 18:07:31,162 | INFO     | Staring training for 300 epochs
+[Training]:   0%|          | 0/380 [00:00<?, ?it/s]2025-12-18 18:07:31,301 | INFO     | geometry_position: shape = (10000, 3)
+2025-12-18 18:07:31,301 | INFO     | geometry_batch_idx: shape = (10000,)
+2025-12-18 18:07:31,302 | INFO     | geometry_supernode_idx: shape = (10000,)
+2025-12-18 18:07:31,302 | INFO     | surface_anchor_position: shape = (1, 10000, 3)
+2025-12-18 18:07:31,302 | INFO     | volume_anchor_position: shape = (1, 10000, 3)
+[Training]:   0%|          | 0/380 [00:01<?, ?it/s]
+Traceback (most recent call last):
+  File "/home/mae-zhangbj/MB_Transolver/ab-ubt_v5/train_DrivAerML.py", line 448, in <module>
+    main()
+  File "/home/mae-zhangbj/MB_Transolver/ab-ubt_v5/train_DrivAerML.py", line 444, in main
+    train_and_evaluate(args, device)
+  File "/home/mae-zhangbj/MB_Transolver/ab-ubt_v5/train_DrivAerML.py", line 129, in train_and_evaluate
+    train_loss = train_one_epoch(model, train_dataloader, optimizer, criterion, device, args)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/MB_Transolver/ab-ubt_v5/train_DrivAerML.py", line 273, in train_one_epoch
+    loss.backward()
+  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/_tensor.py", line 626, in backward
+    torch.autograd.backward(
+  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/autograd/__init__.py", line 347, in backward
+    _engine_run_backward(
+  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/autograd/graph.py", line 823, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 2.24 GiB. GPU 0 has a total capacity of 31.74 GiB of which 821.38 MiB is free. Process 842026 has 1.77 GiB memory in use. Including non-PyTorch memory, this process has 29.16 GiB memory in use. Of the allocated memory 24.36 GiB is allocated by PyTorch, and 4.43 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
