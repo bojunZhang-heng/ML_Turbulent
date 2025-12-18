@@ -1,6 +1,3 @@
-import warnings
-warnings.filterwarnings("ignore", category=UserWarning)
-
 import einops
 import torch
 import torch_geometric
@@ -9,6 +6,8 @@ from torch import nn
 
 from modules.continuous_sincos_embed import ContinuousSincosEmbed
 
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
 
 class SupernodePoolingPosonly(nn.Module):
     """Supernode pooling layer.
