@@ -44,10 +44,12 @@ class Physics_Attention_Irregular_Mesh(nn.Module):
             head_num=self.head_num,
             head_dim=self.head_dim,
         )
+        x_for_v = x
         x = rope(x, freqs=freqs)
         x = rearrange(x, "bs head_num seqlen head_dim -> bs seqlen (head_num head_dim)")
+        x_for_v = rearrange(x_for_v, "bs head_num seqlen head_dim -> bs seqlen (head_num head_dim)")
 
-        ### (1) Slice
+        ### (1) Slice for q k
         fx_mid = self.in_project_fx(x).reshape(B, N, self.head_num, self.head_dim) \
             .permute(0, 2, 1, 3).contiguous()  # B H N C
         x_mid = self.in_project_x(x).reshape(B, N, self.head_num, self.head_dim) \
@@ -57,10 +59,20 @@ class Physics_Attention_Irregular_Mesh(nn.Module):
         slice_token = torch.einsum("bhnc,bhng->bhgc", fx_mid, slice_weights)
         slice_token = slice_token / ((slice_norm + 1e-5)[:, :, :, None].repeat(1, 1, 1, self.head_dim))
 
+        ### (1) Slice for v
+        fx_mid_v = self.in_project_fx(x_for_v).reshape(B, N, self.head_num, self.head_dim) \
+            .permute(0, 2, 1, 3).contiguous()  # B H N C
+        x_mid_v = self.in_project_x(x_for_v).reshape(B, N, self.head_num, self.head_dim) \
+            .permute(0, 2, 1, 3).contiguous()  # B H N C
+        slice_weights_v = self.softmax(self.in_project_slice(x_mid_v) / self.temperature)  # B H N G
+        slice_norm_v = slice_weights_v.sum(2)  # B H G
+        slice_token_v = torch.einsum("bhnc,bhng->bhgc", fx_mid_v, slice_weights_v)
+        slice_token_v = slice_token / ((slice_norm_v + 1e-5)[:, :, :, None].repeat(1, 1, 1, self.head_dim))
+
         ### (2) Attention among slice tokens
         q_slice_token = self.to_q(slice_token)
         k_slice_token = self.to_k(slice_token)
-        v_slice_token = self.to_v(slice_token)
+        v_slice_token = self.to_v(slice_token_v)
         dots = torch.matmul(q_slice_token, k_slice_token.transpose(-1, -2)) * self.scale
         attn = self.softmax(dots)
         attn = self.dropout(attn)
