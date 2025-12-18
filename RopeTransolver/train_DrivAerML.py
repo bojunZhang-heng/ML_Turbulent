@@ -4,7 +4,6 @@ import os
 import yaml
 import argparse
 import torch
-import torch.distributed as dist
 import torch.optim as optim
 import time
 import logging
@@ -102,7 +101,7 @@ def train_and_evaluate(args, device):
 
     # Set up criterion, optimizer, and scheduler
     criterion = torch.nn.MSELoss()
-    optimizer = optim.Adam(
+    optimizer = optim.AdamW(
         model.parameters(), lr=args.training.lr, weight_decay=args.training.weight_decay
     )
     scheduler = torch.optim.lr_scheduler.StepLR(
@@ -129,6 +128,9 @@ def train_and_evaluate(args, device):
 
     logging.info(f"Staring training for {args.training.epochs} epochs")
 
+    global_step = 0
+    warmup_steps = 1000
+
     # Training loop
     for epoch in range(args.training.epochs):
         # Set epoch for the DistributedSampler
@@ -136,7 +138,7 @@ def train_and_evaluate(args, device):
 
         # Training
         torch.cuda.empty_cache()
-        train_loss = train_one_epoch(model, train_dataloader, optimizer, criterion, device, args)
+        train_loss, global_step = train_one_epoch(model, train_dataloader, optimizer, criterion, device, args, global_step, warmup_steps)
         torch.cuda.empty_cache()
 
         # Validation
@@ -251,13 +253,13 @@ def compute_weights(target_keys, enabled_target_keys):
 
 weights = compute_weights(target_keys, enabled_target_keys)
 
-
-def train_one_epoch(model, train_dataloader, optimizer, criterion, device, args):
+def train_one_epoch(model, train_dataloader, optimizer, criterion, device, args, global_step, warmup_steps=1000):
     """Train for one epoch."""
     model.train()
     total_loss = 0
+    global_step += 1  # 累积全局步数
 
-    for batch in tqdm(train_dataloader, desc="[Training]"):
+    for batch_idx, batch in enumerate(tqdm(train_dataloader, desc="[Training]")):
         batch = {key: value.to(device, dtype=torch.float32) for key, value in batch.items()}
 
         # extract target variables for anchor and query
@@ -270,14 +272,21 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, device, args)
 
         pred_velocity = model(data_volume)
 
+        # 线性 warmup
+        if global_step <= warmup_steps:
+            lr_scale = global_step / warmup_steps
+            for param_group in optimizer.param_groups:
+                param_group['lr'] = lr_scale * 1e-3
+
         loss = criterion(pred_velocity, targets_velocity)
 
         optimizer.zero_grad()
         loss.backward()
+
         optimizer.step()
         total_loss += loss.item()
 
-    return total_loss / len(train_dataloader)
+    return total_loss / len(train_dataloader), global_step
 
 
 def validate(model, val_dataloader, criterion, device, args):
