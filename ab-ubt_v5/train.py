@@ -3,12 +3,12 @@ import warnings
 import os
 import random
 import yaml
+import argparse
 import torch
 import torch.distributed as dist
 import torch.multiprocessing as mp
 import torch.optim as optim
 import time
-import argparse
 import logging
 import matplotlib.pyplot as plt
 from tqdm import tqdm
@@ -252,8 +252,8 @@ target_keys = [
 enabled_target_keys = [
     "volume_anchor_velocity",
     "surface_anchor_pressure",
-        "volume_query_velocity",
-        "surface_query_pressure",
+#    "volume_query_velocity",
+#    "surface_query_pressure",
 ]
 
 enabled_position_keys = [
@@ -262,8 +262,8 @@ enabled_position_keys = [
     "geometry_supernode_idx",
     "surface_anchor_position",
     "volume_anchor_position",
-        "surface_query_position",
-        "volume_query_position",
+#    "surface_query_position",
+#    "volume_query_position",
 ]
 
 def compute_weights(target_keys, enabled_target_keys):
