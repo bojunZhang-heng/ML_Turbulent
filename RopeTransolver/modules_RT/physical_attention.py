@@ -1,6 +1,7 @@
 import torch
 import numpy as np
 import torch.nn as nn
+import torch.nn.functional as F
 from einops import repeat, rearrange
 from modules.rope import rope
 
@@ -27,59 +28,27 @@ class Physics_Attention_Irregular_Mesh(nn.Module):
         self.to_q = nn.Linear(head_dim, head_dim, bias=False)
         self.to_k = nn.Linear(head_dim, head_dim, bias=False)
         self.to_v = nn.Linear(head_dim, head_dim, bias=False)
-        self.rope_x = nn.Linear(dim, dim)
+        self.rope_x = nn.Linear(dim, dim*3)
         self.to_out = nn.Sequential(
             nn.Linear(inner_dim, dim),
             nn.Dropout(dropout)
         )
 
     def forward(self, x: torch.Tensor, freqs: torch.Tensor) -> torch.Tensor:
-        # B N C
-        B, N, C = x.shape
 
         # add rope
-        x = rearrange(
+        q, k, v = rearrange(
             self.rope_x(x),
-            "bs seqlen (head_num head_dim) -> bs head_num seqlen head_dim",
+            "bs seqlen (three head_num head_dim) -> three bs head_num seqlen head_dim",
             head_num=self.head_num,
             head_dim=self.head_dim,
-        )
-        x_for_v = x
-        x = rope(x, freqs=freqs)
-        x = rearrange(x, "bs head_num seqlen head_dim -> bs seqlen (head_num head_dim)")
-        x_for_v = rearrange(x_for_v, "bs head_num seqlen head_dim -> bs seqlen (head_num head_dim)")
+        ).unbind(0)
 
-        ### (1) Slice for q k
-        fx_mid = self.in_project_fx(x).reshape(B, N, self.head_num, self.head_dim) \
-            .permute(0, 2, 1, 3).contiguous()  # B H N C
-        x_mid = self.in_project_x(x).reshape(B, N, self.head_num, self.head_dim) \
-            .permute(0, 2, 1, 3).contiguous()  # B H N C
-        slice_weights = self.softmax(self.in_project_slice(x_mid) / self.temperature)  # B H N G
-        slice_norm = slice_weights.sum(2)  # B H G
-        slice_token = torch.einsum("bhnc,bhng->bhgc", fx_mid, slice_weights)
-        slice_token = slice_token / ((slice_norm + 1e-5)[:, :, :, None].repeat(1, 1, 1, self.head_dim))
+        q = rope(q, freqs=freqs)
+        k = rope(k, freqs=freqs)
 
-        ### (1) Slice for v
-        fx_mid_v = self.in_project_fx(x_for_v).reshape(B, N, self.head_num, self.head_dim) \
-            .permute(0, 2, 1, 3).contiguous()  # B H N C
-        x_mid_v = self.in_project_x(x_for_v).reshape(B, N, self.head_num, self.head_dim) \
-            .permute(0, 2, 1, 3).contiguous()  # B H N C
-        slice_weights_v = self.softmax(self.in_project_slice(x_mid_v) / self.temperature)  # B H N G
-        slice_norm_v = slice_weights_v.sum(2)  # B H G
-        slice_token_v = torch.einsum("bhnc,bhng->bhgc", fx_mid_v, slice_weights_v)
-        slice_token_v = slice_token / ((slice_norm_v + 1e-5)[:, :, :, None].repeat(1, 1, 1, self.head_dim))
+        x = F.scaled_dot_product_attention(q, k, v)
+        x = rearrange(x, "bs num_heads seqlen head_dim -> bs seqlen (num_heads head_dim)")
 
-        ### (2) Attention among slice tokens
-        q_slice_token = self.to_q(slice_token)
-        k_slice_token = self.to_k(slice_token)
-        v_slice_token = self.to_v(slice_token_v)
-        dots = torch.matmul(q_slice_token, k_slice_token.transpose(-1, -2)) * self.scale
-        attn = self.softmax(dots)
-        attn = self.dropout(attn)
-        out_slice_token = torch.matmul(attn, v_slice_token)  # B H G D
-
-        ### (3) Deslice
-        out_x = torch.einsum("bhgc,bhng->bhnc", out_slice_token, slice_weights)
-        out_x = rearrange(out_x, 'b h n d -> b n (h d)')
-        return self.to_out(out_x)
+        return self.to_out(x)
 
