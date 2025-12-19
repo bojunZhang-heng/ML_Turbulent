@@ -15,7 +15,7 @@ from types import SimpleNamespace
 # from torch.utils.data.distributed import DistributedSampler
 from utils_v1 import setup_logger, setup_seed
 from colorama import Fore, Style
-from model_transolver import Model
+from modules_RT.model.model_transolver import Model
 from torch.utils.data import DataLoader
 
 # from model_tmp import AnchoredBranchedUPT
