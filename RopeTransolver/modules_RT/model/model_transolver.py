@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import logging
 from timm.models.layers import trunc_normal_
 
 from modules_RT.continuous_sincos_embed import ContinuousSincosEmbed
@@ -25,7 +26,7 @@ class Model(nn.Module):
                  ):
         super(Model, self).__init__()
         self.__name__ = 'UniPDE_3D'
-        self.preprocess = MLP(mlp_input=space_dim,
+        self.preprocess = MLP(mlp_input=hidden_dim,
                               mlp_hidden=hidden_dim * 2,
                               mlp_output=hidden_dim,
                               layer_num=0, act=act, res=False)
@@ -73,7 +74,9 @@ class Model(nn.Module):
         volume_rope = self.rope(x)
         volume_decoder_attn_kwargs["freqs"] = volume_rope
 
-        fx = self.volume_bias(self.pos_embed(x))
+        fx = self.pos_embed(x)
+        fx = self.preprocess(fx)
+
         #fx = self.preprocess(x)
         fx = fx + self.placeholder[None, None, :]
 
