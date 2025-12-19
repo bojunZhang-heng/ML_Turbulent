@@ -267,13 +267,14 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, device, args)
 
     for data in tqdm(train_dataloader, desc="[Training]"):
         x = data['x'].to(device)
-        y = data['y'].permute(1,0).to(device)
+        y = data['y'].to(device)
+
         POS_MEAN_T = torch.tensor(POS_MEAN, dtype=x.dtype, device=x.device)
         POS_STD_T  = torch.tensor(POS_STD, dtype=x.dtype, device=x.device)
         x = (x - POS_MEAN_T) / POS_STD_T
         y = (y - PRESSURE_MEAN) / PRESSURE_STD
 
-        y_hat = model(x).squeeze(0)
+        y_hat = model(x)
         loss = criterion(y_hat, y)
         optimizer.zero_grad()
         loss.backward()
@@ -292,13 +293,13 @@ def validate(model, val_dataloader, criterion, device, args):
     with torch.no_grad():
         for data in tqdm(val_dataloader, desc="[Validation]"):
             x = data['x'].to(device)
-            y = data['y'].permute(1,0).to(device)
+            y = data['y'].to(device)
             POS_MEAN_T = torch.tensor(POS_MEAN, dtype=x.dtype, device=x.device)
             POS_STD_T  = torch.tensor(POS_STD, dtype=x.dtype, device=x.device)
             x = (x - POS_MEAN_T) / POS_STD_T
             y = (y - PRESSURE_MEAN) / PRESSURE_STD
 
-            y_hat = model(x).squeeze(0)
+            y_hat = model(x)
             #y_hat = y_hat * PRESSURE_STD + PRESSURE_MEAN
             loss = criterion(y_hat, y)
 
@@ -332,13 +333,13 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
     with torch.no_grad():
         for data in tqdm(test_dataloader, desc="[test_dataloader]"):
             x = data['x'].to(device)
-            y = data['y'].permute(1,0).to(device)
+            y = data['y'].to(device)
             POS_MEAN_T = torch.tensor(POS_MEAN, dtype=x.dtype, device=x.device)
             POS_STD_T  = torch.tensor(POS_STD, dtype=x.dtype, device=x.device)
             x = (x - POS_MEAN_T) / POS_STD_T
             y = (y - PRESSURE_MEAN) / PRESSURE_STD
 
-            y_hat = model(x).squeeze(0)
+            y_hat = model(x)
 
             loss = criterion(y_hat, y)
             total_loss += loss.item()
