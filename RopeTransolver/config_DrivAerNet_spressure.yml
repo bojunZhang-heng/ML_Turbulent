@@ -6,10 +6,9 @@ model:
     head_num: 8
     hidden_dim: 256
     res: true
-    head_dim: 64
     slice_num: 32
     layer_num: 5
-    mlp_ratio: 1
+    mlp_ratio: 1.5
     dropout: 0.1
 
 training:
