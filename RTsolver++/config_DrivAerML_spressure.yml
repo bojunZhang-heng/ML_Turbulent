@@ -1,0 +1,32 @@
+exp_name: "spressure_N10k_lr1e-3_e250"
+
+model:
+    input_dim: 3
+    output_dim: 1
+    head_num: 8
+    hidden_dim: 256
+    res: true
+    slice_num: 32
+    layer_num: 5
+    mlp_ratio: 1.5
+    dropout: 0.1
+
+training:
+    input: "surface_anchor_position"
+    target: "surface_anchor_pressure"
+    batch_size: 1
+    epochs: 250
+    lr: 0.001
+    scheduler_step: 50
+    scheduler_gamma: 0.5
+    max_grad_norm: 0.1
+    num_workers: 1
+    weight_decay: 0.00000
+    test_only: 0
+    gpus: "0"
+    root_dir: "/mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small"
+    seed: 42
+
+
+
+

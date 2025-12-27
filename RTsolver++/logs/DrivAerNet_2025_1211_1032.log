@@ -1,0 +1,51 @@
+CUDA available GPUs: 1
+Current device index: 0
+Device name: Tesla V100-SXM2-32GB
+Physical GPU(s) specified in CUDA_VISIBLE_DEVICES: ['3']
+Using physical GPU 3 (visible as cuda:0 in PyTorch)
+2025-12-11 10:32:45,157 | INFO     | Config:
+exp_name: DrivAerNet_pressure_N3w_lr5e-4_e300
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 4
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 64
+  layer_num: 8
+  mlp_ratio: 2
+  dropout: 0.1
+training:
+  batch_size: 1
+  epochs: 150
+  lr: 0.0005
+  scheduler_step: 50
+  scheduler_gamma: 0.7
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  gpus: '0'
+  seed: 42
+dataload:
+  directory: /mnt/wjc_group/mae-zhangbj/DrivAerNet_dataset/
+
+2025-12-11 10:32:45,157 | INFO     | args.exp_name : DrivAerNet_pressure_N3w_lr5e-4_e300
+2025-12-11 10:32:45,157 | INFO     | Starting training with 1 GPUs
+2025-12-11 10:32:45,676 | INFO     | Total trainable parameters: 4524353
+2025-12-11 10:32:45,676 | INFO     | Data loaded: 18 training batches, 4 validation batches, 6 test batches
+2025-12-11 10:32:45,677 | INFO     | Staring training for 150 epochs
+[Training]:   0%|          | 0/18 [00:00<?, ?it/s][Training]:   0%|          | 0/18 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train_drivaernet.py", line 433, in <module>
+    main()
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train_drivaernet.py", line 429, in main
+    train_and_evaluate(args, device)
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train_drivaernet.py", line 147, in train_and_evaluate
+    train_loss = train_one_epoch(model, train_dataloader, optimizer, criterion, device, args)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train_drivaernet.py", line 273, in train_one_epoch
+    print(f"train_index: {data['index']}")
+                          ~~~~^^^^^^^^^
+KeyError: 'index'

@@ -1,0 +1,53 @@
+2025-12-11 19:13:46,254 | INFO     | Config:
+exp_name: DrivAerML_velocity_N3w_lr5e-4_e300
+model:
+  input_dim: 3
+  output_dim: 3
+  head_num: 4
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 64
+  layer_num: 8
+  mlp_ratio: 2
+  dropout: 0.1
+training:
+  input: volume_anchor_position
+  target: volume_anchor_velocity
+  batch_size: 1
+  epochs: 300
+  lr: 0.0005
+  scheduler_step: 50
+  scheduler_gamma: 0.7
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 1
+  gpus: '0'
+  root_dir: /work/mae-zhangbj/Data_ab_ubt/drivaerml
+  seed: 42
+
+2025-12-11 19:13:46,254 | INFO     | args.exp_name : DrivAerML_velocity_N3w_lr5e-4_e300
+2025-12-11 19:13:46,254 | INFO     | Starting training with 1 GPUs
+2025-12-11 19:13:46,834 | INFO     | Total trainable parameters: 4614947
+2025-12-11 19:13:46,835 | INFO     | Data loaded: 397 training batches, 34 validation batches, 50 test batches
+2025-12-11 19:13:46,835 | INFO     | Loading best model for testing only
+Traceback (most recent call last):
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train.py", line 488, in <module>
+    main()
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train.py", line 484, in main
+    train_and_evaluate(args, device)
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train.py", line 122, in train_and_evaluate
+    test_model(model, test_dataloader, criterion, device, os.path.join('experiments', args.exp_name), args)
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train.py", line 352, in test_model
+    "volume_anchor_totalpcoeff": get_norm(test_dataloader, {"volume_totalpcoeff"}),
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train.py", line 340, in get_norm
+    return try_get_normalizer_from_collator(dataloader, selector)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train.py", line 324, in try_get_normalizer_from_collator
+    return get_pre(predicate)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/collators/multi_stage_collator.py", line 63, in get_preprocessor
+    raise ValueError("No preprocessor matches predicate.")
+ValueError: No preprocessor matches predicate.

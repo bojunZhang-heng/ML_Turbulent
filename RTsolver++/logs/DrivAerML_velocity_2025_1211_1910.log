@@ -1,0 +1,47 @@
+2025-12-11 19:10:59,727 | INFO     | Config:
+exp_name: DrivAerML_velocity_N3w_lr5e-4_e300
+model:
+  input_dim: 3
+  output_dim: 3
+  head_num: 4
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 64
+  layer_num: 8
+  mlp_ratio: 2
+  dropout: 0.1
+training:
+  input: volume_anchor_position
+  target: volume_anchor_velocity
+  batch_size: 1
+  epochs: 300
+  lr: 0.0005
+  scheduler_step: 50
+  scheduler_gamma: 0.7
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 1
+  gpus: '0'
+  root_dir: /work/mae-zhangbj/Data_ab_ubt/drivaerml
+  seed: 42
+
+2025-12-11 19:10:59,727 | INFO     | args.exp_name : DrivAerML_velocity_N3w_lr5e-4_e300
+2025-12-11 19:10:59,727 | INFO     | Starting training with 1 GPUs
+2025-12-11 19:11:00,380 | INFO     | Total trainable parameters: 4614947
+Traceback (most recent call last):
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train.py", line 488, in <module>
+    main()
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train.py", line 484, in main
+    train_and_evaluate(args, device)
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train.py", line 93, in train_and_evaluate
+    train_dataloader, val_dataloader, test_dataloader = create_data_loaders(
+                                                        ^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/create_data_loaders.py", line 27, in create_data_loaders
+    train_collator = AbuptCollator(
+                     ^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/abupt_collator.py", line 64, in __init__
+    mean=stats.volume_pMeanTrim_mean,
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DrivAerMLStats' object has no attribute 'volume_pMeanTrim_mean'

@@ -1,0 +1,34 @@
+2025-12-12 09:25:45,921 | INFO     | Config:
+exp_name: DrivAerML_spressure_N3w_lr5e-4_e300
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 4
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 64
+  layer_num: 8
+  mlp_ratio: 2
+  dropout: 0.1
+training:
+  input: surface_anchor_position
+  target: surface_anchor_pressure
+  batch_size: 1
+  epochs: 300
+  lr: 0.0005
+  scheduler_step: 50
+  scheduler_gamma: 0.7
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 1
+  gpus: '0'
+  root_dir: /mnt/wjc_group/mae-zhangbj/drivaerML_N100_000
+  seed: 42
+
+2025-12-12 09:25:45,921 | INFO     | args.exp_name : DrivAerML_spressure_N3w_lr5e-4_e300
+2025-12-12 09:25:45,921 | INFO     | Starting training with 1 GPUs
+2025-12-12 09:25:46,204 | INFO     | Total trainable parameters: 4614433
+2025-12-12 09:25:46,205 | INFO     | Data loaded: 393 training batches, 33 validation batches, 48 test batches
+2025-12-12 09:25:46,206 | INFO     | Staring training for 300 epochs

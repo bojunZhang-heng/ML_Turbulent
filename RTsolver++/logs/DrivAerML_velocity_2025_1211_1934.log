@@ -1,0 +1,77 @@
+2025-12-11 19:34:26,897 | INFO     | Config:
+exp_name: DrivAerML_velocity_N3w_lr5e-4_e300
+model:
+  input_dim: 3
+  output_dim: 3
+  head_num: 4
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 64
+  layer_num: 8
+  mlp_ratio: 2
+  dropout: 0.1
+training:
+  input: volume_anchor_position
+  target: volume_anchor_velocity
+  batch_size: 1
+  epochs: 300
+  lr: 0.0005
+  scheduler_step: 50
+  scheduler_gamma: 0.7
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 1
+  gpus: '0'
+  root_dir: /mnt/wjc_group/mae-zhangbj/DrivAerML_dataset
+  seed: 42
+
+2025-12-11 19:34:26,897 | INFO     | args.exp_name : DrivAerML_velocity_N3w_lr5e-4_e300
+2025-12-11 19:34:26,897 | INFO     | Starting training with 1 GPUs
+2025-12-11 19:34:27,510 | INFO     | Total trainable parameters: 4614947
+2025-12-11 19:34:27,510 | INFO     | Data loaded: 393 training batches, 33 validation batches, 46 test batches
+2025-12-11 19:34:27,511 | INFO     | Loading best model for testing only
+[Testing]:   0%|          | 0/46 [00:00<?, ?it/s][Testing]:   2%|▏         | 1/46 [00:02<01:42,  2.28s/it][Testing]:   4%|▍         | 2/46 [00:05<01:56,  2.66s/it][Testing]:   7%|▋         | 3/46 [00:06<01:26,  2.02s/it][Testing]:   9%|▊         | 4/46 [00:09<01:36,  2.29s/it][Testing]:  11%|█         | 5/46 [00:12<01:42,  2.50s/it][Testing]:  13%|█▎        | 6/46 [00:15<01:51,  2.79s/it][Testing]:  15%|█▌        | 7/46 [00:19<02:00,  3.10s/it][Testing]:  15%|█▌        | 7/46 [00:19<01:46,  2.73s/it]
+Traceback (most recent call last):
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train.py", line 488, in <module>
+    main()
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train.py", line 484, in main
+    train_and_evaluate(args, device)
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train.py", line 122, in train_and_evaluate
+    test_model(model, test_dataloader, criterion, device, os.path.join('experiments', args.exp_name), args)
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train.py", line 362, in test_model
+    for batch in tqdm(test_dataloader, desc="[Testing]"):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/tqdm/std.py", line 1181, in __iter__
+    for obj in iterable:
+               ^^^^^^^^
+  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 708, in __next__
+    data = self._next_data()
+           ^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 1480, in _next_data
+    return self._process_data(data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 1505, in _process_data
+    data.reraise()
+  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/_utils.py", line 733, in reraise
+    raise exception
+AssertionError: Caught AssertionError in DataLoader worker process 0.
+Original Traceback (most recent call last):
+  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/utils/data/_utils/worker.py", line 349, in _worker_loop
+    data = fetcher.fetch(index)  # type: ignore[possibly-undefined]
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/utils/data/_utils/fetch.py", line 52, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+            ~~~~~~~~~~~~^^^^^
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/drivaerml_dataset.py", line 117, in __getitem__
+    'surface_position_vtp': self.getitem_surface_position_vtp(idx),
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/drivaerml_dataset.py", line 182, in getitem_surface_position_vtp
+    return self._load(idx=idx, filename_base="surface_position_vtp")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/drivaerml_dataset.py", line 144, in _load
+    assert design_uri.exists(), f"{design_uri.as_posix()} does not exist"
+           ^^^^^^^^^^^^^^^^^^^
+AssertionError: /mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/run_59 does not exist
+

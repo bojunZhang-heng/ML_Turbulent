@@ -1,0 +1,51 @@
+2025-12-10 09:25:54,668 - INFO - Config:
+exp_name: RTformer_DrivAerNet
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 4
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 64
+  layer_num: 8
+  mlp_ratio: 2
+  dropout: 0.1
+training:
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.7
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  gpus: '0'
+  root_dir: ~/drivaerML_N100_000
+  seed: 42
+dataload:
+  directory: /home/mae-zhangbj/DrivAerNet_dataset/
+
+2025-12-10 09:25:54,668 - INFO - args.exp_name : RTformer_DrivAerNet
+2025-12-10 09:25:54,669 - INFO - Starting training with 1 GPUs
+CUDA available GPUs: 1
+Current device index: 0
+Device name: Tesla V100-SXM2-32GB
+Physical GPU(s) specified in CUDA_VISIBLE_DEVICES: ['3']
+Using physical GPU 3 (visible as cuda:0 in PyTorch)
+Traceback (most recent call last):
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train_drivaernet.py", line 426, in <module>
+    main()
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train_drivaernet.py", line 422, in main
+    train_and_evaluate(args, device)
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train_drivaernet.py", line 91, in train_and_evaluate
+    train_data_lst, test_data_lst, val_data_lst = Dataset.get_data_dict(args.dataload.directory)
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/preprocessors_SATO/Dataset.py", line 98, in get_data_dict
+    Surface_points = np.load(os.path.join(directory, 'SurfacePressure', 'points_s', f'points_{index}.npy'))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/numpy/lib/_npyio_impl.py", line 451, in load
+    fid = stack.enter_context(open(os.fspath(file), "rb"))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/mae-zhangbj/DrivAerNet_dataset/SurfacePressure/points_s/points_1502.npy'

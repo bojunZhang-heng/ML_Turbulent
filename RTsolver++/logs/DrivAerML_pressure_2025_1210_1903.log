@@ -1,0 +1,41 @@
+2025-12-10 19:03:44,677 | INFO     | Config:
+exp_name: RTformer_s_pressure_without_pos_nor_e300
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 4
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 64
+  layer_num: 8
+  mlp_ratio: 2
+  dropout: 0.1
+training:
+  input: surface_anchor_position
+  target: surface_anchor_pressure
+  batch_size: 1
+  epochs: 500
+  lr: 0.0001
+  scheduler_step: 50
+  scheduler_gamma: 0.7
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 1
+  gpus: '0'
+  root_dir: ~/drivaerML_N100_000
+  seed: 42
+
+2025-12-10 19:03:44,677 | INFO     | args.exp_name : RTformer_s_pressure_without_pos_nor_e300
+2025-12-10 19:03:44,678 | INFO     | Starting training with 1 GPUs
+2025-12-10 19:03:45,320 | INFO     | Total trainable parameters: 4614433
+2025-12-10 19:03:45,321 | INFO     | Data loaded: 384 training batches, 33 validation batches, 48 test batches
+2025-12-10 19:03:45,322 | INFO     | Loading best model for testing only
+[Testing]:   0%|          | 0/48 [00:00<?, ?it/s][Testing]:   2%|▏         | 1/48 [00:00<00:22,  2.12it/s][Testing]:   6%|▋         | 3/48 [00:00<00:08,  5.56it/s][Testing]:  10%|█         | 5/48 [00:00<00:05,  7.68it/s][Testing]:  15%|█▍        | 7/48 [00:00<00:04,  9.07it/s][Testing]:  19%|█▉        | 9/48 [00:01<00:03, 10.09it/s][Testing]:  23%|██▎       | 11/48 [00:01<00:03, 10.94it/s][Testing]:  27%|██▋       | 13/48 [00:01<00:03, 11.28it/s][Testing]:  31%|███▏      | 15/48 [00:01<00:02, 11.38it/s][Testing]:  35%|███▌      | 17/48 [00:01<00:02, 11.69it/s][Testing]:  40%|███▉      | 19/48 [00:01<00:02, 11.87it/s][Testing]:  44%|████▍     | 21/48 [00:02<00:02, 12.90it/s][Testing]:  48%|████▊     | 23/48 [00:02<00:02, 11.80it/s][Testing]:  52%|█████▏    | 25/48 [00:02<00:02, 11.08it/s][Testing]:  56%|█████▋    | 27/48 [00:02<00:01, 11.38it/s][Testing]:  60%|██████    | 29/48 [00:02<00:01, 11.61it/s][Testing]:  65%|██████▍   | 31/48 [00:03<00:01, 10.89it/s][Testing]:  69%|██████▉   | 33/48 [00:03<00:01, 11.62it/s][Testing]:  73%|███████▎  | 35/48 [00:03<00:01, 11.79it/s][Testing]:  77%|███████▋  | 37/48 [00:03<00:00, 11.92it/s][Testing]:  81%|████████▏ | 39/48 [00:03<00:00, 11.94it/s][Testing]:  85%|████████▌ | 41/48 [00:03<00:00, 11.98it/s][Testing]:  90%|████████▉ | 43/48 [00:03<00:00, 12.16it/s][Testing]:  94%|█████████▍| 45/48 [00:04<00:00, 12.15it/s][Testing]:  98%|█████████▊| 47/48 [00:04<00:00, 12.10it/s][Testing]: 100%|██████████| 48/48 [00:04<00:00, 10.87it/s]
+2025-12-10 19:03:50,040 | INFO     | *******************[35mL2_erro:[0m
+2025-12-10 19:03:50,041 | INFO     |  0.104793
+2025-12-10 19:03:50,041 | INFO     | *******************[35mmse_loss:[0m
+2025-12-10 19:03:50,041 | INFO     |  0.018796
+2025-12-10 19:03:50,041 | INFO     | *******************[35minference_time:[0m
+2025-12-10 19:03:50,041 | INFO     |  0.019956

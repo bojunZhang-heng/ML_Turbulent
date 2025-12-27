@@ -1,0 +1,16 @@
+2025-12-09 09:41:14,745 - INFO - args.exp_name : RTformer_DrivAerNet
+2025-12-09 09:41:14,768 - INFO - Starting training with 1 GPUs
+2025-12-09 09:41:23,505 - INFO - Total trainable parameters: 4524353
+Traceback (most recent call last):
+  File "/work/home/mae_zhangbj/ML_Turbulent/RopeTransolver/train_drivaernet.py", line 511, in <module>
+    main()
+  File "/work/home/mae_zhangbj/ML_Turbulent/RopeTransolver/train_drivaernet.py", line 507, in main
+    mp.spawn(train_and_evaluate, args=(world_size, args), nprocs=world_size, join=True)
+  File "/work/home/mae_zhangbj/miniconda3/envs/ab-ubt/lib/python3.10/site-packages/torch/multiprocessing/spawn.py", line 340, in spawn
+    return start_processes(fn, args, nprocs, join, daemon, start_method="spawn")
+  File "/work/home/mae_zhangbj/miniconda3/envs/ab-ubt/lib/python3.10/site-packages/torch/multiprocessing/spawn.py", line 296, in start_processes
+    while not context.join():
+  File "/work/home/mae_zhangbj/miniconda3/envs/ab-ubt/lib/python3.10/site-packages/torch/multiprocessing/spawn.py", line 212, in join
+    original_trace = pickle.load(fh)
+EOFError: Ran out of input
+slurmstepd: error: Detected 1 oom-kill event(s) in StepId=6410792.batch. Some of your processes may have been killed by the cgroup out-of-memory handler.

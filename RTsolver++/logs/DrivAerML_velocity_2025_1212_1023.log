@@ -1,0 +1,41 @@
+2025-12-12 10:23:08,493 | INFO     | Config:
+exp_name: velocity_N10k_lr1e-3_e250
+model:
+  input_dim: 3
+  output_dim: 3
+  head_num: 8
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 32
+  layer_num: 5
+  mlp_ratio: 1
+  dropout: 0.0
+training:
+  input: volume_anchor_position
+  target: volume_anchor_velocity
+  batch_size: 1
+  epochs: 250
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0
+  test_only: 1
+  gpus: '0'
+  root_dir: /mnt/wjc_group/mae-zhangbj/DrivAerML_dataset
+  seed: 42
+
+2025-12-12 10:23:08,494 | INFO     | args.exp_name : velocity_N10k_lr1e-3_e250
+2025-12-12 10:23:08,494 | INFO     | Starting training with 1 GPUs
+2025-12-12 10:23:08,709 | INFO     | Total trainable parameters: 2266059
+Traceback (most recent call last):
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train_DrivAerML.py", line 488, in <module>
+    main()
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train_DrivAerML.py", line 484, in main
+    train_and_evaluate(args, device)
+  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train_DrivAerML.py", line 93, in train_and_evaluate
+    train_dataloader, val_dataloader, test_dataloader = create_data_loaders(
+                                                        ^^^^^^^^^^^^^^^^^^^^
+TypeError: 'module' object is not callable

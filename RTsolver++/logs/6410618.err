@@ -1,0 +1,27 @@
+2025-12-08 19:53:21,602 - INFO - args.exp_name : RTformer_DrivAerNet
+2025-12-08 19:53:21,605 - INFO - Starting training with 1 GPUs
+2025-12-08 19:53:24,112 - INFO - Total trainable parameters: 4524353
+[rank0]:[W1208 19:53:24.818608325 ProcessGroupNCCL.cpp:1496] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+Traceback (most recent call last):
+  File "/work/home/mae_zhangbj/ML_Turbulent/RopeTransolver/train_drivaernet.py", line 513, in <module>
+    
+  File "/work/home/mae_zhangbj/ML_Turbulent/RopeTransolver/train_drivaernet.py", line 509, in main
+    
+  File "/work/home/mae_zhangbj/miniconda3/envs/ab-ubt/lib/python3.10/site-packages/torch/multiprocessing/spawn.py", line 340, in spawn
+    return start_processes(fn, args, nprocs, join, daemon, start_method="spawn")
+  File "/work/home/mae_zhangbj/miniconda3/envs/ab-ubt/lib/python3.10/site-packages/torch/multiprocessing/spawn.py", line 296, in start_processes
+    while not context.join():
+  File "/work/home/mae_zhangbj/miniconda3/envs/ab-ubt/lib/python3.10/site-packages/torch/multiprocessing/spawn.py", line 215, in join
+    raise ProcessRaisedException(msg, error_index, failed_process.pid)
+torch.multiprocessing.spawn.ProcessRaisedException: 
+
+-- Process 0 terminated with the following error:
+Traceback (most recent call last):
+  File "/work/home/mae_zhangbj/miniconda3/envs/ab-ubt/lib/python3.10/site-packages/torch/multiprocessing/spawn.py", line 90, in _wrap
+    fn(i, *args)
+  File "/work/home/mae_zhangbj/ML_Turbulent/RopeTransolver/train_drivaernet.py", line 130, in train_and_evaluate
+    train_data_lst, test_data_lst, val_data_lst, mean_data, std_data = Dataset.get_data_dict(args.dataload.directory)
+  File "/work/home/mae_zhangbj/ML_Turbulent/RopeTransolver/preprocessors_SATO/Dataset.py", line 89, in get_data_dict
+    with open(os.path.join(directory, 'norm', 'mean.pkl'), 'rb') as f:
+FileNotFoundError: [Errno 2] No such file or directory: '/work/home/mae_zhangbj/DrivAerNet_dataset/norm/mean.pkl'
+

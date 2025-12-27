@@ -1,0 +1,51 @@
+CUDA available GPUs: 1
+Current device index: 0
+Device name: Tesla V100-SXM2-32GB
+Physical GPU(s) specified in CUDA_VISIBLE_DEVICES: ['3']
+Using physical GPU 3 (visible as cuda:0 in PyTorch)
+2025-12-12 09:35:41,533 | INFO     | Config:
+exp_name: DrivAerNet_pressure_N3w_lr5e-4_e300
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 4
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 64
+  layer_num: 8
+  mlp_ratio: 2
+  dropout: 0.1
+training:
+  batch_size: 1
+  epochs: 300
+  lr: 0.0005
+  scheduler_step: 50
+  scheduler_gamma: 0.7
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 1
+  gpus: '0'
+  seed: 42
+dataload:
+  directory: /mnt/wjc_group/mae-zhangbj/DrivAerNet_dataset/
+
+2025-12-12 09:35:41,533 | INFO     | args.exp_name : DrivAerNet_pressure_N3w_lr5e-4_e300
+2025-12-12 09:35:41,533 | INFO     | Starting training with 1 GPUs
+2025-12-12 09:35:41,533 | INFO     | test1
+2025-12-12 09:35:41,747 | INFO     | test2
+2025-12-12 09:35:41,747 | INFO     | test3
+2025-12-12 09:35:42,770 | INFO     | test4
+2025-12-12 09:35:42,771 | INFO     | test5
+2025-12-12 09:35:42,772 | INFO     | test6
+2025-12-12 09:35:42,773 | INFO     | Total trainable parameters: 4524353
+2025-12-12 09:35:42,773 | INFO     | Data loaded: 686 training batches, 138 validation batches, 161 test batches
+2025-12-12 09:35:42,775 | INFO     | Loading best model for testing only
+[test_dataloader]:   0%|          | 0/161 [00:00<?, ?it/s][test_dataloader]:   1%|          | 1/161 [00:00<00:40,  3.92it/s][test_dataloader]:   2%|▏         | 3/161 [00:00<00:19,  8.29it/s][test_dataloader]:   3%|▎         | 5/161 [00:00<00:14, 10.64it/s][test_dataloader]:   4%|▍         | 7/161 [00:00<00:12, 12.20it/s][test_dataloader]:   6%|▌         | 9/161 [00:00<00:11, 13.22it/s][test_dataloader]:   7%|▋         | 11/161 [00:00<00:10, 13.88it/s][test_dataloader]:   8%|▊         | 13/161 [00:01<00:10, 14.34it/s][test_dataloader]:   9%|▉         | 15/161 [00:01<00:09, 14.65it/s][test_dataloader]:  11%|█         | 17/161 [00:01<00:09, 14.86it/s][test_dataloader]:  12%|█▏        | 19/161 [00:01<00:09, 15.00it/s][test_dataloader]:  13%|█▎        | 21/161 [00:01<00:09, 15.10it/s][test_dataloader]:  14%|█▍        | 23/161 [00:01<00:09, 15.16it/s][test_dataloader]:  16%|█▌        | 25/161 [00:01<00:08, 15.21it/s][test_dataloader]:  17%|█▋        | 27/161 [00:01<00:08, 15.25it/s][test_dataloader]:  18%|█▊        | 29/161 [00:02<00:08, 15.28it/s][test_dataloader]:  19%|█▉        | 31/161 [00:02<00:08, 15.29it/s][test_dataloader]:  20%|██        | 33/161 [00:02<00:08, 15.31it/s][test_dataloader]:  22%|██▏       | 35/161 [00:02<00:08, 15.31it/s][test_dataloader]:  23%|██▎       | 37/161 [00:02<00:08, 15.31it/s][test_dataloader]:  24%|██▍       | 39/161 [00:02<00:07, 15.31it/s][test_dataloader]:  25%|██▌       | 41/161 [00:02<00:07, 15.31it/s][test_dataloader]:  27%|██▋       | 43/161 [00:03<00:07, 15.32it/s][test_dataloader]:  28%|██▊       | 45/161 [00:03<00:07, 15.32it/s][test_dataloader]:  29%|██▉       | 47/161 [00:03<00:07, 15.32it/s][test_dataloader]:  30%|███       | 49/161 [00:03<00:07, 15.32it/s][test_dataloader]:  32%|███▏      | 51/161 [00:03<00:07, 15.32it/s][test_dataloader]:  33%|███▎      | 53/161 [00:03<00:07, 15.32it/s][test_dataloader]:  34%|███▍      | 55/161 [00:03<00:06, 15.33it/s][test_dataloader]:  35%|███▌      | 57/161 [00:03<00:06, 15.32it/s][test_dataloader]:  37%|███▋      | 59/161 [00:04<00:06, 15.32it/s][test_dataloader]:  38%|███▊      | 61/161 [00:04<00:06, 15.31it/s][test_dataloader]:  39%|███▉      | 63/161 [00:04<00:06, 15.32it/s][test_dataloader]:  40%|████      | 65/161 [00:04<00:06, 15.32it/s][test_dataloader]:  42%|████▏     | 67/161 [00:04<00:06, 15.32it/s][test_dataloader]:  43%|████▎     | 69/161 [00:04<00:06, 15.33it/s][test_dataloader]:  44%|████▍     | 71/161 [00:04<00:05, 15.34it/s][test_dataloader]:  45%|████▌     | 73/161 [00:04<00:05, 15.33it/s][test_dataloader]:  47%|████▋     | 75/161 [00:05<00:05, 15.33it/s][test_dataloader]:  48%|████▊     | 77/161 [00:05<00:05, 15.33it/s][test_dataloader]:  49%|████▉     | 79/161 [00:05<00:05, 15.33it/s][test_dataloader]:  50%|█████     | 81/161 [00:05<00:05, 15.33it/s][test_dataloader]:  52%|█████▏    | 83/161 [00:05<00:05, 15.32it/s][test_dataloader]:  53%|█████▎    | 85/161 [00:05<00:04, 15.33it/s][test_dataloader]:  54%|█████▍    | 87/161 [00:05<00:04, 15.31it/s][test_dataloader]:  55%|█████▌    | 89/161 [00:06<00:04, 15.32it/s][test_dataloader]:  57%|█████▋    | 91/161 [00:06<00:04, 15.32it/s][test_dataloader]:  58%|█████▊    | 93/161 [00:06<00:04, 15.32it/s][test_dataloader]:  59%|█████▉    | 95/161 [00:06<00:04, 15.32it/s][test_dataloader]:  60%|██████    | 97/161 [00:06<00:04, 15.32it/s][test_dataloader]:  61%|██████▏   | 99/161 [00:06<00:04, 15.32it/s][test_dataloader]:  63%|██████▎   | 101/161 [00:06<00:03, 15.31it/s][test_dataloader]:  64%|██████▍   | 103/161 [00:06<00:03, 15.31it/s][test_dataloader]:  65%|██████▌   | 105/161 [00:07<00:03, 15.32it/s][test_dataloader]:  66%|██████▋   | 107/161 [00:07<00:03, 15.33it/s][test_dataloader]:  68%|██████▊   | 109/161 [00:07<00:03, 15.33it/s][test_dataloader]:  69%|██████▉   | 111/161 [00:07<00:03, 15.33it/s][test_dataloader]:  70%|███████   | 113/161 [00:07<00:03, 15.34it/s][test_dataloader]:  71%|███████▏  | 115/161 [00:07<00:03, 15.32it/s][test_dataloader]:  73%|███████▎  | 117/161 [00:07<00:02, 15.32it/s][test_dataloader]:  74%|███████▍  | 119/161 [00:07<00:02, 15.32it/s][test_dataloader]:  75%|███████▌  | 121/161 [00:08<00:02, 15.32it/s][test_dataloader]:  76%|███████▋  | 123/161 [00:08<00:02, 15.32it/s][test_dataloader]:  78%|███████▊  | 125/161 [00:08<00:02, 15.32it/s][test_dataloader]:  79%|███████▉  | 127/161 [00:08<00:02, 15.32it/s][test_dataloader]:  80%|████████  | 129/161 [00:08<00:02, 15.32it/s][test_dataloader]:  81%|████████▏ | 131/161 [00:08<00:01, 15.32it/s][test_dataloader]:  83%|████████▎ | 133/161 [00:08<00:01, 15.32it/s][test_dataloader]:  84%|████████▍ | 135/161 [00:09<00:01, 15.32it/s][test_dataloader]:  85%|████████▌ | 137/161 [00:09<00:01, 15.33it/s][test_dataloader]:  86%|████████▋ | 139/161 [00:09<00:01, 15.32it/s][test_dataloader]:  88%|████████▊ | 141/161 [00:09<00:01, 15.32it/s][test_dataloader]:  89%|████████▉ | 143/161 [00:09<00:01, 15.31it/s][test_dataloader]:  90%|█████████ | 145/161 [00:09<00:01, 15.31it/s][test_dataloader]:  91%|█████████▏| 147/161 [00:09<00:00, 15.31it/s][test_dataloader]:  93%|█████████▎| 149/161 [00:09<00:00, 15.30it/s][test_dataloader]:  94%|█████████▍| 151/161 [00:10<00:00, 15.31it/s][test_dataloader]:  95%|█████████▌| 153/161 [00:10<00:00, 15.31it/s][test_dataloader]:  96%|█████████▋| 155/161 [00:10<00:00, 15.31it/s][test_dataloader]:  98%|█████████▊| 157/161 [00:10<00:00, 15.32it/s][test_dataloader]:  99%|█████████▉| 159/161 [00:10<00:00, 15.32it/s][test_dataloader]: 100%|██████████| 161/161 [00:10<00:00, 15.33it/s][test_dataloader]: 100%|██████████| 161/161 [00:10<00:00, 14.98it/s]
+2025-12-12 09:35:53,573 | INFO     | *******************[35mL2_erro:[0m
+2025-12-12 09:35:53,573 | INFO     |  0.949124
+2025-12-12 09:35:53,573 | INFO     | *******************[35mmse_loss:[0m
+2025-12-12 09:35:53,573 | INFO     |  0.061793
+2025-12-12 09:35:53,574 | INFO     | *******************[35minference_time:[0m
+2025-12-12 09:35:53,574 | INFO     |  0.000000

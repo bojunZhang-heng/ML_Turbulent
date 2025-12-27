@@ -1,0 +1,49 @@
+CUDA available GPUs: 1
+Current device index: 0
+Device name: Tesla V100-SXM2-32GB
+Physical GPU(s) specified in CUDA_VISIBLE_DEVICES: ['4']
+Using physical GPU 4 (visible as cuda:0 in PyTorch)
+2025-12-25 15:39:19,920 | INFO     | Config:
+exp_name: spressure_N10k_lr1e-3_e250
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 8
+  hidden_dim: 256
+  res: true
+  slice_num: 32
+  layer_num: 5
+  mlp_ratio: 1.5
+  dropout: 0.1
+training:
+  target: y_pres
+  x_mean:
+  - 1.575143
+  - -0.0188374
+  - 0.6046101
+  x_std:
+  - 1.3669719
+  - 0.6226963
+  - 0.39627418
+  y_mean: -94.5
+  y_std: 117.25
+  batch_size: 1
+  epochs: 250
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0
+  test_only: 0
+  gpus: '0'
+  seed: 42
+dataload:
+  directory: /mnt/wjc_group/mae-zhangbj/DrivAerNet_dataset/
+
+2025-12-25 15:39:19,920 | INFO     | args.exp_name : spressure_N10k_lr1e-3_e250
+2025-12-25 15:39:19,921 | INFO     | Starting training with 1 GPUs
+2025-12-25 15:39:24,256 | INFO     | Total trainable parameters: 3381321
+2025-12-25 15:39:24,256 | INFO     | Data loaded: 2457 training batches, 531 validation batches, 534 test batches
+2025-12-25 15:39:24,257 | INFO     | Staring training for 250 epochs
+[Training]:   0%|          | 0/2457 [00:00<?, ?it/s][Training]:   0%|          | 1/2457 [00:01<55:44,  1.36s/it][Training]:   0%|          | 2/2457 [00:02<44:34,  1.09s/it][Training]:   0%|          | 3/2457 [00:03<41:00,  1.00s/it][Training]:   0%|          | 4/2457 [00:04<39:18,  1.04it/s][Training]:   0%|          | 5/2457 [00:04<38:22,  1.07it/s][Training]:   0%|          | 6/2457 [00:05<37:50,  1.08it/s][Training]:   0%|          | 7/2457 [00:06<37:28,  1.09it/s][Training]:   0%|          | 8/2457 [00:07<37:13,  1.10it/s][Training]:   0%|          | 9/2457 [00:08<37:02,  1.10it/s][Training]:   0%|          | 10/2457 [00:09<36:56,  1.10it/s][Training]:   0%|          | 11/2457 [00:10<36:53,  1.11it/s][Training]:   0%|          | 12/2457 [00:11<36:50,  1.11it/s][Training]:   1%|          | 13/2457 [00:12<36:47,  1.11it/s][Training]:   1%|          | 14/2457 [00:13<36:45,  1.11it/s][Training]:   1%|          | 15/2457 [00:13<36:44,  1.11it/s][Training]:   1%|          | 16/2457 [00:14<36:41,  1.11it/s][Training]:   1%|          | 17/2457 [00:15<36:39,  1.11it/s][Training]:   1%|          | 18/2457 [00:16<36:39,  1.11it/s][Training]:   1%|          | 19/2457 [00:17<36:38,  1.11it/s][Training]:   1%|          | 20/2457 [00:18<36:38,  1.11it/s][Training]:   1%|          | 21/2457 [00:19<36:35,  1.11it/s][Training]:   1%|          | 22/2457 [00:20<36:34,  1.11it/s][Training]:   1%|          | 23/2457 [00:21<36:34,  1.11it/s][Training]:   1%|          | 24/2457 [00:22<36:31,  1.11it/s][Training]:   1%|          | 25/2457 [00:22<36:31,  1.11it/s][Training]:   1%|          | 26/2457 [00:23<36:31,  1.11it/s][Training]:   1%|          | 27/2457 [00:24<36:28,  1.11it/s][Training]:   1%|          | 28/2457 [00:25<36:29,  1.11it/s][Training]:   1%|          | 29/2457 [00:26<36:28,  1.11it/s][Training]:   1%|          | 30/2457 [00:27<36:28,  1.11it/s][Training]:   1%|▏         | 31/2457 [00:28<36:27,  1.11it/s][Training]:   1%|▏         | 32/2457 [00:29<36:24,  1.11it/s][Training]:   1%|▏         | 33/2457 [00:30<36:22,  1.11it/s][Training]:   1%|▏         | 34/2457 [00:31<36:23,  1.11it/s][Training]:   1%|▏         | 35/2457 [00:31<36:23,  1.11it/s][Training]:   1%|▏         | 36/2457 [00:32<36:22,  1.11it/s][Training]:   2%|▏         | 37/2457 [00:33<36:19,  1.11it/s][Training]:   2%|▏         | 38/2457 [00:34<36:19,  1.11it/s][Training]:   2%|▏         | 39/2457 [00:35<36:17,  1.11it/s][Training]:   2%|▏         | 40/2457 [00:36<36:17,  1.11it/s][Training]:   2%|▏         | 41/2457 [00:37<36:17,  1.11it/s][Training]:   2%|▏         | 42/2457 [00:38<36:17,  1.11it/s][Training]:   2%|▏         | 43/2457 [00:39<36:17,  1.11it/s][Training]:   2%|▏         | 44/2457 [00:40<36:16,  1.11it/s][Training]:   2%|▏         | 45/2457 [00:41<36:15,  1.11it/s][Training]:   2%|▏         | 46/2457 [00:41<36:14,  1.11it/s][Training]:   2%|▏         | 47/2457 [00:42<36:14,  1.11it/s][Training]:   2%|▏         | 48/2457 [00:43<36:12,  1.11it/s][Training]:   2%|▏         | 49/2457 [00:44<36:10,  1.11it/s][Training]:   2%|▏         | 50/2457 [00:45<36:09,  1.11it/s][Training]:   2%|▏         | 51/2457 [00:46<36:08,  1.11it/s][Training]:   2%|▏         | 52/2457 [00:47<36:08,  1.11it/s][Training]:   2%|▏         | 53/2457 [00:48<36:07,  1.11it/s][Training]:   2%|▏         | 54/2457 [00:49<36:07,  1.11it/s][Training]:   2%|▏         | 55/2457 [00:50<36:06,  1.11it/s][Training]:   2%|▏         | 56/2457 [00:50<36:05,  1.11it/s][Training]:   2%|▏         | 57/2457 [00:51<36:04,  1.11it/s][Training]:   2%|▏         | 58/2457 [00:52<36:04,  1.11it/s][Training]:   2%|▏         | 59/2457 [00:53<36:02,  1.11it/s][Training]:   2%|▏         | 60/2457 [00:54<36:02,  1.11it/s][Training]:   2%|▏         | 61/2457 [00:55<36:01,  1.11it/s][Training]:   3%|▎         | 62/2457 [00:56<36:00,  1.11it/s][Training]:   3%|▎         | 63/2457 [00:57<36:00,  1.11it/s][Training]:   3%|▎         | 64/2457 [00:58<35:59,  1.11it/s][Training]:   3%|▎         | 65/2457 [00:59<35:58,  1.11it/s][Training]:   3%|▎         | 66/2457 [00:59<35:57,  1.11it/s][Training]:   3%|▎         | 67/2457 [01:00<35:56,  1.11it/s][Training]:   3%|▎         | 68/2457 [01:01<35:55,  1.11it/s][Training]:   3%|▎         | 69/2457 [01:02<35:54,  1.11it/s][Training]:   3%|▎         | 70/2457 [01:03<35:53,  1.11it/s][Training]:   3%|▎         | 71/2457 [01:04<35:53,  1.11it/s][Training]:   3%|▎         | 72/2457 [01:05<35:53,  1.11it/s][Training]:   3%|▎         | 73/2457 [01:06<35:52,  1.11it/s][Training]:   3%|▎         | 74/2457 [01:07<35:50,  1.11it/s][Training]:   3%|▎         | 75/2457 [01:08<35:50,  1.11it/s][Training]:   3%|▎         | 76/2457 [01:08<35:48,  1.11it/s][Training]:   3%|▎         | 77/2457 [01:09<35:47,  1.11it/s][Training]:   3%|▎         | 78/2457 [01:10<35:46,  1.11it/s][Training]:   3%|▎         | 79/2457 [01:11<35:45,  1.11it/s][Training]:   3%|▎         | 80/2457 [01:12<35:45,  1.11it/s][Training]:   3%|▎         | 81/2457 [01:13<35:44,  1.11it/s][Training]:   3%|▎         | 82/2457 [01:14<35:43,  1.11it/s][Training]:   3%|▎         | 83/2457 [01:15<35:43,  1.11it/s][Training]:   3%|▎         | 84/2457 [01:16<35:42,  1.11it/s][Training]:   3%|▎         | 85/2457 [01:17<35:40,  1.11it/s][Training]:   4%|▎         | 86/2457 [01:18<35:40,  1.11it/s][Training]:   4%|▎         | 87/2457 [01:18<35:38,  1.11it/s][Training]:   4%|▎         | 88/2457 [01:19<35:35,  1.11it/s][Training]:   4%|▎         | 89/2457 [01:20<35:35,  1.11it/s][Training]:   4%|▎         | 90/2457 [01:21<35:34,  1.11it/s][Training]:   4%|▎         | 91/2457 [01:22<35:34,  1.11it/s][Training]:   4%|▎         | 92/2457 [01:23<35:34,  1.11it/s][Training]:   4%|▍         | 93/2457 [01:24<35:33,  1.11it/s][Training]:   4%|▍         | 94/2457 [01:25<35:31,  1.11it/s][Training]:   4%|▍         | 95/2457 [01:26<35:31,  1.11it/s][Training]:   4%|▍         | 96/2457 [01:27<35:29,  1.11it/s]

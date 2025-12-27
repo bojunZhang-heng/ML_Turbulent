@@ -1,0 +1,103 @@
+CUDA available GPUs: 1
+Current device index: 0
+Device name: Tesla V100-SXM2-32GB
+Physical GPU(s) specified in CUDA_VISIBLE_DEVICES: ['3']
+Using physical GPU 3 (visible as cuda:0 in PyTorch)
+2025-12-11 10:08:41,166 | INFO     | Config:
+exp_name: DrivAerNet_pressure_N3w_lr5e-4_e300
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 4
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 64
+  layer_num: 8
+  mlp_ratio: 2
+  dropout: 0.1
+training:
+  batch_size: 1
+  epochs: 150
+  lr: 0.0005
+  scheduler_step: 50
+  scheduler_gamma: 0.7
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  gpus: '0'
+  seed: 42
+dataload:
+  directory: /mnt/wjc_group/mae-zhangbj/DrivAerNet_dataset/
+
+2025-12-11 10:08:41,166 | INFO     | args.exp_name : DrivAerNet_pressure_N3w_lr5e-4_e300
+2025-12-11 10:08:41,166 | INFO     | Starting training with 1 GPUs
+points_0001.npy
+pressure_0001.npy
+points_0002.npy
+pressure_0002.npy
+points_0003.npy
+pressure_0003.npy
+points_0004.npy
+pressure_0004.npy
+points_0005.npy
+pressure_0005.npy
+points_0006.npy
+pressure_0006.npy
+points_0008.npy
+pressure_0008.npy
+points_0009.npy
+pressure_0009.npy
+points_0010.npy
+pressure_0010.npy
+points_0011.npy
+pressure_0011.npy
+points_0012.npy
+pressure_0012.npy
+points_0013.npy
+pressure_0013.npy
+points_0014.npy
+pressure_0014.npy
+points_0015.npy
+pressure_0015.npy
+points_0016.npy
+pressure_0016.npy
+points_0017.npy
+pressure_0017.npy
+points_0018.npy
+pressure_0018.npy
+points_0019.npy
+pressure_0019.npy
+points_0020.npy
+pressure_0020.npy
+points_0021.npy
+pressure_0021.npy
+points_0022.npy
+pressure_0022.npy
+points_0023.npy
+pressure_0023.npy
+points_0024.npy
+pressure_0024.npy
+points_0025.npy
+pressure_0025.npy
+points_0026.npy
+pressure_0026.npy
+points_0027.npy
+pressure_0027.npy
+points_0028.npy
+pressure_0028.npy
+points_0029.npy
+pressure_0029.npy
+2025-12-11 10:08:41,704 | INFO     | Total trainable parameters: 4524353
+2025-12-11 10:08:41,704 | INFO     | Data loaded: 18 training batches, 4 validation batches, 6 test batches
+2025-12-11 10:08:41,705 | INFO     | Staring training for 150 epochs
+[Training]:   0%|          | 0/18 [00:00<?, ?it/s][Training]:   6%|▌         | 1/18 [00:00<00:13,  1.26it/s][Training]:  11%|█         | 2/18 [00:01<00:08,  1.78it/s][Training]:  17%|█▋        | 3/18 [00:01<00:07,  2.05it/s][Training]:  22%|██▏       | 4/18 [00:01<00:06,  2.23it/s][Training]:  28%|██▊       | 5/18 [00:02<00:05,  2.33it/s][Training]:  33%|███▎      | 6/18 [00:02<00:05,  2.39it/s][Training]:  39%|███▉      | 7/18 [00:03<00:04,  2.43it/s][Training]:  44%|████▍     | 8/18 [00:03<00:04,  2.46it/s][Training]:  50%|█████     | 9/18 [00:03<00:03,  2.49it/s][Training]:  56%|█████▌    | 10/18 [00:04<00:03,  2.50it/s][Training]:  61%|██████    | 11/18 [00:04<00:02,  2.51it/s][Training]:  67%|██████▋   | 12/18 [00:05<00:02,  2.52it/s][Training]:  72%|███████▏  | 13/18 [00:05<00:01,  2.52it/s][Training]:  78%|███████▊  | 14/18 [00:05<00:01,  2.52it/s][Training]:  83%|████████▎ | 15/18 [00:06<00:01,  2.52it/s][Training]:  89%|████████▉ | 16/18 [00:06<00:00,  2.52it/s][Training]:  94%|█████████▍| 17/18 [00:07<00:00,  2.52it/s][Training]: 100%|██████████| 18/18 [00:07<00:00,  2.51it/s][Training]: 100%|██████████| 18/18 [00:07<00:00,  2.38it/s]
+[Validation]:   0%|          | 0/4 [00:00<?, ?it/s][Validation]:  25%|██▌       | 1/4 [00:00<00:00,  4.34it/s][Validation]:  50%|█████     | 2/4 [00:00<00:00,  5.48it/s][Validation]:  75%|███████▌  | 3/4 [00:00<00:00,  5.99it/s][Validation]: 100%|██████████| 4/4 [00:00<00:00,  6.18it/s][Validation]: 100%|██████████| 4/4 [00:00<00:00,  5.59it/s]
+2025-12-11 10:08:50,083 | INFO     | Epoch 1/150 - Train Loss: 1.341638, Val Loss: 0.926675[0m
+2025-12-11 10:08:50,161 | INFO     | New best model saved with Val Loss: 0.926675
+[Training]:   0%|          | 0/18 [00:00<?, ?it/s][Training]:   6%|▌         | 1/18 [00:00<00:07,  2.16it/s][Training]:  11%|█         | 2/18 [00:00<00:06,  2.36it/s][Training]:  17%|█▋        | 3/18 [00:01<00:06,  2.44it/s][Training]:  22%|██▏       | 4/18 [00:01<00:05,  2.49it/s][Training]:  28%|██▊       | 5/18 [00:02<00:05,  2.49it/s][Training]:  33%|███▎      | 6/18 [00:02<00:04,  2.50it/s][Training]:  39%|███▉      | 7/18 [00:02<00:04,  2.50it/s][Training]:  44%|████▍     | 8/18 [00:03<00:03,  2.52it/s][Training]:  50%|█████     | 9/18 [00:03<00:03,  2.52it/s][Training]:  56%|█████▌    | 10/18 [00:04<00:03,  2.53it/s][Training]:  61%|██████    | 11/18 [00:04<00:02,  2.53it/s][Training]:  67%|██████▋   | 12/18 [00:04<00:02,  2.53it/s][Training]:  72%|███████▏  | 13/18 [00:05<00:01,  2.53it/s][Training]:  78%|███████▊  | 14/18 [00:05<00:01,  2.52it/s][Training]:  83%|████████▎ | 15/18 [00:06<00:01,  2.52it/s][Training]:  89%|████████▉ | 16/18 [00:06<00:00,  2.52it/s][Training]:  94%|█████████▍| 17/18 [00:06<00:00,  2.52it/s][Training]: 100%|██████████| 18/18 [00:07<00:00,  2.53it/s][Training]: 100%|██████████| 18/18 [00:07<00:00,  2.50it/s]
+[Validation]:   0%|          | 0/4 [00:00<?, ?it/s][Validation]:  25%|██▌       | 1/4 [00:00<00:00,  4.38it/s][Validation]:  50%|█████     | 2/4 [00:00<00:00,  5.46it/s][Validation]:  75%|███████▌  | 3/4 [00:00<00:00,  5.89it/s][Validation]: 100%|██████████| 4/4 [00:00<00:00,  6.20it/s][Validation]: 100%|██████████| 4/4 [00:00<00:00,  5.65it/s]
+2025-12-11 10:08:58,189 | INFO     | Epoch 2/150 - Train Loss: 0.946820, Val Loss: 0.910298[0m
+2025-12-11 10:08:58,269 | INFO     | New best model saved with Val Loss: 0.910298
+[Training]:   0%|          | 0/18 [00:00<?, ?it/s][Training]:   6%|▌         | 1/18 [00:00<00:08,  2.10it/s][Training]:  11%|█         | 2/18 [00:00<00:06,  2.33it/s][Training]:  17%|█▋        | 3/18 [00:01<00:06,  2.42it/s][Training]:  22%|██▏       | 4/18 [00:01<00:05,  2.45it/s][Training]:  28%|██▊       | 5/18 [00:02<00:05,  2.48it/s][Training]:  33%|███▎      | 6/18 [00:02<00:04,  2.50it/s][Training]:  39%|███▉      | 7/18 [00:02<00:04,  2.51it/s][Training]:  44%|████▍     | 8/18 [00:03<00:03,  2.51it/s][Training]:  50%|█████     | 9/18 [00:03<00:03,  2.52it/s][Training]:  56%|█████▌    | 10/18 [00:04<00:03,  2.52it/s][Training]:  61%|██████    | 11/18 [00:04<00:02,  2.52it/s]

@@ -1,0 +1,57 @@
+CUDA available GPUs: 1
+Current device index: 0
+Device name: Tesla V100-SXM2-32GB
+Physical GPU(s) specified in CUDA_VISIBLE_DEVICES: ['3']
+Using physical GPU 3 (visible as cuda:0 in PyTorch)
+2025-12-19 12:56:35,990 | INFO     | Config:
+exp_name: spressure_N10k_lr1e-3_e250
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 8
+  hidden_dim: 256
+  res: true
+  slice_num: 32
+  layer_num: 5
+  mlp_ratio: 1.5
+  dropout: 0.1
+training:
+  batch_size: 1
+  epochs: 250
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0
+  test_only: 0
+  gpus: '0'
+  seed: 42
+dataload:
+  directory: /mnt/wjc_group/mae-zhangbj/DrivAerNet_dataset/
+
+2025-12-19 12:56:35,991 | INFO     | args.exp_name : spressure_N10k_lr1e-3_e250
+2025-12-19 12:56:35,991 | INFO     | Starting training with 1 GPUs
+2025-12-19 12:56:37,001 | INFO     | Total trainable parameters: 3381321
+2025-12-19 12:56:37,001 | INFO     | Data loaded: 405 training batches, 81 validation batches, 106 test batches
+2025-12-19 12:56:37,001 | INFO     | Staring training for 250 epochs
+[Training]:   0%|          | 0/405 [00:00<?, ?it/s]2025-12-19 12:56:37,098 | INFO     | x.shape: torch.Size([1, 10000, 3])
+2025-12-19 12:56:37,098 | INFO     | y.shape: torch.Size([1, 10000, 1])
+[Training]:   0%|          | 1/405 [00:01<11:38,  1.73s/it]2025-12-19 12:56:38,733 | INFO     | x.shape: torch.Size([1, 10000, 3])
+2025-12-19 12:56:38,734 | INFO     | y.shape: torch.Size([1, 10000, 1])
+[Training]:   0%|          | 2/405 [00:03<10:09,  1.51s/it]2025-12-19 12:56:40,093 | INFO     | x.shape: torch.Size([1, 10000, 3])
+2025-12-19 12:56:40,093 | INFO     | y.shape: torch.Size([1, 10000, 1])
+[Training]:   1%|          | 3/405 [00:04<09:40,  1.44s/it]2025-12-19 12:56:41,454 | INFO     | x.shape: torch.Size([1, 10000, 3])
+2025-12-19 12:56:41,455 | INFO     | y.shape: torch.Size([1, 10000, 1])
+[Training]:   1%|          | 4/405 [00:05<09:26,  1.41s/it]2025-12-19 12:56:42,817 | INFO     | x.shape: torch.Size([1, 10000, 3])
+2025-12-19 12:56:42,817 | INFO     | y.shape: torch.Size([1, 10000, 1])
+[Training]:   1%|          | 5/405 [00:07<09:17,  1.39s/it]2025-12-19 12:56:44,177 | INFO     | x.shape: torch.Size([1, 10000, 3])
+2025-12-19 12:56:44,177 | INFO     | y.shape: torch.Size([1, 10000, 1])
+[Training]:   1%|▏         | 6/405 [00:08<09:10,  1.38s/it]2025-12-19 12:56:45,534 | INFO     | x.shape: torch.Size([1, 10000, 3])
+2025-12-19 12:56:45,534 | INFO     | y.shape: torch.Size([1, 10000, 1])
+[Training]:   2%|▏         | 7/405 [00:09<09:06,  1.37s/it]2025-12-19 12:56:46,893 | INFO     | x.shape: torch.Size([1, 10000, 3])
+2025-12-19 12:56:46,894 | INFO     | y.shape: torch.Size([1, 10000, 1])
+[Training]:   2%|▏         | 8/405 [00:11<09:03,  1.37s/it]2025-12-19 12:56:48,254 | INFO     | x.shape: torch.Size([1, 10000, 3])
+2025-12-19 12:56:48,254 | INFO     | y.shape: torch.Size([1, 10000, 1])
+[Training]:   2%|▏         | 9/405 [00:12<09:01,  1.37s/it]2025-12-19 12:56:49,615 | INFO     | x.shape: torch.Size([1, 10000, 3])
+2025-12-19 12:56:49,615 | INFO     | y.shape: torch.Size([1, 10000, 1])

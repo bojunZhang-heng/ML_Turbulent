@@ -1,0 +1,35 @@
+2025-12-12 13:04:55,375 | INFO     | Config:
+exp_name: velocity_N10k_lr1e-3_e250
+model:
+  input_dim: 3
+  output_dim: 3
+  head_num: 8
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 32
+  layer_num: 5
+  mlp_ratio: 1
+  dropout: 0.0
+training:
+  input: volume_anchor_position
+  target: volume_anchor_velocity
+  batch_size: 1
+  epochs: 250
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0
+  test_only: 1
+  gpus: '0'
+  root_dir: /mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small
+  seed: 42
+
+2025-12-12 13:04:55,375 | INFO     | args.exp_name : velocity_N10k_lr1e-3_e250
+2025-12-12 13:04:55,375 | INFO     | Starting training with 1 GPUs
+2025-12-12 13:04:55,591 | INFO     | Total trainable parameters: 2266059
+2025-12-12 13:04:55,592 | INFO     | Data loaded: 380 training batches, 33 validation batches, 48 test batches
+2025-12-12 13:04:55,592 | INFO     | Loading best model for testing only
+[Testing]:   0%|          | 0/48 [00:00<?, ?it/s]
