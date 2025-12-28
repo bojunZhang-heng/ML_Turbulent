@@ -71,15 +71,12 @@ class Model(nn.Module):
 
         x_norm = x[:, :, 0:1]
         x_phase = x[:, :, 1:3]
-        logging.info(f"x_norm: {x_norm.shape}")
-        logging.info(f"x_phase: {x_phase.shape}")
 
 
         # rope frequencies batch size only for 1
         volume_rope = self.rope(x_phase)
         volume_decoder_attn_kwargs = {}
         volume_decoder_attn_kwargs["freqs"] = volume_rope
-        logging.info(f"volume_rope.shape: {volume_rope.shape}")
 
         fx = self.pos_embed(x_norm)
         fx = self.preprocess(fx)
