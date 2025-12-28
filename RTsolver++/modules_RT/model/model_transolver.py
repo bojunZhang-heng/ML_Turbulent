@@ -34,10 +34,10 @@ class Model(nn.Module):
         self.hidden_dim = hidden_dim
         self.head_num = head_num
         self.space_dim = space_dim
-        self.rope = RopeFrequency(dim=hidden_dim // head_num, ndim=space_dim)
+        self.rope = RopeFrequency(dim=hidden_dim // head_num, ndim=2)
 
         # pos_embed with MLP for volume
-        self.pos_embed = ContinuousSincosEmbed(dim=hidden_dim, ndim=space_dim)
+        self.pos_embed = ContinuousSincosEmbed(dim=hidden_dim, ndim=1)
         self.volume_bias = nn.Sequential(
             nn.Linear(hidden_dim, hidden_dim),
             nn.GELU(),
@@ -68,13 +68,20 @@ class Model(nn.Module):
             nn.init.constant_(m.weight, 1.0)
 
     def forward(self, x):
-        volume_decoder_attn_kwargs = {}
+
+        x_norm = x[:, :, 0:1]
+        x_phase = x[:, :, 1:3]
+        logging.info(f"x_norm: {x_norm.shape}")
+        logging.info(f"x_phase: {x_phase.shape}")
+
 
         # rope frequencies batch size only for 1
-        volume_rope = self.rope(x)
+        volume_rope = self.rope(x_phase)
+        volume_decoder_attn_kwargs = {}
         volume_decoder_attn_kwargs["freqs"] = volume_rope
+        logging.info(f"volume_rope.shape: {volume_rope.shape}")
 
-        fx = self.pos_embed(x)
+        fx = self.pos_embed(x_norm)
         fx = self.preprocess(fx)
 
         #fx = self.preprocess(x)
