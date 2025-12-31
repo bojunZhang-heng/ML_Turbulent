@@ -29,8 +29,6 @@ M = Fore.MAGENTA
 C = Fore.CYAN
 RESET = Style.RESET_ALL
 
-
-
 def initialize_model(args, device):
     """Initialize and return the RegDGCN model."""
 
@@ -260,11 +258,11 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, device, args)
         x = data[args.training.input].to(device)
         y = data[args.training.target].to(device)
 
-        X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
-        X_STD  = torch.tensor(args.training.x_std, dtype=x.dtype, device=x.device)
+    #    X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
+    #    X_STD  = torch.tensor(args.training.x_std, dtype=x.dtype, device=x.device)
         Y_MEAN = torch.tensor(args.training.y_mean, dtype=x.dtype, device=x.device)
         Y_STD = torch.tensor(args.training.y_std, dtype=x.dtype, device=x.device)
-        x = (x - X_MEAN) / X_STD
+    #    x = (x - X_MEAN) / X_STD
         y = (y - Y_MEAN) / Y_STD
 
         y_hat = model(x)
@@ -288,11 +286,11 @@ def validate(model, val_dataloader, criterion, device, args):
             x = data[args.training.input].to(device)
             y = data[args.training.target].to(device)
 
-            X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
-            X_STD  = torch.tensor(args.training.x_std, dtype=x.dtype, device=x.device)
+    #        X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
+    #        X_STD  = torch.tensor(args.training.x_std, dtype=x.dtype, device=x.device)
             Y_MEAN = torch.tensor(args.training.y_mean, dtype=x.dtype, device=x.device)
             Y_STD = torch.tensor(args.training.y_std, dtype=x.dtype, device=x.device)
-            x = (x - X_MEAN) / X_STD
+    #        x = (x - X_MEAN) / X_STD
             y = (y - Y_MEAN) / Y_STD
             y_hat = model(x)
             #y_hat = y_hat * PRESSURE_STD + PRESSURE_MEAN
@@ -330,12 +328,12 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
             x = data[args.training.input].to(device)
             y = data[args.training.target].to(device)
 
-            X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
-            X_STD  = torch.tensor(args.training.x_std, dtype=x.dtype, device=x.device)
+    #        X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
+    #        X_STD  = torch.tensor(args.training.x_std, dtype=x.dtype, device=x.device)
             Y_MEAN = torch.tensor(args.training.y_mean, dtype=x.dtype, device=x.device)
             Y_STD = torch.tensor(args.training.y_std, dtype=x.dtype, device=x.device)
 
-            x = (x - X_MEAN) / X_STD
+    #        x = (x - X_MEAN) / X_STD
             y = (y - Y_MEAN) / Y_STD
             y_hat = model(x)
 

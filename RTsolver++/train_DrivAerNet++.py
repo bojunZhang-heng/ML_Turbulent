@@ -260,16 +260,17 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, device, args)
 
     for data in tqdm(train_dataloader, desc="[Training]"):
         x = data[args.training.input].to(device)
+        x_sph = data[args.training.input_sph].to(device)
         y = data[args.training.target].to(device)
 
-        X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
-        X_STD  = torch.tensor(args.training.x_std, dtype=x.dtype, device=x.device)
+    #    X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
+    #    X_STD  = torch.tensor(args.training.x_std, dtype=x.dtype, device=x.device)
         Y_MEAN = torch.tensor(args.training.y_mean, dtype=x.dtype, device=x.device)
         Y_STD = torch.tensor(args.training.y_std, dtype=x.dtype, device=x.device)
-        x = (x - X_MEAN) / X_STD
+    #    x = (x - X_MEAN) / X_STD
         y = (y - Y_MEAN) / Y_STD
 
-        y_hat = model(x)
+        y_hat = model(x, x_sph)
         loss = criterion(y_hat, y)
         optimizer.zero_grad()
         loss.backward()
@@ -288,16 +289,16 @@ def validate(model, val_dataloader, criterion, device, args):
     with torch.no_grad():
         for data in tqdm(val_dataloader, desc="[Validation]"):
             x = data[args.training.input].to(device)
+            x_sph = data[args.training.input_sph].to(device)
             y = data[args.training.target].to(device)
 
-            X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
-            X_STD  = torch.tensor(args.training.x_std, dtype=x.dtype, device=x.device)
+    #        X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
+    #        X_STD  = torch.tensor(args.training.x_std, dtype=x.dtype, device=x.device)
             Y_MEAN = torch.tensor(args.training.y_mean, dtype=x.dtype, device=x.device)
             Y_STD = torch.tensor(args.training.y_std, dtype=x.dtype, device=x.device)
-            x = (x - X_MEAN) / X_STD
+    #        x = (x - X_MEAN) / X_STD
             y = (y - Y_MEAN) / Y_STD
-            y_hat = model(x)
-            #y_hat = y_hat * PRESSURE_STD + PRESSURE_MEAN
+            y_hat = model(x, x_sph)
             loss = criterion(y_hat, y)
 
             total_loss += loss.item()
@@ -330,16 +331,17 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
     with torch.no_grad():
         for data in tqdm(test_dataloader, desc="[test_dataloader]"):
             x = data[args.training.input].to(device)
+            x_sph = data[args.training.input_sph].to(device)
             y = data[args.training.target].to(device)
 
-            X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
-            X_STD  = torch.tensor(args.training.x_std, dtype=x.dtype, device=x.device)
+    #        X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
+    #        X_STD  = torch.tensor(args.training.x_std, dtype=x.dtype, device=x.device)
             Y_MEAN = torch.tensor(args.training.y_mean, dtype=x.dtype, device=x.device)
             Y_STD = torch.tensor(args.training.y_std, dtype=x.dtype, device=x.device)
 
-            x = (x - X_MEAN) / X_STD
+    #        x = (x - X_MEAN) / X_STD
             y = (y - Y_MEAN) / Y_STD
-            y_hat = model(x)
+            y_hat = model(x, x_sph)
 
             loss = criterion(y_hat, y)
             total_loss += loss.item()

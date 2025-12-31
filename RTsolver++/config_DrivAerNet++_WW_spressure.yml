@@ -13,6 +13,7 @@ model:
 
 training:
     input: "x_pres"
+    input_sph: "x_pres_sph"
     target: "y_pres"
     x_mean: [1.5160021e+00, -5.4310558e-06,   5.8746094e-01]
     x_std:  [1.415669,       0.65769494,      0.38634354]

@@ -1,0 +1,646 @@
+2025-12-28 14:02:23,777 | INFO     | Config:
+exp_name: test
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 8
+  hidden_dim: 256
+  res: true
+  slice_num: 32
+  layer_num: 5
+  mlp_ratio: 1.5
+  dropout: 0.1
+training:
+  input: x_pres
+  target: y_pres
+  x_mean:
+  - 1.5163924
+  - -2.8424793e-05
+  - 0.59128469
+  x_std:
+  - 1.415569
+  - 0.65566987
+  - 0.38558245
+  y_mean: -93.28388
+  y_std: 121.19236
+  batch_size: 1
+  epochs: 250
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0
+  test_only: 0
+  gpus: '0'
+  seed: 42
+dataload:
+  directory: /mnt/wjc_group/mae-zhangbj/DrivAerNet++_dataset/E_S_WWC_WM
+
+2025-12-28 14:02:23,777 | INFO     | args.exp_name : test
+2025-12-28 14:02:23,777 | INFO     | Starting training with 1 GPUs
+2025-12-28 14:02:25,715 | INFO     | Total trainable parameters: 3381321
+2025-12-28 14:02:25,715 | INFO     | Data loaded: 456 training batches, 117 validation batches, 109 test batches
+2025-12-28 14:02:25,716 | INFO     | Staring training for 250 epochs
+2025-12-28 14:02:25,907 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:02:25,907 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:02:25,962 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:02:25,976 | INFO     | emb.shape: torch.Size([1, 10000, 1, 256])
+2025-12-28 14:02:28,043 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:02:28,043 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:02:28,043 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:02:28,043 | INFO     | emb.shape: torch.Size([1, 10000, 1, 256])
+2025-12-28 14:02:29,851 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:02:29,851 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:02:29,852 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:02:29,852 | INFO     | emb.shape: torch.Size([1, 10000, 1, 256])
+2025-12-28 14:02:31,658 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:02:31,658 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:02:31,658 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:02:31,658 | INFO     | emb.shape: torch.Size([1, 10000, 1, 256])
+2025-12-28 14:02:33,465 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:02:33,466 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:02:33,466 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:02:33,466 | INFO     | emb.shape: torch.Size([1, 10000, 1, 256])
+2025-12-28 14:02:35,272 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:02:35,272 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:02:35,272 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:02:35,272 | INFO     | emb.shape: torch.Size([1, 10000, 1, 256])
+2025-12-28 14:02:37,078 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:02:37,078 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:02:37,078 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:02:37,079 | INFO     | emb.shape: torch.Size([1, 10000, 1, 256])
+2025-12-28 14:02:38,885 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:02:38,885 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:02:38,885 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:02:38,885 | INFO     | emb.shape: torch.Size([1, 10000, 1, 256])
+2025-12-28 14:02:40,694 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:02:40,694 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:02:40,695 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:02:40,695 | INFO     | emb.shape: torch.Size([1, 10000, 1, 256])
+2025-12-28 14:02:42,500 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:02:42,500 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:02:42,501 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:02:42,501 | INFO     | emb.shape: torch.Size([1, 10000, 1, 256])
+2025-12-28 14:02:44,307 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:02:44,308 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:02:44,308 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:02:44,308 | INFO     | emb.shape: torch.Size([1, 10000, 1, 256])
+2025-12-28 14:02:46,114 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:02:46,114 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:02:46,114 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:02:46,115 | INFO     | emb.shape: torch.Size([1, 10000, 1, 256])
+2025-12-28 14:02:47,920 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:02:47,921 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:02:47,921 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:02:47,921 | INFO     | emb.shape: torch.Size([1, 10000, 1, 256])
+2025-12-28 14:02:49,729 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:02:49,729 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:02:49,729 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:02:49,730 | INFO     | emb.shape: torch.Size([1, 10000, 1, 256])
+2025-12-28 14:02:51,535 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:02:51,535 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:02:51,535 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:02:51,535 | INFO     | emb.shape: torch.Size([1, 10000, 1, 256])
+2025-12-28 14:02:53,342 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:02:53,342 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:02:53,343 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:02:53,343 | INFO     | emb.shape: torch.Size([1, 10000, 1, 256])
+2025-12-28 14:02:55,149 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:02:55,149 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:02:55,150 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:02:55,150 | INFO     | emb.shape: torch.Size([1, 10000, 1, 256])
+2025-12-28 14:02:56,957 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:02:56,957 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:02:56,958 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:02:56,958 | INFO     | emb.shape: torch.Size([1, 10000, 1, 256])
+2025-12-28 14:02:58,757 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:02:58,758 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:02:58,758 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:02:58,758 | INFO     | emb.shape: torch.Size([1, 10000, 1, 256])
+2025-12-28 14:03:00,565 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:03:00,565 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:03:00,565 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:03:00,566 | INFO     | emb.shape: torch.Size([1, 10000, 1, 256])
+2025-12-28 14:03:02,374 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:03:02,375 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:03:02,375 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:03:02,375 | INFO     | emb.shape: torch.Size([1, 10000, 1, 256])
+2025-12-28 14:03:04,185 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:03:04,186 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:03:04,186 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:03:04,186 | INFO     | emb.shape: torch.Size([1, 10000, 1, 256])
+2025-12-28 14:03:05,996 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:03:05,996 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:03:05,996 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:03:05,996 | INFO     | emb.shape: torch.Size([1, 10000, 1, 256])
+2025-12-28 14:03:07,805 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:03:07,805 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:03:07,805 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:03:07,805 | INFO     | emb.shape: torch.Size([1, 10000, 1, 256])
+2025-12-28 14:03:09,613 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:03:09,613 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:03:09,614 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:03:09,614 | INFO     | emb.shape: torch.Size([1, 10000, 1, 256])
+2025-12-28 14:06:58,905 | INFO     | Config:
+exp_name: test
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 8
+  hidden_dim: 256
+  res: true
+  slice_num: 32
+  layer_num: 5
+  mlp_ratio: 1.5
+  dropout: 0.1
+training:
+  input: x_pres
+  target: y_pres
+  x_mean:
+  - 1.5163924
+  - -2.8424793e-05
+  - 0.59128469
+  x_std:
+  - 1.415569
+  - 0.65566987
+  - 0.38558245
+  y_mean: -93.28388
+  y_std: 121.19236
+  batch_size: 1
+  epochs: 250
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0
+  test_only: 0
+  gpus: '0'
+  seed: 42
+dataload:
+  directory: /mnt/wjc_group/mae-zhangbj/DrivAerNet++_dataset/E_S_WWC_WM
+
+2025-12-28 14:06:58,905 | INFO     | args.exp_name : test
+2025-12-28 14:06:58,905 | INFO     | Starting training with 1 GPUs
+2025-12-28 14:07:00,753 | INFO     | Total trainable parameters: 3381321
+2025-12-28 14:07:00,754 | INFO     | Data loaded: 456 training batches, 117 validation batches, 109 test batches
+2025-12-28 14:07:00,754 | INFO     | Staring training for 250 epochs
+2025-12-28 14:07:00,930 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:07:00,930 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:07:00,964 | INFO     | out.shape: torch.Size([1, 10000, 2, 8])
+2025-12-28 14:07:00,978 | INFO     | out.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:07:00,992 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:07:03,063 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:07:03,064 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:07:03,064 | INFO     | out.shape: torch.Size([1, 10000, 2, 8])
+2025-12-28 14:07:03,064 | INFO     | out.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:07:03,064 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:07:04,873 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:07:04,873 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:07:04,873 | INFO     | out.shape: torch.Size([1, 10000, 2, 8])
+2025-12-28 14:07:04,873 | INFO     | out.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:07:04,873 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:07:06,682 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:07:06,682 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:07:06,682 | INFO     | out.shape: torch.Size([1, 10000, 2, 8])
+2025-12-28 14:07:06,682 | INFO     | out.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:07:06,683 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:19:55,884 | INFO     | Config:
+exp_name: test
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 8
+  hidden_dim: 256
+  res: true
+  slice_num: 32
+  layer_num: 5
+  mlp_ratio: 1.5
+  dropout: 0.1
+training:
+  input: x_pres
+  target: y_pres
+  x_mean:
+  - 1.5163924
+  - -2.8424793e-05
+  - 0.59128469
+  x_std:
+  - 1.415569
+  - 0.65566987
+  - 0.38558245
+  y_mean: -93.28388
+  y_std: 121.19236
+  batch_size: 1
+  epochs: 250
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0
+  test_only: 0
+  gpus: '0'
+  seed: 42
+dataload:
+  directory: /mnt/wjc_group/mae-zhangbj/DrivAerNet++_dataset/E_S_WWC_WM
+
+2025-12-28 14:19:55,884 | INFO     | args.exp_name : test
+2025-12-28 14:19:55,885 | INFO     | Starting training with 1 GPUs
+2025-12-28 14:19:57,766 | INFO     | Total trainable parameters: 3381321
+2025-12-28 14:19:57,766 | INFO     | Data loaded: 456 training batches, 117 validation batches, 109 test batches
+2025-12-28 14:19:57,767 | INFO     | Staring training for 250 epochs
+2025-12-28 14:19:57,947 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:19:57,947 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:19:57,974 | INFO     | out.shape: torch.Size([1, 10000, 2, 8])
+2025-12-28 14:19:57,986 | INFO     | out.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:19:58,000 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:19:58,036 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:19:58,036 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:19:58,050 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:19:58,050 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:19:58,050 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:19:58,050 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:19:58,154 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:19:58,154 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:19:58,154 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:19:58,154 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:19:58,154 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:19:58,154 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:19:58,156 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:19:58,156 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:19:58,156 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:19:58,156 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:19:58,156 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:19:58,157 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:19:58,158 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:19:58,159 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:19:58,159 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:19:58,159 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:19:58,159 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:19:58,159 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:19:58,161 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:19:58,161 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:19:58,161 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:19:58,161 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:19:58,161 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:19:58,162 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:00,084 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:20:00,084 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:20:00,084 | INFO     | out.shape: torch.Size([1, 10000, 2, 8])
+2025-12-28 14:20:00,084 | INFO     | out.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:20:00,084 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:20:00,085 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:00,085 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:00,085 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:00,085 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:00,085 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:00,085 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:00,086 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:00,086 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:00,086 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:00,086 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:00,086 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:00,086 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:00,087 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:00,087 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:00,087 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:00,087 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:00,087 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:00,087 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:00,088 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:00,088 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:00,088 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:00,088 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:00,088 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:00,088 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:00,089 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:00,089 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:00,089 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:00,089 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:00,089 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:00,089 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:01,891 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:20:01,891 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:20:01,892 | INFO     | out.shape: torch.Size([1, 10000, 2, 8])
+2025-12-28 14:20:01,892 | INFO     | out.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:20:01,892 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:20:01,893 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:01,893 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:01,893 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:01,893 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:01,893 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:01,893 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:01,894 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:01,894 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:01,894 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:01,894 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:01,894 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:01,894 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:01,895 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:01,895 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:01,895 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:01,895 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:01,895 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:01,895 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:01,895 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:01,896 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:01,896 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:01,896 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:01,896 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:01,896 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:01,896 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:01,896 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:01,897 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:01,897 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:01,897 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:01,897 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:03,699 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:20:03,699 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:20:03,699 | INFO     | out.shape: torch.Size([1, 10000, 2, 8])
+2025-12-28 14:20:03,699 | INFO     | out.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:20:03,699 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:20:03,700 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:03,700 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:03,700 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:03,700 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:03,700 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:03,700 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:03,701 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:03,701 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:03,701 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:03,701 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:03,701 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:03,701 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:03,702 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:03,702 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:03,702 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:03,702 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:03,702 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:03,702 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:03,703 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:03,703 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:03,703 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:03,703 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:03,703 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:03,703 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:03,704 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:03,704 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:03,704 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:03,704 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:03,704 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:03,704 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:05,507 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:20:05,507 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:20:05,508 | INFO     | out.shape: torch.Size([1, 10000, 2, 8])
+2025-12-28 14:20:05,508 | INFO     | out.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:20:05,508 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:20:05,508 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:05,509 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:05,509 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:05,509 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:05,509 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:05,509 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:05,509 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:05,510 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:05,510 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:05,510 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:05,510 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:05,510 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:05,510 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:05,510 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:05,511 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:05,511 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:05,511 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:05,511 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:05,511 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:05,511 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:05,512 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:05,512 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:05,512 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:05,512 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:05,512 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:05,512 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:05,512 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:05,513 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:05,513 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:05,513 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:07,306 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:20:07,307 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:20:07,307 | INFO     | out.shape: torch.Size([1, 10000, 2, 8])
+2025-12-28 14:20:07,307 | INFO     | out.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:20:07,307 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:20:07,308 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:07,308 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:07,308 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:07,308 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:07,308 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:07,308 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:07,309 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:07,309 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:07,309 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:07,309 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:07,309 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:07,309 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:07,310 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:07,310 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:07,310 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:07,310 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:07,310 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:07,310 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:07,311 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:07,311 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:07,311 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:07,311 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:07,311 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:07,311 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:07,312 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:07,312 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:07,312 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:07,312 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:07,312 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:07,312 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:09,113 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:20:09,113 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:20:09,113 | INFO     | out.shape: torch.Size([1, 10000, 2, 8])
+2025-12-28 14:20:09,114 | INFO     | out.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:20:09,114 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:20:09,114 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:09,114 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:09,114 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:09,115 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:09,115 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:09,115 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:09,115 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:09,115 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:09,115 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:09,116 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:09,116 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:09,116 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:09,116 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:09,116 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:09,116 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:09,116 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:09,116 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:09,117 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:09,117 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:09,117 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:09,117 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:09,117 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:09,117 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:09,117 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:09,118 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:09,118 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:09,118 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:09,118 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:09,118 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:09,118 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:10,922 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:20:10,922 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:20:10,922 | INFO     | out.shape: torch.Size([1, 10000, 2, 8])
+2025-12-28 14:20:10,923 | INFO     | out.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:20:10,923 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:20:10,923 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:10,923 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:10,923 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:10,924 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:10,924 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:10,924 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:10,924 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:10,924 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:10,924 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:10,925 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:10,925 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:10,925 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:10,925 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:10,925 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:10,925 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:10,925 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:10,925 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:10,926 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:10,926 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:10,926 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:10,926 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:10,926 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:10,926 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:10,926 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:10,927 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:10,927 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:10,927 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:10,927 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:10,927 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:10,927 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:12,731 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:20:12,731 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:20:12,731 | INFO     | out.shape: torch.Size([1, 10000, 2, 8])
+2025-12-28 14:20:12,731 | INFO     | out.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:20:12,731 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:20:12,732 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:12,732 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:12,732 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:12,732 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:12,732 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:12,732 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:12,733 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:12,733 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:12,733 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:12,733 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:12,733 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:12,733 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:12,734 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:12,734 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:12,734 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:12,734 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:12,734 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:12,734 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:12,735 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:12,735 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:12,735 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:12,735 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:12,735 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:12,735 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:12,736 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:12,736 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:12,736 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:12,736 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:12,736 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:12,736 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:14,539 | INFO     | x_norm: torch.Size([1, 10000, 1])
+2025-12-28 14:20:14,540 | INFO     | x_phase: torch.Size([1, 10000, 2])
+2025-12-28 14:20:14,540 | INFO     | out.shape: torch.Size([1, 10000, 2, 8])
+2025-12-28 14:20:14,540 | INFO     | out.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:20:14,540 | INFO     | volume_rope.shape: torch.Size([1, 10000, 16])
+2025-12-28 14:20:14,541 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:14,541 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:14,541 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:14,541 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:14,541 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:14,541 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:14,542 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:14,542 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:14,542 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:14,542 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:14,542 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:14,542 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:14,543 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:14,543 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:14,543 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:14,543 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:14,543 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:14,543 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:14,544 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:14,544 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:14,544 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:14,544 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:14,544 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:14,544 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:14,545 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:14,545 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:14,545 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-28 14:20:14,545 | INFO     | freqs.shape: torch.Size([1, 1, 10000, 16])
+2025-12-28 14:20:14,545 | INFO     | x_.shape: torch.Size([1, 8, 10000, 16])
+2025-12-28 14:20:14,545 | INFO     | x_out.shape: torch.Size([1, 8, 10000, 32])
+2025-12-29 12:37:10,092 | INFO     | Config:
+exp_name: test
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 8
+  hidden_dim: 256
+  res: true
+  slice_num: 32
+  layer_num: 5
+  mlp_ratio: 1.5
+  dropout: 0.1
+training:
+  input: x_pres
+  target: y_pres
+  x_mean:
+  - 1.5163924
+  - -2.8424793e-05
+  - 0.59128469
+  x_std:
+  - 1.415569
+  - 0.65566987
+  - 0.38558245
+  y_mean: -93.28388
+  y_std: 121.19236
+  batch_size: 1
+  epochs: 250
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0
+  test_only: 0
+  gpus: '0'
+  seed: 42
+dataload:
+  directory: /mnt/wjc_group/mae-zhangbj/DrivAerNet++_dataset/E_S_WWC_WM
+
+2025-12-29 12:37:10,092 | INFO     | args.exp_name : test
+2025-12-29 12:37:10,093 | INFO     | Starting training with 1 GPUs
+2025-12-29 12:37:11,191 | INFO     | Total trainable parameters: 3381321
+2025-12-29 12:37:11,191 | INFO     | Data loaded: 456 training batches, 117 validation batches, 109 test batches
+2025-12-29 12:37:11,191 | INFO     | Staring training for 250 epochs

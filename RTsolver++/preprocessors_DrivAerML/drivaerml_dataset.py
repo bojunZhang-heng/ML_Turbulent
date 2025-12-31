@@ -180,7 +180,7 @@ class DrivAerMLDataset(Dataset):
     def getitem_surface_position_vtp(self, idx: int) -> torch.Tensor:
         """Retrieves surface positions from the CFD mesh (num_surface_points, 3)"""
         #return self._load(idx=idx, filename="surface_position_vtp.npy")
-        return self._load(idx=idx, filename_base="surface_position_vtp")
+        return self._load(idx=idx, filename_base="surface_position_spherical")
 
     def getitem_surface_position_stl(self, idx: int) -> torch.Tensor:
         """Retrieves surface positions from the STL file (num_surface_points, 3)"""
@@ -199,7 +199,7 @@ class DrivAerMLDataset(Dataset):
     def getitem_volume_position(self, idx: int) -> torch.Tensor:
         """Retrieves volume position (num_volume_points, 3)"""
         #return self._load(idx=idx, filename="volume_cell_position.npy")
-        return self._load(idx=idx, filename_base="volume_cell_position")
+        return self._load(idx=idx, filename_base="volume_cell_position_spherical")
 
     def getitem_volume_pMeanTrim(self, idx: int) -> torch.Tensor:
         """Retrieves volume pressures (num_volume_points, 1)"""

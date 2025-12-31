@@ -1,4 +1,5 @@
-exp_name: "WWC_spressure_N10k_lr1e-3_e250_run2"
+exp_name: "WWC_spressure_N10k_lr1e-3_e250_run3"
+#exp_name: "test"
 
 model:
     input_dim: 3
