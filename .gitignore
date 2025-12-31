@@ -4,3 +4,9 @@ Pressure_Field/logs/
 Pressure_Field/model/__pycache__/
 Pressure_Field/utils/__pycache__/
 Pressure_Field/backup_logs/err_*.log
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
