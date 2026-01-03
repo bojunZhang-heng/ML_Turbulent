@@ -9,9 +9,9 @@
 # cuda:5 for DrivAerNet spressure  Ropesolver
 
 # This time
-# cuda:3
+# cuda:5
 export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH
-export CUDA_VISIBLE_DEVICES=3
+export CUDA_VISIBLE_DEVICES=5
 
 # 确保 logs 目录存在
 LOG_DIR=./logs
