@@ -1,4 +1,4 @@
-exp_name: "vpressure_N3w_lr5e-4_e300"
+exp_name: "DrivAerML_vpressure_N3w_lr5e-4_e300"
 
 model:
     input_dim: 3
