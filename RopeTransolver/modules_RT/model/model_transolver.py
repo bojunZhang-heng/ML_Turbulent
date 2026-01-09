@@ -34,7 +34,7 @@ class Model(nn.Module):
         self.hidden_dim = hidden_dim
         self.head_num = head_num
         self.space_dim = space_dim
-        self.rope = RopeFrequency(dim=hidden_dim // head_num, ndim=space_dim)
+        self.rope = RopeFrequency(dim=hidden_dim, ndim=space_dim)
 
         # pos_embed with MLP for volume
         self.pos_embed = ContinuousSincosEmbed(dim=hidden_dim, ndim=space_dim)

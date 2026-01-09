@@ -5,28 +5,37 @@ import numpy as np
 from torch.utils.data import Dataset
 
 def sato_collate_fn(batch):
-    lengths = [item['x'].shape[0] for item in batch]
+    lengths = [item['x_pres'].shape[0] for item in batch]
     min_len = min(lengths)
 
-    batch_x = []
-    batch_y = []
+    batch_x_pres = []
+    batch_x_wss = []
+    batch_y_pres = []
+    batch_y_wss = []
 
     for item in batch:
-        x = item['x']
-        y = item['y']
+        x_pres = item['x_pres']
+        x_wss = item['x_wss']
+        y_pres = item['y_pres']
+        y_wss = item['y_wss']
 
-        if x.shape[0] > min_len:
+        if x_pres.shape[0] > min_len:
             # Randomly sample min_len indices
-            idx = torch.randperm(x.shape[0])[:min_len]
-            x = x[idx]
-            y = y[idx]
+            idx = torch.randperm(x_pres.shape[0])[:min_len]
+            x_pres = x_pres[idx]
+            y_pres = y_pres[idx]
+            y_wss = y_wss[idx]
 
-        batch_x.append(x)
-        batch_y.append(y)
+        batch_x_pres.append(x_pres)
+        batch_x_wss.append(x_wss)
+        batch_y_pres.append(y_pres)
+        batch_y_wss.append(y_wss)
 
     return {
-        'x': torch.stack(batch_x),
-        'y': torch.stack(batch_y),
+        'x_pres': torch.stack(batch_x_pres),
+        'x_wss': torch.stack(batch_x_wss),
+        'y_pres': torch.stack(batch_y_pres),
+        'y_wss': torch.stack(batch_y_wss),
     }
 
 
@@ -41,22 +50,26 @@ class SATO_Dataset(Dataset):
 
     def __getitem__(self, idx):
         data = self.data_list[idx]
-        x = data['Surface_data']['Surface_points']
-        y = data['Surface_data']['Surface_pressure']
+        x_pres = data['Surface_data']['Surface_pres_points']
+        x_wss = data['Surface_data']['Surface_wss_points']
+        y_pres = data['Surface_data']['Surface_pressure']
+        y_wss = data['Surface_data']['Surface_wss']
 
         # Move downsample logic here to allow parallel processing by DataLoader workers
         if self.config is not None and hasattr(self.config.model, 'down_sample'):
             # Use numpy random generation which is process-safe in workers
-            num_points = x.shape[0]
+            num_points = x_pres.shape[0]
             sample_size = int(num_points * self.config.model.down_sample)
 
             # Generate indices (on CPU)
             sampled_indices = np.random.choice(num_points, sample_size, replace=False)
 
-            x = x[sampled_indices]
-            y = y[sampled_indices]
+            x_pres = x_pres[sampled_indices]
+            x_wss = x_wss[sampled_indices]
+            y_pres = y_pres[sampled_indices]
+            y_wss = y_pres[sampled_indices]
 
-        return {'x': x, 'y': y}
+        return {'x_pres': x_pres, 'x_wss': x_wss, 'y_pres': y_pres, 'y_wss': y_wss}
 
 
 class VTKDataset():
@@ -65,7 +78,7 @@ class VTKDataset():
 
     def get_all_file_paths(self, directory):
         file_paths = []
-        points_dir = os.path.join(directory, "SurfacePressure", "points_s")
+        points_dir = os.path.join(directory, "SurfacePressure", "points_v2")
         for file in os.listdir(points_dir):
             full_path = os.path.join(points_dir, file)
             if os.path.isfile(full_path):  # 只保留文件
@@ -89,17 +102,21 @@ class VTKDataset():
         train_data_lst, test_data_lst, val_data_lst = [], [], []
         for file_path in SurfacePressure_file_paths:
             index = file_path.split("_")[-1].split(".")[0]
-            Surface_points = np.load(os.path.join(directory, 'SurfacePressure', 'points_s', f'points_{index}.npy'))
-            Surface_pressure = np.load(os.path.join(directory, 'SurfacePressure', 'pressure_s', f'pressure_{index}.npy'))
-          #  Surface_points = np.load(os.path.join(directory, 'SurfaceWSS', 'points_s', f'points_{index}.npy'))
-          #  Surface_pressure = np.load(os.path.join(directory, 'SurfaceWSS', 'pressure_s', f'pressure_{index}.npy'))
+            Surface_pres_points = np.load(os.path.join(directory, 'SurfacePressure', 'points_v2', f'points_{index}.npy'))
+            Surface_pressure = np.load(os.path.join(directory, 'SurfacePressure', 'pressure_v2', f'pressure_{index}.npy'))
+            Surface_wss_points = np.load(os.path.join(directory, 'SurfaceWSS', 'points_v2', f'points_{index}.npy'))
+            Surface_wss = np.load(os.path.join(directory, 'SurfaceWSS', 'wss_v2', f'wss_{index}.npy'))
 
-            Surface_points = torch.Tensor(Surface_points).float()
+            Surface_pres_points = torch.Tensor(Surface_pres_points).float()
             Surface_pressure = torch.Tensor(Surface_pressure).float()
+            Surface_wss_points = torch.Tensor(Surface_wss_points).float()
+            Surface_wss = torch.Tensor(Surface_wss).float()
 
             Surface_data = {
-                'Surface_points': Surface_points,
-                'Surface_pressure': Surface_pressure
+                'Surface_pres_points': Surface_pres_points,
+                'Surface_pressure': Surface_pressure,
+                'Surface_wss_points': Surface_wss_points,
+                'Surface_wss': Surface_wss,
             }
 
             data = {'index': index, 'Surface_data': Surface_data}
@@ -113,8 +130,3 @@ class VTKDataset():
 
         return train_data_lst, test_data_lst, val_data_lst
 
-# Constants for normalization
-POS_MIN = -2.0
-POS_MAX = 5.0
-PRESSURE_MEAN = -94.5
-PRESSURE_STD = 117.25

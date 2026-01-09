@@ -259,7 +259,7 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, device, args)
     total_loss = 0
 
     for data in tqdm(train_dataloader, desc="[Training]"):
-        x = data['x'].to(device)
+        x = data[args.training.input].to(device)
         y = data[args.training.target].to(device)
 
         X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
@@ -287,7 +287,7 @@ def validate(model, val_dataloader, criterion, device, args):
 
     with torch.no_grad():
         for data in tqdm(val_dataloader, desc="[Validation]"):
-            x = data['x'].to(device)
+            x = data[args.training.input].to(device)
             y = data[args.training.target].to(device)
 
             X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
@@ -329,7 +329,7 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
 
     with torch.no_grad():
         for data in tqdm(test_dataloader, desc="[test_dataloader]"):
-            x = data['x'].to(device)
+            x = data[args.training.input].to(device)
             y = data[args.training.target].to(device)
 
             X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
@@ -418,7 +418,7 @@ def main():
     args = load_config(args_cmd.config)
     args.dataload.directory = os.path.expanduser(args.dataload.directory)
 
-    exp_dir = os.path.join("experiments_DrivAerNet++", args.exp_name)
+    exp_dir = os.path.join("experiments_DrivAerNet", args.exp_name)
     os.makedirs(exp_dir, exist_ok=True)
 
     device = setup_device()

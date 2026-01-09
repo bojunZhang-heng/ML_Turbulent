@@ -1,5 +1,6 @@
 import einops
 import torch
+import logging
 from torch import nn
 
 
@@ -31,12 +32,12 @@ class RopeFrequency(nn.Module):
         self.max_wavelength = max_wavelength
         self.padding = self.ndim_padding + self.sincos_padding * ndim
         self.assert_positive = assert_positive
-        effective_dim_per_wave = (self.dim - self.padding) // ndim
-        assert effective_dim_per_wave > 0
-        arange = torch.arange(0, effective_dim_per_wave, 2, dtype=torch.float)
+        self.effective_dim_per_wave = (self.dim - self.padding) // ndim
+        assert self.effective_dim_per_wave > 0
+        arange = torch.arange(0, self.effective_dim_per_wave, 2, dtype=torch.float)
         self.register_buffer(
             "omega",
-            1.0 / max_wavelength**(arange / effective_dim_per_wave),
+            1.0 / max_wavelength**(arange / self.effective_dim_per_wave),
         )
 
     def forward(self, coords: torch.Tensor) -> torch.Tensor:
@@ -55,5 +56,8 @@ class RopeFrequency(nn.Module):
         # add padding
         assert self.padding % 2 == 0
         out = torch.concat([out, torch.zeros(*out.shape[:-1], self.padding // 2, device=coords.device)], dim=-1)
+#        logging.info(f"omega: {self.omega.shape}")
+#        logging.info(f"effective_dim_per_wave: {self.effective_dim_per_wave}")
+#        logging.info(f"out: {out.shape}")
         return torch.polar(torch.ones_like(out), out)
 

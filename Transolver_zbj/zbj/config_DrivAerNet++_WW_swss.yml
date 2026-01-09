@@ -1,4 +1,4 @@
-exp_name: "wss_N10k_lr1e-3_e250"
+exp_name: "WW_wss_N10k_lr1e-3_e250_run1"
 
 model:
     input_dim: 3
@@ -12,6 +12,7 @@ model:
     dropout: 0.1
 
 training:
+    input: "x_wss"
     target: "y_wss"
     x_mean: [ 1.5160021e+00, -5.4310558e-06,  5.8746094e-01]
     x_std:  [1.415669,        0.65769494,     0.38634354]
@@ -21,7 +22,7 @@ training:
     epochs: 250
     lr: 0.001
     scheduler_step: 50
-    scheduler_gamma: 0.4
+    scheduler_gamma: 0.5
     max_grad_norm: 0.1
     num_workers: 1
     weight_decay: 0.00000

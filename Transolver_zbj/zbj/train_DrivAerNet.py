@@ -209,7 +209,6 @@ def train_and_evaluate(args, device):
         args,
     )
 
-    # Clean up
 
 target_keys = [
     "surface_anchor_pressure",
@@ -266,12 +265,15 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, device, args)
     total_loss = 0
 
     for data in tqdm(train_dataloader, desc="[Training]"):
-        x = data['x'].to(device)
-        y = data['y'].to(device)
-        POS_MEAN_T = torch.tensor(POS_MEAN, dtype=x.dtype, device=x.device)
-        POS_STD_T  = torch.tensor(POS_STD, dtype=x.dtype, device=x.device)
-        x = (x - POS_MEAN_T) / POS_STD_T
-        y = (y - PRESSURE_MEAN) / PRESSURE_STD
+        x = data[args.training.input].to(device)
+        y = data[args.training.target].to(device)
+
+    #    X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
+    #    X_STD  = torch.tensor(args.training.x_std, dtype=x.dtype, device=x.device)
+        Y_MEAN = torch.tensor(args.training.y_mean, dtype=x.dtype, device=x.device)
+        Y_STD = torch.tensor(args.training.y_std, dtype=x.dtype, device=x.device)
+    #    x = (x - X_MEAN) / X_STD
+        y = (y - Y_MEAN) / Y_STD
 
         y_hat = model(x)
         loss = criterion(y_hat, y)
@@ -291,13 +293,15 @@ def validate(model, val_dataloader, criterion, device, args):
 
     with torch.no_grad():
         for data in tqdm(val_dataloader, desc="[Validation]"):
-            x = data['x'].to(device)
-            y = data['y'].to(device)
-            POS_MEAN_T = torch.tensor(POS_MEAN, dtype=x.dtype, device=x.device)
-            POS_STD_T  = torch.tensor(POS_STD, dtype=x.dtype, device=x.device)
-            x = (x - POS_MEAN_T) / POS_STD_T
-            y = (y - PRESSURE_MEAN) / PRESSURE_STD
+            x = data[args.training.input].to(device)
+            y = data[args.training.target].to(device)
 
+    #        X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
+    #        X_STD  = torch.tensor(args.training.x_std, dtype=x.dtype, device=x.device)
+            Y_MEAN = torch.tensor(args.training.y_mean, dtype=x.dtype, device=x.device)
+            Y_STD = torch.tensor(args.training.y_std, dtype=x.dtype, device=x.device)
+            #x = (x - X_MEAN) / X_STD
+            y = (y - Y_MEAN) / Y_STD
             y_hat = model(x)
             #y_hat = y_hat * PRESSURE_STD + PRESSURE_MEAN
             loss = criterion(y_hat, y)
@@ -331,20 +335,23 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
 
     with torch.no_grad():
         for data in tqdm(test_dataloader, desc="[test_dataloader]"):
-            x = data['x'].to(device)
-            y = data['y'].to(device)
-            POS_MEAN_T = torch.tensor(POS_MEAN, dtype=x.dtype, device=x.device)
-            POS_STD_T  = torch.tensor(POS_STD, dtype=x.dtype, device=x.device)
-            x = (x - POS_MEAN_T) / POS_STD_T
-            y = (y - PRESSURE_MEAN) / PRESSURE_STD
+            x = data[args.training.input].to(device)
+            y = data[args.training.target].to(device)
 
+           # X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
+           # X_STD  = torch.tensor(args.training.x_std, dtype=x.dtype, device=x.device)
+            Y_MEAN = torch.tensor(args.training.y_mean, dtype=x.dtype, device=x.device)
+            Y_STD = torch.tensor(args.training.y_std, dtype=x.dtype, device=x.device)
+
+         #   x = (x - X_MEAN) / X_STD
+            y = (y - Y_MEAN) / Y_STD
             y_hat = model(x)
 
             loss = criterion(y_hat, y)
             total_loss += loss.item()
 
-            y = y * PRESSURE_STD + PRESSURE_MEAN
-            y_hat = y_hat * PRESSURE_STD + PRESSURE_MEAN
+            y = y * Y_STD + Y_MEAN
+            y_hat = y_hat * Y_STD + Y_MEAN
             rel_l2 = (y_hat - y).norm() / y.norm()
             total_L2_error += rel_l2.item()
 
@@ -421,7 +428,6 @@ def main():
     os.makedirs(exp_dir, exist_ok=True)
 
     device = setup_device()
-#    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     train_and_evaluate(args, device)
 
 

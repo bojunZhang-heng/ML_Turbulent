@@ -1,5 +1,6 @@
 import torch
 import numpy as np
+import logging
 import torch.nn as nn
 import torch.nn.functional as F
 from einops import repeat, rearrange
@@ -44,6 +45,14 @@ class Physics_Attention_Irregular_Mesh(nn.Module):
             head_dim=self.head_dim,
         ).unbind(0)
 
+        #logging.info(f"freqs: {freqs.shape}")
+        freqs = rearrange(
+                freqs,
+                "bs seqlen (head_num  head_dim) -> bs head_num seqlen head_dim",
+                head_num=self.head_num,
+                head_dim=self.head_dim // 2,
+        )
+        #logging.info(f"freqs: {freqs.shape}")
         q = rope(q, freqs=freqs)
         k = rope(k, freqs=freqs)
 
