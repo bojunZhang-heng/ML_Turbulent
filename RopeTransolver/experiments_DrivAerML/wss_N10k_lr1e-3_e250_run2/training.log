@@ -387,3 +387,114 @@ training:
 2026-01-04 22:56:58,173 | INFO     |  0.037785
 2026-01-04 22:56:58,173 | INFO     | *******************[35minference_time:[0m
 2026-01-04 22:56:58,173 | INFO     |  0.021544
+2026-01-06 09:11:22,752 | INFO     | Config:
+exp_name: wss_N10k_lr1e-3_e250_run2
+model:
+  input_dim: 3
+  output_dim: 3
+  head_num: 8
+  hidden_dim: 256
+  res: true
+  slice_num: 32
+  layer_num: 5
+  mlp_ratio: 1.5
+  dropout: 0.1
+training:
+  input: surface_anchor_position
+  target: surface_anchor_wallshearstress
+  batch_size: 1
+  epochs: 250
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0
+  test_only: 1
+  gpus: '0'
+  root_dir: /mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small
+  seed: 42
+
+2026-01-06 09:11:22,752 | INFO     | args.exp_name : wss_N10k_lr1e-3_e250_run2
+2026-01-06 09:11:22,752 | INFO     | Starting training with 1 GPUs
+2026-01-06 09:11:23,007 | INFO     | Total trainable parameters: 3381835
+2026-01-06 09:11:23,008 | INFO     | Data loaded: 380 training batches, 33 validation batches, 44 test batches
+2026-01-06 09:11:23,009 | INFO     | Loading best model for testing only
+2026-01-06 09:15:16,656 | INFO     | Config:
+exp_name: wss_N10k_lr1e-3_e250_run2
+model:
+  input_dim: 3
+  output_dim: 3
+  head_num: 8
+  hidden_dim: 256
+  res: true
+  slice_num: 32
+  layer_num: 5
+  mlp_ratio: 1.5
+  dropout: 0.1
+training:
+  input: surface_anchor_position
+  target: surface_anchor_wallshearstress
+  batch_size: 1
+  epochs: 250
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0
+  test_only: 1
+  gpus: '0'
+  root_dir: /mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small
+  seed: 42
+
+2026-01-06 09:15:16,656 | INFO     | args.exp_name : wss_N10k_lr1e-3_e250_run2
+2026-01-06 09:15:16,656 | INFO     | Starting training with 1 GPUs
+2026-01-06 09:15:17,222 | INFO     | Total trainable parameters: 3381835
+2026-01-06 09:15:17,223 | INFO     | Data loaded: 380 training batches, 33 validation batches, 44 test batches
+2026-01-06 09:15:17,224 | INFO     | Loading best model for testing only
+2026-01-06 09:15:32,395 | INFO     | *******************[35mL2_erro:[0m
+2026-01-06 09:15:32,395 | INFO     |  0.169286
+2026-01-06 09:15:32,396 | INFO     | *******************[35mmse_loss:[0m
+2026-01-06 09:15:32,396 | INFO     |  0.037785
+2026-01-06 09:15:32,396 | INFO     | *******************[35minference_time:[0m
+2026-01-06 09:15:32,396 | INFO     |  0.013608
+2026-01-06 18:04:46,066 | INFO     | Config:
+exp_name: wss_N10k_lr1e-3_e250_run2
+model:
+  input_dim: 3
+  output_dim: 3
+  head_num: 8
+  hidden_dim: 256
+  res: true
+  slice_num: 32
+  layer_num: 5
+  mlp_ratio: 1.5
+  dropout: 0.1
+training:
+  input: surface_anchor_position
+  target: surface_anchor_wallshearstress
+  batch_size: 1
+  epochs: 250
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0
+  test_only: 1
+  gpus: '0'
+  root_dir: /mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small
+  seed: 42
+
+2026-01-06 18:04:46,066 | INFO     | args.exp_name : wss_N10k_lr1e-3_e250_run2
+2026-01-06 18:04:46,066 | INFO     | Starting training with 1 GPUs
+2026-01-06 18:04:46,829 | INFO     | Total trainable parameters: 3381835
+2026-01-06 18:04:46,830 | INFO     | Data loaded: 380 training batches, 33 validation batches, 44 test batches
+2026-01-06 18:04:46,831 | INFO     | Loading best model for testing only
+2026-01-06 18:05:06,393 | INFO     | *******************[35mL2_erro:[0m
+2026-01-06 18:05:06,393 | INFO     |  0.169286
+2026-01-06 18:05:06,393 | INFO     | *******************[35mmse_loss:[0m
+2026-01-06 18:05:06,394 | INFO     |  0.037785
+2026-01-06 18:05:06,394 | INFO     | *******************[35minference_time:[0m
+2026-01-06 18:05:06,394 | INFO     |  0.019212
