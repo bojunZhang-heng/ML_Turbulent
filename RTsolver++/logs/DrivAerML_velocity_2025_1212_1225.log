@@ -1,81 +1,0 @@
-2025-12-12 12:25:42,280 | INFO     | Config:
-exp_name: velocity_N10k_lr1e-3_e250
-model:
-  input_dim: 3
-  output_dim: 3
-  head_num: 8
-  hidden_dim: 256
-  res: true
-  head_dim: 64
-  slice_num: 32
-  layer_num: 5
-  mlp_ratio: 1
-  dropout: 0.0
-training:
-  input: volume_anchor_position
-  target: volume_anchor_velocity
-  batch_size: 1
-  epochs: 250
-  lr: 0.001
-  scheduler_step: 50
-  scheduler_gamma: 0.5
-  max_grad_norm: 0.1
-  num_workers: 1
-  weight_decay: 0.0
-  test_only: 1
-  gpus: '0'
-  root_dir: /mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small
-  seed: 42
-
-2025-12-12 12:25:42,280 | INFO     | args.exp_name : velocity_N10k_lr1e-3_e250
-2025-12-12 12:25:42,280 | INFO     | Starting training with 1 GPUs
-2025-12-12 12:25:42,504 | INFO     | Total trainable parameters: 2266059
-2025-12-12 12:25:42,505 | INFO     | Data loaded: 383 training batches, 33 validation batches, 48 test batches
-2025-12-12 12:25:42,506 | INFO     | Staring training for 250 epochs
-[Training]:   0%|          | 0/383 [00:00<?, ?it/s][Training]:   0%|          | 1/383 [00:00<03:02,  2.09it/s][Training]:   1%|          | 4/383 [00:00<00:45,  8.36it/s][Training]:   2%|▏         | 7/383 [00:00<00:28, 13.35it/s][Training]:   3%|▎         | 10/383 [00:00<00:21, 17.55it/s][Training]:   3%|▎         | 13/383 [00:00<00:17, 20.80it/s][Training]:   4%|▍         | 16/383 [00:00<00:15, 23.27it/s][Training]:   5%|▍         | 19/383 [00:01<00:14, 25.08it/s][Training]:   6%|▌         | 22/383 [00:01<00:13, 26.41it/s][Training]:   7%|▋         | 25/383 [00:01<00:13, 27.28it/s][Training]:   7%|▋         | 28/383 [00:01<00:12, 27.72it/s][Training]:   8%|▊         | 31/383 [00:01<00:12, 28.32it/s][Training]:   9%|▉         | 34/383 [00:01<00:12, 28.75it/s][Training]:  10%|▉         | 37/383 [00:01<00:11, 29.06it/s][Training]:  10%|█         | 40/383 [00:01<00:11, 29.25it/s][Training]:  11%|█         | 43/383 [00:01<00:11, 29.35it/s][Training]:  12%|█▏        | 46/383 [00:02<00:11, 29.44it/s][Training]:  13%|█▎        | 49/383 [00:02<00:11, 29.50it/s][Training]:  14%|█▎        | 52/383 [00:02<00:11, 29.17it/s][Training]:  14%|█▍        | 55/383 [00:02<00:11, 29.19it/s][Training]:  15%|█▌        | 58/383 [00:02<00:11, 29.02it/s][Training]:  16%|█▌        | 61/383 [00:02<00:11, 29.25it/s][Training]:  17%|█▋        | 64/383 [00:02<00:11, 28.61it/s][Training]:  17%|█▋        | 67/383 [00:02<00:11, 28.29it/s][Training]:  18%|█▊        | 70/383 [00:02<00:11, 28.16it/s][Training]:  19%|█▉        | 73/383 [00:02<00:11, 28.02it/s][Training]:  20%|█▉        | 76/383 [00:03<00:10, 27.96it/s][Training]:  21%|██        | 79/383 [00:03<00:10, 28.18it/s][Training]:  21%|██▏       | 82/383 [00:03<00:10, 28.25it/s][Training]:  22%|██▏       | 85/383 [00:03<00:10, 28.11it/s][Training]:  23%|██▎       | 88/383 [00:03<00:10, 28.50it/s][Training]:  24%|██▍       | 91/383 [00:03<00:10, 27.90it/s][Training]:  25%|██▍       | 94/383 [00:03<00:10, 27.59it/s][Training]:  25%|██▌       | 97/383 [00:03<00:10, 27.30it/s][Training]:  26%|██▌       | 100/383 [00:03<00:10, 27.80it/s][Training]:  27%|██▋       | 103/383 [00:04<00:09, 28.18it/s][Training]:  28%|██▊       | 106/383 [00:04<00:09, 28.44it/s][Training]:  28%|██▊       | 109/383 [00:04<00:09, 28.05it/s][Training]:  28%|██▊       | 109/383 [00:04<00:10, 25.66it/s]
-Traceback (most recent call last):
-  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train_DrivAerML.py", line 488, in <module>
-    main()
-  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train_DrivAerML.py", line 484, in main
-    train_and_evaluate(args, device)
-  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train_DrivAerML.py", line 139, in train_and_evaluate
-    train_loss = train_one_epoch(model, train_dataloader, optimizer, criterion, device, args)
-                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train_DrivAerML.py", line 262, in train_one_epoch
-    for batch in tqdm(train_dataloader, desc="[Training]"):
-                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/tqdm/std.py", line 1181, in __iter__
-    for obj in iterable:
-               ^^^^^^^^
-  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 708, in __next__
-    data = self._next_data()
-           ^^^^^^^^^^^^^^^^^
-  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 1480, in _next_data
-    return self._process_data(data)
-           ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 1505, in _process_data
-    data.reraise()
-  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/_utils.py", line 733, in reraise
-    raise exception
-AssertionError: Caught AssertionError in DataLoader worker process 0.
-Original Traceback (most recent call last):
-  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/utils/data/_utils/worker.py", line 349, in _worker_loop
-    data = fetcher.fetch(index)  # type: ignore[possibly-undefined]
-           ^^^^^^^^^^^^^^^^^^^^
-  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/utils/data/_utils/fetch.py", line 52, in fetch
-    data = [self.dataset[idx] for idx in possibly_batched_index]
-            ~~~~~~~~~~~~^^^^^
-  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/preprocessors_DrivAerML/drivaerml_dataset.py", line 117, in __getitem__
-    'surface_position_vtp': self.getitem_surface_position_vtp(idx),
-                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/preprocessors_DrivAerML/drivaerml_dataset.py", line 183, in getitem_surface_position_vtp
-    return self._load(idx=idx, filename_base="surface_position_vtp")
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/preprocessors_DrivAerML/drivaerml_dataset.py", line 144, in _load
-    assert design_uri.exists(), f"{design_uri.as_posix()} does not exist"
-           ^^^^^^^^^^^^^^^^^^^
-AssertionError: /mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small/run_478 does not exist
-
-Exception in thread Thread-2 (_pin_memory_loop):
-Traceback (most recent call last):
-  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/threading.py", line 1075, in _bootstrap_inner

@@ -1,38 +1,0 @@
-CUDA available GPUs: 1
-Current device index: 0
-Device name: Tesla V100-SXM2-32GB
-Physical GPU(s) specified in CUDA_VISIBLE_DEVICES: ['4']
-Using physical GPU 4 (visible as cuda:0 in PyTorch)
-2025-12-20 09:25:29,355 | INFO     | Config:
-exp_name: spressure_N10k_lr1e-3_e250
-model:
-  input_dim: 3
-  output_dim: 1
-  head_num: 8
-  hidden_dim: 256
-  res: true
-  slice_num: 32
-  layer_num: 5
-  mlp_ratio: 1.5
-  dropout: 0.1
-training:
-  batch_size: 1
-  epochs: 250
-  lr: 0.001
-  scheduler_step: 50
-  scheduler_gamma: 0.5
-  max_grad_norm: 0.1
-  num_workers: 1
-  weight_decay: 0.0
-  test_only: 0
-  gpus: '0'
-  seed: 42
-dataload:
-  directory: /mnt/wjc_group/mae-zhangbj/DrivAerNet_dataset/
-
-2025-12-20 09:25:29,355 | INFO     | args.exp_name : spressure_N10k_lr1e-3_e250
-2025-12-20 09:25:29,355 | INFO     | Starting training with 1 GPUs
-2025-12-20 09:25:30,487 | INFO     | Total trainable parameters: 3381321
-2025-12-20 09:25:30,488 | INFO     | Data loaded: 405 training batches, 81 validation batches, 106 test batches
-2025-12-20 09:25:30,488 | INFO     | Staring training for 250 epochs
-[Training]:   0%|          | 0/405 [00:00<?, ?it/s][Training]:   0%|          | 1/405 [00:00<05:04,  1.33it/s][Training]:   0%|          | 2/405 [00:01<03:37,  1.85it/s][Training]:   1%|          | 3/405 [00:01<03:09,  2.12it/s][Training]:   1%|          | 4/405 [00:01<02:56,  2.27it/s][Training]:   1%|          | 5/405 [00:02<02:49,  2.37it/s][Training]:   1%|▏         | 6/405 [00:02<02:44,  2.43it/s][Training]:   2%|▏         | 7/405 [00:03<02:41,  2.47it/s][Training]:   2%|▏         | 8/405 [00:03<02:39,  2.49it/s][Training]:   2%|▏         | 9/405 [00:03<02:37,  2.51it/s][Training]:   2%|▏         | 10/405 [00:04<02:36,  2.52it/s][Training]:   3%|▎         | 11/405 [00:04<02:35,  2.53it/s][Training]:   3%|▎         | 12/405 [00:05<02:34,  2.54it/s][Training]:   3%|▎         | 13/405 [00:05<02:34,  2.54it/s][Training]:   3%|▎         | 14/405 [00:05<02:33,  2.55it/s][Training]:   4%|▎         | 15/405 [00:06<02:32,  2.55it/s][Training]:   4%|▍         | 16/405 [00:06<02:32,  2.55it/s][Training]:   4%|▍         | 17/405 [00:07<02:32,  2.55it/s][Training]:   4%|▍         | 18/405 [00:07<02:31,  2.55it/s][Training]:   5%|▍         | 19/405 [00:07<02:31,  2.55it/s][Training]:   5%|▍         | 20/405 [00:08<02:30,  2.55it/s][Training]:   5%|▌         | 21/405 [00:08<02:30,  2.55it/s][Training]:   5%|▌         | 22/405 [00:08<02:30,  2.55it/s][Training]:   6%|▌         | 23/405 [00:09<02:29,  2.55it/s][Training]:   6%|▌         | 24/405 [00:09<02:29,  2.55it/s][Training]:   6%|▌         | 25/405 [00:10<02:28,  2.55it/s][Training]:   6%|▋         | 26/405 [00:10<02:28,  2.55it/s][Training]:   7%|▋         | 27/405 [00:10<02:28,  2.55it/s][Training]:   7%|▋         | 28/405 [00:11<02:27,  2.55it/s][Training]:   7%|▋         | 29/405 [00:11<02:27,  2.55it/s][Training]:   7%|▋         | 30/405 [00:12<02:26,  2.55it/s][Training]:   8%|▊         | 31/405 [00:12<02:26,  2.55it/s][Training]:   8%|▊         | 32/405 [00:12<02:26,  2.55it/s][Training]:   8%|▊         | 33/405 [00:13<02:25,  2.55it/s][Training]:   8%|▊         | 34/405 [00:13<02:25,  2.55it/s][Training]:   9%|▊         | 35/405 [00:14<02:24,  2.55it/s][Training]:   9%|▉         | 36/405 [00:14<02:24,  2.55it/s][Training]:   9%|▉         | 37/405 [00:14<02:24,  2.55it/s][Training]:   9%|▉         | 38/405 [00:15<02:23,  2.55it/s][Training]:  10%|▉         | 39/405 [00:15<02:23,  2.55it/s][Training]:  10%|▉         | 40/405 [00:16<02:22,  2.56it/s][Training]:  10%|█         | 41/405 [00:16<02:22,  2.56it/s]

@@ -1,658 +1,0 @@
-2025-12-10 09:28:16,637 - INFO - Config:
-exp_name: RTformer_DrivAerNet
-model:
-  input_dim: 3
-  output_dim: 1
-  head_num: 4
-  hidden_dim: 256
-  res: true
-  head_dim: 64
-  slice_num: 64
-  layer_num: 8
-  mlp_ratio: 2
-  dropout: 0.1
-training:
-  batch_size: 1
-  epochs: 150
-  lr: 0.001
-  scheduler_step: 50
-  scheduler_gamma: 0.7
-  max_grad_norm: 0.1
-  num_workers: 1
-  weight_decay: 1.0e-05
-  test_only: 0
-  gpus: '0'
-  root_dir: ~/drivaerML_N100_000
-  seed: 42
-dataload:
-  directory: /home/mae-zhangbj/DrivAerNet_dataset/
-
-2025-12-10 09:28:16,637 - INFO - args.exp_name : RTformer_DrivAerNet
-2025-12-10 09:28:16,637 - INFO - Starting training with 1 GPUs
-2025-12-10 09:28:17,403 - INFO - Total trainable parameters: 4524353
-2025-12-10 09:28:17,403 - INFO - Data loaded: 676 training batches, 166 validation batches, 150 test batches
-2025-12-10 09:28:17,404 - INFO - Staring training for 150 epochs
-CUDA available GPUs: 1
-Current device index: 0
-Device name: Tesla V100-SXM2-32GB
-Physical GPU(s) specified in CUDA_VISIBLE_DEVICES: ['3']
-Using physical GPU 3 (visible as cuda:0 in PyTorch)
-[Training]:   0%|          | 0/676 [00:00<?, ?it/s]2025-12-10 09:28:17,781 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:17,781 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   0%|          | 1/676 [00:00<06:28,  1.74it/s]2025-12-10 09:28:17,998 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:17,998 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   0%|          | 2/676 [00:00<03:48,  2.95it/s]2025-12-10 09:28:18,170 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:18,170 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   0%|          | 3/676 [00:00<02:57,  3.80it/s]2025-12-10 09:28:18,343 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:18,343 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   1%|          | 4/676 [00:01<02:32,  4.40it/s]2025-12-10 09:28:18,515 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:18,516 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   1%|          | 5/676 [00:01<02:19,  4.81it/s]2025-12-10 09:28:18,693 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:18,693 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   1%|          | 6/676 [00:01<02:11,  5.11it/s]2025-12-10 09:28:18,858 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:18,858 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   1%|          | 7/676 [00:01<02:05,  5.31it/s]2025-12-10 09:28:19,031 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:19,031 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   1%|          | 8/676 [00:01<02:02,  5.45it/s]2025-12-10 09:28:19,204 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:19,204 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   1%|▏         | 9/676 [00:01<02:00,  5.56it/s]2025-12-10 09:28:19,376 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:19,376 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   1%|▏         | 10/676 [00:02<01:58,  5.63it/s]2025-12-10 09:28:19,552 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:19,552 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   2%|▏         | 11/676 [00:02<01:57,  5.68it/s]2025-12-10 09:28:19,722 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:19,722 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   2%|▏         | 12/676 [00:02<01:56,  5.71it/s]2025-12-10 09:28:19,894 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:19,894 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   2%|▏         | 13/676 [00:02<01:55,  5.73it/s]2025-12-10 09:28:20,067 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:20,067 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   2%|▏         | 14/676 [00:02<01:55,  5.75it/s]2025-12-10 09:28:20,240 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:20,240 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   2%|▏         | 15/676 [00:02<01:54,  5.76it/s]2025-12-10 09:28:20,412 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:20,412 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   2%|▏         | 16/676 [00:03<01:54,  5.77it/s]2025-12-10 09:28:20,585 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:20,585 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   3%|▎         | 17/676 [00:03<01:54,  5.78it/s]2025-12-10 09:28:20,757 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:20,757 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   3%|▎         | 18/676 [00:03<01:53,  5.79it/s]2025-12-10 09:28:20,930 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:20,930 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   3%|▎         | 19/676 [00:03<01:53,  5.79it/s]2025-12-10 09:28:21,102 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:21,102 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   3%|▎         | 20/676 [00:03<01:53,  5.79it/s]2025-12-10 09:28:21,275 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:21,275 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   3%|▎         | 21/676 [00:04<01:53,  5.79it/s]2025-12-10 09:28:21,448 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:21,448 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   3%|▎         | 22/676 [00:04<01:52,  5.79it/s]2025-12-10 09:28:21,620 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:21,620 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   3%|▎         | 23/676 [00:04<01:52,  5.79it/s]2025-12-10 09:28:21,793 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:21,793 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   4%|▎         | 24/676 [00:04<01:52,  5.79it/s]2025-12-10 09:28:21,966 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:21,966 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   4%|▎         | 25/676 [00:04<01:52,  5.79it/s]2025-12-10 09:28:22,141 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:22,141 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   4%|▍         | 26/676 [00:04<01:52,  5.79it/s]2025-12-10 09:28:22,312 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:22,312 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   4%|▍         | 27/676 [00:05<01:52,  5.79it/s]2025-12-10 09:28:22,484 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:22,484 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   4%|▍         | 28/676 [00:05<01:51,  5.79it/s]2025-12-10 09:28:22,658 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:22,659 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   4%|▍         | 29/676 [00:05<01:51,  5.79it/s]2025-12-10 09:28:22,829 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:22,829 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   4%|▍         | 30/676 [00:05<01:51,  5.79it/s]2025-12-10 09:28:23,002 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:23,002 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   5%|▍         | 31/676 [00:05<01:51,  5.80it/s]2025-12-10 09:28:23,174 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:23,174 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   5%|▍         | 32/676 [00:05<01:51,  5.79it/s]2025-12-10 09:28:23,347 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:23,347 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   5%|▍         | 33/676 [00:06<01:51,  5.79it/s]2025-12-10 09:28:23,520 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:23,521 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   5%|▌         | 34/676 [00:06<01:50,  5.79it/s]2025-12-10 09:28:23,692 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:23,693 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   5%|▌         | 35/676 [00:06<01:50,  5.79it/s]2025-12-10 09:28:23,866 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:23,866 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   5%|▌         | 36/676 [00:06<01:50,  5.80it/s]2025-12-10 09:28:24,038 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:24,038 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   5%|▌         | 37/676 [00:06<01:50,  5.79it/s]2025-12-10 09:28:24,210 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:24,210 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   6%|▌         | 38/676 [00:06<01:50,  5.79it/s]2025-12-10 09:28:24,383 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:24,383 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   6%|▌         | 39/676 [00:07<01:49,  5.80it/s]2025-12-10 09:28:24,555 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:24,555 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   6%|▌         | 40/676 [00:07<01:49,  5.80it/s]2025-12-10 09:28:24,727 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:24,727 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   6%|▌         | 41/676 [00:07<01:49,  5.80it/s]2025-12-10 09:28:24,900 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:24,900 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   6%|▌         | 42/676 [00:07<01:49,  5.80it/s]2025-12-10 09:28:25,073 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:25,073 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   6%|▋         | 43/676 [00:07<01:49,  5.79it/s]2025-12-10 09:28:25,245 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:25,245 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   7%|▋         | 44/676 [00:07<01:49,  5.79it/s]2025-12-10 09:28:25,418 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:25,418 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   7%|▋         | 45/676 [00:08<01:48,  5.80it/s]2025-12-10 09:28:25,590 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:25,590 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   7%|▋         | 46/676 [00:08<01:48,  5.80it/s]2025-12-10 09:28:25,763 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:25,763 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   7%|▋         | 47/676 [00:08<01:48,  5.79it/s]2025-12-10 09:28:25,937 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:25,937 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   7%|▋         | 48/676 [00:08<01:48,  5.79it/s]2025-12-10 09:28:26,108 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:26,108 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   7%|▋         | 49/676 [00:08<01:48,  5.79it/s]2025-12-10 09:28:26,281 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:26,281 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   7%|▋         | 50/676 [00:09<01:48,  5.79it/s]2025-12-10 09:28:26,454 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:26,454 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   8%|▊         | 51/676 [00:09<01:47,  5.79it/s]2025-12-10 09:28:26,626 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:26,626 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   8%|▊         | 52/676 [00:09<01:47,  5.80it/s]2025-12-10 09:28:26,800 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:26,800 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   8%|▊         | 53/676 [00:09<01:47,  5.79it/s]2025-12-10 09:28:26,971 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:26,972 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   8%|▊         | 54/676 [00:09<01:47,  5.80it/s]2025-12-10 09:28:27,144 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:27,144 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   8%|▊         | 55/676 [00:09<01:47,  5.80it/s]2025-12-10 09:28:27,317 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:27,317 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   8%|▊         | 56/676 [00:10<01:47,  5.79it/s]2025-12-10 09:28:27,490 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:27,490 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   8%|▊         | 57/676 [00:10<01:46,  5.79it/s]2025-12-10 09:28:27,662 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:27,662 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   9%|▊         | 58/676 [00:10<01:46,  5.79it/s]2025-12-10 09:28:27,834 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:27,835 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   9%|▊         | 59/676 [00:10<01:46,  5.80it/s]2025-12-10 09:28:28,007 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:28,007 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   9%|▉         | 60/676 [00:10<01:46,  5.80it/s]2025-12-10 09:28:28,179 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:28,179 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   9%|▉         | 61/676 [00:10<01:46,  5.80it/s]2025-12-10 09:28:28,352 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:28,352 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   9%|▉         | 62/676 [00:11<01:45,  5.80it/s]2025-12-10 09:28:28,524 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:28,525 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   9%|▉         | 63/676 [00:11<01:45,  5.80it/s]2025-12-10 09:28:28,697 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:28,697 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:   9%|▉         | 64/676 [00:11<01:45,  5.80it/s]2025-12-10 09:28:28,870 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:28,870 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  10%|▉         | 65/676 [00:11<01:45,  5.79it/s]2025-12-10 09:28:29,042 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:29,042 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  10%|▉         | 66/676 [00:11<01:45,  5.79it/s]2025-12-10 09:28:29,215 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:29,215 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  10%|▉         | 67/676 [00:11<01:45,  5.79it/s]2025-12-10 09:28:29,387 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:29,387 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  10%|█         | 68/676 [00:12<01:44,  5.79it/s]2025-12-10 09:28:29,561 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:29,561 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  10%|█         | 69/676 [00:12<01:44,  5.79it/s]2025-12-10 09:28:29,733 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:29,733 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  10%|█         | 70/676 [00:12<01:44,  5.79it/s]2025-12-10 09:28:29,905 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:29,905 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  11%|█         | 71/676 [00:12<01:44,  5.79it/s]2025-12-10 09:28:30,078 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:30,078 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  11%|█         | 72/676 [00:12<01:44,  5.79it/s]2025-12-10 09:28:30,250 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:30,250 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  11%|█         | 73/676 [00:13<01:44,  5.80it/s]2025-12-10 09:28:30,423 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:30,423 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  11%|█         | 74/676 [00:13<01:43,  5.80it/s]2025-12-10 09:28:30,595 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:30,595 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  11%|█         | 75/676 [00:13<01:43,  5.80it/s]2025-12-10 09:28:30,768 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:30,768 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  11%|█         | 76/676 [00:13<01:43,  5.80it/s]2025-12-10 09:28:30,940 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:30,941 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  11%|█▏        | 77/676 [00:13<01:43,  5.80it/s]2025-12-10 09:28:31,113 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:31,113 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  12%|█▏        | 78/676 [00:13<01:43,  5.80it/s]2025-12-10 09:28:31,285 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:31,286 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  12%|█▏        | 79/676 [00:14<01:43,  5.79it/s]2025-12-10 09:28:31,465 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:31,466 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  12%|█▏        | 80/676 [00:14<01:42,  5.79it/s]2025-12-10 09:28:31,631 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:31,631 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  12%|█▏        | 81/676 [00:14<01:42,  5.79it/s]2025-12-10 09:28:31,803 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:31,803 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  12%|█▏        | 82/676 [00:14<01:42,  5.80it/s]2025-12-10 09:28:31,976 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:31,976 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  12%|█▏        | 83/676 [00:14<01:42,  5.80it/s]2025-12-10 09:28:32,148 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:32,148 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  12%|█▏        | 84/676 [00:14<01:42,  5.79it/s]2025-12-10 09:28:32,321 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:32,321 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  13%|█▎        | 85/676 [00:15<01:42,  5.79it/s]2025-12-10 09:28:32,493 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:32,494 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  13%|█▎        | 86/676 [00:15<01:41,  5.80it/s]2025-12-10 09:28:32,667 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:32,667 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  13%|█▎        | 87/676 [00:15<01:41,  5.79it/s]2025-12-10 09:28:32,848 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:32,849 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  13%|█▎        | 88/676 [00:15<01:41,  5.79it/s]2025-12-10 09:28:33,015 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:33,015 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  13%|█▎        | 89/676 [00:15<01:41,  5.79it/s]2025-12-10 09:28:33,184 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:33,184 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  13%|█▎        | 90/676 [00:15<01:41,  5.79it/s]2025-12-10 09:28:33,357 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:33,357 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  13%|█▎        | 91/676 [00:16<01:40,  5.79it/s]2025-12-10 09:28:33,529 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:33,530 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  14%|█▎        | 92/676 [00:16<01:40,  5.79it/s]2025-12-10 09:28:33,703 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:33,703 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  14%|█▍        | 93/676 [00:16<01:40,  5.79it/s]2025-12-10 09:28:33,875 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:33,875 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  14%|█▍        | 94/676 [00:16<01:40,  5.79it/s]2025-12-10 09:28:34,048 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:34,048 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  14%|█▍        | 95/676 [00:16<01:40,  5.79it/s]2025-12-10 09:28:34,220 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:34,220 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  14%|█▍        | 96/676 [00:16<01:40,  5.79it/s]2025-12-10 09:28:34,393 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:34,393 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  14%|█▍        | 97/676 [00:17<01:40,  5.79it/s]2025-12-10 09:28:34,566 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:34,566 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  14%|█▍        | 98/676 [00:17<01:39,  5.79it/s]2025-12-10 09:28:34,740 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:34,740 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  15%|█▍        | 99/676 [00:17<01:39,  5.79it/s]2025-12-10 09:28:34,911 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:34,911 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  15%|█▍        | 100/676 [00:17<01:39,  5.79it/s]2025-12-10 09:28:35,084 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:35,084 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  15%|█▍        | 101/676 [00:17<01:39,  5.79it/s]2025-12-10 09:28:35,257 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:35,257 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  15%|█▌        | 102/676 [00:18<01:39,  5.79it/s]2025-12-10 09:28:35,429 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:35,430 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  15%|█▌        | 103/676 [00:18<01:38,  5.79it/s]2025-12-10 09:28:35,602 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:35,602 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  15%|█▌        | 104/676 [00:18<01:38,  5.79it/s]2025-12-10 09:28:35,775 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:35,775 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  16%|█▌        | 105/676 [00:18<01:38,  5.79it/s]2025-12-10 09:28:35,947 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:35,947 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  16%|█▌        | 106/676 [00:18<01:38,  5.79it/s]2025-12-10 09:28:36,122 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:36,122 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  16%|█▌        | 107/676 [00:18<01:38,  5.79it/s]2025-12-10 09:28:36,293 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:36,293 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  16%|█▌        | 108/676 [00:19<01:38,  5.79it/s]2025-12-10 09:28:36,465 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:36,465 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  16%|█▌        | 109/676 [00:19<01:37,  5.79it/s]2025-12-10 09:28:36,638 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:36,638 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  16%|█▋        | 110/676 [00:19<01:37,  5.79it/s]2025-12-10 09:28:36,811 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:36,811 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  16%|█▋        | 111/676 [00:19<01:37,  5.79it/s]2025-12-10 09:28:36,983 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:36,983 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  17%|█▋        | 112/676 [00:19<01:37,  5.79it/s]2025-12-10 09:28:37,156 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:37,156 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  17%|█▋        | 113/676 [00:19<01:37,  5.79it/s]2025-12-10 09:28:37,329 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:37,329 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  17%|█▋        | 114/676 [00:20<01:37,  5.79it/s]2025-12-10 09:28:37,501 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:37,501 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  17%|█▋        | 115/676 [00:20<01:36,  5.79it/s]2025-12-10 09:28:37,680 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:37,680 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  17%|█▋        | 116/676 [00:20<01:36,  5.79it/s]2025-12-10 09:28:37,846 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:37,847 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  17%|█▋        | 117/676 [00:20<01:36,  5.79it/s]2025-12-10 09:28:38,019 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:38,019 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  17%|█▋        | 118/676 [00:20<01:36,  5.79it/s]2025-12-10 09:28:38,191 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:38,192 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  18%|█▊        | 119/676 [00:20<01:36,  5.79it/s]2025-12-10 09:28:38,364 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:38,364 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  18%|█▊        | 120/676 [00:21<01:35,  5.79it/s]2025-12-10 09:28:38,540 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:38,540 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  18%|█▊        | 121/676 [00:21<01:35,  5.79it/s]2025-12-10 09:28:38,716 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:38,717 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  18%|█▊        | 122/676 [00:21<01:35,  5.79it/s]2025-12-10 09:28:38,882 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:38,882 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  18%|█▊        | 123/676 [00:21<01:35,  5.79it/s]2025-12-10 09:28:39,055 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:39,055 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  18%|█▊        | 124/676 [00:21<01:35,  5.79it/s]2025-12-10 09:28:39,234 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:39,234 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  18%|█▊        | 125/676 [00:21<01:35,  5.78it/s]2025-12-10 09:28:39,402 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:39,402 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  19%|█▊        | 126/676 [00:22<01:35,  5.79it/s]2025-12-10 09:28:39,574 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:39,574 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  19%|█▉        | 127/676 [00:22<01:34,  5.79it/s]2025-12-10 09:28:39,746 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:39,746 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  19%|█▉        | 128/676 [00:22<01:34,  5.79it/s]2025-12-10 09:28:39,919 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:39,920 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  19%|█▉        | 129/676 [00:22<01:34,  5.79it/s]2025-12-10 09:28:40,092 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:40,092 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  19%|█▉        | 130/676 [00:22<01:34,  5.79it/s]2025-12-10 09:28:40,264 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:40,264 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  19%|█▉        | 131/676 [00:23<01:34,  5.79it/s]2025-12-10 09:28:40,437 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:40,437 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  20%|█▉        | 132/676 [00:23<01:33,  5.79it/s]2025-12-10 09:28:40,609 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:40,610 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  20%|█▉        | 133/676 [00:23<01:33,  5.80it/s]2025-12-10 09:28:40,782 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:40,782 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  20%|█▉        | 134/676 [00:23<01:33,  5.80it/s]2025-12-10 09:28:40,954 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:40,954 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  20%|█▉        | 135/676 [00:23<01:33,  5.80it/s]2025-12-10 09:28:41,126 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:41,126 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  20%|██        | 136/676 [00:23<01:33,  5.80it/s]2025-12-10 09:28:41,299 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:41,299 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  20%|██        | 137/676 [00:24<01:32,  5.80it/s]2025-12-10 09:28:41,472 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:41,473 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  20%|██        | 138/676 [00:24<01:32,  5.80it/s]2025-12-10 09:28:41,644 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:41,644 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  21%|██        | 139/676 [00:24<01:32,  5.79it/s]2025-12-10 09:28:41,816 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:41,816 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  21%|██        | 140/676 [00:24<01:32,  5.80it/s]2025-12-10 09:28:41,989 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:41,989 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  21%|██        | 141/676 [00:24<01:32,  5.80it/s]2025-12-10 09:28:42,162 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:42,162 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  21%|██        | 142/676 [00:24<01:32,  5.80it/s]2025-12-10 09:28:42,334 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:42,334 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  21%|██        | 143/676 [00:25<01:31,  5.80it/s]2025-12-10 09:28:42,506 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:42,506 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  21%|██▏       | 144/676 [00:25<01:31,  5.80it/s]2025-12-10 09:28:42,679 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:42,679 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  21%|██▏       | 145/676 [00:25<01:31,  5.78it/s]2025-12-10 09:28:42,855 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:42,855 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  22%|██▏       | 146/676 [00:25<01:31,  5.78it/s]2025-12-10 09:28:43,026 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:43,027 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  22%|██▏       | 147/676 [00:25<01:31,  5.78it/s]2025-12-10 09:28:43,198 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:43,198 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  22%|██▏       | 148/676 [00:25<01:31,  5.79it/s]2025-12-10 09:28:43,371 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:43,372 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  22%|██▏       | 149/676 [00:26<01:30,  5.79it/s]2025-12-10 09:28:43,544 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:43,544 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  22%|██▏       | 150/676 [00:26<01:30,  5.79it/s]2025-12-10 09:28:43,716 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:43,716 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  22%|██▏       | 151/676 [00:26<01:30,  5.80it/s]2025-12-10 09:28:43,888 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:43,889 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  22%|██▏       | 152/676 [00:26<01:30,  5.80it/s]2025-12-10 09:28:44,061 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:44,061 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  23%|██▎       | 153/676 [00:26<01:30,  5.80it/s]2025-12-10 09:28:44,234 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:44,234 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  23%|██▎       | 154/676 [00:26<01:30,  5.80it/s]2025-12-10 09:28:44,407 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:44,407 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  23%|██▎       | 155/676 [00:27<01:29,  5.79it/s]2025-12-10 09:28:44,579 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:44,579 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  23%|██▎       | 156/676 [00:27<01:29,  5.80it/s]2025-12-10 09:28:44,753 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:44,753 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  23%|██▎       | 157/676 [00:27<01:29,  5.79it/s]2025-12-10 09:28:44,926 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:44,926 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  23%|██▎       | 158/676 [00:27<01:29,  5.79it/s]2025-12-10 09:28:45,097 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:45,097 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  24%|██▎       | 159/676 [00:27<01:29,  5.79it/s]2025-12-10 09:28:45,269 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:45,270 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  24%|██▎       | 160/676 [00:28<01:29,  5.80it/s]2025-12-10 09:28:45,442 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:45,442 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  24%|██▍       | 161/676 [00:28<01:28,  5.80it/s]2025-12-10 09:28:45,614 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:45,614 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  24%|██▍       | 162/676 [00:28<01:28,  5.80it/s]2025-12-10 09:28:45,786 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:45,786 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  24%|██▍       | 163/676 [00:28<01:28,  5.80it/s]2025-12-10 09:28:45,961 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:45,961 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  24%|██▍       | 164/676 [00:28<01:28,  5.79it/s]2025-12-10 09:28:46,132 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:46,132 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  24%|██▍       | 165/676 [00:28<01:28,  5.79it/s]2025-12-10 09:28:46,304 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:46,304 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  25%|██▍       | 166/676 [00:29<01:27,  5.80it/s]2025-12-10 09:28:46,477 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:46,477 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  25%|██▍       | 167/676 [00:29<01:27,  5.80it/s]2025-12-10 09:28:46,649 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:46,649 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  25%|██▍       | 168/676 [00:29<01:27,  5.80it/s]2025-12-10 09:28:46,822 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:46,822 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  25%|██▌       | 169/676 [00:29<01:27,  5.80it/s]2025-12-10 09:28:46,994 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:46,994 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  25%|██▌       | 170/676 [00:29<01:27,  5.80it/s]2025-12-10 09:28:47,166 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:47,167 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  25%|██▌       | 171/676 [00:29<01:27,  5.80it/s]2025-12-10 09:28:47,338 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:47,339 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  25%|██▌       | 172/676 [00:30<01:26,  5.80it/s]2025-12-10 09:28:47,511 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:47,511 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  26%|██▌       | 173/676 [00:30<01:26,  5.80it/s]2025-12-10 09:28:47,684 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:47,684 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  26%|██▌       | 174/676 [00:30<01:26,  5.80it/s]2025-12-10 09:28:47,857 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:47,857 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  26%|██▌       | 175/676 [00:30<01:26,  5.79it/s]2025-12-10 09:28:48,029 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:48,029 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  26%|██▌       | 176/676 [00:30<01:26,  5.79it/s]2025-12-10 09:28:48,201 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:48,201 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  26%|██▌       | 177/676 [00:30<01:26,  5.80it/s]2025-12-10 09:28:48,374 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:48,374 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  26%|██▋       | 178/676 [00:31<01:25,  5.80it/s]2025-12-10 09:28:48,547 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:48,547 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  26%|██▋       | 179/676 [00:31<01:25,  5.80it/s]2025-12-10 09:28:48,719 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:48,719 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  27%|██▋       | 180/676 [00:31<01:25,  5.79it/s]2025-12-10 09:28:48,892 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:48,892 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  27%|██▋       | 181/676 [00:31<01:25,  5.79it/s]2025-12-10 09:28:49,065 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:49,065 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  27%|██▋       | 182/676 [00:31<01:25,  5.79it/s]2025-12-10 09:28:49,237 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:49,237 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  27%|██▋       | 183/676 [00:31<01:25,  5.79it/s]2025-12-10 09:28:49,410 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:49,410 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  27%|██▋       | 184/676 [00:32<01:24,  5.79it/s]2025-12-10 09:28:49,587 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:49,588 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  27%|██▋       | 185/676 [00:32<01:24,  5.79it/s]2025-12-10 09:28:49,755 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:49,755 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  28%|██▊       | 186/676 [00:32<01:24,  5.80it/s]2025-12-10 09:28:49,927 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:49,927 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  28%|██▊       | 187/676 [00:32<01:24,  5.80it/s]2025-12-10 09:28:50,099 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:50,100 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  28%|██▊       | 188/676 [00:32<01:24,  5.80it/s]2025-12-10 09:28:50,273 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:50,273 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  28%|██▊       | 189/676 [00:33<01:24,  5.80it/s]2025-12-10 09:28:50,445 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:50,445 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  28%|██▊       | 190/676 [00:33<01:23,  5.80it/s]2025-12-10 09:28:50,617 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:50,617 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  28%|██▊       | 191/676 [00:33<01:23,  5.80it/s]2025-12-10 09:28:50,789 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:50,789 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  28%|██▊       | 192/676 [00:33<01:23,  5.80it/s]2025-12-10 09:28:50,962 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:50,962 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  29%|██▊       | 193/676 [00:33<01:23,  5.80it/s]2025-12-10 09:28:51,135 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:51,135 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  29%|██▊       | 194/676 [00:33<01:23,  5.80it/s]2025-12-10 09:28:51,307 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:51,307 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  29%|██▉       | 195/676 [00:34<01:22,  5.80it/s]2025-12-10 09:28:51,482 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:51,482 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  29%|██▉       | 196/676 [00:34<01:22,  5.80it/s]2025-12-10 09:28:51,653 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:51,653 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  29%|██▉       | 197/676 [00:34<01:22,  5.80it/s]2025-12-10 09:28:51,825 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:51,825 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  29%|██▉       | 198/676 [00:34<01:22,  5.80it/s]2025-12-10 09:28:51,997 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:51,997 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  29%|██▉       | 199/676 [00:34<01:22,  5.80it/s]2025-12-10 09:28:52,170 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:52,170 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  30%|██▉       | 200/676 [00:34<01:22,  5.80it/s]2025-12-10 09:28:52,342 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:52,343 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  30%|██▉       | 201/676 [00:35<01:21,  5.79it/s]2025-12-10 09:28:52,515 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:52,515 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  30%|██▉       | 202/676 [00:35<01:21,  5.80it/s]2025-12-10 09:28:52,687 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:52,688 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  30%|███       | 203/676 [00:35<01:21,  5.79it/s]2025-12-10 09:28:52,860 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:52,860 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  30%|███       | 204/676 [00:35<01:21,  5.80it/s]2025-12-10 09:28:53,032 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:53,033 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  30%|███       | 205/676 [00:35<01:21,  5.80it/s]2025-12-10 09:28:53,205 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:53,205 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  30%|███       | 206/676 [00:35<01:21,  5.80it/s]2025-12-10 09:28:53,378 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:53,378 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  31%|███       | 207/676 [00:36<01:20,  5.80it/s]2025-12-10 09:28:53,550 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:53,550 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  31%|███       | 208/676 [00:36<01:20,  5.80it/s]2025-12-10 09:28:53,722 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:53,722 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  31%|███       | 209/676 [00:36<01:20,  5.80it/s]2025-12-10 09:28:53,895 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:53,895 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  31%|███       | 210/676 [00:36<01:20,  5.80it/s]2025-12-10 09:28:54,067 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:54,067 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  31%|███       | 211/676 [00:36<01:20,  5.80it/s]2025-12-10 09:28:54,240 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:54,240 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  31%|███▏      | 212/676 [00:36<01:20,  5.80it/s]2025-12-10 09:28:54,413 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:54,413 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  32%|███▏      | 213/676 [00:37<01:19,  5.79it/s]2025-12-10 09:28:54,586 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:54,586 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  32%|███▏      | 214/676 [00:37<01:19,  5.79it/s]2025-12-10 09:28:54,759 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:54,759 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  32%|███▏      | 215/676 [00:37<01:19,  5.79it/s]2025-12-10 09:28:54,931 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:54,931 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  32%|███▏      | 216/676 [00:37<01:19,  5.79it/s]2025-12-10 09:28:55,103 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:55,104 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  32%|███▏      | 217/676 [00:37<01:19,  5.79it/s]2025-12-10 09:28:55,276 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:55,276 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  32%|███▏      | 218/676 [00:38<01:19,  5.79it/s]2025-12-10 09:28:55,449 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:55,449 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  32%|███▏      | 219/676 [00:38<01:18,  5.79it/s]2025-12-10 09:28:55,623 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:55,623 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  33%|███▎      | 220/676 [00:38<01:18,  5.79it/s]2025-12-10 09:28:55,794 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:55,794 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  33%|███▎      | 221/676 [00:38<01:18,  5.79it/s]2025-12-10 09:28:55,967 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:55,967 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  33%|███▎      | 222/676 [00:38<01:18,  5.79it/s]2025-12-10 09:28:56,140 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:56,140 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  33%|███▎      | 223/676 [00:38<01:18,  5.79it/s]2025-12-10 09:28:56,313 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:56,313 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  33%|███▎      | 224/676 [00:39<01:18,  5.79it/s]2025-12-10 09:28:56,486 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:56,486 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  33%|███▎      | 225/676 [00:39<01:17,  5.79it/s]2025-12-10 09:28:56,658 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:56,659 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  33%|███▎      | 226/676 [00:39<01:17,  5.79it/s]2025-12-10 09:28:56,831 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:56,831 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  34%|███▎      | 227/676 [00:39<01:17,  5.79it/s]2025-12-10 09:28:57,003 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:57,003 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  34%|███▎      | 228/676 [00:39<01:17,  5.79it/s]2025-12-10 09:28:57,176 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:57,176 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  34%|███▍      | 229/676 [00:39<01:17,  5.80it/s]2025-12-10 09:28:57,348 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:57,348 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  34%|███▍      | 230/676 [00:40<01:16,  5.80it/s]2025-12-10 09:28:57,521 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:57,521 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  34%|███▍      | 231/676 [00:40<01:16,  5.80it/s]2025-12-10 09:28:57,693 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:57,694 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  34%|███▍      | 232/676 [00:40<01:16,  5.80it/s]2025-12-10 09:28:57,867 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:57,867 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  34%|███▍      | 233/676 [00:40<01:16,  5.79it/s]2025-12-10 09:28:58,039 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:58,039 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  35%|███▍      | 234/676 [00:40<01:16,  5.79it/s]2025-12-10 09:28:58,211 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:58,212 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  35%|███▍      | 235/676 [00:40<01:16,  5.79it/s]2025-12-10 09:28:58,384 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:58,384 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  35%|███▍      | 236/676 [00:41<01:15,  5.80it/s]2025-12-10 09:28:58,556 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:58,556 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  35%|███▌      | 237/676 [00:41<01:15,  5.80it/s]2025-12-10 09:28:58,729 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:58,729 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  35%|███▌      | 238/676 [00:41<01:15,  5.80it/s]2025-12-10 09:28:58,901 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:58,902 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  35%|███▌      | 239/676 [00:41<01:15,  5.80it/s]2025-12-10 09:28:59,074 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:59,074 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  36%|███▌      | 240/676 [00:41<01:15,  5.80it/s]2025-12-10 09:28:59,246 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:59,246 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  36%|███▌      | 241/676 [00:42<01:15,  5.80it/s]2025-12-10 09:28:59,419 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:59,419 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  36%|███▌      | 242/676 [00:42<01:14,  5.80it/s]2025-12-10 09:28:59,592 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:59,592 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  36%|███▌      | 243/676 [00:42<01:14,  5.79it/s]2025-12-10 09:28:59,764 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:59,764 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  36%|███▌      | 244/676 [00:42<01:14,  5.80it/s]2025-12-10 09:28:59,937 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:28:59,937 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  36%|███▌      | 245/676 [00:42<01:14,  5.80it/s]2025-12-10 09:29:00,110 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:00,110 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  36%|███▋      | 246/676 [00:42<01:14,  5.79it/s]2025-12-10 09:29:00,282 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:00,282 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  37%|███▋      | 247/676 [00:43<01:14,  5.79it/s]2025-12-10 09:29:00,455 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:00,455 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  37%|███▋      | 248/676 [00:43<01:13,  5.79it/s]2025-12-10 09:29:00,628 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:00,629 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  37%|███▋      | 249/676 [00:43<01:13,  5.79it/s]2025-12-10 09:29:00,799 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:00,800 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  37%|███▋      | 250/676 [00:43<01:13,  5.79it/s]2025-12-10 09:29:00,972 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:00,972 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  37%|███▋      | 251/676 [00:43<01:13,  5.79it/s]2025-12-10 09:29:01,145 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:01,145 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  37%|███▋      | 252/676 [00:43<01:13,  5.79it/s]2025-12-10 09:29:01,318 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:01,318 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  37%|███▋      | 253/676 [00:44<01:13,  5.79it/s]2025-12-10 09:29:01,490 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:01,490 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  38%|███▊      | 254/676 [00:44<01:12,  5.79it/s]2025-12-10 09:29:01,662 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:01,662 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  38%|███▊      | 255/676 [00:44<01:12,  5.80it/s]2025-12-10 09:29:01,835 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:01,835 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  38%|███▊      | 256/676 [00:44<01:12,  5.80it/s]2025-12-10 09:29:02,007 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:02,007 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  38%|███▊      | 257/676 [00:44<01:12,  5.80it/s]2025-12-10 09:29:02,180 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:02,180 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  38%|███▊      | 258/676 [00:44<01:12,  5.80it/s]2025-12-10 09:29:02,352 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:02,353 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  38%|███▊      | 259/676 [00:45<01:11,  5.80it/s]2025-12-10 09:29:02,525 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:02,525 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  38%|███▊      | 260/676 [00:45<01:11,  5.80it/s]2025-12-10 09:29:02,698 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:02,698 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  39%|███▊      | 261/676 [00:45<01:11,  5.79it/s]2025-12-10 09:29:02,870 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:02,871 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  39%|███▉      | 262/676 [00:45<01:11,  5.79it/s]2025-12-10 09:29:03,043 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:03,043 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  39%|███▉      | 263/676 [00:45<01:11,  5.79it/s]2025-12-10 09:29:03,216 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:03,216 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  39%|███▉      | 264/676 [00:45<01:11,  5.79it/s]2025-12-10 09:29:03,389 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:03,389 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  39%|███▉      | 265/676 [00:46<01:10,  5.79it/s]2025-12-10 09:29:03,561 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:03,561 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  39%|███▉      | 266/676 [00:46<01:10,  5.79it/s]2025-12-10 09:29:03,734 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:03,734 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  39%|███▉      | 267/676 [00:46<01:10,  5.79it/s]2025-12-10 09:29:03,906 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:03,907 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  40%|███▉      | 268/676 [00:46<01:10,  5.80it/s]2025-12-10 09:29:04,079 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:04,079 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  40%|███▉      | 269/676 [00:46<01:10,  5.79it/s]2025-12-10 09:29:04,252 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:04,252 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  40%|███▉      | 270/676 [00:47<01:10,  5.79it/s]2025-12-10 09:29:04,424 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:04,424 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  40%|████      | 271/676 [00:47<01:09,  5.79it/s]2025-12-10 09:29:04,597 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:04,597 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  40%|████      | 272/676 [00:47<01:09,  5.79it/s]2025-12-10 09:29:04,769 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:04,770 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  40%|████      | 273/676 [00:47<01:09,  5.79it/s]2025-12-10 09:29:04,947 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:04,947 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  41%|████      | 274/676 [00:47<01:09,  5.79it/s]2025-12-10 09:29:05,115 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:05,115 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  41%|████      | 275/676 [00:47<01:09,  5.79it/s]2025-12-10 09:29:05,288 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:05,288 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  41%|████      | 276/676 [00:48<01:09,  5.79it/s]2025-12-10 09:29:05,460 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:05,461 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  41%|████      | 277/676 [00:48<01:08,  5.79it/s]2025-12-10 09:29:05,633 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:05,633 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  41%|████      | 278/676 [00:48<01:08,  5.79it/s]2025-12-10 09:29:05,805 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:05,805 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  41%|████▏     | 279/676 [00:48<01:08,  5.80it/s]2025-12-10 09:29:05,978 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:05,978 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  41%|████▏     | 280/676 [00:48<01:08,  5.80it/s]2025-12-10 09:29:06,150 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:06,150 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  42%|████▏     | 281/676 [00:48<01:08,  5.80it/s]2025-12-10 09:29:06,323 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:06,323 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  42%|████▏     | 282/676 [00:49<01:08,  5.79it/s]2025-12-10 09:29:06,496 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:06,496 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  42%|████▏     | 283/676 [00:49<01:07,  5.79it/s]2025-12-10 09:29:06,668 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:06,668 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  42%|████▏     | 284/676 [00:49<01:07,  5.79it/s]2025-12-10 09:29:06,841 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:06,841 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  42%|████▏     | 285/676 [00:49<01:07,  5.79it/s]2025-12-10 09:29:07,013 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:07,014 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  42%|████▏     | 286/676 [00:49<01:07,  5.79it/s]2025-12-10 09:29:07,186 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:07,186 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  42%|████▏     | 287/676 [00:49<01:07,  5.79it/s]2025-12-10 09:29:07,359 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:07,359 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  43%|████▎     | 288/676 [00:50<01:07,  5.79it/s]2025-12-10 09:29:07,532 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:07,532 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  43%|████▎     | 289/676 [00:50<01:06,  5.79it/s]2025-12-10 09:29:07,705 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:07,705 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  43%|████▎     | 290/676 [00:50<01:06,  5.79it/s]2025-12-10 09:29:07,877 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:07,877 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  43%|████▎     | 291/676 [00:50<01:06,  5.79it/s]2025-12-10 09:29:08,050 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:08,050 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  43%|████▎     | 292/676 [00:50<01:06,  5.79it/s]2025-12-10 09:29:08,222 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:08,222 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  43%|████▎     | 293/676 [00:50<01:06,  5.79it/s]2025-12-10 09:29:08,395 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:08,395 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  43%|████▎     | 294/676 [00:51<01:05,  5.79it/s]2025-12-10 09:29:08,567 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:08,568 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  44%|████▎     | 295/676 [00:51<01:05,  5.79it/s]2025-12-10 09:29:08,740 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:08,740 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  44%|████▍     | 296/676 [00:51<01:05,  5.79it/s]2025-12-10 09:29:08,912 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:08,912 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  44%|████▍     | 297/676 [00:51<01:05,  5.80it/s]2025-12-10 09:29:09,085 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:09,085 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  44%|████▍     | 298/676 [00:51<01:05,  5.79it/s]2025-12-10 09:29:09,258 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:09,258 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  44%|████▍     | 299/676 [00:52<01:05,  5.79it/s]2025-12-10 09:29:09,430 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:09,431 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  44%|████▍     | 300/676 [00:52<01:04,  5.79it/s]2025-12-10 09:29:09,603 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:09,603 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  45%|████▍     | 301/676 [00:52<01:04,  5.79it/s]2025-12-10 09:29:09,776 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:09,776 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  45%|████▍     | 302/676 [00:52<01:04,  5.79it/s]2025-12-10 09:29:09,948 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:09,949 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  45%|████▍     | 303/676 [00:52<01:04,  5.79it/s]2025-12-10 09:29:10,121 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:10,121 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  45%|████▍     | 304/676 [00:52<01:04,  5.79it/s]2025-12-10 09:29:10,294 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:10,294 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  45%|████▌     | 305/676 [00:53<01:04,  5.79it/s]2025-12-10 09:29:10,467 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:10,467 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  45%|████▌     | 306/676 [00:53<01:03,  5.79it/s]2025-12-10 09:29:10,639 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:10,639 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  45%|████▌     | 307/676 [00:53<01:03,  5.79it/s]2025-12-10 09:29:10,812 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:10,812 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  46%|████▌     | 308/676 [00:53<01:03,  5.79it/s]2025-12-10 09:29:10,984 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
-2025-12-10 09:29:10,984 - INFO - y.shape:torch.Size([30000, 1])
-[Training]:  46%|████▌     | 309/676 [00:53<01:03,  5.80it/s]

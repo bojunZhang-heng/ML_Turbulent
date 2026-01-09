@@ -1,288 +1,0 @@
-CUDA available GPUs: 1
-Current device index: 0
-Device name: Tesla V100-SXM2-32GB
-Physical GPU(s) specified in CUDA_VISIBLE_DEVICES: ['3']
-Using physical GPU 3 (visible as cuda:0 in PyTorch)
-2025-12-11 10:44:16,044 | INFO     | Config:
-exp_name: DrivAerNet_pressure_N3w_lr5e-4_e300
-model:
-  input_dim: 3
-  output_dim: 1
-  head_num: 4
-  hidden_dim: 256
-  res: true
-  head_dim: 64
-  slice_num: 64
-  layer_num: 8
-  mlp_ratio: 2
-  dropout: 0.1
-training:
-  batch_size: 1
-  epochs: 150
-  lr: 0.0005
-  scheduler_step: 50
-  scheduler_gamma: 0.7
-  max_grad_norm: 0.1
-  num_workers: 1
-  weight_decay: 1.0e-05
-  test_only: 0
-  gpus: '0'
-  seed: 42
-dataload:
-  directory: /mnt/wjc_group/mae-zhangbj/DrivAerNet_dataset/
-
-2025-12-11 10:44:16,045 | INFO     | args.exp_name : DrivAerNet_pressure_N3w_lr5e-4_e300
-2025-12-11 10:44:16,045 | INFO     | Starting training with 1 GPUs
-2025-12-11 10:44:16,522 | INFO     | Total trainable parameters: 4524353
-2025-12-11 10:44:16,522 | INFO     | Data loaded: 18 training batches, 4 validation batches, 6 test batches
-2025-12-11 10:44:16,523 | INFO     | Staring training for 150 epochs
-[Training]:   0%|          | 0/18 [00:00<?, ?it/s][Training]:   6%|▌         | 1/18 [00:00<00:13,  1.24it/s][Training]:  11%|█         | 2/18 [00:01<00:09,  1.77it/s][Training]:  17%|█▋        | 3/18 [00:01<00:07,  2.04it/s][Training]:  22%|██▏       | 4/18 [00:02<00:06,  2.21it/s][Training]:  28%|██▊       | 5/18 [00:02<00:05,  2.32it/s][Training]:  33%|███▎      | 6/18 [00:02<00:05,  2.38it/s][Training]:  39%|███▉      | 7/18 [00:03<00:04,  2.43it/s][Training]:  44%|████▍     | 8/18 [00:03<00:04,  2.45it/s][Training]:  50%|█████     | 9/18 [00:03<00:03,  2.47it/s][Training]:  56%|█████▌    | 10/18 [00:04<00:03,  2.48it/s][Training]:  61%|██████    | 11/18 [00:04<00:02,  2.49it/s][Training]:  67%|██████▋   | 12/18 [00:05<00:02,  2.50it/s][Training]:  72%|███████▏  | 13/18 [00:05<00:01,  2.52it/s][Training]:  78%|███████▊  | 14/18 [00:05<00:01,  2.51it/s][Training]:  83%|████████▎ | 15/18 [00:06<00:01,  2.51it/s][Training]:  89%|████████▉ | 16/18 [00:06<00:00,  2.52it/s][Training]:  94%|█████████▍| 17/18 [00:07<00:00,  2.52it/s][Training]: 100%|██████████| 18/18 [00:07<00:00,  2.52it/s]index:  9
-index:  12
-index:  15
-index:  16
-index:  8
-index:  5
-index:  7
-index:  14
-index:  13
-index:  1
-index:  2
-index:  4
-index:  17
-index:  6
-index:  10
-index:  3
-index:  0
-index:  11
-[Training]: 100%|██████████| 18/18 [00:07<00:00,  2.37it/s]
-[Validation]:   0%|          | 0/4 [00:00<?, ?it/s][Validation]:  25%|██▌       | 1/4 [00:00<00:00,  4.18it/s][Validation]:  50%|█████     | 2/4 [00:00<00:00,  5.28it/s][Validation]:  75%|███████▌  | 3/4 [00:00<00:00,  5.84it/s][Validation]: 100%|██████████| 4/4 [00:00<00:00,  6.08it/s]index:  2
-index:  1
-index:  0
-index:  3
-[Validation]: 100%|██████████| 4/4 [00:00<00:00,  5.45it/s]
-2025-12-11 10:44:24,951 | INFO     | Epoch 1/150 - Train Loss: 1.341638, Val Loss: 0.926675[0m
-2025-12-11 10:44:25,020 | INFO     | New best model saved with Val Loss: 0.926675
-[Training]:   0%|          | 0/18 [00:00<?, ?it/s][Training]:   6%|▌         | 1/18 [00:00<00:08,  2.08it/s][Training]:  11%|█         | 2/18 [00:00<00:06,  2.31it/s][Training]:  17%|█▋        | 3/18 [00:01<00:06,  2.40it/s][Training]:  22%|██▏       | 4/18 [00:01<00:05,  2.45it/s][Training]:  28%|██▊       | 5/18 [00:02<00:05,  2.47it/s][Training]:  33%|███▎      | 6/18 [00:02<00:04,  2.48it/s][Training]:  39%|███▉      | 7/18 [00:02<00:04,  2.51it/s][Training]:  44%|████▍     | 8/18 [00:03<00:03,  2.51it/s][Training]:  50%|█████     | 9/18 [00:03<00:03,  2.52it/s][Training]:  56%|█████▌    | 10/18 [00:04<00:03,  2.51it/s][Training]:  61%|██████    | 11/18 [00:04<00:02,  2.51it/s][Training]:  67%|██████▋   | 12/18 [00:04<00:02,  2.51it/s][Training]:  72%|███████▏  | 13/18 [00:05<00:01,  2.51it/s][Training]:  78%|███████▊  | 14/18 [00:05<00:01,  2.51it/s][Training]:  83%|████████▎ | 15/18 [00:06<00:01,  2.53it/s][Training]:  89%|████████▉ | 16/18 [00:06<00:00,  2.53it/s][Training]:  94%|█████████▍| 17/18 [00:06<00:00,  2.52it/s][Training]: 100%|██████████| 18/18 [00:07<00:00,  2.52it/s]index:  0
-index:  11
-index:  4
-index:  2
-index:  6
-index:  7
-index:  15
-index:  17
-index:  9
-index:  1
-index:  13
-index:  10
-index:  14
-index:  12
-index:  3
-index:  16
-index:  5
-index:  8
-[Training]: 100%|██████████| 18/18 [00:07<00:00,  2.48it/s]
-[Validation]:   0%|          | 0/4 [00:00<?, ?it/s][Validation]:  25%|██▌       | 1/4 [00:00<00:00,  4.23it/s][Validation]:  50%|█████     | 2/4 [00:00<00:00,  5.32it/s][Validation]:  75%|███████▌  | 3/4 [00:00<00:00,  5.86it/s][Validation]: 100%|██████████| 4/4 [00:00<00:00,  6.08it/s]index:  3
-index:  2
-index:  0
-index:  1
-[Validation]: 100%|██████████| 4/4 [00:00<00:00,  5.49it/s]
-2025-12-11 10:44:33,123 | INFO     | Epoch 2/150 - Train Loss: 0.946820, Val Loss: 0.910298[0m
-2025-12-11 10:44:33,196 | INFO     | New best model saved with Val Loss: 0.910298
-[Training]:   0%|          | 0/18 [00:00<?, ?it/s][Training]:   6%|▌         | 1/18 [00:00<00:08,  2.10it/s][Training]:  11%|█         | 2/18 [00:00<00:06,  2.33it/s][Training]:  17%|█▋        | 3/18 [00:01<00:06,  2.44it/s][Training]:  22%|██▏       | 4/18 [00:01<00:05,  2.47it/s][Training]:  28%|██▊       | 5/18 [00:02<00:05,  2.49it/s][Training]:  33%|███▎      | 6/18 [00:02<00:04,  2.49it/s][Training]:  39%|███▉      | 7/18 [00:02<00:04,  2.50it/s][Training]:  44%|████▍     | 8/18 [00:03<00:03,  2.50it/s][Training]:  50%|█████     | 9/18 [00:03<00:03,  2.50it/s][Training]:  56%|█████▌    | 10/18 [00:04<00:03,  2.52it/s][Training]:  61%|██████    | 11/18 [00:04<00:02,  2.51it/s][Training]:  67%|██████▋   | 12/18 [00:04<00:02,  2.51it/s][Training]:  72%|███████▏  | 13/18 [00:05<00:01,  2.53it/s][Training]:  78%|███████▊  | 14/18 [00:05<00:01,  2.52it/s][Training]:  83%|████████▎ | 15/18 [00:06<00:01,  2.52it/s][Training]:  89%|████████▉ | 16/18 [00:06<00:00,  2.53it/s][Training]:  94%|█████████▍| 17/18 [00:06<00:00,  2.52it/s][Training]: 100%|██████████| 18/18 [00:07<00:00,  2.52it/s]index:  13
-index:  3
-index:  5
-index:  7
-index:  12
-index:  6
-index:  9
-index:  1
-index:  0
-index:  11
-index:  10
-index:  2
-index:  17
-index:  8
-index:  15
-index:  16
-index:  4
-index:  14
-[Training]: 100%|██████████| 18/18 [00:07<00:00,  2.48it/s]
-[Validation]:   0%|          | 0/4 [00:00<?, ?it/s][Validation]:  25%|██▌       | 1/4 [00:00<00:00,  4.13it/s][Validation]:  50%|█████     | 2/4 [00:00<00:00,  5.31it/s][Validation]:  75%|███████▌  | 3/4 [00:00<00:00,  5.79it/s][Validation]: 100%|██████████| 4/4 [00:00<00:00,  6.09it/s]index:  1
-index:  0
-index:  3
-index:  2
-[Validation]: 100%|██████████| 4/4 [00:00<00:00,  5.47it/s]
-2025-12-11 10:44:41,279 | INFO     | Epoch 3/150 - Train Loss: 0.943871, Val Loss: 0.909942[0m
-2025-12-11 10:44:41,361 | INFO     | New best model saved with Val Loss: 0.909942
-[Training]:   0%|          | 0/18 [00:00<?, ?it/s][Training]:   6%|▌         | 1/18 [00:00<00:08,  2.06it/s][Training]:  11%|█         | 2/18 [00:00<00:06,  2.30it/s][Training]:  17%|█▋        | 3/18 [00:01<00:06,  2.40it/s][Training]:  22%|██▏       | 4/18 [00:01<00:05,  2.45it/s][Training]:  28%|██▊       | 5/18 [00:02<00:05,  2.47it/s][Training]:  33%|███▎      | 6/18 [00:02<00:04,  2.48it/s][Training]:  39%|███▉      | 7/18 [00:02<00:04,  2.49it/s][Training]:  44%|████▍     | 8/18 [00:03<00:04,  2.49it/s][Training]:  50%|█████     | 9/18 [00:03<00:03,  2.50it/s][Training]:  56%|█████▌    | 10/18 [00:04<00:03,  2.51it/s][Training]:  61%|██████    | 11/18 [00:04<00:02,  2.53it/s][Training]:  67%|██████▋   | 12/18 [00:04<00:02,  2.53it/s][Training]:  72%|███████▏  | 13/18 [00:05<00:01,  2.53it/s][Training]:  78%|███████▊  | 14/18 [00:05<00:01,  2.53it/s][Training]:  83%|████████▎ | 15/18 [00:06<00:01,  2.52it/s][Training]:  89%|████████▉ | 16/18 [00:06<00:00,  2.52it/s][Training]:  94%|█████████▍| 17/18 [00:06<00:00,  2.52it/s][Training]: 100%|██████████| 18/18 [00:07<00:00,  2.53it/s]index:  14
-index:  15
-index:  17
-index:  12
-index:  0
-index:  7
-index:  13
-index:  1
-index:  9
-index:  6
-index:  5
-index:  3
-index:  16
-index:  4
-index:  10
-index:  2
-index:  8
-index:  11
-[Training]: 100%|██████████| 18/18 [00:07<00:00,  2.48it/s]
-[Validation]:   0%|          | 0/4 [00:00<?, ?it/s][Validation]:  25%|██▌       | 1/4 [00:00<00:00,  4.20it/s][Validation]:  50%|█████     | 2/4 [00:00<00:00,  5.37it/s][Validation]:  75%|███████▌  | 3/4 [00:00<00:00,  5.83it/s][Validation]: 100%|██████████| 4/4 [00:00<00:00,  6.13it/s]index:  0
-index:  3
-index:  1
-index:  2
-[Validation]: 100%|██████████| 4/4 [00:00<00:00,  5.49it/s]
-2025-12-11 10:44:49,462 | INFO     | Epoch 4/150 - Train Loss: 0.943237, Val Loss: 0.909705[0m
-2025-12-11 10:44:49,543 | INFO     | New best model saved with Val Loss: 0.909705
-[Training]:   0%|          | 0/18 [00:00<?, ?it/s][Training]:   6%|▌         | 1/18 [00:00<00:08,  2.06it/s][Training]:  11%|█         | 2/18 [00:00<00:06,  2.31it/s][Training]:  17%|█▋        | 3/18 [00:01<00:06,  2.40it/s][Training]:  22%|██▏       | 4/18 [00:01<00:05,  2.45it/s][Training]:  28%|██▊       | 5/18 [00:02<00:05,  2.48it/s][Training]:  33%|███▎      | 6/18 [00:02<00:04,  2.50it/s][Training]:  39%|███▉      | 7/18 [00:02<00:04,  2.50it/s][Training]:  44%|████▍     | 8/18 [00:03<00:03,  2.51it/s][Training]:  50%|█████     | 9/18 [00:03<00:03,  2.51it/s][Training]:  56%|█████▌    | 10/18 [00:04<00:03,  2.53it/s][Training]:  61%|██████    | 11/18 [00:04<00:02,  2.53it/s][Training]:  67%|██████▋   | 12/18 [00:04<00:02,  2.53it/s][Training]:  72%|███████▏  | 13/18 [00:05<00:01,  2.54it/s][Training]:  78%|███████▊  | 14/18 [00:05<00:01,  2.53it/s][Training]:  83%|████████▎ | 15/18 [00:06<00:01,  2.53it/s][Training]:  89%|████████▉ | 16/18 [00:06<00:00,  2.53it/s][Training]:  94%|█████████▍| 17/18 [00:06<00:00,  2.53it/s][Training]: 100%|██████████| 18/18 [00:07<00:00,  2.52it/s]index:  5
-index:  7
-index:  6
-index:  10
-index:  13
-index:  8
-index:  0
-index:  17
-index:  11
-index:  2
-index:  16
-index:  4
-index:  9
-index:  15
-index:  1
-index:  12
-index:  3
-index:  14
-[Training]: 100%|██████████| 18/18 [00:07<00:00,  2.49it/s]
-[Validation]:   0%|          | 0/4 [00:00<?, ?it/s][Validation]:  25%|██▌       | 1/4 [00:00<00:00,  4.14it/s][Validation]:  50%|█████     | 2/4 [00:00<00:00,  5.25it/s][Validation]:  75%|███████▌  | 3/4 [00:00<00:00,  5.80it/s][Validation]: 100%|██████████| 4/4 [00:00<00:00,  6.05it/s]index:  3
-index:  0
-index:  1
-index:  2
-[Validation]: 100%|██████████| 4/4 [00:00<00:00,  5.38it/s]
-2025-12-11 10:44:57,634 | INFO     | Epoch 5/150 - Train Loss: 0.943044, Val Loss: 0.909680[0m
-2025-12-11 10:44:57,706 | INFO     | New best model saved with Val Loss: 0.909680
-[Training]:   0%|          | 0/18 [00:00<?, ?it/s][Training]:   6%|▌         | 1/18 [00:00<00:07,  2.14it/s][Training]:  11%|█         | 2/18 [00:00<00:06,  2.36it/s][Training]:  17%|█▋        | 3/18 [00:01<00:06,  2.44it/s][Training]:  22%|██▏       | 4/18 [00:01<00:05,  2.47it/s][Training]:  28%|██▊       | 5/18 [00:02<00:05,  2.48it/s][Training]:  33%|███▎      | 6/18 [00:02<00:04,  2.50it/s][Training]:  39%|███▉      | 7/18 [00:02<00:04,  2.51it/s][Training]:  44%|████▍     | 8/18 [00:03<00:03,  2.53it/s][Training]:  50%|█████     | 9/18 [00:03<00:03,  2.52it/s][Training]:  56%|█████▌    | 10/18 [00:04<00:03,  2.53it/s][Training]:  61%|██████    | 11/18 [00:04<00:02,  2.53it/s][Training]:  67%|██████▋   | 12/18 [00:04<00:02,  2.52it/s][Training]:  72%|███████▏  | 13/18 [00:05<00:01,  2.53it/s][Training]:  78%|███████▊  | 14/18 [00:05<00:01,  2.53it/s][Training]:  83%|████████▎ | 15/18 [00:05<00:01,  2.53it/s][Training]:  89%|████████▉ | 16/18 [00:06<00:00,  2.54it/s][Training]:  94%|█████████▍| 17/18 [00:06<00:00,  2.53it/s][Training]: 100%|██████████| 18/18 [00:07<00:00,  2.52it/s]index:  16
-index:  15
-index:  13
-index:  10
-index:  17
-index:  2
-index:  12
-index:  14
-index:  1
-index:  6
-index:  0
-index:  4
-index:  11
-index:  3
-index:  8
-index:  9
-index:  5
-index:  7
-[Training]: 100%|██████████| 18/18 [00:07<00:00,  2.49it/s]
-[Validation]:   0%|          | 0/4 [00:00<?, ?it/s][Validation]:  25%|██▌       | 1/4 [00:00<00:00,  4.11it/s][Validation]:  50%|█████     | 2/4 [00:00<00:00,  5.24it/s][Validation]:  75%|███████▌  | 3/4 [00:00<00:00,  5.74it/s][Validation]: 100%|██████████| 4/4 [00:00<00:00,  6.14it/s]index:  2
-index:  3
-index:  1
-index:  0
-[Validation]: 100%|██████████| 4/4 [00:00<00:00,  5.48it/s]
-2025-12-11 10:45:05,764 | INFO     | Epoch 6/150 - Train Loss: 0.942848, Val Loss: 0.909580[0m
-2025-12-11 10:45:05,836 | INFO     | New best model saved with Val Loss: 0.909580
-[Training]:   0%|          | 0/18 [00:00<?, ?it/s][Training]:   6%|▌         | 1/18 [00:00<00:08,  2.09it/s][Training]:  11%|█         | 2/18 [00:00<00:06,  2.32it/s][Training]:  17%|█▋        | 3/18 [00:01<00:06,  2.42it/s][Training]:  22%|██▏       | 4/18 [00:01<00:05,  2.46it/s][Training]:  28%|██▊       | 5/18 [00:02<00:05,  2.49it/s][Training]:  33%|███▎      | 6/18 [00:02<00:04,  2.50it/s][Training]:  39%|███▉      | 7/18 [00:02<00:04,  2.50it/s][Training]:  44%|████▍     | 8/18 [00:03<00:03,  2.50it/s][Training]:  50%|█████     | 9/18 [00:03<00:03,  2.51it/s][Training]:  56%|█████▌    | 10/18 [00:04<00:03,  2.53it/s][Training]:  61%|██████    | 11/18 [00:04<00:02,  2.53it/s][Training]:  67%|██████▋   | 12/18 [00:04<00:02,  2.52it/s][Training]:  72%|███████▏  | 13/18 [00:05<00:01,  2.52it/s][Training]:  78%|███████▊  | 14/18 [00:05<00:01,  2.52it/s][Training]:  83%|████████▎ | 15/18 [00:06<00:01,  2.51it/s][Training]:  89%|████████▉ | 16/18 [00:06<00:00,  2.51it/s][Training]:  94%|█████████▍| 17/18 [00:06<00:00,  2.51it/s][Training]: 100%|██████████| 18/18 [00:07<00:00,  2.52it/s]index:  14
-index:  2
-index:  0
-index:  1
-index:  8
-index:  6
-index:  9
-index:  10
-index:  16
-index:  5
-index:  13
-index:  15
-index:  7
-index:  4
-index:  11
-index:  12
-index:  17
-index:  3
-[Training]: 100%|██████████| 18/18 [00:07<00:00,  2.48it/s]
-[Validation]:   0%|          | 0/4 [00:00<?, ?it/s][Validation]:  25%|██▌       | 1/4 [00:00<00:00,  4.20it/s][Validation]:  50%|█████     | 2/4 [00:00<00:00,  5.37it/s][Validation]:  75%|███████▌  | 3/4 [00:00<00:00,  5.83it/s][Validation]: 100%|██████████| 4/4 [00:00<00:00,  6.12it/s]index:  1
-index:  3
-index:  2
-index:  0
-[Validation]: 100%|██████████| 4/4 [00:00<00:00,  5.45it/s]
-2025-12-11 10:45:13,932 | INFO     | Epoch 7/150 - Train Loss: 0.942927, Val Loss: 0.909480[0m
-2025-12-11 10:45:14,001 | INFO     | New best model saved with Val Loss: 0.909480
-[Training]:   0%|          | 0/18 [00:00<?, ?it/s][Training]:   6%|▌         | 1/18 [00:00<00:08,  2.08it/s][Training]:  11%|█         | 2/18 [00:00<00:06,  2.32it/s][Training]:  17%|█▋        | 3/18 [00:01<00:06,  2.40it/s][Training]:  22%|██▏       | 4/18 [00:01<00:05,  2.44it/s][Training]:  28%|██▊       | 5/18 [00:02<00:05,  2.48it/s][Training]:  33%|███▎      | 6/18 [00:02<00:04,  2.50it/s][Training]:  39%|███▉      | 7/18 [00:02<00:04,  2.50it/s][Training]:  44%|████▍     | 8/18 [00:03<00:03,  2.51it/s][Training]:  50%|█████     | 9/18 [00:03<00:03,  2.51it/s][Training]:  56%|█████▌    | 10/18 [00:04<00:03,  2.51it/s][Training]:  61%|██████    | 11/18 [00:04<00:02,  2.51it/s][Training]:  67%|██████▋   | 12/18 [00:04<00:02,  2.52it/s][Training]:  72%|███████▏  | 13/18 [00:05<00:01,  2.52it/s][Training]:  78%|███████▊  | 14/18 [00:05<00:01,  2.51it/s][Training]:  83%|████████▎ | 15/18 [00:06<00:01,  2.52it/s][Training]:  89%|████████▉ | 16/18 [00:06<00:00,  2.52it/s][Training]:  94%|█████████▍| 17/18 [00:06<00:00,  2.52it/s][Training]: 100%|██████████| 18/18 [00:07<00:00,  2.52it/s]index:  11
-index:  0
-index:  10
-index:  5
-index:  16
-index:  12
-index:  15
-index:  2
-index:  17
-index:  6
-index:  4
-index:  1
-index:  8
-index:  13
-index:  9
-index:  14
-index:  3
-index:  7
-[Training]: 100%|██████████| 18/18 [00:07<00:00,  2.47it/s]
-[Validation]:   0%|          | 0/4 [00:00<?, ?it/s][Validation]:  25%|██▌       | 1/4 [00:00<00:00,  6.39it/s][Validation]:  75%|███████▌  | 3/4 [00:00<00:00, 11.09it/s]index:  1
-index:  2
-index:  0
-index:  3
-[Validation]: 100%|██████████| 4/4 [00:00<00:00,  9.26it/s]
-2025-12-11 10:45:21,815 | INFO     | Epoch 8/150 - Train Loss: 0.942873, Val Loss: 0.910444[0m
-[Training]:   0%|          | 0/18 [00:00<?, ?it/s][Training]:   6%|▌         | 1/18 [00:00<00:07,  2.13it/s][Training]:  11%|█         | 2/18 [00:00<00:06,  2.37it/s][Training]:  17%|█▋        | 3/18 [00:01<00:06,  2.48it/s][Training]:  22%|██▏       | 4/18 [00:01<00:05,  2.52it/s][Training]:  28%|██▊       | 5/18 [00:02<00:05,  2.54it/s][Training]:  33%|███▎      | 6/18 [00:02<00:04,  2.56it/s][Training]:  39%|███▉      | 7/18 [00:02<00:04,  2.56it/s][Training]:  44%|████▍     | 8/18 [00:03<00:03,  2.57it/s][Training]:  50%|█████     | 9/18 [00:03<00:03,  2.58it/s][Training]:  56%|█████▌    | 10/18 [00:03<00:03,  2.57it/s][Training]:  61%|██████    | 11/18 [00:04<00:02,  2.75it/s][Training]:  67%|██████▋   | 12/18 [00:04<00:01,  3.27it/s][Training]:  72%|███████▏  | 13/18 [00:04<00:01,  3.07it/s][Training]:  78%|███████▊  | 14/18 [00:05<00:01,  2.90it/s][Training]:  83%|████████▎ | 15/18 [00:05<00:01,  2.77it/s][Training]:  89%|████████▉ | 16/18 [00:05<00:00,  2.69it/s][Training]:  94%|█████████▍| 17/18 [00:06<00:00,  2.64it/s][Training]: 100%|██████████| 18/18 [00:06<00:00,  2.59it/s]index:  0
-index:  6
-index:  11
-index:  7
-index:  14
-index:  5
-index:  10
-index:  9
-index:  16
-index:  17
-index:  2
-index:  13
-index:  3
-index:  12
-index:  1
-index:  15
-index:  4
-index:  8
-[Training]: 100%|██████████| 18/18 [00:06<00:00,  2.64it/s]
-[Validation]:   0%|          | 0/4 [00:00<?, ?it/s][Validation]:  25%|██▌       | 1/4 [00:00<00:00,  4.22it/s][Validation]:  50%|█████     | 2/4 [00:00<00:00,  5.31it/s][Validation]:  75%|███████▌  | 3/4 [00:00<00:00,  5.84it/s][Validation]: 100%|██████████| 4/4 [00:00<00:00,  6.08it/s]index:  1
-index:  3
-index:  0
-index:  2
-[Validation]: 100%|██████████| 4/4 [00:00<00:00,  5.51it/s]
-2025-12-11 10:45:29,463 | INFO     | Epoch 9/150 - Train Loss: 0.943364, Val Loss: 0.909825[0m
-[Training]:   0%|          | 0/18 [00:00<?, ?it/s][Training]:   6%|▌         | 1/18 [00:00<00:08,  2.07it/s][Training]:  11%|█         | 2/18 [00:00<00:06,  2.32it/s][Training]:  17%|█▋        | 3/18 [00:01<00:06,  2.40it/s][Training]:  22%|██▏       | 4/18 [00:01<00:05,  2.46it/s][Training]:  28%|██▊       | 5/18 [00:02<00:05,  2.50it/s][Training]:  33%|███▎      | 6/18 [00:02<00:04,  2.52it/s][Training]:  39%|███▉      | 7/18 [00:02<00:04,  2.51it/s][Training]:  44%|████▍     | 8/18 [00:03<00:03,  2.51it/s][Training]:  50%|█████     | 9/18 [00:03<00:03,  2.51it/s][Training]:  56%|█████▌    | 10/18 [00:04<00:03,  2.51it/s][Training]:  61%|██████    | 11/18 [00:04<00:02,  2.51it/s][Training]:  67%|██████▋   | 12/18 [00:04<00:02,  2.53it/s][Training]:  72%|███████▏  | 13/18 [00:05<00:01,  2.53it/s][Training]:  78%|███████▊  | 14/18 [00:05<00:01,  2.53it/s][Training]:  83%|████████▎ | 15/18 [00:06<00:01,  2.53it/s]index:  8
-index:  16
-index:  14
-index:  7
-index:  10
-index:  6
-index:  11
-index:  5
-index:  1
-index:  4
-index:  15
-index:  2
-index:  17
-index:  9
-index:  12
-index:  13
-index:  3
-index:  0

@@ -1,78 +1,0 @@
-CUDA available GPUs: 1
-Current device index: 0
-Device name: Tesla V100-SXM2-32GB
-Physical GPU(s) specified in CUDA_VISIBLE_DEVICES: ['3']
-Using physical GPU 3 (visible as cuda:0 in PyTorch)
-2025-12-19 12:55:31,002 | INFO     | Config:
-exp_name: spressure_N10k_lr1e-3_e250
-model:
-  input_dim: 3
-  output_dim: 1
-  head_num: 8
-  hidden_dim: 256
-  res: true
-  slice_num: 32
-  layer_num: 5
-  mlp_ratio: 1.5
-  dropout: 0.1
-training:
-  batch_size: 1
-  epochs: 250
-  lr: 0.001
-  scheduler_step: 50
-  scheduler_gamma: 0.5
-  max_grad_norm: 0.1
-  num_workers: 1
-  weight_decay: 0.0
-  test_only: 0
-  gpus: '0'
-  seed: 42
-dataload:
-  directory: /mnt/wjc_group/mae-zhangbj/DrivAerNet_dataset/
-
-2025-12-19 12:55:31,002 | INFO     | args.exp_name : spressure_N10k_lr1e-3_e250
-2025-12-19 12:55:31,002 | INFO     | Starting training with 1 GPUs
-2025-12-19 12:55:32,064 | INFO     | Total trainable parameters: 3381321
-2025-12-19 12:55:32,064 | INFO     | Data loaded: 405 training batches, 81 validation batches, 106 test batches
-2025-12-19 12:55:32,064 | INFO     | Staring training for 250 epochs
-[Training]:   0%|          | 0/405 [00:00<?, ?it/s]2025-12-19 12:55:32,162 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   0%|          | 1/405 [00:01<11:49,  1.76s/it]2025-12-19 12:55:33,823 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   0%|          | 2/405 [00:03<10:14,  1.53s/it]2025-12-19 12:55:35,186 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   1%|          | 3/405 [00:04<09:43,  1.45s/it]2025-12-19 12:55:36,550 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   1%|          | 4/405 [00:05<09:28,  1.42s/it]2025-12-19 12:55:37,913 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   1%|          | 5/405 [00:07<09:18,  1.40s/it]2025-12-19 12:55:39,275 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   1%|▏         | 6/405 [00:08<09:12,  1.38s/it]2025-12-19 12:55:40,635 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   2%|▏         | 7/405 [00:09<09:08,  1.38s/it]2025-12-19 12:55:42,000 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   2%|▏         | 8/405 [00:11<09:04,  1.37s/it]2025-12-19 12:55:43,362 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   2%|▏         | 9/405 [00:12<09:02,  1.37s/it]2025-12-19 12:55:44,723 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   2%|▏         | 10/405 [00:14<09:00,  1.37s/it]2025-12-19 12:55:46,086 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   3%|▎         | 11/405 [00:15<08:58,  1.37s/it]2025-12-19 12:55:47,449 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   3%|▎         | 12/405 [00:16<08:56,  1.36s/it]2025-12-19 12:55:48,810 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   3%|▎         | 13/405 [00:18<08:55,  1.37s/it]2025-12-19 12:55:50,178 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   3%|▎         | 14/405 [00:19<08:53,  1.36s/it]2025-12-19 12:55:51,539 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   4%|▎         | 15/405 [00:20<08:51,  1.36s/it]2025-12-19 12:55:52,901 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   4%|▍         | 16/405 [00:22<08:50,  1.36s/it]2025-12-19 12:55:54,262 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   4%|▍         | 17/405 [00:23<08:48,  1.36s/it]2025-12-19 12:55:55,623 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   4%|▍         | 18/405 [00:24<08:46,  1.36s/it]2025-12-19 12:55:56,983 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   5%|▍         | 19/405 [00:26<08:45,  1.36s/it]2025-12-19 12:55:58,346 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   5%|▍         | 20/405 [00:27<08:44,  1.36s/it]2025-12-19 12:55:59,708 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   5%|▌         | 21/405 [00:29<08:42,  1.36s/it]2025-12-19 12:56:01,069 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   5%|▌         | 22/405 [00:30<08:41,  1.36s/it]2025-12-19 12:56:02,430 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   6%|▌         | 23/405 [00:31<08:40,  1.36s/it]2025-12-19 12:56:03,792 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   6%|▌         | 24/405 [00:33<08:38,  1.36s/it]2025-12-19 12:56:05,153 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   6%|▌         | 25/405 [00:34<08:37,  1.36s/it]2025-12-19 12:56:06,514 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   6%|▋         | 26/405 [00:35<08:36,  1.36s/it]2025-12-19 12:56:07,876 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   7%|▋         | 27/405 [00:37<08:34,  1.36s/it]2025-12-19 12:56:09,237 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   7%|▋         | 28/405 [00:38<08:33,  1.36s/it]2025-12-19 12:56:10,598 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   7%|▋         | 29/405 [00:39<08:31,  1.36s/it]2025-12-19 12:56:11,959 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   7%|▋         | 30/405 [00:41<08:30,  1.36s/it]2025-12-19 12:56:13,322 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   8%|▊         | 31/405 [00:42<08:29,  1.36s/it]2025-12-19 12:56:14,684 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   8%|▊         | 32/405 [00:43<08:27,  1.36s/it]2025-12-19 12:56:16,045 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   8%|▊         | 33/405 [00:45<08:26,  1.36s/it]2025-12-19 12:56:17,407 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   8%|▊         | 34/405 [00:46<08:25,  1.36s/it]2025-12-19 12:56:18,768 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   9%|▊         | 35/405 [00:48<08:23,  1.36s/it]2025-12-19 12:56:20,129 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   9%|▉         | 36/405 [00:49<08:22,  1.36s/it]2025-12-19 12:56:21,496 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   9%|▉         | 37/405 [00:50<08:21,  1.36s/it]2025-12-19 12:56:22,858 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:   9%|▉         | 38/405 [00:52<08:20,  1.36s/it]2025-12-19 12:56:24,221 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:  10%|▉         | 39/405 [00:53<08:18,  1.36s/it]2025-12-19 12:56:25,582 | INFO     | y.shape: torch.Size([1, 10000, 1])
-[Training]:  10%|▉         | 40/405 [00:54<08:17,  1.36s/it]2025-12-19 12:56:26,943 | INFO     | y.shape: torch.Size([1, 10000, 1])

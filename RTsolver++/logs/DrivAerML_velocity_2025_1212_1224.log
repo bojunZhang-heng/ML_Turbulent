@@ -1,77 +1,0 @@
-2025-12-12 12:24:54,584 | INFO     | Config:
-exp_name: velocity_N10k_lr1e-3_e250
-model:
-  input_dim: 3
-  output_dim: 3
-  head_num: 8
-  hidden_dim: 256
-  res: true
-  head_dim: 64
-  slice_num: 32
-  layer_num: 5
-  mlp_ratio: 1
-  dropout: 0.0
-training:
-  input: volume_anchor_position
-  target: volume_anchor_velocity
-  batch_size: 1
-  epochs: 250
-  lr: 0.001
-  scheduler_step: 50
-  scheduler_gamma: 0.5
-  max_grad_norm: 0.1
-  num_workers: 1
-  weight_decay: 0.0
-  test_only: 1
-  gpus: '0'
-  root_dir: /mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small
-  seed: 42
-
-2025-12-12 12:24:54,584 | INFO     | args.exp_name : velocity_N10k_lr1e-3_e250
-2025-12-12 12:24:54,584 | INFO     | Starting training with 1 GPUs
-2025-12-12 12:24:54,798 | INFO     | Total trainable parameters: 2266059
-2025-12-12 12:24:54,799 | INFO     | Data loaded: 385 training batches, 33 validation batches, 48 test batches
-2025-12-12 12:24:54,800 | INFO     | Staring training for 250 epochs
-[Training]:   0%|          | 0/385 [00:00<?, ?it/s][Training]:   0%|          | 1/385 [00:00<02:56,  2.17it/s][Training]:   1%|          | 4/385 [00:00<00:43,  8.68it/s][Training]:   2%|▏         | 7/385 [00:00<00:27, 13.83it/s][Training]:   3%|▎         | 10/385 [00:00<00:20, 18.01it/s][Training]:   3%|▎         | 13/385 [00:00<00:17, 21.01it/s][Training]:   4%|▍         | 16/385 [00:00<00:15, 23.14it/s][Training]:   5%|▍         | 19/385 [00:01<00:14, 25.01it/s][Training]:   6%|▌         | 22/385 [00:01<00:13, 26.34it/s][Training]:   6%|▋         | 25/385 [00:01<00:13, 26.99it/s][Training]:   7%|▋         | 28/385 [00:01<00:12, 27.82it/s][Training]:   8%|▊         | 31/385 [00:01<00:12, 28.41it/s][Training]:   9%|▉         | 34/385 [00:01<00:12, 28.85it/s][Training]:  10%|▉         | 37/385 [00:01<00:11, 29.13it/s][Training]:  10%|█         | 40/385 [00:01<00:11, 29.35it/s][Training]:  11%|█         | 43/385 [00:01<00:11, 29.49it/s][Training]:  12%|█▏        | 46/385 [00:01<00:11, 29.58it/s][Training]:  13%|█▎        | 49/385 [00:02<00:11, 29.65it/s][Training]:  14%|█▎        | 52/385 [00:02<00:11, 29.70it/s][Training]:  14%|█▍        | 55/385 [00:02<00:11, 29.72it/s][Training]:  15%|█▌        | 58/385 [00:02<00:10, 29.74it/s][Training]:  16%|█▌        | 61/385 [00:02<00:11, 29.03it/s][Training]:  17%|█▋        | 64/385 [00:02<00:11, 29.13it/s][Training]:  17%|█▋        | 67/385 [00:02<00:10, 29.24it/s][Training]:  18%|█▊        | 70/385 [00:02<00:10, 29.35it/s][Training]:  19%|█▉        | 73/385 [00:02<00:10, 29.48it/s][Training]:  20%|█▉        | 76/385 [00:03<00:10, 29.58it/s][Training]:  21%|██        | 79/385 [00:03<00:10, 29.48it/s][Training]:  21%|██▏       | 82/385 [00:03<00:10, 29.56it/s][Training]:  22%|██▏       | 85/385 [00:03<00:10, 29.62it/s][Training]:  23%|██▎       | 88/385 [00:03<00:10, 29.59it/s][Training]:  24%|██▎       | 91/385 [00:03<00:09, 29.57it/s][Training]:  24%|██▍       | 94/385 [00:03<00:09, 29.65it/s][Training]:  25%|██▌       | 97/385 [00:03<00:09, 29.36it/s][Training]:  26%|██▌       | 100/385 [00:03<00:09, 29.44it/s][Training]:  27%|██▋       | 103/385 [00:03<00:09, 29.51it/s][Training]:  28%|██▊       | 106/385 [00:04<00:09, 29.59it/s][Training]:  28%|██▊       | 109/385 [00:04<00:09, 29.60it/s][Training]:  29%|██▉       | 112/385 [00:04<00:09, 29.32it/s][Training]:  30%|██▉       | 115/385 [00:04<00:09, 29.46it/s][Training]:  31%|███       | 118/385 [00:04<00:09, 29.59it/s][Training]:  31%|███▏      | 121/385 [00:04<00:08, 29.67it/s][Training]:  32%|███▏      | 124/385 [00:04<00:08, 29.74it/s][Training]:  33%|███▎      | 127/385 [00:04<00:08, 29.79it/s][Training]:  34%|███▍      | 130/385 [00:04<00:08, 29.78it/s][Training]:  35%|███▍      | 133/385 [00:04<00:08, 29.61it/s][Training]:  35%|███▌      | 136/385 [00:05<00:08, 29.31it/s][Training]:  36%|███▌      | 139/385 [00:05<00:08, 29.19it/s][Training]:  37%|███▋      | 142/385 [00:05<00:08, 29.21it/s][Training]:  38%|███▊      | 145/385 [00:05<00:08, 29.40it/s][Training]:  38%|███▊      | 148/385 [00:05<00:08, 29.39it/s][Training]:  39%|███▉      | 151/385 [00:05<00:08, 28.94it/s][Training]:  40%|████      | 154/385 [00:05<00:08, 28.46it/s][Training]:  41%|████      | 157/385 [00:05<00:07, 28.61it/s][Training]:  42%|████▏     | 160/385 [00:05<00:07, 28.77it/s][Training]:  42%|████▏     | 163/385 [00:05<00:07, 28.93it/s][Training]:  43%|████▎     | 166/385 [00:06<00:07, 29.10it/s][Training]:  44%|████▍     | 169/385 [00:06<00:07, 29.25it/s][Training]:  45%|████▍     | 172/385 [00:06<00:07, 29.38it/s][Training]:  45%|████▌     | 175/385 [00:06<00:07, 29.51it/s][Training]:  46%|████▌     | 178/385 [00:06<00:06, 29.62it/s][Training]:  47%|████▋     | 181/385 [00:06<00:06, 29.46it/s][Training]:  48%|████▊     | 184/385 [00:06<00:06, 29.56it/s][Training]:  48%|████▊     | 184/385 [00:06<00:07, 27.52it/s]
-Traceback (most recent call last):
-  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train_DrivAerML.py", line 488, in <module>
-    main()
-  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train_DrivAerML.py", line 484, in main
-    train_and_evaluate(args, device)
-  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train_DrivAerML.py", line 139, in train_and_evaluate
-    train_loss = train_one_epoch(model, train_dataloader, optimizer, criterion, device, args)
-                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/train_DrivAerML.py", line 262, in train_one_epoch
-    for batch in tqdm(train_dataloader, desc="[Training]"):
-                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/tqdm/std.py", line 1181, in __iter__
-    for obj in iterable:
-               ^^^^^^^^
-  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 708, in __next__
-    data = self._next_data()
-           ^^^^^^^^^^^^^^^^^
-  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 1480, in _next_data
-    return self._process_data(data)
-           ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 1505, in _process_data
-    data.reraise()
-  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/_utils.py", line 733, in reraise
-    raise exception
-FileNotFoundError: Caught FileNotFoundError in DataLoader worker process 0.
-Original Traceback (most recent call last):
-  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/utils/data/_utils/worker.py", line 349, in _worker_loop
-    data = fetcher.fetch(index)  # type: ignore[possibly-undefined]
-           ^^^^^^^^^^^^^^^^^^^^
-  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/utils/data/_utils/fetch.py", line 52, in fetch
-    data = [self.dataset[idx] for idx in possibly_batched_index]
-            ~~~~~~~~~~~~^^^^^
-  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/preprocessors_DrivAerML/drivaerml_dataset.py", line 120, in __getitem__
-    'volume_position': self.getitem_volume_position(idx),
-                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/preprocessors_DrivAerML/drivaerml_dataset.py", line 202, in getitem_volume_position
-    return self._load(idx=idx, filename_base="volume_cell_position")
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/preprocessors_DrivAerML/drivaerml_dataset.py", line 173, in _load
-    raise FileNotFoundError(f"Neither {np_path}  (nor _v2 versions) found for run_{design_id}")
-FileNotFoundError: Neither /mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small/run_413/volume_cell_position.npy  (nor _v2 versions) found for run_413
-

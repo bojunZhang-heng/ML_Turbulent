@@ -1,49 +1,0 @@
-CUDA available GPUs: 1
-Current device index: 0
-Device name: Tesla V100-SXM2-32GB
-Physical GPU(s) specified in CUDA_VISIBLE_DEVICES: ['4']
-Using physical GPU 4 (visible as cuda:0 in PyTorch)
-2025-12-25 10:33:02,932 | INFO     | Config:
-exp_name: WW_spressure_N10k_lr1e-3_e250_run3
-model:
-  input_dim: 3
-  output_dim: 1
-  head_num: 8
-  hidden_dim: 256
-  res: true
-  slice_num: 32
-  layer_num: 5
-  mlp_ratio: 1.5
-  dropout: 0.1
-training:
-  target: y_pres
-  x_mean:
-  - 1.5160021
-  - -5.4310558e-06
-  - 0.58746094
-  x_std:
-  - 1.415669
-  - 0.65769494
-  - 0.38634354
-  y_mean: -95.576584
-  y_std: 123.44368
-  batch_size: 1
-  epochs: 250
-  lr: 0.001
-  scheduler_step: 50
-  scheduler_gamma: 0.5
-  max_grad_norm: 0.1
-  num_workers: 1
-  weight_decay: 0.0
-  test_only: 0
-  gpus: '0'
-  seed: 42
-dataload:
-  directory: /mnt/wjc_group/mae-zhangbj/DrivAerNet++_dataset/E_S_WW_WM
-
-2025-12-25 10:33:02,932 | INFO     | args.exp_name : WW_spressure_N10k_lr1e-3_e250_run3
-2025-12-25 10:33:02,932 | INFO     | Starting training with 1 GPUs
-2025-12-25 10:33:03,776 | INFO     | Total trainable parameters: 3381321
-2025-12-25 10:33:03,776 | INFO     | Data loaded: 464 training batches, 118 validation batches, 110 test batches
-2025-12-25 10:33:03,777 | INFO     | Staring training for 250 epochs
-[Training]:   0%|          | 0/464 [00:00<?, ?it/s][Training]:   0%|          | 1/464 [00:00<06:23,  1.21it/s][Training]:   0%|          | 2/464 [00:01<04:24,  1.75it/s][Training]:   1%|          | 3/464 [00:01<03:45,  2.05it/s][Training]:   1%|          | 4/464 [00:02<03:27,  2.22it/s][Training]:   1%|          | 5/464 [00:02<03:16,  2.33it/s][Training]:   1%|▏         | 6/464 [00:02<03:10,  2.40it/s][Training]:   2%|▏         | 7/464 [00:03<03:06,  2.45it/s][Training]:   2%|▏         | 8/464 [00:03<03:03,  2.48it/s][Training]:   2%|▏         | 9/464 [00:03<03:01,  2.51it/s][Training]:   2%|▏         | 10/464 [00:04<02:59,  2.52it/s][Training]:   2%|▏         | 11/464 [00:04<02:58,  2.53it/s][Training]:   3%|▎         | 12/464 [00:05<02:57,  2.54it/s][Training]:   3%|▎         | 13/464 [00:05<02:56,  2.55it/s]
