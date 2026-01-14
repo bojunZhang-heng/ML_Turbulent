@@ -11,7 +11,7 @@
 # This time
 # cuda:5
 export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH
-export CUDA_VISIBLE_DEVICES=3
+export CUDA_VISIBLE_DEVICES=4
 
 # 确保 logs 目录存在
 LOG_DIR=./logs
@@ -32,10 +32,10 @@ TIMESTAMP=$(date "+%Y_%m%d_%H%M")
 #nohup python train_DrivAerNet.py config_DrivAerNet_swss.yml > ${LOG_DIR}/DrivAerNet_swss_${TIMESTAMP}.log 2>&1 &
 
 # DrivAerNet++
-#nohup python train_DrivAerNet++.py config_DrivAerNet++_WW_spressure.yml > ${LOG_DIR}/DrivAerNet++_WW_spressure_${TIMESTAMP}.log 2>&1 &
+nohup python train_DrivAerNet++.py config_DrivAerNet++_WW_spressure.yml > ${LOG_DIR}/DrivAerNet++_WW_spressure_${TIMESTAMP}.log 2>&1 &
 #nohup python train_DrivAerNet++.py config_DrivAerNet++_WWC_spressure.yml > ${LOG_DIR}/DrivAerNet++_WWC_spressure_${TIMESTAMP}.log 2>&1 &
 #nohup python train_DrivAerNet++.py config_DrivAerNet++_WW_swss.yml > ${LOG_DIR}/DrivAerNet++_WW_swss_${TIMESTAMP}.log 2>&1 &
-nohup python train_DrivAerNet++.py config_DrivAerNet++_WWC_swss.yml > ${LOG_DIR}/DrivAerNet++_WWC_swss_${TIMESTAMP}.log 2>&1 &
+#nohup python train_DrivAerNet++.py config_DrivAerNet++_WWC_swss.yml > ${LOG_DIR}/DrivAerNet++_WWC_swss_${TIMESTAMP}.log 2>&1 &
 
 
 # 获取训练脚本 PID
