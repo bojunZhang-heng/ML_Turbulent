@@ -50,8 +50,6 @@ def load_config(path):
         cfg = yaml.safe_load(f)
     return dict_to_namespace(cfg)
 
-# Default config file (same as you used previously)
-CONFIG_PATH = "config_train_s_wss.yml"
 
 # ============================================================
 # Logging setup
@@ -308,7 +306,7 @@ def main():
 
     # load config (hardcoded path as before)
     SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-    CONFIG_PATH = os.path.join(SCRIPT_DIR, "config_DrivAerML_velocity.yml")
+    CONFIG_PATH = os.path.join(SCRIPT_DIR, "config_DrivAerML_local.yml")
     cfg = load_config(CONFIG_PATH)
 
     def namespace_to_dict(ns):
