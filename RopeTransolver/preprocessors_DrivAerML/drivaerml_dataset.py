@@ -60,15 +60,15 @@ class DrivAerMLDefaultSplitIDs:
 
 # ====================== For CPU ==================================
     train_cpu = {
-        115, 141, 144
+        1,
     }
 
     val_cpu = {
-        235,
+        2,
     }
 
     test_cpu = {
-        245,
+        3,
     }
 
     tutorial = {11}
