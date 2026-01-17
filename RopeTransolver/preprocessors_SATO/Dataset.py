@@ -78,7 +78,7 @@ class VTKDataset():
 
     def get_all_file_paths(self, directory):
         file_paths = []
-        points_dir = os.path.join(directory, "SurfacePressure", "points_s")
+        points_dir = os.path.join(directory, "SurfacePressure", "points_v2")
         for file in os.listdir(points_dir):
             full_path = os.path.join(points_dir, file)
             if os.path.isfile(full_path):  # 只保留文件
