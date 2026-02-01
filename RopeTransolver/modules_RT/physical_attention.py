@@ -10,6 +10,7 @@ ACTIVATION = {'gelu': nn.GELU, 'tanh': nn.Tanh, 'sigmoid': nn.Sigmoid, 'relu': n
               'softplus': nn.Softplus, 'ELU': nn.ELU, 'silu': nn.SiLU}
 
 
+
 class Physics_Attention_Irregular_Mesh(nn.Module):
     def __init__(self, dim, head_num=8, head_dim=64, dropout=0., slice_num=64):
         super().__init__()
