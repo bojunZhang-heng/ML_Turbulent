@@ -14,6 +14,7 @@ def rope(x: torch.Tensor, freqs: torch.Tensor) -> torch.Tensor:
 
     # add dim for num_heads
     x_out = torch.view_as_real(x_ * freqs_).flatten(start_dim=3)
+    
     return x_out.type_as(x)
 
 
