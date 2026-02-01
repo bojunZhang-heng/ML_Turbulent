@@ -4,7 +4,7 @@ import logging
 import torch.nn as nn
 import torch.nn.functional as F
 from einops import repeat, rearrange
-from modules.rope import rope
+from modules_RT.rope import rope
 
 ACTIVATION = {'gelu': nn.GELU, 'tanh': nn.Tanh, 'sigmoid': nn.Sigmoid, 'relu': nn.ReLU, 'leaky_relu': nn.LeakyReLU(0.1),
               'softplus': nn.Softplus, 'ELU': nn.ELU, 'silu': nn.SiLU}
@@ -46,14 +46,15 @@ class Physics_Attention_Irregular_Mesh(nn.Module):
             head_dim=self.head_dim,
         ).unbind(0)
 
-        #logging.info(f"freqs: {freqs.shape}")
+ #       logging.info(f"q: {q.shape}")
+ #       logging.info(f"freqs: {freqs.shape}")
         freqs = rearrange(
                 freqs,
                 "bs seqlen (head_num  head_dim) -> bs head_num seqlen head_dim",
                 head_num=self.head_num,
                 head_dim=self.head_dim // 2,
         )
-        #logging.info(f"freqs: {freqs.shape}")
+#        logging.info(f"freqs: {freqs.shape}")
         q = rope(q, freqs=freqs)
         k = rope(k, freqs=freqs)
 
