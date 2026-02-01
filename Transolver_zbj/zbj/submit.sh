@@ -29,8 +29,8 @@ TIMESTAMP=$(date "+%Y_%m%d_%H%M")
 #nohup python train_DrivAerNet.py config_DrivAerNet_swss.yml > ${LOG_DIR}/DrivAerNet_swss_${TIMESTAMP}.log 2>&1 &
 
 # DrivAerNet++
-#nohup python train_DrivAerNet++.py config_DrivAerNet++_WW_spressure.yml > ${LOG_DIR}/DrivAerNet++_WW_spressure_${TIMESTAMP}.log 2>&1 &
-nohup python train_DrivAerNet++.py config_DrivAerNet++_WW_swss.yml > ${LOG_DIR}/DrivAerNet++_WW_swss_${TIMESTAMP}.log 2>&1 &
+nohup python train_DrivAerNet++.py config_DrivAerNet++_WW_spressure.yml > ${LOG_DIR}/DrivAerNet++_WW_spressure_${TIMESTAMP}.log 2>&1 &
+#nohup python train_DrivAerNet++.py config_DrivAerNet++_WW_swss.yml > ${LOG_DIR}/DrivAerNet++_WW_swss_${TIMESTAMP}.log 2>&1 &
 #nohup python train_DrivAerNet++.py config_DrivAerNet++_WWC_spressure.yml > ${LOG_DIR}/DrivAerNet++_WWC_spressure_${TIMESTAMP}.log 2>&1 &
 #nohup python train_DrivAerNet++.py config_DrivAerNet++_WWC_swss.yml > ${LOG_DIR}/DrivAerNet++_WWC_swss_${TIMESTAMP}.log 2>&1 &
 
