@@ -10,10 +10,9 @@ def rope(x: torch.Tensor, freqs: torch.Tensor) -> torch.Tensor:
     assert freqs.ndim == 4, "freqs.shape should be (batch_size, num_heads, seqlen, head_dim)"
 
     x_ = torch.view_as_complex(x.float().reshape(*x.shape[:-1], -1, 2))
-    freqs_ = torch.view_as_complex(freqs.float().reshape(*freqs.shape[:-1], -1, 2))
 
     # add dim for num_heads
-    x_out = torch.view_as_real(x_ * freqs_).flatten(start_dim=3)
+    x_out = torch.view_as_real(x_ * freqs).flatten(start_dim=3)
     
     return x_out.type_as(x)
 
