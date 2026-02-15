@@ -802,3 +802,53 @@ dataload:
 2026-01-11 17:32:03,169 | INFO     |  0.082680
 2026-01-11 17:32:03,169 | INFO     | *******************[35minference_time:[0m
 2026-01-11 17:32:03,169 | INFO     |  0.000000
+2026-02-01 18:28:03,915 | INFO     | Config:
+exp_name: WWC_wss_N10k_lr1e-3_e250_run2
+model:
+  input_dim: 3
+  output_dim: 3
+  head_num: 8
+  hidden_dim: 192
+  res: true
+  slice_num: 32
+  layer_num: 8
+  mlp_ratio: 1.5
+  dropout: 0.1
+training:
+  input: x_wss
+  target: y_wss
+  x_mean:
+  - 1.5163924
+  - -2.8424793e-05
+  - 0.59128469
+  x_std:
+  - 1.415569
+  - 0.65566987
+  - 0.38558245
+  y_mean:
+  - -0.7534824
+  - 0.06558424
+  - -0.08560407
+  y_std:
+  - 0.81970537
+  - 0.4570819
+  - 0.82683504
+  batch_size: 1
+  epochs: 250
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0
+  test_only: 0
+  gpus: '0'
+  seed: 42
+dataload:
+  directory: /mnt/wjc_group/mae-zhangbj/DrivAerNet++_dataset/E_S_WWC_WM
+
+2026-02-01 18:28:03,916 | INFO     | args.exp_name : WWC_wss_N10k_lr1e-3_e250_run2
+2026-02-01 18:28:03,916 | INFO     | Starting training with 1 GPUs
+2026-02-01 18:28:42,153 | INFO     | Total trainable parameters: 2916995
+2026-02-01 18:28:42,153 | INFO     | Data loaded: 456 training batches, 117 validation batches, 109 test batches
+2026-02-01 18:28:42,154 | INFO     | Staring training for 250 epochs

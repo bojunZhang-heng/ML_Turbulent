@@ -22,7 +22,7 @@ TIMESTAMP=$(date "+%Y_%m%d_%H%M")
 
 # 启动训练（后台）
 # DrivAerML
-nohup python train_DrivAerML.py config_DrivAerML_velocity.yml > ${LOG_DIR}/DrivAerML_velocity_${TIMESTAMP}.log 2>&1 &
+#nohup python train_DrivAerML.py config_DrivAerML_velocity.yml > ${LOG_DIR}/DrivAerML_velocity_${TIMESTAMP}.log 2>&1 &
 #nohup python train_DrivAerML.py config_DrivAerML_spressure.yml > ${LOG_DIR}/DrivAerML_spressure_${TIMESTAMP}.log 2>&1 &
 #nohup python train_DrivAerML.py config_DrivAerML_swss.yml > ${LOG_DIR}/DrivAerML_swss_${TIMESTAMP}.log 2>&1 &
 #nohup python test_model.py config_DrivAerML_velocity.yml > ${LOG_DIR}/DrivAerML_test_${TIMESTAMP}.log 2>&1 &
@@ -34,7 +34,7 @@ nohup python train_DrivAerML.py config_DrivAerML_velocity.yml > ${LOG_DIR}/DrivA
 # DrivAerNet++
 #nohup python train_DrivAerNet++.py config_DrivAerNet++_WW_spressure.yml > ${LOG_DIR}/DrivAerNet++_WW_spressure_${TIMESTAMP}.log 2>&1 &
 #nohup python train_DrivAerNet++.py config_DrivAerNet++_WWC_spressure.yml > ${LOG_DIR}/DrivAerNet++_WWC_spressure_${TIMESTAMP}.log 2>&1 &
-#nohup python train_DrivAerNet++.py config_DrivAerNet++_WW_swss.yml > ${LOG_DIR}/DrivAerNet++_WW_swss_${TIMESTAMP}.log 2>&1 &
+nohup python train_DrivAerNet++.py config_DrivAerNet++_WW_swss.yml > ${LOG_DIR}/DrivAerNet++_WW_swss_${TIMESTAMP}.log 2>&1 &
 #nohup python train_DrivAerNet++.py config_DrivAerNet++_WWC_swss.yml > ${LOG_DIR}/DrivAerNet++_WWC_swss_${TIMESTAMP}.log 2>&1 &
 
 
