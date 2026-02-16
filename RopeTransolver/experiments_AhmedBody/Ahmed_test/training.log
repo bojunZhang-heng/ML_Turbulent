@@ -280,3 +280,47 @@ dataload:
 2026-02-16 17:01:29,298 | INFO     | Staring training for 3 epochs
 2026-02-16 17:06:08,451 | INFO     | Epoch 1/3 - Train Loss: 9.220226, Val Loss: 8.514632[0m
 2026-02-16 17:06:08,489 | INFO     | New best model saved with Val Loss: 8.514632
+2026-02-16 17:11:12,841 | INFO     | Config:
+exp_name: Ahmed_test
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 8
+  hidden_dim: 192
+  res: true
+  slice_num: 32
+  layer_num: 8
+  mlp_ratio: 1.5
+  dropout: 0.1
+training:
+  input: x
+  target: y
+  x_mean:
+  - 1.5163924
+  - -2.8424793e-05
+  - 0.59128469
+  x_std:
+  - 1.415569
+  - 0.65566987
+  - 0.38558245
+  y_mean: -93.28388
+  y_std: 121.19236
+  batch_size: 1
+  epochs: 3
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0
+  test_only: 0
+  gpus: '0'
+  seed: 42
+dataload:
+  directory: /mnt/wjc_group/mae-zhangbj/AhmedBody_dataset
+
+2026-02-16 17:11:12,841 | INFO     | args.exp_name : Ahmed_test
+2026-02-16 17:11:12,841 | INFO     | Starting training with 1 GPUs
+2026-02-16 17:11:14,696 | INFO     | Total trainable parameters: 2916609
+2026-02-16 17:11:14,696 | INFO     | Data loaded: 440 training batches, 55 validation batches, 55 test batches
+2026-02-16 17:11:14,697 | INFO     | Staring training for 3 epochs
