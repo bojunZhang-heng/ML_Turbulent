@@ -19,7 +19,7 @@ training:
     y_mean: -93.28388
     y_std: 121.19236
     batch_size: 1
-    epochs: 3
+    epochs: 150
     lr: 0.001
     scheduler_step: 50
     scheduler_gamma: 0.5
@@ -31,5 +31,5 @@ training:
     seed: 42
 
 dataload:
-    directory: "/mnt/wjc_group/mae-zhangb/ShapeNet_dataset"
+    directory: "/mnt/wjc_group/mae-zhangbj/ShapeNet_dataset"
     
