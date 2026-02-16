@@ -87,8 +87,8 @@ class VTKDataset():
         train_data_lst, test_data_lst, val_data_lst = [], [], []
         for file_path in Surface_file_paths:
             index = file_path.split("_")[-1].split(".")[0]
-            Surface_points = np.load(os.path.join(directory,  'points_v2', f'nodes_{index}.npy'))
-            Surface_feature = np.load(os.path.join(directory,  'feature_v2', f'features_{index}.npy'))
+            Surface_points = np.load(os.path.join(directory,  'points', f'nodes_{index}.npy'))
+            Surface_feature = np.load(os.path.join(directory,  'feature', f'features_{index}.npy'))
 
             Surface_points = torch.Tensor(Surface_points).float()
             Surface_feature = torch.Tensor(Surface_feature).float()
