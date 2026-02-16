@@ -169,8 +169,8 @@ def run_train(cfg):
             # prepare inputs from enabled_position_keys
             batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
             data_volume = batch_filtered["volume_anchor_position"]
-
             pred = model(data_volume)
+            print(f"pred.shape: {pred.shape}")
     logging.info("Training finished.")
 
 
