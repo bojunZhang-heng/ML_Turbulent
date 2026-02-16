@@ -37,10 +37,10 @@ TIMESTAMP=$(date "+%Y_%m%d_%H%M")
 #nohup python train_DrivAerNet++.py config_DrivAerNet++_WW_swss.yml > ${LOG_DIR}/DrivAerNet++_WW_swss_${TIMESTAMP}.log 2>&1 &
 #nohup python train_DrivAerNet++.py config_DrivAerNet++_WWC_swss.yml > ${LOG_DIR}/DrivAerNet++_WWC_swss_${TIMESTAMP}.log 2>&1 &
 
-# ShapeNet
+# AhmedBody
 nohup python train_AhmedBody.py config_AhmedBody.yml > ${LOG_DIR}/AhmedBody_${TIMESTAMP}.log 2>&1 &
 
-# AhmedBody
+# ShapeNet
 #nohup python train_ShapeNet.py config_ShapeNet.yml > ${LOG_DIR}/ShapeNet_${TIMESTAMP}.log 2>&1 &
 
 # 获取训练脚本 PID
