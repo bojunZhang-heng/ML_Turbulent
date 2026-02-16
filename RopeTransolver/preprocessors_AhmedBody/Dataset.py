@@ -64,7 +64,7 @@ class VTKDataset():
 
     def get_all_file_paths(self, directory):
         file_paths = []
-        points_dir = os.path.join(directory, "feature")
+        points_dir = os.path.join(directory, "feature_v2")
         for file in os.listdir(points_dir):
             full_path = os.path.join(points_dir, file)
             if os.path.isfile(full_path):  # 只保留文件
@@ -87,8 +87,8 @@ class VTKDataset():
         train_data_lst, test_data_lst, val_data_lst = [], [], []
         for file_path in Surface_file_paths:
             index = file_path.split("_")[-1].split(".")[0]
-            Surface_points = np.load(os.path.join(directory,  'points', f'nodes_{index}.npy'))
-            Surface_feature = np.load(os.path.join(directory,  'feature', f'features_{index}.npy'))
+            Surface_points = np.load(os.path.join(directory,  'points_v2', f'nodes_{index}.npy'))
+            Surface_feature = np.load(os.path.join(directory,  'feature_v2', f'features_{index}.npy'))
 
             Surface_points = torch.Tensor(Surface_points).float()
             Surface_feature = torch.Tensor(Surface_feature).float()
