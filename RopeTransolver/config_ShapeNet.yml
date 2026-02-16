@@ -31,5 +31,5 @@ training:
     seed: 42
 
 dataload:
-    directory: "/Users/zhangbojun/ShapeNet_dataset"
+    directory: "/mnt/wjc_group/mae-zhangb/ShapeNet_dataset"
     
