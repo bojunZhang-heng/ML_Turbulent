@@ -14,7 +14,7 @@ from types import SimpleNamespace
 # Import modules
 from utils_v1 import setup_logger, setup_seed
 from colorama import Fore, Style
-from modules_RT.model.model_transolver import Model
+from model_transolver import Model
 from torch.utils.data import DataLoader
 
 # from model_tmp import AnchoredBranchedUPT
@@ -34,8 +34,8 @@ RESET = Style.RESET_ALL
 def initialize_model(args, device):
     """Initialize and return the RegDGCN model."""
 
-    model = Model(hidden_dim=args.model.hidden_dim,
-                  layer_num=args.model.layer_num,
+    model = Model(n_hidden=args.model.hidden_dim,
+                  n_layers=args.model.layer_num,
                   space_dim=args.model.input_dim,
                   mlp_ratio=args.model.mlp_ratio,
                   slice_num=args.model.slice_num,
