@@ -1,4 +1,4 @@
-exp_name: "Shape_test"
+exp_name: "AhmedBody_test"
 
 model:
     input_dim: 3
@@ -14,10 +14,10 @@ model:
 training:
     input: "x"
     target: "y"
-    x_mean: [ 1.5163924e+00, -2.8424793e-05,  5.9128469e-01]
-    x_std: [1.415569,  0.65566987, 0.38558245]
-    y_mean: -93.28388
-    y_std: 121.19236
+    x_mean: [-0.52420167,  0.14349585,  0.19739145]
+    x_std : [0.3569483,  0.07413766, 0.1201103 ]
+    y_mean: -178.14659246
+    y_std: 357.21268573
     batch_size: 1
     epochs: 3
     lr: 0.001
@@ -31,5 +31,5 @@ training:
     seed: 42
 
 dataload:
-    directory: "/Users/zhangbojun/ShapeNet_dataset"
+    directory: "/Users/zhangbojun/AhmedBody_dataset"
     
