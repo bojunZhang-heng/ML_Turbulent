@@ -31,5 +31,5 @@ training:
     seed: 42
 
 dataload:
-    directory: "/mnt/wjc_group/mae-zhangbj/AhmedBody_dataset"
+    directory: "/mnt/wjc_group/mae-zhangbj/AhmedBody_dataset/"
     
