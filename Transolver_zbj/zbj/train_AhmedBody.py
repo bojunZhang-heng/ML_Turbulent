@@ -259,6 +259,7 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, device, args)
     for data in tqdm(train_dataloader, desc="[Training]"):
         x = data[args.training.input].to(device)
         y = data[args.training.target][:,:,0:1].to(device)
+
     #    X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
     #    X_STD  = torch.tensor(args.training.x_std, dtype=x.dtype, device=x.device)
         Y_MEAN = torch.tensor(args.training.y_mean, dtype=x.dtype, device=x.device)
