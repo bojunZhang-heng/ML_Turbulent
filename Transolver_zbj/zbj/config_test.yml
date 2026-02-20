@@ -19,7 +19,7 @@ training:
     y_mean: -178.14659246
     y_std: 357.21268573
     batch_size: 1
-    epochs: 3
+    epochs: 150
     lr: 0.001
     scheduler_step: 50
     scheduler_gamma: 0.5
