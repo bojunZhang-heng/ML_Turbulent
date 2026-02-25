@@ -1,4 +1,4 @@
-exp_name: "ShapeNet_test"
+exp_name: "ShapeNet_pressure"
 
 model:
     input_dim: 3
