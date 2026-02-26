@@ -13,6 +13,7 @@ from types import SimpleNamespace
 
 # Import modules
 from utils_v1 import setup_logger, setup_seed
+from utils_RPTO import vistualization
 from colorama import Fore, Style
 from modules_RT.model.model_transolver import Model
 from torch.utils.data import DataLoader
@@ -122,6 +123,7 @@ def train_and_evaluate(args, device):
     if args.training.test_only and os.path.exists(best_model_path):
         logging.info("Loading best model for testing only")
         model.load_state_dict(torch.load(best_model_path, map_location=device))
+        #model.to(device)
         test_model(model, test_dataloader, criterion, device, os.path.join('experiments_ShapeNet', args.exp_name), args)
         return
 
@@ -354,6 +356,24 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
 
         logging.info(f"*******************{M}inference_time:{RESET}")
         logging.info(f" {total_inference_time / len(test_dataloader):.6f}")
+    if plt:
+        figure_dir = os.path.join(exp_dir, "figure")
+        os.makedirs(figure_dir, exist_ok=True)
+        x = x.clamp(
+            torch.tensor([325, 308, 320], device=x.device),
+            torch.tensor([366, 358, 350], device=x.device),
+        )
+        figure_path = os.path.join(figure_dir, "pressure.png")
+        vistualization(
+            [x, x],
+            color=[y.cpu().clamp(-2, 2), y_hat.cpu().clamp(-2, 2)],
+            delta_clamp=(-0.25, 0.25),
+            title=["target velocity", "predicted velocity"],
+            num_points=x.shape[1],
+            figsize=(18, 6),
+            save_path=figure_path,
+        )
+        data_dir = os.path.join(model_dir, "data")
 
 # ============================================================
 # Load hyperparam
