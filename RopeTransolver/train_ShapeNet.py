@@ -13,7 +13,7 @@ from types import SimpleNamespace
 
 # Import modules
 from utils_v1 import setup_logger, setup_seed
-from utils_RPTO import plot_car_results
+from utils_RPTO import plot_car_results_pointNet
 from colorama import Fore, Style
 from modules_RT.model.model_transolver import Model
 from torch.utils.data import DataLoader
@@ -366,7 +366,7 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
         print(f"x.shape:{x.shape}")
         print(f"y.shape:{y.shape}")
         figure_path = os.path.join(figure_dir, "pressure.png")
-        plot_car_results(
+        plot_car_results_pointNet(
             x, y, y_hat,
             save_path=figure_path,
             figsize=(18, 6),
