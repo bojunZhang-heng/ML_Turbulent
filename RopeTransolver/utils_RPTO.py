@@ -1,14 +1,16 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
+from matplotlib.tri import Triangulation
+import matplotlib as mpl
 
-def plot_car_results(
+def plot_car_results_pointNet(
     x,
     y,
     y_hat,
     save_path,
     figsize=(8, 6),
-    point_size=2,
+    point_size=1,
     colorbar_pad=-0.2,       # colorbar与图像下方的距离
     colorbar_fontsize=12,
 ):
