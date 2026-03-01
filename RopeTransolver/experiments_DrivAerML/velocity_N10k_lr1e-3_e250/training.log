@@ -3747,3 +3747,63 @@ training:
 2025-12-23 21:31:05,406 | INFO     |  0.028913
 2025-12-23 21:31:05,406 | INFO     | *******************[35minference_time:[0m
 2025-12-23 21:31:05,406 | INFO     |  0.011876
+2026-03-01 18:46:20,751 | INFO     | Config:
+exp_name: velocity_N10k_lr1e-3_e250
+model:
+  input_dim: 3
+  output_dim: 3
+  head_num: 8
+  hidden_dim: 256
+  res: true
+  slice_num: 32
+  layer_num: 5
+  mlp_ratio: 1.5
+  dropout: 0.1
+training:
+  input: volume_anchor_position
+  target: volume_anchor_velocity
+  batch_size: 1
+  epochs: 250
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0
+  test_only: 1
+  gpus: '0'
+  root_dir: /mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small
+  seed: 42
+
+2026-03-01 18:46:20,752 | INFO     | args.exp_name : velocity_N10k_lr1e-3_e250
+2026-03-01 18:46:20,752 | INFO     | Starting training with 1 GPUs
+2026-03-01 18:50:36,841 | INFO     | Config:
+exp_name: velocity_N10k_lr1e-3_e250
+model:
+  input_dim: 3
+  output_dim: 3
+  head_num: 8
+  hidden_dim: 256
+  res: true
+  slice_num: 32
+  layer_num: 5
+  mlp_ratio: 1.5
+  dropout: 0.1
+training:
+  input: volume_anchor_position
+  target: volume_anchor_velocity
+  batch_size: 1
+  epochs: 250
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0
+  test_only: 1
+  gpus: '0'
+  root_dir: /mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small
+  seed: 42
+
+2026-03-01 18:50:36,841 | INFO     | args.exp_name : velocity_N10k_lr1e-3_e250
+2026-03-01 18:50:36,841 | INFO     | Starting training with 1 GPUs
