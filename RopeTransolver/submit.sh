@@ -11,7 +11,7 @@
 # This time
 # cuda:5
 export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH
-export CUDA_VISIBLE_DEVICES=3
+export CUDA_VISIBLE_DEVICES=0
 
 # 确保 logs 目录存在
 LOG_DIR=./logs
@@ -22,7 +22,7 @@ TIMESTAMP=$(date "+%Y_%m%d_%H%M")
 
 # 启动训练（后台）
 # DrivAerML
-#nohup python train_DrivAerML.py config_DrivAerML_velocity.yml > ${LOG_DIR}/DrivAerML_velocity_${TIMESTAMP}.log 2>&1 &
+nohup python train_DrivAerML.py config_DrivAerML_velocity.yml > ${LOG_DIR}/DrivAerML_velocity_${TIMESTAMP}.log 2>&1 &
 #nohup python train_DrivAerML.py config_DrivAerML_spressure.yml > ${LOG_DIR}/DrivAerML_spressure_${TIMESTAMP}.log 2>&1 &
 #nohup python train_DrivAerML.py config_DrivAerML_swss.yml > ${LOG_DIR}/DrivAerML_swss_${TIMESTAMP}.log 2>&1 &
 #nohup python test_model.py config_DrivAerML_velocity.yml > ${LOG_DIR}/DrivAerML_test_${TIMESTAMP}.log 2>&1 &
@@ -41,7 +41,7 @@ TIMESTAMP=$(date "+%Y_%m%d_%H%M")
 #nohup python train_AhmedBody.py config_AhmedBody.yml > ${LOG_DIR}/AhmedBody_${TIMESTAMP}.log 2>&1 &
 
 # ShapeNet
-nohup python train_ShapeNet.py config_ShapeNet.yml > ${LOG_DIR}/ShapeNet_${TIMESTAMP}.log 2>&1 &
+#nohup python train_ShapeNet.py config_ShapeNet.yml > ${LOG_DIR}/ShapeNet_${TIMESTAMP}.log 2>&1 &
 
 # 获取训练脚本 PID
 PID=$!
