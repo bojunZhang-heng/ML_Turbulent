@@ -1,6 +1,7 @@
 # train.py
 import warnings
 import os
+import numpy as np
 import yaml
 import argparse
 import torch
@@ -362,22 +363,32 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
             # extract target variables for anchor
 
             targets = {k: batch.pop(k) for k in target_keys if k in batch}
-            targets_velocity = targets[args.training.target]
+            y = targets[args.training.target]
 
             batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
-            data_volume = batch_filtered[args.training.input]
+            x = batch_filtered[args.training.input]
 
-            pred_velocity = model(data_volume)
+            y_hat = model(x)
 
             inference_time = time.time() - start_time
             total_inference_time += inference_time
 
-            mse_loss = criterion(pred_velocity, targets_velocity)
+            mse_loss = criterion(y_hat, y)
             total_loss += mse_loss.item()
-            pred_den = normalizers[args.training.target].denormalize(pred_velocity)
-            targ_den = normalizers[args.training.target].denormalize(targets_velocity)
+            pred_den = normalizers[args.training.target].denormalize(y_hat)
+            targ_den = normalizers[args.training.target].denormalize(y)
             L2_error = (pred_den - targ_den).norm() / targ_den.norm()
             total_L2_error += L2_error.item()
+        x = x.detach().cpu().numpy()
+        y = y.detach().cpu().numpy()
+        yhat = y_hat.detach().cpu().numpy()
+
+        save_folder = os.path.join(exp_dir, "test_saves")
+        os.makedirs(save_folder, exist_ok=True)
+
+        np.save(os.path.join(save_folder, "x.npy"), x)
+        np.save(os.path.join(save_folder, "y.npy"), y)
+        np.save(os.path.join(save_folder, "yhat.npy"), yhat)
 
 
         logging.info(f"*******************{M}L2_erro:{RESET}")
@@ -389,53 +400,6 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
         logging.info(f"*******************{M}inference_time:{RESET}")
         logging.info(f" {total_inference_time / len(test_dataloader):.6f}")
 
-    # Checkout the value
-
-
-#    if dist.get_rank() == 0:
-#        logging.info(f"Total MSE across all processes: {total_mse_tensor.item()}")
-#
-#    if device == 0:
-#        # Calculate aggregated metrics
-#        avg_mse = total_mse_tensor.item() / total_samples_tensor.item()
-#        avg_mae = total_mae_tensor.item() / total_samples_tensor.item()
-#        avg_rel_l2 = total_rel_l2_tensor.item() / total_samples_tensor.item()
-#        avg_rel_l1 = total_rel_l1_tensor.item() / total_samples_tensor.item()
-#
-#        # Calculate R² score - only on rank 0 with locally collected data
-#        all_outputs = torch.cat(all_outputs, dim=0).numpy()
-#        all_targets = torch.cat(all_targets, dim=0).numpy()
-#        tmp = np.mean(all_targets)
-#        logging.info("mean value for all_targets: {tmp}")
-#        ss_tot = np.sum((all_targets - np.mean(all_targets)) ** 2)
-#        ss_res = np.sum((all_targets - all_outputs) ** 2)
-#        r_squared = 1 - (ss_res / ss_tot) if ss_tot > 0 else 0
-#
-#        # Calculate max AE
-#        max_ae = np.max(np.abs(all_targets - all_outputs))
-#        logging.info(
-#            f"Test MSE: {avg_mse:.6f}, Test MAE: {avg_mae:.6f}, Max AE: {max_ae:.6f}, Test R2: {r_squared:.4f}"
-#        )
-#        logging.info(
-#            f"Relative L2 Error: {avg_rel_l2:.6f}, Relative L1 error: {avg_rel_l1:.6f}"
-#        )
-#        logging.info(
-#            f"Total inference time: {total_inference_time: .2f}s for {total_samples_tensor.item()} samples"
-#        )
-#
-#        # Save metrics to a text file
-#        metrics_file = os.path.join(exp_dir, "test_metrics.txt")
-#        with open(metrics_file, "w") as f:
-#            f.write(f"Test MSE: {avg_mse:.6f}\n")
-#            f.write(f"Test MAE: {avg_mae:.6f}\n")
-#            f.write(f"Max MAE: {max_ae:.6f}\n")
-#            f.write(f"Test R2: {r_squared:.4f}\n")
-#            f.write(f"Relative L2 Error: {avg_rel_l2:.6f}\n")
-#            f.write(f"Relative L1 error: {avg_rel_l1:.6f}\n")
-#            f.write(
-#                f"Total inference time: {total_inference_time: .2f}s for {total_samples_tensor.item()} samples\n"
-#            )
-#
 
 # ============================================================
 # Load hyperparam
