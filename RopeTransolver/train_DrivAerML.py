@@ -92,7 +92,7 @@ def train_and_evaluate(args, device):
     # BUG is here
     train_dataloader, val_dataloader, test_dataloader = create_data_loaders(
         args.training.root_dir, args.training.batch_size, use_query_positions=True, num_workers=args.training.num_workers,
-        train_split="train", val_split="val", test_split="test",
+        train_split="train_cpu", val_split="val_cpu", test_split="test_cpu",
     )
 
     # Log dataset info
@@ -114,8 +114,10 @@ def train_and_evaluate(args, device):
     # Store the model
     best_model_path = os.path.join("experiments_DrivAerML", args.exp_name, "best_model.pth")
     final_model_path = os.path.join("experiments_DrivAerML", args.exp_name, "final_model.pth")
-
+    exp_name = os.path.join(os.getcwd(), "/RopeTransolver/experiments_DrivAerML", args.exp_name)
+    best_model_path = os.path.join(exp_name, "best_model.pth")
     # Check if test_only and model exists
+    print(f"best_model_path:{best_model_path}")
     if args.training.test_only and os.path.exists(best_model_path):
         logging.info("Loading best model for testing only")
         model.load_state_dict(torch.load(best_model_path, map_location=device))
