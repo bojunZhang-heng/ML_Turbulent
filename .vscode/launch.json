@@ -8,7 +8,7 @@
         {
             "name": "Python 调试程序: 当前文件",
             "type": "debugpy",
-            "args": ["./RopeTransolver/config_ShapeNet.yml"],
+            "args": ["Transolver_zbj/zbj/config_ShapeNet.yml"],
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
