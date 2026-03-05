@@ -13,6 +13,7 @@ from types import SimpleNamespace
 
 # Import modules
 from utils_v1 import setup_logger, setup_seed
+from utils_RPTO import plot_car_results_pointNet
 from colorama import Fore, Style
 from model_transolver import Model
 from torch.utils.data import DataLoader
@@ -115,8 +116,12 @@ def train_and_evaluate(args, device):
     )
 
     # Store the model
-    best_model_path = os.path.join("experiments_ShapeNet", args.exp_name, "best_model.pth")
-    final_model_path = os.path.join("experiments_ShapeNet", args.exp_name, "final_model.pth")
+    exp_name = os.path.join(os.getcwd(), "./Transolver_zbj/zbj//experiments_ShapeNet", args.exp_name)
+    best_model_path = os.path.join(exp_name, "best_model.pth")
+    final_model_path = os.path.join(exp_name, "final_model.pth")
+    print(f"exp_name: {exp_name}")
+    print(f"best_model_path:{best_model_path}")
+    print(os.path.exists(best_model_path))
 
     # Check if test_only and model exists
     if args.training.test_only and os.path.exists(best_model_path):
@@ -355,7 +360,18 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
 
         logging.info(f"*******************{M}inference_time:{RESET}")
         logging.info(f" {total_inference_time / len(test_dataloader):.6f}")
-
+    if plt:
+        exp_dir = os.path.join(os.getcwd(), "./Transolver_zbj/zbj/experiments_ShapeNet", args.exp_name)
+        figure_dir = os.path.join(exp_dir, "figure")
+        os.makedirs(figure_dir, exist_ok=True)
+        print(f"x.shape:{x.shape}")
+        print(f"y.shape:{y.shape}")
+        figure_path = os.path.join(figure_dir, "pressure.png")
+        plot_car_results_pointNet(
+            x, y, y_hat,
+            save_path=figure_path,
+            figsize=(18, 6),
+        )
 # ============================================================
 # Load hyperparam
 # ============================================================
