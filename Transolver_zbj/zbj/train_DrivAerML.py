@@ -8,6 +8,7 @@ import torch.distributed as dist
 import torch.optim as optim
 import time
 import logging
+import numpy as np
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 from types import SimpleNamespace
@@ -92,7 +93,7 @@ def train_and_evaluate(args, device):
     # BUG is here
     train_dataloader, val_dataloader, test_dataloader = create_data_loaders(
         args.training.root_dir, args.training.batch_size, use_query_positions=True, num_workers=args.training.num_workers,
-        train_split="train", val_split="val", test_split="test",
+        train_split="train_cpu", val_split="val_cpu", test_split="test_cpu",
     )
 
     # Log dataset info
@@ -112,9 +113,10 @@ def train_and_evaluate(args, device):
     )
 
     # Store the model
-    best_model_path = os.path.join("experiments_DrivAerML", args.exp_name, "best_model.pth")
+    exp_name = os.path.join(os.getcwd(), "./Transolver_zbj/zbj/experiments_DrivAerML", args.exp_name)
+    best_model_path = os.path.join(exp_name, "best_model.pth")
     final_model_path = os.path.join("experiments_DrivAerML", args.exp_name, "final_model.pth")
-
+    print(f"best_model_path: {best_model_path}")
     # Check if test_only and model exists
     if args.training.test_only and os.path.exists(best_model_path):
         logging.info("Loading best model for testing only")
@@ -364,22 +366,32 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
             # extract target variables for anchor
 
             targets = {k: batch.pop(k) for k in target_keys if k in batch}
-            targets_velocity = targets[args.training.target]
+            y = targets[args.training.target]
 
             batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
-            data_volume = batch_filtered[args.training.input]
+            x = batch_filtered[args.training.input]
 
-            pred_velocity = model(data_volume)
+            y_hat = model(x)
 
             inference_time = time.time() - start_time
             total_inference_time += inference_time
 
-            mse_loss = criterion(pred_velocity, targets_velocity)
+            mse_loss = criterion(y_hat, y_hat)
             total_loss += mse_loss.item()
-            pred_den = normalizers[args.training.target].denormalize(pred_velocity)
-            targ_den = normalizers[args.training.target].denormalize(targets_velocity)
+            pred_den = normalizers[args.training.target].denormalize(y_hat)
+            targ_den = normalizers[args.training.target].denormalize(y)
             L2_error = (pred_den - targ_den).norm() / targ_den.norm()
             total_L2_error += L2_error.item()
+
+            # 转到 CPU
+            x = x.detach().cpu().numpy()
+            y = y.detach().cpu().numpy()
+            y_hat = y_hat.detach().cpu().numpy()
+
+            # 保存为 .npy 文件
+            np.save("x.npy", x)
+            np.save("y.npy", y)
+            np.save("y_hat.npy", y_hat)
 
 
         logging.info(f"*******************{M}L2_erro:{RESET}")
