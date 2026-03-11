@@ -70,9 +70,8 @@ def get_graph_feature(x, k=20, idx=None, dim9=False):
 
 
 class Transform_Net(nn.Module):
-    def __init__(self, args):
+    def __init__(self):
         super(Transform_Net, self).__init__()
-        self.args = args
         self.k = 3
 
         self.bn1 = nn.BatchNorm2d(64)
@@ -117,19 +116,24 @@ class Transform_Net(nn.Module):
         return x
 
 class RegDGCNN_pressure(nn.Module):
-    def __init__(self, args):
+    def __init__(
+            self,
+            k,
+            emb_dims,
+            dropout):
         super(RegDGCNN_pressure, self).__init__()
-        self.args = args
         self.seg_num_all = 1
-        self.k = args['k']
-        self.transform_net = Transform_Net(args)
+        self.k = k
+        self.emb_dims = emb_dims
+        self.dropout = dropout
+        self.transform_net = Transform_Net()
 
         self.bn1 = nn.BatchNorm2d(64)
         self.bn2 = nn.BatchNorm2d(64)
         self.bn3 = nn.BatchNorm2d(64)
         self.bn4 = nn.BatchNorm2d(64)
         self.bn5 = nn.BatchNorm2d(64)
-        self.bn6 = nn.BatchNorm1d(args['emb_dims'])
+        self.bn6 = nn.BatchNorm1d(self.emb_dims)
         self.bn7 = nn.BatchNorm1d(64)
         self.bn8 = nn.BatchNorm1d(256)
         self.bn9 = nn.BatchNorm1d(256)
@@ -150,7 +154,7 @@ class RegDGCNN_pressure(nn.Module):
         self.conv5 = nn.Sequential(nn.Conv2d(64 * 2, 64, kernel_size=1, bias=False),
                                    self.bn5,
                                    nn.LeakyReLU(negative_slope=0.2))
-        self.conv6 = nn.Sequential(nn.Conv1d(192, args['emb_dims'], kernel_size=1, bias=False),
+        self.conv6 = nn.Sequential(nn.Conv1d(192, self.emb_dims, kernel_size=1, bias=False),
                                    self.bn6,
                                    nn.LeakyReLU(negative_slope=0.2))
         self.conv7 = nn.Sequential(nn.Conv1d(16, 64, kernel_size=1, bias=False),
@@ -159,11 +163,11 @@ class RegDGCNN_pressure(nn.Module):
         self.conv8 = nn.Sequential(nn.Conv1d(1216, 256, kernel_size=1, bias=False),
                                    self.bn8,
                                    nn.LeakyReLU(negative_slope=0.2))
-        self.dp1 = nn.Dropout(p=args['dropout'])
+        self.dp1 = nn.Dropout(p=self.dropout)
         self.conv9 = nn.Sequential(nn.Conv1d(256, 256, kernel_size=1, bias=False),
                                    self.bn9,
                                    nn.LeakyReLU(negative_slope=0.2))
-        self.dp2 = nn.Dropout(p=args['dropout'])
+        self.dp2 = nn.Dropout(p=self.dropout)
         self.conv10 = nn.Sequential(nn.Conv1d(256, 128, kernel_size=1, bias=False),
                                     self.bn10,
                                     nn.LeakyReLU(negative_slope=0.2))
