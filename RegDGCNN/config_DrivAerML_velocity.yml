@@ -2,14 +2,12 @@ exp_name: "velocity_N10k_lr1e-3_e250"
 
 model:
     input_dim: 3
-    output_dim: 3
-    head_num: 8
-    hidden_dim: 256
+    output_dim: 1
     res: true
-    slice_num: 32
-    layer_num: 5
+    emb_dims: 1024
+    k: 40
     mlp_ratio: 1.5
-    dropout: 0.1
+    dropout: 0.4
 
 training:
     input: "volume_anchor_position"
