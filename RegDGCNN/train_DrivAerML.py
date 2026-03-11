@@ -6,6 +6,7 @@ import yaml
 import argparse
 import torch
 import torch.optim as optim
+from torch.optim.lr_scheduler import ReduceLROnPlateau
 import time
 import logging
 import matplotlib.pyplot as plt
@@ -16,7 +17,7 @@ from types import SimpleNamespace
 # from torch.utils.data.distributed import DistributedSampler
 from utils_v1 import setup_logger, setup_seed
 from colorama import Fore, Style
-from modules_RT.model.model_transolver import Model
+from model_pressure import RegDGCNN_pressure
 
 # from model_tmp import AnchoredBranchedUPT
 from preprocessors_DrivAerML import (
@@ -37,13 +38,8 @@ RESET = Style.RESET_ALL
 def initialize_model(args, device):
     """Initialize and return the RegDGCN model."""
 
-    model = Model(hidden_dim=args.model.hidden_dim,
-                  layer_num=args.model.layer_num,
-                  head_num=args.model.head_num,
-                  space_dim=args.model.input_dim,
-                  mlp_ratio=args.model.mlp_ratio,
-                  slice_num=args.model.slice_num,
-                  out_dim=args.model.output_dim,
+    model = RegDGCNN_pressure(k=args.model.k,
+                  emb_dims=args.model.emb_dims,
                   dropout=args.model.dropout,
             ).to(device)
 
@@ -102,14 +98,11 @@ def train_and_evaluate(args, device):
 
     # Set up criterion, optimizer, and scheduler
     criterion = torch.nn.MSELoss()
-    optimizer = optim.AdamW(
+    optimizer = optim.Adam(
         model.parameters(), lr=args.training.lr, weight_decay=args.training.weight_decay
     )
-    scheduler = torch.optim.lr_scheduler.StepLR(
-        optimizer,
-        step_size=args.training.scheduler_step,
-        gamma=args.training.scheduler_gamma
-    )
+
+    scheduler = ReduceLROnPlateau(optimizer, 'min', patience=10, factor=0.1, verbose=True)
 
     # Store the model
     best_model_path = os.path.join("experiments_DrivAerML", args.exp_name, "best_model.pth")
