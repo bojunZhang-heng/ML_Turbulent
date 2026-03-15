@@ -1,0 +1,57 @@
+2026-03-16 05:57:20,290 | INFO     | Config:
+exp_name: spressure_N10k_lr1e-3_e250
+model:
+  input_dim: 3
+  output_dim: 1
+  res: true
+  emb_dims: 1024
+  k: 40
+  mlp_ratio: 1.5
+  dropout: 0.4
+training:
+  input: surface_anchor_position
+  target: surface_anchor_pressure
+  batch_size: 1
+  epochs: 250
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0001
+  test_only: 1
+  gpus: '0'
+  root_dir: /Users/zhangbojun/DrivAerML_dataset
+  seed: 42
+
+2026-03-16 05:57:20,290 | INFO     | args.exp_name : spressure_N10k_lr1e-3_e250
+2026-03-16 05:57:20,291 | INFO     | Starting training with 1 GPUs
+Traceback (most recent call last):
+  File "/home/mae-zhangbj/ML_Turbulent/RegDGCNN/train_DrivAerML.py", line 448, in <module>
+    main()
+  File "/home/mae-zhangbj/ML_Turbulent/RegDGCNN/train_DrivAerML.py", line 444, in main
+    train_and_evaluate(args, device)
+  File "/home/mae-zhangbj/ML_Turbulent/RegDGCNN/train_DrivAerML.py", line 82, in train_and_evaluate
+    model = initialize_model(args, device)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/ML_Turbulent/RegDGCNN/train_DrivAerML.py", line 44, in initialize_model
+    ).to(device)
+      ^^^^^^^^^^
+  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1343, in to
+    return self._apply(convert)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/nn/modules/module.py", line 930, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1329, in convert
+    return t.to(
+           ^^^^^
+RuntimeError: CUDA error: CUDA-capable device(s) is/are busy or unavailable
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
