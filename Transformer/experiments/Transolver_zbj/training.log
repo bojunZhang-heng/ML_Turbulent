@@ -1,0 +1,5 @@
+2025-12-04 17:10:58,832 - INFO - args.exp_name : Transolver_zbj
+2025-12-04 17:10:58,833 - INFO - Starting training with 1 GPUs
+2025-12-04 17:10:59,763 - INFO - Total trainable parameters: 4525124
+2025-12-04 17:10:59,764 - INFO - Data loaded: 384 training batches, 33 validation batches, 48 test batches
+2025-12-04 17:10:59,764 - INFO - Staring training for 300 epochs

@@ -1,0 +1,777 @@
+2025-12-22 17:44:29,256 | INFO     | Config:
+exp_name: spressure_N10k_lr1e-3_e250_run1
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 8
+  hidden_dim: 256
+  res: true
+  slice_num: 32
+  layer_num: 5
+  mlp_ratio: 1.5
+  dropout: 0.1
+training:
+  input: surface_anchor_position
+  target: surface_anchor_pressure
+  batch_size: 1
+  epochs: 250
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0
+  test_only: 0
+  gpus: '0'
+  root_dir: /mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small
+  seed: 42
+
+2025-12-22 17:44:29,256 | INFO     | args.exp_name : spressure_N10k_lr1e-3_e250_run1
+2025-12-22 17:44:29,256 | INFO     | Starting training with 1 GPUs
+2025-12-22 17:44:29,753 | INFO     | Total trainable parameters: 3381321
+2025-12-22 17:44:29,754 | INFO     | Data loaded: 380 training batches, 33 validation batches, 44 test batches
+2025-12-22 17:44:29,755 | INFO     | Staring training for 250 epochs
+2025-12-22 17:52:52,677 | INFO     | Epoch 1/250 - Train Loss: 0.876835, Val Loss: 0.618375[0m
+2025-12-22 17:52:52,702 | INFO     | New best model saved with Val Loss: 0.618375
+2025-12-22 18:01:40,599 | INFO     | Epoch 2/250 - Train Loss: 0.611773, Val Loss: 0.636640[0m
+2025-12-22 18:10:28,294 | INFO     | Epoch 3/250 - Train Loss: 0.581581, Val Loss: 0.580222[0m
+2025-12-22 18:10:28,346 | INFO     | New best model saved with Val Loss: 0.580222
+2025-12-22 18:19:16,047 | INFO     | Epoch 4/250 - Train Loss: 0.577814, Val Loss: 0.532342[0m
+2025-12-22 18:19:16,096 | INFO     | New best model saved with Val Loss: 0.532342
+2025-12-22 18:28:03,703 | INFO     | Epoch 5/250 - Train Loss: 0.555296, Val Loss: 0.531314[0m
+2025-12-22 18:28:03,755 | INFO     | New best model saved with Val Loss: 0.531314
+2025-12-22 18:36:51,324 | INFO     | Epoch 6/250 - Train Loss: 0.534436, Val Loss: 0.537641[0m
+2025-12-22 18:45:38,799 | INFO     | Epoch 7/250 - Train Loss: 0.510001, Val Loss: 0.550957[0m
+2025-12-22 18:54:26,312 | INFO     | Epoch 8/250 - Train Loss: 0.495022, Val Loss: 0.450811[0m
+2025-12-22 18:54:26,356 | INFO     | New best model saved with Val Loss: 0.450811
+2025-12-22 19:03:13,816 | INFO     | Epoch 9/250 - Train Loss: 0.435808, Val Loss: 0.404856[0m
+2025-12-22 19:03:13,869 | INFO     | New best model saved with Val Loss: 0.404856
+2025-12-22 19:12:01,189 | INFO     | Epoch 10/250 - Train Loss: 0.423638, Val Loss: 0.396731[0m
+2025-12-22 19:12:01,241 | INFO     | New best model saved with Val Loss: 0.396731
+2025-12-22 19:20:48,715 | INFO     | Epoch 11/250 - Train Loss: 0.407401, Val Loss: 0.376920[0m
+2025-12-22 19:20:48,767 | INFO     | New best model saved with Val Loss: 0.376920
+2025-12-22 19:29:36,303 | INFO     | Epoch 12/250 - Train Loss: 0.375688, Val Loss: 0.334989[0m
+2025-12-22 19:29:36,355 | INFO     | New best model saved with Val Loss: 0.334989
+2025-12-22 19:38:23,873 | INFO     | Epoch 13/250 - Train Loss: 0.308733, Val Loss: 0.267153[0m
+2025-12-22 19:38:23,929 | INFO     | New best model saved with Val Loss: 0.267153
+2025-12-22 19:47:11,494 | INFO     | Epoch 14/250 - Train Loss: 0.272720, Val Loss: 0.247101[0m
+2025-12-22 19:47:11,535 | INFO     | New best model saved with Val Loss: 0.247101
+2025-12-22 19:55:59,080 | INFO     | Epoch 15/250 - Train Loss: 0.255724, Val Loss: 0.220330[0m
+2025-12-22 19:55:59,132 | INFO     | New best model saved with Val Loss: 0.220330
+2025-12-22 20:04:46,754 | INFO     | Epoch 16/250 - Train Loss: 0.233832, Val Loss: 0.215458[0m
+2025-12-22 20:04:46,804 | INFO     | New best model saved with Val Loss: 0.215458
+2025-12-22 20:13:34,345 | INFO     | Epoch 17/250 - Train Loss: 0.218072, Val Loss: 0.198093[0m
+2025-12-22 20:13:34,384 | INFO     | New best model saved with Val Loss: 0.198093
+2025-12-22 20:22:21,987 | INFO     | Epoch 18/250 - Train Loss: 0.203012, Val Loss: 0.189487[0m
+2025-12-22 20:22:22,035 | INFO     | New best model saved with Val Loss: 0.189487
+2025-12-22 20:31:09,596 | INFO     | Epoch 19/250 - Train Loss: 0.206503, Val Loss: 0.309282[0m
+2025-12-22 20:39:57,140 | INFO     | Epoch 20/250 - Train Loss: 0.191107, Val Loss: 0.165420[0m
+2025-12-22 20:39:57,187 | INFO     | New best model saved with Val Loss: 0.165420
+2025-12-22 20:48:44,825 | INFO     | Epoch 21/250 - Train Loss: 0.177967, Val Loss: 0.175191[0m
+2025-12-22 20:57:32,420 | INFO     | Epoch 22/250 - Train Loss: 0.164836, Val Loss: 0.152524[0m
+2025-12-22 20:57:32,460 | INFO     | New best model saved with Val Loss: 0.152524
+2025-12-22 21:06:20,049 | INFO     | Epoch 23/250 - Train Loss: 0.156692, Val Loss: 0.150066[0m
+2025-12-22 21:06:20,088 | INFO     | New best model saved with Val Loss: 0.150066
+2025-12-22 21:15:07,661 | INFO     | Epoch 24/250 - Train Loss: 0.150950, Val Loss: 0.134250[0m
+2025-12-22 21:15:07,709 | INFO     | New best model saved with Val Loss: 0.134250
+2025-12-22 21:23:55,253 | INFO     | Epoch 25/250 - Train Loss: 0.145454, Val Loss: 0.130467[0m
+2025-12-22 21:23:55,304 | INFO     | New best model saved with Val Loss: 0.130467
+2025-12-22 21:32:42,843 | INFO     | Epoch 26/250 - Train Loss: 0.140947, Val Loss: 0.131436[0m
+2025-12-22 21:41:30,373 | INFO     | Epoch 27/250 - Train Loss: 0.136744, Val Loss: 0.119999[0m
+2025-12-22 21:41:30,424 | INFO     | New best model saved with Val Loss: 0.119999
+2025-12-22 21:50:17,974 | INFO     | Epoch 28/250 - Train Loss: 0.131932, Val Loss: 0.125191[0m
+2025-12-22 21:59:05,474 | INFO     | Epoch 29/250 - Train Loss: 0.126871, Val Loss: 0.123973[0m
+2025-12-22 22:07:52,907 | INFO     | Epoch 30/250 - Train Loss: 0.122320, Val Loss: 0.111781[0m
+2025-12-22 22:07:52,958 | INFO     | New best model saved with Val Loss: 0.111781
+2025-12-22 22:16:40,590 | INFO     | Epoch 31/250 - Train Loss: 0.118662, Val Loss: 0.116177[0m
+2025-12-22 22:25:28,105 | INFO     | Epoch 32/250 - Train Loss: 0.117817, Val Loss: 0.106176[0m
+2025-12-22 22:25:28,156 | INFO     | New best model saved with Val Loss: 0.106176
+2025-12-22 22:34:15,653 | INFO     | Epoch 33/250 - Train Loss: 0.112306, Val Loss: 0.103446[0m
+2025-12-22 22:34:15,704 | INFO     | New best model saved with Val Loss: 0.103446
+2025-12-22 22:43:03,152 | INFO     | Epoch 34/250 - Train Loss: 0.110325, Val Loss: 0.099388[0m
+2025-12-22 22:43:03,199 | INFO     | New best model saved with Val Loss: 0.099388
+2025-12-22 22:51:50,668 | INFO     | Epoch 35/250 - Train Loss: 0.108446, Val Loss: 0.095585[0m
+2025-12-22 22:51:50,719 | INFO     | New best model saved with Val Loss: 0.095585
+2025-12-22 23:00:38,169 | INFO     | Epoch 36/250 - Train Loss: 0.102737, Val Loss: 0.091464[0m
+2025-12-22 23:00:38,221 | INFO     | New best model saved with Val Loss: 0.091464
+2025-12-22 23:09:25,714 | INFO     | Epoch 37/250 - Train Loss: 0.100799, Val Loss: 0.091815[0m
+2025-12-22 23:18:13,169 | INFO     | Epoch 38/250 - Train Loss: 0.097401, Val Loss: 0.092603[0m
+2025-12-22 23:27:00,634 | INFO     | Epoch 39/250 - Train Loss: 0.094925, Val Loss: 0.089311[0m
+2025-12-22 23:27:00,674 | INFO     | New best model saved with Val Loss: 0.089311
+2025-12-22 23:35:48,096 | INFO     | Epoch 40/250 - Train Loss: 0.093809, Val Loss: 0.088478[0m
+2025-12-22 23:35:48,147 | INFO     | New best model saved with Val Loss: 0.088478
+2025-12-22 23:44:35,628 | INFO     | Epoch 41/250 - Train Loss: 0.090711, Val Loss: 0.080533[0m
+2025-12-22 23:44:35,679 | INFO     | New best model saved with Val Loss: 0.080533
+2025-12-22 23:53:23,172 | INFO     | Epoch 42/250 - Train Loss: 0.088664, Val Loss: 0.080329[0m
+2025-12-22 23:53:23,223 | INFO     | New best model saved with Val Loss: 0.080329
+2025-12-23 00:02:10,672 | INFO     | Epoch 43/250 - Train Loss: 0.088711, Val Loss: 0.081611[0m
+2025-12-23 00:10:58,133 | INFO     | Epoch 44/250 - Train Loss: 0.084086, Val Loss: 0.080712[0m
+2025-12-23 00:19:45,564 | INFO     | Epoch 45/250 - Train Loss: 0.083823, Val Loss: 0.082634[0m
+2025-12-23 00:28:33,033 | INFO     | Epoch 46/250 - Train Loss: 0.080330, Val Loss: 0.071338[0m
+2025-12-23 00:28:33,085 | INFO     | New best model saved with Val Loss: 0.071338
+2025-12-23 00:37:20,492 | INFO     | Epoch 47/250 - Train Loss: 0.078256, Val Loss: 0.074058[0m
+2025-12-23 00:46:07,970 | INFO     | Epoch 48/250 - Train Loss: 0.077542, Val Loss: 0.071507[0m
+2025-12-23 00:54:55,449 | INFO     | Epoch 49/250 - Train Loss: 0.075944, Val Loss: 0.068216[0m
+2025-12-23 00:54:55,500 | INFO     | New best model saved with Val Loss: 0.068216
+2025-12-23 01:03:42,889 | INFO     | Epoch 50/250 - Train Loss: 0.077229, Val Loss: 0.069134[0m
+2025-12-23 01:12:30,429 | INFO     | Epoch 51/250 - Train Loss: 0.062483, Val Loss: 0.058233[0m
+2025-12-23 01:12:30,480 | INFO     | New best model saved with Val Loss: 0.058233
+2025-12-23 01:21:17,921 | INFO     | Epoch 52/250 - Train Loss: 0.060417, Val Loss: 0.057875[0m
+2025-12-23 01:21:17,960 | INFO     | New best model saved with Val Loss: 0.057875
+2025-12-23 01:30:05,348 | INFO     | Epoch 53/250 - Train Loss: 0.059865, Val Loss: 0.058156[0m
+2025-12-23 01:38:52,752 | INFO     | Epoch 54/250 - Train Loss: 0.058917, Val Loss: 0.057174[0m
+2025-12-23 01:38:52,803 | INFO     | New best model saved with Val Loss: 0.057174
+2025-12-23 01:47:40,177 | INFO     | Epoch 55/250 - Train Loss: 0.058924, Val Loss: 0.054581[0m
+2025-12-23 01:47:40,228 | INFO     | New best model saved with Val Loss: 0.054581
+2025-12-23 01:56:27,615 | INFO     | Epoch 56/250 - Train Loss: 0.057784, Val Loss: 0.055051[0m
+2025-12-23 02:05:14,998 | INFO     | Epoch 57/250 - Train Loss: 0.057059, Val Loss: 0.054418[0m
+2025-12-23 02:05:15,048 | INFO     | New best model saved with Val Loss: 0.054418
+2025-12-23 02:14:02,475 | INFO     | Epoch 58/250 - Train Loss: 0.056450, Val Loss: 0.051451[0m
+2025-12-23 02:14:02,526 | INFO     | New best model saved with Val Loss: 0.051451
+2025-12-23 02:22:49,985 | INFO     | Epoch 59/250 - Train Loss: 0.056036, Val Loss: 0.051555[0m
+2025-12-23 02:31:37,335 | INFO     | Epoch 60/250 - Train Loss: 0.056025, Val Loss: 0.051682[0m
+2025-12-23 02:40:24,692 | INFO     | Epoch 61/250 - Train Loss: 0.053149, Val Loss: 0.053956[0m
+2025-12-23 02:49:12,080 | INFO     | Epoch 62/250 - Train Loss: 0.053119, Val Loss: 0.052276[0m
+2025-12-23 02:57:59,381 | INFO     | Epoch 63/250 - Train Loss: 0.052646, Val Loss: 0.047338[0m
+2025-12-23 02:57:59,431 | INFO     | New best model saved with Val Loss: 0.047338
+2025-12-23 03:06:46,744 | INFO     | Epoch 64/250 - Train Loss: 0.051567, Val Loss: 0.049800[0m
+2025-12-23 03:15:34,138 | INFO     | Epoch 65/250 - Train Loss: 0.051420, Val Loss: 0.048234[0m
+2025-12-23 03:24:21,472 | INFO     | Epoch 66/250 - Train Loss: 0.050431, Val Loss: 0.047298[0m
+2025-12-23 03:24:21,522 | INFO     | New best model saved with Val Loss: 0.047298
+2025-12-23 03:33:08,856 | INFO     | Epoch 67/250 - Train Loss: 0.049686, Val Loss: 0.048128[0m
+2025-12-23 03:41:56,253 | INFO     | Epoch 68/250 - Train Loss: 0.049389, Val Loss: 0.048420[0m
+2025-12-23 03:50:43,663 | INFO     | Epoch 69/250 - Train Loss: 0.048911, Val Loss: 0.047497[0m
+2025-12-23 03:59:30,962 | INFO     | Epoch 70/250 - Train Loss: 0.048360, Val Loss: 0.046372[0m
+2025-12-23 03:59:31,014 | INFO     | New best model saved with Val Loss: 0.046372
+2025-12-23 04:08:18,427 | INFO     | Epoch 71/250 - Train Loss: 0.047574, Val Loss: 0.046204[0m
+2025-12-23 04:08:18,477 | INFO     | New best model saved with Val Loss: 0.046204
+2025-12-23 04:17:05,837 | INFO     | Epoch 72/250 - Train Loss: 0.047899, Val Loss: 0.043211[0m
+2025-12-23 04:17:05,887 | INFO     | New best model saved with Val Loss: 0.043211
+2025-12-23 04:25:53,245 | INFO     | Epoch 73/250 - Train Loss: 0.046280, Val Loss: 0.043292[0m
+2025-12-23 04:34:40,620 | INFO     | Epoch 74/250 - Train Loss: 0.046047, Val Loss: 0.045691[0m
+2025-12-23 04:43:27,978 | INFO     | Epoch 75/250 - Train Loss: 0.046076, Val Loss: 0.042393[0m
+2025-12-23 04:43:28,028 | INFO     | New best model saved with Val Loss: 0.042393
+2025-12-23 04:52:15,336 | INFO     | Epoch 76/250 - Train Loss: 0.044685, Val Loss: 0.042919[0m
+2025-12-23 05:01:02,665 | INFO     | Epoch 77/250 - Train Loss: 0.045704, Val Loss: 0.044098[0m
+2025-12-23 05:09:50,033 | INFO     | Epoch 78/250 - Train Loss: 0.044742, Val Loss: 0.042786[0m
+2025-12-23 05:18:37,368 | INFO     | Epoch 79/250 - Train Loss: 0.043681, Val Loss: 0.044929[0m
+2025-12-23 05:27:24,733 | INFO     | Epoch 80/250 - Train Loss: 0.044142, Val Loss: 0.041150[0m
+2025-12-23 05:27:24,783 | INFO     | New best model saved with Val Loss: 0.041150
+2025-12-23 05:36:12,137 | INFO     | Epoch 81/250 - Train Loss: 0.043567, Val Loss: 0.042250[0m
+2025-12-23 05:44:59,516 | INFO     | Epoch 82/250 - Train Loss: 0.043464, Val Loss: 0.047382[0m
+2025-12-23 05:53:46,860 | INFO     | Epoch 83/250 - Train Loss: 0.042937, Val Loss: 0.042158[0m
+2025-12-23 06:02:34,176 | INFO     | Epoch 84/250 - Train Loss: 0.042508, Val Loss: 0.040433[0m
+2025-12-23 06:02:34,216 | INFO     | New best model saved with Val Loss: 0.040433
+2025-12-23 06:11:21,649 | INFO     | Epoch 85/250 - Train Loss: 0.042268, Val Loss: 0.039263[0m
+2025-12-23 06:11:21,700 | INFO     | New best model saved with Val Loss: 0.039263
+2025-12-23 06:20:09,080 | INFO     | Epoch 86/250 - Train Loss: 0.041689, Val Loss: 0.039472[0m
+2025-12-23 06:28:56,480 | INFO     | Epoch 87/250 - Train Loss: 0.042396, Val Loss: 0.040255[0m
+2025-12-23 06:37:43,831 | INFO     | Epoch 88/250 - Train Loss: 0.041146, Val Loss: 0.040258[0m
+2025-12-23 06:46:31,232 | INFO     | Epoch 89/250 - Train Loss: 0.041358, Val Loss: 0.039844[0m
+2025-12-23 06:55:18,505 | INFO     | Epoch 90/250 - Train Loss: 0.040688, Val Loss: 0.039331[0m
+2025-12-23 07:04:05,941 | INFO     | Epoch 91/250 - Train Loss: 0.040868, Val Loss: 0.037287[0m
+2025-12-23 07:04:05,992 | INFO     | New best model saved with Val Loss: 0.037287
+2025-12-23 07:12:53,359 | INFO     | Epoch 92/250 - Train Loss: 0.039704, Val Loss: 0.037302[0m
+2025-12-23 07:21:40,736 | INFO     | Epoch 93/250 - Train Loss: 0.040558, Val Loss: 0.040248[0m
+2025-12-23 07:30:28,065 | INFO     | Epoch 94/250 - Train Loss: 0.040235, Val Loss: 0.040565[0m
+2025-12-23 07:39:15,380 | INFO     | Epoch 95/250 - Train Loss: 0.038823, Val Loss: 0.037912[0m
+2025-12-23 07:48:02,754 | INFO     | Epoch 96/250 - Train Loss: 0.039047, Val Loss: 0.036494[0m
+2025-12-23 07:48:02,805 | INFO     | New best model saved with Val Loss: 0.036494
+2025-12-23 07:56:50,118 | INFO     | Epoch 97/250 - Train Loss: 0.038866, Val Loss: 0.038588[0m
+2025-12-23 08:05:37,436 | INFO     | Epoch 98/250 - Train Loss: 0.038540, Val Loss: 0.036132[0m
+2025-12-23 08:05:37,489 | INFO     | New best model saved with Val Loss: 0.036132
+2025-12-23 08:14:24,877 | INFO     | Epoch 99/250 - Train Loss: 0.038156, Val Loss: 0.036329[0m
+2025-12-23 08:23:12,178 | INFO     | Epoch 100/250 - Train Loss: 0.037262, Val Loss: 0.039961[0m
+2025-12-23 08:31:59,525 | INFO     | Epoch 101/250 - Train Loss: 0.032150, Val Loss: 0.031101[0m
+2025-12-23 08:31:59,576 | INFO     | New best model saved with Val Loss: 0.031101
+2025-12-23 08:40:46,906 | INFO     | Epoch 102/250 - Train Loss: 0.031502, Val Loss: 0.031303[0m
+2025-12-23 08:49:34,224 | INFO     | Epoch 103/250 - Train Loss: 0.031539, Val Loss: 0.030437[0m
+2025-12-23 08:49:34,269 | INFO     | New best model saved with Val Loss: 0.030437
+2025-12-23 08:58:21,798 | INFO     | Epoch 104/250 - Train Loss: 0.031234, Val Loss: 0.030682[0m
+2025-12-23 09:07:09,486 | INFO     | Epoch 105/250 - Train Loss: 0.031022, Val Loss: 0.031236[0m
+2025-12-23 09:15:57,172 | INFO     | Epoch 106/250 - Train Loss: 0.031189, Val Loss: 0.030085[0m
+2025-12-23 09:15:57,224 | INFO     | New best model saved with Val Loss: 0.030085
+2025-12-23 09:24:44,900 | INFO     | Epoch 107/250 - Train Loss: 0.030640, Val Loss: 0.032179[0m
+2025-12-23 09:33:32,572 | INFO     | Epoch 108/250 - Train Loss: 0.031040, Val Loss: 0.032046[0m
+2025-12-23 09:42:20,275 | INFO     | Epoch 109/250 - Train Loss: 0.030491, Val Loss: 0.030146[0m
+2025-12-23 09:51:07,925 | INFO     | Epoch 110/250 - Train Loss: 0.030337, Val Loss: 0.030952[0m
+2025-12-23 09:59:55,638 | INFO     | Epoch 111/250 - Train Loss: 0.030398, Val Loss: 0.029825[0m
+2025-12-23 09:59:55,685 | INFO     | New best model saved with Val Loss: 0.029825
+2025-12-23 10:08:43,349 | INFO     | Epoch 112/250 - Train Loss: 0.029951, Val Loss: 0.030097[0m
+2025-12-23 10:17:31,057 | INFO     | Epoch 113/250 - Train Loss: 0.029957, Val Loss: 0.031438[0m
+2025-12-23 10:26:18,737 | INFO     | Epoch 114/250 - Train Loss: 0.029528, Val Loss: 0.030008[0m
+2025-12-23 10:35:06,397 | INFO     | Epoch 115/250 - Train Loss: 0.029725, Val Loss: 0.029010[0m
+2025-12-23 10:35:06,448 | INFO     | New best model saved with Val Loss: 0.029010
+2025-12-23 10:43:54,161 | INFO     | Epoch 116/250 - Train Loss: 0.029193, Val Loss: 0.030036[0m
+2025-12-23 10:52:41,857 | INFO     | Epoch 117/250 - Train Loss: 0.029335, Val Loss: 0.028917[0m
+2025-12-23 10:52:41,908 | INFO     | New best model saved with Val Loss: 0.028917
+2025-12-23 11:01:29,553 | INFO     | Epoch 118/250 - Train Loss: 0.029216, Val Loss: 0.028929[0m
+2025-12-23 11:10:17,234 | INFO     | Epoch 119/250 - Train Loss: 0.028677, Val Loss: 0.030002[0m
+2025-12-23 11:19:04,877 | INFO     | Epoch 120/250 - Train Loss: 0.029291, Val Loss: 0.028976[0m
+2025-12-23 11:27:52,595 | INFO     | Epoch 121/250 - Train Loss: 0.028626, Val Loss: 0.028400[0m
+2025-12-23 11:27:52,642 | INFO     | New best model saved with Val Loss: 0.028400
+2025-12-23 11:36:40,290 | INFO     | Epoch 122/250 - Train Loss: 0.028509, Val Loss: 0.028034[0m
+2025-12-23 11:36:40,342 | INFO     | New best model saved with Val Loss: 0.028034
+2025-12-23 11:45:28,035 | INFO     | Epoch 123/250 - Train Loss: 0.028590, Val Loss: 0.028661[0m
+2025-12-23 11:54:15,697 | INFO     | Epoch 124/250 - Train Loss: 0.028631, Val Loss: 0.029244[0m
+2025-12-23 12:03:03,240 | INFO     | Epoch 125/250 - Train Loss: 0.028389, Val Loss: 0.028047[0m
+2025-12-23 12:11:50,746 | INFO     | Epoch 126/250 - Train Loss: 0.028139, Val Loss: 0.029678[0m
+2025-12-23 12:20:38,294 | INFO     | Epoch 127/250 - Train Loss: 0.028115, Val Loss: 0.027518[0m
+2025-12-23 12:20:38,345 | INFO     | New best model saved with Val Loss: 0.027518
+2025-12-23 12:29:25,841 | INFO     | Epoch 128/250 - Train Loss: 0.027841, Val Loss: 0.028538[0m
+2025-12-23 12:38:13,360 | INFO     | Epoch 129/250 - Train Loss: 0.027591, Val Loss: 0.028116[0m
+2025-12-23 12:47:00,823 | INFO     | Epoch 130/250 - Train Loss: 0.027558, Val Loss: 0.028984[0m
+2025-12-23 12:55:48,393 | INFO     | Epoch 131/250 - Train Loss: 0.027232, Val Loss: 0.027237[0m
+2025-12-23 12:55:48,444 | INFO     | New best model saved with Val Loss: 0.027237
+2025-12-23 13:04:35,943 | INFO     | Epoch 132/250 - Train Loss: 0.027509, Val Loss: 0.029142[0m
+2025-12-23 13:13:23,467 | INFO     | Epoch 133/250 - Train Loss: 0.027356, Val Loss: 0.028776[0m
+2025-12-23 13:22:11,037 | INFO     | Epoch 134/250 - Train Loss: 0.027252, Val Loss: 0.027111[0m
+2025-12-23 13:22:11,091 | INFO     | New best model saved with Val Loss: 0.027111
+2025-12-23 13:30:58,565 | INFO     | Epoch 135/250 - Train Loss: 0.027075, Val Loss: 0.026968[0m
+2025-12-23 13:30:58,604 | INFO     | New best model saved with Val Loss: 0.026968
+2025-12-23 13:39:46,129 | INFO     | Epoch 136/250 - Train Loss: 0.026891, Val Loss: 0.027755[0m
+2025-12-23 13:48:33,620 | INFO     | Epoch 137/250 - Train Loss: 0.027172, Val Loss: 0.028568[0m
+2025-12-23 13:57:21,173 | INFO     | Epoch 138/250 - Train Loss: 0.026911, Val Loss: 0.027326[0m
+2025-12-23 14:06:08,721 | INFO     | Epoch 139/250 - Train Loss: 0.026682, Val Loss: 0.026678[0m
+2025-12-23 14:06:08,767 | INFO     | New best model saved with Val Loss: 0.026678
+2025-12-23 14:14:56,214 | INFO     | Epoch 140/250 - Train Loss: 0.026364, Val Loss: 0.026721[0m
+2025-12-23 14:23:43,820 | INFO     | Epoch 141/250 - Train Loss: 0.026499, Val Loss: 0.027697[0m
+2025-12-23 14:32:31,374 | INFO     | Epoch 142/250 - Train Loss: 0.026313, Val Loss: 0.026757[0m
+2025-12-23 14:41:18,881 | INFO     | Epoch 143/250 - Train Loss: 0.026296, Val Loss: 0.027581[0m
+2025-12-23 14:50:06,380 | INFO     | Epoch 144/250 - Train Loss: 0.026252, Val Loss: 0.027070[0m
+2025-12-23 14:58:53,755 | INFO     | Epoch 145/250 - Train Loss: 0.026071, Val Loss: 0.028023[0m
+2025-12-23 15:07:41,126 | INFO     | Epoch 146/250 - Train Loss: 0.026554, Val Loss: 0.027295[0m
+2025-12-23 15:16:28,524 | INFO     | Epoch 147/250 - Train Loss: 0.025952, Val Loss: 0.028277[0m
+2025-12-23 15:25:15,876 | INFO     | Epoch 148/250 - Train Loss: 0.025756, Val Loss: 0.028846[0m
+2025-12-23 15:34:03,248 | INFO     | Epoch 149/250 - Train Loss: 0.025741, Val Loss: 0.026720[0m
+2025-12-23 15:42:50,573 | INFO     | Epoch 150/250 - Train Loss: 0.025922, Val Loss: 0.027799[0m
+2025-12-23 15:51:37,965 | INFO     | Epoch 151/250 - Train Loss: 0.022781, Val Loss: 0.023490[0m
+2025-12-23 15:51:38,019 | INFO     | New best model saved with Val Loss: 0.023490
+2025-12-23 16:00:25,353 | INFO     | Epoch 152/250 - Train Loss: 0.022536, Val Loss: 0.023755[0m
+2025-12-23 16:09:12,695 | INFO     | Epoch 153/250 - Train Loss: 0.022457, Val Loss: 0.024561[0m
+2025-12-23 16:18:00,032 | INFO     | Epoch 154/250 - Train Loss: 0.022315, Val Loss: 0.023691[0m
+2025-12-23 16:26:47,405 | INFO     | Epoch 155/250 - Train Loss: 0.022315, Val Loss: 0.023594[0m
+2025-12-23 16:35:34,773 | INFO     | Epoch 156/250 - Train Loss: 0.022351, Val Loss: 0.024690[0m
+2025-12-23 16:44:22,396 | INFO     | Epoch 157/250 - Train Loss: 0.022206, Val Loss: 0.023931[0m
+2025-12-23 16:53:09,768 | INFO     | Epoch 158/250 - Train Loss: 0.022041, Val Loss: 0.023300[0m
+2025-12-23 16:53:09,821 | INFO     | New best model saved with Val Loss: 0.023300
+2025-12-23 17:01:57,169 | INFO     | Epoch 159/250 - Train Loss: 0.022129, Val Loss: 0.023744[0m
+2025-12-23 17:10:44,499 | INFO     | Epoch 160/250 - Train Loss: 0.021999, Val Loss: 0.023319[0m
+2025-12-23 17:19:31,933 | INFO     | Epoch 161/250 - Train Loss: 0.021941, Val Loss: 0.024149[0m
+2025-12-23 17:28:19,248 | INFO     | Epoch 162/250 - Train Loss: 0.021869, Val Loss: 0.023293[0m
+2025-12-23 17:28:19,300 | INFO     | New best model saved with Val Loss: 0.023293
+2025-12-23 17:37:06,706 | INFO     | Epoch 163/250 - Train Loss: 0.021806, Val Loss: 0.023245[0m
+2025-12-23 17:37:06,757 | INFO     | New best model saved with Val Loss: 0.023245
+2025-12-23 17:45:54,128 | INFO     | Epoch 164/250 - Train Loss: 0.021679, Val Loss: 0.023359[0m
+2025-12-23 17:54:41,449 | INFO     | Epoch 165/250 - Train Loss: 0.021884, Val Loss: 0.023641[0m
+2025-12-23 18:03:28,746 | INFO     | Epoch 166/250 - Train Loss: 0.021709, Val Loss: 0.022963[0m
+2025-12-23 18:03:28,797 | INFO     | New best model saved with Val Loss: 0.022963
+2025-12-23 18:12:16,154 | INFO     | Epoch 167/250 - Train Loss: 0.021521, Val Loss: 0.023133[0m
+2025-12-23 18:21:03,541 | INFO     | Epoch 168/250 - Train Loss: 0.021478, Val Loss: 0.023160[0m
+2025-12-23 18:29:50,905 | INFO     | Epoch 169/250 - Train Loss: 0.021552, Val Loss: 0.022507[0m
+2025-12-23 18:29:50,956 | INFO     | New best model saved with Val Loss: 0.022507
+2025-12-23 18:38:38,291 | INFO     | Epoch 170/250 - Train Loss: 0.021288, Val Loss: 0.023128[0m
+2025-12-23 18:47:25,668 | INFO     | Epoch 171/250 - Train Loss: 0.021125, Val Loss: 0.022640[0m
+2025-12-23 18:56:13,045 | INFO     | Epoch 172/250 - Train Loss: 0.021306, Val Loss: 0.022799[0m
+2025-12-23 19:05:00,418 | INFO     | Epoch 173/250 - Train Loss: 0.021096, Val Loss: 0.022635[0m
+2025-12-23 19:13:47,776 | INFO     | Epoch 174/250 - Train Loss: 0.021161, Val Loss: 0.022740[0m
+2025-12-23 19:22:35,157 | INFO     | Epoch 175/250 - Train Loss: 0.021009, Val Loss: 0.022160[0m
+2025-12-23 19:22:35,209 | INFO     | New best model saved with Val Loss: 0.022160
+2025-12-23 19:31:22,524 | INFO     | Epoch 176/250 - Train Loss: 0.021031, Val Loss: 0.022885[0m
+2025-12-23 19:40:09,933 | INFO     | Epoch 177/250 - Train Loss: 0.020998, Val Loss: 0.023056[0m
+2025-12-23 19:48:57,257 | INFO     | Epoch 178/250 - Train Loss: 0.020993, Val Loss: 0.022681[0m
+2025-12-23 19:57:44,625 | INFO     | Epoch 179/250 - Train Loss: 0.020781, Val Loss: 0.022332[0m
+2025-12-23 20:06:31,969 | INFO     | Epoch 180/250 - Train Loss: 0.020901, Val Loss: 0.022904[0m
+2025-12-23 20:15:19,384 | INFO     | Epoch 181/250 - Train Loss: 0.020673, Val Loss: 0.022473[0m
+2025-12-23 20:24:06,701 | INFO     | Epoch 182/250 - Train Loss: 0.020655, Val Loss: 0.022578[0m
+2025-12-23 20:32:54,033 | INFO     | Epoch 183/250 - Train Loss: 0.020715, Val Loss: 0.022062[0m
+2025-12-23 20:32:54,084 | INFO     | New best model saved with Val Loss: 0.022062
+2025-12-23 20:41:41,476 | INFO     | Epoch 184/250 - Train Loss: 0.020706, Val Loss: 0.022917[0m
+2025-12-23 20:50:28,900 | INFO     | Epoch 185/250 - Train Loss: 0.020610, Val Loss: 0.022717[0m
+2025-12-23 20:59:16,248 | INFO     | Epoch 186/250 - Train Loss: 0.020424, Val Loss: 0.021752[0m
+2025-12-23 20:59:16,297 | INFO     | New best model saved with Val Loss: 0.021752
+2025-12-23 21:08:03,684 | INFO     | Epoch 187/250 - Train Loss: 0.020612, Val Loss: 0.022492[0m
+2025-12-23 21:16:51,081 | INFO     | Epoch 188/250 - Train Loss: 0.020384, Val Loss: 0.022522[0m
+2025-12-23 21:25:38,403 | INFO     | Epoch 189/250 - Train Loss: 0.020300, Val Loss: 0.022338[0m
+2025-12-23 21:34:25,792 | INFO     | Epoch 190/250 - Train Loss: 0.020386, Val Loss: 0.022266[0m
+2025-12-23 21:43:13,212 | INFO     | Epoch 191/250 - Train Loss: 0.020195, Val Loss: 0.022820[0m
+2025-12-23 21:52:00,592 | INFO     | Epoch 192/250 - Train Loss: 0.020289, Val Loss: 0.022591[0m
+2025-12-23 22:00:47,909 | INFO     | Epoch 193/250 - Train Loss: 0.020362, Val Loss: 0.022453[0m
+2025-12-23 22:09:35,216 | INFO     | Epoch 194/250 - Train Loss: 0.020255, Val Loss: 0.021991[0m
+2025-12-23 22:18:22,577 | INFO     | Epoch 195/250 - Train Loss: 0.020098, Val Loss: 0.022127[0m
+2025-12-23 22:27:09,924 | INFO     | Epoch 196/250 - Train Loss: 0.020092, Val Loss: 0.021897[0m
+2025-12-23 22:35:57,312 | INFO     | Epoch 197/250 - Train Loss: 0.020088, Val Loss: 0.021914[0m
+2025-12-23 22:44:44,637 | INFO     | Epoch 198/250 - Train Loss: 0.020049, Val Loss: 0.022606[0m
+2025-12-23 22:53:31,975 | INFO     | Epoch 199/250 - Train Loss: 0.019990, Val Loss: 0.022069[0m
+2025-12-23 23:02:19,256 | INFO     | Epoch 200/250 - Train Loss: 0.019887, Val Loss: 0.022009[0m
+2025-12-23 23:11:06,629 | INFO     | Epoch 201/250 - Train Loss: 0.018448, Val Loss: 0.020368[0m
+2025-12-23 23:11:06,676 | INFO     | New best model saved with Val Loss: 0.020368
+2025-12-23 23:19:53,979 | INFO     | Epoch 202/250 - Train Loss: 0.018379, Val Loss: 0.020214[0m
+2025-12-23 23:19:54,030 | INFO     | New best model saved with Val Loss: 0.020214
+2025-12-23 23:28:41,366 | INFO     | Epoch 203/250 - Train Loss: 0.018369, Val Loss: 0.020273[0m
+2025-12-23 23:37:28,705 | INFO     | Epoch 204/250 - Train Loss: 0.018343, Val Loss: 0.020267[0m
+2025-12-23 23:46:16,056 | INFO     | Epoch 205/250 - Train Loss: 0.018305, Val Loss: 0.020779[0m
+2025-12-23 23:55:03,421 | INFO     | Epoch 206/250 - Train Loss: 0.018340, Val Loss: 0.020407[0m
+2025-12-24 00:03:50,717 | INFO     | Epoch 207/250 - Train Loss: 0.018254, Val Loss: 0.020547[0m
+2025-12-24 00:12:38,064 | INFO     | Epoch 208/250 - Train Loss: 0.018252, Val Loss: 0.020277[0m
+2025-12-24 00:21:25,421 | INFO     | Epoch 209/250 - Train Loss: 0.018277, Val Loss: 0.020186[0m
+2025-12-24 00:21:25,472 | INFO     | New best model saved with Val Loss: 0.020186
+2025-12-24 00:30:12,740 | INFO     | Epoch 210/250 - Train Loss: 0.018119, Val Loss: 0.020395[0m
+2025-12-24 00:39:00,153 | INFO     | Epoch 211/250 - Train Loss: 0.018168, Val Loss: 0.020290[0m
+2025-12-24 00:47:47,456 | INFO     | Epoch 212/250 - Train Loss: 0.018129, Val Loss: 0.020377[0m
+2025-12-24 00:56:34,787 | INFO     | Epoch 213/250 - Train Loss: 0.018114, Val Loss: 0.020074[0m
+2025-12-24 00:56:34,838 | INFO     | New best model saved with Val Loss: 0.020074
+2025-12-24 01:05:22,180 | INFO     | Epoch 214/250 - Train Loss: 0.017998, Val Loss: 0.020180[0m
+2025-12-24 01:14:09,525 | INFO     | Epoch 215/250 - Train Loss: 0.018056, Val Loss: 0.020417[0m
+2025-12-24 01:22:56,872 | INFO     | Epoch 216/250 - Train Loss: 0.017933, Val Loss: 0.020557[0m
+2025-12-24 01:31:44,224 | INFO     | Epoch 217/250 - Train Loss: 0.018003, Val Loss: 0.020147[0m
+2025-12-24 01:40:31,485 | INFO     | Epoch 218/250 - Train Loss: 0.017890, Val Loss: 0.020127[0m
+2025-12-24 01:49:18,801 | INFO     | Epoch 219/250 - Train Loss: 0.017872, Val Loss: 0.020042[0m
+2025-12-24 01:49:18,852 | INFO     | New best model saved with Val Loss: 0.020042
+2025-12-24 01:58:06,112 | INFO     | Epoch 220/250 - Train Loss: 0.017830, Val Loss: 0.020449[0m
+2025-12-24 02:06:53,468 | INFO     | Epoch 221/250 - Train Loss: 0.017860, Val Loss: 0.020365[0m
+2025-12-24 02:15:40,837 | INFO     | Epoch 222/250 - Train Loss: 0.017808, Val Loss: 0.020007[0m
+2025-12-24 02:15:40,888 | INFO     | New best model saved with Val Loss: 0.020007
+2025-12-24 02:24:28,176 | INFO     | Epoch 223/250 - Train Loss: 0.017811, Val Loss: 0.020377[0m
+2025-12-24 02:33:15,456 | INFO     | Epoch 224/250 - Train Loss: 0.017746, Val Loss: 0.020147[0m
+2025-12-24 02:42:02,853 | INFO     | Epoch 225/250 - Train Loss: 0.017746, Val Loss: 0.020158[0m
+2025-12-24 02:50:50,168 | INFO     | Epoch 226/250 - Train Loss: 0.017745, Val Loss: 0.019743[0m
+2025-12-24 02:50:50,221 | INFO     | New best model saved with Val Loss: 0.019743
+2025-12-24 02:59:37,556 | INFO     | Epoch 227/250 - Train Loss: 0.017711, Val Loss: 0.019801[0m
+2025-12-24 03:08:24,865 | INFO     | Epoch 228/250 - Train Loss: 0.017633, Val Loss: 0.020021[0m
+2025-12-24 03:17:12,229 | INFO     | Epoch 229/250 - Train Loss: 0.017607, Val Loss: 0.020207[0m
+2025-12-24 03:25:59,549 | INFO     | Epoch 230/250 - Train Loss: 0.017603, Val Loss: 0.019818[0m
+2025-12-24 03:34:46,944 | INFO     | Epoch 231/250 - Train Loss: 0.017618, Val Loss: 0.019563[0m
+2025-12-24 03:34:46,994 | INFO     | New best model saved with Val Loss: 0.019563
+2025-12-24 03:43:34,341 | INFO     | Epoch 232/250 - Train Loss: 0.017496, Val Loss: 0.019636[0m
+2025-12-24 03:52:21,634 | INFO     | Epoch 233/250 - Train Loss: 0.017489, Val Loss: 0.020086[0m
+2025-12-24 04:01:08,981 | INFO     | Epoch 234/250 - Train Loss: 0.017475, Val Loss: 0.019863[0m
+2025-12-24 04:09:56,333 | INFO     | Epoch 235/250 - Train Loss: 0.017600, Val Loss: 0.020228[0m
+2025-12-24 04:18:43,704 | INFO     | Epoch 236/250 - Train Loss: 0.017459, Val Loss: 0.019856[0m
+2025-12-24 04:27:31,044 | INFO     | Epoch 237/250 - Train Loss: 0.017381, Val Loss: 0.020208[0m
+2025-12-24 04:36:18,345 | INFO     | Epoch 238/250 - Train Loss: 0.017320, Val Loss: 0.020083[0m
+2025-12-24 04:45:05,665 | INFO     | Epoch 239/250 - Train Loss: 0.017396, Val Loss: 0.019873[0m
+2025-12-24 04:53:52,959 | INFO     | Epoch 240/250 - Train Loss: 0.017350, Val Loss: 0.019974[0m
+2025-12-24 05:02:40,334 | INFO     | Epoch 241/250 - Train Loss: 0.017411, Val Loss: 0.019975[0m
+2025-12-24 05:11:27,640 | INFO     | Epoch 242/250 - Train Loss: 0.017270, Val Loss: 0.019514[0m
+2025-12-24 05:11:27,691 | INFO     | New best model saved with Val Loss: 0.019514
+2025-12-24 05:20:15,009 | INFO     | Epoch 243/250 - Train Loss: 0.017297, Val Loss: 0.019762[0m
+2025-12-24 05:29:02,346 | INFO     | Epoch 244/250 - Train Loss: 0.017170, Val Loss: 0.019501[0m
+2025-12-24 05:29:02,402 | INFO     | New best model saved with Val Loss: 0.019501
+2025-12-24 05:37:49,704 | INFO     | Epoch 245/250 - Train Loss: 0.017247, Val Loss: 0.019386[0m
+2025-12-24 05:37:49,750 | INFO     | New best model saved with Val Loss: 0.019386
+2025-12-24 05:46:37,053 | INFO     | Epoch 246/250 - Train Loss: 0.017187, Val Loss: 0.020080[0m
+2025-12-24 05:55:24,416 | INFO     | Epoch 247/250 - Train Loss: 0.017206, Val Loss: 0.019643[0m
+2025-12-24 06:04:11,720 | INFO     | Epoch 248/250 - Train Loss: 0.017197, Val Loss: 0.019577[0m
+2025-12-24 06:12:59,102 | INFO     | Epoch 249/250 - Train Loss: 0.017173, Val Loss: 0.019532[0m
+2025-12-24 06:19:57,805 | INFO     | Epoch 250/250 - Train Loss: 0.017145, Val Loss: 0.019204[0m
+2025-12-24 06:19:57,851 | INFO     | New best model saved with Val Loss: 0.019204
+2025-12-24 06:19:57,961 | INFO     | Final model saved to experiments_DrivAerML/spressure_N10k_lr1e-3_e250_run1/final_model.pth
+2025-12-24 06:19:57,961 | INFO     | Testing the final model
+2025-12-24 06:20:08,009 | INFO     | *******************[35mL2_erro:[0m
+2025-12-24 06:20:08,009 | INFO     |  0.102570
+2025-12-24 06:20:08,009 | INFO     | *******************[35mmse_loss:[0m
+2025-12-24 06:20:08,009 | INFO     |  0.018116
+2025-12-24 06:20:08,009 | INFO     | *******************[35minference_time:[0m
+2025-12-24 06:20:08,009 | INFO     |  0.007405
+2025-12-24 06:20:08,010 | INFO     | Testing the best model
+2025-12-24 06:20:18,228 | INFO     | *******************[35mL2_erro:[0m
+2025-12-24 06:20:18,229 | INFO     |  0.102570
+2025-12-24 06:20:18,229 | INFO     | *******************[35mmse_loss:[0m
+2025-12-24 06:20:18,229 | INFO     |  0.018116
+2025-12-24 06:20:18,229 | INFO     | *******************[35minference_time:[0m
+2025-12-24 06:20:18,229 | INFO     |  0.007170
+2025-12-24 08:35:09,553 | INFO     | Config:
+exp_name: spressure_N10k_lr1e-3_e250_run1
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 8
+  hidden_dim: 256
+  res: true
+  slice_num: 32
+  layer_num: 5
+  mlp_ratio: 1.5
+  dropout: 0.1
+training:
+  input: surface_anchor_position
+  target: surface_anchor_pressure
+  batch_size: 1
+  epochs: 250
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0
+  test_only: 0
+  gpus: '0'
+  root_dir: /mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small
+  seed: 42
+
+2025-12-24 08:35:09,553 | INFO     | args.exp_name : spressure_N10k_lr1e-3_e250_run1
+2025-12-24 08:35:09,553 | INFO     | Starting training with 1 GPUs
+2025-12-24 08:35:10,041 | INFO     | Total trainable parameters: 3381321
+2025-12-24 08:35:10,042 | INFO     | Data loaded: 380 training batches, 33 validation batches, 44 test batches
+2025-12-24 08:35:10,043 | INFO     | Staring training for 250 epochs
+2025-12-24 08:43:20,979 | INFO     | Epoch 1/250 - Train Loss: 0.874053, Val Loss: 0.594222[0m
+2025-12-24 08:43:21,032 | INFO     | New best model saved with Val Loss: 0.594222
+2025-12-24 08:52:08,774 | INFO     | Epoch 2/250 - Train Loss: 0.607281, Val Loss: 0.574693[0m
+2025-12-24 08:52:08,827 | INFO     | New best model saved with Val Loss: 0.574693
+2025-12-24 09:00:56,231 | INFO     | Epoch 3/250 - Train Loss: 0.571745, Val Loss: 0.571396[0m
+2025-12-24 09:00:56,282 | INFO     | New best model saved with Val Loss: 0.571396
+2025-12-24 09:09:43,607 | INFO     | Epoch 4/250 - Train Loss: 0.555758, Val Loss: 0.516790[0m
+2025-12-24 09:09:43,662 | INFO     | New best model saved with Val Loss: 0.516790
+2025-12-24 09:18:31,020 | INFO     | Epoch 5/250 - Train Loss: 0.532616, Val Loss: 0.505945[0m
+2025-12-24 09:18:31,072 | INFO     | New best model saved with Val Loss: 0.505945
+2025-12-24 09:27:18,443 | INFO     | Epoch 6/250 - Train Loss: 0.502504, Val Loss: 0.464247[0m
+2025-12-24 09:27:18,497 | INFO     | New best model saved with Val Loss: 0.464247
+2025-12-24 09:36:05,872 | INFO     | Epoch 7/250 - Train Loss: 0.469227, Val Loss: 0.458448[0m
+2025-12-24 09:36:05,920 | INFO     | New best model saved with Val Loss: 0.458448
+2025-12-24 09:44:53,215 | INFO     | Epoch 8/250 - Train Loss: 0.391866, Val Loss: 0.392773[0m
+2025-12-24 09:44:53,263 | INFO     | New best model saved with Val Loss: 0.392773
+2025-12-24 09:53:40,582 | INFO     | Epoch 9/250 - Train Loss: 0.369096, Val Loss: 0.349020[0m
+2025-12-24 09:53:40,634 | INFO     | New best model saved with Val Loss: 0.349020
+2025-12-24 10:02:27,844 | INFO     | Epoch 10/250 - Train Loss: 0.340122, Val Loss: 0.314354[0m
+2025-12-24 10:02:27,899 | INFO     | New best model saved with Val Loss: 0.314354
+2025-12-24 10:11:15,166 | INFO     | Epoch 11/250 - Train Loss: 0.312518, Val Loss: 0.281471[0m
+2025-12-24 10:11:15,227 | INFO     | New best model saved with Val Loss: 0.281471
+2025-12-24 10:20:02,525 | INFO     | Epoch 12/250 - Train Loss: 0.293886, Val Loss: 0.263213[0m
+2025-12-24 10:20:02,576 | INFO     | New best model saved with Val Loss: 0.263213
+2025-12-24 10:28:50,003 | INFO     | Epoch 13/250 - Train Loss: 0.251494, Val Loss: 0.213388[0m
+2025-12-24 10:28:50,047 | INFO     | New best model saved with Val Loss: 0.213388
+2025-12-24 10:37:37,368 | INFO     | Epoch 14/250 - Train Loss: 0.227890, Val Loss: 0.212019[0m
+2025-12-24 10:37:37,421 | INFO     | New best model saved with Val Loss: 0.212019
+2025-12-24 10:46:24,775 | INFO     | Epoch 15/250 - Train Loss: 0.213648, Val Loss: 0.194864[0m
+2025-12-24 10:46:24,828 | INFO     | New best model saved with Val Loss: 0.194864
+2025-12-24 10:55:12,245 | INFO     | Epoch 16/250 - Train Loss: 0.206356, Val Loss: 0.202183[0m
+2025-12-24 11:03:59,592 | INFO     | Epoch 17/250 - Train Loss: 0.193806, Val Loss: 0.195881[0m
+2025-12-24 11:12:47,030 | INFO     | Epoch 18/250 - Train Loss: 0.215585, Val Loss: 0.183874[0m
+2025-12-24 11:12:47,082 | INFO     | New best model saved with Val Loss: 0.183874
+2025-12-24 11:21:34,509 | INFO     | Epoch 19/250 - Train Loss: 0.182628, Val Loss: 0.178784[0m
+2025-12-24 11:21:34,558 | INFO     | New best model saved with Val Loss: 0.178784
+2025-12-24 11:30:21,824 | INFO     | Epoch 20/250 - Train Loss: 0.172841, Val Loss: 0.152095[0m
+2025-12-24 11:30:21,875 | INFO     | New best model saved with Val Loss: 0.152095
+2025-12-24 11:39:09,301 | INFO     | Epoch 21/250 - Train Loss: 0.168172, Val Loss: 0.156331[0m
+2025-12-24 11:47:56,788 | INFO     | Epoch 22/250 - Train Loss: 0.164265, Val Loss: 0.160790[0m
+2025-12-24 11:56:44,144 | INFO     | Epoch 23/250 - Train Loss: 0.157747, Val Loss: 0.153162[0m
+2025-12-24 12:05:31,469 | INFO     | Epoch 24/250 - Train Loss: 0.160995, Val Loss: 0.134283[0m
+2025-12-24 12:05:31,522 | INFO     | New best model saved with Val Loss: 0.134283
+2025-12-24 12:14:18,916 | INFO     | Epoch 25/250 - Train Loss: 0.148680, Val Loss: 0.143089[0m
+2025-12-24 12:23:06,262 | INFO     | Epoch 26/250 - Train Loss: 0.146889, Val Loss: 0.136222[0m
+2025-12-24 12:31:53,645 | INFO     | Epoch 27/250 - Train Loss: 0.140607, Val Loss: 0.138276[0m
+2025-12-24 12:40:41,053 | INFO     | Epoch 28/250 - Train Loss: 0.137826, Val Loss: 0.135056[0m
+2025-12-24 12:49:28,356 | INFO     | Epoch 29/250 - Train Loss: 0.134033, Val Loss: 0.125871[0m
+2025-12-24 12:49:28,410 | INFO     | New best model saved with Val Loss: 0.125871
+2025-12-24 12:58:15,616 | INFO     | Epoch 30/250 - Train Loss: 0.131409, Val Loss: 0.125033[0m
+2025-12-24 12:58:15,668 | INFO     | New best model saved with Val Loss: 0.125033
+2025-12-24 13:07:03,029 | INFO     | Epoch 31/250 - Train Loss: 0.124496, Val Loss: 0.121093[0m
+2025-12-24 13:07:03,077 | INFO     | New best model saved with Val Loss: 0.121093
+2025-12-24 13:15:50,453 | INFO     | Epoch 32/250 - Train Loss: 0.124943, Val Loss: 0.113147[0m
+2025-12-24 13:15:50,505 | INFO     | New best model saved with Val Loss: 0.113147
+2025-12-24 13:24:37,850 | INFO     | Epoch 33/250 - Train Loss: 0.118293, Val Loss: 0.112573[0m
+2025-12-24 13:24:37,902 | INFO     | New best model saved with Val Loss: 0.112573
+2025-12-24 13:33:25,226 | INFO     | Epoch 34/250 - Train Loss: 0.115701, Val Loss: 0.113827[0m
+2025-12-24 13:42:12,553 | INFO     | Epoch 35/250 - Train Loss: 0.114016, Val Loss: 0.102189[0m
+2025-12-24 13:42:12,607 | INFO     | New best model saved with Val Loss: 0.102189
+2025-12-24 13:50:59,881 | INFO     | Epoch 36/250 - Train Loss: 0.108755, Val Loss: 0.104078[0m
+2025-12-24 13:59:47,213 | INFO     | Epoch 37/250 - Train Loss: 0.105170, Val Loss: 0.094887[0m
+2025-12-24 13:59:47,266 | INFO     | New best model saved with Val Loss: 0.094887
+2025-12-24 14:08:34,563 | INFO     | Epoch 38/250 - Train Loss: 0.103472, Val Loss: 0.093730[0m
+2025-12-24 14:08:34,615 | INFO     | New best model saved with Val Loss: 0.093730
+2025-12-24 14:17:21,899 | INFO     | Epoch 39/250 - Train Loss: 0.101883, Val Loss: 0.090275[0m
+2025-12-24 14:17:21,940 | INFO     | New best model saved with Val Loss: 0.090275
+2025-12-24 14:26:09,229 | INFO     | Epoch 40/250 - Train Loss: 0.097799, Val Loss: 0.089553[0m
+2025-12-24 14:26:09,280 | INFO     | New best model saved with Val Loss: 0.089553
+2025-12-24 14:34:56,637 | INFO     | Epoch 41/250 - Train Loss: 0.095967, Val Loss: 0.089095[0m
+2025-12-24 14:34:56,684 | INFO     | New best model saved with Val Loss: 0.089095
+2025-12-24 14:43:43,961 | INFO     | Epoch 42/250 - Train Loss: 0.093499, Val Loss: 0.086690[0m
+2025-12-24 14:43:44,012 | INFO     | New best model saved with Val Loss: 0.086690
+2025-12-24 14:52:31,325 | INFO     | Epoch 43/250 - Train Loss: 0.091779, Val Loss: 0.083441[0m
+2025-12-24 14:52:31,376 | INFO     | New best model saved with Val Loss: 0.083441
+2025-12-24 15:01:18,669 | INFO     | Epoch 44/250 - Train Loss: 0.088626, Val Loss: 0.085204[0m
+2025-12-24 15:10:05,966 | INFO     | Epoch 45/250 - Train Loss: 0.087243, Val Loss: 0.082721[0m
+2025-12-24 15:10:06,019 | INFO     | New best model saved with Val Loss: 0.082721
+2025-12-24 15:18:53,210 | INFO     | Epoch 46/250 - Train Loss: 0.085367, Val Loss: 0.078298[0m
+2025-12-24 15:18:53,256 | INFO     | New best model saved with Val Loss: 0.078298
+2025-12-24 15:27:40,474 | INFO     | Epoch 47/250 - Train Loss: 0.084735, Val Loss: 0.076419[0m
+2025-12-24 15:27:40,525 | INFO     | New best model saved with Val Loss: 0.076419
+2025-12-24 15:36:27,840 | INFO     | Epoch 48/250 - Train Loss: 0.081509, Val Loss: 0.082154[0m
+2025-12-24 15:45:15,011 | INFO     | Epoch 49/250 - Train Loss: 0.079537, Val Loss: 0.072207[0m
+2025-12-24 15:45:15,061 | INFO     | New best model saved with Val Loss: 0.072207
+2025-12-24 15:54:02,290 | INFO     | Epoch 50/250 - Train Loss: 0.078502, Val Loss: 0.074554[0m
+2025-12-24 16:02:49,562 | INFO     | Epoch 51/250 - Train Loss: 0.065868, Val Loss: 0.062560[0m
+2025-12-24 16:02:49,613 | INFO     | New best model saved with Val Loss: 0.062560
+2025-12-24 16:11:36,844 | INFO     | Epoch 52/250 - Train Loss: 0.063461, Val Loss: 0.058200[0m
+2025-12-24 16:11:36,895 | INFO     | New best model saved with Val Loss: 0.058200
+2025-12-24 16:20:24,180 | INFO     | Epoch 53/250 - Train Loss: 0.063227, Val Loss: 0.062003[0m
+2025-12-24 16:29:11,416 | INFO     | Epoch 54/250 - Train Loss: 0.062405, Val Loss: 0.058428[0m
+2025-12-24 16:37:58,687 | INFO     | Epoch 55/250 - Train Loss: 0.061588, Val Loss: 0.059733[0m
+2025-12-24 16:46:46,088 | INFO     | Epoch 56/250 - Train Loss: 0.060541, Val Loss: 0.057121[0m
+2025-12-24 16:46:46,139 | INFO     | New best model saved with Val Loss: 0.057121
+2025-12-24 16:55:33,359 | INFO     | Epoch 57/250 - Train Loss: 0.060020, Val Loss: 0.058268[0m
+2025-12-24 17:04:20,708 | INFO     | Epoch 58/250 - Train Loss: 0.059790, Val Loss: 0.056373[0m
+2025-12-24 17:04:20,758 | INFO     | New best model saved with Val Loss: 0.056373
+2025-12-24 17:13:08,066 | INFO     | Epoch 59/250 - Train Loss: 0.058482, Val Loss: 0.056879[0m
+2025-12-24 17:21:55,270 | INFO     | Epoch 60/250 - Train Loss: 0.057575, Val Loss: 0.059688[0m
+2025-12-24 17:30:42,639 | INFO     | Epoch 61/250 - Train Loss: 0.057733, Val Loss: 0.056665[0m
+2025-12-24 17:39:29,865 | INFO     | Epoch 62/250 - Train Loss: 0.056735, Val Loss: 0.057097[0m
+2025-12-24 17:48:17,153 | INFO     | Epoch 63/250 - Train Loss: 0.056845, Val Loss: 0.053386[0m
+2025-12-24 17:48:17,205 | INFO     | New best model saved with Val Loss: 0.053386
+2025-12-24 17:57:04,437 | INFO     | Epoch 64/250 - Train Loss: 0.055081, Val Loss: 0.052894[0m
+2025-12-24 17:57:04,491 | INFO     | New best model saved with Val Loss: 0.052894
+2025-12-24 18:05:51,784 | INFO     | Epoch 65/250 - Train Loss: 0.054953, Val Loss: 0.052829[0m
+2025-12-24 18:05:51,831 | INFO     | New best model saved with Val Loss: 0.052829
+2025-12-24 18:14:39,366 | INFO     | Epoch 66/250 - Train Loss: 0.055251, Val Loss: 0.051941[0m
+2025-12-24 18:14:39,411 | INFO     | New best model saved with Val Loss: 0.051941
+2025-12-24 18:23:27,185 | INFO     | Epoch 67/250 - Train Loss: 0.053941, Val Loss: 0.050298[0m
+2025-12-24 18:23:27,236 | INFO     | New best model saved with Val Loss: 0.050298
+2025-12-24 18:32:14,894 | INFO     | Epoch 68/250 - Train Loss: 0.053674, Val Loss: 0.053875[0m
+2025-12-24 18:41:02,610 | INFO     | Epoch 69/250 - Train Loss: 0.053510, Val Loss: 0.055561[0m
+2025-12-24 18:49:50,258 | INFO     | Epoch 70/250 - Train Loss: 0.052150, Val Loss: 0.052691[0m
+2025-12-24 18:58:37,824 | INFO     | Epoch 71/250 - Train Loss: 0.051765, Val Loss: 0.050916[0m
+2025-12-24 19:07:25,528 | INFO     | Epoch 72/250 - Train Loss: 0.052151, Val Loss: 0.049702[0m
+2025-12-24 19:07:25,579 | INFO     | New best model saved with Val Loss: 0.049702
+2025-12-24 19:16:13,386 | INFO     | Epoch 73/250 - Train Loss: 0.051168, Val Loss: 0.052758[0m
+2025-12-24 19:25:01,110 | INFO     | Epoch 74/250 - Train Loss: 0.050004, Val Loss: 0.047501[0m
+2025-12-24 19:25:01,169 | INFO     | New best model saved with Val Loss: 0.047501
+2025-12-24 19:33:48,977 | INFO     | Epoch 75/250 - Train Loss: 0.049990, Val Loss: 0.049487[0m
+2025-12-24 19:42:36,757 | INFO     | Epoch 76/250 - Train Loss: 0.049157, Val Loss: 0.047432[0m
+2025-12-24 19:42:36,810 | INFO     | New best model saved with Val Loss: 0.047432
+2025-12-24 19:51:24,493 | INFO     | Epoch 77/250 - Train Loss: 0.048712, Val Loss: 0.047227[0m
+2025-12-24 19:51:24,548 | INFO     | New best model saved with Val Loss: 0.047227
+2025-12-24 20:00:12,250 | INFO     | Epoch 78/250 - Train Loss: 0.049001, Val Loss: 0.048160[0m
+2025-12-24 20:09:00,031 | INFO     | Epoch 79/250 - Train Loss: 0.048248, Val Loss: 0.048334[0m
+2025-12-24 20:17:47,651 | INFO     | Epoch 80/250 - Train Loss: 0.047223, Val Loss: 0.045742[0m
+2025-12-24 20:17:47,696 | INFO     | New best model saved with Val Loss: 0.045742
+2025-12-24 20:26:35,507 | INFO     | Epoch 81/250 - Train Loss: 0.047605, Val Loss: 0.045172[0m
+2025-12-24 20:26:35,557 | INFO     | New best model saved with Val Loss: 0.045172
+2025-12-24 20:35:23,261 | INFO     | Epoch 82/250 - Train Loss: 0.046596, Val Loss: 0.047329[0m
+2025-12-24 20:44:11,091 | INFO     | Epoch 83/250 - Train Loss: 0.046646, Val Loss: 0.046058[0m
+2025-12-24 20:52:58,838 | INFO     | Epoch 84/250 - Train Loss: 0.045472, Val Loss: 0.043044[0m
+2025-12-24 20:52:58,890 | INFO     | New best model saved with Val Loss: 0.043044
+2025-12-24 21:01:46,610 | INFO     | Epoch 85/250 - Train Loss: 0.044940, Val Loss: 0.042968[0m
+2025-12-24 21:01:46,661 | INFO     | New best model saved with Val Loss: 0.042968
+2025-12-24 21:10:34,418 | INFO     | Epoch 86/250 - Train Loss: 0.045426, Val Loss: 0.043946[0m
+2025-12-24 21:19:22,238 | INFO     | Epoch 87/250 - Train Loss: 0.043783, Val Loss: 0.042472[0m
+2025-12-24 21:19:22,289 | INFO     | New best model saved with Val Loss: 0.042472
+2025-12-24 21:28:10,052 | INFO     | Epoch 88/250 - Train Loss: 0.044017, Val Loss: 0.041926[0m
+2025-12-24 21:28:10,105 | INFO     | New best model saved with Val Loss: 0.041926
+2025-12-24 21:36:57,841 | INFO     | Epoch 89/250 - Train Loss: 0.044818, Val Loss: 0.043843[0m
+2025-12-24 21:45:45,457 | INFO     | Epoch 90/250 - Train Loss: 0.043653, Val Loss: 0.040205[0m
+2025-12-24 21:45:45,509 | INFO     | New best model saved with Val Loss: 0.040205
+2025-12-24 21:54:33,318 | INFO     | Epoch 91/250 - Train Loss: 0.043432, Val Loss: 0.043902[0m
+2025-12-24 22:03:21,132 | INFO     | Epoch 92/250 - Train Loss: 0.043174, Val Loss: 0.041231[0m
+2025-12-24 22:12:08,919 | INFO     | Epoch 93/250 - Train Loss: 0.043073, Val Loss: 0.042303[0m
+2025-12-24 22:20:56,653 | INFO     | Epoch 94/250 - Train Loss: 0.042255, Val Loss: 0.043210[0m
+2025-12-24 22:29:44,372 | INFO     | Epoch 95/250 - Train Loss: 0.041597, Val Loss: 0.041475[0m
+2025-12-24 22:38:32,164 | INFO     | Epoch 96/250 - Train Loss: 0.041676, Val Loss: 0.043461[0m
+2025-12-24 22:47:19,877 | INFO     | Epoch 97/250 - Train Loss: 0.041811, Val Loss: 0.039853[0m
+2025-12-24 22:47:19,928 | INFO     | New best model saved with Val Loss: 0.039853
+2025-12-24 22:56:07,690 | INFO     | Epoch 98/250 - Train Loss: 0.041485, Val Loss: 0.040870[0m
+2025-12-24 23:04:55,502 | INFO     | Epoch 99/250 - Train Loss: 0.040769, Val Loss: 0.038371[0m
+2025-12-24 23:04:55,553 | INFO     | New best model saved with Val Loss: 0.038371
+2025-12-24 23:13:43,294 | INFO     | Epoch 100/250 - Train Loss: 0.039959, Val Loss: 0.042284[0m
+2025-12-24 23:22:31,138 | INFO     | Epoch 101/250 - Train Loss: 0.034615, Val Loss: 0.034565[0m
+2025-12-24 23:22:31,189 | INFO     | New best model saved with Val Loss: 0.034565
+2025-12-24 23:31:18,826 | INFO     | Epoch 102/250 - Train Loss: 0.034231, Val Loss: 0.034018[0m
+2025-12-24 23:31:18,880 | INFO     | New best model saved with Val Loss: 0.034018
+2025-12-24 23:40:06,470 | INFO     | Epoch 103/250 - Train Loss: 0.034026, Val Loss: 0.033616[0m
+2025-12-24 23:40:06,521 | INFO     | New best model saved with Val Loss: 0.033616
+2025-12-24 23:48:54,170 | INFO     | Epoch 104/250 - Train Loss: 0.033781, Val Loss: 0.033731[0m
+2025-12-24 23:57:41,834 | INFO     | Epoch 105/250 - Train Loss: 0.033756, Val Loss: 0.034642[0m
+2025-12-25 00:06:29,430 | INFO     | Epoch 106/250 - Train Loss: 0.033208, Val Loss: 0.032628[0m
+2025-12-25 00:06:29,480 | INFO     | New best model saved with Val Loss: 0.032628
+2025-12-25 00:15:17,046 | INFO     | Epoch 107/250 - Train Loss: 0.033471, Val Loss: 0.034282[0m
+2025-12-25 00:24:04,583 | INFO     | Epoch 108/250 - Train Loss: 0.033053, Val Loss: 0.033121[0m
+2025-12-25 00:32:52,182 | INFO     | Epoch 109/250 - Train Loss: 0.032826, Val Loss: 0.032184[0m
+2025-12-25 00:32:52,223 | INFO     | New best model saved with Val Loss: 0.032184
+2025-12-25 00:41:39,746 | INFO     | Epoch 110/250 - Train Loss: 0.032515, Val Loss: 0.031868[0m
+2025-12-25 00:41:39,788 | INFO     | New best model saved with Val Loss: 0.031868
+2025-12-25 00:50:27,452 | INFO     | Epoch 111/250 - Train Loss: 0.032678, Val Loss: 0.033088[0m
+2025-12-25 00:59:15,024 | INFO     | Epoch 112/250 - Train Loss: 0.032454, Val Loss: 0.031807[0m
+2025-12-25 00:59:15,075 | INFO     | New best model saved with Val Loss: 0.031807
+2025-12-25 01:08:02,750 | INFO     | Epoch 113/250 - Train Loss: 0.032054, Val Loss: 0.032994[0m
+2025-12-25 01:16:50,430 | INFO     | Epoch 114/250 - Train Loss: 0.031876, Val Loss: 0.032382[0m
+2025-12-25 01:25:38,105 | INFO     | Epoch 115/250 - Train Loss: 0.031608, Val Loss: 0.033739[0m
+2025-12-25 01:34:25,701 | INFO     | Epoch 116/250 - Train Loss: 0.032383, Val Loss: 0.033829[0m
+2025-12-25 01:43:13,264 | INFO     | Epoch 117/250 - Train Loss: 0.031650, Val Loss: 0.031760[0m
+2025-12-25 01:43:13,315 | INFO     | New best model saved with Val Loss: 0.031760
+2025-12-25 01:52:00,877 | INFO     | Epoch 118/250 - Train Loss: 0.031519, Val Loss: 0.031746[0m
+2025-12-25 01:52:00,929 | INFO     | New best model saved with Val Loss: 0.031746
+2025-12-25 02:00:48,557 | INFO     | Epoch 119/250 - Train Loss: 0.030993, Val Loss: 0.031354[0m
+2025-12-25 02:00:48,604 | INFO     | New best model saved with Val Loss: 0.031354
+2025-12-25 02:09:36,241 | INFO     | Epoch 120/250 - Train Loss: 0.031585, Val Loss: 0.032733[0m
+2025-12-25 02:18:23,940 | INFO     | Epoch 121/250 - Train Loss: 0.030609, Val Loss: 0.031282[0m
+2025-12-25 02:18:23,983 | INFO     | New best model saved with Val Loss: 0.031282
+2025-12-25 02:27:11,500 | INFO     | Epoch 122/250 - Train Loss: 0.030660, Val Loss: 0.030727[0m
+2025-12-25 02:27:11,554 | INFO     | New best model saved with Val Loss: 0.030727
+2025-12-25 02:35:59,625 | INFO     | Epoch 123/250 - Train Loss: 0.030996, Val Loss: 0.031095[0m
+2025-12-25 02:44:47,292 | INFO     | Epoch 124/250 - Train Loss: 0.030504, Val Loss: 0.030708[0m
+2025-12-25 02:44:47,343 | INFO     | New best model saved with Val Loss: 0.030708
+2025-12-25 02:53:34,986 | INFO     | Epoch 125/250 - Train Loss: 0.030066, Val Loss: 0.030965[0m
+2025-12-25 03:02:22,700 | INFO     | Epoch 126/250 - Train Loss: 0.030366, Val Loss: 0.032618[0m
+2025-12-25 03:11:10,423 | INFO     | Epoch 127/250 - Train Loss: 0.030358, Val Loss: 0.031167[0m
+2025-12-25 03:19:58,170 | INFO     | Epoch 128/250 - Train Loss: 0.029674, Val Loss: 0.030934[0m
+2025-12-25 03:28:46,081 | INFO     | Epoch 129/250 - Train Loss: 0.030272, Val Loss: 0.030572[0m
+2025-12-25 03:28:46,127 | INFO     | New best model saved with Val Loss: 0.030572
+2025-12-25 03:37:33,996 | INFO     | Epoch 130/250 - Train Loss: 0.029606, Val Loss: 0.031469[0m
+2025-12-25 03:46:22,150 | INFO     | Epoch 131/250 - Train Loss: 0.029406, Val Loss: 0.029226[0m
+2025-12-25 03:46:22,202 | INFO     | New best model saved with Val Loss: 0.029226
+2025-12-25 03:55:10,317 | INFO     | Epoch 132/250 - Train Loss: 0.029851, Val Loss: 0.031102[0m
+2025-12-25 04:03:58,413 | INFO     | Epoch 133/250 - Train Loss: 0.029072, Val Loss: 0.029966[0m
+2025-12-25 04:12:46,529 | INFO     | Epoch 134/250 - Train Loss: 0.029106, Val Loss: 0.030378[0m
+2025-12-25 04:21:34,589 | INFO     | Epoch 135/250 - Train Loss: 0.029325, Val Loss: 0.030617[0m
+2025-12-25 04:30:22,685 | INFO     | Epoch 136/250 - Train Loss: 0.028854, Val Loss: 0.029566[0m
+2025-12-25 04:39:10,830 | INFO     | Epoch 137/250 - Train Loss: 0.028530, Val Loss: 0.029585[0m
+2025-12-25 04:47:58,911 | INFO     | Epoch 138/250 - Train Loss: 0.028857, Val Loss: 0.028538[0m
+2025-12-25 04:47:58,967 | INFO     | New best model saved with Val Loss: 0.028538
+2025-12-25 04:56:47,075 | INFO     | Epoch 139/250 - Train Loss: 0.028749, Val Loss: 0.029213[0m
+2025-12-25 05:05:35,114 | INFO     | Epoch 140/250 - Train Loss: 0.028680, Val Loss: 0.029826[0m
+2025-12-25 05:14:23,229 | INFO     | Epoch 141/250 - Train Loss: 0.028379, Val Loss: 0.028906[0m
+2025-12-25 05:23:11,337 | INFO     | Epoch 142/250 - Train Loss: 0.028362, Val Loss: 0.030104[0m
+2025-12-25 05:31:59,498 | INFO     | Epoch 143/250 - Train Loss: 0.027991, Val Loss: 0.028495[0m
+2025-12-25 05:31:59,549 | INFO     | New best model saved with Val Loss: 0.028495
+2025-12-25 05:40:47,627 | INFO     | Epoch 144/250 - Train Loss: 0.028372, Val Loss: 0.029242[0m
+2025-12-25 05:49:35,729 | INFO     | Epoch 145/250 - Train Loss: 0.027564, Val Loss: 0.030982[0m
+2025-12-25 05:58:23,817 | INFO     | Epoch 146/250 - Train Loss: 0.027955, Val Loss: 0.028449[0m
+2025-12-25 05:58:23,870 | INFO     | New best model saved with Val Loss: 0.028449
+2025-12-25 06:07:11,966 | INFO     | Epoch 147/250 - Train Loss: 0.028039, Val Loss: 0.030871[0m
+2025-12-25 06:16:00,053 | INFO     | Epoch 148/250 - Train Loss: 0.027729, Val Loss: 0.029962[0m
+2025-12-25 06:24:48,181 | INFO     | Epoch 149/250 - Train Loss: 0.027290, Val Loss: 0.027547[0m
+2025-12-25 06:24:48,233 | INFO     | New best model saved with Val Loss: 0.027547
+2025-12-25 06:33:36,285 | INFO     | Epoch 150/250 - Train Loss: 0.027670, Val Loss: 0.028373[0m
+2025-12-25 06:42:24,246 | INFO     | Epoch 151/250 - Train Loss: 0.024298, Val Loss: 0.025535[0m
+2025-12-25 06:42:24,297 | INFO     | New best model saved with Val Loss: 0.025535
+2025-12-25 06:51:12,412 | INFO     | Epoch 152/250 - Train Loss: 0.023960, Val Loss: 0.025982[0m
+2025-12-25 07:00:00,596 | INFO     | Epoch 153/250 - Train Loss: 0.024019, Val Loss: 0.026651[0m
+2025-12-25 07:08:48,781 | INFO     | Epoch 154/250 - Train Loss: 0.023925, Val Loss: 0.025590[0m
+2025-12-25 07:17:36,928 | INFO     | Epoch 155/250 - Train Loss: 0.023905, Val Loss: 0.025202[0m
+2025-12-25 07:17:36,980 | INFO     | New best model saved with Val Loss: 0.025202
+2025-12-25 07:26:25,134 | INFO     | Epoch 156/250 - Train Loss: 0.023875, Val Loss: 0.025712[0m
+2025-12-25 07:35:13,268 | INFO     | Epoch 157/250 - Train Loss: 0.023685, Val Loss: 0.025346[0m
+2025-12-25 07:44:01,198 | INFO     | Epoch 158/250 - Train Loss: 0.023785, Val Loss: 0.025143[0m
+2025-12-25 07:44:01,249 | INFO     | New best model saved with Val Loss: 0.025143
+2025-12-25 07:52:49,067 | INFO     | Epoch 159/250 - Train Loss: 0.023627, Val Loss: 0.025358[0m
+2025-12-25 08:01:36,864 | INFO     | Epoch 160/250 - Train Loss: 0.023586, Val Loss: 0.025034[0m
+2025-12-25 08:01:36,915 | INFO     | New best model saved with Val Loss: 0.025034
+2025-12-25 08:10:24,748 | INFO     | Epoch 161/250 - Train Loss: 0.023504, Val Loss: 0.025190[0m
+2025-12-25 08:19:12,586 | INFO     | Epoch 162/250 - Train Loss: 0.023357, Val Loss: 0.025254[0m
+2025-12-25 08:28:00,353 | INFO     | Epoch 163/250 - Train Loss: 0.023368, Val Loss: 0.023981[0m
+2025-12-25 08:28:00,404 | INFO     | New best model saved with Val Loss: 0.023981
+2025-12-25 08:36:48,151 | INFO     | Epoch 164/250 - Train Loss: 0.022983, Val Loss: 0.026209[0m
+2025-12-25 08:45:35,930 | INFO     | Epoch 165/250 - Train Loss: 0.023276, Val Loss: 0.025188[0m
+2025-12-25 08:54:23,000 | INFO     | Epoch 166/250 - Train Loss: 0.023272, Val Loss: 0.024531[0m
+2025-12-25 09:03:08,689 | INFO     | Epoch 167/250 - Train Loss: 0.023012, Val Loss: 0.024718[0m
+2025-12-25 09:11:56,162 | INFO     | Epoch 168/250 - Train Loss: 0.023057, Val Loss: 0.024650[0m
+2025-12-25 09:20:42,933 | INFO     | Epoch 169/250 - Train Loss: 0.023185, Val Loss: 0.024637[0m
+2025-12-25 09:29:30,884 | INFO     | Epoch 170/250 - Train Loss: 0.022705, Val Loss: 0.024484[0m
+2025-12-25 09:38:19,089 | INFO     | Epoch 171/250 - Train Loss: 0.022890, Val Loss: 0.024799[0m
+2025-12-25 09:47:07,083 | INFO     | Epoch 172/250 - Train Loss: 0.022680, Val Loss: 0.023814[0m
+2025-12-25 09:47:07,134 | INFO     | New best model saved with Val Loss: 0.023814
+2025-12-25 09:55:55,167 | INFO     | Epoch 173/250 - Train Loss: 0.022513, Val Loss: 0.024377[0m
+2025-12-25 10:04:43,147 | INFO     | Epoch 174/250 - Train Loss: 0.022626, Val Loss: 0.024090[0m
+2025-12-25 10:13:31,198 | INFO     | Epoch 175/250 - Train Loss: 0.022647, Val Loss: 0.024651[0m
+2025-12-25 10:22:19,293 | INFO     | Epoch 176/250 - Train Loss: 0.022422, Val Loss: 0.024338[0m
+2025-12-25 10:31:07,356 | INFO     | Epoch 177/250 - Train Loss: 0.022452, Val Loss: 0.025048[0m
+2025-12-25 10:39:55,419 | INFO     | Epoch 178/250 - Train Loss: 0.022380, Val Loss: 0.024129[0m
+2025-12-25 10:48:43,537 | INFO     | Epoch 179/250 - Train Loss: 0.022320, Val Loss: 0.025294[0m
+2025-12-25 10:57:31,665 | INFO     | Epoch 180/250 - Train Loss: 0.022288, Val Loss: 0.024372[0m
+2025-12-25 11:06:20,015 | INFO     | Epoch 181/250 - Train Loss: 0.022154, Val Loss: 0.023727[0m
+2025-12-25 11:06:20,066 | INFO     | New best model saved with Val Loss: 0.023727
+2025-12-25 11:15:08,122 | INFO     | Epoch 182/250 - Train Loss: 0.021945, Val Loss: 0.023979[0m
+2025-12-25 11:23:56,242 | INFO     | Epoch 183/250 - Train Loss: 0.021987, Val Loss: 0.023703[0m
+2025-12-25 11:23:56,294 | INFO     | New best model saved with Val Loss: 0.023703
+2025-12-25 11:32:44,371 | INFO     | Epoch 184/250 - Train Loss: 0.022005, Val Loss: 0.024302[0m
+2025-12-25 11:41:32,474 | INFO     | Epoch 185/250 - Train Loss: 0.021991, Val Loss: 0.023253[0m
+2025-12-25 11:41:32,526 | INFO     | New best model saved with Val Loss: 0.023253
+2025-12-25 11:50:20,699 | INFO     | Epoch 186/250 - Train Loss: 0.021755, Val Loss: 0.024442[0m
+2025-12-25 11:59:08,821 | INFO     | Epoch 187/250 - Train Loss: 0.021916, Val Loss: 0.023955[0m
+2025-12-25 12:07:56,966 | INFO     | Epoch 188/250 - Train Loss: 0.021802, Val Loss: 0.024818[0m
+2025-12-25 12:16:45,089 | INFO     | Epoch 189/250 - Train Loss: 0.022137, Val Loss: 0.023853[0m
+2025-12-25 12:25:33,233 | INFO     | Epoch 190/250 - Train Loss: 0.021731, Val Loss: 0.023540[0m
+2025-12-25 12:34:21,527 | INFO     | Epoch 191/250 - Train Loss: 0.021594, Val Loss: 0.023724[0m
+2025-12-25 12:43:09,577 | INFO     | Epoch 192/250 - Train Loss: 0.021528, Val Loss: 0.023417[0m
+2025-12-25 12:51:57,710 | INFO     | Epoch 193/250 - Train Loss: 0.021618, Val Loss: 0.023607[0m
+2025-12-25 13:00:45,810 | INFO     | Epoch 194/250 - Train Loss: 0.021470, Val Loss: 0.023417[0m
+2025-12-25 13:09:33,962 | INFO     | Epoch 195/250 - Train Loss: 0.021444, Val Loss: 0.023491[0m
+2025-12-25 13:18:22,088 | INFO     | Epoch 196/250 - Train Loss: 0.021467, Val Loss: 0.023956[0m
+2025-12-25 13:27:10,221 | INFO     | Epoch 197/250 - Train Loss: 0.021567, Val Loss: 0.023569[0m
+2025-12-25 13:35:58,335 | INFO     | Epoch 198/250 - Train Loss: 0.021298, Val Loss: 0.023188[0m
+2025-12-25 13:35:58,386 | INFO     | New best model saved with Val Loss: 0.023188
+2025-12-25 13:44:46,494 | INFO     | Epoch 199/250 - Train Loss: 0.021067, Val Loss: 0.023166[0m
+2025-12-25 13:44:46,545 | INFO     | New best model saved with Val Loss: 0.023166
+2025-12-25 13:53:34,684 | INFO     | Epoch 200/250 - Train Loss: 0.021058, Val Loss: 0.023667[0m
+2025-12-25 14:02:22,824 | INFO     | Epoch 201/250 - Train Loss: 0.019692, Val Loss: 0.022186[0m
+2025-12-25 14:02:22,877 | INFO     | New best model saved with Val Loss: 0.022186
+2025-12-25 14:11:10,990 | INFO     | Epoch 202/250 - Train Loss: 0.019578, Val Loss: 0.021809[0m
+2025-12-25 14:11:11,042 | INFO     | New best model saved with Val Loss: 0.021809
+2025-12-25 14:19:59,157 | INFO     | Epoch 203/250 - Train Loss: 0.019515, Val Loss: 0.021466[0m
+2025-12-25 14:19:59,209 | INFO     | New best model saved with Val Loss: 0.021466
+2025-12-25 14:28:47,325 | INFO     | Epoch 204/250 - Train Loss: 0.019452, Val Loss: 0.021858[0m
+2025-12-25 14:37:35,468 | INFO     | Epoch 205/250 - Train Loss: 0.019454, Val Loss: 0.021936[0m
+2025-12-25 14:46:23,496 | INFO     | Epoch 206/250 - Train Loss: 0.019424, Val Loss: 0.021751[0m
+2025-12-25 14:55:11,594 | INFO     | Epoch 207/250 - Train Loss: 0.019365, Val Loss: 0.021937[0m
+2025-12-25 15:03:59,701 | INFO     | Epoch 208/250 - Train Loss: 0.019436, Val Loss: 0.021712[0m
+2025-12-25 15:12:47,816 | INFO     | Epoch 209/250 - Train Loss: 0.019383, Val Loss: 0.021750[0m
+2025-12-25 15:21:35,852 | INFO     | Epoch 210/250 - Train Loss: 0.019330, Val Loss: 0.021937[0m
+2025-12-25 15:30:24,085 | INFO     | Epoch 211/250 - Train Loss: 0.019352, Val Loss: 0.021800[0m
+2025-12-25 15:39:12,174 | INFO     | Epoch 212/250 - Train Loss: 0.019225, Val Loss: 0.021890[0m
+2025-12-25 15:48:00,314 | INFO     | Epoch 213/250 - Train Loss: 0.019119, Val Loss: 0.021859[0m
+2025-12-25 15:56:48,597 | INFO     | Epoch 214/250 - Train Loss: 0.019109, Val Loss: 0.021552[0m
+2025-12-25 16:05:36,696 | INFO     | Epoch 215/250 - Train Loss: 0.019168, Val Loss: 0.021598[0m
+2025-12-25 16:14:24,843 | INFO     | Epoch 216/250 - Train Loss: 0.019111, Val Loss: 0.021467[0m
+2025-12-25 16:23:12,960 | INFO     | Epoch 217/250 - Train Loss: 0.019137, Val Loss: 0.021420[0m
+2025-12-25 16:23:13,007 | INFO     | New best model saved with Val Loss: 0.021420
+2025-12-25 16:32:01,029 | INFO     | Epoch 218/250 - Train Loss: 0.018970, Val Loss: 0.021506[0m
+2025-12-25 16:40:49,164 | INFO     | Epoch 219/250 - Train Loss: 0.018951, Val Loss: 0.021278[0m
+2025-12-25 16:40:49,215 | INFO     | New best model saved with Val Loss: 0.021278
+2025-12-25 16:49:37,321 | INFO     | Epoch 220/250 - Train Loss: 0.018985, Val Loss: 0.021423[0m
+2025-12-25 16:58:25,454 | INFO     | Epoch 221/250 - Train Loss: 0.018949, Val Loss: 0.021666[0m
+2025-12-25 17:07:13,526 | INFO     | Epoch 222/250 - Train Loss: 0.018958, Val Loss: 0.021427[0m
+2025-12-25 17:16:01,647 | INFO     | Epoch 223/250 - Train Loss: 0.018880, Val Loss: 0.021184[0m
+2025-12-25 17:16:01,700 | INFO     | New best model saved with Val Loss: 0.021184
+2025-12-25 17:24:49,824 | INFO     | Epoch 224/250 - Train Loss: 0.018829, Val Loss: 0.021673[0m
+2025-12-25 17:33:37,913 | INFO     | Epoch 225/250 - Train Loss: 0.018786, Val Loss: 0.021356[0m
+2025-12-25 17:42:26,034 | INFO     | Epoch 226/250 - Train Loss: 0.018778, Val Loss: 0.020998[0m
+2025-12-25 17:42:26,085 | INFO     | New best model saved with Val Loss: 0.020998
+2025-12-25 17:51:14,202 | INFO     | Epoch 227/250 - Train Loss: 0.018721, Val Loss: 0.021659[0m
+2025-12-25 18:00:02,385 | INFO     | Epoch 228/250 - Train Loss: 0.018845, Val Loss: 0.021229[0m
+2025-12-25 18:08:50,505 | INFO     | Epoch 229/250 - Train Loss: 0.018608, Val Loss: 0.021754[0m
+2025-12-25 18:17:38,673 | INFO     | Epoch 230/250 - Train Loss: 0.018677, Val Loss: 0.021273[0m
+2025-12-25 18:26:26,936 | INFO     | Epoch 231/250 - Train Loss: 0.018753, Val Loss: 0.021416[0m
+2025-12-25 18:35:15,046 | INFO     | Epoch 232/250 - Train Loss: 0.018606, Val Loss: 0.020686[0m
+2025-12-25 18:35:15,097 | INFO     | New best model saved with Val Loss: 0.020686
+2025-12-25 18:44:03,245 | INFO     | Epoch 233/250 - Train Loss: 0.018600, Val Loss: 0.021109[0m
+2025-12-25 18:52:51,385 | INFO     | Epoch 234/250 - Train Loss: 0.018624, Val Loss: 0.021245[0m
+2025-12-25 19:01:39,579 | INFO     | Epoch 235/250 - Train Loss: 0.018546, Val Loss: 0.021627[0m
+2025-12-25 19:10:27,710 | INFO     | Epoch 236/250 - Train Loss: 0.018515, Val Loss: 0.021251[0m
+2025-12-25 19:19:15,857 | INFO     | Epoch 237/250 - Train Loss: 0.018523, Val Loss: 0.021192[0m
+2025-12-25 19:28:04,074 | INFO     | Epoch 238/250 - Train Loss: 0.018397, Val Loss: 0.021548[0m
+2025-12-25 19:36:52,202 | INFO     | Epoch 239/250 - Train Loss: 0.018472, Val Loss: 0.021621[0m
+2025-12-25 19:45:40,288 | INFO     | Epoch 240/250 - Train Loss: 0.018373, Val Loss: 0.021266[0m
+2025-12-25 19:54:28,561 | INFO     | Epoch 241/250 - Train Loss: 0.018383, Val Loss: 0.021269[0m
+2025-12-25 20:03:16,675 | INFO     | Epoch 242/250 - Train Loss: 0.018352, Val Loss: 0.020795[0m
+2025-12-25 20:12:04,853 | INFO     | Epoch 243/250 - Train Loss: 0.018281, Val Loss: 0.021218[0m
+2025-12-25 20:20:52,988 | INFO     | Epoch 244/250 - Train Loss: 0.018276, Val Loss: 0.021159[0m
+2025-12-25 20:29:41,138 | INFO     | Epoch 245/250 - Train Loss: 0.018215, Val Loss: 0.021195[0m
+2025-12-25 20:38:29,379 | INFO     | Epoch 246/250 - Train Loss: 0.018227, Val Loss: 0.021540[0m
+2025-12-25 20:47:17,590 | INFO     | Epoch 247/250 - Train Loss: 0.018207, Val Loss: 0.021142[0m
+2025-12-25 20:56:05,777 | INFO     | Epoch 248/250 - Train Loss: 0.018185, Val Loss: 0.021091[0m
+2025-12-25 21:04:53,953 | INFO     | Epoch 249/250 - Train Loss: 0.018159, Val Loss: 0.020822[0m
+2025-12-25 21:13:40,673 | INFO     | Epoch 250/250 - Train Loss: 0.018089, Val Loss: 0.021087[0m
+2025-12-25 21:13:40,816 | INFO     | Final model saved to experiments_DrivAerML/spressure_N10k_lr1e-3_e250_run1/final_model.pth
+2025-12-25 21:13:40,816 | INFO     | Testing the final model
+2025-12-25 21:13:51,868 | INFO     | *******************[35mL2_erro:[0m
+2025-12-25 21:13:51,868 | INFO     |  0.106984
+2025-12-25 21:13:51,868 | INFO     | *******************[35mmse_loss:[0m
+2025-12-25 21:13:51,868 | INFO     |  0.019754
+2025-12-25 21:13:51,869 | INFO     | *******************[35minference_time:[0m
+2025-12-25 21:13:51,869 | INFO     |  0.008412
+2025-12-25 21:13:51,869 | INFO     | Testing the best model
+2025-12-25 21:14:02,124 | INFO     | *******************[35mL2_erro:[0m
+2025-12-25 21:14:02,125 | INFO     |  0.107427
+2025-12-25 21:14:02,125 | INFO     | *******************[35mmse_loss:[0m
+2025-12-25 21:14:02,125 | INFO     |  0.019897
+2025-12-25 21:14:02,125 | INFO     | *******************[35minference_time:[0m
+2025-12-25 21:14:02,125 | INFO     |  0.007451

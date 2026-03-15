@@ -1,0 +1,244 @@
+2025-12-19 09:29:33,803 | INFO     | Config:
+exp_name: velocity_N10k_lr1e-3_e150
+model:
+  input_dim: 3
+  output_dim: 3
+  head_num: 8
+  hidden_dim: 256
+  res: true
+  slice_num: 32
+  layer_num: 5
+  mlp_ratio: 1.5
+  dropout: 0.1
+training:
+  input: volume_anchor_position
+  target: volume_anchor_velocity
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 250
+  scheduler_gamma: 1
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0
+  test_only: 0
+  gpus: '0'
+  root_dir: /mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small
+  seed: 42
+
+2025-12-19 09:29:33,803 | INFO     | args.exp_name : velocity_N10k_lr1e-3_e150
+2025-12-19 09:29:33,803 | INFO     | Starting training with 1 GPUs
+2025-12-19 09:29:34,025 | INFO     | Total trainable parameters: 3252299
+2025-12-19 09:29:34,026 | INFO     | Data loaded: 380 training batches, 33 validation batches, 44 test batches
+2025-12-19 09:29:34,026 | INFO     | Staring training for 150 epochs
+2025-12-19 09:31:37,557 | INFO     | Config:
+exp_name: velocity_N10k_lr1e-3_e150
+model:
+  input_dim: 3
+  output_dim: 3
+  head_num: 8
+  hidden_dim: 256
+  res: true
+  slice_num: 32
+  layer_num: 5
+  mlp_ratio: 1.5
+  dropout: 0.1
+training:
+  input: volume_anchor_position
+  target: volume_anchor_velocity
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 250
+  scheduler_gamma: 1
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0
+  test_only: 0
+  gpus: '0'
+  root_dir: /mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small
+  seed: 42
+
+2025-12-19 09:31:37,557 | INFO     | args.exp_name : velocity_N10k_lr1e-3_e150
+2025-12-19 09:31:37,558 | INFO     | Starting training with 1 GPUs
+2025-12-19 09:31:37,771 | INFO     | Total trainable parameters: 3252299
+2025-12-19 09:31:37,772 | INFO     | Data loaded: 380 training batches, 33 validation batches, 44 test batches
+2025-12-19 09:31:37,772 | INFO     | Staring training for 150 epochs
+2025-12-19 09:31:37,930 | INFO     | After pos_embed: {fx.shape}
+2025-12-19 09:32:15,022 | INFO     | Config:
+exp_name: velocity_N10k_lr1e-3_e150
+model:
+  input_dim: 3
+  output_dim: 3
+  head_num: 8
+  hidden_dim: 256
+  res: true
+  slice_num: 32
+  layer_num: 5
+  mlp_ratio: 1.5
+  dropout: 0.1
+training:
+  input: volume_anchor_position
+  target: volume_anchor_velocity
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 250
+  scheduler_gamma: 1
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0
+  test_only: 0
+  gpus: '0'
+  root_dir: /mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small
+  seed: 42
+
+2025-12-19 09:32:15,022 | INFO     | args.exp_name : velocity_N10k_lr1e-3_e150
+2025-12-19 09:32:15,022 | INFO     | Starting training with 1 GPUs
+2025-12-19 09:32:15,254 | INFO     | Total trainable parameters: 3252299
+2025-12-19 09:32:15,254 | INFO     | Data loaded: 380 training batches, 33 validation batches, 44 test batches
+2025-12-19 09:32:15,255 | INFO     | Staring training for 150 epochs
+2025-12-19 09:32:15,424 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:32:57,173 | INFO     | Config:
+exp_name: velocity_N10k_lr1e-3_e150
+model:
+  input_dim: 3
+  output_dim: 3
+  head_num: 8
+  hidden_dim: 256
+  res: true
+  slice_num: 32
+  layer_num: 5
+  mlp_ratio: 1.5
+  dropout: 0.1
+training:
+  input: volume_anchor_position
+  target: volume_anchor_velocity
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 250
+  scheduler_gamma: 1
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0
+  test_only: 0
+  gpus: '0'
+  root_dir: /mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small
+  seed: 42
+
+2025-12-19 09:32:57,173 | INFO     | args.exp_name : velocity_N10k_lr1e-3_e150
+2025-12-19 09:32:57,173 | INFO     | Starting training with 1 GPUs
+2025-12-19 09:32:57,396 | INFO     | Total trainable parameters: 3381835
+2025-12-19 09:32:57,396 | INFO     | Data loaded: 380 training batches, 33 validation batches, 44 test batches
+2025-12-19 09:32:57,397 | INFO     | Staring training for 150 epochs
+2025-12-19 09:32:57,564 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:32:58,143 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:32:58,535 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:32:58,928 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:32:59,321 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:32:59,713 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:00,106 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:00,501 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:00,894 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:01,286 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:01,679 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:02,071 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:02,463 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:02,856 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:03,248 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:03,641 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:04,033 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:04,425 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:04,817 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:05,210 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:05,603 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:05,995 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:06,387 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:06,780 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:07,172 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:07,565 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:07,957 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:08,349 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:08,742 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:09,135 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:09,527 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:09,920 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:10,313 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:10,705 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:11,097 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:11,489 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:11,882 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:12,275 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:12,667 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:13,059 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:13,452 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:13,844 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:14,236 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:14,629 | INFO     | After pos_embed: torch.Size([1, 10000, 256])
+2025-12-19 09:33:19,594 | INFO     | Config:
+exp_name: velocity_N10k_lr1e-3_e150
+model:
+  input_dim: 3
+  output_dim: 3
+  head_num: 8
+  hidden_dim: 256
+  res: true
+  slice_num: 32
+  layer_num: 5
+  mlp_ratio: 1.5
+  dropout: 0.1
+training:
+  input: volume_anchor_position
+  target: volume_anchor_velocity
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 250
+  scheduler_gamma: 1
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0
+  test_only: 0
+  gpus: '0'
+  root_dir: /mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small
+  seed: 42
+
+2025-12-19 09:33:19,595 | INFO     | args.exp_name : velocity_N10k_lr1e-3_e150
+2025-12-19 09:33:19,595 | INFO     | Starting training with 1 GPUs
+2025-12-19 09:33:19,880 | INFO     | Total trainable parameters: 3381835
+2025-12-19 09:33:19,881 | INFO     | Data loaded: 380 training batches, 33 validation batches, 44 test batches
+2025-12-19 09:33:19,882 | INFO     | Staring training for 150 epochs
+2025-12-19 09:34:35,099 | INFO     | Config:
+exp_name: velocity_N10k_lr1e-3_e150
+model:
+  input_dim: 3
+  output_dim: 3
+  head_num: 8
+  hidden_dim: 256
+  res: true
+  slice_num: 32
+  layer_num: 5
+  mlp_ratio: 1.5
+  dropout: 0.1
+training:
+  input: volume_anchor_position
+  target: volume_anchor_velocity
+  batch_size: 1
+  epochs: 250
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0
+  test_only: 0
+  gpus: '0'
+  root_dir: /mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small
+  seed: 42
+
+2025-12-19 09:34:35,099 | INFO     | args.exp_name : velocity_N10k_lr1e-3_e150
+2025-12-19 09:34:35,099 | INFO     | Starting training with 1 GPUs
+2025-12-19 09:34:35,330 | INFO     | Total trainable parameters: 3381835
+2025-12-19 09:34:35,330 | INFO     | Data loaded: 380 training batches, 33 validation batches, 44 test batches
+2025-12-19 09:34:35,331 | INFO     | Staring training for 250 epochs

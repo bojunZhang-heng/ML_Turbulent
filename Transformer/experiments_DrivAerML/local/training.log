@@ -1,0 +1,35 @@
+2026-03-01 19:09:16,224 | INFO     | Config:
+exp_name: local
+model:
+  input_dim: 3
+  output_dim: 3
+  head_num: 8
+  hidden_dim: 256
+  res: true
+  slice_num: 32
+  layer_num: 5
+  mlp_ratio: 1.5
+  dropout: 0.1
+training:
+  input: volume_anchor_position
+  target: volume_anchor_velocity
+  batch_size: 1
+  epochs: 250
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0
+  test_only: 1
+  gpus: '0'
+  root_dir: /Users/zhangbojun/DrivAerML_dataset
+  seed: 42
+
+2026-03-01 19:09:16,224 | INFO     | args.exp_name : local
+2026-03-01 19:09:16,224 | INFO     | Starting training with 1 GPUs
+2026-03-01 19:09:16,302 | INFO     | Total trainable parameters: 3381835
+2026-03-01 19:09:16,302 | INFO     | Data loaded: 1 training batches, 1 validation batches, 1 test batches
+2026-03-01 19:09:16,303 | INFO     | Staring training for 250 epochs
+2026-03-01 19:09:33,156 | INFO     | Epoch 1/250 - Train Loss: 1.100950, Val Loss: 3.373368[0m
+2026-03-01 19:09:33,180 | INFO     | New best model saved with Val Loss: 3.373368
