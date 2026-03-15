@@ -257,15 +257,16 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, device, args)
 
         # extract target variables for anchor and query
         targets = {k: batch.pop(k) for k in target_keys if k in batch}
-        targets_velocity = targets[args.training.target]
+        y = targets[args.training.target]
 
         # extract target variables for anchor and query
         batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
-        data_volume = batch_filtered[args.training.input]
+        x = batch_filtered[args.training.input]
+        x = x.permute(0,2,1).contiguous()
+        y = y.permute(1,0).unsqueeze(0).contiguous()
+        y_hat = model(x)
 
-        pred_velocity = model(data_volume)
-
-        loss = criterion(pred_velocity, targets_velocity)
+        loss = criterion(y_hat, y)
 
         optimizer.zero_grad()
         loss.backward()
@@ -287,14 +288,15 @@ def validate(model, val_dataloader, criterion, device, args):
 
             # extract target variables for anchor and query
             targets = {k: batch.pop(k) for k in target_keys if k in batch}
-            targets_velocity = targets[args.training.target]
+            y = targets[args.training.target]
 
             # extract target variables for anchor and query
             batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
-            data_volume = batch_filtered[args.training.input]
-
-            pred_velocity = model(data_volume)
-            loss = criterion(pred_velocity, targets_velocity)
+            x = batch_filtered[args.training.input]
+            x = x.permute(0,2,1).contiguous()
+            y = y.permute(1,0).unsqueeze(0).contiguous()
+            y_hat = model(x)
+            loss = criterion(y_hat, y)
 
 
             total_loss += loss.item()
@@ -362,7 +364,9 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
 
             batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
             x = batch_filtered[args.training.input]
-
+            
+            x = x.permute(0,2,1).contiguous()
+            y = y.permute(1,0).unsqueeze(0).contiguous()
             y_hat = model(x)
 
             inference_time = time.time() - start_time
