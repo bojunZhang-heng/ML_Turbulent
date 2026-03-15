@@ -74,9 +74,9 @@ class Transform_Net(nn.Module):
         super(Transform_Net, self).__init__()
         self.k = 3
 
-        self.bn1 = nn.BatchNorm2d(64)
-        self.bn2 = nn.BatchNorm2d(128)
-        self.bn3 = nn.BatchNorm1d(1024)
+        self.bn1 = nn.GroupNorm(1,64)
+        self.bn2 = nn.GroupNorm(1,128)
+        self.bn3 = nn.GroupNorm(1,1024)
 
         self.conv1 = nn.Sequential(nn.Conv2d(6, 64, kernel_size=1, bias=False),
                                    self.bn1,
@@ -89,9 +89,9 @@ class Transform_Net(nn.Module):
                                    nn.LeakyReLU(negative_slope=0.2))
 
         self.linear1 = nn.Linear(1024, 512, bias=False)
-        self.bn3 = nn.BatchNorm1d(512)
+        self.bn3 = nn.GroupNorm(1,512)
         self.linear2 = nn.Linear(512, 256, bias=False)
-        self.bn4 = nn.BatchNorm1d(256)
+        self.bn4 = nn.GroupNorm(1,256)
 
         self.transform = nn.Linear(256, 3*3)
         init.constant_(self.transform.weight, 0)
@@ -128,16 +128,16 @@ class RegDGCNN_pressure(nn.Module):
         self.dropout = dropout
         self.transform_net = Transform_Net()
 
-        self.bn1 = nn.BatchNorm2d(64)
-        self.bn2 = nn.BatchNorm2d(64)
-        self.bn3 = nn.BatchNorm2d(64)
-        self.bn4 = nn.BatchNorm2d(64)
-        self.bn5 = nn.BatchNorm2d(64)
-        self.bn6 = nn.BatchNorm1d(self.emb_dims)
-        self.bn7 = nn.BatchNorm1d(64)
-        self.bn8 = nn.BatchNorm1d(256)
-        self.bn9 = nn.BatchNorm1d(256)
-        self.bn10 = nn.BatchNorm1d(128)
+        self.bn1 = nn.GroupNorm(1,64)
+        self.bn2 = nn.GroupNorm(1,64)
+        self.bn3 = nn.GroupNorm(1,64)
+        self.bn4 = nn.GroupNorm(1,64)
+        self.bn5 = nn.GroupNorm(1,64)
+        self.bn6 = nn.GroupNorm(1,self.emb_dims)
+        self.bn7 = nn.GroupNorm(1,64)
+        self.bn8 = nn.GroupNorm(1,256)
+        self.bn9 = nn.GroupNorm(1,256)
+        self.bn10 = nn.GroupNorm(1,128)
 
         self.conv1 = nn.Sequential(nn.Conv2d(6, 64, kernel_size=1, bias=False),
                                    self.bn1,
