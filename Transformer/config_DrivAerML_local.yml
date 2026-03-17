@@ -15,7 +15,7 @@ training:
     input: "surface_anchor_position"
     target: "surface_anchor_pressure"
     batch_size: 1
-    epochs: 250
+    epochs: 1
     lr: 0.001
     scheduler_step: 50
     scheduler_gamma: 0.5
