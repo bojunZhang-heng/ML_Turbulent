@@ -88,7 +88,7 @@ def train_and_evaluate(args, device):
     # BUG is here
     train_dataloader, val_dataloader, test_dataloader = create_data_loaders(
         args.training.root_dir, args.training.batch_size, use_query_positions=True, num_workers=args.training.num_workers,
-        train_split="train_cpu", val_split="val_cpu", test_split="test_cpu",
+        train_split="train", val_split="val", test_split="test",
     )
 
     # Log dataset info
@@ -107,8 +107,6 @@ def train_and_evaluate(args, device):
     # Store the model
     best_model_path = os.path.join("experiments_DrivAerML", args.exp_name, "best_model.pth")
     final_model_path = os.path.join("experiments_DrivAerML", args.exp_name, "final_model.pth")
-    exp_name = os.path.join(os.getcwd(), "/RopeTransolver/experiments_DrivAerML", args.exp_name)
-    best_model_path = os.path.join(exp_name, "best_model.pth")
     # Check if test_only and model exists
     print(f"best_model_path:{best_model_path}")
     if args.training.test_only and os.path.exists(best_model_path):
@@ -153,7 +151,7 @@ def train_and_evaluate(args, device):
             logging.info(f"New best model saved with Val Loss: {best_val_loss:.6f}")
 
         # Update learning rate scheduler
-        scheduler.step()
+        scheduler.step(val_loss)
 
         # Save progress rate scheduler
         if (epoch + 1) % 10 == 0 or epoch == args.training.epochs - 1:
@@ -364,7 +362,7 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
 
             batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
             x = batch_filtered[args.training.input]
-            
+
             x = x.permute(0,2,1).contiguous()
             y = y.permute(1,0).unsqueeze(0).contiguous()
             y_hat = model(x)
