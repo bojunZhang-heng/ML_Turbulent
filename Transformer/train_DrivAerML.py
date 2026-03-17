@@ -114,7 +114,7 @@ def train_and_evaluate(args, device):
     # Store the model
     best_model_path = os.path.join("experiments_DrivAerML", args.exp_name, "best_model.pth")
     final_model_path = os.path.join("experiments_DrivAerML", args.exp_name, "final_model.pth")
-    exp_name = os.path.join(os.getcwd(), "/RopeTransolver/experiments_DrivAerML", args.exp_name)
+    exp_name = os.path.join(os.getcwd(), "/Transformer/experiments_DrivAerML", args.exp_name)
     best_model_path = os.path.join(exp_name, "best_model.pth")
     # Check if test_only and model exists
     print(f"best_model_path:{best_model_path}")
