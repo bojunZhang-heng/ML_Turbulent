@@ -13,7 +13,7 @@ training:
     input: "volume_anchor_position"
     target: "volume_anchor_velocity"
     batch_size: 1
-    epochs: 250
+    epochs: 400
     lr: 0.001
     scheduler_step: 50
     scheduler_gamma: 0.5
