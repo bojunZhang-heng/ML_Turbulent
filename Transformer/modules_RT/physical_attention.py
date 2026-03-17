@@ -46,18 +46,6 @@ class Physics_Attention_Irregular_Mesh(nn.Module):
             head_dim=self.head_dim,
         ).unbind(0)
 
- #       logging.info(f"q: {q.shape}")
- #       logging.info(f"freqs: {freqs.shape}")
-        freqs = rearrange(
-                freqs,
-                "bs seqlen (head_num  head_dim) -> bs head_num seqlen head_dim",
-                head_num=self.head_num,
-                head_dim=self.head_dim // 2,
-        )
-#        logging.info(f"freqs: {freqs.shape}")
-        q = rope(q, freqs=freqs)
-        k = rope(k, freqs=freqs)
-
         x = F.scaled_dot_product_attention(q, k, v)
         x = rearrange(x, "bs num_heads seqlen head_dim -> bs seqlen (num_heads head_dim)")
 
