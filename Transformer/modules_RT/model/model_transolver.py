@@ -26,7 +26,7 @@ class Model(nn.Module):
                  ):
         super(Model, self).__init__()
         self.__name__ = 'UniPDE_3D'
-        self.preprocess = MLP(mlp_input=hidden_dim,
+        self.preprocess = MLP(mlp_input=space_dim,
                               mlp_hidden=hidden_dim * 2,
                               mlp_output=hidden_dim,
                               layer_num=0, act=act, res=False)
@@ -75,7 +75,7 @@ class Model(nn.Module):
         volume_decoder_attn_kwargs["freqs"] = volume_rope
 
         fx = self.pos_embed(x)
-        fx = self.preprocess(fx)
+        fx = self.preprocess(x)
 
         #fx = self.preprocess(x)
         fx = fx + self.placeholder[None, None, :]
