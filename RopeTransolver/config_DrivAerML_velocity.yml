@@ -26,6 +26,7 @@ training:
     gpus: "0"
     root_dir: "/mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small"
     seed: 42
+    L2: 0.098
 
 
 
