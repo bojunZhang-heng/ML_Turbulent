@@ -27,7 +27,7 @@ training:
     num_workers: 1
     weight_decay: 0.00000
     test_only: 1  
-    plt: 1
+    plt: 0
     gpus: "0"
     seed: 42
 
