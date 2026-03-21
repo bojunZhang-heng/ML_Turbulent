@@ -8,6 +8,7 @@ import torch.optim as optim
 import time
 import logging
 import matplotlib.pyplot as plt
+import numpy as np
 from tqdm import tqdm
 from types import SimpleNamespace
 
@@ -329,28 +330,34 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
 
     total_loss = 0
     total_L2_error = 0
+    output_file = "/Users/zhangbojun/ShapeNet_dataset/Transolver_L2_error.txt"
+    with open(output_file, "w") as f:
+        with torch.no_grad():
+            for data in tqdm(test_dataloader, desc="[test_dataloader]"):
+                x = data[args.training.input].to(device)
+                y = data[args.training.target][:,:,0:1].to(device)
 
-    with torch.no_grad():
-        for data in tqdm(test_dataloader, desc="[test_dataloader]"):
-            x = data[args.training.input].to(device)
-            y = data[args.training.target][:,:,0:1].to(device)
+        #        X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
+        #        X_STD  = torch.tensor(args.training.x_std, dtype=x.dtype, device=x.device)
+                Y_MEAN = torch.tensor(args.training.y_mean, dtype=x.dtype, device=x.device)
+                Y_STD = torch.tensor(args.training.y_std, dtype=x.dtype, device=x.device)
 
-    #        X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
-    #        X_STD  = torch.tensor(args.training.x_std, dtype=x.dtype, device=x.device)
-            Y_MEAN = torch.tensor(args.training.y_mean, dtype=x.dtype, device=x.device)
-            Y_STD = torch.tensor(args.training.y_std, dtype=x.dtype, device=x.device)
+        #        x = (x - X_MEAN) / X_STD
+                y = (y - Y_MEAN) / Y_STD
+                y_hat = model(x)
 
-    #        x = (x - X_MEAN) / X_STD
-            y = (y - Y_MEAN) / Y_STD
-            y_hat = model(x)
+                loss = criterion(y_hat, y)
+                total_loss += loss.item()
+                np.save("/Users/zhangbojun/ML_Turbulent/Transolver_zbj/zbj/data_ShapeNet_norm/pressure/x.npy", x)
+                np.save("/Users/zhangbojun/ML_Turbulent/Transolver_zbj/zbj/data_ShapeNet_norm/pressure/y.npy", y)
+                np.save("/Users/zhangbojun/ML_Turbulent/Transolver_zbj/zbj/data_ShapeNet_norm/pressure/y_hat.npy", y_hat)
+                y = y * Y_STD + Y_MEAN
+                y_hat = y_hat * Y_STD + Y_MEAN
+                rel_l2 = (y_hat - y).norm() / y.norm()
+                f.write(f"{rel_l2.item():.5f}\n")
+                total_L2_error += rel_l2.item()
+        print(f"[INFO] L2 errors saved to: {output_file}")
 
-            loss = criterion(y_hat, y)
-            total_loss += loss.item()
-
-            y = y * Y_STD + Y_MEAN
-            y_hat = y_hat * Y_STD + Y_MEAN
-            rel_l2 = (y_hat - y).norm() / y.norm()
-            total_L2_error += rel_l2.item()
 
         logging.info(f"*******************{M}L2_erro:{RESET}")
         logging.info(f" {total_L2_error / len(test_dataloader):.6f}")
@@ -360,7 +367,7 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
 
         logging.info(f"*******************{M}inference_time:{RESET}")
         logging.info(f" {total_inference_time / len(test_dataloader):.6f}")
-    if plt:
+    if args.training.plt:
         exp_dir = os.path.join(os.getcwd(), "./Transolver_zbj/zbj/experiments_ShapeNet", args.exp_name)
         figure_dir = os.path.join(exp_dir, "figure")
         os.makedirs(figure_dir, exist_ok=True)
