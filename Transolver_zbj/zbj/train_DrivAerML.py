@@ -93,7 +93,7 @@ def train_and_evaluate(args, device):
     # BUG is here
     train_dataloader, val_dataloader, test_dataloader = create_data_loaders(
         args.training.root_dir, args.training.batch_size, use_query_positions=True, num_workers=args.training.num_workers,
-        train_split="train_cpu", val_split="val_cpu", test_split="test_cpu",
+        train_split="train", val_split="val", test_split="test",
     )
 
     # Log dataset info
@@ -113,8 +113,8 @@ def train_and_evaluate(args, device):
     )
 
     # Store the model
-    exp_name = os.path.join(os.getcwd(), "./Transolver_zbj/zbj/experiments_DrivAerML", args.exp_name)
-    best_model_path = os.path.join(exp_name, "best_model.pth")
+    best_model_path = os.path.join("experiments_DrivAerML", args.exp_name, "best_model.pth")
+    final_model_path = os.path.join("experiments_DrivAerML", args.exp_name, "final_model.pth")
     # Check if test_only and model exists
     if args.training.test_only and os.path.exists(best_model_path):
         logging.info("Loading best model for testing only")
