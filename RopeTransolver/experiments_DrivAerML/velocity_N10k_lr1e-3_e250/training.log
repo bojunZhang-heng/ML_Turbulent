@@ -4217,3 +4217,77 @@ training:
 2026-03-18 17:31:22,080 | INFO     |  0.021223
 2026-03-18 17:31:22,080 | INFO     | *******************[35minference_time:[0m
 2026-03-18 17:31:22,080 | INFO     |  0.003098
+2026-03-21 11:16:13,400 | INFO     | Config:
+exp_name: velocity_N10k_lr1e-3_e250
+model:
+  input_dim: 3
+  output_dim: 3
+  head_num: 8
+  hidden_dim: 256
+  res: true
+  slice_num: 32
+  layer_num: 5
+  mlp_ratio: 1.5
+  dropout: 0.1
+training:
+  input: volume_anchor_position
+  target: volume_anchor_velocity
+  batch_size: 1
+  epochs: 250
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0
+  test_only: 1
+  gpus: '0'
+  root_dir: /mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small
+  seed: 42
+  L2: 0.098
+
+2026-03-21 11:16:13,400 | INFO     | args.exp_name : velocity_N10k_lr1e-3_e250
+2026-03-21 11:16:13,400 | INFO     | Starting training with 1 GPUs
+2026-03-21 11:16:13,669 | INFO     | Total trainable parameters: 3381835
+2026-03-21 11:16:13,670 | INFO     | Data loaded: 380 training batches, 33 validation batches, 44 test batches
+2026-03-21 11:16:13,671 | INFO     | Loading best model for testing only
+2026-03-21 11:18:43,023 | INFO     | Config:
+exp_name: velocity_N10k_lr1e-3_e250
+model:
+  input_dim: 3
+  output_dim: 3
+  head_num: 8
+  hidden_dim: 256
+  res: true
+  slice_num: 32
+  layer_num: 5
+  mlp_ratio: 1.5
+  dropout: 0.1
+training:
+  input: volume_anchor_position
+  target: volume_anchor_velocity
+  batch_size: 1
+  epochs: 250
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0
+  test_only: 1
+  gpus: '0'
+  root_dir: /mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small
+  seed: 42
+  L2: 0.098
+
+2026-03-21 11:18:43,023 | INFO     | args.exp_name : velocity_N10k_lr1e-3_e250
+2026-03-21 11:18:43,023 | INFO     | Starting training with 1 GPUs
+2026-03-21 11:18:43,283 | INFO     | Total trainable parameters: 3381835
+2026-03-21 11:18:43,284 | INFO     | Data loaded: 380 training batches, 33 validation batches, 44 test batches
+2026-03-21 11:18:43,284 | INFO     | Loading best model for testing only
+2026-03-21 11:18:47,802 | INFO     | *******************[35mL2_erro:[0m
+2026-03-21 11:18:47,802 | INFO     |  0.098965
+2026-03-21 11:18:47,803 | INFO     | *******************[35mmse_loss:[0m
+2026-03-21 11:18:47,803 | INFO     |  0.021223
+2026-03-21 11:18:47,803 | INFO     | *******************[35minference_time:[0m
+2026-03-21 11:18:47,803 | INFO     |  0.004675
