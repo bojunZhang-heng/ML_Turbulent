@@ -355,41 +355,40 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
     }
     total_loss = 0
     total_L2_error = 0
+    output_file = "/home/mae-zhangbj/preprocess/DrivAerML/result_L2_error.txt"
+    with open(output_file, "w") as f:
 
-    with torch.no_grad():
-        for batch in tqdm(test_dataloader, desc="[Testing]"):
-            start_time = time.time()
-            batch = {key: value.to(device, dtype=torch.float32) for key, value in batch.items()}
-            # extract target variables for anchor
+        with torch.no_grad():
+            for batch in tqdm(test_dataloader, desc="[Testing]"):
+                start_time = time.time()
+                batch = {key: value.to(device, dtype=torch.float32) for key, value in batch.items()}
+                # extract target variables for anchor
 
-            targets = {k: batch.pop(k) for k in target_keys if k in batch}
-            y = targets[args.training.target]
+                targets = {k: batch.pop(k) for k in target_keys if k in batch}
+                y = targets[args.training.target]
 
-            batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
-            x = batch_filtered[args.training.input]
+                batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
+                x = batch_filtered[args.training.input]
 
-            y_hat = model(x)
+                y_hat = model(x)
+                np.save("/home/mae-zhangbj/preprocess/DrivAerML/data/x.npy", x)
+                np.save("/home/mae-zhangbj/preprocess/DrivAerML/data/y.npy", y)
+                np.save("/home/mae-zhangbj/preprocess/DrivAerML/data/y_hat.npy", y_hat)
 
-            inference_time = time.time() - start_time
-            total_inference_time += inference_time
+                inference_time = time.time() - start_time
+                total_inference_time += inference_time
 
-            mse_loss = criterion(y_hat, y)
-            total_loss += mse_loss.item()
-            pred_den = normalizers[args.training.target].denormalize(y_hat)
-            targ_den = normalizers[args.training.target].denormalize(y)
-            L2_error = (pred_den - targ_den).norm() / targ_den.norm()
-            total_L2_error += L2_error.item()
+                mse_loss = criterion(y_hat, y)
+                total_loss += mse_loss.item()
+                pred_den = normalizers[args.training.target].denormalize(y_hat)
+                targ_den = normalizers[args.training.target].denormalize(y)
+                L2_error = (pred_den - targ_den).norm() / targ_den.norm()
+                f.write(f"{rel_l2.item():.5f}\n")
+
+                total_L2_error += L2_error.item()
         x = x.detach().cpu().numpy()
         y = y.detach().cpu().numpy()
         yhat = y_hat.detach().cpu().numpy()
-
-        save_folder = os.path.join(exp_dir, "test_saves")
-        os.makedirs(save_folder, exist_ok=True)
-
-        np.save(os.path.join(save_folder, "x.npy"), x)
-        np.save(os.path.join(save_folder, "y.npy"), y)
-        np.save(os.path.join(save_folder, "yhat.npy"), yhat)
-
 
         logging.info(f"*******************{M}L2_erro:{RESET}")
         logging.info(f" {total_L2_error / len(test_dataloader):.6f}")
