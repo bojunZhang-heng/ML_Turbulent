@@ -115,8 +115,6 @@ def train_and_evaluate(args, device):
     # Store the model
     exp_name = os.path.join(os.getcwd(), "./Transolver_zbj/zbj/experiments_DrivAerML", args.exp_name)
     best_model_path = os.path.join(exp_name, "best_model.pth")
-    final_model_path = os.path.join("experiments_DrivAerML", args.exp_name, "final_model.pth")
-    print(f"best_model_path: {best_model_path}")
     # Check if test_only and model exists
     if args.training.test_only and os.path.exists(best_model_path):
         logging.info("Loading best model for testing only")
@@ -359,49 +357,50 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
     total_loss = 0
     total_L2_error = 0
 
-    with torch.no_grad():
-        for batch in tqdm(test_dataloader, desc="[Testing]"):
-            start_time = time.time()
-            batch = {key: value.to(device, dtype=torch.float32) for key, value in batch.items()}
-            # extract target variables for anchor
+    output_file = "/home/mae-zhangbj/preprocess/DrivAerML/Transolver_L2_error.txt"
+    with open(output_file, "w") as f:
 
-            targets = {k: batch.pop(k) for k in target_keys if k in batch}
-            y = targets[args.training.target]
+        with torch.no_grad():
+            for batch in tqdm(test_dataloader, desc="[Testing]"):
+                start_time = time.time()
+                batch = {key: value.to(device, dtype=torch.float32) for key, value in batch.items()}
+                # extract target variables for anchor
 
-            batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
-            x = batch_filtered[args.training.input]
+                targets = {k: batch.pop(k) for k in target_keys if k in batch}
+                y = targets[args.training.target]
 
-            y_hat = model(x)
+                batch_filtered = {k: batch[k] for k in enabled_position_keys if k in batch}
+                x = batch_filtered[args.training.input]
 
-            inference_time = time.time() - start_time
-            total_inference_time += inference_time
+                y_hat = model(x)
 
-            mse_loss = criterion(y_hat, y_hat)
-            total_loss += mse_loss.item()
-            pred_den = normalizers[args.training.target].denormalize(y_hat)
-            targ_den = normalizers[args.training.target].denormalize(y)
-            L2_error = (pred_den - targ_den).norm() / targ_den.norm()
-            total_L2_error += L2_error.item()
+                inference_time = time.time() - start_time
+                total_inference_time += inference_time
 
-            # 转到 CPU
-            x = x.detach().cpu().numpy()
-            y = y.detach().cpu().numpy()
-            y_hat = y_hat.detach().cpu().numpy()
+                mse_loss = criterion(y_hat, y)
+                total_loss += mse_loss.item()
+                pred_den = normalizers[args.training.target].denormalize(y_hat)
+                targ_den = normalizers[args.training.target].denormalize(y)
+                L2_error = (pred_den - targ_den).norm() / targ_den.norm()
+                f.write(f"{L2_error.item():.5f}\n")
 
-            # 保存为 .npy 文件
-            np.save("x.npy", x)
-            np.save("y.npy", y)
-            np.save("y_hat.npy", y_hat)
+                total_L2_error += L2_error.item()
+        x = x.detach().cpu().numpy()
+        y = y.detach().cpu().numpy()
+        y_hat = y_hat.detach().cpu().numpy()
+        np.save("/home/mae-zhangbj/preprocess/DrivAerML/data_Transolver/x.npy", x)
+        np.save("/home/mae-zhangbj/preprocess/DrivAerML/data_Transolver/y.npy", y)
+        np.save("/home/mae-zhangbj/preprocess/DrivAerML/data_Transolver/y_hat.npy", y_hat)
 
 
-        logging.info(f"*******************{M}L2_erro:{RESET}")
-        logging.info(f" {total_L2_error / len(test_dataloader):.6f}")
+    logging.info(f"*******************{M}L2_erro:{RESET}")
+    logging.info(f" {total_L2_error / len(test_dataloader):.6f}")
 
-        logging.info(f"*******************{M}mse_loss:{RESET}")
-        logging.info(f" {total_loss / len(test_dataloader):.6f}")
+    logging.info(f"*******************{M}mse_loss:{RESET}")
+    logging.info(f" {total_loss / len(test_dataloader):.6f}")
 
-        logging.info(f"*******************{M}inference_time:{RESET}")
-        logging.info(f" {total_inference_time / len(test_dataloader):.6f}")
+    logging.info(f"*******************{M}inference_time:{RESET}")
+    logging.info(f" {total_inference_time / len(test_dataloader):.6f}")
 
     # Checkout the value
 
