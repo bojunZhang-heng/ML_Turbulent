@@ -22,7 +22,7 @@ training:
     max_grad_norm: 0.1
     num_workers: 1
     weight_decay: 0.00000
-    test_only: 0
+    test_only: 1
     gpus: "0"
     root_dir: "/mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small"
     seed: 42

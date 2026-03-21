@@ -371,9 +371,6 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
                 x = batch_filtered[args.training.input]
 
                 y_hat = model(x)
-                np.save("/home/mae-zhangbj/preprocess/DrivAerML/data/x.npy", x)
-                np.save("/home/mae-zhangbj/preprocess/DrivAerML/data/y.npy", y)
-                np.save("/home/mae-zhangbj/preprocess/DrivAerML/data/y_hat.npy", y_hat)
 
                 inference_time = time.time() - start_time
                 total_inference_time += inference_time
@@ -383,12 +380,15 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
                 pred_den = normalizers[args.training.target].denormalize(y_hat)
                 targ_den = normalizers[args.training.target].denormalize(y)
                 L2_error = (pred_den - targ_den).norm() / targ_den.norm()
-                f.write(f"{rel_l2.item():.5f}\n")
+                f.write(f"{L2_error.item():.5f}\n")
 
                 total_L2_error += L2_error.item()
         x = x.detach().cpu().numpy()
         y = y.detach().cpu().numpy()
-        yhat = y_hat.detach().cpu().numpy()
+        y_hat = y_hat.detach().cpu().numpy()
+        np.save("/home/mae-zhangbj/preprocess/DrivAerML/data/x.npy", x)
+        np.save("/home/mae-zhangbj/preprocess/DrivAerML/data/y.npy", y)
+        np.save("/home/mae-zhangbj/preprocess/DrivAerML/data/y_hat.npy", y_hat)
 
         logging.info(f"*******************{M}L2_erro:{RESET}")
         logging.info(f" {total_L2_error / len(test_dataloader):.6f}")
