@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
 from matplotlib.tri import Triangulation
 from mpl_toolkits.axes_grid1 import make_axes_locatable
+from matplotlib.ticker import FormatStrFormatter
 
 
 def plot_car_ShapeNet_pressure(
@@ -207,7 +208,7 @@ def plot_car_ShapeNet_pressure(
     print("Saved focused point cloud images (car-centered) with tight colorbar.")
 
 
-def plot_car_velocity(
+def plot_car_DrivAerML_velocity(
     size,      # 速度场空间位置，用于裁剪和固定坐标轴比例 (N_s,3) 或 (1,N_s,3)
     x,         # y/y_hat 的空间位置 (1,N,3) 或 (N,3)
     y,         # 标量值 (1,N,1) 或 (N,1)
@@ -299,7 +300,16 @@ def plot_car_velocity(
         ax.view_init(elev=elev, azim=azim)
 
         cbar = fig.colorbar(sc, ax=ax, orientation='horizontal', pad=colorbar_pad, fraction=0.05)
+        # ===== 手动设置 5 个刻度 =====
+        if vmin is not None and vmax is not None:
+            ticks = np.linspace(vmin, vmax, 5)
+            cbar.set_ticks(ticks)
+        else:
+            # 对于 error（没有固定范围），用当前数据范围
+            ticks = np.linspace(values.min(), values.max(), 5)
+            cbar.set_ticks(ticks)
         cbar.ax.tick_params(labelsize=colorbar_fontsize)
+        cbar.ax.xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
         plt.savefig(filename, dpi=300, bbox_inches='tight', pad_inches=0.01)
         plt.close(fig)
 
