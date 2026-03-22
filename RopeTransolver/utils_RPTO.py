@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
 from matplotlib.tri import Triangulation
 from mpl_toolkits.axes_grid1 import make_axes_locatable
+from matplotlib.ticker import FormatStrFormatter
 
 def plot_car_ShapeNet_pressure(
     size,
@@ -206,7 +207,7 @@ def plot_car_ShapeNet_pressure(
     print("Saved focused point cloud images (car-centered) with tight colorbar.")
 
 
-def plot_car_velocity(
+def plot_car_DrivAerML_velocity(
     size,      # 速度场空间位置，用于裁剪和固定坐标轴比例 (N_s,3) 或 (1,N_s,3)
     x,         # y/y_hat 的空间位置 (1,N,3) 或 (N,3)
     y,         # 标量值 (1,N,1) 或 (N,1)
@@ -298,112 +299,16 @@ def plot_car_velocity(
         ax.view_init(elev=elev, azim=azim)
 
         cbar = fig.colorbar(sc, ax=ax, orientation='horizontal', pad=colorbar_pad, fraction=0.05)
+        # ===== 手动设置 5 个刻度 =====
+        if vmin is not None and vmax is not None:
+            ticks = np.linspace(vmin, vmax, 5)
+            cbar.set_ticks(ticks)
+        else:
+            # 对于 error（没有固定范围），用当前数据范围
+            ticks = np.linspace(values.min(), values.max(), 5)
+            cbar.set_ticks(ticks)
         cbar.ax.tick_params(labelsize=colorbar_fontsize)
-        plt.savefig(filename, dpi=300, bbox_inches='tight', pad_inches=0.01)
-        plt.close(fig)
-
-    vmin = y_true.min()
-    vmax = y_true.max()
-    draw(y_true, f"{save_path}_true.png", vmin, vmax)
-    draw(y_pred, f"{save_path}_pred.png", vmin, vmax)
-    draw(abs_err, f"{save_path}_abs_error.png", None, None)
-    print("Saved point cloud images with focus-based axes (car proportion preserved).")
-
-def plot_car_pressure(
-    size,      # 速度场空间位置，用于裁剪和固定坐标轴比例 (N_s,3) 或 (1,N_s,3)
-    x,         # y/y_hat 的空间位置 (1,N,3) 或 (N,3)
-    y,         # 标量值 (1,N,1) 或 (N,1)
-    y_hat,     # 标量值 (1,N,1) 或 (N,1)
-    save_path="fig",
-    figsize=(8,6),
-    point_size=1,
-    colorbar_pad=-0.2,
-    colorbar_fontsize=6,
-    elev=25,
-    azim=-135,
-    focus_method="percentile",  # "percentile" | "voxel" | "surface" | None
-    lower_pct=1.0,
-    upper_pct=99.0,
-    voxel_grid=50,
-    focus_radius_scale=0.5,
-    surface_idx=None,
-    downsample_farfield=None,
-):
-    # ======================
-    # 全局字体：Times New Roman
-    # ======================
-    plt.rcParams["font.family"] = "Times New Roman"
-    plt.rcParams["mathtext.fontset"] = "stix"
-    plt.rcParams["axes.unicode_minus"] = False
-
-    # --- 处理输入维度 ---
-    if size.ndim == 3 and size.shape[0]==1:
-        size = size[0]
-    if x.ndim == 3 and x.shape[0]==1:
-        coords = x[0]
-    else:
-        coords = x
-    if y.ndim == 3 and y.shape[0]==1:
-        y_true = y[0].reshape(-1)
-    else:
-        y_true = y.reshape(-1)
-    if y_hat.ndim == 3 and y_hat.shape[0]==1:
-        y_pred = y_hat[0].reshape(-1)
-    else:
-        y_pred = y_hat.reshape(-1)
-    abs_err = np.abs(y_true - y_pred)
-
-    # --- focus_method 裁剪 ---
-    Npts = size.shape[0]
-    mask_keep = np.ones(Npts, dtype=bool)
-    if focus_method == "percentile":
-        low = np.percentile(size, lower_pct, axis=0)
-        high = np.percentile(size, upper_pct, axis=0)
-        for d in range(3):
-            mask_keep &= (size[:,d]>=low[d]) & (size[:,d]<=high[d])
-    elif focus_method == "voxel":
-        H, edges = np.histogramdd(size, bins=[voxel_grid]*3)
-        max_idx = np.unravel_index(np.argmax(H), H.shape)
-        centers = [0.5*(edges[d][max_idx[d]]+edges[d][max_idx[d]+1]) for d in range(3)]
-        focus_center = np.array(centers)
-        radius = focus_radius_scale * np.max(size.max(axis=0)-size.min(axis=0))
-        mask_keep = np.linalg.norm(size - focus_center[None,:], axis=1)<=radius
-    elif focus_method == "surface":
-        if surface_idx is None:
-            raise ValueError("surface_idx must be provided for surface focus")
-        surface_coords = size[surface_idx]
-        center = surface_coords.mean(axis=0)
-        radius = focus_radius_scale * np.max(surface_coords.max(axis=0)-surface_coords.min(axis=0))
-        mask_keep = np.linalg.norm(size - center[None,:], axis=1)<=radius
-    elif focus_method is None:
-        mask_keep = np.ones(Npts, dtype=bool)
-    else:
-        raise ValueError(f"Unknown focus_method: {focus_method}")
-
-    # 用裁剪后的速度场范围固定坐标轴
-    size_focus = size[mask_keep]
-    xyz_range = size_focus.max(axis=0) - size_focus.min(axis=0)
-    xyz_min = size_focus.min(axis=0)
-    xyz_max = size_focus.max(axis=0)
-
-    # --- 绘图函数 ---
-    def draw(values, filename, vmin=None, vmax=None):
-        fig = plt.figure(figsize=figsize)
-        ax = fig.add_subplot(111, projection='3d')
-
-        sc = ax.scatter(coords[:,0], coords[:,1], coords[:,2],
-                        c=values, s=point_size, vmin=vmin, vmax=vmax)
-        ax.set_axis_off()
-        ax.set_box_aspect(xyz_range)
-        ax.set_xlim(xyz_min[0], xyz_max[0])
-        ax.set_ylim(xyz_min[1], xyz_max[1])
-        ax.set_zlim(xyz_min[2], xyz_max[2])
-        ax.view_init(elev=elev, azim=azim)
-        
-        cbar_ax = fig.add_axes([0.3, 0.25, 0.3, 0.025])  # 可以调整 left, bottom, width, height
-        cbar = fig.colorbar(sc, cax=cbar_ax, orientation='horizontal', pad=colorbar_pad, fraction=0.05)
-        cbar.ax.tick_params(labelsize=colorbar_fontsize)
-        
+        cbar.ax.xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
         plt.savefig(filename, dpi=300, bbox_inches='tight', pad_inches=0.01)
         plt.close(fig)
 
