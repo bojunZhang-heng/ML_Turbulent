@@ -23,7 +23,7 @@ plot_car_DrivAerML_velocity(
     x, y, y_hat,
     save_path=figure_path,
     figsize=(12, 8),
-    colorbar_fontsize=26,
+    colorbar_fontsize=24,
 )
-# 8
-# 12
+# 24
+# 26
