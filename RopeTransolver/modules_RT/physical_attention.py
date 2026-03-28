@@ -58,6 +58,25 @@ class Physics_Attention_Irregular_Mesh(nn.Module):
         q = rope(q, freqs=freqs)
         k = rope(k, freqs=freqs)
 
+        # 1. 确保在 CPU 且无梯度
+        q = q.detach().cpu()
+        k = k.detach().cpu()
+
+        # 2. 手动计算 Attention 矩阵 (因为 F.scaled_dot_product_attention 不返回矩阵)
+        # 计算公式: softmax( (Q @ K.T) / sqrt(d_k) )
+        d_k = q.size(-1)
+        # [num_heads, 10000, 10000]
+        attn_scores = torch.matmul(q, k.transpose(-2, -1)) / (d_k ** 0.5)
+        attn_matrix = torch.softmax(attn_scores, dim=-1)
+    
+        # 3. 在 Head 维度取平均 (降低保存负担，且代表模型整体关注度)
+        # [10000, 10000]
+        attn_avg = attn_matrix.squeeze(0).mean(dim=0).numpy()
+
+        # 4. 保存为 NumPy 文件，供交互式脚本读取
+        np.save(f"attn_matrix.npy", attn_avg)
+    
+        print(f"数据已保存！\n 矩阵文件: attn_matrix.npy")        
         x = F.scaled_dot_product_attention(q, k, v)
         x = rearrange(x, "bs num_heads seqlen head_dim -> bs seqlen (num_heads head_dim)")
 
