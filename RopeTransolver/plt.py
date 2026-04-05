@@ -1,5 +1,5 @@
 import numpy as np
-from utils_RPTO import plot_car_DrivAerML 
+from utils_RPTO import plot_car_DrivAerML_velocity 
 import os
 
 size=np.load("/Users/zhangbojun/ML_Turbulent/RopeTransolver/data_DrivAerML/velocity/x.npy")
@@ -18,11 +18,10 @@ print(y.shape)
 print(y_hat.shape)
 
 figure_path = "/Users/zhangbojun/ML_Turbulent/RopeTransolver/fig/velocity/"
-plot_car_DrivAerML(
+plot_car_DrivAerML_velocity(
     size,
     x, y, y_hat,
     save_path=figure_path,
-    error_log_scale=True,
     #figsize=(12, 8),
     #colorbar_fontsize=24,
 )
