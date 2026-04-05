@@ -14,7 +14,6 @@ from types import SimpleNamespace
 
 # Import modules
 from utils_v1 import setup_logger, setup_seed
-from utils_RPTO import plot_car_results_pointNet
 from colorama import Fore, Style
 from modules_RT.model.model_transolver import Model
 from torch.utils.data import DataLoader
@@ -95,7 +94,7 @@ def train_and_evaluate(args, device):
 
     train_dataloader = DataLoader(train_dataset, batch_size=args.training.batch_size, shuffle=True, num_workers=4, pin_memory=True, collate_fn=sato_collate_fn)
     val_dataloader = DataLoader(val_dataset, batch_size=args.training.batch_size, shuffle=True, num_workers=4, pin_memory=True, collate_fn=sato_collate_fn)
-    test_dataloader = DataLoader(test_dataset, batch_size=args.training.batch_size, shuffle=False, num_workers=2, pin_memory=True, collate_fn=sato_collate_fn)
+    test_dataloader = DataLoader(test_dataset, batch_size=args.training.batch_size, shuffle=True, num_workers=2, pin_memory=True, collate_fn=sato_collate_fn)
 
     total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
     logging.info(f"Total trainable parameters: {total_params}")
@@ -117,13 +116,9 @@ def train_and_evaluate(args, device):
     )
 
     # Store the model
-    exp_name = os.path.join(os.getcwd(), "./RopeTransolver/experiments_ShapeNet", args.exp_name)
-    best_model_path = os.path.join(exp_name, "best_model.pth")
-    final_model_path = os.path.join(exp_name, "final_model.pth")
-    print(f"exp_name: {exp_name}")
-    print(f"best_model_path:{best_model_path}")
-    print(os.path.exists(best_model_path))
     # Check if test_only and model exists
+    best_model_path = os.path.join("experiments_ShapeNet", args.exp_name, "best_model.pth")
+    final_model_path = os.path.join("experiments_ShapeNet", args.exp_name, "final_model.pth")
     if args.training.test_only and os.path.exists(best_model_path):
         logging.info("Loading best model for testing only")
         model.load_state_dict(torch.load(best_model_path, map_location=device))
@@ -329,7 +324,7 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
 
     total_loss = 0
     total_L2_error = 0
-    output_file = "/Users/zhangbojun/ShapeNet_dataset/result_L2_error.txt"
+    output_file = "/home/mae-zhangbj/ML_Turbulent/RopeTransolver/ShapeNet_result_L2_error.txt"
     with open(output_file, "w") as f:
         with torch.no_grad():
             for data in tqdm(test_dataloader, desc="[test_dataloader]"):
@@ -344,9 +339,6 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
         #        x = (x - X_MEAN) / X_STD
                 y = (y - Y_MEAN) / Y_STD
                 y_hat = model(x)
-                np.save("/Users/zhangbojun/ML_Turbulent/RopeTransolver/data_ShapeNet_norm/pressure/x.npy", x)
-                np.save("/Users/zhangbojun/ML_Turbulent/RopeTransolver/data_ShapeNet_norm/pressure/y.npy", y)
-                np.save("/Users/zhangbojun/ML_Turbulent/RopeTransolver/data_ShapeNet_norm/pressure/y_hat.npy", y_hat)
                 loss = criterion(y_hat, y)
                 total_loss += loss.item()
 
@@ -366,18 +358,7 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
 
         logging.info(f"*******************{M}inference_time:{RESET}")
         logging.info(f" {total_inference_time / len(test_dataloader):.6f}")
-    if args.training.plt:
-        exp_dir = os.path.join(os.getcwd(), "./RopeTransolver/experiments_ShapeNet", args.exp_name)
-        figure_dir = os.path.join(exp_dir, "figure")
-        os.makedirs(figure_dir, exist_ok=True)
-        print(f"x.shape:{x.shape}")
-        print(f"y.shape:{y.shape}")
-        figure_path = os.path.join(figure_dir, "pressure.png")
-        plot_car_results_pointNet(
-            x, y, y_hat,
-            save_path=figure_path,
-            figsize=(18, 6),
-        )
+
 # ============================================================
 # Load hyperparam
 # ============================================================
