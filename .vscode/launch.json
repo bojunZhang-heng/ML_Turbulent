@@ -7,7 +7,7 @@
         {
             "name": "Python 调试程序: 当前文件",
             "type": "debugpy",
-            "args": ["/Users/zhangbojun/ML_Turbulent/RopeTransolver/config_ShapeNet.yml"],
+            "args": ["/Users/zhangbojun/ML_Turbulent/attention_map_Transolver/config_DrivAerML_spressure.yml"],
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",

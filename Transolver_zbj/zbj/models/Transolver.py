@@ -53,6 +53,21 @@ class Physics_Attention_Irregular_Mesh(nn.Module):
         dots = torch.matmul(q_slice_token, k_slice_token.transpose(-1, -2)) * self.scale
         attn = self.softmax(dots)
         attn = self.dropout(attn)
+        print(f"attn.shape: {attn.shape}")
+    
+        # 3. 计算熵 H = -sum(p * log(p))
+        eps = 1e-12
+        # 在最后一个维度 (Key 维度) 计算熵
+        entropy = -torch.sum(attn * torch.log(attn + eps), dim=-1)
+    
+        # 4. 归一化 (Normalized Entropy)
+        # 对于 N=10000, log(N) \approx 9.21
+        log_n = np.log(10_000)
+        norm_entropy = entropy / log_n
+        norm_entropy = norm_entropy.flatten().detach().cpu().numpy()
+        print(f"norm_entropy: {norm_entropy.shape}")
+        # 4. 保存为 NumPy 文件，供交互式脚本读取
+        np.save("DrivAerML_Transolver_entropy.npy", norm_entropy)
         out_slice_token = torch.matmul(attn, v_slice_token)  # B H G D
 
         ### (3) Deslice
