@@ -10,6 +10,8 @@ import logging
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 from types import SimpleNamespace
+from torch.optim.lr_scheduler import ReduceLROnPlateau
+
 
 # Import modules
 from utils_v1 import setup_logger, setup_seed
@@ -101,14 +103,8 @@ def train_and_evaluate(args, device):
 
     # Set up criterion, optimizer, and scheduler
     criterion = torch.nn.MSELoss()
-    optimizer = optim.Adam(
-        model.parameters(), lr=args.training.lr, weight_decay=args.training.weight_decay
-    )
-    scheduler = torch.optim.lr_scheduler.StepLR(
-        optimizer,
-        step_size=args.training.scheduler_step,
-        gamma=args.training.scheduler_gamma
-    )
+    optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=1e-4)
+    scheduler = ReduceLROnPlateau(optimizer, 'min', patience=10, factor=0.1, verbose=True)
 
     # Store the model
     #exp_name = os.path.join(os.getcwd(), "./RopeTransolver/experiments_ShapeNet", args.exp_name)
