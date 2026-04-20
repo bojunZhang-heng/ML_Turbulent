@@ -36,7 +36,7 @@ def initialize_model(args, device):
     """Initialize and return the RegDGCN model."""
     model = RegDGCNN_pressure(
         k=args.model.k,
-        emb_dims=args.model.emb_dims                      
+        emb_dims=args.model.emb_dims,                      
         dropout=args.model.dropout).to(device)
 
     return model
