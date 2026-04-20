@@ -8,12 +8,13 @@ model:
     k: 40
     mlp_ratio: 1.5
     dropout: 0.4
+    output_channels: 1
 
 training:
     input: "surface_anchor_position"
     target: "surface_anchor_pressure"
     batch_size: 1
-    epochs: 250
+    epochs: 150
     lr: 0.001
     scheduler_step: 50
     scheduler_gamma: 0.5
@@ -22,9 +23,10 @@ training:
     weight_decay: 0.0001
     test_only: 0
     gpus: "0"
-    root_dir: "/mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small"
     seed: 42
 
-
+dataload: 
+    #directory: "/Users/zhangbojun/ShapeNet_dataset"
+    #root_dir: "/mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small"
 
 
