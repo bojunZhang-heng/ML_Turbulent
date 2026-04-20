@@ -15,7 +15,7 @@ from types import SimpleNamespace
 from utils_v1 import setup_logger, setup_seed
 from utils_RPTO import plot_car_results_pointNet
 from colorama import Fore, Style
-from modules_RT.model.model_transolver import Model
+from model_pressure import RegDGCNN_pressure
 from torch.utils.data import DataLoader
 
 # from model_tmp import AnchoredBranchedUPT
@@ -34,15 +34,10 @@ RESET = Style.RESET_ALL
 
 def initialize_model(args, device):
     """Initialize and return the RegDGCN model."""
-
-    model = Model(hidden_dim=args.model.hidden_dim,
-                  layer_num=args.model.layer_num,
-                  space_dim=args.model.input_dim,
-                  mlp_ratio=args.model.mlp_ratio,
-                  slice_num=args.model.slice_num,
-                  out_dim=args.model.output_dim,
-                  dropout=args.model.dropout,
-            ).to(device)
+    model = RegDGCNN_pressure(
+        k=args.model.k,
+        emb_dims=args.model.emb_dims                      
+        dropout=args.model.dropout).to(device)
 
     return model
 
@@ -116,7 +111,7 @@ def train_and_evaluate(args, device):
     )
 
     # Store the model
-    exp_name = os.path.join(os.getcwd(), "./RopeTransolver/experiments_ShapeNet", args.exp_name)
+    #exp_name = os.path.join(os.getcwd(), "./RopeTransolver/experiments_ShapeNet", args.exp_name)
     best_model_path = os.path.join(exp_name, "best_model.pth")
     final_model_path = os.path.join(exp_name, "final_model.pth")
     print(f"exp_name: {exp_name}")
@@ -264,11 +259,11 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, device, args)
     for data in tqdm(train_dataloader, desc="[Training]"):
         x = data[args.training.input].to(device)
         y = data[args.training.target][:,:,0:1].to(device)
-    #    X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
-    #    X_STD  = torch.tensor(args.training.x_std, dtype=x.dtype, device=x.device)
+        X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
+        X_STD  = torch.tensor(args.training.x_std, dtype=x.dtype, device=x.device)
         Y_MEAN = torch.tensor(args.training.y_mean, dtype=x.dtype, device=x.device)
         Y_STD = torch.tensor(args.training.y_std, dtype=x.dtype, device=x.device)
-    #    x = (x - X_MEAN) / X_STD
+        x = (x - X_MEAN) / X_STD
         y = (y - Y_MEAN) / Y_STD
 
         y_hat = model(x)
@@ -292,11 +287,11 @@ def validate(model, val_dataloader, criterion, device, args):
             x = data[args.training.input].to(device)
             y = data[args.training.target][:,:,0:1].to(device)
 
-    #        X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
-    #        X_STD  = torch.tensor(args.training.x_std, dtype=x.dtype, device=x.device)
+            X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
+            X_STD  = torch.tensor(args.training.x_std, dtype=x.dtype, device=x.device)
             Y_MEAN = torch.tensor(args.training.y_mean, dtype=x.dtype, device=x.device)
             Y_STD = torch.tensor(args.training.y_std, dtype=x.dtype, device=x.device)
-    #        x = (x - X_MEAN) / X_STD
+            x = (x - X_MEAN) / X_STD
             y = (y - Y_MEAN) / Y_STD
             y_hat = model(x)
             #y_hat = y_hat * PRESSURE_STD + PRESSURE_MEAN
@@ -334,12 +329,12 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
             x = data[args.training.input].to(device)
             y = data[args.training.target][:,:,0:1].to(device)
 
-    #        X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
-    #        X_STD  = torch.tensor(args.training.x_std, dtype=x.dtype, device=x.device)
+            X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
+            X_STD  = torch.tensor(args.training.x_std, dtype=x.dtype, device=x.device)
             Y_MEAN = torch.tensor(args.training.y_mean, dtype=x.dtype, device=x.device)
             Y_STD = torch.tensor(args.training.y_std, dtype=x.dtype, device=x.device)
 
-    #        x = (x - X_MEAN) / X_STD
+            x = (x - X_MEAN) / X_STD
             y = (y - Y_MEAN) / Y_STD
             y_hat = model(x)
 
