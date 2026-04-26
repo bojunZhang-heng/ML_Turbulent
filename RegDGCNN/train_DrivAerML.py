@@ -38,9 +38,10 @@ RESET = Style.RESET_ALL
 def initialize_model(args, device):
     """Initialize and return the RegDGCN model."""
 
-    model = RegDGCNN_pressure(k=args.model.k,
-                  emb_dims=args.model.emb_dims,
-                  dropout=args.model.dropout,
+    model = RegDGCNN_pressure(
+            k=args.model.k,
+            emb_dims=args.model.emb_dims,
+            dropout=args.model.dropout,
             ).to(device)
 
     return model
@@ -98,10 +99,7 @@ def train_and_evaluate(args, device):
 
     # Set up criterion, optimizer, and scheduler
     criterion = torch.nn.MSELoss()
-    optimizer = optim.Adam(
-        model.parameters(), lr=args.training.lr, weight_decay=args.training.weight_decay
-    )
-
+    optimizer = optim.Adam(model.parameters(), lr=args.training.lr, weight_decay=1e-4)
     scheduler = ReduceLROnPlateau(optimizer, 'min', patience=10, factor=0.1, verbose=True)
 
     # Store the model
@@ -262,6 +260,12 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, device, args)
         x = batch_filtered[args.training.input]
         x = x.permute(0,2,1).contiguous()
         y = y.permute(1,0).unsqueeze(0).contiguous()
+       # logging.info(f"x.shape: {x.shape}")
+       # logging.info(f"y.shape: {y.shape}")
+
+       # x = x.permute(0, 2, 1).contiguous()
+       # y = y.permute(0, 2, 1).contiguous()
+
         y_hat = model(x)
 
         loss = criterion(y_hat, y)
@@ -293,6 +297,9 @@ def validate(model, val_dataloader, criterion, device, args):
             x = batch_filtered[args.training.input]
             x = x.permute(0,2,1).contiguous()
             y = y.permute(1,0).unsqueeze(0).contiguous()
+
+         #   x = x.permute(0, 2, 1).contiguous()
+         #   y = y.permute(0, 2, 1).contiguous()
             y_hat = model(x)
             loss = criterion(y_hat, y)
 
@@ -365,7 +372,13 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
 
             x = x.permute(0,2,1).contiguous()
             y = y.permute(1,0).unsqueeze(0).contiguous()
+
+         #   x = x.permute(0, 2, 1).contiguous()
+         #   y = y.permute(0, 2, 1).contiguous()
             y_hat = model(x)
+            logging.info(f"x.shape: {x.shape}")
+            logging.info(f"y.shape: {y.shape}")
+            logging.info(f"y_hat.shape: {y_hat.shape}")
 
             inference_time = time.time() - start_time
             total_inference_time += inference_time

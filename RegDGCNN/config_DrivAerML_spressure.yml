@@ -14,19 +14,19 @@ training:
     input: "surface_anchor_position"
     target: "surface_anchor_pressure"
     batch_size: 1
-    epochs: 150
+    epochs: 250
     lr: 0.001
     scheduler_step: 50
     scheduler_gamma: 0.5
     max_grad_norm: 0.1
     num_workers: 1
     weight_decay: 0.0001
-    test_only: 0
+    test_only: 1
     gpus: "0"
     seed: 42
+    root_dir: "/mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small"
 
 dataload: 
-    #directory: "/Users/zhangbojun/ShapeNet_dataset"
-    #root_dir: "/mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small"
+    directory: "/Users/zhangbojun/ShapeNet_dataset"
 
 

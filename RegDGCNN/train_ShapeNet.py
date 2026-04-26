@@ -38,7 +38,7 @@ def initialize_model(args, device):
     """Initialize and return the RegDGCN model."""
     model = RegDGCNN_pressure(
         k=args.model.k,
-        emb_dims=args.model.emb_dims,                      
+        emb_dims=args.model.emb_dims,
         dropout=args.model.dropout).to(device)
 
     return model
@@ -103,14 +103,14 @@ def train_and_evaluate(args, device):
 
     # Set up criterion, optimizer, and scheduler
     criterion = torch.nn.MSELoss()
-    optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=1e-4)
+    optimizer = optim.Adam(model.parameters(), lr=args.training.lr, weight_decay=1e-4)
     scheduler = ReduceLROnPlateau(optimizer, 'min', patience=10, factor=0.1, verbose=True)
 
     # Store the model
     #exp_name = os.path.join(os.getcwd(), "./RopeTransolver/experiments_ShapeNet", args.exp_name)
-    best_model_path = os.path.join(exp_name, "best_model.pth")
-    final_model_path = os.path.join(exp_name, "final_model.pth")
-    print(f"exp_name: {exp_name}")
+    best_model_path = os.path.join("experiments_ShapeNet", args.exp_name, "best_model.pth")
+    final_model_path = os.path.join("experiments_ShapeNet", args.exp_name, "final_model.pth")
+    print(f"exp_name: {args.exp_name}")
     print(f"best_model_path:{best_model_path}")
     print(os.path.exists(best_model_path))
     # Check if test_only and model exists
@@ -156,7 +156,7 @@ def train_and_evaluate(args, device):
             logging.info(f"New best model saved with Val Loss: {best_val_loss:.6f}")
 
         # Update learning rate scheduler
-        scheduler.step()
+        scheduler.step(val_loss)
 
         # Save progress rate scheduler
         if (epoch + 1) % 10 == 0 or epoch == args.training.epochs - 1:
@@ -255,10 +255,23 @@ def train_one_epoch(model, train_dataloader, optimizer, criterion, device, args)
     for data in tqdm(train_dataloader, desc="[Training]"):
         x = data[args.training.input].to(device)
         y = data[args.training.target][:,:,0:1].to(device)
+        #logging.info(f"x.shape: {x.shape}")
+        #logging.info(f"y.shape: {y.shape}")
+        x = x.permute(0, 2, 1).contiguous()
+        y = y.permute(0, 2, 1).contiguous()
+        #logging.info(f"x.shape: {x.shape}")
+        #logging.info(f"y.shape: {y.shape}")
+
         X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
         X_STD  = torch.tensor(args.training.x_std, dtype=x.dtype, device=x.device)
         Y_MEAN = torch.tensor(args.training.y_mean, dtype=x.dtype, device=x.device)
         Y_STD = torch.tensor(args.training.y_std, dtype=x.dtype, device=x.device)
+
+        X_MEAN = X_MEAN.view(1, -1, 1)
+        X_STD  = X_STD.view(1, -1, 1)
+        Y_MEAN = Y_MEAN.view(1, -1, 1)
+        Y_STD  = Y_STD.view(1, -1, 1)
+
         x = (x - X_MEAN) / X_STD
         y = (y - Y_MEAN) / Y_STD
 
@@ -283,10 +296,19 @@ def validate(model, val_dataloader, criterion, device, args):
             x = data[args.training.input].to(device)
             y = data[args.training.target][:,:,0:1].to(device)
 
+            x = x.permute(0, 2, 1).contiguous()
+            y = y.permute(0, 2, 1).contiguous()
+
             X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
             X_STD  = torch.tensor(args.training.x_std, dtype=x.dtype, device=x.device)
             Y_MEAN = torch.tensor(args.training.y_mean, dtype=x.dtype, device=x.device)
             Y_STD = torch.tensor(args.training.y_std, dtype=x.dtype, device=x.device)
+
+            X_MEAN = X_MEAN.view(1, -1, 1)
+            X_STD  = X_STD.view(1, -1, 1)
+            Y_MEAN = Y_MEAN.view(1, -1, 1)
+            Y_STD  = Y_STD.view(1, -1, 1)
+
             x = (x - X_MEAN) / X_STD
             y = (y - Y_MEAN) / Y_STD
             y_hat = model(x)
@@ -325,10 +347,18 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
             x = data[args.training.input].to(device)
             y = data[args.training.target][:,:,0:1].to(device)
 
+            x = x.permute(0, 2, 1).contiguous()
+            y = y.permute(0, 2, 1).contiguous()
+
             X_MEAN = torch.tensor(args.training.x_mean, dtype=x.dtype, device=x.device)
             X_STD  = torch.tensor(args.training.x_std, dtype=x.dtype, device=x.device)
             Y_MEAN = torch.tensor(args.training.y_mean, dtype=x.dtype, device=x.device)
             Y_STD = torch.tensor(args.training.y_std, dtype=x.dtype, device=x.device)
+
+            X_MEAN = X_MEAN.view(1, -1, 1)
+            X_STD  = X_STD.view(1, -1, 1)
+            Y_MEAN = Y_MEAN.view(1, -1, 1)
+            Y_STD  = Y_STD.view(1, -1, 1)
 
             x = (x - X_MEAN) / X_STD
             y = (y - Y_MEAN) / Y_STD
@@ -350,18 +380,6 @@ def test_model(model, test_dataloader, criterion, device, exp_dir, args):
 
         logging.info(f"*******************{M}inference_time:{RESET}")
         logging.info(f" {total_inference_time / len(test_dataloader):.6f}")
-    if plt:
-        exp_dir = os.path.join(os.getcwd(), "./RopeTransolver/experiments_ShapeNet", args.exp_name)
-        figure_dir = os.path.join(exp_dir, "figure")
-        os.makedirs(figure_dir, exist_ok=True)
-        print(f"x.shape:{x.shape}")
-        print(f"y.shape:{y.shape}")
-        figure_path = os.path.join(figure_dir, "pressure.png")
-        plot_car_results_pointNet(
-            x, y, y_hat,
-            save_path=figure_path,
-            figsize=(18, 6),
-        )
 # ============================================================
 # Load hyperparam
 # ============================================================

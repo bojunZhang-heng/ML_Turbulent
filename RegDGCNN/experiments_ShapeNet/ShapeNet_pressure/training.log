@@ -1,0 +1,1594 @@
+2026-04-21 04:46:10,706 | INFO     | Config:
+exp_name: ShapeNet_pressure
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 8
+  hidden_dim: 192
+  res: true
+  slice_num: 32
+  layer_num: 8
+  mlp_ratio: 1.5
+  dropout: 0.1
+training:
+  input: x
+  target: y
+  x_mean:
+  - 1.5163924
+  - -2.8424793e-05
+  - 0.59128469
+  x_std:
+  - 1.415569
+  - 0.65566987
+  - 0.38558245
+  y_mean: -93.28388
+  y_std: 121.19236
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 0.0
+  test_only: 1
+  plt: 1
+  gpus: '0'
+  seed: 42
+dataload:
+  directory: /Users/zhangbojun/ShapeNet_dataset
+
+2026-04-21 04:46:10,706 | INFO     | args.exp_name : ShapeNet_pressure
+2026-04-21 04:46:10,706 | INFO     | Starting training with 1 GPUs
+2026-04-21 04:51:02,288 | INFO     | Config:
+exp_name: ShapeNet_pressure
+model:
+  input_dim: 3
+  output_dim: 1
+  res: true
+  emb_dims: 1024
+  k: 40
+  mlp_ratio: 1.5
+  dropout: 0.4
+  output_channels: 1
+training:
+  input: x
+  target: y
+  x_mean:
+  - 1.5163924
+  - -2.8424793e-05
+  - 0.59128469
+  x_std:
+  - 1.415569
+  - 0.65566987
+  - 0.38558245
+  y_mean: -93.28388
+  y_std: 121.19236
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  plt: 0
+  gpus: '0'
+  seed: 42
+dataload:
+  directory: /Users/zhangbojun/ShapeNet_dataset
+
+2026-04-21 04:51:02,288 | INFO     | args.exp_name : ShapeNet_pressure
+2026-04-21 04:51:02,288 | INFO     | Starting training with 1 GPUs
+2026-04-21 04:51:46,985 | INFO     | Config:
+exp_name: ShapeNet_pressure
+model:
+  input_dim: 3
+  output_dim: 1
+  res: true
+  emb_dims: 1024
+  k: 40
+  mlp_ratio: 1.5
+  dropout: 0.4
+  output_channels: 1
+training:
+  input: x
+  target: y
+  x_mean:
+  - 1.5163924
+  - -2.8424793e-05
+  - 0.59128469
+  x_std:
+  - 1.415569
+  - 0.65566987
+  - 0.38558245
+  y_mean: -93.28388
+  y_std: 121.19236
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  plt: 0
+  gpus: '0'
+  seed: 42
+dataload:
+  directory: /mnt/wjc_group/mae-zhangbj/ShapeNet_dataset
+
+2026-04-21 04:51:46,986 | INFO     | args.exp_name : ShapeNet_pressure
+2026-04-21 04:51:46,986 | INFO     | Starting training with 1 GPUs
+2026-04-21 04:52:06,304 | INFO     | Total trainable parameters: 1437705
+2026-04-21 04:52:06,304 | INFO     | Data loaded: 440 training batches, 55 validation batches, 55 test batches
+2026-04-21 04:53:07,343 | INFO     | Config:
+exp_name: ShapeNet_pressure
+model:
+  input_dim: 3
+  output_dim: 1
+  res: true
+  emb_dims: 1024
+  k: 40
+  mlp_ratio: 1.5
+  dropout: 0.4
+  output_channels: 1
+training:
+  input: x
+  target: y
+  x_mean:
+  - 1.5163924
+  - -2.8424793e-05
+  - 0.59128469
+  x_std:
+  - 1.415569
+  - 0.65566987
+  - 0.38558245
+  y_mean: -93.28388
+  y_std: 121.19236
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  plt: 0
+  gpus: '0'
+  seed: 42
+dataload:
+  directory: /mnt/wjc_group/mae-zhangbj/ShapeNet_dataset
+
+2026-04-21 04:53:07,344 | INFO     | args.exp_name : ShapeNet_pressure
+2026-04-21 04:53:07,344 | INFO     | Starting training with 1 GPUs
+2026-04-21 04:53:08,090 | INFO     | Total trainable parameters: 1437705
+2026-04-21 04:53:08,090 | INFO     | Data loaded: 440 training batches, 55 validation batches, 55 test batches
+2026-04-21 04:54:39,344 | INFO     | Config:
+exp_name: ShapeNet_pressure
+model:
+  input_dim: 3
+  output_dim: 1
+  res: true
+  emb_dims: 1024
+  k: 40
+  mlp_ratio: 1.5
+  dropout: 0.4
+  output_channels: 1
+training:
+  input: x
+  target: y
+  x_mean:
+  - 1.5163924
+  - -2.8424793e-05
+  - 0.59128469
+  x_std:
+  - 1.415569
+  - 0.65566987
+  - 0.38558245
+  y_mean: -93.28388
+  y_std: 121.19236
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  plt: 0
+  gpus: '0'
+  seed: 42
+dataload:
+  directory: /mnt/wjc_group/mae-zhangbj/ShapeNet_dataset
+
+2026-04-21 04:54:39,344 | INFO     | args.exp_name : ShapeNet_pressure
+2026-04-21 04:54:39,344 | INFO     | Starting training with 1 GPUs
+2026-04-21 04:54:40,033 | INFO     | Total trainable parameters: 1437705
+2026-04-21 04:54:40,033 | INFO     | Data loaded: 440 training batches, 55 validation batches, 55 test batches
+2026-04-21 04:54:40,789 | INFO     | Staring training for 150 epochs
+2026-04-21 05:00:06,349 | INFO     | Config:
+exp_name: ShapeNet_pressure
+model:
+  input_dim: 3
+  output_dim: 1
+  res: true
+  emb_dims: 1024
+  k: 40
+  mlp_ratio: 1.5
+  dropout: 0.4
+  output_channels: 1
+training:
+  input: x
+  target: y
+  x_mean:
+  - 1.5163924
+  - -2.8424793e-05
+  - 0.59128469
+  x_std:
+  - 1.415569
+  - 0.65566987
+  - 0.38558245
+  y_mean: -93.28388
+  y_std: 121.19236
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  plt: 0
+  gpus: '0'
+  seed: 42
+dataload:
+  directory: /mnt/wjc_group/mae-zhangbj/ShapeNet_dataset
+
+2026-04-21 05:00:06,349 | INFO     | args.exp_name : ShapeNet_pressure
+2026-04-21 05:00:06,350 | INFO     | Starting training with 1 GPUs
+2026-04-21 05:00:06,997 | INFO     | Total trainable parameters: 1437705
+2026-04-21 05:00:06,998 | INFO     | Data loaded: 440 training batches, 55 validation batches, 55 test batches
+2026-04-21 05:00:07,728 | INFO     | Staring training for 150 epochs
+2026-04-21 05:00:07,845 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:00:07,846 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:02:01,452 | INFO     | Config:
+exp_name: ShapeNet_pressure
+model:
+  input_dim: 3
+  output_dim: 1
+  res: true
+  emb_dims: 1024
+  k: 40
+  mlp_ratio: 1.5
+  dropout: 0.4
+  output_channels: 1
+training:
+  input: x
+  target: y
+  x_mean:
+  - 1.5163924
+  - -2.8424793e-05
+  - 0.59128469
+  x_std:
+  - 1.415569
+  - 0.65566987
+  - 0.38558245
+  y_mean: -93.28388
+  y_std: 121.19236
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  plt: 0
+  gpus: '0'
+  seed: 42
+dataload:
+  directory: /mnt/wjc_group/mae-zhangbj/ShapeNet_dataset
+
+2026-04-21 05:02:01,452 | INFO     | args.exp_name : ShapeNet_pressure
+2026-04-21 05:02:01,452 | INFO     | Starting training with 1 GPUs
+2026-04-21 05:02:02,110 | INFO     | Total trainable parameters: 1437705
+2026-04-21 05:02:02,110 | INFO     | Data loaded: 440 training batches, 55 validation batches, 55 test batches
+2026-04-21 05:02:02,844 | INFO     | Staring training for 150 epochs
+2026-04-21 05:02:02,951 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:02:02,952 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:02:02,977 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:02:02,977 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:48,596 | INFO     | Config:
+exp_name: ShapeNet_pressure
+model:
+  input_dim: 3
+  output_dim: 1
+  res: true
+  emb_dims: 1024
+  k: 40
+  mlp_ratio: 1.5
+  dropout: 0.4
+  output_channels: 1
+training:
+  input: x
+  target: y
+  x_mean:
+  - 1.5163924
+  - -2.8424793e-05
+  - 0.59128469
+  x_std:
+  - 1.415569
+  - 0.65566987
+  - 0.38558245
+  y_mean: -93.28388
+  y_std: 121.19236
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  plt: 0
+  gpus: '0'
+  seed: 42
+dataload:
+  directory: /mnt/wjc_group/mae-zhangbj/ShapeNet_dataset
+
+2026-04-21 05:04:48,596 | INFO     | args.exp_name : ShapeNet_pressure
+2026-04-21 05:04:48,596 | INFO     | Starting training with 1 GPUs
+2026-04-21 05:04:49,373 | INFO     | Total trainable parameters: 1437705
+2026-04-21 05:04:49,373 | INFO     | Data loaded: 440 training batches, 55 validation batches, 55 test batches
+2026-04-21 05:04:50,113 | INFO     | Staring training for 150 epochs
+2026-04-21 05:04:50,223 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:50,223 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:50,246 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:50,247 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:51,413 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:51,413 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:51,413 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:51,413 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:51,506 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:51,506 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:51,506 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:51,506 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:51,599 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:51,599 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:51,599 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:51,599 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:51,690 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:51,690 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:51,690 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:51,690 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:51,780 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:51,780 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:51,780 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:51,780 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:51,869 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:51,869 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:51,869 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:51,869 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:51,958 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:51,959 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:51,959 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:51,959 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:52,048 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:52,048 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:52,048 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:52,048 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:52,137 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:52,137 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:52,137 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:52,137 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:52,227 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:52,227 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:52,227 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:52,227 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:52,316 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:52,316 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:52,316 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:52,316 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:52,406 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:52,406 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:52,406 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:52,406 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:52,495 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:52,495 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:52,495 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:52,495 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:52,584 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:52,584 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:52,584 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:52,585 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:52,674 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:52,674 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:52,674 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:52,674 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:52,763 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:52,763 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:52,763 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:52,763 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:52,853 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:52,853 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:52,853 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:52,853 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:52,942 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:52,942 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:52,942 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:52,942 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:53,032 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:53,032 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:53,032 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:53,032 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:53,121 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:53,121 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:53,121 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:53,121 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:53,211 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:53,211 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:53,211 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:53,211 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:53,300 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:53,300 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:53,300 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:53,300 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:53,390 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:53,390 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:53,390 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:53,390 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:53,479 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:53,479 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:53,479 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:53,480 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:53,569 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:53,569 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:53,569 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:53,569 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:53,658 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:53,658 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:53,658 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:53,658 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:53,748 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:53,748 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:53,748 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:53,748 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:53,837 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:53,837 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:53,838 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:53,838 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:53,927 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:53,927 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:53,927 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:53,927 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:54,016 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:54,016 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:54,016 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:54,017 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:54,106 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:54,106 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:54,107 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:54,107 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:54,197 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:54,198 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:54,198 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:54,198 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:54,287 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:54,287 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:54,288 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:54,288 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:54,379 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:54,379 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:54,379 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:54,379 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:54,468 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:54,469 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:54,469 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:54,469 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:54,558 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:54,558 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:54,558 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:54,558 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:54,648 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:54,648 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:54,648 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:54,648 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:54,737 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:54,737 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:54,737 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:54,737 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:54,827 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:54,827 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:54,827 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:54,827 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:54,916 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:54,916 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:54,916 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:54,916 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:55,006 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:55,006 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:55,006 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:55,006 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:55,095 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:55,095 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:55,095 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:55,095 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:55,185 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:55,185 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:55,185 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:55,185 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:55,274 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:55,274 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:55,274 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:55,274 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:55,364 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:55,364 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:55,364 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:55,364 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:55,453 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:55,453 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:55,453 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:55,453 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:55,543 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:55,543 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:55,543 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:55,543 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:55,632 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:55,632 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:55,632 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:55,632 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:55,722 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:55,722 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:55,722 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:55,722 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:55,811 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:55,811 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:55,811 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:55,811 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:55,900 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:55,900 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:55,900 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:55,900 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:55,990 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:55,990 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:55,990 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:55,990 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:56,079 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:56,079 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:56,079 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:56,079 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:56,168 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:56,168 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:56,169 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:56,169 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:56,258 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:56,258 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:56,258 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:56,258 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:56,347 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:56,347 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:56,347 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:56,347 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:56,436 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:56,436 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:56,436 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:56,437 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:56,526 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:56,526 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:56,526 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:56,526 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:56,615 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:56,615 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:56,615 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:56,615 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:56,704 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:56,704 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:56,704 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:56,704 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:56,793 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:56,794 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:56,794 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:56,794 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:56,883 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:56,883 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:56,883 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:56,883 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:56,972 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:56,972 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:56,972 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:56,972 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:57,061 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:57,061 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:57,062 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:57,062 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:57,151 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:57,151 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:57,151 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:57,151 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:57,240 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:57,240 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:57,240 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:57,240 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:57,330 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:57,330 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:57,330 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:57,330 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:57,419 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:57,419 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:57,419 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:57,419 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:57,508 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:57,508 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:57,509 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:57,509 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:57,598 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:57,598 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:57,598 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:57,598 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:57,687 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:57,687 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:57,687 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:57,687 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:57,776 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:57,776 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:57,777 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:57,777 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:57,866 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:57,866 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:57,866 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:57,866 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:57,955 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:57,955 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:57,955 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:57,955 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:58,044 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:58,044 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:58,045 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:58,045 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:58,134 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:58,134 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:58,134 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:58,134 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:58,223 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:58,223 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:58,223 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:58,223 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:58,312 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:58,312 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:58,312 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:58,312 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:58,402 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:58,402 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:58,402 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:58,402 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:58,491 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:58,491 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:58,491 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:58,491 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:58,580 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:58,580 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:58,580 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:58,580 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:58,670 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:58,670 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:58,670 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:58,670 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:58,759 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:58,759 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:58,759 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:58,759 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:58,848 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:58,848 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:58,848 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:58,848 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:58,938 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:58,938 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:58,938 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:58,938 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:59,027 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:59,027 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:59,027 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:59,027 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:59,117 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:59,117 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:59,117 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:59,117 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:59,206 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:59,206 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:59,206 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:59,206 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:59,295 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:59,296 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:59,296 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:59,296 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:59,385 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:59,385 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:59,385 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:59,385 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:59,474 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:59,474 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:59,474 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:59,474 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:59,563 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:59,564 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:59,564 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:59,564 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:59,653 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:59,653 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:59,653 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:59,653 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:59,742 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:59,742 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:59,742 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:59,742 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:59,831 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:59,831 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:59,831 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:59,831 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:04:59,921 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:04:59,921 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:04:59,921 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:04:59,921 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:00,010 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:00,010 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:00,010 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:00,010 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:00,099 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:00,099 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:00,099 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:00,099 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:00,189 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:00,189 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:00,189 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:00,189 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:00,278 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:00,278 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:00,278 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:00,278 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:00,367 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:00,367 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:00,367 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:00,367 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:00,456 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:00,456 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:00,457 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:00,457 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:00,546 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:00,546 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:00,546 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:00,546 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:00,635 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:00,635 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:00,635 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:00,635 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:00,724 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:00,724 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:00,725 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:00,725 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:00,814 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:00,814 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:00,814 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:00,814 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:00,903 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:00,903 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:00,903 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:00,903 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:00,992 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:00,992 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:00,993 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:00,993 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:01,082 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:01,082 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:01,082 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:01,082 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:01,171 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:01,171 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:01,171 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:01,171 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:01,261 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:01,261 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:01,261 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:01,261 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:01,350 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:01,350 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:01,350 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:01,350 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:01,440 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:01,440 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:01,440 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:01,440 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:01,529 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:01,529 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:01,529 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:01,529 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:01,618 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:01,618 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:01,618 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:01,619 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:01,708 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:01,708 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:01,708 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:01,708 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:01,797 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:01,797 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:01,797 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:01,797 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:01,886 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:01,886 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:01,886 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:01,887 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:01,976 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:01,976 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:01,976 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:01,976 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:02,065 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:02,065 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:02,065 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:02,065 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:02,154 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:02,154 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:02,155 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:02,155 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:02,244 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:02,244 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:02,244 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:02,244 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:02,333 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:02,333 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:02,334 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:02,334 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:02,423 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:02,423 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:02,423 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:02,423 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:02,512 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:02,512 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:02,512 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:02,512 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:02,601 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:02,601 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:02,601 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:02,602 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:02,691 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:02,691 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:02,691 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:02,691 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:02,780 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:02,780 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:02,780 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:02,780 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:02,869 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:02,869 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:02,869 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:02,870 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:02,958 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:02,959 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:02,959 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:02,959 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:03,048 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:03,048 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:03,048 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:03,048 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:03,137 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:03,137 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:03,137 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:03,137 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:03,226 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:03,226 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:03,227 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:03,227 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:03,316 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:03,316 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:03,316 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:03,316 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:03,405 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:03,405 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:03,405 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:03,405 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:03,494 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:03,495 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:03,495 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:03,495 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:03,584 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:03,584 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:03,584 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:03,584 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:03,673 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:03,673 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:03,673 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:03,673 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:03,762 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:03,762 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:03,763 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:03,763 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:03,852 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:03,852 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:03,852 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:03,852 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:03,941 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:03,941 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:03,941 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:03,941 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:04,031 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:04,031 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:04,031 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:04,031 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:04,120 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:04,120 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:04,120 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:04,120 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:04,209 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:04,209 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:04,209 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:04,209 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:04,298 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:04,298 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:04,298 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:04,298 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:04,388 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:04,388 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:04,388 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:04,388 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:04,477 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:04,477 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:04,477 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:04,477 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:04,566 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:04,567 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:04,567 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:04,567 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:04,656 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:04,656 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:04,656 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:04,656 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:04,745 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:04,745 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:04,745 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:04,745 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:04,834 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:04,834 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:04,835 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:04,835 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:04,924 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:04,924 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:04,924 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:04,924 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:05,013 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:05,013 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:05,013 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:05,013 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:05,104 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:05,104 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:05,104 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:05,104 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:05,193 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:05,193 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:05,193 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:05,193 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:05,283 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:05,283 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:05,283 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:05,283 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:05,372 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:05,372 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:05,372 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:05,372 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:05,461 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:05,461 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:05,462 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:05,462 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:05,551 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:05,551 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:05,551 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:05,551 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:05,640 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:05,640 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:05,640 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:05,640 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:05,730 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:05,730 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:05,730 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:05,730 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:05,819 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:05,819 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:05,819 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:05,819 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:05,908 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:05,908 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:05,908 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:05,909 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:05,998 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:05,998 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:05,998 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:05,998 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:06,087 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:06,087 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:06,087 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:06,087 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:06,176 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:06,176 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:06,176 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:06,176 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:06,266 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:06,266 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:06,266 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:06,266 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:06,355 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:06,355 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:06,355 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:06,355 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:06,445 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:06,445 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:06,445 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:06,445 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:06,534 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:06,534 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:06,534 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:06,534 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:06,623 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:06,623 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:06,623 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:06,623 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:06,712 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:06,712 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:06,713 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:06,713 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:06,802 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:06,802 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:06,802 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:06,802 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:06,891 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:06,891 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:06,891 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:06,891 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:06,980 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:06,980 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:06,980 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:06,980 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:07,070 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:07,070 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:07,070 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:07,070 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:07,159 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:07,159 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:07,159 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:07,159 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:07,248 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:07,248 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:07,248 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:07,248 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:07,338 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:07,338 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:07,338 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:07,338 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:07,427 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:07,427 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:07,427 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:07,427 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:07,516 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:07,516 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:07,516 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:07,517 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:07,605 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:07,606 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:07,606 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:07,606 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:07,695 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:07,695 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:07,695 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:07,695 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:07,784 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:07,784 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:07,784 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:07,784 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:07,874 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:07,874 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:07,874 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:07,874 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:07,963 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:07,963 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:07,963 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:07,963 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:08,053 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:08,053 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:08,053 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:08,053 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:08,142 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:08,142 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:08,142 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:08,142 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:08,231 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:08,231 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:08,231 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:08,231 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:08,320 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:08,320 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:08,320 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:08,320 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:08,410 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:08,410 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:08,410 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:08,410 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:08,499 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:08,499 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:08,499 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:08,499 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:08,588 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:08,588 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:08,588 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:08,588 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:08,677 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:08,678 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:08,678 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:08,678 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:08,767 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:08,767 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:08,767 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:08,767 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:08,856 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:08,856 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:08,856 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:08,856 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:08,946 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:08,946 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:08,946 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:08,946 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:09,035 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:09,035 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:09,035 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:09,035 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:09,124 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:09,124 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:09,124 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:09,124 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:09,213 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:09,213 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:09,213 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:09,214 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:09,303 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:09,303 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:09,303 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:09,303 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:09,392 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:09,392 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:09,392 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:09,392 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:09,482 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:09,482 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:09,482 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:09,482 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:09,571 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:09,571 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:09,571 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:09,571 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:09,660 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:09,660 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:09,660 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:09,660 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:09,749 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:09,749 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:09,750 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:09,750 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:09,839 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:09,839 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:09,839 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:09,839 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:09,928 | INFO     | x.shape: torch.Size([1, 3586, 3])
+2026-04-21 05:05:09,928 | INFO     | y.shape: torch.Size([1, 3586, 1])
+2026-04-21 05:05:09,928 | INFO     | x.shape: torch.Size([1, 3, 3586])
+2026-04-21 05:05:09,928 | INFO     | y.shape: torch.Size([1, 1, 3586])
+2026-04-21 05:05:48,994 | INFO     | Config:
+exp_name: ShapeNet_pressure
+model:
+  input_dim: 3
+  output_dim: 1
+  res: true
+  emb_dims: 1024
+  k: 40
+  mlp_ratio: 1.5
+  dropout: 0.4
+  output_channels: 1
+training:
+  input: x
+  target: y
+  x_mean:
+  - 1.5163924
+  - -2.8424793e-05
+  - 0.59128469
+  x_std:
+  - 1.415569
+  - 0.65566987
+  - 0.38558245
+  y_mean: -93.28388
+  y_std: 121.19236
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  plt: 0
+  gpus: '0'
+  seed: 42
+dataload:
+  directory: /mnt/wjc_group/mae-zhangbj/ShapeNet_dataset
+
+2026-04-21 05:05:48,994 | INFO     | args.exp_name : ShapeNet_pressure
+2026-04-21 05:05:48,994 | INFO     | Starting training with 1 GPUs
+2026-04-21 05:05:49,679 | INFO     | Total trainable parameters: 1437705
+2026-04-21 05:05:49,679 | INFO     | Data loaded: 440 training batches, 55 validation batches, 55 test batches
+2026-04-21 05:05:50,447 | INFO     | Staring training for 150 epochs
+2026-04-21 05:08:52,875 | INFO     | Config:
+exp_name: ShapeNet_pressure
+model:
+  input_dim: 3
+  output_dim: 1
+  res: true
+  emb_dims: 1024
+  k: 40
+  mlp_ratio: 1.5
+  dropout: 0.4
+  output_channels: 1
+training:
+  input: x
+  target: y
+  x_mean:
+  - 1.5163924
+  - -2.8424793e-05
+  - 0.59128469
+  x_std:
+  - 1.415569
+  - 0.65566987
+  - 0.38558245
+  y_mean: -93.28388
+  y_std: 121.19236
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  plt: 0
+  gpus: '0'
+  seed: 42
+dataload:
+  directory: /mnt/wjc_group/mae-zhangbj/ShapeNet_dataset
+
+2026-04-21 05:08:52,876 | INFO     | args.exp_name : ShapeNet_pressure
+2026-04-21 05:08:52,876 | INFO     | Starting training with 1 GPUs
+2026-04-21 05:08:53,550 | INFO     | Total trainable parameters: 1437705
+2026-04-21 05:08:53,550 | INFO     | Data loaded: 440 training batches, 55 validation batches, 55 test batches
+2026-04-21 05:08:54,281 | INFO     | Staring training for 150 epochs
+2026-04-21 05:09:38,674 | INFO     | Epoch 1/150 - Train Loss: 0.107390, Val Loss: 0.063707[0m
+2026-04-21 05:13:51,853 | INFO     | Config:
+exp_name: ShapeNet_pressure
+model:
+  input_dim: 3
+  output_dim: 1
+  res: true
+  emb_dims: 1024
+  k: 40
+  mlp_ratio: 1.5
+  dropout: 0.4
+  output_channels: 1
+training:
+  input: x
+  target: y
+  x_mean:
+  - 1.5163924
+  - -2.8424793e-05
+  - 0.59128469
+  x_std:
+  - 1.415569
+  - 0.65566987
+  - 0.38558245
+  y_mean: -93.28388
+  y_std: 121.19236
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  plt: 0
+  gpus: '0'
+  seed: 42
+dataload:
+  directory: /mnt/wjc_group/mae-zhangbj/ShapeNet_dataset
+
+2026-04-21 05:13:51,853 | INFO     | args.exp_name : ShapeNet_pressure
+2026-04-21 05:13:51,853 | INFO     | Starting training with 1 GPUs
+2026-04-21 05:13:52,642 | INFO     | Total trainable parameters: 1437705
+2026-04-21 05:13:52,642 | INFO     | Data loaded: 440 training batches, 55 validation batches, 55 test batches
+2026-04-21 05:13:53,427 | INFO     | Staring training for 150 epochs
+2026-04-21 05:14:37,804 | INFO     | Epoch 1/150 - Train Loss: 0.107390, Val Loss: 0.063707[0m
+2026-04-21 05:14:37,820 | INFO     | New best model saved with Val Loss: 0.063707
+2026-04-21 05:20:45,851 | INFO     | Config:
+exp_name: ShapeNet_pressure
+model:
+  input_dim: 3
+  output_dim: 1
+  res: true
+  emb_dims: 1024
+  k: 40
+  mlp_ratio: 1.5
+  dropout: 0.4
+  output_channels: 1
+training:
+  input: x
+  target: y
+  x_mean:
+  - 1.5163924
+  - -2.8424793e-05
+  - 0.59128469
+  x_std:
+  - 1.415569
+  - 0.65566987
+  - 0.38558245
+  y_mean: -93.28388
+  y_std: 121.19236
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  plt: 0
+  gpus: '0'
+  seed: 42
+dataload:
+  directory: /mnt/wjc_group/mae-zhangbj/ShapeNet_dataset
+
+2026-04-21 05:20:45,851 | INFO     | args.exp_name : ShapeNet_pressure
+2026-04-21 05:20:45,851 | INFO     | Starting training with 1 GPUs
+2026-04-21 05:20:46,466 | INFO     | Total trainable parameters: 1437705
+2026-04-21 05:20:46,467 | INFO     | Data loaded: 440 training batches, 55 validation batches, 55 test batches
+2026-04-21 05:20:47,196 | INFO     | Staring training for 150 epochs
+2026-04-21 05:21:31,618 | INFO     | Epoch 1/150 - Train Loss: 0.107390, Val Loss: 0.063707[0m
+2026-04-21 05:21:31,640 | INFO     | New best model saved with Val Loss: 0.063707
+2026-04-21 05:22:15,493 | INFO     | Epoch 2/150 - Train Loss: 0.054986, Val Loss: 0.041950[0m
+2026-04-21 05:22:15,518 | INFO     | New best model saved with Val Loss: 0.041950
+2026-04-21 05:22:59,365 | INFO     | Epoch 3/150 - Train Loss: 0.038529, Val Loss: 0.025220[0m
+2026-04-21 05:22:59,388 | INFO     | New best model saved with Val Loss: 0.025220
+2026-04-21 05:23:43,254 | INFO     | Epoch 4/150 - Train Loss: 0.029414, Val Loss: 0.021920[0m
+2026-04-21 05:23:43,281 | INFO     | New best model saved with Val Loss: 0.021920
+2026-04-21 05:24:27,143 | INFO     | Epoch 5/150 - Train Loss: 0.023102, Val Loss: 0.016305[0m
+2026-04-21 05:24:27,166 | INFO     | New best model saved with Val Loss: 0.016305
+2026-04-21 05:25:11,036 | INFO     | Epoch 6/150 - Train Loss: 0.018808, Val Loss: 0.018319[0m
+2026-04-21 05:25:54,894 | INFO     | Epoch 7/150 - Train Loss: 0.015628, Val Loss: 0.010915[0m
+2026-04-21 05:25:54,913 | INFO     | New best model saved with Val Loss: 0.010915
+2026-04-21 05:26:38,774 | INFO     | Epoch 8/150 - Train Loss: 0.012985, Val Loss: 0.009696[0m
+2026-04-21 05:26:38,791 | INFO     | New best model saved with Val Loss: 0.009696
+2026-04-21 05:27:22,645 | INFO     | Epoch 9/150 - Train Loss: 0.012480, Val Loss: 0.010427[0m
+2026-04-21 05:28:06,483 | INFO     | Epoch 10/150 - Train Loss: 0.011555, Val Loss: 0.008317[0m
+2026-04-21 05:28:06,511 | INFO     | New best model saved with Val Loss: 0.008317
+2026-04-21 05:28:50,495 | INFO     | Epoch 11/150 - Train Loss: 0.010670, Val Loss: 0.013371[0m
+2026-04-21 05:29:34,363 | INFO     | Epoch 12/150 - Train Loss: 0.010230, Val Loss: 0.009040[0m
+2026-04-21 05:30:18,222 | INFO     | Epoch 13/150 - Train Loss: 0.009728, Val Loss: 0.009311[0m
+2026-04-21 05:31:02,063 | INFO     | Epoch 14/150 - Train Loss: 0.009733, Val Loss: 0.007087[0m
+2026-04-21 05:31:02,085 | INFO     | New best model saved with Val Loss: 0.007087
+2026-04-21 05:31:45,949 | INFO     | Epoch 15/150 - Train Loss: 0.009186, Val Loss: 0.007168[0m
+2026-04-21 05:32:29,825 | INFO     | Epoch 16/150 - Train Loss: 0.008812, Val Loss: 0.008587[0m
+2026-04-21 05:33:13,707 | INFO     | Epoch 17/150 - Train Loss: 0.008443, Val Loss: 0.006194[0m
+2026-04-21 05:33:13,729 | INFO     | New best model saved with Val Loss: 0.006194
+2026-04-21 05:33:57,608 | INFO     | Epoch 18/150 - Train Loss: 0.008663, Val Loss: 0.005933[0m
+2026-04-21 05:33:57,629 | INFO     | New best model saved with Val Loss: 0.005933
+2026-04-21 05:34:41,537 | INFO     | Epoch 19/150 - Train Loss: 0.008192, Val Loss: 0.006332[0m
+2026-04-21 05:35:25,410 | INFO     | Epoch 20/150 - Train Loss: 0.007990, Val Loss: 0.012724[0m
+2026-04-21 05:36:09,379 | INFO     | Epoch 21/150 - Train Loss: 0.008289, Val Loss: 0.007900[0m
+2026-04-21 05:36:53,263 | INFO     | Epoch 22/150 - Train Loss: 0.008344, Val Loss: 0.009980[0m
+2026-04-21 05:37:37,171 | INFO     | Epoch 23/150 - Train Loss: 0.007719, Val Loss: 0.010759[0m
+2026-04-21 05:38:21,064 | INFO     | Epoch 24/150 - Train Loss: 0.007625, Val Loss: 0.009497[0m
+2026-04-21 05:39:04,944 | INFO     | Epoch 25/150 - Train Loss: 0.007645, Val Loss: 0.007691[0m
+2026-04-21 05:39:48,841 | INFO     | Epoch 26/150 - Train Loss: 0.007516, Val Loss: 0.008489[0m
+2026-04-21 05:40:32,722 | INFO     | Epoch 27/150 - Train Loss: 0.007433, Val Loss: 0.007056[0m
+2026-04-21 05:41:16,609 | INFO     | Epoch 28/150 - Train Loss: 0.007527, Val Loss: 0.012193[0m
+2026-04-21 05:42:00,486 | INFO     | Epoch 29/150 - Train Loss: 0.007433, Val Loss: 0.012222[0m
+2026-04-21 05:42:44,343 | INFO     | Epoch 30/150 - Train Loss: 0.005195, Val Loss: 0.005761[0m
+2026-04-21 05:42:44,365 | INFO     | New best model saved with Val Loss: 0.005761
+2026-04-21 05:43:28,381 | INFO     | Epoch 31/150 - Train Loss: 0.004881, Val Loss: 0.005977[0m
+2026-04-21 05:44:12,254 | INFO     | Epoch 32/150 - Train Loss: 0.004805, Val Loss: 0.005566[0m
+2026-04-21 05:44:12,272 | INFO     | New best model saved with Val Loss: 0.005566
+2026-04-21 05:44:56,138 | INFO     | Epoch 33/150 - Train Loss: 0.004740, Val Loss: 0.005466[0m
+2026-04-21 05:44:56,160 | INFO     | New best model saved with Val Loss: 0.005466
+2026-04-21 05:45:40,090 | INFO     | Epoch 34/150 - Train Loss: 0.004648, Val Loss: 0.005567[0m
+2026-04-21 05:46:23,991 | INFO     | Epoch 35/150 - Train Loss: 0.004616, Val Loss: 0.005151[0m
+2026-04-21 05:46:24,013 | INFO     | New best model saved with Val Loss: 0.005151
+2026-04-21 05:47:07,936 | INFO     | Epoch 36/150 - Train Loss: 0.004558, Val Loss: 0.005793[0m
+2026-04-21 05:47:51,834 | INFO     | Epoch 37/150 - Train Loss: 0.004529, Val Loss: 0.004595[0m
+2026-04-21 05:47:51,860 | INFO     | New best model saved with Val Loss: 0.004595
+2026-04-21 05:48:35,774 | INFO     | Epoch 38/150 - Train Loss: 0.004438, Val Loss: 0.004596[0m
+2026-04-21 05:49:19,682 | INFO     | Epoch 39/150 - Train Loss: 0.004448, Val Loss: 0.005953[0m
+2026-04-21 05:50:03,577 | INFO     | Epoch 40/150 - Train Loss: 0.004397, Val Loss: 0.005210[0m
+2026-04-21 05:50:47,563 | INFO     | Epoch 41/150 - Train Loss: 0.004357, Val Loss: 0.005273[0m
+2026-04-21 05:51:31,440 | INFO     | Epoch 42/150 - Train Loss: 0.004329, Val Loss: 0.004573[0m
+2026-04-21 05:51:31,468 | INFO     | New best model saved with Val Loss: 0.004573
+2026-04-21 05:52:15,360 | INFO     | Epoch 43/150 - Train Loss: 0.004270, Val Loss: 0.005215[0m
+2026-04-21 05:52:59,262 | INFO     | Epoch 44/150 - Train Loss: 0.004296, Val Loss: 0.005555[0m
+2026-04-21 05:53:43,204 | INFO     | Epoch 45/150 - Train Loss: 0.004213, Val Loss: 0.004006[0m
+2026-04-21 05:53:43,228 | INFO     | New best model saved with Val Loss: 0.004006
+2026-04-21 05:54:27,122 | INFO     | Epoch 46/150 - Train Loss: 0.004203, Val Loss: 0.004339[0m
+2026-04-21 05:55:11,029 | INFO     | Epoch 47/150 - Train Loss: 0.004199, Val Loss: 0.005663[0m
+2026-04-21 05:55:54,955 | INFO     | Epoch 48/150 - Train Loss: 0.004172, Val Loss: 0.003881[0m
+2026-04-21 05:55:54,977 | INFO     | New best model saved with Val Loss: 0.003881
+2026-04-21 05:56:38,859 | INFO     | Epoch 49/150 - Train Loss: 0.004128, Val Loss: 0.003590[0m
+2026-04-21 05:56:38,881 | INFO     | New best model saved with Val Loss: 0.003590
+2026-04-21 05:57:22,775 | INFO     | Epoch 50/150 - Train Loss: 0.004114, Val Loss: 0.004026[0m
+2026-04-21 05:58:06,751 | INFO     | Epoch 51/150 - Train Loss: 0.004047, Val Loss: 0.004281[0m
+2026-04-21 05:58:50,658 | INFO     | Epoch 52/150 - Train Loss: 0.004005, Val Loss: 0.004871[0m
+2026-04-21 05:59:34,564 | INFO     | Epoch 53/150 - Train Loss: 0.004020, Val Loss: 0.004955[0m
+2026-04-21 06:00:18,449 | INFO     | Epoch 54/150 - Train Loss: 0.003994, Val Loss: 0.005273[0m
+2026-04-21 06:01:02,349 | INFO     | Epoch 55/150 - Train Loss: 0.004001, Val Loss: 0.005613[0m
+2026-04-21 06:01:46,289 | INFO     | Epoch 56/150 - Train Loss: 0.003914, Val Loss: 0.004949[0m
+2026-04-21 06:02:30,201 | INFO     | Epoch 57/150 - Train Loss: 0.003915, Val Loss: 0.004337[0m
+2026-04-21 06:03:14,137 | INFO     | Epoch 58/150 - Train Loss: 0.003938, Val Loss: 0.004628[0m
+2026-04-21 06:03:58,055 | INFO     | Epoch 59/150 - Train Loss: 0.003930, Val Loss: 0.004276[0m
+2026-04-21 06:04:41,926 | INFO     | Epoch 60/150 - Train Loss: 0.003827, Val Loss: 0.004478[0m
+2026-04-21 06:05:25,920 | INFO     | Epoch 61/150 - Train Loss: 0.003571, Val Loss: 0.004328[0m
+2026-04-21 06:06:09,826 | INFO     | Epoch 62/150 - Train Loss: 0.003538, Val Loss: 0.004051[0m
+2026-04-21 06:06:53,745 | INFO     | Epoch 63/150 - Train Loss: 0.003520, Val Loss: 0.004100[0m
+2026-04-21 06:07:37,634 | INFO     | Epoch 64/150 - Train Loss: 0.003510, Val Loss: 0.004253[0m
+2026-04-21 06:08:21,530 | INFO     | Epoch 65/150 - Train Loss: 0.003497, Val Loss: 0.004025[0m
+2026-04-21 06:09:05,428 | INFO     | Epoch 66/150 - Train Loss: 0.003505, Val Loss: 0.004260[0m
+2026-04-21 06:09:49,323 | INFO     | Epoch 67/150 - Train Loss: 0.003494, Val Loss: 0.004037[0m
+2026-04-21 06:10:33,201 | INFO     | Epoch 68/150 - Train Loss: 0.003491, Val Loss: 0.004282[0m
+2026-04-21 06:11:17,099 | INFO     | Epoch 69/150 - Train Loss: 0.003480, Val Loss: 0.004346[0m
+2026-04-21 06:12:00,996 | INFO     | Epoch 70/150 - Train Loss: 0.003476, Val Loss: 0.004294[0m
+2026-04-21 06:12:44,967 | INFO     | Epoch 71/150 - Train Loss: 0.003473, Val Loss: 0.004106[0m
+2026-04-21 06:13:28,849 | INFO     | Epoch 72/150 - Train Loss: 0.003434, Val Loss: 0.004181[0m
+2026-04-21 06:14:12,723 | INFO     | Epoch 73/150 - Train Loss: 0.003442, Val Loss: 0.004072[0m
+2026-04-21 06:14:56,620 | INFO     | Epoch 74/150 - Train Loss: 0.003443, Val Loss: 0.004140[0m
+2026-04-21 06:15:40,493 | INFO     | Epoch 75/150 - Train Loss: 0.003437, Val Loss: 0.004155[0m
+2026-04-21 06:16:24,388 | INFO     | Epoch 76/150 - Train Loss: 0.003427, Val Loss: 0.004141[0m
+2026-04-21 06:17:08,260 | INFO     | Epoch 77/150 - Train Loss: 0.003436, Val Loss: 0.004116[0m
+2026-04-21 06:17:52,171 | INFO     | Epoch 78/150 - Train Loss: 0.003432, Val Loss: 0.004092[0m
+2026-04-21 06:18:36,062 | INFO     | Epoch 79/150 - Train Loss: 0.003435, Val Loss: 0.004129[0m
+2026-04-21 06:19:19,958 | INFO     | Epoch 80/150 - Train Loss: 0.003434, Val Loss: 0.004171[0m
+2026-04-21 06:20:03,988 | INFO     | Epoch 81/150 - Train Loss: 0.003431, Val Loss: 0.004149[0m
+2026-04-21 06:20:47,881 | INFO     | Epoch 82/150 - Train Loss: 0.003424, Val Loss: 0.004146[0m
+2026-04-21 06:21:31,745 | INFO     | Epoch 83/150 - Train Loss: 0.003419, Val Loss: 0.004136[0m
+2026-04-21 06:22:15,611 | INFO     | Epoch 84/150 - Train Loss: 0.003422, Val Loss: 0.004140[0m
+2026-04-21 06:22:59,498 | INFO     | Epoch 85/150 - Train Loss: 0.003429, Val Loss: 0.004128[0m
+2026-04-21 06:23:43,375 | INFO     | Epoch 86/150 - Train Loss: 0.003424, Val Loss: 0.004137[0m
+2026-04-21 06:24:27,265 | INFO     | Epoch 87/150 - Train Loss: 0.003424, Val Loss: 0.004122[0m
+2026-04-21 06:25:11,154 | INFO     | Epoch 88/150 - Train Loss: 0.003428, Val Loss: 0.004135[0m
+2026-04-21 06:25:55,048 | INFO     | Epoch 89/150 - Train Loss: 0.003422, Val Loss: 0.004128[0m
+2026-04-21 06:26:38,966 | INFO     | Epoch 90/150 - Train Loss: 0.003423, Val Loss: 0.004133[0m
+2026-04-21 06:27:22,962 | INFO     | Epoch 91/150 - Train Loss: 0.003424, Val Loss: 0.004128[0m
+2026-04-21 06:28:06,883 | INFO     | Epoch 92/150 - Train Loss: 0.003423, Val Loss: 0.004114[0m
+2026-04-21 06:28:50,791 | INFO     | Epoch 93/150 - Train Loss: 0.003430, Val Loss: 0.004132[0m
+2026-04-21 06:29:34,701 | INFO     | Epoch 94/150 - Train Loss: 0.003424, Val Loss: 0.004130[0m
+2026-04-21 06:30:18,620 | INFO     | Epoch 95/150 - Train Loss: 0.003425, Val Loss: 0.004131[0m
+2026-04-21 06:31:02,513 | INFO     | Epoch 96/150 - Train Loss: 0.003432, Val Loss: 0.004129[0m
+2026-04-21 06:31:46,416 | INFO     | Epoch 97/150 - Train Loss: 0.003424, Val Loss: 0.004130[0m
+2026-04-21 06:32:30,317 | INFO     | Epoch 98/150 - Train Loss: 0.003418, Val Loss: 0.004130[0m
+2026-04-21 06:33:14,188 | INFO     | Epoch 99/150 - Train Loss: 0.003428, Val Loss: 0.004129[0m
+2026-04-21 06:33:58,116 | INFO     | Epoch 100/150 - Train Loss: 0.003424, Val Loss: 0.004129[0m
+2026-04-21 06:34:42,121 | INFO     | Epoch 101/150 - Train Loss: 0.003431, Val Loss: 0.004129[0m
+2026-04-21 06:35:26,023 | INFO     | Epoch 102/150 - Train Loss: 0.003428, Val Loss: 0.004130[0m
+2026-04-21 06:36:09,918 | INFO     | Epoch 103/150 - Train Loss: 0.003421, Val Loss: 0.004129[0m
+2026-04-21 06:36:53,806 | INFO     | Epoch 104/150 - Train Loss: 0.003427, Val Loss: 0.004129[0m
+2026-04-21 06:37:37,701 | INFO     | Epoch 105/150 - Train Loss: 0.003429, Val Loss: 0.004132[0m
+2026-04-21 06:38:21,596 | INFO     | Epoch 106/150 - Train Loss: 0.003427, Val Loss: 0.004131[0m
+2026-04-21 06:39:05,500 | INFO     | Epoch 107/150 - Train Loss: 0.003422, Val Loss: 0.004130[0m
+2026-04-21 06:39:49,408 | INFO     | Epoch 108/150 - Train Loss: 0.003423, Val Loss: 0.004130[0m
+2026-04-21 06:40:33,296 | INFO     | Epoch 109/150 - Train Loss: 0.003424, Val Loss: 0.004130[0m
+2026-04-21 06:41:17,189 | INFO     | Epoch 110/150 - Train Loss: 0.003432, Val Loss: 0.004129[0m
+2026-04-21 06:42:01,313 | INFO     | Epoch 111/150 - Train Loss: 0.003420, Val Loss: 0.004129[0m
+2026-04-21 06:42:45,208 | INFO     | Epoch 112/150 - Train Loss: 0.003428, Val Loss: 0.004129[0m
+2026-04-21 06:43:29,146 | INFO     | Epoch 113/150 - Train Loss: 0.003427, Val Loss: 0.004127[0m
+2026-04-21 06:44:13,039 | INFO     | Epoch 114/150 - Train Loss: 0.003428, Val Loss: 0.004129[0m
+2026-04-21 06:44:56,924 | INFO     | Epoch 115/150 - Train Loss: 0.003421, Val Loss: 0.004129[0m
+2026-04-21 06:45:40,800 | INFO     | Epoch 116/150 - Train Loss: 0.003429, Val Loss: 0.004126[0m
+2026-04-21 06:46:24,710 | INFO     | Epoch 117/150 - Train Loss: 0.003428, Val Loss: 0.004128[0m
+2026-04-21 06:47:08,601 | INFO     | Epoch 118/150 - Train Loss: 0.003425, Val Loss: 0.004128[0m
+2026-04-21 06:47:52,483 | INFO     | Epoch 119/150 - Train Loss: 0.003417, Val Loss: 0.004127[0m
+2026-04-21 06:48:36,386 | INFO     | Epoch 120/150 - Train Loss: 0.003419, Val Loss: 0.004127[0m
+2026-04-21 06:49:20,388 | INFO     | Epoch 121/150 - Train Loss: 0.003427, Val Loss: 0.004127[0m
+2026-04-21 06:50:04,265 | INFO     | Epoch 122/150 - Train Loss: 0.003434, Val Loss: 0.004127[0m
+2026-04-21 06:50:48,156 | INFO     | Epoch 123/150 - Train Loss: 0.003422, Val Loss: 0.004128[0m
+2026-04-21 06:51:32,061 | INFO     | Epoch 124/150 - Train Loss: 0.003424, Val Loss: 0.004126[0m
+2026-04-21 06:52:15,942 | INFO     | Epoch 125/150 - Train Loss: 0.003422, Val Loss: 0.004126[0m
+2026-04-21 06:52:59,872 | INFO     | Epoch 126/150 - Train Loss: 0.003425, Val Loss: 0.004126[0m
+2026-04-21 06:53:43,760 | INFO     | Epoch 127/150 - Train Loss: 0.003419, Val Loss: 0.004126[0m
+2026-04-21 06:54:27,658 | INFO     | Epoch 128/150 - Train Loss: 0.003421, Val Loss: 0.004127[0m
+2026-04-21 06:55:11,547 | INFO     | Epoch 129/150 - Train Loss: 0.003429, Val Loss: 0.004128[0m
+2026-04-21 06:55:55,443 | INFO     | Epoch 130/150 - Train Loss: 0.003425, Val Loss: 0.004128[0m
+2026-04-21 06:56:39,424 | INFO     | Epoch 131/150 - Train Loss: 0.003431, Val Loss: 0.004128[0m
+2026-04-21 06:57:23,313 | INFO     | Epoch 132/150 - Train Loss: 0.003429, Val Loss: 0.004127[0m
+2026-04-21 06:58:07,189 | INFO     | Epoch 133/150 - Train Loss: 0.003425, Val Loss: 0.004128[0m
+2026-04-21 06:58:51,098 | INFO     | Epoch 134/150 - Train Loss: 0.003425, Val Loss: 0.004128[0m
+2026-04-21 06:59:35,017 | INFO     | Epoch 135/150 - Train Loss: 0.003429, Val Loss: 0.004129[0m
+2026-04-21 07:00:18,905 | INFO     | Epoch 136/150 - Train Loss: 0.003428, Val Loss: 0.004129[0m
+2026-04-21 07:01:02,830 | INFO     | Epoch 137/150 - Train Loss: 0.003434, Val Loss: 0.004129[0m
+2026-04-21 07:01:46,751 | INFO     | Epoch 138/150 - Train Loss: 0.003421, Val Loss: 0.004130[0m
+2026-04-21 07:02:30,651 | INFO     | Epoch 139/150 - Train Loss: 0.003422, Val Loss: 0.004128[0m
+2026-04-21 07:03:14,524 | INFO     | Epoch 140/150 - Train Loss: 0.003427, Val Loss: 0.004130[0m
+2026-04-21 07:03:58,556 | INFO     | Epoch 141/150 - Train Loss: 0.003427, Val Loss: 0.004128[0m
+2026-04-21 07:04:42,457 | INFO     | Epoch 142/150 - Train Loss: 0.003420, Val Loss: 0.004129[0m
+2026-04-21 07:05:26,352 | INFO     | Epoch 143/150 - Train Loss: 0.003426, Val Loss: 0.004130[0m
+2026-04-21 07:06:10,255 | INFO     | Epoch 144/150 - Train Loss: 0.003421, Val Loss: 0.004131[0m
+2026-04-21 07:06:54,160 | INFO     | Epoch 145/150 - Train Loss: 0.003428, Val Loss: 0.004130[0m
+2026-04-21 07:07:38,059 | INFO     | Epoch 146/150 - Train Loss: 0.003427, Val Loss: 0.004130[0m
+2026-04-21 07:08:21,978 | INFO     | Epoch 147/150 - Train Loss: 0.003420, Val Loss: 0.004130[0m
+2026-04-21 07:09:05,879 | INFO     | Epoch 148/150 - Train Loss: 0.003425, Val Loss: 0.004129[0m
+2026-04-21 07:09:49,769 | INFO     | Epoch 149/150 - Train Loss: 0.003424, Val Loss: 0.004130[0m
+2026-04-21 07:10:33,712 | INFO     | Epoch 150/150 - Train Loss: 0.003428, Val Loss: 0.004130[0m
+2026-04-21 07:10:33,826 | INFO     | Final model saved to experiments_ShapeNet/ShapeNet_pressure/final_model.pth
+2026-04-21 07:10:33,826 | INFO     | Testing the final model
+2026-04-21 07:10:38,337 | INFO     | *******************[35mL2_erro:[0m
+2026-04-21 07:10:38,337 | INFO     |  0.131589
+2026-04-21 07:10:38,338 | INFO     | *******************[35mmse_loss:[0m
+2026-04-21 07:10:38,338 | INFO     |  0.004753
+2026-04-21 07:10:38,338 | INFO     | *******************[35minference_time:[0m
+2026-04-21 07:10:38,338 | INFO     |  0.000000
+2026-04-21 18:20:11,740 | INFO     | Config:
+exp_name: ShapeNet_pressure
+model:
+  input_dim: 3
+  output_dim: 1
+  res: true
+  emb_dims: 1024
+  k: 40
+  mlp_ratio: 1.5
+  dropout: 0.4
+  output_channels: 1
+training:
+  input: x
+  target: y
+  x_mean:
+  - 1.5163924
+  - -2.8424793e-05
+  - 0.59128469
+  x_std:
+  - 1.415569
+  - 0.65566987
+  - 0.38558245
+  y_mean: -93.28388
+  y_std: 121.19236
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 1
+  plt: 0
+  gpus: '0'
+  seed: 42
+dataload:
+  directory: /mnt/wjc_group/mae-zhangbj/ShapeNet_dataset
+
+2026-04-21 18:20:11,740 | INFO     | args.exp_name : ShapeNet_pressure
+2026-04-21 18:20:11,740 | INFO     | Starting training with 1 GPUs
+2026-04-21 18:20:12,430 | INFO     | Total trainable parameters: 1437705
+2026-04-21 18:20:12,430 | INFO     | Data loaded: 440 training batches, 55 validation batches, 55 test batches
+2026-04-21 18:20:13,165 | INFO     | Loading best model for testing only
+2026-04-21 18:20:17,990 | INFO     | *******************[35mL2_erro:[0m
+2026-04-21 18:20:17,990 | INFO     |  0.125935
+2026-04-21 18:20:17,990 | INFO     | *******************[35mmse_loss:[0m
+2026-04-21 18:20:17,990 | INFO     |  0.004390
+2026-04-21 18:20:17,990 | INFO     | *******************[35minference_time:[0m
+2026-04-21 18:20:17,991 | INFO     |  0.000000

@@ -2,7 +2,7 @@ exp_name: "velocity_N10k_lr1e-3_e250"
 
 model:
     input_dim: 3
-    output_dim: 1
+    output_dim: 3
     res: true
     emb_dims: 1024
     k: 40
@@ -13,19 +13,21 @@ training:
     input: "volume_anchor_position"
     target: "volume_anchor_velocity"
     batch_size: 1
-    epochs: 400
+    epochs: 250
     lr: 0.001
     scheduler_step: 50
     scheduler_gamma: 0.5
     max_grad_norm: 0.1
     num_workers: 1
-    weight_decay: 0.00000
+    weight_decay: 0.00001
     test_only: 1  
     gpus: "0"
+    seed: 42
     root_dir: "/mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small"
     seed: 42
 
-
+dataload: 
+    directory: "/Users/zhangbojun/ShapeNet_dataset"
 
 
 

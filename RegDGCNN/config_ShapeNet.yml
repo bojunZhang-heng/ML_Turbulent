@@ -25,14 +25,14 @@ training:
     max_grad_norm: 0.1
     num_workers: 1
     weight_decay: 0.00001
-    test_only: 0
+    test_only: 1
     plt: 0
     gpus: "0"
     seed: 42
 
 dataload:
-#    directory: "/mnt/wjc_group/mae-zhangbj/ShapeNet_dataset"
-    directory: "/Users/zhangbojun/ShapeNet_dataset"
+    directory: "/mnt/wjc_group/mae-zhangbj/ShapeNet_dataset"
+#    directory: "/Users/zhangbojun/ShapeNet_dataset"
 
 
 
