@@ -42,6 +42,7 @@ def initialize_model(args, device):
             k=args.model.k,
             emb_dims=args.model.emb_dims,
             dropout=args.model.dropout,
+            output_dim=args.output_dim
             ).to(device)
 
     return model

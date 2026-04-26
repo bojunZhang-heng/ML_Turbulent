@@ -120,9 +120,10 @@ class RegDGCNN_pressure(nn.Module):
             self,
             k,
             emb_dims,
-            dropout):
+            dropout,
+            output_dim):
         super(RegDGCNN_pressure, self).__init__()
-        self.seg_num_all = 1
+        self.seg_num_all = output_dim
         self.k = k
         self.emb_dims = emb_dims
         self.dropout = dropout
