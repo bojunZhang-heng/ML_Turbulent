@@ -1,0 +1,89 @@
+/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch_geometric/__init__.py:4: UserWarning: An issue occurred while importing 'pyg-lib'. Disabling its usage. Stacktrace: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.33' not found (required by /home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/libpyg.so)
+  import torch_geometric.typing
+/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch_geometric/__init__.py:4: UserWarning: An issue occurred while importing 'torch-sparse'. Disabling its usage. Stacktrace: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.33' not found (required by /home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/libpyg.so)
+  import torch_geometric.typing
+2025-12-18 18:13:19,266 | INFO     | Config:
+exp_name: v5_epoch300_N50_000_drop01_lr_query
+slice_num: 32
+ref: 8
+downsample: 5
+batch_size: 1
+epochs: 300
+lr: 0.001
+scheduler_step: 100
+scheduler_gamma: 0.1
+max_grad_norm: 0.1
+num_workers: 1
+weight_decay: 1.0e-05
+ndim: 3
+input_dim: 3
+output_dim_surface: 1
+output_dim_volume: 3
+geometry_depth: 1
+num_surf_blocks: 6
+num_volume_blocks: 6
+num_heads: 3
+blocks: pscsc
+n_input: 192
+dim: 192
+n_layers: 5
+res: true
+dim_head: 64
+radius: 0.25
+seed: 1
+test_only: 0
+gpus: '0'
+root_dir: /mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small
+
+2025-12-18 18:13:19,266 | INFO     | args.exp_name : v5_epoch300_N50_000_drop01_lr_query
+2025-12-18 18:13:19,266 | INFO     | Starting training with 1 GPUs
+2025-12-18 18:13:20,927 | INFO     | Total trainable parameters: 19229879
+2025-12-18 18:13:20,928 | INFO     | Data loaded: 380 training batches, 33 validation batches, 44 test batches
+2025-12-18 18:13:20,929 | INFO     | Staring training for 300 epochs
+[Training]:   0%|          | 0/380 [00:00<?, ?it/s]2025-12-18 18:13:21,057 | INFO     | geometry_position: shape = (10000, 3)
+2025-12-18 18:13:21,058 | INFO     | geometry_batch_idx: shape = (10000,)
+2025-12-18 18:13:21,058 | INFO     | geometry_supernode_idx: shape = (10000,)
+2025-12-18 18:13:21,058 | INFO     | surface_anchor_position: shape = (1, 10000, 3)
+2025-12-18 18:13:21,058 | INFO     | volume_anchor_position: shape = (1, 10000, 3)
+[Training]:   0%|          | 0/380 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/home/mae-zhangbj/MB_Transolver/ab-ubt_v5/train_DrivAerML.py", line 448, in <module>
+    main()
+  File "/home/mae-zhangbj/MB_Transolver/ab-ubt_v5/train_DrivAerML.py", line 444, in main
+    train_and_evaluate(args, device)
+  File "/home/mae-zhangbj/MB_Transolver/ab-ubt_v5/train_DrivAerML.py", line 129, in train_and_evaluate
+    train_loss = train_one_epoch(model, train_dataloader, optimizer, criterion, device, args)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/MB_Transolver/ab-ubt_v5/train_DrivAerML.py", line 263, in train_one_epoch
+    prediction = model(**batch_filtered)
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/MB_Transolver/ab-ubt_v5/model_ab_ubt.py", line 192, in forward
+    x = block(x, attn_kwargs=dict(split_size=split_size, **shared_attn_kwargs))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/MB_Transolver/ab-ubt_v5/modules/blocks/transformer_block.py", line 41, in forward
+    x = x + self.attn(self.norm1(x), **(attn_kwargs or {}))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/MB_Transolver/ab-ubt_v5/modules/attention/sharedweights_splitattn_attention.py", line 32, in forward
+    self.qkv(x),
+    ^^^^^^^^
+  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1928, in __getattr__
+    raise AttributeError(
+AttributeError: 'SharedweightsSplitattnAttention' object has no attribute 'qkv'
