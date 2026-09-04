@@ -1,59 +1,0 @@
-CUDA available GPUs: 1
-Current device index: 0
-Device name: Tesla V100-SXM2-32GB
-Physical GPU(s) specified in CUDA_VISIBLE_DEVICES: ['1']
-Using physical GPU 1 (visible as cuda:0 in PyTorch)
-2026-04-21 18:20:11,740 | INFO     | Config:
-exp_name: ShapeNet_pressure
-model:
-  input_dim: 3
-  output_dim: 1
-  res: true
-  emb_dims: 1024
-  k: 40
-  mlp_ratio: 1.5
-  dropout: 0.4
-  output_channels: 1
-training:
-  input: x
-  target: y
-  x_mean:
-  - 1.5163924
-  - -2.8424793e-05
-  - 0.59128469
-  x_std:
-  - 1.415569
-  - 0.65566987
-  - 0.38558245
-  y_mean: -93.28388
-  y_std: 121.19236
-  batch_size: 1
-  epochs: 150
-  lr: 0.001
-  scheduler_step: 50
-  scheduler_gamma: 0.5
-  max_grad_norm: 0.1
-  num_workers: 1
-  weight_decay: 1.0e-05
-  test_only: 1
-  plt: 0
-  gpus: '0'
-  seed: 42
-dataload:
-  directory: /mnt/wjc_group/mae-zhangbj/ShapeNet_dataset
-
-2026-04-21 18:20:11,740 | INFO     | args.exp_name : ShapeNet_pressure
-2026-04-21 18:20:11,740 | INFO     | Starting training with 1 GPUs
-2026-04-21 18:20:12,430 | INFO     | Total trainable parameters: 1437705
-2026-04-21 18:20:12,430 | INFO     | Data loaded: 440 training batches, 55 validation batches, 55 test batches
-exp_name: ShapeNet_pressure
-best_model_path:experiments_ShapeNet/ShapeNet_pressure/best_model.pth
-True
-2026-04-21 18:20:13,165 | INFO     | Loading best model for testing only
-[test_dataloader]:   0%|          | 0/55 [00:00<?, ?it/s][test_dataloader]:   2%|▏         | 1/55 [00:00<00:23,  2.25it/s][test_dataloader]:   5%|▌         | 3/55 [00:00<00:09,  5.69it/s][test_dataloader]:   9%|▉         | 5/55 [00:00<00:06,  7.89it/s][test_dataloader]:  13%|█▎        | 7/55 [00:00<00:05,  9.34it/s][test_dataloader]:  16%|█▋        | 9/55 [00:01<00:04, 10.31it/s][test_dataloader]:  20%|██        | 11/55 [00:01<00:04, 10.98it/s][test_dataloader]:  24%|██▎       | 13/55 [00:01<00:03, 11.43it/s][test_dataloader]:  27%|██▋       | 15/55 [00:01<00:03, 11.74it/s][test_dataloader]:  31%|███       | 17/55 [00:01<00:03, 11.95it/s][test_dataloader]:  35%|███▍      | 19/55 [00:01<00:02, 12.11it/s][test_dataloader]:  38%|███▊      | 21/55 [00:02<00:02, 12.21it/s][test_dataloader]:  42%|████▏     | 23/55 [00:02<00:02, 12.28it/s][test_dataloader]:  45%|████▌     | 25/55 [00:02<00:02, 12.34it/s][test_dataloader]:  49%|████▉     | 27/55 [00:02<00:02, 12.38it/s][test_dataloader]:  53%|█████▎    | 29/55 [00:02<00:02, 12.40it/s][test_dataloader]:  56%|█████▋    | 31/55 [00:02<00:01, 12.41it/s][test_dataloader]:  60%|██████    | 33/55 [00:03<00:01, 12.43it/s][test_dataloader]:  64%|██████▎   | 35/55 [00:03<00:01, 12.44it/s][test_dataloader]:  67%|██████▋   | 37/55 [00:03<00:01, 12.44it/s][test_dataloader]:  71%|███████   | 39/55 [00:03<00:01, 12.45it/s][test_dataloader]:  75%|███████▍  | 41/55 [00:03<00:01, 12.46it/s][test_dataloader]:  78%|███████▊  | 43/55 [00:03<00:00, 12.46it/s][test_dataloader]:  82%|████████▏ | 45/55 [00:03<00:00, 12.46it/s][test_dataloader]:  85%|████████▌ | 47/55 [00:04<00:00, 12.45it/s][test_dataloader]:  89%|████████▉ | 49/55 [00:04<00:00, 12.44it/s][test_dataloader]:  93%|█████████▎| 51/55 [00:04<00:00, 12.44it/s][test_dataloader]:  96%|█████████▋| 53/55 [00:04<00:00, 12.44it/s][test_dataloader]: 100%|██████████| 55/55 [00:04<00:00, 12.45it/s][test_dataloader]: 100%|██████████| 55/55 [00:04<00:00, 11.44it/s]
-2026-04-21 18:20:17,990 | INFO     | *******************[35mL2_erro:[0m
-2026-04-21 18:20:17,990 | INFO     |  0.125935
-2026-04-21 18:20:17,990 | INFO     | *******************[35mmse_loss:[0m
-2026-04-21 18:20:17,990 | INFO     |  0.004390
-2026-04-21 18:20:17,990 | INFO     | *******************[35minference_time:[0m
-2026-04-21 18:20:17,991 | INFO     |  0.000000
