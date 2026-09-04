@@ -1,0 +1,35 @@
+exp_name: "Ahmed_test"
+
+model:
+    input_dim: 3
+    output_dim: 1
+    head_num: 8
+    hidden_dim: 192
+    res: true
+    slice_num: 32
+    layer_num: 8
+    mlp_ratio: 1.5
+    dropout: 0.1
+
+training:
+    input: "x"
+    target: "y"
+    x_mean: [ 1.5163924e+00, -2.8424793e-05,  5.9128469e-01]
+    x_std: [1.415569,  0.65566987, 0.38558245]
+    y_mean: -93.28388
+    y_std: 121.19236
+    batch_size: 1
+    epochs: 3
+    lr: 0.001
+    scheduler_step: 50
+    scheduler_gamma: 0.5
+    max_grad_norm: 0.1
+    num_workers: 1
+    weight_decay: 0.00000
+    test_only: 0  
+    gpus: "0"
+    seed: 42
+
+dataload:
+    directory: "/mnt/wjc_group/mae-zhangbj/AhmedBody_dataset"
+    

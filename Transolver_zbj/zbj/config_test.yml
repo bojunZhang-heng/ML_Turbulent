@@ -1,0 +1,35 @@
+exp_name: "AhmedBody_test"
+
+model:
+    input_dim: 3
+    output_dim: 1
+    head_num: 8
+    hidden_dim: 192
+    res: true
+    slice_num: 32
+    layer_num: 8
+    mlp_ratio: 1.5
+    dropout: 0.1
+
+training:
+    input: "x"
+    target: "y"
+    x_mean: [-0.52420167,  0.14349585,  0.19739145]
+    x_std : [0.3569483,  0.07413766, 0.1201103 ]
+    y_mean: -178.14659246
+    y_std: 357.21268573
+    batch_size: 1
+    epochs: 150
+    lr: 0.001
+    scheduler_step: 50
+    scheduler_gamma: 0.5
+    max_grad_norm: 0.1
+    num_workers: 1
+    weight_decay: 0.00000
+    test_only: 0  
+    gpus: "0"
+    seed: 42
+
+dataload:
+    directory: "/Users/zhangbojun/AhmedBody_dataset"
+    

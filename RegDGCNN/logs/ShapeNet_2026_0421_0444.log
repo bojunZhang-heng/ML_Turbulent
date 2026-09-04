@@ -1,0 +1,4 @@
+  File "/home/mae-zhangbj/ML_Turbulent/RegDGCNN/train_ShapeNet.py", line 39
+    emb_dims=args.model.emb_dims                      
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: invalid syntax. Perhaps you forgot a comma?

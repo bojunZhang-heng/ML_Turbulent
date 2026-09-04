@@ -1,0 +1,39 @@
+exp_name: "WW_wss_N10k_lr1e-3_e250_run1"
+
+model:
+    input_dim: 3
+    output_dim: 3
+    head_num: 8
+    hidden_dim: 192
+    res: true
+    slice_num: 32
+    layer_num: 8
+    mlp_ratio: 1.5
+    dropout: 0.1
+
+training:
+    input: "x_wss"
+    target: "y_wss"
+    x_mean: [ 1.5160021e+00, -5.4310558e-06,  5.8746094e-01]
+    x_std:  [1.415669,        0.65769494,     0.38634354]
+    y_mean: [-0.7479795,      0.06631929,    -0.0876555 ]
+    y_std:  [0.8171278,       0.4440619,      0.82449216]
+    #    y_mean: 1.1269214
+    #    y_std: 0.9211574
+    batch_size: 1
+    epochs: 250
+    lr: 0.001
+    scheduler_step: 50
+    scheduler_gamma: 0.5
+    max_grad_norm: 0.1
+    num_workers: 1
+    weight_decay: 0.00000
+    test_only: 0  
+    gpus: "0"
+    seed: 42
+
+dataload:
+    directory: "/mnt/wjc_group/mae-zhangbj/DrivAerNet++_dataset/E_S_WW_WM"
+
+
+

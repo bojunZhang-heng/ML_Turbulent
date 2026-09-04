@@ -1,0 +1,52 @@
+2026-04-26 12:15:56,454 | INFO     | Config:
+exp_name: velocity_N10k_lr1e-3_e250
+model:
+  input_dim: 3
+  output_dim: 3
+  res: true
+  emb_dims: 1024
+  k: 40
+  mlp_ratio: 1.5
+  dropout: 0.4
+training:
+  input: volume_anchor_position
+  target: volume_anchor_velocity
+  batch_size: 1
+  epochs: 250
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 1
+  gpus: '0'
+  seed: 42
+  root_dir: /mnt/wjc_group/mae-zhangbj/DrivAerML_dataset/small
+dataload:
+  directory: /Users/zhangbojun/ShapeNet_dataset
+
+2026-04-26 12:15:56,454 | INFO     | args.exp_name : velocity_N10k_lr1e-3_e250
+2026-04-26 12:15:56,454 | INFO     | Starting training with 1 GPUs
+2026-04-26 12:15:56,636 | INFO     | Total trainable parameters: 1437705
+2026-04-26 12:15:56,637 | INFO     | Data loaded: 380 training batches, 33 validation batches, 44 test batches
+best_model_path:experiments_DrivAerML/velocity_N10k_lr1e-3_e250/best_model.pth
+2026-04-26 12:15:57,391 | INFO     | Loading best model for testing only
+[Testing]:   0%|          | 0/44 [00:00<?, ?it/s]2026-04-26 12:15:57,871 | INFO     | x.shape: torch.Size([1, 3, 10000])
+2026-04-26 12:15:57,871 | INFO     | y.shape: torch.Size([1, 3, 10000])
+2026-04-26 12:15:57,871 | INFO     | y_hat.shape: torch.Size([1, 1, 10000])
+[Testing]:   0%|          | 0/44 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/home/mae-zhangbj/ML_Turbulent/RegDGCNN/train_DrivAerML.py", line 459, in <module>
+    main()
+  File "/home/mae-zhangbj/ML_Turbulent/RegDGCNN/train_DrivAerML.py", line 455, in main
+    train_and_evaluate(args, device)
+  File "/home/mae-zhangbj/ML_Turbulent/RegDGCNN/train_DrivAerML.py", line 113, in train_and_evaluate
+    test_model(model, test_dataloader, criterion, device, os.path.join('experiments_DrivAerML', args.exp_name), args)
+  File "/home/mae-zhangbj/ML_Turbulent/RegDGCNN/train_DrivAerML.py", line 388, in test_model
+    pred_den = normalizers[args.training.target].denormalize(y_hat)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/ML_Turbulent/RegDGCNN/preprocessors_DrivAerML/moment_normalization_preprocessor.py", line 124, in denormalize
+    denormalized_value = value * std_tensor + mean_tensor
+                         ~~~~~~^~~~~~~~~~~~
+RuntimeError: The size of tensor a (10000) must match the size of tensor b (3) at non-singleton dimension 2

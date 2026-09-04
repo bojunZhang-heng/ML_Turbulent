@@ -1,0 +1,3039 @@
+2025-12-09 19:28:58,985 - INFO - Config:
+exp_name: RTformer_DrivAerNet
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 4
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 64
+  layer_num: 8
+  mlp_ratio: 2
+  dropout: 0.1
+training:
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.7
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  gpus: '0'
+  root_dir: ~/drivaerML_N100_000
+  seed: 42
+dataload:
+  directory: /home/mae-zhangbj/DrivAerNet_dataset/
+
+2025-12-09 19:28:58,985 - INFO - args.exp_name : RTformer_DrivAerNet
+2025-12-09 19:28:58,985 - INFO - Starting training with 1 GPUs
+2025-12-09 19:29:01,383 - INFO - Total trainable parameters: 4524353
+2025-12-09 19:29:01,383 - INFO - Data loaded: 2768 training batches, 603 validation batches, 595 test batches
+2025-12-09 19:29:01,384 - INFO - Staring training for 150 epochs
+2025-12-09 19:42:30,886 - INFO - Config:
+exp_name: RTformer_DrivAerNet
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 4
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 64
+  layer_num: 8
+  mlp_ratio: 2
+  dropout: 0.1
+training:
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.7
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  gpus: '0'
+  root_dir: ~/drivaerML_N100_000
+  seed: 42
+dataload:
+  directory: /home/mae-zhangbj/DrivAerNet_dataset/
+
+2025-12-09 19:42:30,886 - INFO - args.exp_name : RTformer_DrivAerNet
+2025-12-09 19:42:30,886 - INFO - Starting training with 1 GPUs
+2025-12-09 19:42:33,342 - INFO - Total trainable parameters: 4524353
+2025-12-09 19:42:33,342 - INFO - Data loaded: 2768 training batches, 603 validation batches, 595 test batches
+2025-12-09 19:42:33,343 - INFO - Staring training for 150 epochs
+2025-12-09 19:51:13,777 - INFO - Epoch 1/150 - Train Loss: 0.969191, Val Loss: 0.972661[0m
+2025-12-09 19:51:13,812 - INFO - New best model saved with Val Loss: 0.972661
+2025-12-09 19:59:54,427 - INFO - Epoch 2/150 - Train Loss: 0.961253, Val Loss: 0.972030[0m
+2025-12-09 19:59:54,499 - INFO - New best model saved with Val Loss: 0.972030
+2025-12-09 20:08:35,161 - INFO - Epoch 3/150 - Train Loss: 0.960635, Val Loss: 0.971940[0m
+2025-12-09 20:08:35,233 - INFO - New best model saved with Val Loss: 0.971940
+2025-12-09 20:17:15,038 - INFO - Epoch 4/150 - Train Loss: 0.960588, Val Loss: 0.971936[0m
+2025-12-09 20:17:15,106 - INFO - New best model saved with Val Loss: 0.971936
+2025-12-09 20:25:54,264 - INFO - Epoch 5/150 - Train Loss: 0.960587, Val Loss: 0.971935[0m
+2025-12-09 20:25:54,334 - INFO - New best model saved with Val Loss: 0.971935
+2025-12-09 20:34:33,494 - INFO - Epoch 6/150 - Train Loss: 0.960575, Val Loss: 0.971935[0m
+2025-12-09 20:43:12,601 - INFO - Epoch 7/150 - Train Loss: 0.960581, Val Loss: 0.971989[0m
+2025-12-09 20:51:51,646 - INFO - Epoch 8/150 - Train Loss: 0.960562, Val Loss: 0.971947[0m
+2025-12-09 21:00:30,805 - INFO - Epoch 9/150 - Train Loss: 0.960567, Val Loss: 0.972036[0m
+2025-12-09 21:09:10,011 - INFO - Epoch 10/150 - Train Loss: 0.960567, Val Loss: 0.971941[0m
+2025-12-09 21:17:49,394 - INFO - Epoch 11/150 - Train Loss: 0.960563, Val Loss: 0.971935[0m
+2025-12-09 21:26:28,420 - INFO - Epoch 12/150 - Train Loss: 0.960564, Val Loss: 0.971936[0m
+2025-12-09 21:35:07,492 - INFO - Epoch 13/150 - Train Loss: 0.960561, Val Loss: 0.971935[0m
+2025-12-09 21:43:46,624 - INFO - Epoch 14/150 - Train Loss: 0.960562, Val Loss: 0.972134[0m
+2025-12-09 21:52:25,713 - INFO - Epoch 15/150 - Train Loss: 0.960562, Val Loss: 0.971939[0m
+2025-12-09 22:01:04,851 - INFO - Epoch 16/150 - Train Loss: 0.960560, Val Loss: 0.971936[0m
+2025-12-09 22:09:43,986 - INFO - Epoch 17/150 - Train Loss: 0.960563, Val Loss: 0.971941[0m
+2025-12-09 22:18:23,169 - INFO - Epoch 18/150 - Train Loss: 0.960562, Val Loss: 0.971969[0m
+2025-12-09 22:27:02,347 - INFO - Epoch 19/150 - Train Loss: 0.960560, Val Loss: 0.971937[0m
+2025-12-09 22:35:41,474 - INFO - Epoch 20/150 - Train Loss: 0.960558, Val Loss: 0.971949[0m
+2025-12-09 22:44:20,758 - INFO - Epoch 21/150 - Train Loss: 0.960559, Val Loss: 0.971936[0m
+2025-12-09 22:52:59,965 - INFO - Epoch 22/150 - Train Loss: 0.960557, Val Loss: 0.971945[0m
+2025-12-09 23:01:39,117 - INFO - Epoch 23/150 - Train Loss: 0.960560, Val Loss: 0.971935[0m
+2025-12-09 23:10:18,231 - INFO - Epoch 24/150 - Train Loss: 0.960561, Val Loss: 0.971935[0m
+2025-12-09 23:18:57,455 - INFO - Epoch 25/150 - Train Loss: 0.960555, Val Loss: 0.971935[0m
+2025-12-09 23:27:36,683 - INFO - Epoch 26/150 - Train Loss: 0.960559, Val Loss: 0.971953[0m
+2025-12-09 23:36:15,928 - INFO - Epoch 27/150 - Train Loss: 0.960560, Val Loss: 0.971936[0m
+2025-12-09 23:44:55,111 - INFO - Epoch 28/150 - Train Loss: 0.960566, Val Loss: 0.971949[0m
+2025-12-09 23:53:34,258 - INFO - Epoch 29/150 - Train Loss: 0.960562, Val Loss: 0.971951[0m
+2025-12-10 00:02:13,424 - INFO - Epoch 30/150 - Train Loss: 0.960562, Val Loss: 0.971937[0m
+2025-12-10 00:10:52,658 - INFO - Epoch 31/150 - Train Loss: 0.960558, Val Loss: 0.971982[0m
+2025-12-10 00:19:31,723 - INFO - Epoch 32/150 - Train Loss: 0.960562, Val Loss: 0.971944[0m
+2025-12-10 00:28:10,857 - INFO - Epoch 33/150 - Train Loss: 0.960559, Val Loss: 0.971935[0m
+2025-12-10 00:28:10,928 - INFO - New best model saved with Val Loss: 0.971935
+2025-12-10 00:36:50,114 - INFO - Epoch 34/150 - Train Loss: 0.960561, Val Loss: 0.971948[0m
+2025-12-10 00:45:29,239 - INFO - Epoch 35/150 - Train Loss: 0.960564, Val Loss: 0.971936[0m
+2025-12-10 00:54:08,420 - INFO - Epoch 36/150 - Train Loss: 0.960562, Val Loss: 0.971936[0m
+2025-12-10 01:02:47,533 - INFO - Epoch 37/150 - Train Loss: 0.960559, Val Loss: 0.971946[0m
+2025-12-10 01:11:26,644 - INFO - Epoch 38/150 - Train Loss: 0.960565, Val Loss: 0.971965[0m
+2025-12-10 01:20:05,828 - INFO - Epoch 39/150 - Train Loss: 0.960561, Val Loss: 0.971936[0m
+2025-12-10 01:28:44,903 - INFO - Epoch 40/150 - Train Loss: 0.960560, Val Loss: 0.971991[0m
+2025-12-10 01:37:24,112 - INFO - Epoch 41/150 - Train Loss: 0.960562, Val Loss: 0.971958[0m
+2025-12-10 01:46:03,222 - INFO - Epoch 42/150 - Train Loss: 0.960560, Val Loss: 0.971935[0m
+2025-12-10 01:54:42,363 - INFO - Epoch 43/150 - Train Loss: 0.960559, Val Loss: 0.971935[0m
+2025-12-10 02:03:21,443 - INFO - Epoch 44/150 - Train Loss: 0.960559, Val Loss: 0.971940[0m
+2025-12-10 02:12:00,569 - INFO - Epoch 45/150 - Train Loss: 0.960560, Val Loss: 0.971936[0m
+2025-12-10 02:20:39,659 - INFO - Epoch 46/150 - Train Loss: 0.960562, Val Loss: 0.971938[0m
+2025-12-10 02:29:18,736 - INFO - Epoch 47/150 - Train Loss: 0.960559, Val Loss: 0.971938[0m
+2025-12-10 02:37:57,825 - INFO - Epoch 48/150 - Train Loss: 0.960558, Val Loss: 0.971935[0m
+2025-12-10 02:46:37,012 - INFO - Epoch 49/150 - Train Loss: 0.960560, Val Loss: 0.971935[0m
+2025-12-10 02:55:16,132 - INFO - Epoch 50/150 - Train Loss: 0.960557, Val Loss: 0.971961[0m
+2025-12-10 03:03:55,365 - INFO - Epoch 51/150 - Train Loss: 0.960556, Val Loss: 0.971935[0m
+2025-12-10 03:12:34,491 - INFO - Epoch 52/150 - Train Loss: 0.960554, Val Loss: 0.971950[0m
+2025-12-10 03:21:13,556 - INFO - Epoch 53/150 - Train Loss: 0.960553, Val Loss: 0.971959[0m
+2025-12-10 03:29:52,712 - INFO - Epoch 54/150 - Train Loss: 0.960554, Val Loss: 0.971939[0m
+2025-12-10 03:38:31,889 - INFO - Epoch 55/150 - Train Loss: 0.960549, Val Loss: 0.971941[0m
+2025-12-10 03:47:11,074 - INFO - Epoch 56/150 - Train Loss: 0.960557, Val Loss: 0.971936[0m
+2025-12-10 03:55:50,224 - INFO - Epoch 57/150 - Train Loss: 0.960554, Val Loss: 0.971938[0m
+2025-12-10 04:04:29,366 - INFO - Epoch 58/150 - Train Loss: 0.960556, Val Loss: 0.971937[0m
+2025-12-10 04:13:08,508 - INFO - Epoch 59/150 - Train Loss: 0.960555, Val Loss: 0.971962[0m
+2025-12-10 04:21:47,598 - INFO - Epoch 60/150 - Train Loss: 0.960555, Val Loss: 0.971936[0m
+2025-12-10 04:30:26,897 - INFO - Epoch 61/150 - Train Loss: 0.960556, Val Loss: 0.971942[0m
+2025-12-10 04:39:06,042 - INFO - Epoch 62/150 - Train Loss: 0.960552, Val Loss: 0.971936[0m
+2025-12-10 04:47:45,171 - INFO - Epoch 63/150 - Train Loss: 0.960554, Val Loss: 0.971935[0m
+2025-12-10 04:56:24,310 - INFO - Epoch 64/150 - Train Loss: 0.960553, Val Loss: 0.971940[0m
+2025-12-10 05:05:03,471 - INFO - Epoch 65/150 - Train Loss: 0.960551, Val Loss: 0.971940[0m
+2025-12-10 05:13:42,668 - INFO - Epoch 66/150 - Train Loss: 0.960555, Val Loss: 0.971939[0m
+2025-12-10 05:22:21,841 - INFO - Epoch 67/150 - Train Loss: 0.960555, Val Loss: 0.971937[0m
+2025-12-10 05:31:01,012 - INFO - Epoch 68/150 - Train Loss: 0.960554, Val Loss: 0.971968[0m
+2025-12-10 05:39:40,251 - INFO - Epoch 69/150 - Train Loss: 0.960553, Val Loss: 0.971935[0m
+2025-12-10 05:48:19,532 - INFO - Epoch 70/150 - Train Loss: 0.960553, Val Loss: 0.971950[0m
+2025-12-10 05:56:58,869 - INFO - Epoch 71/150 - Train Loss: 0.960555, Val Loss: 0.971939[0m
+2025-12-10 06:05:38,157 - INFO - Epoch 72/150 - Train Loss: 0.960554, Val Loss: 0.971942[0m
+2025-12-10 06:14:17,471 - INFO - Epoch 73/150 - Train Loss: 0.960552, Val Loss: 0.971936[0m
+2025-12-10 06:22:56,670 - INFO - Epoch 74/150 - Train Loss: 0.960554, Val Loss: 0.971997[0m
+2025-12-10 06:31:35,906 - INFO - Epoch 75/150 - Train Loss: 0.960553, Val Loss: 0.971936[0m
+2025-12-10 06:40:15,138 - INFO - Epoch 76/150 - Train Loss: 0.960553, Val Loss: 0.971945[0m
+2025-12-10 06:48:54,359 - INFO - Epoch 77/150 - Train Loss: 0.960559, Val Loss: 0.971936[0m
+2025-12-10 06:57:33,640 - INFO - Epoch 78/150 - Train Loss: 0.960552, Val Loss: 0.971935[0m
+2025-12-10 07:06:12,868 - INFO - Epoch 79/150 - Train Loss: 0.960555, Val Loss: 0.971935[0m
+2025-12-10 07:06:12,940 - INFO - New best model saved with Val Loss: 0.971935
+2025-12-10 07:14:52,142 - INFO - Epoch 80/150 - Train Loss: 0.960557, Val Loss: 0.971935[0m
+2025-12-10 07:23:31,501 - INFO - Epoch 81/150 - Train Loss: 0.960553, Val Loss: 0.971939[0m
+2025-12-10 07:32:10,868 - INFO - Epoch 82/150 - Train Loss: 0.960555, Val Loss: 0.971936[0m
+2025-12-10 07:40:50,249 - INFO - Epoch 83/150 - Train Loss: 0.960556, Val Loss: 0.971939[0m
+2025-12-10 07:49:29,555 - INFO - Epoch 84/150 - Train Loss: 0.960552, Val Loss: 0.971938[0m
+2025-12-10 07:58:08,903 - INFO - Epoch 85/150 - Train Loss: 0.960554, Val Loss: 0.971935[0m
+2025-12-10 07:58:08,973 - INFO - New best model saved with Val Loss: 0.971935
+2025-12-10 08:06:48,266 - INFO - Epoch 86/150 - Train Loss: 0.960553, Val Loss: 0.971937[0m
+2025-12-10 08:15:27,534 - INFO - Epoch 87/150 - Train Loss: 0.960552, Val Loss: 0.971946[0m
+2025-12-10 08:24:06,923 - INFO - Epoch 88/150 - Train Loss: 0.960555, Val Loss: 0.971945[0m
+2025-12-10 08:32:46,205 - INFO - Epoch 89/150 - Train Loss: 0.960552, Val Loss: 0.971969[0m
+2025-12-10 08:41:25,516 - INFO - Epoch 90/150 - Train Loss: 0.960558, Val Loss: 0.971936[0m
+2025-12-10 08:50:04,840 - INFO - Epoch 91/150 - Train Loss: 0.960554, Val Loss: 0.971935[0m
+2025-12-10 08:58:44,128 - INFO - Epoch 92/150 - Train Loss: 0.960552, Val Loss: 0.971950[0m
+2025-12-10 09:25:54,668 - INFO - Config:
+exp_name: RTformer_DrivAerNet
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 4
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 64
+  layer_num: 8
+  mlp_ratio: 2
+  dropout: 0.1
+training:
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.7
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  gpus: '0'
+  root_dir: ~/drivaerML_N100_000
+  seed: 42
+dataload:
+  directory: /home/mae-zhangbj/DrivAerNet_dataset/
+
+2025-12-10 09:25:54,668 - INFO - args.exp_name : RTformer_DrivAerNet
+2025-12-10 09:25:54,669 - INFO - Starting training with 1 GPUs
+2025-12-10 09:28:16,637 - INFO - Config:
+exp_name: RTformer_DrivAerNet
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 4
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 64
+  layer_num: 8
+  mlp_ratio: 2
+  dropout: 0.1
+training:
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.7
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  gpus: '0'
+  root_dir: ~/drivaerML_N100_000
+  seed: 42
+dataload:
+  directory: /home/mae-zhangbj/DrivAerNet_dataset/
+
+2025-12-10 09:28:16,637 - INFO - args.exp_name : RTformer_DrivAerNet
+2025-12-10 09:28:16,637 - INFO - Starting training with 1 GPUs
+2025-12-10 09:28:17,403 - INFO - Total trainable parameters: 4524353
+2025-12-10 09:28:17,403 - INFO - Data loaded: 676 training batches, 166 validation batches, 150 test batches
+2025-12-10 09:28:17,404 - INFO - Staring training for 150 epochs
+2025-12-10 09:28:17,781 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:17,781 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:17,998 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:17,998 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:18,170 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:18,170 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:18,343 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:18,343 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:18,515 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:18,516 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:18,693 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:18,693 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:18,858 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:18,858 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:19,031 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:19,031 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:19,204 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:19,204 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:19,376 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:19,376 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:19,552 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:19,552 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:19,722 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:19,722 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:19,894 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:19,894 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:20,067 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:20,067 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:20,240 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:20,240 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:20,412 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:20,412 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:20,585 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:20,585 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:20,757 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:20,757 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:20,930 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:20,930 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:21,102 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:21,102 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:21,275 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:21,275 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:21,448 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:21,448 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:21,620 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:21,620 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:21,793 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:21,793 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:21,966 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:21,966 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:22,141 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:22,141 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:22,312 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:22,312 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:22,484 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:22,484 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:22,658 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:22,659 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:22,829 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:22,829 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:23,002 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:23,002 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:23,174 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:23,174 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:23,347 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:23,347 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:23,520 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:23,521 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:23,692 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:23,693 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:23,866 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:23,866 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:24,038 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:24,038 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:24,210 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:24,210 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:24,383 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:24,383 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:24,555 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:24,555 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:24,727 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:24,727 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:24,900 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:24,900 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:25,073 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:25,073 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:25,245 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:25,245 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:25,418 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:25,418 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:25,590 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:25,590 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:25,763 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:25,763 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:25,937 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:25,937 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:26,108 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:26,108 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:26,281 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:26,281 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:26,454 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:26,454 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:26,626 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:26,626 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:26,800 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:26,800 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:26,971 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:26,972 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:27,144 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:27,144 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:27,317 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:27,317 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:27,490 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:27,490 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:27,662 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:27,662 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:27,834 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:27,835 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:28,007 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:28,007 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:28,179 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:28,179 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:28,352 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:28,352 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:28,524 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:28,525 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:28,697 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:28,697 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:28,870 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:28,870 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:29,042 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:29,042 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:29,215 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:29,215 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:29,387 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:29,387 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:29,561 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:29,561 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:29,733 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:29,733 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:29,905 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:29,905 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:30,078 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:30,078 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:30,250 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:30,250 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:30,423 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:30,423 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:30,595 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:30,595 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:30,768 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:30,768 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:30,940 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:30,941 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:31,113 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:31,113 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:31,285 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:31,286 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:31,465 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:31,466 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:31,631 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:31,631 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:31,803 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:31,803 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:31,976 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:31,976 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:32,148 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:32,148 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:32,321 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:32,321 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:32,493 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:32,494 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:32,667 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:32,667 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:32,848 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:32,849 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:33,015 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:33,015 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:33,184 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:33,184 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:33,357 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:33,357 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:33,529 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:33,530 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:33,703 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:33,703 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:33,875 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:33,875 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:34,048 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:34,048 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:34,220 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:34,220 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:34,393 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:34,393 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:34,566 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:34,566 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:34,740 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:34,740 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:34,911 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:34,911 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:35,084 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:35,084 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:35,257 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:35,257 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:35,429 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:35,430 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:35,602 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:35,602 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:35,775 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:35,775 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:35,947 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:35,947 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:36,122 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:36,122 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:36,293 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:36,293 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:36,465 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:36,465 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:36,638 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:36,638 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:36,811 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:36,811 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:36,983 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:36,983 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:37,156 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:37,156 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:37,329 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:37,329 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:37,501 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:37,501 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:37,680 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:37,680 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:37,846 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:37,847 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:38,019 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:38,019 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:38,191 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:38,192 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:38,364 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:38,364 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:38,540 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:38,540 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:38,716 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:38,717 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:38,882 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:38,882 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:39,055 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:39,055 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:39,234 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:39,234 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:39,402 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:39,402 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:39,574 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:39,574 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:39,746 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:39,746 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:39,919 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:39,920 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:40,092 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:40,092 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:40,264 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:40,264 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:40,437 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:40,437 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:40,609 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:40,610 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:40,782 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:40,782 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:40,954 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:40,954 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:41,126 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:41,126 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:41,299 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:41,299 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:41,472 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:41,473 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:41,644 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:41,644 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:41,816 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:41,816 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:41,989 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:41,989 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:42,162 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:42,162 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:42,334 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:42,334 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:42,506 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:42,506 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:42,679 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:42,679 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:42,855 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:42,855 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:43,026 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:43,027 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:43,198 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:43,198 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:43,371 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:43,372 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:43,544 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:43,544 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:43,716 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:43,716 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:43,888 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:43,889 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:44,061 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:44,061 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:44,234 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:44,234 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:44,407 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:44,407 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:44,579 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:44,579 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:44,753 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:44,753 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:44,926 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:44,926 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:45,097 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:45,097 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:45,269 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:45,270 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:45,442 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:45,442 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:45,614 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:45,614 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:45,786 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:45,786 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:45,961 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:45,961 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:46,132 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:46,132 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:46,304 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:46,304 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:46,477 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:46,477 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:46,649 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:46,649 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:46,822 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:46,822 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:46,994 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:46,994 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:47,166 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:47,167 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:47,338 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:47,339 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:47,511 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:47,511 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:47,684 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:47,684 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:47,857 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:47,857 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:48,029 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:48,029 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:48,201 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:48,201 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:48,374 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:48,374 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:48,547 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:48,547 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:48,719 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:48,719 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:48,892 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:48,892 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:49,065 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:49,065 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:49,237 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:49,237 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:49,410 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:49,410 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:49,587 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:49,588 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:49,755 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:49,755 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:49,927 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:49,927 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:50,099 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:50,100 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:50,273 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:50,273 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:50,445 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:50,445 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:50,617 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:50,617 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:50,789 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:50,789 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:50,962 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:50,962 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:51,135 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:51,135 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:51,307 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:51,307 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:51,482 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:51,482 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:51,653 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:51,653 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:51,825 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:51,825 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:51,997 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:51,997 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:52,170 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:52,170 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:52,342 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:52,343 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:52,515 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:52,515 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:52,687 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:52,688 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:52,860 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:52,860 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:53,032 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:53,033 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:53,205 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:53,205 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:53,378 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:53,378 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:53,550 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:53,550 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:53,722 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:53,722 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:53,895 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:53,895 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:54,067 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:54,067 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:54,240 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:54,240 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:54,413 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:54,413 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:54,586 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:54,586 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:54,759 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:54,759 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:54,931 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:54,931 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:55,103 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:55,104 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:55,276 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:55,276 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:55,449 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:55,449 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:55,623 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:55,623 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:55,794 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:55,794 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:55,967 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:55,967 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:56,140 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:56,140 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:56,313 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:56,313 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:56,486 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:56,486 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:56,658 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:56,659 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:56,831 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:56,831 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:57,003 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:57,003 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:57,176 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:57,176 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:57,348 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:57,348 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:57,521 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:57,521 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:57,693 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:57,694 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:57,867 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:57,867 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:58,039 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:58,039 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:58,211 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:58,212 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:58,384 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:58,384 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:58,556 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:58,556 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:58,729 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:58,729 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:58,901 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:58,902 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:59,074 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:59,074 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:59,246 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:59,246 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:59,419 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:59,419 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:59,592 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:59,592 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:59,764 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:59,764 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:28:59,937 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:28:59,937 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:00,110 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:00,110 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:00,282 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:00,282 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:00,455 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:00,455 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:00,628 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:00,629 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:00,799 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:00,800 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:00,972 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:00,972 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:01,145 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:01,145 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:01,318 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:01,318 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:01,490 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:01,490 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:01,662 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:01,662 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:01,835 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:01,835 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:02,007 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:02,007 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:02,180 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:02,180 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:02,352 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:02,353 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:02,525 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:02,525 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:02,698 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:02,698 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:02,870 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:02,871 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:03,043 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:03,043 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:03,216 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:03,216 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:03,389 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:03,389 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:03,561 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:03,561 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:03,734 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:03,734 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:03,906 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:03,907 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:04,079 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:04,079 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:04,252 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:04,252 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:04,424 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:04,424 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:04,597 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:04,597 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:04,769 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:04,770 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:04,947 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:04,947 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:05,115 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:05,115 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:05,288 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:05,288 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:05,460 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:05,461 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:05,633 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:05,633 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:05,805 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:05,805 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:05,978 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:05,978 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:06,150 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:06,150 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:06,323 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:06,323 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:06,496 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:06,496 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:06,668 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:06,668 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:06,841 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:06,841 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:07,013 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:07,014 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:07,186 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:07,186 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:07,359 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:07,359 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:07,532 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:07,532 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:07,705 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:07,705 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:07,877 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:07,877 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:08,050 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:08,050 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:08,222 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:08,222 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:08,395 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:08,395 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:08,567 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:08,568 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:08,740 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:08,740 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:08,912 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:08,912 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:09,085 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:09,085 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:09,258 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:09,258 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:09,430 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:09,431 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:09,603 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:09,603 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:09,776 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:09,776 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:09,948 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:09,949 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:10,121 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:10,121 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:10,294 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:10,294 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:10,467 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:10,467 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:10,639 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:10,639 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:10,812 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:10,812 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:29:10,984 - INFO - y_hat.shape:torch.Size([1, 30000, 1])
+2025-12-10 09:29:10,984 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:06,570 - INFO - Config:
+exp_name: RTformer_DrivAerNet
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 4
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 64
+  layer_num: 8
+  mlp_ratio: 2
+  dropout: 0.1
+training:
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.7
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  gpus: '0'
+  root_dir: ~/drivaerML_N100_000
+  seed: 42
+dataload:
+  directory: /home/mae-zhangbj/DrivAerNet_dataset/
+
+2025-12-10 09:30:06,571 - INFO - args.exp_name : RTformer_DrivAerNet
+2025-12-10 09:30:06,571 - INFO - Starting training with 1 GPUs
+2025-12-10 09:30:07,344 - INFO - Total trainable parameters: 4524353
+2025-12-10 09:30:07,345 - INFO - Data loaded: 676 training batches, 166 validation batches, 150 test batches
+2025-12-10 09:30:07,345 - INFO - Staring training for 150 epochs
+2025-12-10 09:30:07,714 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:07,715 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:07,938 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:07,938 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:08,109 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:08,109 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:08,282 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:08,282 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:08,454 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:08,454 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:08,627 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:08,627 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:08,800 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:08,800 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:08,972 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:08,973 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:09,145 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:09,146 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:09,318 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:09,318 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:09,490 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:09,491 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:09,663 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:09,663 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:09,836 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:09,836 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:10,008 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:10,008 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:10,182 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:10,182 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:10,353 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:10,353 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:10,526 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:10,526 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:10,698 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:10,698 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:10,871 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:10,871 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:11,048 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:11,048 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:11,219 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:11,219 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:11,395 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:11,395 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:11,564 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:11,565 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:11,734 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:11,734 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:11,906 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:11,906 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:12,079 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:12,079 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:12,252 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:12,252 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:12,424 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:12,424 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:12,597 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:12,597 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:12,770 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:12,770 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:12,942 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:12,942 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:13,116 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:13,116 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:13,288 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:13,288 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:13,461 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:13,461 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:13,633 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:13,633 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:13,806 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:13,806 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:13,986 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:13,986 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:14,151 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:14,151 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:14,324 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:14,324 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:14,496 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:14,497 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:14,669 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:14,669 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:14,843 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:14,843 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:15,014 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:15,014 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:15,186 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:15,187 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:15,359 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:15,359 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:15,532 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:15,532 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:15,704 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:15,704 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:15,876 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:15,877 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:16,050 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:16,050 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:16,222 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:16,222 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:16,394 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:16,394 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:16,567 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:16,567 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:16,739 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:16,739 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:16,911 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:16,911 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:17,084 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:17,084 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:17,257 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:17,257 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:17,430 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:17,430 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:17,601 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:17,601 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:17,774 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:17,774 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:17,947 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:17,947 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:18,119 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:18,119 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:18,292 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:18,292 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:18,464 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:18,464 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:18,636 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:18,636 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:18,808 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:18,809 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:18,982 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:18,982 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:19,153 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:19,154 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:19,326 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:19,326 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:19,499 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:19,499 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:19,671 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:19,671 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:19,845 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:19,846 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:20,015 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:20,016 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:20,188 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:20,188 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:20,361 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:20,361 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:20,533 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:20,533 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:20,706 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:20,706 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:20,878 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:20,878 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:21,051 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:21,051 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:21,223 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:21,223 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:21,396 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:21,396 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:21,568 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:21,568 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:21,741 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:21,741 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:21,912 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:21,913 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:22,085 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:22,085 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:22,258 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:22,258 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:22,430 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:22,430 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:22,603 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:22,603 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:22,775 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:22,775 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:22,948 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:22,948 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:23,121 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:23,121 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:23,293 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:23,293 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:23,465 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:23,465 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:23,639 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:23,639 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:23,811 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:23,811 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:23,983 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:23,983 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:24,156 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:24,156 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:24,328 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:24,328 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:24,501 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:24,501 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:24,674 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:24,674 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:24,846 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:24,846 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:25,018 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:25,018 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:25,190 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:25,190 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:25,363 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:25,364 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:25,536 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:25,536 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:25,709 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:25,709 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:25,881 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:25,881 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:26,054 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:26,054 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:26,226 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:26,227 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:26,399 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:26,399 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:26,571 - INFO - y_hat.shape:torch.Size([1, 1, 30000, 1])
+2025-12-10 09:30:26,572 - INFO - y.shape:torch.Size([30000, 1])
+2025-12-10 09:30:36,310 - INFO - Config:
+exp_name: RTformer_DrivAerNet
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 4
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 64
+  layer_num: 8
+  mlp_ratio: 2
+  dropout: 0.1
+training:
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.7
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  gpus: '0'
+  root_dir: ~/drivaerML_N100_000
+  seed: 42
+dataload:
+  directory: /home/mae-zhangbj/DrivAerNet_dataset/
+
+2025-12-10 09:30:36,311 - INFO - args.exp_name : RTformer_DrivAerNet
+2025-12-10 09:30:36,311 - INFO - Starting training with 1 GPUs
+2025-12-10 09:30:37,061 - INFO - Total trainable parameters: 4524353
+2025-12-10 09:30:37,061 - INFO - Data loaded: 676 training batches, 166 validation batches, 150 test batches
+2025-12-10 09:30:37,062 - INFO - Staring training for 150 epochs
+2025-12-10 09:32:45,337 - INFO - Epoch 1/150 - Train Loss: 0.992877, Val Loss: 0.953521[0m
+2025-12-10 09:32:45,411 - INFO - New best model saved with Val Loss: 0.953521
+2025-12-10 09:34:53,552 - INFO - Epoch 2/150 - Train Loss: 0.962168, Val Loss: 0.953544[0m
+2025-12-10 09:37:01,768 - INFO - Epoch 3/150 - Train Loss: 0.961652, Val Loss: 0.954009[0m
+2025-12-10 09:39:09,993 - INFO - Epoch 4/150 - Train Loss: 0.961307, Val Loss: 0.954732[0m
+2025-12-10 09:41:18,219 - INFO - Epoch 5/150 - Train Loss: 0.962110, Val Loss: 0.953458[0m
+2025-12-10 09:41:18,290 - INFO - New best model saved with Val Loss: 0.953458
+2025-12-10 09:43:26,538 - INFO - Epoch 6/150 - Train Loss: 0.961546, Val Loss: 0.953421[0m
+2025-12-10 09:43:26,608 - INFO - New best model saved with Val Loss: 0.953421
+2025-12-10 09:45:34,964 - INFO - Epoch 7/150 - Train Loss: 0.961129, Val Loss: 0.954155[0m
+2025-12-10 09:47:43,297 - INFO - Epoch 8/150 - Train Loss: 0.961001, Val Loss: 0.953669[0m
+2025-12-10 09:49:51,671 - INFO - Epoch 9/150 - Train Loss: 0.960641, Val Loss: 0.953422[0m
+2025-12-10 09:51:59,739 - INFO - Epoch 10/150 - Train Loss: 0.960611, Val Loss: 0.953451[0m
+2025-12-10 09:54:07,850 - INFO - Epoch 11/150 - Train Loss: 0.960598, Val Loss: 0.953477[0m
+2025-12-10 09:55:35,559 | INFO     | Config:
+exp_name: RTformer_DrivAerNet
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 4
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 64
+  layer_num: 8
+  mlp_ratio: 2
+  dropout: 0.1
+training:
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.7
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  gpus: '0'
+  root_dir: ~/drivaerML_N100_000
+  seed: 42
+dataload:
+  directory: /home/mae-zhangbj/DrivAerNet_dataset/
+
+2025-12-10 09:55:35,559 | INFO     | args.exp_name : RTformer_DrivAerNet
+2025-12-10 09:55:35,559 | INFO     | Starting training with 1 GPUs
+2025-12-10 09:55:36,313 | INFO     | Total trainable parameters: 4524353
+2025-12-10 09:55:36,313 | INFO     | Data loaded: 676 training batches, 166 validation batches, 150 test batches
+2025-12-10 09:55:36,314 | INFO     | Staring training for 150 epochs
+2025-12-10 09:57:44,521 | INFO     | Epoch 1/150 - Train Loss: 0.992877, Val Loss: 0.953521[0m
+2025-12-10 09:57:44,595 | INFO     | New best model saved with Val Loss: 0.953521
+2025-12-10 09:59:52,508 | INFO     | Epoch 2/150 - Train Loss: 0.962168, Val Loss: 0.953544[0m
+2025-12-10 10:02:00,409 | INFO     | Epoch 3/150 - Train Loss: 0.961652, Val Loss: 0.954009[0m
+2025-12-10 10:04:08,299 | INFO     | Epoch 4/150 - Train Loss: 0.961307, Val Loss: 0.954732[0m
+2025-12-10 10:06:16,194 | INFO     | Epoch 5/150 - Train Loss: 0.962110, Val Loss: 0.953458[0m
+2025-12-10 10:06:16,266 | INFO     | New best model saved with Val Loss: 0.953458
+2025-12-10 10:08:24,187 | INFO     | Epoch 6/150 - Train Loss: 0.961546, Val Loss: 0.953421[0m
+2025-12-10 10:08:24,256 | INFO     | New best model saved with Val Loss: 0.953421
+2025-12-10 10:10:32,154 | INFO     | Epoch 7/150 - Train Loss: 0.961129, Val Loss: 0.954155[0m
+2025-12-10 10:13:20,795 | INFO     | Config:
+exp_name: RTformer_DrivAerNet
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 4
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 64
+  layer_num: 8
+  mlp_ratio: 2
+  dropout: 0.1
+training:
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.7
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  gpus: '0'
+  root_dir: ~/drivaerML_N100_000
+  seed: 42
+dataload:
+  directory: /home/mae-zhangbj/DrivAerNet_dataset/
+
+2025-12-10 10:13:20,795 | INFO     | args.exp_name : RTformer_DrivAerNet
+2025-12-10 10:13:20,796 | INFO     | Starting training with 1 GPUs
+2025-12-10 10:13:21,536 | INFO     | Total trainable parameters: 4524353
+2025-12-10 10:13:21,537 | INFO     | Data loaded: 676 training batches, 166 validation batches, 150 test batches
+2025-12-10 10:13:21,537 | INFO     | Staring training for 150 epochs
+2025-12-10 10:13:21,678 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:21,679 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:21,933 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:22,165 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:22,165 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:22,177 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:22,343 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:22,343 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:22,353 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:22,516 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:22,516 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:22,526 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:22,688 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:22,688 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:22,703 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:22,861 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:22,861 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:22,872 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:23,034 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:23,034 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:23,045 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:23,206 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:23,206 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:23,217 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:23,379 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:23,379 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:23,390 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:23,552 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:23,552 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:23,562 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:23,724 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:23,724 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:23,735 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:23,897 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:23,897 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:23,908 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:24,070 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:24,070 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:24,081 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:24,243 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:24,243 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:24,254 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:24,416 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:24,416 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:24,428 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:24,590 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:24,590 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:24,600 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:24,762 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:24,762 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:24,781 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:24,935 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:24,935 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:24,948 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:25,108 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:25,108 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:25,121 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:25,280 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:25,280 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:25,294 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:25,453 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:25,453 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:25,466 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:25,625 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:25,625 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:25,638 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:25,798 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:25,798 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:25,811 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:25,971 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:25,971 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:25,990 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:26,144 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:26,144 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:26,157 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:26,317 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:26,317 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:26,330 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:26,490 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:26,490 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:26,508 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:26,663 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:26,663 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:26,675 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:26,835 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:26,835 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:26,849 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:27,008 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:27,008 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:27,021 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:27,181 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:27,181 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:27,194 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:27,354 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:27,354 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:27,368 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:27,526 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:27,527 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:27,540 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:27,699 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:27,699 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:27,713 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:27,872 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:27,872 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:27,885 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:28,045 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:28,045 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:28,058 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:28,218 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:28,218 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:28,232 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:28,391 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:28,391 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:28,403 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:28,563 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:28,563 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:28,577 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:28,736 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:28,736 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:28,749 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:28,909 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:28,909 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:28,922 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:29,081 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:29,082 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:29,095 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:29,255 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:29,255 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:29,268 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:29,427 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:29,427 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:29,441 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:29,600 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:29,600 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:29,613 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:29,773 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:29,773 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:29,786 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:29,945 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:29,945 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:29,958 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:30,118 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:30,118 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:30,131 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:30,291 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:30,291 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:30,304 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:30,463 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:30,464 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:30,476 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:30,636 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:30,636 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:30,650 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:30,809 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:30,809 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:30,822 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:30,982 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:30,982 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:30,995 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:31,154 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:31,154 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:31,168 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:31,327 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:31,327 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:31,340 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:31,500 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:31,500 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:31,513 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:31,673 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:31,673 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:31,686 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:31,846 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:31,846 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:31,859 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:32,019 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:32,019 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:32,032 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:32,191 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:32,191 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:32,204 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:32,364 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:32,364 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:32,377 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:32,537 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:32,537 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:32,550 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:32,710 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:32,710 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:32,723 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:32,883 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:32,883 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:32,896 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:33,056 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:33,056 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:33,069 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:33,228 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:33,228 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:33,242 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:33,401 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:33,401 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:33,414 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:33,574 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:33,574 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:33,587 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:33,747 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:33,747 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:33,760 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:33,920 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:33,920 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:33,933 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:34,093 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:34,093 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:34,106 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:34,265 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:34,266 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:34,279 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:34,438 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:34,438 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:34,451 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:34,611 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:34,611 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:34,625 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:34,784 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:34,784 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:34,797 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:34,957 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:34,957 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:34,971 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:35,130 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:35,130 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:35,143 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:35,303 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:35,303 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:35,316 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:35,476 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:35,476 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:35,489 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:35,649 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:35,649 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:35,662 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:35,822 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:35,822 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:35,836 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:35,994 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:35,995 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:36,007 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:36,167 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:36,167 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:36,180 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:36,340 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:36,340 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:36,353 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:36,512 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:36,512 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:36,526 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:36,685 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:36,685 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:36,698 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:36,858 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:36,858 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:36,871 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:37,031 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:37,031 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:37,044 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:37,203 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:37,204 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:37,217 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:37,376 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:37,376 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:37,389 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:37,548 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:37,548 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:37,561 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:37,721 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:37,721 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:37,734 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:37,893 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:37,893 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:37,907 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:38,067 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:38,067 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:38,080 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:38,239 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:38,239 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:38,252 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:38,412 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:38,412 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:38,426 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:38,584 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:38,585 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:38,597 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:38,757 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:38,757 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:38,770 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:38,930 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:38,930 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:38,944 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:39,103 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:39,103 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:39,116 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:39,276 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:39,276 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:39,289 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:39,448 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:39,449 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:39,462 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:39,621 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:39,621 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:39,634 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:39,794 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:39,794 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:39,807 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:39,967 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:39,967 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:39,980 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:40,140 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:40,140 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:40,153 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:40,312 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:40,312 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:40,326 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:40,485 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:40,485 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:40,498 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:40,657 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:40,658 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:40,671 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:40,830 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:40,830 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:40,843 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:41,003 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:41,003 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:41,016 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:41,176 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:41,176 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:41,189 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:41,348 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:41,349 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:41,363 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:41,521 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:41,521 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:41,535 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:41,694 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:41,694 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:41,707 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:41,867 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:41,867 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:41,879 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:42,039 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:42,039 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:42,053 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:42,212 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:42,212 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:42,225 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:42,385 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:42,385 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:42,398 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:42,557 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:42,557 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:42,570 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:42,730 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:42,730 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:42,744 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:42,903 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:42,903 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:42,916 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:43,076 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:43,076 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:43,089 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:43,248 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:43,248 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:43,266 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:43,421 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:43,421 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:43,432 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:43,594 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:43,594 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:43,607 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:43,766 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:43,766 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:43,779 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:43,939 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:43,939 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:43,952 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:44,111 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:44,112 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:44,125 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:44,284 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:44,284 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:44,297 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:44,457 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:44,457 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:44,470 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:44,630 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:44,630 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:44,643 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:44,802 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:44,802 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:44,815 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:44,975 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:44,975 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:44,988 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:45,148 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:45,148 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:45,161 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:45,320 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:45,320 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:45,334 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:45,493 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:45,493 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:45,507 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:45,666 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:45,666 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:45,679 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:45,839 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:45,839 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:45,852 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:46,011 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:46,012 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:46,025 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:46,184 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:46,184 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:46,198 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:46,357 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:46,357 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:46,371 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:46,530 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:46,530 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:46,543 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:46,703 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:46,703 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:46,716 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:46,876 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:46,876 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:46,889 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:47,048 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:47,049 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:47,063 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:47,221 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:47,221 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:47,235 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:47,394 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:47,394 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:47,407 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:47,567 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:47,567 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:47,580 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:47,740 | INFO     | x.shape: {x.shape}
+2025-12-10 10:13:47,740 | INFO     | y.shape: {y.shape}
+2025-12-10 10:13:47,753 | INFO     | y_hat.shape: {y_hat.shape}
+2025-12-10 10:13:53,198 | INFO     | Config:
+exp_name: RTformer_DrivAerNet
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 4
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 64
+  layer_num: 8
+  mlp_ratio: 2
+  dropout: 0.1
+training:
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.7
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  gpus: '0'
+  root_dir: ~/drivaerML_N100_000
+  seed: 42
+dataload:
+  directory: /home/mae-zhangbj/DrivAerNet_dataset/
+
+2025-12-10 10:13:53,198 | INFO     | args.exp_name : RTformer_DrivAerNet
+2025-12-10 10:13:53,198 | INFO     | Starting training with 1 GPUs
+2025-12-10 10:13:53,960 | INFO     | Total trainable parameters: 4524353
+2025-12-10 10:13:53,960 | INFO     | Data loaded: 676 training batches, 166 validation batches, 150 test batches
+2025-12-10 10:13:53,961 | INFO     | Staring training for 150 epochs
+2025-12-10 10:13:54,094 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:54,094 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:54,314 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:54,537 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:54,537 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:54,549 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:54,710 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:54,710 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:54,721 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:54,883 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:54,883 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:54,894 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:55,056 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:55,056 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:55,067 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:55,229 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:55,229 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:55,239 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:55,401 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:55,402 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:55,412 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:55,574 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:55,574 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:55,585 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:55,747 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:55,747 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:55,757 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:55,919 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:55,920 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:55,930 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:56,092 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:56,092 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:56,103 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:56,265 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:56,265 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:56,276 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:56,438 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:56,438 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:56,449 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:56,611 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:56,611 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:56,622 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:56,784 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:56,784 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:56,795 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:56,957 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:56,957 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:56,967 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:57,129 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:57,129 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:57,139 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:57,302 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:57,302 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:57,313 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:57,475 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:57,475 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:57,485 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:57,647 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:57,647 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:57,658 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:57,820 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:57,820 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:57,830 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:57,992 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:57,992 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:58,003 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:58,165 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:58,165 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:58,175 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:58,337 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:58,337 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:58,348 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:58,510 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:58,510 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:58,520 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:58,682 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:58,682 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:58,693 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:58,855 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:58,855 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:58,871 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:59,033 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:59,033 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:59,043 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:59,205 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:59,206 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:59,216 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:59,378 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:59,379 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:59,389 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:59,551 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:59,552 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:59,562 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:59,724 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:59,724 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:59,736 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:13:59,897 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:13:59,897 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:13:59,907 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:00,070 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:00,070 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:00,080 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:00,242 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:00,242 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:00,253 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:00,415 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:00,415 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:00,425 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:00,588 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:00,588 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:00,599 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:00,761 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:00,761 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:00,771 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:00,933 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:00,934 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:00,944 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:01,106 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:01,106 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:01,117 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:01,279 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:01,279 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:01,289 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:01,452 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:01,452 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:01,462 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:01,624 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:01,624 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:01,635 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:01,797 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:01,797 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:01,808 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:01,970 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:01,970 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:01,980 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:02,142 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:02,142 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:02,153 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:02,315 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:02,315 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:02,325 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:02,488 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:02,488 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:02,498 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:02,660 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:02,660 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:02,671 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:02,833 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:02,833 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:02,843 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:03,005 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:03,005 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:03,016 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:03,178 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:03,178 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:03,188 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:03,351 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:03,351 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:03,361 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:03,523 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:03,524 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:03,534 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:03,696 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:03,696 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:03,707 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:03,869 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:03,869 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:03,880 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:04,041 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:04,041 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:04,052 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:04,214 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:04,214 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:04,224 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:04,387 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:04,387 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:04,397 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:04,559 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:04,559 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:04,569 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:04,732 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:04,732 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:04,742 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:04,904 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:04,904 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:04,915 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:05,077 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:05,077 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:05,088 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:05,250 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:05,250 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:05,260 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:05,422 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:05,422 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:05,433 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:05,595 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:05,595 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:05,606 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:05,767 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:05,768 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:05,778 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:05,940 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:05,940 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:05,951 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:06,113 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:06,113 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:06,124 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:06,286 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:06,286 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:06,296 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:06,458 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:06,458 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:06,469 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:06,631 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:06,631 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:06,641 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:06,803 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:06,804 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:06,814 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:06,976 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:06,976 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:06,987 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:07,149 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:07,149 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:07,159 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:07,322 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:07,322 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:07,332 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:07,494 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:07,495 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:07,506 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:07,668 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:07,668 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:07,678 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:07,840 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:07,840 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:07,851 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:08,012 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:08,013 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:08,023 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:08,185 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:08,185 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:08,195 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:08,358 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:08,358 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:08,368 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:08,530 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:08,531 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:08,542 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:08,703 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:08,704 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:08,714 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:08,876 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:08,876 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:08,886 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:09,049 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:09,049 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:09,059 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:09,221 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:09,221 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:09,232 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:09,394 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:09,394 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:09,407 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:09,567 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:09,567 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:09,578 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:09,740 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:09,740 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:09,750 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:09,913 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:09,913 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:09,923 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:10,085 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:10,085 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:10,096 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:10,258 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:10,258 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:10,269 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:10,431 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:10,431 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:10,442 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:10,604 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:10,604 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:10,614 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:10,776 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:10,776 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:10,787 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:10,949 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:10,949 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:10,959 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:11,121 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:11,121 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:11,132 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:11,294 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:11,294 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:11,304 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:11,467 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:11,467 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:11,477 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:11,640 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:11,640 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:11,651 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:11,813 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:11,813 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:11,824 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:11,986 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:11,986 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:11,996 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:12,158 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:12,159 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:12,169 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:12,331 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:12,331 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:12,342 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:12,504 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:12,504 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:12,515 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:12,677 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:12,677 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:12,688 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:12,850 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:12,850 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:12,860 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:13,022 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:13,022 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:13,033 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:13,195 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:13,196 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:13,206 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:13,368 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:13,368 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:13,379 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:13,541 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:13,541 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:13,551 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:13,714 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:13,714 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:13,724 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:13,887 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:13,887 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:13,898 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:14,059 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:14,059 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:14,070 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:14,232 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:14,232 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:14,243 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:14,405 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:14,405 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:14,416 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:14,578 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:14,578 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:14,588 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:14,750 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:14,750 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:14,761 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:14,924 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:14,924 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:14,935 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:15,097 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:15,097 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:15,109 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:15,270 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:15,270 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:15,281 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:15,443 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:15,443 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:15,453 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:15,616 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:15,616 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:15,626 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:15,788 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:15,789 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:15,799 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:15,961 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:15,961 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:15,972 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:16,134 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:16,134 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:16,144 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:16,306 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:16,307 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:16,317 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:16,479 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:16,479 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:16,490 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:16,652 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:16,652 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:16,663 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:16,825 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:16,825 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:16,835 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:16,997 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:16,997 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:17,008 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:17,170 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:17,170 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:17,181 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:17,343 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:17,343 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:17,354 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:17,516 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:17,516 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:17,527 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:17,688 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:17,689 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:17,699 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:17,861 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:17,861 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:17,872 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:18,034 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:18,034 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:18,044 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:18,207 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:18,207 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:18,218 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:18,380 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:18,380 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:18,390 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:18,553 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:18,553 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:18,563 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:18,725 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:18,725 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:18,736 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:18,898 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:18,898 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:18,908 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:19,070 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:19,071 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:19,081 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:19,243 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:19,243 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:19,254 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:19,416 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:19,416 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:19,427 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:19,589 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:19,589 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:19,599 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:19,762 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:19,762 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:19,773 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:19,934 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:19,934 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:19,945 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:20,107 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:20,107 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:20,118 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:20,280 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:20,280 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:20,297 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:20,453 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:20,453 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:20,464 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:20,626 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:20,626 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:20,636 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:20,798 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:20,798 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:20,809 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:20,971 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:20,971 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:20,982 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:21,144 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:21,144 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:21,155 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:21,317 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:21,317 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:21,327 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:21,490 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:21,490 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:21,500 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:21,662 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:21,662 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:21,673 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:21,835 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:21,835 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:21,845 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:22,008 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:22,008 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:22,018 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:22,181 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:22,181 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:22,191 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:22,354 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:22,354 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:22,364 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:22,526 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:22,526 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:22,537 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:22,699 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:22,699 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:22,709 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:22,872 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:22,872 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:22,884 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:23,045 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:23,045 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:23,055 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:23,218 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:23,218 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:23,228 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:23,390 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:23,390 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:23,401 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:23,563 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:23,563 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:23,573 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:23,735 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:23,735 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:23,746 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:23,908 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:23,908 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:23,918 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:24,081 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:24,081 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:24,091 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:24,253 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:24,253 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:24,264 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:24,426 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:24,426 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:24,436 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:24,598 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:24,598 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:24,609 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:24,771 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:24,772 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:24,782 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:24,944 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:24,944 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:24,955 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:25,117 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:25,117 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:25,127 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:25,290 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:25,290 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:25,300 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:25,463 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:25,463 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:25,473 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:25,636 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:25,636 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:25,646 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:25,808 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:25,808 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:25,818 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:25,981 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:25,981 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:25,992 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:26,154 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:26,154 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:26,164 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:26,327 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:26,327 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:26,337 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:26,499 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:26,500 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:26,510 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:26,672 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:26,673 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:26,683 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:26,845 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:26,845 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:26,855 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:27,018 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:27,018 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:27,028 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:27,191 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:27,191 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:27,201 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:27,363 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:27,363 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:27,374 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:27,536 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:27,536 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:27,547 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:27,709 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:27,709 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:27,720 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:27,881 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:27,882 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:27,892 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:28,054 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:28,054 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:28,064 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:28,227 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:28,227 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:28,237 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:28,400 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:28,400 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:28,410 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:28,572 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:28,572 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:28,589 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:28,745 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:28,745 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:28,755 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:28,918 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:28,918 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:28,928 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:29,091 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:29,091 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:29,101 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:29,264 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:29,264 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:29,274 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:29,437 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:29,437 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:29,447 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:29,609 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:29,609 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:29,619 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:29,782 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:29,782 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:29,793 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:29,955 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:29,955 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:29,965 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:30,128 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:30,128 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:30,138 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:30,301 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:30,301 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:30,311 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:30,473 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:30,473 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:30,484 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:30,646 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:30,646 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:30,657 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:30,819 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:30,819 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:30,829 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:30,991 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:30,991 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:31,002 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:31,164 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:31,164 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:31,174 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:31,337 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:31,337 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:31,347 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:31,509 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:31,510 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:31,520 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:31,682 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:31,682 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:31,693 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:31,855 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:31,855 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:31,865 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:32,028 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:32,028 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:32,038 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:32,201 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:32,201 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:32,211 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:32,373 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:32,373 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:32,384 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:32,546 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:32,546 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:32,556 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:32,718 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:32,718 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:32,729 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:32,891 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:32,891 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:32,902 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:33,064 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:33,064 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:33,074 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:33,237 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:33,237 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:33,247 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:33,410 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:33,410 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:33,420 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:33,582 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:33,582 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:33,593 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:33,755 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:33,755 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:33,765 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:33,928 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:33,928 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:33,939 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:34,101 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:34,101 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:34,111 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:34,274 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:34,274 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:34,284 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:34,446 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:34,447 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:34,457 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:34,619 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:34,619 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:34,630 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:34,792 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:34,792 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:34,802 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:34,964 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:34,965 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:34,975 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:35,138 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:35,138 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:35,149 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:35,311 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:35,311 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:35,321 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:35,483 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:35,484 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:35,494 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:35,656 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:35,656 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:35,667 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:35,829 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:35,829 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:35,839 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:36,002 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:36,002 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:36,012 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:36,174 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:36,175 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:36,185 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:36,347 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:36,347 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:36,358 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:36,520 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:36,520 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:36,530 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:36,693 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:36,693 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:36,703 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:36,865 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:36,865 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:36,876 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:14:37,038 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 10:14:37,038 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 10:14:37,048 | INFO     | y_hat.shape: torch.Size([30000, 1])
+2025-12-10 10:23:23,199 | INFO     | Config:
+exp_name: RTformer_DrivAerNet
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 4
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 64
+  layer_num: 8
+  mlp_ratio: 2
+  dropout: 0.1
+training:
+  batch_size: 1
+  epochs: 150
+  lr: 0.0005
+  scheduler_step: 50
+  scheduler_gamma: 0.7
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  gpus: '0'
+  root_dir: ~/drivaerML_N100_000
+  seed: 42
+dataload:
+  directory: /home/mae-zhangbj/DrivAerNet_dataset/
+
+2025-12-10 10:23:23,200 | INFO     | args.exp_name : RTformer_DrivAerNet
+2025-12-10 10:23:23,200 | INFO     | Starting training with 1 GPUs
+2025-12-10 10:23:23,958 | INFO     | Total trainable parameters: 4524353
+2025-12-10 10:23:23,958 | INFO     | Data loaded: 676 training batches, 166 validation batches, 150 test batches
+2025-12-10 10:23:23,959 | INFO     | Staring training for 150 epochs
+2025-12-10 10:25:32,270 | INFO     | Epoch 1/150 - Train Loss: 13473.398299, Val Loss: 13107.539245[0m
+2025-12-10 10:25:32,340 | INFO     | New best model saved with Val Loss: 13107.539245
+2025-12-10 10:27:40,516 | INFO     | Epoch 2/150 - Train Loss: 13222.726128, Val Loss: 13110.001906[0m
+2025-12-10 10:29:48,795 | INFO     | Epoch 3/150 - Train Loss: 13217.529412, Val Loss: 13114.679193[0m
+2025-12-10 10:31:57,004 | INFO     | Epoch 4/150 - Train Loss: 13215.141070, Val Loss: 13132.998635[0m
+2025-12-10 11:18:06,063 | INFO     | Config:
+exp_name: RTformer_DrivAerNet
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 4
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 64
+  layer_num: 8
+  mlp_ratio: 2
+  dropout: 0.1
+training:
+  batch_size: 1
+  epochs: 150
+  lr: 0.0005
+  scheduler_step: 50
+  scheduler_gamma: 0.7
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  gpus: '0'
+  root_dir: ~/drivaerML_N100_000
+  seed: 42
+dataload:
+  directory: /home/mae-zhangbj/DrivAerNet_dataset/
+
+2025-12-10 11:18:06,063 | INFO     | args.exp_name : RTformer_DrivAerNet
+2025-12-10 11:18:06,063 | INFO     | Starting training with 1 GPUs
+2025-12-10 11:18:06,816 | INFO     | Total trainable parameters: 4524353
+2025-12-10 11:18:06,816 | INFO     | Data loaded: 676 training batches, 166 validation batches, 150 test batches
+2025-12-10 11:18:06,817 | INFO     | Staring training for 150 epochs
+2025-12-10 11:20:50,084 | INFO     | Config:
+exp_name: RTformer_DrivAerNet
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 4
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 64
+  layer_num: 8
+  mlp_ratio: 2
+  dropout: 0.1
+training:
+  batch_size: 1
+  epochs: 150
+  lr: 0.0005
+  scheduler_step: 50
+  scheduler_gamma: 0.7
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  gpus: '0'
+  root_dir: ~/drivaerML_N100_000
+  seed: 42
+dataload:
+  directory: /home/mae-zhangbj/DrivAerNet_dataset/
+
+2025-12-10 11:20:50,084 | INFO     | args.exp_name : RTformer_DrivAerNet
+2025-12-10 11:20:50,084 | INFO     | Starting training with 1 GPUs
+2025-12-10 11:20:50,846 | INFO     | Total trainable parameters: 4524353
+2025-12-10 11:20:50,846 | INFO     | Data loaded: 676 training batches, 166 validation batches, 150 test batches
+2025-12-10 11:20:50,847 | INFO     | Staring training for 150 epochs
+2025-12-10 11:22:59,210 | INFO     | Epoch 1/150 - Train Loss: 0.971223, Val Loss: 0.953512[0m
+2025-12-10 11:22:59,283 | INFO     | New best model saved with Val Loss: 0.953512
+2025-12-10 11:25:07,516 | INFO     | Epoch 2/150 - Train Loss: 0.961252, Val Loss: 0.953476[0m
+2025-12-10 11:25:07,591 | INFO     | New best model saved with Val Loss: 0.953476
+2025-12-10 11:27:15,862 | INFO     | Epoch 3/150 - Train Loss: 0.961161, Val Loss: 0.953682[0m
+2025-12-10 11:29:24,147 | INFO     | Epoch 4/150 - Train Loss: 0.960924, Val Loss: 0.953720[0m
+2025-12-10 11:31:32,443 | INFO     | Epoch 5/150 - Train Loss: 0.960886, Val Loss: 0.953553[0m
+2025-12-10 11:33:40,749 | INFO     | Epoch 6/150 - Train Loss: 0.960846, Val Loss: 0.953662[0m
+2025-12-10 11:35:49,071 | INFO     | Epoch 7/150 - Train Loss: 0.960963, Val Loss: 0.953462[0m
+2025-12-10 11:35:49,142 | INFO     | New best model saved with Val Loss: 0.953462
+2025-12-10 11:37:57,453 | INFO     | Epoch 8/150 - Train Loss: 0.960726, Val Loss: 0.953580[0m
+2025-12-10 11:40:05,772 | INFO     | Epoch 9/150 - Train Loss: 0.960875, Val Loss: 0.953562[0m
+2025-12-10 11:42:14,093 | INFO     | Epoch 10/150 - Train Loss: 0.960858, Val Loss: 0.953750[0m
+2025-12-10 11:44:22,544 | INFO     | Epoch 11/150 - Train Loss: 0.960682, Val Loss: 0.953497[0m
+2025-12-10 11:46:30,874 | INFO     | Epoch 12/150 - Train Loss: 0.960625, Val Loss: 0.953430[0m
+2025-12-10 11:46:30,945 | INFO     | New best model saved with Val Loss: 0.953430
+2025-12-10 11:48:39,280 | INFO     | Epoch 13/150 - Train Loss: 0.960594, Val Loss: 0.953440[0m
+2025-12-10 11:50:47,542 | INFO     | Epoch 14/150 - Train Loss: 0.960600, Val Loss: 0.953447[0m
+2025-12-10 11:52:55,852 | INFO     | Epoch 15/150 - Train Loss: 0.960604, Val Loss: 0.953423[0m
+2025-12-10 11:52:55,922 | INFO     | New best model saved with Val Loss: 0.953423
+2025-12-10 11:55:04,041 | INFO     | Epoch 16/150 - Train Loss: 0.960595, Val Loss: 0.953469[0m
+2025-12-10 11:57:12,166 | INFO     | Epoch 17/150 - Train Loss: 0.960596, Val Loss: 0.953595[0m
+2025-12-10 12:00:39,223 | INFO     | Epoch 18/150 - Train Loss: 0.960594, Val Loss: 0.953434[0m
+2025-12-10 12:05:26,968 | INFO     | Epoch 19/150 - Train Loss: 0.960591, Val Loss: 0.953426[0m
+2025-12-10 12:10:14,572 | INFO     | Epoch 20/150 - Train Loss: 0.960587, Val Loss: 0.953422[0m
+2025-12-10 12:10:14,643 | INFO     | New best model saved with Val Loss: 0.953422
+2025-12-10 12:15:02,068 | INFO     | Epoch 21/150 - Train Loss: 0.960603, Val Loss: 0.953447[0m
+2025-12-10 12:19:49,355 | INFO     | Epoch 22/150 - Train Loss: 0.960600, Val Loss: 0.953422[0m
+2025-12-10 12:24:36,763 | INFO     | Epoch 23/150 - Train Loss: 0.960592, Val Loss: 0.953442[0m
+2025-12-10 12:29:24,659 | INFO     | Epoch 24/150 - Train Loss: 0.960599, Val Loss: 0.953429[0m
+2025-12-10 12:34:12,052 | INFO     | Epoch 25/150 - Train Loss: 0.960577, Val Loss: 0.953429[0m
+2025-12-10 12:38:59,571 | INFO     | Epoch 26/150 - Train Loss: 0.960584, Val Loss: 0.953424[0m
+2025-12-10 12:43:47,641 | INFO     | Epoch 27/150 - Train Loss: 0.960580, Val Loss: 0.953424[0m
+2025-12-10 12:48:35,700 | INFO     | Epoch 28/150 - Train Loss: 0.960603, Val Loss: 0.953439[0m
+2025-12-10 12:53:23,805 | INFO     | Epoch 29/150 - Train Loss: 0.960584, Val Loss: 0.953422[0m
+2025-12-10 12:58:12,436 | INFO     | Epoch 30/150 - Train Loss: 0.960590, Val Loss: 0.953423[0m
+2025-12-10 13:03:00,164 | INFO     | Epoch 31/150 - Train Loss: 0.960590, Val Loss: 0.953431[0m
+2025-12-10 13:07:48,269 | INFO     | Epoch 32/150 - Train Loss: 0.960579, Val Loss: 0.953439[0m
+2025-12-10 13:12:06,439 | INFO     | Config:
+exp_name: RTformer_DrivAerNet
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 4
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 64
+  layer_num: 8
+  mlp_ratio: 2
+  dropout: 0.1
+training:
+  batch_size: 1
+  epochs: 150
+  lr: 0.0005
+  scheduler_step: 50
+  scheduler_gamma: 0.7
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  gpus: '0'
+  root_dir: ~/drivaerML_N100_000
+  seed: 42
+dataload:
+  directory: /home/mae-zhangbj/DrivAerNet_dataset/
+
+2025-12-10 13:12:06,439 | INFO     | args.exp_name : RTformer_DrivAerNet
+2025-12-10 13:12:06,439 | INFO     | Starting training with 1 GPUs
+2025-12-10 13:12:07,892 | INFO     | Total trainable parameters: 4524353
+2025-12-10 13:12:07,893 | INFO     | Data loaded: 676 training batches, 166 validation batches, 150 test batches
+2025-12-10 13:12:07,893 | INFO     | Staring training for 150 epochs
+2025-12-10 13:12:36,218 | INFO     | Epoch 33/150 - Train Loss: 0.960584, Val Loss: 0.953424[0m
+2025-12-10 13:12:49,601 | INFO     | Config:
+exp_name: RTformer_DrivAerNet
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 4
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 64
+  layer_num: 8
+  mlp_ratio: 2
+  dropout: 0.1
+training:
+  batch_size: 1
+  epochs: 150
+  lr: 0.0005
+  scheduler_step: 50
+  scheduler_gamma: 0.7
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  gpus: '0'
+  root_dir: ~/drivaerML_N100_000
+  seed: 42
+dataload:
+  directory: /home/mae-zhangbj/DrivAerNet_dataset/
+
+2025-12-10 13:12:49,601 | INFO     | args.exp_name : RTformer_DrivAerNet
+2025-12-10 13:12:49,601 | INFO     | Starting training with 1 GPUs
+2025-12-10 13:12:51,064 | INFO     | Total trainable parameters: 4524353
+2025-12-10 13:12:51,064 | INFO     | Data loaded: 676 training batches, 166 validation batches, 150 test batches
+2025-12-10 13:12:51,064 | INFO     | Staring training for 150 epochs
+2025-12-10 13:12:51,201 | INFO     | x.shape: torch.Size([1, 30000, 3])
+2025-12-10 13:12:51,201 | INFO     | y.shape: torch.Size([30000, 1])
+2025-12-10 13:14:11,215 | INFO     | Config:
+exp_name: RTformer_DrivAerNet
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 4
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 64
+  layer_num: 8
+  mlp_ratio: 2
+  dropout: 0.1
+training:
+  batch_size: 1
+  epochs: 150
+  lr: 0.0005
+  scheduler_step: 50
+  scheduler_gamma: 0.7
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  gpus: '0'
+  root_dir: ~/drivaerML_N100_000
+  seed: 42
+dataload:
+  directory: /home/mae-zhangbj/DrivAerNet_dataset/
+
+2025-12-10 13:14:11,215 | INFO     | args.exp_name : RTformer_DrivAerNet
+2025-12-10 13:14:11,216 | INFO     | Starting training with 1 GPUs
+2025-12-10 13:14:12,736 | INFO     | Total trainable parameters: 4524353
+2025-12-10 13:14:12,736 | INFO     | Data loaded: 676 training batches, 166 validation batches, 150 test batches
+2025-12-10 13:14:12,737 | INFO     | Staring training for 150 epochs
+2025-12-10 13:14:13,161 | INFO     | x[1,0,0]: tensor([2.8043, 0.8530, 0.2442], device='cuda:0')
+2025-12-10 13:14:13,161 | INFO     | y[0,:]: -102.41500091552734
+2025-12-10 13:14:14,010 | INFO     | x[1,0,0]: tensor([ 0.3201, -0.5102,  0.2625], device='cuda:0')
+2025-12-10 13:14:14,010 | INFO     | y[0,:]: -39.36050033569336
+2025-12-10 13:14:14,619 | INFO     | x[1,0,0]: tensor([2.3864, 0.7370, 0.6695], device='cuda:0')
+2025-12-10 13:14:14,619 | INFO     | y[0,:]: -59.0098991394043
+2025-12-10 13:14:15,227 | INFO     | x[1,0,0]: tensor([2.0708, 0.3125, 1.6813], device='cuda:0')
+2025-12-10 13:14:15,228 | INFO     | y[0,:]: -20.252899169921875
+2025-12-10 13:14:15,839 | INFO     | x[1,0,0]: tensor([ 2.7927, -0.4517,  0.3187], device='cuda:0')
+2025-12-10 13:14:15,839 | INFO     | y[0,:]: 379.2869873046875
+2025-12-10 13:14:16,455 | INFO     | x[1,0,0]: tensor([ 2.0146, -0.3889,  0.2123], device='cuda:0')
+2025-12-10 13:14:16,455 | INFO     | y[0,:]: -59.09659957885742
+2025-12-10 13:14:17,071 | INFO     | x[1,0,0]: tensor([0.9364, 0.5128, 0.1271], device='cuda:0')
+2025-12-10 13:14:17,071 | INFO     | y[0,:]: -108.58599853515625
+2025-12-10 13:14:17,684 | INFO     | x[1,0,0]: tensor([-0.4844, -0.5752,  0.9011], device='cuda:0')
+2025-12-10 13:14:17,684 | INFO     | y[0,:]: -183.2519989013672
+2025-12-10 13:14:18,296 | INFO     | x[1,0,0]: tensor([2.9617, 0.7104, 0.1020], device='cuda:0')
+2025-12-10 13:14:18,296 | INFO     | y[0,:]: -53.51470184326172
+2025-12-10 13:14:18,909 | INFO     | x[1,0,0]: tensor([2.7010, 0.8744, 0.5502], device='cuda:0')
+2025-12-10 13:14:18,909 | INFO     | y[0,:]: -47.93280029296875
+2025-12-10 13:14:19,525 | INFO     | x[1,0,0]: tensor([ 2.1854, -0.8764,  0.4250], device='cuda:0')
+2025-12-10 13:14:19,525 | INFO     | y[0,:]: -112.0260009765625
+2025-12-10 13:14:20,143 | INFO     | x[1,0,0]: tensor([-0.5765,  0.8142,  0.5187], device='cuda:0')
+2025-12-10 13:14:20,143 | INFO     | y[0,:]: -179.58900451660156
+2025-12-10 13:14:20,759 | INFO     | x[1,0,0]: tensor([ 2.8568, -0.3375,  0.3071], device='cuda:0')
+2025-12-10 13:14:20,760 | INFO     | y[0,:]: -101.3550033569336
+2025-12-10 13:14:21,371 | INFO     | x[1,0,0]: tensor([2.8269, 0.8485, 0.3760], device='cuda:0')
+2025-12-10 13:14:21,371 | INFO     | y[0,:]: -338.6659851074219
+2025-12-10 13:14:21,983 | INFO     | x[1,0,0]: tensor([ 0.8453, -0.7714,  1.1119], device='cuda:0')
+2025-12-10 13:14:21,983 | INFO     | y[0,:]: 3.945050001144409
+2025-12-10 13:14:22,595 | INFO     | x[1,0,0]: tensor([-0.2436,  0.8793,  0.8116], device='cuda:0')
+2025-12-10 13:14:22,595 | INFO     | y[0,:]: -131.73500061035156
+2025-12-10 13:14:23,204 | INFO     | x[1,0,0]: tensor([ 2.6661, -0.8683,  0.7845], device='cuda:0')
+2025-12-10 13:14:23,204 | INFO     | y[0,:]: -88.76740264892578
+2025-12-10 13:14:23,818 | INFO     | x[1,0,0]: tensor([1.9701, 0.1518, 0.2503], device='cuda:0')
+2025-12-10 13:14:23,818 | INFO     | y[0,:]: -150.56100463867188
+2025-12-10 13:14:24,428 | INFO     | x[1,0,0]: tensor([ 3.7556, -0.3055,  0.3811], device='cuda:0')
+2025-12-10 13:14:24,428 | INFO     | y[0,:]: 30.816200256347656
+2025-12-10 13:14:25,044 | INFO     | x[1,0,0]: tensor([-1.0242,  0.1250,  0.7435], device='cuda:0')
+2025-12-10 13:14:25,044 | INFO     | y[0,:]: -73.44149780273438
+2025-12-10 13:14:25,660 | INFO     | x[1,0,0]: tensor([ 3.6264, -0.1623,  1.2239], device='cuda:0')
+2025-12-10 13:14:25,661 | INFO     | y[0,:]: -118.18800354003906
+2025-12-10 13:14:26,270 | INFO     | x[1,0,0]: tensor([ 2.4272, -0.7626,  0.2442], device='cuda:0')
+2025-12-10 13:14:26,270 | INFO     | y[0,:]: -36.118499755859375
+2025-12-10 13:14:26,879 | INFO     | x[1,0,0]: tensor([3.8840, 0.1253, 0.4067], device='cuda:0')
+2025-12-10 13:14:26,879 | INFO     | y[0,:]: 117.73100280761719
+2025-12-10 13:14:27,494 | INFO     | x[1,0,0]: tensor([ 1.3719, -0.8904,  0.6188], device='cuda:0')
+2025-12-10 13:14:27,494 | INFO     | y[0,:]: -60.024600982666016
+2025-12-10 13:14:28,109 | INFO     | x[1,0,0]: tensor([0.3886, 0.7124, 0.2813], device='cuda:0')
+2025-12-10 13:14:28,109 | INFO     | y[0,:]: -46.832000732421875
+2025-12-10 13:14:28,725 | INFO     | x[1,0,0]: tensor([ 3.0384, -0.1704,  0.2376], device='cuda:0')
+2025-12-10 13:14:28,725 | INFO     | y[0,:]: -127.19200134277344
+2025-12-10 13:14:29,335 | INFO     | x[1,0,0]: tensor([0.8448, 0.7965, 0.1100], device='cuda:0')
+2025-12-10 13:14:29,336 | INFO     | y[0,:]: -179.10299682617188
+2025-12-10 13:14:29,949 | INFO     | x[1,0,0]: tensor([ 3.3873, -0.7708,  0.3759], device='cuda:0')
+2025-12-10 13:14:29,949 | INFO     | y[0,:]: -72.81529998779297
+2025-12-10 13:14:30,565 | INFO     | x[1,0,0]: tensor([ 1.2802, -0.8764,  0.8624], device='cuda:0')
+2025-12-10 13:14:30,565 | INFO     | y[0,:]: -299.51800537109375
+2025-12-10 13:14:31,184 | INFO     | x[1,0,0]: tensor([2.9333, 0.6665, 0.3062], device='cuda:0')
+2025-12-10 13:14:31,184 | INFO     | y[0,:]: -127.4000015258789
+2025-12-10 13:14:31,794 | INFO     | x[1,0,0]: tensor([3.4684, 0.7730, 0.5003], device='cuda:0')
+2025-12-10 13:14:31,794 | INFO     | y[0,:]: -59.07979965209961
+2025-12-10 13:14:32,405 | INFO     | x[1,0,0]: tensor([ 2.0195, -0.1500,  0.3937], device='cuda:0')
+2025-12-10 13:14:32,405 | INFO     | y[0,:]: -196.81100463867188
+2025-12-10 13:14:33,017 | INFO     | x[1,0,0]: tensor([0.5930, 0.5373, 0.1278], device='cuda:0')
+2025-12-10 13:14:33,017 | INFO     | y[0,:]: -160.35400390625
+2025-12-10 13:14:33,626 | INFO     | x[1,0,0]: tensor([-0.3819, -0.6257,  0.8637], device='cuda:0')
+2025-12-10 13:14:33,626 | INFO     | y[0,:]: -0.0030599799938499928
+2025-12-10 13:14:34,229 | INFO     | x[1,0,0]: tensor([ 3.1361, -0.7970,  0.2381], device='cuda:0')
+2025-12-10 13:14:34,230 | INFO     | y[0,:]: -677.06298828125
+2025-12-10 13:14:34,844 | INFO     | x[1,0,0]: tensor([ 0.3299, -0.7753,  0.6448], device='cuda:0')
+2025-12-10 13:14:34,844 | INFO     | y[0,:]: -152.4949951171875
+2025-12-10 13:14:35,459 | INFO     | x[1,0,0]: tensor([ 3.4113, -0.6462,  0.3634], device='cuda:0')
+2025-12-10 13:14:35,460 | INFO     | y[0,:]: -103.1709976196289
+2025-12-10 13:14:36,068 | INFO     | x[1,0,0]: tensor([ 2.9742, -0.4876,  1.3483], device='cuda:0')
+2025-12-10 13:14:36,068 | INFO     | y[0,:]: -76.13719940185547
+2025-12-10 13:14:36,676 | INFO     | x[1,0,0]: tensor([-0.3025,  0.6889,  0.3750], device='cuda:0')
+2025-12-10 13:14:36,676 | INFO     | y[0,:]: -70.91739654541016
+2025-12-10 13:14:37,286 | INFO     | x[1,0,0]: tensor([ 1.8188, -0.0775,  0.4503], device='cuda:0')
+2025-12-10 13:14:37,286 | INFO     | y[0,:]: -113.56600189208984
+2025-12-10 13:14:37,897 | INFO     | x[1,0,0]: tensor([ 2.1396, -0.7122,  0.1242], device='cuda:0')
+2025-12-10 13:14:37,897 | INFO     | y[0,:]: -102.6969985961914
+2025-12-10 13:14:38,506 | INFO     | x[1,0,0]: tensor([ 3.4919, -0.3567,  0.4310], device='cuda:0')
+2025-12-10 13:14:38,507 | INFO     | y[0,:]: -138.03399658203125
+2025-12-10 13:14:39,123 | INFO     | x[1,0,0]: tensor([2.8156, 0.2357, 0.2001], device='cuda:0')
+2025-12-10 13:14:39,123 | INFO     | y[0,:]: -31.778099060058594
+2025-12-10 13:14:39,628 | INFO     | x[1,0,0]: tensor([ 2.4603, -0.7101,  1.1424], device='cuda:0')
+2025-12-10 13:14:39,629 | INFO     | y[0,:]: -71.46900177001953
+2025-12-10 13:14:40,215 | INFO     | x[1,0,0]: tensor([ 0.3232, -0.8165,  0.7846], device='cuda:0')
+2025-12-10 13:14:40,215 | INFO     | y[0,:]: -58.615501403808594
+2025-12-10 13:14:40,820 | INFO     | x[1,0,0]: tensor([1.1886, 0.8517, 1.1126], device='cuda:0')
+2025-12-10 13:14:40,821 | INFO     | y[0,:]: -145.6719970703125
+2025-12-10 13:14:41,415 | INFO     | x[1,0,0]: tensor([ 0.2481, -0.2377,  1.0079], device='cuda:0')
+2025-12-10 13:14:41,415 | INFO     | y[0,:]: -82.1333999633789
+2025-12-10 13:14:42,016 | INFO     | x[1,0,0]: tensor([ 1.7270, -0.0795,  0.4128], device='cuda:0')
+2025-12-10 13:14:42,017 | INFO     | y[0,:]: -18.04640007019043
+2025-12-10 13:14:42,619 | INFO     | x[1,0,0]: tensor([ 1.0620, -0.5006,  1.2927], device='cuda:0')
+2025-12-10 13:14:42,619 | INFO     | y[0,:]: -97.1343002319336
+2025-12-10 13:14:43,225 | INFO     | x[1,0,0]: tensor([-1.0112, -0.3748,  0.4188], device='cuda:0')
+2025-12-10 13:14:43,225 | INFO     | y[0,:]: -205.30299377441406
+2025-12-10 13:14:43,744 | INFO     | x[1,0,0]: tensor([0.5469, 0.8818, 0.4688], device='cuda:0')
+2025-12-10 13:14:43,744 | INFO     | y[0,:]: -173.7429962158203
+2025-12-10 13:14:44,362 | INFO     | x[1,0,0]: tensor([-0.1264, -0.1749,  0.9595], device='cuda:0')
+2025-12-10 13:14:44,362 | INFO     | y[0,:]: -63.74599838256836
+2025-12-10 13:14:44,978 | INFO     | x[1,0,0]: tensor([ 0.8826, -0.7309,  1.1087], device='cuda:0')
+2025-12-10 13:14:44,978 | INFO     | y[0,:]: -39.63309860229492
+2025-12-10 13:14:45,583 | INFO     | x[1,0,0]: tensor([ 3.7298, -0.5500,  0.7046], device='cuda:0')
+2025-12-10 13:14:45,583 | INFO     | y[0,:]: -270.56298828125
+2025-12-10 13:14:46,188 | INFO     | x[1,0,0]: tensor([0.9135, 0.8786, 0.3061], device='cuda:0')
+2025-12-10 13:14:46,189 | INFO     | y[0,:]: -92.40730285644531
+2025-12-10 13:14:46,801 | INFO     | x[1,0,0]: tensor([ 3.7627, -0.0750,  0.3596], device='cuda:0')
+2025-12-10 13:14:46,801 | INFO     | y[0,:]: -264.75
+2025-12-10 13:14:47,413 | INFO     | x[1,0,0]: tensor([-1.0333,  0.2621,  0.7249], device='cuda:0')
+2025-12-10 13:14:47,413 | INFO     | y[0,:]: -28.124099731445312
+2025-12-10 13:14:48,029 | INFO     | x[1,0,0]: tensor([ 2.4369, -0.7894,  0.2249], device='cuda:0')
+2025-12-10 13:14:48,029 | INFO     | y[0,:]: -62.712398529052734
+2025-12-10 13:14:48,641 | INFO     | x[1,0,0]: tensor([-0.7952, -0.5993,  0.5994], device='cuda:0')
+2025-12-10 13:14:48,641 | INFO     | y[0,:]: -23.93000030517578
+2025-12-10 13:14:49,252 | INFO     | x[1,0,0]: tensor([3.8956, 0.4015, 0.5374], device='cuda:0')
+2025-12-10 13:14:49,253 | INFO     | y[0,:]: -15.515399932861328
+2025-12-10 13:14:49,866 | INFO     | x[1,0,0]: tensor([0.4980, 0.5533, 1.1470], device='cuda:0')
+2025-12-10 13:14:49,866 | INFO     | y[0,:]: -29.704099655151367
+2025-12-10 13:14:50,485 | INFO     | x[1,0,0]: tensor([2.9490, 0.8690, 0.4785], device='cuda:0')
+2025-12-10 13:14:50,485 | INFO     | y[0,:]: 167.3070068359375
+2025-12-10 13:14:51,103 | INFO     | x[1,0,0]: tensor([0.6616, 0.8844, 0.7436], device='cuda:0')
+2025-12-10 13:14:51,103 | INFO     | y[0,:]: -62.31529998779297
+2025-12-10 13:14:51,713 | INFO     | x[1,0,0]: tensor([-0.6508,  0.7690,  0.5474], device='cuda:0')
+2025-12-10 13:14:51,714 | INFO     | y[0,:]: -35.631099700927734
+2025-12-10 13:14:52,320 | INFO     | x[1,0,0]: tensor([ 0.0539, -0.4708,  0.4625], device='cuda:0')
+2025-12-10 13:14:52,320 | INFO     | y[0,:]: -81.35690307617188
+2025-12-10 13:14:52,937 | INFO     | x[1,0,0]: tensor([ 2.5750, -0.2010,  0.5437], device='cuda:0')
+2025-12-10 13:14:52,937 | INFO     | y[0,:]: -59.235801696777344
+2025-12-10 13:14:53,548 | INFO     | x[1,0,0]: tensor([ 0.8906, -0.6723,  0.1373], device='cuda:0')
+2025-12-10 13:14:53,548 | INFO     | y[0,:]: -165.40699768066406
+2025-12-10 13:14:54,160 | INFO     | x[1,0,0]: tensor([ 2.9076, -0.8714,  0.4627], device='cuda:0')
+2025-12-10 13:14:54,160 | INFO     | y[0,:]: -75.19100189208984
+2025-12-10 13:14:54,776 | INFO     | x[1,0,0]: tensor([0.3047, 0.8355, 0.2873], device='cuda:0')
+2025-12-10 13:14:54,776 | INFO     | y[0,:]: -74.31659698486328
+2025-12-10 13:14:55,386 | INFO     | x[1,0,0]: tensor([ 0.3768, -0.8718,  0.3375], device='cuda:0')
+2025-12-10 13:14:55,386 | INFO     | y[0,:]: -37.601898193359375
+2025-12-10 13:14:55,996 | INFO     | x[1,0,0]: tensor([0.9822, 0.1092, 0.1941], device='cuda:0')
+2025-12-10 13:14:55,997 | INFO     | y[0,:]: -17.718000411987305
+2025-12-10 13:14:56,613 | INFO     | x[1,0,0]: tensor([3.1415, 0.6077, 0.3812], device='cuda:0')
+2025-12-10 13:14:56,613 | INFO     | y[0,:]: 422.2560119628906
+2025-12-10 13:14:57,221 | INFO     | x[1,0,0]: tensor([-0.0386, -0.8132,  0.0046], device='cuda:0')
+2025-12-10 13:14:57,221 | INFO     | y[0,:]: -72.23590087890625
+2025-12-10 13:14:57,830 | INFO     | x[1,0,0]: tensor([1.8525, 0.6514, 0.2065], device='cuda:0')
+2025-12-10 13:14:57,831 | INFO     | y[0,:]: -119.03500366210938
+2025-12-10 13:14:58,439 | INFO     | x[1,0,0]: tensor([2.9650, 0.8030, 0.9821], device='cuda:0')
+2025-12-10 13:14:58,439 | INFO     | y[0,:]: -102.90899658203125
+2025-12-10 13:14:59,056 | INFO     | x[1,0,0]: tensor([ 2.4715, -0.8229,  1.1733], device='cuda:0')
+2025-12-10 13:14:59,056 | INFO     | y[0,:]: -93.41490173339844
+2025-12-10 13:14:59,666 | INFO     | x[1,0,0]: tensor([ 2.4604, -0.1728,  0.5072], device='cuda:0')
+2025-12-10 13:14:59,666 | INFO     | y[0,:]: -52.0442008972168
+2025-12-10 13:15:00,277 | INFO     | x[1,0,0]: tensor([-0.1294,  0.4856,  0.1750], device='cuda:0')
+2025-12-10 13:15:00,277 | INFO     | y[0,:]: -24.567399978637695
+2025-12-10 13:15:00,888 | INFO     | x[1,0,0]: tensor([0.0973, 0.8153, 0.3129], device='cuda:0')
+2025-12-10 13:15:00,888 | INFO     | y[0,:]: -78.18150329589844
+2025-12-10 13:15:01,503 | INFO     | x[1,0,0]: tensor([ 3.6843, -0.2371,  0.9485], device='cuda:0')
+2025-12-10 13:15:01,504 | INFO     | y[0,:]: -169.30099487304688
+2025-12-10 13:15:02,119 | INFO     | x[1,0,0]: tensor([ 0.7646, -0.7363,  0.1941], device='cuda:0')
+2025-12-10 13:15:02,120 | INFO     | y[0,:]: -67.33619689941406
+2025-12-10 13:15:02,730 | INFO     | x[1,0,0]: tensor([ 2.4946, -0.5721,  0.5500], device='cuda:0')
+2025-12-10 13:15:02,730 | INFO     | y[0,:]: -52.238800048828125
+2025-12-10 13:15:03,340 | INFO     | x[1,0,0]: tensor([ 2.6212, -0.2256,  0.5814], device='cuda:0')
+2025-12-10 13:15:03,340 | INFO     | y[0,:]: -122.19100189208984
+2025-12-10 13:15:03,955 | INFO     | x[1,0,0]: tensor([ 1.8875, -0.1125,  1.4757], device='cuda:0')
+2025-12-10 13:15:03,956 | INFO     | y[0,:]: -68.62570190429688
+2025-12-10 13:15:04,561 | INFO     | x[1,0,0]: tensor([ 0.7068, -0.8666,  0.9691], device='cuda:0')
+2025-12-10 13:15:04,561 | INFO     | y[0,:]: -201.34500122070312
+2025-12-10 13:15:05,176 | INFO     | x[1,0,0]: tensor([2.8842, 0.8251, 1.0371], device='cuda:0')
+2025-12-10 13:15:05,176 | INFO     | y[0,:]: -77.57209777832031
+2025-12-10 13:15:05,792 | INFO     | x[1,0,0]: tensor([2.3113, 0.6947, 1.3780], device='cuda:0')
+2025-12-10 13:15:05,792 | INFO     | y[0,:]: -129.83700561523438
+2025-12-10 13:15:06,408 | INFO     | x[1,0,0]: tensor([ 0.0312, -0.4743,  0.6691], device='cuda:0')
+2025-12-10 13:15:06,408 | INFO     | y[0,:]: 271.4779968261719
+2025-12-10 13:15:07,022 | INFO     | x[1,0,0]: tensor([ 0.9242, -0.0375,  0.5326], device='cuda:0')
+2025-12-10 13:15:07,022 | INFO     | y[0,:]: -158.39500427246094
+2025-12-10 13:15:07,637 | INFO     | x[1,0,0]: tensor([ 1.2917, -0.8250,  0.1824], device='cuda:0')
+2025-12-10 13:15:07,637 | INFO     | y[0,:]: -45.842498779296875
+2025-12-10 13:15:08,246 | INFO     | x[1,0,0]: tensor([ 3.6519, -0.6194,  0.4041], device='cuda:0')
+2025-12-10 13:15:08,246 | INFO     | y[0,:]: -43.96849822998047
+2025-12-10 13:15:08,843 | INFO     | x[1,0,0]: tensor([5.0406e-01, 9.6734e-07, 1.0966e+00], device='cuda:0')
+2025-12-10 13:15:08,843 | INFO     | y[0,:]: -71.99040222167969
+2025-12-10 13:15:09,455 | INFO     | x[1,0,0]: tensor([1.0168, 0.7955, 0.9904], device='cuda:0')
+2025-12-10 13:15:09,455 | INFO     | y[0,:]: -229.1790008544922
+2025-12-10 13:15:10,072 | INFO     | x[1,0,0]: tensor([ 1.2230, -0.8839,  0.3316], device='cuda:0')
+2025-12-10 13:15:10,072 | INFO     | y[0,:]: -149.4969940185547
+2025-12-10 13:15:10,687 | INFO     | x[1,0,0]: tensor([ 3.8456, -0.3991,  0.6742], device='cuda:0')
+2025-12-10 13:15:10,688 | INFO     | y[0,:]: -52.6244010925293
+2025-12-10 13:15:11,301 | INFO     | x[1,0,0]: tensor([2.6805, 0.8165, 0.4618], device='cuda:0')
+2025-12-10 13:15:11,302 | INFO     | y[0,:]: -137.21200561523438
+2025-12-10 13:15:11,919 | INFO     | x[1,0,0]: tensor([0.0202, 0.8483, 0.3932], device='cuda:0')
+2025-12-10 13:15:11,919 | INFO     | y[0,:]: -9.052519798278809
+2025-12-10 13:15:12,534 | INFO     | x[1,0,0]: tensor([ 0.3835, -0.7987,  0.2937], device='cuda:0')
+2025-12-10 13:15:12,534 | INFO     | y[0,:]: -231.99000549316406
+2025-12-10 13:15:13,151 | INFO     | x[1,0,0]: tensor([ 2.0021, -0.7719,  1.0338], device='cuda:0')
+2025-12-10 13:15:13,151 | INFO     | y[0,:]: -200.3939971923828
+2025-12-10 13:15:13,758 | INFO     | x[1,0,0]: tensor([ 1.6360, -0.0809,  0.4461], device='cuda:0')
+2025-12-10 13:15:13,759 | INFO     | y[0,:]: -158.98899841308594
+2025-12-10 13:15:14,370 | INFO     | x[1,0,0]: tensor([ 3.3775, -0.3041,  0.3488], device='cuda:0')
+2025-12-10 13:15:14,371 | INFO     | y[0,:]: 49.83890151977539
+2025-12-10 13:15:14,981 | INFO     | x[1,0,0]: tensor([2.9034, 0.8000, 0.2998], device='cuda:0')
+2025-12-10 13:15:14,982 | INFO     | y[0,:]: -59.8119010925293
+2025-12-10 13:15:15,592 | INFO     | x[1,0,0]: tensor([0.2378, 0.8125, 0.5058], device='cuda:0')
+2025-12-10 13:15:15,592 | INFO     | y[0,:]: -77.78350067138672
+2025-12-10 13:15:16,207 | INFO     | x[1,0,0]: tensor([ 1.7271, -0.7718,  1.1796], device='cuda:0')
+2025-12-10 13:15:16,208 | INFO     | y[0,:]: -195.94400024414062
+2025-12-10 13:15:16,817 | INFO     | x[1,0,0]: tensor([ 1.2573, -0.8891,  0.4938], device='cuda:0')
+2025-12-10 13:15:16,817 | INFO     | y[0,:]: -34.58250045776367
+2025-12-10 13:15:17,430 | INFO     | x[1,0,0]: tensor([-0.5086,  0.8409,  0.4749], device='cuda:0')
+2025-12-10 13:15:17,431 | INFO     | y[0,:]: -98.7656021118164
+2025-12-10 13:15:18,047 | INFO     | x[1,0,0]: tensor([-1.0346, -0.3622,  0.7561], device='cuda:0')
+2025-12-10 13:15:18,047 | INFO     | y[0,:]: -51.54999923706055
+2025-12-10 13:15:18,657 | INFO     | x[1,0,0]: tensor([3.0873, 0.8066, 0.8303], device='cuda:0')
+2025-12-10 13:15:18,657 | INFO     | y[0,:]: -143.9040069580078
+2025-12-10 13:15:19,267 | INFO     | x[1,0,0]: tensor([1.1234, 0.5465, 1.4656], device='cuda:0')
+2025-12-10 13:15:19,267 | INFO     | y[0,:]: -47.9281005859375
+2025-12-10 13:15:19,876 | INFO     | x[1,0,0]: tensor([0.6588, 0.5126, 1.1745], device='cuda:0')
+2025-12-10 13:15:19,876 | INFO     | y[0,:]: -143.9149932861328
+2025-12-10 13:15:20,463 | INFO     | x[1,0,0]: tensor([ 3.6174, -0.6755,  0.5377], device='cuda:0')
+2025-12-10 13:15:20,463 | INFO     | y[0,:]: -52.09469985961914
+2025-12-10 13:15:21,074 | INFO     | x[1,0,0]: tensor([ 1.7500, -0.8736,  0.3315], device='cuda:0')
+2025-12-10 13:15:21,074 | INFO     | y[0,:]: -53.525001525878906
+2025-12-10 13:15:21,677 | INFO     | x[1,0,0]: tensor([ 2.1511e+00, -1.4931e-03,  3.2506e-01], device='cuda:0')
+2025-12-10 13:15:21,677 | INFO     | y[0,:]: -96.61969757080078
+2025-12-10 13:15:22,288 | INFO     | x[1,0,0]: tensor([ 1.0853, -0.7400,  1.1002], device='cuda:0')
+2025-12-10 13:15:22,288 | INFO     | y[0,:]: -16.40060043334961
+2025-12-10 13:15:22,905 | INFO     | x[1,0,0]: tensor([2.4947, 0.8747, 0.2375], device='cuda:0')
+2025-12-10 13:15:22,905 | INFO     | y[0,:]: -72.94660186767578
+2025-12-10 13:15:23,515 | INFO     | x[1,0,0]: tensor([3.3887, 0.7136, 1.1499], device='cuda:0')
+2025-12-10 13:15:23,515 | INFO     | y[0,:]: -259.6409912109375
+2025-12-10 13:15:24,127 | INFO     | x[1,0,0]: tensor([ 0.8715, -0.1669,  0.3446], device='cuda:0')
+2025-12-10 13:15:24,128 | INFO     | y[0,:]: -68.41320037841797
+2025-12-10 13:15:24,743 | INFO     | x[1,0,0]: tensor([0.1459, 0.4664, 0.3313], device='cuda:0')
+2025-12-10 13:15:24,743 | INFO     | y[0,:]: 78.52780151367188
+2025-12-10 13:15:25,361 | INFO     | x[1,0,0]: tensor([ 1.1460, -0.6577,  1.4722], device='cuda:0')
+2025-12-10 13:15:25,361 | INFO     | y[0,:]: -127.18900299072266
+2025-12-10 13:15:25,973 | INFO     | x[1,0,0]: tensor([-0.2518,  0.8206,  0.9962], device='cuda:0')
+2025-12-10 13:15:25,973 | INFO     | y[0,:]: -157.3769989013672
+2025-12-10 13:15:26,588 | INFO     | x[1,0,0]: tensor([ 2.9020, -0.1957,  0.6898], device='cuda:0')
+2025-12-10 13:15:26,588 | INFO     | y[0,:]: -99.5697021484375
+2025-12-10 13:15:27,201 | INFO     | x[1,0,0]: tensor([ 1.4979, -0.7630,  1.0809], device='cuda:0')
+2025-12-10 13:15:27,201 | INFO     | y[0,:]: -34.756500244140625
+2025-12-10 13:15:27,812 | INFO     | x[1,0,0]: tensor([ 3.0909, -0.1253,  1.2501], device='cuda:0')
+2025-12-10 13:15:27,812 | INFO     | y[0,:]: -125.58599853515625
+2025-12-10 13:15:28,427 | INFO     | x[1,0,0]: tensor([ 2.3251, -0.5377,  0.1837], device='cuda:0')
+2025-12-10 13:15:28,428 | INFO     | y[0,:]: -109.93199920654297
+2025-12-10 13:15:29,042 | INFO     | x[1,0,0]: tensor([ 3.9119, -0.1249,  0.4715], device='cuda:0')
+2025-12-10 13:15:29,042 | INFO     | y[0,:]: -116.46800231933594
+2025-12-10 13:15:29,652 | INFO     | x[1,0,0]: tensor([ 0.3037, -0.7233,  0.3743], device='cuda:0')
+2025-12-10 13:15:29,652 | INFO     | y[0,:]: -70.8855972290039
+2025-12-10 13:15:30,264 | INFO     | x[1,0,0]: tensor([ 1.6125, -0.8144,  1.1001], device='cuda:0')
+2025-12-10 13:15:30,264 | INFO     | y[0,:]: -68.23380279541016
+2025-12-10 13:15:30,879 | INFO     | x[1,0,0]: tensor([ 1.0854, -0.8248,  0.1887], device='cuda:0')
+2025-12-10 13:15:30,879 | INFO     | y[0,:]: -68.81340026855469
+2025-12-10 13:15:31,495 | INFO     | x[1,0,0]: tensor([ 0.9473, -0.6255,  1.4123], device='cuda:0')
+2025-12-10 13:15:31,495 | INFO     | y[0,:]: -70.07579803466797
+2025-12-10 13:15:32,109 | INFO     | x[1,0,0]: tensor([3.2046, 0.8086, 0.7990], device='cuda:0')
+2025-12-10 13:15:32,109 | INFO     | y[0,:]: -9.508549690246582
+2025-12-10 13:15:32,713 | INFO     | x[1,0,0]: tensor([ 1.0968, -0.4122,  0.1332], device='cuda:0')
+2025-12-10 13:15:32,713 | INFO     | y[0,:]: -33.89899826049805
+2025-12-10 13:15:33,325 | INFO     | x[1,0,0]: tensor([0.0852, 0.8691, 0.0589], device='cuda:0')
+2025-12-10 13:15:33,325 | INFO     | y[0,:]: -83.17790222167969
+2025-12-10 13:15:33,935 | INFO     | x[1,0,0]: tensor([-0.5865, -0.8366,  0.5875], device='cuda:0')
+2025-12-10 13:15:33,935 | INFO     | y[0,:]: -89.94889831542969
+2025-12-10 13:15:34,550 | INFO     | x[1,0,0]: tensor([3.6718, 0.2001, 0.9804], device='cuda:0')
+2025-12-10 13:15:34,550 | INFO     | y[0,:]: -129.89100646972656
+2025-12-10 13:15:35,165 | INFO     | x[1,0,0]: tensor([-0.6650,  0.5250,  0.1904], device='cuda:0')
+2025-12-10 13:15:35,165 | INFO     | y[0,:]: 106.38999938964844
+2025-12-10 13:15:35,779 | INFO     | x[1,0,0]: tensor([2.9219, 0.7132, 0.2934], device='cuda:0')
+2025-12-10 13:15:35,779 | INFO     | y[0,:]: -73.55220031738281
+2025-12-10 13:15:36,393 | INFO     | x[1,0,0]: tensor([2.7355, 0.6237, 0.8569], device='cuda:0')
+2025-12-10 13:15:36,393 | INFO     | y[0,:]: -48.09980010986328
+2025-12-10 13:15:37,009 | INFO     | x[1,0,0]: tensor([-0.7795,  0.1750,  0.2159], device='cuda:0')
+2025-12-10 13:15:37,009 | INFO     | y[0,:]: -61.07310104370117
+2025-12-10 13:15:37,620 | INFO     | x[1,0,0]: tensor([3.1589, 0.8493, 0.5438], device='cuda:0')
+2025-12-10 13:15:37,620 | INFO     | y[0,:]: -24.2992000579834
+2025-12-10 13:15:38,231 | INFO     | x[1,0,0]: tensor([3.4666, 0.3627, 0.3083], device='cuda:0')
+2025-12-10 13:15:38,231 | INFO     | y[0,:]: -93.76860046386719
+2025-12-10 13:15:38,845 | INFO     | x[1,0,0]: tensor([ 2.4378, -0.1641,  0.4661], device='cuda:0')
+2025-12-10 13:15:38,845 | INFO     | y[0,:]: -45.878299713134766
+2025-12-10 13:15:39,455 | INFO     | x[1,0,0]: tensor([ 3.2292, -0.8154,  0.4687], device='cuda:0')
+2025-12-10 13:15:39,455 | INFO     | y[0,:]: -164.072998046875
+2025-12-10 13:17:53,176 | INFO     | Epoch 34/150 - Train Loss: 0.960602, Val Loss: 0.953423[0m
+2025-12-10 13:22:41,035 | INFO     | Epoch 35/150 - Train Loss: 0.960577, Val Loss: 0.953424[0m
+2025-12-10 13:27:29,456 | INFO     | Epoch 36/150 - Train Loss: 0.960581, Val Loss: 0.953495[0m
+2025-12-10 13:32:17,742 | INFO     | Epoch 37/150 - Train Loss: 0.960582, Val Loss: 0.953426[0m
+2025-12-10 13:37:05,658 | INFO     | Epoch 38/150 - Train Loss: 0.960575, Val Loss: 0.953421[0m
+2025-12-10 13:37:05,730 | INFO     | New best model saved with Val Loss: 0.953421
+2025-12-10 13:41:53,780 | INFO     | Epoch 39/150 - Train Loss: 0.960580, Val Loss: 0.953424[0m
+2025-12-10 13:46:41,855 | INFO     | Epoch 40/150 - Train Loss: 0.960593, Val Loss: 0.953422[0m
+2025-12-10 13:51:29,634 | INFO     | Epoch 41/150 - Train Loss: 0.960579, Val Loss: 0.953430[0m
+2025-12-10 13:56:18,067 | INFO     | Epoch 42/150 - Train Loss: 0.960581, Val Loss: 0.953423[0m
+2025-12-10 14:01:06,412 | INFO     | Epoch 43/150 - Train Loss: 0.960596, Val Loss: 0.953425[0m
+2025-12-10 14:05:54,314 | INFO     | Epoch 44/150 - Train Loss: 0.960596, Val Loss: 0.953422[0m
+2025-12-10 14:39:49,823 | INFO     | Config:
+exp_name: RTformer_DrivAerNet
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 4
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 64
+  layer_num: 8
+  mlp_ratio: 2
+  dropout: 0.1
+training:
+  batch_size: 1
+  epochs: 150
+  lr: 0.0005
+  scheduler_step: 50
+  scheduler_gamma: 0.7
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  gpus: '0'
+  root_dir: ~/drivaerML_N100_000
+  seed: 42
+dataload:
+  directory: /home/mae-zhangbj/DrivAerNet_dataset/
+
+2025-12-10 14:39:49,823 | INFO     | args.exp_name : RTformer_DrivAerNet
+2025-12-10 14:39:49,823 | INFO     | Starting training with 1 GPUs
+2025-12-10 14:39:50,609 | INFO     | Total trainable parameters: 4524353
+2025-12-10 14:39:50,609 | INFO     | Data loaded: 676 training batches, 166 validation batches, 150 test batches
+2025-12-10 14:39:50,610 | INFO     | Staring training for 150 epochs

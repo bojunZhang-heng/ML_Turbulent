@@ -1,0 +1,75 @@
+2025-12-08 11:42:08,442 - INFO - args.exp_name : RTformer_DrivAerNet
+2025-12-08 11:42:08,445 - INFO - Starting training with 1 GPUs
+2025-12-08 11:42:10,081 - INFO - Total trainable parameters: 4524353
+2025-12-08 11:42:10,087 - ERROR - Error loading subset file ~/ML_Turbulent/RopeTransolver/preprocessors_drivaernet/train_val_test_splits/train_design_ids.txt: [Errno 2] No such file or directory: '~/ML_Turbulent/RopeTransolver/preprocessors_drivaernet/train_val_test_splits/train_design_ids.txt'
+2025-12-08 11:42:10,087 - ERROR - Error loading subset file ~/ML_Turbulent/RopeTransolver/preprocessors_drivaernet/train_val_test_splits/val_design_ids.txt: [Errno 2] No such file or directory: '~/ML_Turbulent/RopeTransolver/preprocessors_drivaernet/train_val_test_splits/val_design_ids.txt'
+2025-12-08 11:42:10,087 - ERROR - Error loading subset file ~/ML_Turbulent/RopeTransolver/preprocessors_drivaernet/train_val_test_splits/test_design_ids.txt: [Errno 2] No such file or directory: '~/ML_Turbulent/RopeTransolver/preprocessors_drivaernet/train_val_test_splits/test_design_ids.txt'
+2025-12-08 11:45:43,202 - INFO - args.exp_name : RTformer_DrivAerNet
+2025-12-08 11:45:43,204 - INFO - Starting training with 1 GPUs
+2025-12-08 11:45:44,279 - INFO - Total trainable parameters: 4524353
+2025-12-08 11:45:44,286 - ERROR - No matching VTK files found for IDs in /work/mae-zhangbj/ML_Turbulent/RopeTransolver/preprocessors_drivaernet/train_val_test_splits/train_design_ids.txt.
+2025-12-08 11:45:44,287 - ERROR - No matching VTK files found for IDs in /work/mae-zhangbj/ML_Turbulent/RopeTransolver/preprocessors_drivaernet/train_val_test_splits/val_design_ids.txt.
+2025-12-08 11:45:44,289 - ERROR - No matching VTK files found for IDs in /work/mae-zhangbj/ML_Turbulent/RopeTransolver/preprocessors_drivaernet/train_val_test_splits/test_design_ids.txt.
+2025-12-08 11:45:44,289 - INFO - Data loaded: 0 training batches, 0 validation batches, 0 test batches
+2025-12-08 11:45:44,290 - INFO - Staring training for 150 epochs
+2025-12-08 12:57:22,183 - INFO - args.exp_name : RTformer_DrivAerNet
+2025-12-08 12:57:22,186 - INFO - Starting training with 1 GPUs
+2025-12-08 12:57:23,099 - INFO - Total trainable parameters: 4524353
+2025-12-08 13:00:21,456 - INFO - args.exp_name : RTformer_DrivAerNet
+2025-12-08 13:00:21,458 - INFO - Starting training with 1 GPUs
+2025-12-08 13:00:22,361 - INFO - Total trainable parameters: 4524353
+2025-12-08 13:00:22,417 - INFO - Data loaded: 65 training batches, 12 validation batches, 7 test batches
+2025-12-08 13:00:22,418 - INFO - Staring training for 150 epochs
+2025-12-08 13:00:31,848 - INFO - data.shape: torch.Size([1, 1, 3, 10000])
+2025-12-08 13:00:31,861 - INFO - targets.shape: torch.Size([1, 1, 10000])
+2025-12-08 13:11:49,997 - INFO - args.exp_name : RTformer_DrivAerNet
+2025-12-08 13:11:49,998 - INFO - Starting training with 1 GPUs
+2025-12-08 13:11:50,540 - INFO - Total trainable parameters: 4524353
+2025-12-08 13:11:50,635 - INFO - Data loaded: 65 training batches, 12 validation batches, 7 test batches
+2025-12-08 13:11:50,636 - INFO - Staring training for 150 epochs
+2025-12-08 13:11:59,059 - INFO - data.shape: torch.Size([1, 1, 3, 10000])
+2025-12-08 13:11:59,060 - INFO - targets.shape: torch.Size([1, 1, 10000])
+2025-12-08 13:13:50,296 - INFO - args.exp_name : RTformer_DrivAerNet
+2025-12-08 13:13:50,297 - INFO - Starting training with 1 GPUs
+2025-12-08 13:13:50,823 - INFO - Total trainable parameters: 4524353
+2025-12-08 13:13:50,878 - INFO - Data loaded: 65 training batches, 12 validation batches, 7 test batches
+2025-12-08 13:13:50,879 - INFO - Staring training for 150 epochs
+2025-12-08 13:13:58,983 - INFO - data.shape: torch.Size([1, 1, 3, 10000])
+2025-12-08 13:13:58,983 - INFO - targets.shape: torch.Size([1, 1, 10000])
+2025-12-08 18:59:12,319 - INFO - args.exp_name : RTformer_DrivAerNet
+2025-12-08 18:59:12,340 - INFO - Starting training with 1 GPUs
+2025-12-08 18:59:14,027 - INFO - Total trainable parameters: 4524353
+2025-12-09 19:24:41,728 - INFO - Config:
+exp_name: RTformer_DrivAerNet
+model:
+  input_dim: 3
+  output_dim: 1
+  head_num: 4
+  hidden_dim: 256
+  res: true
+  head_dim: 64
+  slice_num: 64
+  layer_num: 8
+  mlp_ratio: 2
+  dropout: 0.1
+training:
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.7
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  gpus: '0'
+  root_dir: ~/drivaerML_N100_000
+  seed: 42
+dataload:
+  directory: ~/DrivAerNet_dataset/
+
+2025-12-09 19:24:41,728 - INFO - args.exp_name : RTformer_DrivAerNet
+2025-12-09 19:24:41,728 - INFO - Starting training with 1 GPUs
+2025-12-09 19:24:42,015 - INFO - Total trainable parameters: 4524353
+2025-12-09 19:24:42,016 - INFO - Data loaded: 384 training batches, 33 validation batches, 48 test batches
+2025-12-09 19:24:42,017 - INFO - Staring training for 150 epochs

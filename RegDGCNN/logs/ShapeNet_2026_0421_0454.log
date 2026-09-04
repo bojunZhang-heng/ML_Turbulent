@@ -1,0 +1,80 @@
+CUDA available GPUs: 1
+Current device index: 0
+Device name: Tesla V100-SXM2-32GB
+Physical GPU(s) specified in CUDA_VISIBLE_DEVICES: ['0']
+Using physical GPU 0 (visible as cuda:0 in PyTorch)
+2026-04-21 04:54:39,344 | INFO     | Config:
+exp_name: ShapeNet_pressure
+model:
+  input_dim: 3
+  output_dim: 1
+  res: true
+  emb_dims: 1024
+  k: 40
+  mlp_ratio: 1.5
+  dropout: 0.4
+  output_channels: 1
+training:
+  input: x
+  target: y
+  x_mean:
+  - 1.5163924
+  - -2.8424793e-05
+  - 0.59128469
+  x_std:
+  - 1.415569
+  - 0.65566987
+  - 0.38558245
+  y_mean: -93.28388
+  y_std: 121.19236
+  batch_size: 1
+  epochs: 150
+  lr: 0.001
+  scheduler_step: 50
+  scheduler_gamma: 0.5
+  max_grad_norm: 0.1
+  num_workers: 1
+  weight_decay: 1.0e-05
+  test_only: 0
+  plt: 0
+  gpus: '0'
+  seed: 42
+dataload:
+  directory: /mnt/wjc_group/mae-zhangbj/ShapeNet_dataset
+
+2026-04-21 04:54:39,344 | INFO     | args.exp_name : ShapeNet_pressure
+2026-04-21 04:54:39,344 | INFO     | Starting training with 1 GPUs
+2026-04-21 04:54:40,033 | INFO     | Total trainable parameters: 1437705
+2026-04-21 04:54:40,033 | INFO     | Data loaded: 440 training batches, 55 validation batches, 55 test batches
+exp_name: ShapeNet_pressure
+best_model_path:ShapeNet_pressure/best_model.pth
+False
+2026-04-21 04:54:40,789 | INFO     | Staring training for 150 epochs
+[Training]:   0%|          | 0/440 [00:00<?, ?it/s][Training]:   0%|          | 0/440 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/home/mae-zhangbj/ML_Turbulent/RegDGCNN/train_ShapeNet.py", line 433, in <module>
+    main()
+  File "/home/mae-zhangbj/ML_Turbulent/RegDGCNN/train_ShapeNet.py", line 429, in main
+    train_and_evaluate(args, device)
+  File "/home/mae-zhangbj/ML_Turbulent/RegDGCNN/train_ShapeNet.py", line 137, in train_and_evaluate
+    train_loss = train_one_epoch(model, train_dataloader, optimizer, criterion, device, args)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/ML_Turbulent/RegDGCNN/train_ShapeNet.py", line 265, in train_one_epoch
+    y_hat = model(x)
+            ^^^^^^^^
+  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/miniconda3/envs/Rope/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/ML_Turbulent/RegDGCNN/model_pressure.py", line 180, in forward
+    x0 = get_graph_feature(x, k=self.k)  # (batch_size, 3, num_points) -> (batch_size, 3*2, num_points, k)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mae-zhangbj/ML_Turbulent/RegDGCNN/model_pressure.py", line 55, in get_graph_feature
+    idx = knn(x, k=k)  # (batch_size, num_points, k)
+          ^^^^^^^^^^^
+  File "/home/mae-zhangbj/ML_Turbulent/RegDGCNN/model_pressure.py", line 34, in knn
+    idx = pairwise_distance.topk(k=k, dim=-1)[1]  # (batch_size, num_points, k)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: selected index k out of range
