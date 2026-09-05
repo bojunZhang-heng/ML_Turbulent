@@ -1,0 +1,8 @@
+einops>=0.8.1
+diffusers>=0.28.2
+numpy>=1.26.4
+transformers>=4.42.3
+timm>=1.0.12
+ipykernel>=7.2.0
+vape4d
+matplotlib

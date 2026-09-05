@@ -1,0 +1,16 @@
+LICENSE
+README.MD
+pyproject.toml
+src/p3d_surrogate/__init__.py
+src/p3d_surrogate/utils.py
+src/p3d_surrogate/visualization.py
+src/p3d_surrogate.egg-info/PKG-INFO
+src/p3d_surrogate.egg-info/SOURCES.txt
+src/p3d_surrogate.egg-info/dependency_links.txt
+src/p3d_surrogate.egg-info/requires.txt
+src/p3d_surrogate.egg-info/top_level.txt
+src/p3d_surrogate/models/__init__.py
+src/p3d_surrogate/models/context_model.py
+src/p3d_surrogate/models/p3d.py
+src/p3d_surrogate/sampler/__init__.py
+src/p3d_surrogate/sampler/ode_euler.py
