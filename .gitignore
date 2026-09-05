@@ -5,6 +5,11 @@ Pressure_Field/model/__pycache__/
 Pressure_Field/utils/__pycache__/
 Pressure_Field/backup_logs/err_*.log
 
+P3D/.pre-commit-config.yaml
+P3D/.vscode/
+
+
+
 # Python cache
 __pycache__/
 *.pyc
