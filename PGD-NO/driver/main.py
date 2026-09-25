@@ -15,15 +15,28 @@ import torch
 import argparse
 import pickle
 import numpy as np
+import yaml
 
-# use argparse to get the model name and predicted feature name
-parser = argparse.ArgumentParser()
-parser.add_argument('--model_name', type=str, default="transolver")
-parser.add_argument('--predicted_feature_name', type=str, default="pressure")
-parser.add_argument('--phase', type=str, default="train", choices=["train", "restart_train", "test"])
-parser.add_argument('--num_epochs', type=int, default=500)
-parser.add_argument('--eval_freq', type=int, default=10)
-parser.add_argument('--learning_rate', type=float, default=2e-5)
+# Load YAML defaults first. Explicit command-line arguments override them.
+config_parser = argparse.ArgumentParser(add_help=False)
+config_parser.add_argument('--config', type=str, default=None)
+config_args, _ = config_parser.parse_known_args()
+config = {}
+if config_args.config:
+    with open(config_args.config, 'r', encoding='utf-8') as config_file:
+        config = yaml.safe_load(config_file) or {}
+
+parser = argparse.ArgumentParser(parents=[config_parser])
+parser.set_defaults(**config)
+parser.add_argument('--model_name', type=str, default=config.get('model_name', "transolver"))
+parser.add_argument('--predicted_feature_name', type=str, default=config.get('predicted_feature_name', "pressure"))
+parser.add_argument('--phase', type=str, default=config.get('phase', "train"), choices=["train", "restart_train", "test"])
+parser.add_argument('--num_epochs', type=int, default=config.get('num_epochs', 500))
+parser.add_argument('--eval_freq', type=int, default=config.get('eval_freq', 10))
+parser.add_argument('--learning_rate', type=float, default=config.get('learning_rate', 2e-5))
+parser.add_argument('--data_path', type=str, default=config.get('data_path', "/Users/zhangbojun/ML_Turbulent/PGD-NO/data/"))
+parser.add_argument('--batch_size', type=int, default=config.get('batch_size', 1))
+parser.add_argument('--shuffle', action=argparse.BooleanOptionalAction, default=config.get('shuffle', True))
 args = parser.parse_args()
 
 # set the experiment settings
@@ -75,9 +88,9 @@ def main():
             VAL_index.append(idx)
         else:            # 8–9 → 2/10 → test
             TEST_index.append(idx)
-    TRAIN_index = [1, 2, 3, 4]
-    VAL_index = [5, 6, 7, 8]
-    TEST_index = [9, 10]
+    TRAIN_index = config.get('train_index', [1, 2, 3, 4])
+    VAL_index = config.get('val_index', [5, 6, 7, 8])
+    TEST_index = config.get('test_index', [9, 10])
     
     # '''
     # Debug
@@ -86,16 +99,18 @@ def main():
     # VAL_index = [46]
     # TEST_index = [46]
 
-    DATA_PATH = "/Users/zhangbojun/ML_Turbulent/PGD-NO/data/"
+    DATA_PATH = args.data_path
+    if not DATA_PATH.endswith(os.sep):
+        DATA_PATH += os.sep
     with open(DATA_PATH + "normalization_scalars.pkl", "rb") as f:
         normalization_scalars = pickle.load(f)
     train_loader, val_loader, test_loader, _ = create_data_loaders(
         DATA_PATH, 
-        batch_size=1, 
+        batch_size=args.batch_size, 
         train_index=TRAIN_index, 
         val_index=VAL_index, 
         test_index=TEST_index,
-        shuffle=True,
+        shuffle=args.shuffle,
         predicted_feature_name=predicted_feature_name
     )
     
