@@ -111,7 +111,7 @@ def train(model_name, model, train_loader, val_loader, normalization_scalars,
 
                     if model_name == 'transolver':
                         outputs = model(coorf)
-                    elif model_name == 'transolver_seg' or model_name == 'transolver_seg_v2':
+                    elif model_name in ('transolver_seg', 'transolver_seg_v2', 'SegLinearNO'):
                         outputs = model((coorf, seg_matrix))
                     else:
                         raise ValueError(f"Model name {model_name} not supported")
@@ -196,7 +196,7 @@ def test(model_name, model, test_loader, normalization_scalars, model_path="mode
 
             if model_name == 'transolver':
                 outputs = model(coorf)
-            elif model_name == 'transolver_seg' or model_name == 'transolver_seg_v2':
+            elif model_name in ('transolver_seg', 'transolver_seg_v2', 'SegLinearNO'):
                 outputs = model((coorf, seg_matrix))
             else:
                 raise ValueError(f"Model name {model_name} not supported")
