@@ -1,0 +1,19 @@
+# PGD-NO training configuration.
+# Run from PGD-NO/driver:
+#   python main.py --config config.yml
+
+model_name: SegLinearNO
+predicted_feature_name: pressure
+phase: restart_train
+num_epochs: 2
+eval_freq: 1
+learning_rate: 2.0e-5
+
+data_path: /Users/zhangbojun/ML_Turbulent/PGD-NO/data/
+batch_size: 1
+shuffle: true
+
+# Simulation IDs used by the per-file data loader.
+train_index: [1, 2, 3, 4]
+val_index: [5, 6, 7, 8]
+test_index: [9, 10]
