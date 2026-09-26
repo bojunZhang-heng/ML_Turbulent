@@ -9,7 +9,8 @@ num_epochs: 2
 eval_freq: 1
 learning_rate: 2.0e-5
 
-data_path: /Users/zhangbojun/ML_Turbulent/PGD-NO/data/
+#data_path: /Users/zhangbojun/ML_Turbulent/PGD-NO/data/
+data_path: /data/zhangbojun/DrivAerNet++_dataset/PressureVTK/E_S_WWC_WM/pklFile/
 batch_size: 1
 shuffle: true
 
