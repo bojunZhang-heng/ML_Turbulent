@@ -8,6 +8,9 @@ Pressure_Field/backup_logs/err_*.log
 P3D/.pre-commit-config.yaml
 P3D/.vscode/
 
+PGD-NO/driver/logs/
+PGD-NO/logs/
+submit.sh
 
 
 # Python cache
