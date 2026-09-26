@@ -13,6 +13,11 @@ Run the setup script to create a conda environment and install all required depe
 ./setup_env.sh
 ```
 
+The script reuses an existing `pgd-no` environment. To remove and recreate it
+explicitly, run `./setup_env.sh --recreate`. On a machine with a working NVIDIA
+driver, CUDA wheels default to `cu118`; override this with, for example,
+`TORCH_CUDA_VERSION=cu121 ./setup_env.sh` when appropriate for the driver.
+
 ## Data Processing
 
 **Step 1:** Download the raw data from the following sources:
