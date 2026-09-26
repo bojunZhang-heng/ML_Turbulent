@@ -55,28 +55,19 @@ def main():
     # Create data loaders
     print("\n🔄 Creating data loaders...")
 
-    ALL_INDEX = [
-        46, 48, 55, 66, 77, 140, 171, 211, 215, 216,
-        242, 245, 252, 259, 298, 318, 323, 332, 354, 356,
-        409, 416, 461, 474, 487, 517, 520, 551, 575, 584,
-        631, 642, 652, 677, 708, 739, 754, 775, 780, 781,
-        788, 794, 853, 854, 862, 865, 898, 910, 920, 991,
-        1010, 1017, 1081, 1091, 1093, 1098, 1273, 1320, 1329, 1332,
-        1342, 1377, 1421, 1426, 1430, 1433, 1441, 1443, 1455, 1459,
-        1463, 1490, 1496, 1502, 1507, 1525, 1539, 1541, 1542, 1552,
-        1562, 1565, 1662, 1664, 1695, 1702, 1711, 1713, 1716, 1757,
-        1785, 1822, 1836, 1837, 1901, 1931, 1944, 1951, 1975, 2014,
-        2049, 2065, 2070, 2079, 2088, 2117, 2125, 2129, 2155, 2178,
-        2188, 2193, 2198, 2204, 2242, 2258, 2270, 2280, 2323, 2337,
-        2338, 2380, 2404, 2462, 2501, 2526, 2532, 2536, 2548, 2557,
-        2563, 2582, 2660, 2662, 2694, 2706, 2719, 2729, 2732, 2752,
-        2783, 2788, 2791, 2867, 2870, 2875, 2900, 2952, 2966, 2975,
-        3026, 3048, 3079, 3137, 3138, 3161, 3184, 3236, 3285, 3288,
-        3291, 3326, 3328, 3342, 3349, 3389, 3428, 3451, 3458, 3473,
-        3487, 3488, 3502, 3513, 3516, 3532, 3546, 3555, 3616, 3623,
-        3637, 3650, 3658, 3671, 3680, 3704, 3719, 3757, 3790, 3801,
-        3816, 3833, 3843, 3848, 3849, 3874, 3889, 3892, 3936, 3940,
-    ]
+    DATA_PATH = args.data_path
+    if not DATA_PATH.endswith(os.sep):
+        DATA_PATH += os.sep
+
+    # 动态扫描 DATA_PATH 下的样本文件，生成索引列表
+    # 假设样本文件为 .vtk 格式，文件名（不含扩展名）即为索引
+    sample_files = [f for f in os.listdir(DATA_PATH) if f.endswith('.pkl')]
+    # 提取索引，假设文件名是纯数字
+    ALL_INDEX = sorted([int(os.path.splitext(f)[0]) for f in sample_files 
+                        if os.path.splitext(f)[0].isdigit()])
+
+    num_samples = len(ALL_INDEX)
+    print(f"Total samples found in {DATA_PATH}: {num_samples}")
 
     TRAIN_index, VAL_index, TEST_index = [], [], []
 
@@ -88,20 +79,13 @@ def main():
             VAL_index.append(idx)
         else:            # 8–9 → 2/10 → test
             TEST_index.append(idx)
-    TRAIN_index = config.get('train_index', [1, 2, 3, 4])
-    VAL_index = config.get('val_index', [5, 6, 7, 8])
-    TEST_index = config.get('test_index', [9, 10])
     
-    # '''
-    # Debug
-    # '''
-    # TRAIN_index = [46]
-    # VAL_index = [46]
-    # TEST_index = [46]
+    #Debug        
+    #TRAIN_index = config.get('train_index', [1, 2, 3, 4])
+    #VAL_index = config.get('val_index', [5, 6, 7, 8])
+    #TEST_index = config.get('test_index', [9, 10])
+    print(f"Train: {len(TRAIN_index)}, Val: {len(VAL_index)}, Test: {len(TEST_index)}")
 
-    DATA_PATH = args.data_path
-    if not DATA_PATH.endswith(os.sep):
-        DATA_PATH += os.sep
     with open(DATA_PATH + "normalization_scalars.pkl", "rb") as f:
         normalization_scalars = pickle.load(f)
     train_loader, val_loader, test_loader, _ = create_data_loaders(
