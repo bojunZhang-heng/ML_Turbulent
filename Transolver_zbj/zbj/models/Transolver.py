@@ -41,9 +41,20 @@ class Physics_Attention_Irregular_Mesh(nn.Module):
             .permute(0, 2, 1, 3).contiguous()  # B H N C
         x_mid = self.in_project_x(x).reshape(B, N, self.heads, self.dim_head) \
             .permute(0, 2, 1, 3).contiguous()  # B H N C
+
+        # 每个空间点把自己的权重分配给不同 slices
+        # 但这并不保证每个 slice 的总权重为 1
         slice_weights = self.softmax(self.in_project_slice(x_mid) / self.temperature)  # B H N G
+
+        # slice_norm 表示第G个切片在N个空间点的权重和
         slice_norm = slice_weights.sum(2)  # B H G
+
+        # einsum 重复但未出现在输出中的字母要求和，即n被求和
         slice_token = torch.einsum("bhnc,bhng->bhgc", fx_mid, slice_weights)
+
+        # 将加权求和变为加权平均
+        # 如果不除以 slice_norm，slice 结果不仅反映点特征大小，还会受到“这个 slice 吸收了多少权重”的影响。
+        # 对每个 slice 单独归一化。
         slice_token = slice_token / ((slice_norm + 1e-5)[:, :, :, None].repeat(1, 1, 1, self.dim_head))
 
         ### (2) Attention among slice tokens

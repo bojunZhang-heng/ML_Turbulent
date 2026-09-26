@@ -5,13 +5,47 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python 调试程序: 当前文件",
+            "name": "PGD-NO: train debug",
             "type": "debugpy",
-            "args": ["/Users/zhangbojun/ML_Turbulent/RegDGCNN/config_ShapeNet.yml"],
             "request": "launch",
-            "program": "${file}",
+            "program": "${workspaceFolder}/PGD-NO/driver/main.py",
+            "python": "/opt/anaconda3/envs/pgd-no/bin/python",
+            "cwd": "${workspaceFolder}/PGD-NO/driver",
+            "args": [
+                "--model_name", "SegLinearNO",
+                "--predicted_feature_name", "pressure",
+                "--phase", "restart_train",
+                "--num_epochs", "2",
+                "--eval_freq", "1",
+                "--learning_rate", "2e-5"
+            ],
+            "env": {
+                "PYTHONUNBUFFERED": "1",
+                "PYTHONPATH": "${workspaceFolder}/PGD-NO/driver"
+            },
             "console": "integratedTerminal",
             "justMyCode": false,
+            "subProcess": true
+        },
+        {
+            "name": "PGD-NO: test debug",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/PGD-NO/driver/main.py",
+            "python": "/opt/anaconda3/envs/pgd-no/bin/python",
+            "cwd": "${workspaceFolder}/PGD-NO/driver",
+            "args": [
+                "--model_name", "transolver_seg",
+                "--predicted_feature_name", "pressure",
+                "--phase", "test"
+            ],
+            "env": {
+                "PYTHONUNBUFFERED": "1",
+                "PYTHONPATH": "${workspaceFolder}/PGD-NO/driver"
+            },
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "subProcess": true
         }
-    ] 
+    ]
 }
