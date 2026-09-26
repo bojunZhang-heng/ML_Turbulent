@@ -34,7 +34,7 @@ parser.add_argument('--phase', type=str, default=config.get('phase', "train"), c
 parser.add_argument('--num_epochs', type=int, default=config.get('num_epochs', 500))
 parser.add_argument('--eval_freq', type=int, default=config.get('eval_freq', 10))
 parser.add_argument('--learning_rate', type=float, default=config.get('learning_rate', 2e-5))
-parser.add_argument('--data_path', type=str, default=config.get('data_path', "/Users/zhangbojun/ML_Turbulent/PGD-NO/data/"))
+parser.add_argument('--data_path', type=str, default=config.get('data_path', ""))
 parser.add_argument('--batch_size', type=int, default=config.get('batch_size', 1))
 parser.add_argument('--shuffle', action=argparse.BooleanOptionalAction, default=config.get('shuffle', True))
 args = parser.parse_args()
@@ -51,7 +51,7 @@ def main():
     Main function to run training and testing.
     """
     print("🚀 Starting VTK Data Processing Pipeline")
-    
+
     # Create data loaders
     print("\n🔄 Creating data loaders...")
 
@@ -63,7 +63,7 @@ def main():
     # 假设样本文件为 .vtk 格式，文件名（不含扩展名）即为索引
     sample_files = [f for f in os.listdir(DATA_PATH) if f.endswith('.pkl')]
     # 提取索引，假设文件名是纯数字
-    ALL_INDEX = sorted([int(os.path.splitext(f)[0]) for f in sample_files 
+    ALL_INDEX = sorted([int(os.path.splitext(f)[0]) for f in sample_files
                         if os.path.splitext(f)[0].isdigit()])
 
     num_samples = len(ALL_INDEX)
@@ -79,8 +79,8 @@ def main():
             VAL_index.append(idx)
         else:            # 8–9 → 2/10 → test
             TEST_index.append(idx)
-    
-    #Debug        
+
+    #Debug
     #TRAIN_index = config.get('train_index', [1, 2, 3, 4])
     #VAL_index = config.get('val_index', [5, 6, 7, 8])
     #TEST_index = config.get('test_index', [9, 10])
@@ -89,21 +89,21 @@ def main():
     with open(DATA_PATH + "normalization_scalars.pkl", "rb") as f:
         normalization_scalars = pickle.load(f)
     train_loader, val_loader, test_loader, _ = create_data_loaders(
-        DATA_PATH, 
-        batch_size=args.batch_size, 
-        train_index=TRAIN_index, 
-        val_index=VAL_index, 
+        DATA_PATH,
+        batch_size=args.batch_size,
+        train_index=TRAIN_index,
+        val_index=VAL_index,
         test_index=TEST_index,
         shuffle=args.shuffle,
         predicted_feature_name=predicted_feature_name
     )
-    
+
     # Create model
     print("\n🏗️  Creating model...")
     if model_name == 'transolver':
         # Improved hyperparameters for better performance
         model = Transolver_Model(
-            space_dim=6, 
+            space_dim=6,
             out_dim=1,
             n_layers=8,        # Increased from 8 to 12
             n_hidden=256,       # Increased from 256 to 512
@@ -115,7 +115,7 @@ def main():
         )
     elif model_name == 'transolver_seg':
         model = Transolver_SEG_Model(
-            space_dim=6, 
+            space_dim=6,
             out_dim=1,
             n_layers=8,        # Increased from 8 to 12
             n_hidden=256,       # Increased from 256 to 512
@@ -126,7 +126,7 @@ def main():
         )  # Changed from 3 to 6 for 6D features
     elif model_name == 'transolver_seg_v2':
         model = Transolver_SEG_V2_Model(
-            space_dim=6, 
+            space_dim=6,
             out_dim=1,
             n_layers=8,        # Increased from 8 to 12
             n_hidden=256,       # Increased from 256 to 512
@@ -137,7 +137,7 @@ def main():
         )
     elif model_name == 'SegLinearNO':
         model = SegLinearNO(
-            space_dim=6, 
+            space_dim=6,
             out_dim=1,
             n_layers=8,        # Increased from 8 to 12
             n_hidden=256,       # Increased from 256 to 512
@@ -165,7 +165,7 @@ def main():
                 print("Loaded pre-trained model")
         except:
             print("No compatible pre-trained model found")
-    
+
     # Training
     if phase == 'train' or phase == 'restart_train':
         print("\n🎯 Starting training...")
@@ -181,7 +181,7 @@ def main():
             save_path="trained_models/best_model_{}.pth".format(model_flag),
             predicted_feature_name=predicted_feature_name
         )
-    
+
     # Testing
     print("\n🧪 Starting testing...")
     print("\n Testing on test dataset...")
@@ -197,4 +197,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main() 
+    main()
