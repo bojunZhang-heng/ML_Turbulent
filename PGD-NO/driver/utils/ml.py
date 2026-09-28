@@ -201,6 +201,8 @@ def test(model_name, model, test_loader, normalization_scalars, model_path="mode
                 outputs = model(coorf)
             elif model_name in ('transolver_seg', 'transolver_seg_v2', 'SegLinearNO'):
                 outputs = model((coorf, seg_matrix))
+            elif model_name == 'LinearNO':
+                outputs = model(coorf)
             else:
                 raise ValueError(f"Model name {model_name} not supported")
             loss = criterion(outputs, target)
