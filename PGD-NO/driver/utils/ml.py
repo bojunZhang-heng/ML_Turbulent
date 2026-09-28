@@ -70,6 +70,9 @@ def train(model_name, model, train_loader, val_loader, normalization_scalars,
             coorf, seg_matrix, target, sim_ids = batch_data
             coorf, target = coorf.to(device), target.to(device)
             seg_matrix = seg_matrix.to(device)
+            print(f"seg_matrix.shape:{seg_matrix.shape}")
+            print(f"coorf.shape:{coorf.shape}")
+
 
             optimizer.zero_grad()
             if model_name == 'transolver':
