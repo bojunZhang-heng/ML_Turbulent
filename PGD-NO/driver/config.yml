@@ -6,7 +6,7 @@
 model_name: LinearNO
 predicted_feature_name: pressure
 phase: restart_train
-num_epochs: 2
+num_epochs: 300
 eval_freq: 1
 learning_rate: 2.0e-5
 
