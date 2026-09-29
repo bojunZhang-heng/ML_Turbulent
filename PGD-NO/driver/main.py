@@ -61,7 +61,7 @@ def main():
         DATA_PATH += os.sep
 
     # 动态扫描 DATA_PATH 下的样本文件，生成索引列表
-    # 假设样本文件为 .vtk 格式，文件名（不含扩展名）即为索引
+    # 假设样本文件为 .pkl 格式，文件名（不含扩展名）即为索引
     sample_files = [f for f in os.listdir(DATA_PATH) if f.endswith('.pkl')]
     # 提取索引，假设文件名是纯数字
     ALL_INDEX = sorted([int(os.path.splitext(f)[0]) for f in sample_files
@@ -147,6 +147,15 @@ def main():
             act='gelu',
             mlp_ratio=2
         )
+    elif model_name == 'LinearNO':
+        model = LinearNO(
+            space_dim=6,
+            n_layers=8,
+            n_hidden=256,
+            n_head=8,
+            Time_Input=False, 
+            mlp_ratio=2,fun_dim=4,out_dim=4,key_ratio=1,
+            unified_pos=False,isregular=False)
     else:
         raise ValueError(f"Model name {model_name} not supported")
     print(f"Model parameters: {sum(p.numel() for p in model.parameters())}")
