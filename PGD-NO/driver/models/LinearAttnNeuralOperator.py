@@ -228,8 +228,8 @@ class LinearAttentionNeuralOperator(nn.Module):
         return pos
 
     def forward(self,data):
-        cfd_data, geom_data = data
-        x, fx, T = cfd_data.x, None, None
+        cfd_data = data
+        x, fx, T = cfd_data, None, None
         x = x[None, :, :]
         if self.unified_pos:
             x = self.pos.repeat(x.shape[0], 1, 1,
