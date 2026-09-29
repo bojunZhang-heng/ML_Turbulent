@@ -4,7 +4,7 @@ from models.transolver_model import Model as Transolver_Model
 from models.Transolver_seg import Model as Transolver_SEG_Model
 from models.Transolver_seg_v2 import Model as Transolver_SEG_V2_Model
 from models.SegLinearNO import Model as SegLinearNO
-from models.LinearAttnNeuralOperator import LinearNO as LinearNO
+from models.LinearAttnNeuralOperator import LinearAttentionNeuralOperator as LinearNO
 # from models.mlp import MLP as MLP_Model
 # from models.figconv import FigConv_Model
 # from models.figconv import Multi_grid_model
