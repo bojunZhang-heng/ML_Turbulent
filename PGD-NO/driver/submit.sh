@@ -25,7 +25,8 @@ TIMESTAMP=$(date "+%Y_%m%d_%H%M")
 #nohup python train_DrivAerML.py config_DrivAerML_velocity.yml > ${LOG_DIR}/DrivAerML_velocity_${TIMESTAMP}.log 2>&1 &
 
 # DrivAerNet
-nohup python main.py  --config config.yml > ${LOG_DIR}/DrivAerNet++_${TIMESTAMP}.log 2>&1 &
+#nohup python main.py  --config config.yml > ${LOG_DIR}/DrivAerNet++_${TIMESTAMP}.log 2>&1 &
+nohup python main.py  --config config_LinearNO.yml > ${LOG_DIR}/DrivAerNet++_${TIMESTAMP}.log 2>&1 &
 #nohup python train_DrivAerNet.py config_DrivAerNet_swss.yml > ${LOG_DIR}/DrivAerNet_swss_${TIMESTAMP}.log 2>&1 &
 
 # DrivAerNet++
