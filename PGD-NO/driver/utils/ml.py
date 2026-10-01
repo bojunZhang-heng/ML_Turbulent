@@ -8,6 +8,11 @@ from tqdm import tqdm
 from utils.metric import compute_relative_error
 from utils.metric import denormalize_pressure
 
+def mem(tag):
+    print(f"[{tag}] alloc={torch.cuda.memory_allocated()/1e9:.2f}GB "
+          f"reserved={torch.cuda.memory_reserved()/1e9:.2f}GB "
+          f"max={torch.cuda.max_memory_allocated()/1e9:.2f}GB")
+    
 def train(model_name, model, train_loader, val_loader, normalization_scalars, 
           num_epochs=100, learning_rate=0.0001, eval_freq = 10,
           save_path="models/best_model.pth", predicted_feature_name="pressure"):
@@ -74,6 +79,7 @@ def train(model_name, model, train_loader, val_loader, normalization_scalars,
             coorf, target = coorf.to(device), target.to(device)
             seg_matrix = seg_matrix.to(device)
             optimizer.zero_grad()
+            mem("after zero_grad")
 
             with autocast(device_type="cuda", dtype=AMP_DTYPE):
                 if model_name == 'transolver':
@@ -84,12 +90,15 @@ def train(model_name, model, train_loader, val_loader, normalization_scalars,
                     outputs = model(coorf)    
                 else:
                     raise ValueError(f"Model name {model_name} not supported")
+                loss = criterion(outputs, target)
+
+            mem("after forward")   # ← 如果这里就爆，说明 forward 激活太大
             # ── 3. 反向 + 更新换成 scaler 接口
-            loss = criterion(outputs, target)
             scaler.scale(loss).backward()
-            scaler.step(optimizer)
-            scaler.update()
             lr_scheduler.step()
+            scaler.step(optimizer)
+            mem("after backward")  # ← 如果这里爆，说明梯度/激活累积太多
+            scaler.update()
             # lr_scheduler.step(loss.item())
             
             train_loss += loss.item()
