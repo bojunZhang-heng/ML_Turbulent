@@ -154,7 +154,7 @@ def main():
             n_hidden=256,
             n_head=8,
             Time_Input=False, 
-            mlp_ratio=2,fun_dim=4,out_dim=4,key_ratio=1,
+            mlp_ratio=2,fun_dim=0,out_dim=1,key_ratio=1,
             unified_pos=False,isregular=False)
     else:
         raise ValueError(f"Model name {model_name} not supported")
