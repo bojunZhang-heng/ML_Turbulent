@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
+from torch.amp import autocast, GradScaler
 import os
 import numpy as np
 from tqdm import tqdm
@@ -27,7 +28,9 @@ def train(model_name, model, train_loader, val_loader, normalization_scalars,
     """
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
-    
+    AMP_DTYPE = torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16
+    scaler = GradScaler(device=device)
+
     model = model.float().to(device)
     criterion = nn.MSELoss()
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
@@ -70,23 +73,22 @@ def train(model_name, model, train_loader, val_loader, normalization_scalars,
             coorf, seg_matrix, target, sim_ids = batch_data
             coorf, target = coorf.to(device), target.to(device)
             seg_matrix = seg_matrix.to(device)
-            #print(f"seg_matrix.shape:{seg_matrix.shape}")
-            #print(f"coorf.shape:{coorf.shape}")
-
-
             optimizer.zero_grad()
-            if model_name == 'transolver':
-                outputs = model(coorf)
-            elif model_name in ('transolver_seg', 'transolver_seg_v2', 'SegLinearNO'):
-                outputs = model((coorf, seg_matrix))
-            elif model_name == 'LinearNO':
-                outputs = model(coorf)    
-            else:
-                raise ValueError(f"Model name {model_name} not supported")
 
+            with autocast(device_type="cuda", dtype=AMP_DTYPE):
+                if model_name == 'transolver':
+                    outputs = model(coorf)
+                elif model_name in ('transolver_seg', 'transolver_seg_v2', 'SegLinearNO'):
+                    outputs = model((coorf, seg_matrix))
+                elif model_name == 'LinearNO':
+                    outputs = model(coorf)    
+                else:
+                    raise ValueError(f"Model name {model_name} not supported")
+            # ── 3. 反向 + 更新换成 scaler 接口
             loss = criterion(outputs, target)
-            loss.backward()
-            optimizer.step()
+            scaler.scale(loss).backward()
+            scaler.step(optimizer)
+            scaler.update()
             lr_scheduler.step()
             # lr_scheduler.step(loss.item())
             
@@ -113,7 +115,7 @@ def train(model_name, model, train_loader, val_loader, normalization_scalars,
                     coorf, seg_matrix, target, sim_ids = batch_data
                     coorf, target = coorf.to(device), target.to(device)
                     seg_matrix = seg_matrix.to(device)
-
+                    #with autocast(device_type="cuda", dtype=torch.float16):
                     if model_name == 'transolver':
                         outputs = model(coorf)
                     elif model_name in ('transolver_seg', 'transolver_seg_v2', 'SegLinearNO'):
