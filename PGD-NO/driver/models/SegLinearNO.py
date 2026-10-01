@@ -20,9 +20,9 @@ def gumbel_softmax(logits, tau=1, hard=False):
 
     y = logits + gumbel_noise
     y = y / tau
-    
+
     y = F.softmax(y, dim=-1)
-    
+
     if hard:
         _, y_hard = y.max(dim=-1)
         y_one_hot = torch.zeros_like(y).scatter_(-1, y_hard.unsqueeze(-1), 1.0)
@@ -243,7 +243,7 @@ class Transolver_plus_block(nn.Module):
         #                                 dropout=dropout, slice_num=slice_num)
         self.Attn = SegLinearAttention(hidden_dim, heads=num_heads, dim_head=hidden_dim // num_heads,
                                           dropout=dropout)
-        
+
 
         self.ln_2 = nn.LayerNorm(hidden_dim)
         self.mlp = MLP(hidden_dim, hidden_dim * mlp_ratio, hidden_dim, n_layers=0, res=False, act=act)
@@ -258,16 +258,10 @@ class Transolver_plus_block(nn.Module):
             out_x, attn_coord_to_token = attn_output
             fx = out_x + fx
         else:
-            if self.training:
-                fx = checkpoint(self.Attn, self.ln_1(fx), seg_matrix, use_reentrant=True) + fx
-            else:
-                fx = self.Attn(self.ln_1(fx), seg_matrix) + fx
-        
-        if self.training and not return_attention:
-            fx = checkpoint(self.mlp, self.ln_2(fx), use_reentrant=True) + fx
-        else:
-            fx = self.mlp(self.ln_2(fx)) + fx
-        
+            fx = self.Attn(self.ln_1(fx), seg_matrix) + fx
+
+        fx = self.mlp(self.ln_2(fx)) + fx
+
         if self.last_layer:
             result = self.mlp2(self.ln_3(fx))
             if return_attention:
@@ -363,31 +357,34 @@ class Model(nn.Module):
         else:
             fx = self.preprocess(x)
             fx = fx + self.placeholder[None, None, :]    # (B, N, C)
-        
+
         all_attentions = []
-        
+
         # geometry information processing
         for i, block in enumerate(self.blocks):
             if return_attention:
                 fx, attn_coord_to_token = block(fx, seg_matrix, return_attention=True)
                 all_attentions.append(attn_coord_to_token)
+            elif self.training:
+                fx = checkpoint(block, fx, seg_matrix, use_reentrant=False)
+            #    fx = block(fx, seg_matrix)    # (B, N, F)
             else:
                 fx = block(fx, seg_matrix)    # (B, N, F)
-        
+
         fx = self.Cp_decoder(fx)
 
         if return_attention:
             return fx, all_attentions
         else:
             return fx
-    
+
     def extract_attention_scores(self, data):
         """
         Extract attention scores between coordinates (query nodes) and slice tokens across all layers.
-        
+
         Args:
             data: Tuple of (x, seg_matrix) where x is (B, N, F) and seg_matrix is (B, S, N)
-            
+
         Returns:
             dict: Dictionary containing:
                 - 'attention_scores': List of (B, H, N, S) numpy arrays, one per layer,
@@ -397,10 +394,10 @@ class Model(nn.Module):
         self.eval()
         with torch.no_grad():
             _, all_attentions = self.forward(data, return_attention=True)
-            
+
             # Convert to numpy arrays
             attention_scores = [attn.cpu().numpy() for attn in all_attentions]
-            
+
             return {
                 'attention_scores': attention_scores,  # List of (B, H, N, S) arrays
             }
