@@ -5,6 +5,8 @@ from models.Embedding import timestep_embedding
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from torch.utils.checkpoint import checkpoint
+
 
 from einops import rearrange
 
@@ -247,6 +249,12 @@ class LinearAttentionNeuralOperator(nn.Module):
             fx = fx + Time_emb
 
         for block in self.blocks:
-            fx = block(fx)
+            if self.training:
+                fx = checkpoint(block, fx, use_reentrant=False)
+            else:
+                fx = block(fx)
 
-        return fx[0]
+        return fx
+
+
+
