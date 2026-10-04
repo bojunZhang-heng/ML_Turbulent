@@ -19,3 +19,6 @@ __pycache__/
 *.pyo
 
 .vscode
+LinearNO/LinearNO.yml
+PGD-NO/driver/config_mac.yml
+process_ShapeNet.py
