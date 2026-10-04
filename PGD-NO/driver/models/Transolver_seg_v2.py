@@ -68,7 +68,7 @@ class Physics_Attention_seg(nn.Module):
         x: (B, N, C)
         seg_matrix: (B, S, N), where S is number of physics tokens
         '''
-        # B N C
+        # B N C 
         B, N, C = x.shape
         
         # compute the slice tokens
