@@ -4,6 +4,7 @@ from models.transolver_model import Model as Transolver_Model
 from models.Transolver_seg import Model as Transolver_SEG_Model
 from models.Transolver_seg_v2 import Model as Transolver_SEG_V2_Model
 from models.SegLinearNO import Model as SegLinearNO
+from models.SegLinearNO_v2 import Model as SegLinearNO_v2
 from models.LinearAttnNeuralOperator import LinearAttentionNeuralOperator as LinearNO
 # from models.mlp import MLP as MLP_Model
 # from models.figconv import FigConv_Model
@@ -141,6 +142,17 @@ def main():
         )
     elif model_name == 'SegLinearNO':
         model = SegLinearNO(
+            space_dim=6,
+            out_dim=1,
+            n_layers=8,        # Increased from 8 to 12
+            n_hidden=256,       # Increased from 256 to 512
+            dropout=0.0,        # Added dropout for regularization
+            n_head=8,
+            act='gelu',
+            mlp_ratio=2
+        )
+    elif model_name == 'SegLinearNO_v2':
+        model = SegLinearNO_v2(
             space_dim=6,
             out_dim=1,
             n_layers=8,        # Increased from 8 to 12
