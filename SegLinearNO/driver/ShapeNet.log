@@ -1,0 +1,17 @@
+2026-10-04 14:57:24 | INFO | process_data.py started with PID 708437
+2026-10-04 14:57:24 | INFO | Input directory: /data/zhangbojun/ShapeNet_dataset/vtk
+2026-10-04 14:57:24 | INFO | Output directory: /data/zhangbojun/ShapeNet_dataset/vtk/pklFile
+2026-10-04 14:57:24 | INFO | Found 611 VTK files to process.
+2026-10-04 14:57:24 | INFO | Processing VTK 1/611 (0.2%): car_00000.vtk
+[0m[31m2026-10-04 14:57:24.303 (   0.574s) [    7F4BFCB84680]  vtkPolyDataReader.cxx:115    ERR| vtkPolyDataReader (0x563a943462c0): Cannot read dataset type: unstructured_grid[0m
+2026-10-04 14:57:24 | ERROR | Data processing failed.
+Traceback (most recent call last):
+  File "/home/zhangbojun/ML_Turbulent/PGD-NO/driver/process_data_ShapeNet.py", line 536, in <module>
+    main()
+  File "/home/zhangbojun/ML_Turbulent/PGD-NO/driver/process_data_ShapeNet.py", line 493, in main
+    normalization_scalars = process_data_folder(
+  File "/home/zhangbojun/ML_Turbulent/PGD-NO/driver/process_data_ShapeNet.py", line 386, in process_data_folder
+    coords, pressure, normals, polydata = read_vtk_file(str(vtk_file))
+  File "/home/zhangbojun/ML_Turbulent/PGD-NO/driver/process_data_ShapeNet.py", line 121, in read_vtk_file
+    coords = numpy_support.vtk_to_numpy(points.GetData())  # Shape: (N, 3)
+AttributeError: 'NoneType' object has no attribute 'GetData'

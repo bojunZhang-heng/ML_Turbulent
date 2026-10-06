@@ -1,0 +1,3060 @@
+2026-09-26 14:33:21 | INFO | process_data.py started with PID 382277
+2026-09-26 14:33:21 | INFO | Input directory: /data/zhangbojun/DrivAerNet++_dataset/PressureVTK/E_S_WW_WM
+2026-09-26 14:33:21 | INFO | Output directory: /data/zhangbojun/DrivAerNet++_dataset/PressureVTK/E_S_WW_WM/pklFile
+2026-09-26 14:33:21 | INFO | Found 698 VTK files to process.
+2026-09-26 14:33:21 | INFO | Processing VTK 1/698 (0.1%): E_S_WW_WM_001.vtk
+No-cluster nodes: 92230 / 482634 (19.11%)
+Multi-cluster nodes: 0 / 482634 (0.00%)
+2026-09-26 14:34:01 | INFO | Saved simulation 1: nodes=482634, segments=89, elapsed=40.7s
+2026-09-26 14:34:01 | INFO | Processing VTK 2/698 (0.3%): E_S_WW_WM_002.vtk
+No-cluster nodes: 93026 / 480085 (19.38%)
+Multi-cluster nodes: 0 / 480085 (0.00%)
+2026-09-26 14:34:41 | INFO | Saved simulation 2: nodes=480085, segments=61, elapsed=40.0s
+2026-09-26 14:34:41 | INFO | Processing VTK 3/698 (0.4%): E_S_WW_WM_003.vtk
+No-cluster nodes: 91514 / 495330 (18.48%)
+Multi-cluster nodes: 0 / 495330 (0.00%)
+2026-09-26 14:35:23 | INFO | Saved simulation 3: nodes=495330, segments=83, elapsed=41.5s
+2026-09-26 14:35:23 | INFO | Processing VTK 4/698 (0.6%): E_S_WW_WM_004.vtk
+No-cluster nodes: 91748 / 517107 (17.74%)
+Multi-cluster nodes: 0 / 517107 (0.00%)
+2026-09-26 14:36:07 | INFO | Saved simulation 4: nodes=517107, segments=81, elapsed=43.9s
+2026-09-26 14:36:07 | INFO | Processing VTK 5/698 (0.7%): E_S_WW_WM_005.vtk
+No-cluster nodes: 93018 / 521713 (17.83%)
+Multi-cluster nodes: 0 / 521713 (0.00%)
+2026-09-26 14:36:51 | INFO | Saved simulation 5: nodes=521713, segments=83, elapsed=44.2s
+2026-09-26 14:36:51 | INFO | Processing VTK 6/698 (0.9%): E_S_WW_WM_006.vtk
+No-cluster nodes: 91054 / 539320 (16.88%)
+Multi-cluster nodes: 0 / 539320 (0.00%)
+2026-09-26 14:37:37 | INFO | Saved simulation 6: nodes=539320, segments=69, elapsed=45.9s
+2026-09-26 14:37:37 | INFO | Processing VTK 7/698 (1.0%): E_S_WW_WM_007.vtk
+No-cluster nodes: 91348 / 535651 (17.05%)
+Multi-cluster nodes: 0 / 535651 (0.00%)
+2026-09-26 14:38:22 | INFO | Saved simulation 7: nodes=535651, segments=81, elapsed=45.5s
+2026-09-26 14:38:22 | INFO | Processing VTK 8/698 (1.1%): E_S_WW_WM_008.vtk
+No-cluster nodes: 91258 / 520456 (17.53%)
+Multi-cluster nodes: 0 / 520456 (0.00%)
+2026-09-26 14:39:06 | INFO | Saved simulation 8: nodes=520456, segments=71, elapsed=44.1s
+2026-09-26 14:39:06 | INFO | Processing VTK 9/698 (1.3%): E_S_WW_WM_009.vtk
+No-cluster nodes: 93364 / 527261 (17.71%)
+Multi-cluster nodes: 0 / 527261 (0.00%)
+2026-09-26 14:39:51 | INFO | Saved simulation 9: nodes=527261, segments=81, elapsed=44.6s
+2026-09-26 14:39:51 | INFO | Processing VTK 10/698 (1.4%): E_S_WW_WM_010.vtk
+No-cluster nodes: 92696 / 483809 (19.16%)
+Multi-cluster nodes: 0 / 483809 (0.00%)
+2026-09-26 14:40:31 | INFO | Saved simulation 10: nodes=483809, segments=77, elapsed=40.4s
+2026-09-26 14:40:31 | INFO | Processing VTK 11/698 (1.6%): E_S_WW_WM_011.vtk
+No-cluster nodes: 90682 / 443633 (20.44%)
+Multi-cluster nodes: 0 / 443633 (0.00%)
+2026-09-26 14:41:08 | INFO | Saved simulation 11: nodes=443633, segments=73, elapsed=36.6s
+2026-09-26 14:41:08 | INFO | Processing VTK 12/698 (1.7%): E_S_WW_WM_012.vtk
+No-cluster nodes: 90196 / 486755 (18.53%)
+Multi-cluster nodes: 0 / 486755 (0.00%)
+2026-09-26 14:41:49 | INFO | Saved simulation 12: nodes=486755, segments=75, elapsed=40.7s
+2026-09-26 14:41:49 | INFO | Processing VTK 13/698 (1.9%): E_S_WW_WM_013.vtk
+No-cluster nodes: 90824 / 537613 (16.89%)
+Multi-cluster nodes: 0 / 537613 (0.00%)
+2026-09-26 14:42:34 | INFO | Saved simulation 13: nodes=537613, segments=79, elapsed=45.8s
+2026-09-26 14:42:34 | INFO | Processing VTK 14/698 (2.0%): E_S_WW_WM_014.vtk
+No-cluster nodes: 90512 / 509485 (17.77%)
+Multi-cluster nodes: 0 / 509485 (0.00%)
+2026-09-26 14:43:18 | INFO | Saved simulation 14: nodes=509485, segments=79, elapsed=43.3s
+2026-09-26 14:43:18 | INFO | Processing VTK 15/698 (2.1%): E_S_WW_WM_015.vtk
+No-cluster nodes: 91822 / 509527 (18.02%)
+Multi-cluster nodes: 0 / 509527 (0.00%)
+2026-09-26 14:44:01 | INFO | Saved simulation 15: nodes=509527, segments=79, elapsed=43.0s
+2026-09-26 14:44:01 | INFO | Processing VTK 16/698 (2.3%): E_S_WW_WM_016.vtk
+No-cluster nodes: 89972 / 460970 (19.52%)
+Multi-cluster nodes: 0 / 460970 (0.00%)
+2026-09-26 14:44:39 | INFO | Saved simulation 16: nodes=460970, segments=93, elapsed=38.5s
+2026-09-26 14:44:39 | INFO | Processing VTK 17/698 (2.4%): E_S_WW_WM_017.vtk
+No-cluster nodes: 90050 / 463440 (19.43%)
+Multi-cluster nodes: 0 / 463440 (0.00%)
+2026-09-26 14:45:18 | INFO | Saved simulation 17: nodes=463440, segments=67, elapsed=38.6s
+2026-09-26 14:45:18 | INFO | Processing VTK 18/698 (2.6%): E_S_WW_WM_018.vtk
+No-cluster nodes: 90220 / 489890 (18.42%)
+Multi-cluster nodes: 0 / 489890 (0.00%)
+2026-09-26 14:45:59 | INFO | Saved simulation 18: nodes=489890, segments=87, elapsed=41.2s
+2026-09-26 14:45:59 | INFO | Processing VTK 19/698 (2.7%): E_S_WW_WM_019.vtk
+No-cluster nodes: 91250 / 480934 (18.97%)
+Multi-cluster nodes: 0 / 480934 (0.00%)
+2026-09-26 14:46:39 | INFO | Saved simulation 19: nodes=480934, segments=83, elapsed=40.1s
+2026-09-26 14:46:39 | INFO | Processing VTK 20/698 (2.9%): E_S_WW_WM_020.vtk
+No-cluster nodes: 90916 / 498681 (18.23%)
+Multi-cluster nodes: 0 / 498681 (0.00%)
+2026-09-26 14:47:21 | INFO | Saved simulation 20: nodes=498681, segments=83, elapsed=42.1s
+2026-09-26 14:47:21 | INFO | Processing VTK 21/698 (3.0%): E_S_WW_WM_021.vtk
+No-cluster nodes: 90732 / 484572 (18.72%)
+Multi-cluster nodes: 0 / 484572 (0.00%)
+2026-09-26 14:48:02 | INFO | Saved simulation 21: nodes=484572, segments=73, elapsed=40.7s
+2026-09-26 14:48:02 | INFO | Processing VTK 22/698 (3.2%): E_S_WW_WM_022.vtk
+No-cluster nodes: 89966 / 503614 (17.86%)
+Multi-cluster nodes: 0 / 503614 (0.00%)
+2026-09-26 14:48:44 | INFO | Saved simulation 22: nodes=503614, segments=71, elapsed=42.6s
+2026-09-26 14:48:44 | INFO | Processing VTK 23/698 (3.3%): E_S_WW_WM_023.vtk
+No-cluster nodes: 91274 / 495597 (18.42%)
+Multi-cluster nodes: 0 / 495597 (0.00%)
+2026-09-26 14:49:26 | INFO | Saved simulation 23: nodes=495597, segments=57, elapsed=42.0s
+2026-09-26 14:49:26 | INFO | Processing VTK 24/698 (3.4%): E_S_WW_WM_024.vtk
+No-cluster nodes: 92394 / 525104 (17.60%)
+Multi-cluster nodes: 0 / 525104 (0.00%)
+2026-09-26 14:50:11 | INFO | Saved simulation 24: nodes=525104, segments=71, elapsed=44.7s
+2026-09-26 14:50:11 | INFO | Processing VTK 25/698 (3.6%): E_S_WW_WM_025.vtk
+No-cluster nodes: 93590 / 544153 (17.20%)
+Multi-cluster nodes: 0 / 544153 (0.00%)
+2026-09-26 14:50:58 | INFO | Saved simulation 25: nodes=544153, segments=71, elapsed=46.6s
+2026-09-26 14:50:58 | INFO | Processing VTK 26/698 (3.7%): E_S_WW_WM_026.vtk
+No-cluster nodes: 91516 / 477150 (19.18%)
+Multi-cluster nodes: 0 / 477150 (0.00%)
+2026-09-26 14:51:38 | INFO | Saved simulation 26: nodes=477150, segments=77, elapsed=40.1s
+2026-09-26 14:51:38 | INFO | Processing VTK 27/698 (3.9%): E_S_WW_WM_027.vtk
+No-cluster nodes: 90560 / 484686 (18.68%)
+Multi-cluster nodes: 0 / 484686 (0.00%)
+2026-09-26 14:52:18 | INFO | Saved simulation 27: nodes=484686, segments=87, elapsed=40.5s
+2026-09-26 14:52:18 | INFO | Processing VTK 28/698 (4.0%): E_S_WW_WM_028.vtk
+No-cluster nodes: 90016 / 496119 (18.14%)
+Multi-cluster nodes: 0 / 496119 (0.00%)
+2026-09-26 14:53:00 | INFO | Saved simulation 28: nodes=496119, segments=85, elapsed=41.9s
+2026-09-26 14:53:00 | INFO | Processing VTK 29/698 (4.2%): E_S_WW_WM_029.vtk
+No-cluster nodes: 93138 / 499720 (18.64%)
+Multi-cluster nodes: 0 / 499720 (0.00%)
+2026-09-26 14:53:42 | INFO | Saved simulation 29: nodes=499720, segments=71, elapsed=41.9s
+2026-09-26 14:53:42 | INFO | Processing VTK 30/698 (4.3%): E_S_WW_WM_030.vtk
+No-cluster nodes: 90170 / 493850 (18.26%)
+Multi-cluster nodes: 0 / 493850 (0.00%)
+2026-09-26 14:54:24 | INFO | Saved simulation 30: nodes=493850, segments=79, elapsed=41.5s
+2026-09-26 14:54:24 | INFO | Processing VTK 31/698 (4.4%): E_S_WW_WM_031.vtk
+No-cluster nodes: 91906 / 511019 (17.98%)
+Multi-cluster nodes: 0 / 511019 (0.00%)
+2026-09-26 14:55:07 | INFO | Saved simulation 31: nodes=511019, segments=73, elapsed=43.2s
+2026-09-26 14:55:07 | INFO | Processing VTK 32/698 (4.6%): E_S_WW_WM_032.vtk
+No-cluster nodes: 91158 / 469038 (19.44%)
+Multi-cluster nodes: 0 / 469038 (0.00%)
+2026-09-26 14:55:46 | INFO | Saved simulation 32: nodes=469038, segments=81, elapsed=39.1s
+2026-09-26 14:55:46 | INFO | Processing VTK 33/698 (4.7%): E_S_WW_WM_033.vtk
+No-cluster nodes: 90134 / 510843 (17.64%)
+Multi-cluster nodes: 0 / 510843 (0.00%)
+2026-09-26 14:56:29 | INFO | Saved simulation 33: nodes=510843, segments=81, elapsed=43.3s
+2026-09-26 14:56:29 | INFO | Processing VTK 34/698 (4.9%): E_S_WW_WM_034.vtk
+No-cluster nodes: 90774 / 462234 (19.64%)
+Multi-cluster nodes: 0 / 462234 (0.00%)
+2026-09-26 14:57:08 | INFO | Saved simulation 34: nodes=462234, segments=89, elapsed=38.8s
+2026-09-26 14:57:08 | INFO | Processing VTK 35/698 (5.0%): E_S_WW_WM_035.vtk
+No-cluster nodes: 91212 / 485752 (18.78%)
+Multi-cluster nodes: 0 / 485752 (0.00%)
+2026-09-26 14:57:49 | INFO | Saved simulation 35: nodes=485752, segments=79, elapsed=41.1s
+2026-09-26 14:57:49 | INFO | Processing VTK 36/698 (5.2%): E_S_WW_WM_036.vtk
+No-cluster nodes: 91162 / 508735 (17.92%)
+Multi-cluster nodes: 0 / 508735 (0.00%)
+2026-09-26 14:58:32 | INFO | Saved simulation 36: nodes=508735, segments=83, elapsed=43.3s
+2026-09-26 14:58:32 | INFO | Processing VTK 37/698 (5.3%): E_S_WW_WM_037.vtk
+No-cluster nodes: 90952 / 537965 (16.91%)
+Multi-cluster nodes: 0 / 537965 (0.00%)
+2026-09-26 14:59:19 | INFO | Saved simulation 37: nodes=537965, segments=83, elapsed=46.2s
+2026-09-26 14:59:19 | INFO | Processing VTK 38/698 (5.4%): E_S_WW_WM_038.vtk
+No-cluster nodes: 92342 / 498463 (18.53%)
+Multi-cluster nodes: 0 / 498463 (0.00%)
+2026-09-26 15:00:01 | INFO | Saved simulation 38: nodes=498463, segments=75, elapsed=42.3s
+2026-09-26 15:00:01 | INFO | Processing VTK 39/698 (5.6%): E_S_WW_WM_039.vtk
+No-cluster nodes: 93020 / 512676 (18.14%)
+Multi-cluster nodes: 0 / 512676 (0.00%)
+2026-09-26 15:00:44 | INFO | Saved simulation 39: nodes=512676, segments=73, elapsed=43.5s
+2026-09-26 15:00:44 | INFO | Processing VTK 40/698 (5.7%): E_S_WW_WM_040.vtk
+No-cluster nodes: 91778 / 513205 (17.88%)
+Multi-cluster nodes: 0 / 513205 (0.00%)
+2026-09-26 15:01:28 | INFO | Saved simulation 40: nodes=513205, segments=77, elapsed=43.5s
+2026-09-26 15:01:28 | INFO | Processing VTK 41/698 (5.9%): E_S_WW_WM_041.vtk
+No-cluster nodes: 92676 / 533364 (17.38%)
+Multi-cluster nodes: 0 / 533364 (0.00%)
+2026-09-26 15:02:13 | INFO | Saved simulation 41: nodes=533364, segments=81, elapsed=45.4s
+2026-09-26 15:02:13 | INFO | Processing VTK 42/698 (6.0%): E_S_WW_WM_042.vtk
+No-cluster nodes: 91210 / 500802 (18.21%)
+Multi-cluster nodes: 0 / 500802 (0.00%)
+2026-09-26 15:02:56 | INFO | Saved simulation 42: nodes=500802, segments=85, elapsed=42.3s
+2026-09-26 15:02:56 | INFO | Processing VTK 43/698 (6.2%): E_S_WW_WM_043.vtk
+No-cluster nodes: 91256 / 523107 (17.44%)
+Multi-cluster nodes: 0 / 523107 (0.00%)
+2026-09-26 15:03:40 | INFO | Saved simulation 43: nodes=523107, segments=61, elapsed=44.7s
+2026-09-26 15:03:40 | INFO | Processing VTK 44/698 (6.3%): E_S_WW_WM_044.vtk
+No-cluster nodes: 92188 / 512965 (17.97%)
+Multi-cluster nodes: 0 / 512965 (0.00%)
+2026-09-26 15:04:24 | INFO | Saved simulation 44: nodes=512965, segments=83, elapsed=43.7s
+2026-09-26 15:04:24 | INFO | Processing VTK 45/698 (6.4%): E_S_WW_WM_045.vtk
+No-cluster nodes: 91390 / 483625 (18.90%)
+Multi-cluster nodes: 0 / 483625 (0.00%)
+2026-09-26 15:05:05 | INFO | Saved simulation 45: nodes=483625, segments=77, elapsed=40.6s
+2026-09-26 15:05:05 | INFO | Processing VTK 46/698 (6.6%): E_S_WW_WM_046.vtk
+No-cluster nodes: 91622 / 522933 (17.52%)
+Multi-cluster nodes: 0 / 522933 (0.00%)
+2026-09-26 15:05:49 | INFO | Saved simulation 46: nodes=522933, segments=79, elapsed=44.4s
+2026-09-26 15:05:49 | INFO | Processing VTK 47/698 (6.7%): E_S_WW_WM_047.vtk
+No-cluster nodes: 90216 / 504248 (17.89%)
+Multi-cluster nodes: 0 / 504248 (0.00%)
+2026-09-26 15:06:32 | INFO | Saved simulation 47: nodes=504248, segments=79, elapsed=42.8s
+2026-09-26 15:06:32 | INFO | Processing VTK 48/698 (6.9%): E_S_WW_WM_048.vtk
+No-cluster nodes: 90910 / 487063 (18.66%)
+Multi-cluster nodes: 0 / 487063 (0.00%)
+2026-09-26 15:07:13 | INFO | Saved simulation 48: nodes=487063, segments=73, elapsed=40.8s
+2026-09-26 15:07:13 | INFO | Processing VTK 49/698 (7.0%): E_S_WW_WM_049.vtk
+No-cluster nodes: 92662 / 531699 (17.43%)
+Multi-cluster nodes: 0 / 531699 (0.00%)
+2026-09-26 15:07:58 | INFO | Saved simulation 49: nodes=531699, segments=81, elapsed=45.1s
+2026-09-26 15:07:58 | INFO | Processing VTK 50/698 (7.2%): E_S_WW_WM_050.vtk
+No-cluster nodes: 93372 / 526995 (17.72%)
+Multi-cluster nodes: 0 / 526995 (0.00%)
+2026-09-26 15:08:43 | INFO | Saved simulation 50: nodes=526995, segments=77, elapsed=44.8s
+2026-09-26 15:08:43 | INFO | Processing VTK 51/698 (7.3%): E_S_WW_WM_051.vtk
+No-cluster nodes: 91154 / 511808 (17.81%)
+Multi-cluster nodes: 0 / 511808 (0.00%)
+2026-09-26 15:09:26 | INFO | Saved simulation 51: nodes=511808, segments=77, elapsed=43.6s
+2026-09-26 15:09:26 | INFO | Processing VTK 52/698 (7.4%): E_S_WW_WM_052.vtk
+No-cluster nodes: 91556 / 521431 (17.56%)
+Multi-cluster nodes: 0 / 521431 (0.00%)
+2026-09-26 15:10:11 | INFO | Saved simulation 52: nodes=521431, segments=77, elapsed=44.3s
+2026-09-26 15:10:11 | INFO | Processing VTK 53/698 (7.6%): E_S_WW_WM_053.vtk
+No-cluster nodes: 91114 / 516683 (17.63%)
+Multi-cluster nodes: 0 / 516683 (0.00%)
+2026-09-26 15:10:55 | INFO | Saved simulation 53: nodes=516683, segments=73, elapsed=44.0s
+2026-09-26 15:10:55 | INFO | Processing VTK 54/698 (7.7%): E_S_WW_WM_054.vtk
+No-cluster nodes: 90192 / 479156 (18.82%)
+Multi-cluster nodes: 0 / 479156 (0.00%)
+2026-09-26 15:11:35 | INFO | Saved simulation 54: nodes=479156, segments=85, elapsed=40.0s
+2026-09-26 15:11:35 | INFO | Processing VTK 55/698 (7.9%): E_S_WW_WM_055.vtk
+No-cluster nodes: 91554 / 491054 (18.64%)
+Multi-cluster nodes: 0 / 491054 (0.00%)
+2026-09-26 15:12:16 | INFO | Saved simulation 55: nodes=491054, segments=79, elapsed=41.3s
+2026-09-26 15:12:16 | INFO | Processing VTK 56/698 (8.0%): E_S_WW_WM_056.vtk
+No-cluster nodes: 90886 / 501497 (18.12%)
+Multi-cluster nodes: 0 / 501497 (0.00%)
+2026-09-26 15:12:58 | INFO | Saved simulation 56: nodes=501497, segments=103, elapsed=42.5s
+2026-09-26 15:12:58 | INFO | Processing VTK 57/698 (8.2%): E_S_WW_WM_057.vtk
+No-cluster nodes: 90788 / 509007 (17.84%)
+Multi-cluster nodes: 0 / 509007 (0.00%)
+2026-09-26 15:13:42 | INFO | Saved simulation 57: nodes=509007, segments=81, elapsed=43.3s
+2026-09-26 15:13:42 | INFO | Processing VTK 58/698 (8.3%): E_S_WW_WM_058.vtk
+No-cluster nodes: 92498 / 556577 (16.62%)
+Multi-cluster nodes: 0 / 556577 (0.00%)
+2026-09-26 15:14:29 | INFO | Saved simulation 58: nodes=556577, segments=75, elapsed=47.9s
+2026-09-26 15:14:29 | INFO | Processing VTK 59/698 (8.5%): E_S_WW_WM_059.vtk
+No-cluster nodes: 90938 / 495178 (18.36%)
+Multi-cluster nodes: 0 / 495178 (0.00%)
+2026-09-26 15:15:11 | INFO | Saved simulation 59: nodes=495178, segments=85, elapsed=41.8s
+2026-09-26 15:15:11 | INFO | Processing VTK 60/698 (8.6%): E_S_WW_WM_060.vtk
+No-cluster nodes: 91808 / 536572 (17.11%)
+Multi-cluster nodes: 0 / 536572 (0.00%)
+2026-09-26 15:15:57 | INFO | Saved simulation 60: nodes=536572, segments=73, elapsed=45.8s
+2026-09-26 15:15:57 | INFO | Processing VTK 61/698 (8.7%): E_S_WW_WM_061.vtk
+No-cluster nodes: 91838 / 511226 (17.96%)
+Multi-cluster nodes: 0 / 511226 (0.00%)
+2026-09-26 15:16:40 | INFO | Saved simulation 61: nodes=511226, segments=75, elapsed=43.1s
+2026-09-26 15:16:40 | INFO | Processing VTK 62/698 (8.9%): E_S_WW_WM_062.vtk
+No-cluster nodes: 90956 / 497315 (18.29%)
+Multi-cluster nodes: 0 / 497315 (0.00%)
+2026-09-26 15:17:22 | INFO | Saved simulation 62: nodes=497315, segments=71, elapsed=41.9s
+2026-09-26 15:17:22 | INFO | Processing VTK 63/698 (9.0%): E_S_WW_WM_063.vtk
+No-cluster nodes: 91282 / 498716 (18.30%)
+Multi-cluster nodes: 0 / 498716 (0.00%)
+2026-09-26 15:18:04 | INFO | Saved simulation 63: nodes=498716, segments=91, elapsed=41.8s
+2026-09-26 15:18:04 | INFO | Processing VTK 64/698 (9.2%): E_S_WW_WM_064.vtk
+No-cluster nodes: 91726 / 506528 (18.11%)
+Multi-cluster nodes: 0 / 506528 (0.00%)
+2026-09-26 15:18:49 | INFO | Saved simulation 64: nodes=506528, segments=87, elapsed=45.6s
+2026-09-26 15:18:49 | INFO | Processing VTK 65/698 (9.3%): E_S_WW_WM_065.vtk
+No-cluster nodes: 92662 / 506575 (18.29%)
+Multi-cluster nodes: 0 / 506575 (0.00%)
+2026-09-26 15:19:33 | INFO | Saved simulation 65: nodes=506575, segments=75, elapsed=43.6s
+2026-09-26 15:19:33 | INFO | Processing VTK 66/698 (9.5%): E_S_WW_WM_066.vtk
+No-cluster nodes: 90088 / 489351 (18.41%)
+Multi-cluster nodes: 0 / 489351 (0.00%)
+2026-09-26 15:20:15 | INFO | Saved simulation 66: nodes=489351, segments=85, elapsed=42.3s
+2026-09-26 15:20:15 | INFO | Processing VTK 67/698 (9.6%): E_S_WW_WM_067.vtk
+No-cluster nodes: 91466 / 541655 (16.89%)
+Multi-cluster nodes: 0 / 541655 (0.00%)
+2026-09-26 15:21:01 | INFO | Saved simulation 67: nodes=541655, segments=83, elapsed=45.8s
+2026-09-26 15:21:01 | INFO | Processing VTK 68/698 (9.7%): E_S_WW_WM_068.vtk
+No-cluster nodes: 89662 / 482154 (18.60%)
+Multi-cluster nodes: 0 / 482154 (0.00%)
+2026-09-26 15:21:41 | INFO | Saved simulation 68: nodes=482154, segments=81, elapsed=40.1s
+2026-09-26 15:21:41 | INFO | Processing VTK 69/698 (9.9%): E_S_WW_WM_069.vtk
+No-cluster nodes: 92662 / 524461 (17.67%)
+Multi-cluster nodes: 0 / 524461 (0.00%)
+2026-09-26 15:22:25 | INFO | Saved simulation 69: nodes=524461, segments=91, elapsed=44.1s
+2026-09-26 15:22:25 | INFO | Processing VTK 70/698 (10.0%): E_S_WW_WM_070.vtk
+No-cluster nodes: 90840 / 484713 (18.74%)
+Multi-cluster nodes: 0 / 484713 (0.00%)
+2026-09-26 15:23:06 | INFO | Saved simulation 70: nodes=484713, segments=87, elapsed=40.2s
+2026-09-26 15:23:06 | INFO | Processing VTK 71/698 (10.2%): E_S_WW_WM_071.vtk
+No-cluster nodes: 91838 / 473708 (19.39%)
+Multi-cluster nodes: 0 / 473708 (0.00%)
+2026-09-26 15:23:45 | INFO | Saved simulation 71: nodes=473708, segments=85, elapsed=39.4s
+2026-09-26 15:23:45 | INFO | Processing VTK 72/698 (10.3%): E_S_WW_WM_072.vtk
+No-cluster nodes: 93180 / 533071 (17.48%)
+Multi-cluster nodes: 0 / 533071 (0.00%)
+2026-09-26 15:24:30 | INFO | Saved simulation 72: nodes=533071, segments=75, elapsed=44.9s
+2026-09-26 15:24:30 | INFO | Processing VTK 73/698 (10.5%): E_S_WW_WM_073.vtk
+No-cluster nodes: 90926 / 510772 (17.80%)
+Multi-cluster nodes: 0 / 510772 (0.00%)
+2026-09-26 15:25:12 | INFO | Saved simulation 73: nodes=510772, segments=85, elapsed=42.6s
+2026-09-26 15:25:12 | INFO | Processing VTK 74/698 (10.6%): E_S_WW_WM_074.vtk
+No-cluster nodes: 91614 / 529370 (17.31%)
+Multi-cluster nodes: 0 / 529370 (0.00%)
+2026-09-26 15:25:57 | INFO | Saved simulation 74: nodes=529370, segments=79, elapsed=44.5s
+2026-09-26 15:25:57 | INFO | Processing VTK 75/698 (10.7%): E_S_WW_WM_075.vtk
+No-cluster nodes: 92048 / 481363 (19.12%)
+Multi-cluster nodes: 0 / 481363 (0.00%)
+2026-09-26 15:26:37 | INFO | Saved simulation 75: nodes=481363, segments=73, elapsed=40.0s
+2026-09-26 15:26:37 | INFO | Processing VTK 76/698 (10.9%): E_S_WW_WM_076.vtk
+No-cluster nodes: 90898 / 519591 (17.49%)
+Multi-cluster nodes: 0 / 519591 (0.00%)
+2026-09-26 15:27:21 | INFO | Saved simulation 76: nodes=519591, segments=65, elapsed=43.6s
+2026-09-26 15:27:21 | INFO | Processing VTK 77/698 (11.0%): E_S_WW_WM_077.vtk
+No-cluster nodes: 91178 / 540395 (16.87%)
+Multi-cluster nodes: 0 / 540395 (0.00%)
+2026-09-26 15:28:06 | INFO | Saved simulation 77: nodes=540395, segments=69, elapsed=45.8s
+2026-09-26 15:28:06 | INFO | Processing VTK 78/698 (11.2%): E_S_WW_WM_078.vtk
+No-cluster nodes: 90760 / 484546 (18.73%)
+Multi-cluster nodes: 0 / 484546 (0.00%)
+2026-09-26 15:28:47 | INFO | Saved simulation 78: nodes=484546, segments=71, elapsed=40.3s
+2026-09-26 15:28:47 | INFO | Processing VTK 79/698 (11.3%): E_S_WW_WM_079.vtk
+No-cluster nodes: 91364 / 457397 (19.97%)
+Multi-cluster nodes: 0 / 457397 (0.00%)
+2026-09-26 15:29:24 | INFO | Saved simulation 79: nodes=457397, segments=91, elapsed=37.6s
+2026-09-26 15:29:24 | INFO | Processing VTK 80/698 (11.5%): E_S_WW_WM_080.vtk
+No-cluster nodes: 91468 / 493230 (18.54%)
+Multi-cluster nodes: 0 / 493230 (0.00%)
+2026-09-26 15:30:05 | INFO | Saved simulation 80: nodes=493230, segments=91, elapsed=41.1s
+2026-09-26 15:30:05 | INFO | Processing VTK 81/698 (11.6%): E_S_WW_WM_081.vtk
+No-cluster nodes: 93300 / 494763 (18.86%)
+Multi-cluster nodes: 0 / 494763 (0.00%)
+2026-09-26 15:30:47 | INFO | Saved simulation 81: nodes=494763, segments=63, elapsed=41.3s
+2026-09-26 15:30:47 | INFO | Processing VTK 82/698 (11.7%): E_S_WW_WM_082.vtk
+No-cluster nodes: 91254 / 501470 (18.20%)
+Multi-cluster nodes: 0 / 501470 (0.00%)
+2026-09-26 15:31:29 | INFO | Saved simulation 82: nodes=501470, segments=83, elapsed=42.1s
+2026-09-26 15:31:29 | INFO | Processing VTK 83/698 (11.9%): E_S_WW_WM_083.vtk
+No-cluster nodes: 91058 / 500756 (18.18%)
+Multi-cluster nodes: 0 / 500756 (0.00%)
+2026-09-26 15:32:11 | INFO | Saved simulation 83: nodes=500756, segments=81, elapsed=42.1s
+2026-09-26 15:32:11 | INFO | Processing VTK 84/698 (12.0%): E_S_WW_WM_084.vtk
+No-cluster nodes: 90828 / 522273 (17.39%)
+Multi-cluster nodes: 0 / 522273 (0.00%)
+2026-09-26 15:32:55 | INFO | Saved simulation 84: nodes=522273, segments=83, elapsed=44.1s
+2026-09-26 15:32:55 | INFO | Processing VTK 85/698 (12.2%): E_S_WW_WM_085.vtk
+No-cluster nodes: 91532 / 535795 (17.08%)
+Multi-cluster nodes: 0 / 535795 (0.00%)
+2026-09-26 15:33:40 | INFO | Saved simulation 85: nodes=535795, segments=79, elapsed=45.4s
+2026-09-26 15:33:40 | INFO | Processing VTK 86/698 (12.3%): E_S_WW_WM_086.vtk
+No-cluster nodes: 90188 / 499972 (18.04%)
+Multi-cluster nodes: 0 / 499972 (0.00%)
+2026-09-26 15:34:22 | INFO | Saved simulation 86: nodes=499972, segments=69, elapsed=42.0s
+2026-09-26 15:34:22 | INFO | Processing VTK 87/698 (12.5%): E_S_WW_WM_087.vtk
+No-cluster nodes: 91728 / 512397 (17.90%)
+Multi-cluster nodes: 0 / 512397 (0.00%)
+2026-09-26 15:35:05 | INFO | Saved simulation 87: nodes=512397, segments=71, elapsed=43.1s
+2026-09-26 15:35:05 | INFO | Processing VTK 88/698 (12.6%): E_S_WW_WM_088.vtk
+No-cluster nodes: 91800 / 479522 (19.14%)
+Multi-cluster nodes: 0 / 479522 (0.00%)
+2026-09-26 15:35:45 | INFO | Saved simulation 88: nodes=479522, segments=73, elapsed=40.0s
+2026-09-26 15:35:45 | INFO | Processing VTK 89/698 (12.8%): E_S_WW_WM_089.vtk
+No-cluster nodes: 92346 / 492317 (18.76%)
+Multi-cluster nodes: 0 / 492317 (0.00%)
+2026-09-26 15:36:27 | INFO | Saved simulation 89: nodes=492317, segments=53, elapsed=41.2s
+2026-09-26 15:36:27 | INFO | Processing VTK 90/698 (12.9%): E_S_WW_WM_090.vtk
+No-cluster nodes: 90922 / 477432 (19.04%)
+Multi-cluster nodes: 0 / 477432 (0.00%)
+2026-09-26 15:37:06 | INFO | Saved simulation 90: nodes=477432, segments=85, elapsed=39.6s
+2026-09-26 15:37:06 | INFO | Processing VTK 91/698 (13.0%): E_S_WW_WM_091.vtk
+No-cluster nodes: 92464 / 459099 (20.14%)
+Multi-cluster nodes: 0 / 459099 (0.00%)
+2026-09-26 15:37:44 | INFO | Saved simulation 91: nodes=459099, segments=91, elapsed=37.7s
+2026-09-26 15:37:44 | INFO | Processing VTK 92/698 (13.2%): E_S_WW_WM_092.vtk
+No-cluster nodes: 90568 / 473106 (19.14%)
+Multi-cluster nodes: 0 / 473106 (0.00%)
+2026-09-26 15:38:23 | INFO | Saved simulation 92: nodes=473106, segments=83, elapsed=39.0s
+2026-09-26 15:38:23 | INFO | Processing VTK 93/698 (13.3%): E_S_WW_WM_093.vtk
+No-cluster nodes: 90880 / 510688 (17.80%)
+Multi-cluster nodes: 0 / 510688 (0.00%)
+2026-09-26 15:39:06 | INFO | Saved simulation 93: nodes=510688, segments=85, elapsed=42.8s
+2026-09-26 15:39:06 | INFO | Processing VTK 94/698 (13.5%): E_S_WW_WM_094.vtk
+No-cluster nodes: 91632 / 517907 (17.69%)
+Multi-cluster nodes: 0 / 517907 (0.00%)
+2026-09-26 15:39:49 | INFO | Saved simulation 94: nodes=517907, segments=87, elapsed=43.5s
+2026-09-26 15:39:49 | INFO | Processing VTK 95/698 (13.6%): E_S_WW_WM_095.vtk
+No-cluster nodes: 91650 / 489840 (18.71%)
+Multi-cluster nodes: 0 / 489840 (0.00%)
+2026-09-26 15:40:30 | INFO | Saved simulation 95: nodes=489840, segments=81, elapsed=40.7s
+2026-09-26 15:40:30 | INFO | Processing VTK 96/698 (13.8%): E_S_WW_WM_096.vtk
+No-cluster nodes: 91224 / 480926 (18.97%)
+Multi-cluster nodes: 0 / 480926 (0.00%)
+2026-09-26 15:41:10 | INFO | Saved simulation 96: nodes=480926, segments=75, elapsed=40.0s
+2026-09-26 15:41:10 | INFO | Processing VTK 97/698 (13.9%): E_S_WW_WM_097.vtk
+No-cluster nodes: 92070 / 489703 (18.80%)
+Multi-cluster nodes: 0 / 489703 (0.00%)
+2026-09-26 15:41:50 | INFO | Saved simulation 97: nodes=489703, segments=79, elapsed=40.6s
+2026-09-26 15:41:50 | INFO | Processing VTK 98/698 (14.0%): E_S_WW_WM_098.vtk
+No-cluster nodes: 91018 / 471187 (19.32%)
+Multi-cluster nodes: 0 / 471187 (0.00%)
+2026-09-26 15:42:32 | INFO | Saved simulation 98: nodes=471187, segments=79, elapsed=41.5s
+2026-09-26 15:42:32 | INFO | Processing VTK 99/698 (14.2%): E_S_WW_WM_099.vtk
+No-cluster nodes: 90780 / 509421 (17.82%)
+Multi-cluster nodes: 0 / 509421 (0.00%)
+2026-09-26 15:43:17 | INFO | Saved simulation 99: nodes=509421, segments=83, elapsed=44.7s
+2026-09-26 15:43:17 | INFO | Processing VTK 100/698 (14.3%): E_S_WW_WM_100.vtk
+No-cluster nodes: 90086 / 467885 (19.25%)
+Multi-cluster nodes: 0 / 467885 (0.00%)
+2026-09-26 15:43:55 | INFO | Saved simulation 100: nodes=467885, segments=83, elapsed=38.7s
+2026-09-26 15:43:55 | INFO | Processing VTK 101/698 (14.5%): E_S_WW_WM_101.vtk
+No-cluster nodes: 91288 / 482668 (18.91%)
+Multi-cluster nodes: 0 / 482668 (0.00%)
+2026-09-26 15:44:35 | INFO | Saved simulation 101: nodes=482668, segments=95, elapsed=40.0s
+2026-09-26 15:44:35 | INFO | Processing VTK 102/698 (14.6%): E_S_WW_WM_102.vtk
+No-cluster nodes: 91416 / 477805 (19.13%)
+Multi-cluster nodes: 0 / 477805 (0.00%)
+2026-09-26 15:45:15 | INFO | Saved simulation 102: nodes=477805, segments=73, elapsed=39.4s
+2026-09-26 15:45:15 | INFO | Processing VTK 103/698 (14.8%): E_S_WW_WM_103.vtk
+No-cluster nodes: 91820 / 521174 (17.62%)
+Multi-cluster nodes: 0 / 521174 (0.00%)
+2026-09-26 15:45:59 | INFO | Saved simulation 103: nodes=521174, segments=87, elapsed=44.1s
+2026-09-26 15:45:59 | INFO | Processing VTK 104/698 (14.9%): E_S_WW_WM_104.vtk
+No-cluster nodes: 92772 / 547642 (16.94%)
+Multi-cluster nodes: 0 / 547642 (0.00%)
+2026-09-26 15:46:46 | INFO | Saved simulation 104: nodes=547642, segments=83, elapsed=47.0s
+2026-09-26 15:46:46 | INFO | Processing VTK 105/698 (15.0%): E_S_WW_WM_105.vtk
+No-cluster nodes: 91436 / 471076 (19.41%)
+Multi-cluster nodes: 0 / 471076 (0.00%)
+2026-09-26 15:47:26 | INFO | Saved simulation 105: nodes=471076, segments=83, elapsed=39.9s
+2026-09-26 15:47:26 | INFO | Processing VTK 106/698 (15.2%): E_S_WW_WM_106.vtk
+No-cluster nodes: 90004 / 450204 (19.99%)
+Multi-cluster nodes: 0 / 450204 (0.00%)
+2026-09-26 15:48:05 | INFO | Saved simulation 106: nodes=450204, segments=77, elapsed=38.7s
+2026-09-26 15:48:05 | INFO | Processing VTK 107/698 (15.3%): E_S_WW_WM_107.vtk
+No-cluster nodes: 91076 / 519751 (17.52%)
+Multi-cluster nodes: 0 / 519751 (0.00%)
+2026-09-26 15:48:49 | INFO | Saved simulation 107: nodes=519751, segments=95, elapsed=44.0s
+2026-09-26 15:48:49 | INFO | Processing VTK 108/698 (15.5%): E_S_WW_WM_108.vtk
+No-cluster nodes: 92650 / 485895 (19.07%)
+Multi-cluster nodes: 0 / 485895 (0.00%)
+2026-09-26 15:49:29 | INFO | Saved simulation 108: nodes=485895, segments=81, elapsed=40.5s
+2026-09-26 15:49:29 | INFO | Processing VTK 109/698 (15.6%): E_S_WW_WM_109.vtk
+No-cluster nodes: 90760 / 478489 (18.97%)
+Multi-cluster nodes: 0 / 478489 (0.00%)
+2026-09-26 15:50:09 | INFO | Saved simulation 109: nodes=478489, segments=71, elapsed=39.8s
+2026-09-26 15:50:09 | INFO | Processing VTK 110/698 (15.8%): E_S_WW_WM_110.vtk
+No-cluster nodes: 91052 / 520156 (17.50%)
+Multi-cluster nodes: 0 / 520156 (0.00%)
+2026-09-26 15:50:55 | INFO | Saved simulation 110: nodes=520156, segments=81, elapsed=46.6s
+2026-09-26 15:50:55 | INFO | Processing VTK 111/698 (15.9%): E_S_WW_WM_111.vtk
+No-cluster nodes: 91326 / 509717 (17.92%)
+Multi-cluster nodes: 0 / 509717 (0.00%)
+2026-09-26 15:51:40 | INFO | Saved simulation 111: nodes=509717, segments=69, elapsed=44.6s
+2026-09-26 15:51:40 | INFO | Processing VTK 112/698 (16.0%): E_S_WW_WM_112.vtk
+No-cluster nodes: 91996 / 507687 (18.12%)
+Multi-cluster nodes: 0 / 507687 (0.00%)
+2026-09-26 15:52:23 | INFO | Saved simulation 112: nodes=507687, segments=85, elapsed=43.0s
+2026-09-26 15:52:23 | INFO | Processing VTK 113/698 (16.2%): E_S_WW_WM_113.vtk
+No-cluster nodes: 90918 / 498806 (18.23%)
+Multi-cluster nodes: 0 / 498806 (0.00%)
+2026-09-26 15:53:05 | INFO | Saved simulation 113: nodes=498806, segments=73, elapsed=42.2s
+2026-09-26 15:53:05 | INFO | Processing VTK 114/698 (16.3%): E_S_WW_WM_114.vtk
+No-cluster nodes: 91250 / 509398 (17.91%)
+Multi-cluster nodes: 0 / 509398 (0.00%)
+2026-09-26 15:53:48 | INFO | Saved simulation 114: nodes=509398, segments=79, elapsed=43.0s
+2026-09-26 15:53:48 | INFO | Processing VTK 115/698 (16.5%): E_S_WW_WM_115.vtk
+No-cluster nodes: 92364 / 506537 (18.23%)
+Multi-cluster nodes: 0 / 506537 (0.00%)
+2026-09-26 15:54:33 | INFO | Saved simulation 115: nodes=506537, segments=79, elapsed=44.9s
+2026-09-26 15:54:33 | INFO | Processing VTK 116/698 (16.6%): E_S_WW_WM_116.vtk
+No-cluster nodes: 90628 / 489154 (18.53%)
+Multi-cluster nodes: 0 / 489154 (0.00%)
+2026-09-26 15:55:14 | INFO | Saved simulation 116: nodes=489154, segments=77, elapsed=41.1s
+2026-09-26 15:55:14 | INFO | Processing VTK 117/698 (16.8%): E_S_WW_WM_117.vtk
+No-cluster nodes: 91138 / 538876 (16.91%)
+Multi-cluster nodes: 0 / 538876 (0.00%)
+2026-09-26 15:56:00 | INFO | Saved simulation 117: nodes=538876, segments=79, elapsed=45.8s
+2026-09-26 15:56:00 | INFO | Processing VTK 118/698 (16.9%): E_S_WW_WM_118.vtk
+No-cluster nodes: 92368 / 478077 (19.32%)
+Multi-cluster nodes: 0 / 478077 (0.00%)
+2026-09-26 15:56:40 | INFO | Saved simulation 118: nodes=478077, segments=81, elapsed=39.8s
+2026-09-26 15:56:40 | INFO | Processing VTK 119/698 (17.0%): E_S_WW_WM_119.vtk
+No-cluster nodes: 91438 / 525822 (17.39%)
+Multi-cluster nodes: 0 / 525822 (0.00%)
+2026-09-26 15:57:25 | INFO | Saved simulation 119: nodes=525822, segments=85, elapsed=44.8s
+2026-09-26 15:57:25 | INFO | Processing VTK 120/698 (17.2%): E_S_WW_WM_120.vtk
+No-cluster nodes: 91782 / 497665 (18.44%)
+Multi-cluster nodes: 0 / 497665 (0.00%)
+2026-09-26 15:58:07 | INFO | Saved simulation 120: nodes=497665, segments=93, elapsed=42.2s
+2026-09-26 15:58:07 | INFO | Processing VTK 121/698 (17.3%): E_S_WW_WM_121.vtk
+No-cluster nodes: 91196 / 500058 (18.24%)
+Multi-cluster nodes: 0 / 500058 (0.00%)
+2026-09-26 15:58:49 | INFO | Saved simulation 121: nodes=500058, segments=69, elapsed=42.4s
+2026-09-26 15:58:49 | INFO | Processing VTK 122/698 (17.5%): E_S_WW_WM_122.vtk
+No-cluster nodes: 91452 / 480197 (19.04%)
+Multi-cluster nodes: 0 / 480197 (0.00%)
+2026-09-26 15:59:30 | INFO | Saved simulation 122: nodes=480197, segments=83, elapsed=40.3s
+2026-09-26 15:59:30 | INFO | Processing VTK 123/698 (17.6%): E_S_WW_WM_123.vtk
+No-cluster nodes: 91608 / 495455 (18.49%)
+Multi-cluster nodes: 0 / 495455 (0.00%)
+2026-09-26 16:00:11 | INFO | Saved simulation 123: nodes=495455, segments=91, elapsed=41.6s
+2026-09-26 16:00:11 | INFO | Processing VTK 124/698 (17.8%): E_S_WW_WM_124.vtk
+No-cluster nodes: 91334 / 478911 (19.07%)
+Multi-cluster nodes: 0 / 478911 (0.00%)
+2026-09-26 16:00:51 | INFO | Saved simulation 124: nodes=478911, segments=75, elapsed=40.1s
+2026-09-26 16:00:51 | INFO | Processing VTK 125/698 (17.9%): E_S_WW_WM_125.vtk
+No-cluster nodes: 91038 / 487191 (18.69%)
+Multi-cluster nodes: 0 / 487191 (0.00%)
+2026-09-26 16:01:32 | INFO | Saved simulation 125: nodes=487191, segments=79, elapsed=41.1s
+2026-09-26 16:01:32 | INFO | Processing VTK 126/698 (18.1%): E_S_WW_WM_126.vtk
+No-cluster nodes: 91716 / 504595 (18.18%)
+Multi-cluster nodes: 0 / 504595 (0.00%)
+2026-09-26 16:02:15 | INFO | Saved simulation 126: nodes=504595, segments=83, elapsed=42.4s
+2026-09-26 16:02:15 | INFO | Processing VTK 127/698 (18.2%): E_S_WW_WM_127.vtk
+No-cluster nodes: 90844 / 460074 (19.75%)
+Multi-cluster nodes: 0 / 460074 (0.00%)
+2026-09-26 16:02:53 | INFO | Saved simulation 127: nodes=460074, segments=79, elapsed=38.3s
+2026-09-26 16:02:53 | INFO | Processing VTK 128/698 (18.3%): E_S_WW_WM_128.vtk
+No-cluster nodes: 92198 / 508851 (18.12%)
+Multi-cluster nodes: 0 / 508851 (0.00%)
+2026-09-26 16:03:36 | INFO | Saved simulation 128: nodes=508851, segments=85, elapsed=42.7s
+2026-09-26 16:03:36 | INFO | Processing VTK 129/698 (18.5%): E_S_WW_WM_129.vtk
+No-cluster nodes: 92700 / 542530 (17.09%)
+Multi-cluster nodes: 0 / 542530 (0.00%)
+2026-09-26 16:04:22 | INFO | Saved simulation 129: nodes=542530, segments=85, elapsed=46.3s
+2026-09-26 16:04:22 | INFO | Processing VTK 130/698 (18.6%): E_S_WW_WM_130.vtk
+No-cluster nodes: 92108 / 492487 (18.70%)
+Multi-cluster nodes: 0 / 492487 (0.00%)
+2026-09-26 16:05:03 | INFO | Saved simulation 130: nodes=492487, segments=75, elapsed=41.2s
+2026-09-26 16:05:03 | INFO | Processing VTK 131/698 (18.8%): E_S_WW_WM_131.vtk
+No-cluster nodes: 90182 / 515417 (17.50%)
+Multi-cluster nodes: 0 / 515417 (0.00%)
+2026-09-26 16:05:47 | INFO | Saved simulation 131: nodes=515417, segments=75, elapsed=43.6s
+2026-09-26 16:05:47 | INFO | Processing VTK 132/698 (18.9%): E_S_WW_WM_132.vtk
+No-cluster nodes: 90766 / 456063 (19.90%)
+Multi-cluster nodes: 0 / 456063 (0.00%)
+2026-09-26 16:06:25 | INFO | Saved simulation 132: nodes=456063, segments=81, elapsed=37.9s
+2026-09-26 16:06:25 | INFO | Processing VTK 133/698 (19.1%): E_S_WW_WM_133.vtk
+No-cluster nodes: 93246 / 496336 (18.79%)
+Multi-cluster nodes: 0 / 496336 (0.00%)
+2026-09-26 16:07:06 | INFO | Saved simulation 133: nodes=496336, segments=91, elapsed=41.4s
+2026-09-26 16:07:06 | INFO | Processing VTK 134/698 (19.2%): E_S_WW_WM_134.vtk
+No-cluster nodes: 89748 / 464091 (19.34%)
+Multi-cluster nodes: 0 / 464091 (0.00%)
+2026-09-26 16:07:45 | INFO | Saved simulation 134: nodes=464091, segments=81, elapsed=38.5s
+2026-09-26 16:07:45 | INFO | Processing VTK 135/698 (19.3%): E_S_WW_WM_135.vtk
+No-cluster nodes: 92046 / 473674 (19.43%)
+Multi-cluster nodes: 0 / 473674 (0.00%)
+2026-09-26 16:08:27 | INFO | Saved simulation 135: nodes=473674, segments=83, elapsed=41.8s
+2026-09-26 16:08:27 | INFO | Processing VTK 136/698 (19.5%): E_S_WW_WM_136.vtk
+No-cluster nodes: 91388 / 491332 (18.60%)
+Multi-cluster nodes: 0 / 491332 (0.00%)
+2026-09-26 16:09:09 | INFO | Saved simulation 136: nodes=491332, segments=81, elapsed=42.0s
+2026-09-26 16:09:09 | INFO | Processing VTK 137/698 (19.6%): E_S_WW_WM_137.vtk
+No-cluster nodes: 92362 / 521669 (17.71%)
+Multi-cluster nodes: 0 / 521669 (0.00%)
+2026-09-26 16:09:53 | INFO | Saved simulation 137: nodes=521669, segments=79, elapsed=44.6s
+2026-09-26 16:09:53 | INFO | Processing VTK 138/698 (19.8%): E_S_WW_WM_138.vtk
+No-cluster nodes: 92506 / 522244 (17.71%)
+Multi-cluster nodes: 0 / 522244 (0.00%)
+2026-09-26 16:10:38 | INFO | Saved simulation 138: nodes=522244, segments=73, elapsed=44.6s
+2026-09-26 16:10:38 | INFO | Processing VTK 139/698 (19.9%): E_S_WW_WM_139.vtk
+No-cluster nodes: 92222 / 493883 (18.67%)
+Multi-cluster nodes: 0 / 493883 (0.00%)
+2026-09-26 16:11:19 | INFO | Saved simulation 139: nodes=493883, segments=69, elapsed=41.6s
+2026-09-26 16:11:19 | INFO | Processing VTK 140/698 (20.1%): E_S_WW_WM_140.vtk
+No-cluster nodes: 92418 / 482106 (19.17%)
+Multi-cluster nodes: 0 / 482106 (0.00%)
+2026-09-26 16:12:00 | INFO | Saved simulation 140: nodes=482106, segments=75, elapsed=40.5s
+2026-09-26 16:12:00 | INFO | Processing VTK 141/698 (20.2%): E_S_WW_WM_141.vtk
+No-cluster nodes: 91146 / 509114 (17.90%)
+Multi-cluster nodes: 0 / 509114 (0.00%)
+2026-09-26 16:12:43 | INFO | Saved simulation 141: nodes=509114, segments=71, elapsed=43.3s
+2026-09-26 16:12:43 | INFO | Processing VTK 142/698 (20.3%): E_S_WW_WM_142.vtk
+No-cluster nodes: 90896 / 469068 (19.38%)
+Multi-cluster nodes: 0 / 469068 (0.00%)
+2026-09-26 16:13:22 | INFO | Saved simulation 142: nodes=469068, segments=81, elapsed=39.3s
+2026-09-26 16:13:22 | INFO | Processing VTK 143/698 (20.5%): E_S_WW_WM_143.vtk
+No-cluster nodes: 91246 / 495641 (18.41%)
+Multi-cluster nodes: 0 / 495641 (0.00%)
+2026-09-26 16:14:05 | INFO | Saved simulation 143: nodes=495641, segments=81, elapsed=42.1s
+2026-09-26 16:14:05 | INFO | Processing VTK 144/698 (20.6%): E_S_WW_WM_144.vtk
+No-cluster nodes: 92904 / 488494 (19.02%)
+Multi-cluster nodes: 0 / 488494 (0.00%)
+2026-09-26 16:14:46 | INFO | Saved simulation 144: nodes=488494, segments=65, elapsed=41.2s
+2026-09-26 16:14:46 | INFO | Processing VTK 145/698 (20.8%): E_S_WW_WM_145.vtk
+No-cluster nodes: 90720 / 498790 (18.19%)
+Multi-cluster nodes: 0 / 498790 (0.00%)
+2026-09-26 16:15:28 | INFO | Saved simulation 145: nodes=498790, segments=77, elapsed=42.3s
+2026-09-26 16:15:28 | INFO | Processing VTK 146/698 (20.9%): E_S_WW_WM_146.vtk
+No-cluster nodes: 91700 / 493278 (18.59%)
+Multi-cluster nodes: 0 / 493278 (0.00%)
+2026-09-26 16:16:10 | INFO | Saved simulation 146: nodes=493278, segments=67, elapsed=41.7s
+2026-09-26 16:16:10 | INFO | Processing VTK 147/698 (21.1%): E_S_WW_WM_147.vtk
+No-cluster nodes: 91210 / 486349 (18.75%)
+Multi-cluster nodes: 0 / 486349 (0.00%)
+2026-09-26 16:16:51 | INFO | Saved simulation 147: nodes=486349, segments=79, elapsed=41.0s
+2026-09-26 16:16:51 | INFO | Processing VTK 148/698 (21.2%): E_S_WW_WM_148.vtk
+No-cluster nodes: 90928 / 496657 (18.31%)
+Multi-cluster nodes: 0 / 496657 (0.00%)
+2026-09-26 16:17:33 | INFO | Saved simulation 148: nodes=496657, segments=71, elapsed=42.0s
+2026-09-26 16:17:33 | INFO | Processing VTK 149/698 (21.3%): E_S_WW_WM_149.vtk
+No-cluster nodes: 89992 / 475830 (18.91%)
+Multi-cluster nodes: 0 / 475830 (0.00%)
+2026-09-26 16:18:13 | INFO | Saved simulation 149: nodes=475830, segments=77, elapsed=40.1s
+2026-09-26 16:18:13 | INFO | Processing VTK 150/698 (21.5%): E_S_WW_WM_150.vtk
+No-cluster nodes: 91956 / 466591 (19.71%)
+Multi-cluster nodes: 0 / 466591 (0.00%)
+2026-09-26 16:18:52 | INFO | Saved simulation 150: nodes=466591, segments=71, elapsed=39.4s
+2026-09-26 16:18:52 | INFO | Processing VTK 151/698 (21.6%): E_S_WW_WM_151.vtk
+No-cluster nodes: 91038 / 460012 (19.79%)
+Multi-cluster nodes: 0 / 460012 (0.00%)
+2026-09-26 16:19:31 | INFO | Saved simulation 151: nodes=460012, segments=59, elapsed=38.6s
+2026-09-26 16:19:31 | INFO | Processing VTK 152/698 (21.8%): E_S_WW_WM_152.vtk
+No-cluster nodes: 91404 / 534063 (17.11%)
+Multi-cluster nodes: 0 / 534063 (0.00%)
+2026-09-26 16:20:17 | INFO | Saved simulation 152: nodes=534063, segments=71, elapsed=46.0s
+2026-09-26 16:20:17 | INFO | Processing VTK 153/698 (21.9%): E_S_WW_WM_153.vtk
+No-cluster nodes: 91162 / 521220 (17.49%)
+Multi-cluster nodes: 0 / 521220 (0.00%)
+2026-09-26 16:21:02 | INFO | Saved simulation 153: nodes=521220, segments=73, elapsed=44.7s
+2026-09-26 16:21:02 | INFO | Processing VTK 154/698 (22.1%): E_S_WW_WM_154.vtk
+No-cluster nodes: 91640 / 503346 (18.21%)
+Multi-cluster nodes: 0 / 503346 (0.00%)
+2026-09-26 16:21:45 | INFO | Saved simulation 154: nodes=503346, segments=87, elapsed=42.9s
+2026-09-26 16:21:45 | INFO | Processing VTK 155/698 (22.2%): E_S_WW_WM_155.vtk
+No-cluster nodes: 90090 / 463301 (19.45%)
+Multi-cluster nodes: 0 / 463301 (0.00%)
+2026-09-26 16:22:23 | INFO | Saved simulation 155: nodes=463301, segments=91, elapsed=38.9s
+2026-09-26 16:22:23 | INFO | Processing VTK 156/698 (22.3%): E_S_WW_WM_156.vtk
+No-cluster nodes: 91222 / 500356 (18.23%)
+Multi-cluster nodes: 0 / 500356 (0.00%)
+2026-09-26 16:23:06 | INFO | Saved simulation 156: nodes=500356, segments=73, elapsed=42.4s
+2026-09-26 16:23:06 | INFO | Processing VTK 157/698 (22.5%): E_S_WW_WM_157.vtk
+No-cluster nodes: 91804 / 487011 (18.85%)
+Multi-cluster nodes: 0 / 487011 (0.00%)
+2026-09-26 16:23:47 | INFO | Saved simulation 157: nodes=487011, segments=67, elapsed=41.3s
+2026-09-26 16:23:47 | INFO | Processing VTK 158/698 (22.6%): E_S_WW_WM_158.vtk
+No-cluster nodes: 91626 / 513451 (17.85%)
+Multi-cluster nodes: 0 / 513451 (0.00%)
+2026-09-26 16:24:31 | INFO | Saved simulation 158: nodes=513451, segments=79, elapsed=43.7s
+2026-09-26 16:24:31 | INFO | Processing VTK 159/698 (22.8%): E_S_WW_WM_159.vtk
+No-cluster nodes: 90940 / 451246 (20.15%)
+Multi-cluster nodes: 0 / 451246 (0.00%)
+2026-09-26 16:25:09 | INFO | Saved simulation 159: nodes=451246, segments=79, elapsed=37.8s
+2026-09-26 16:25:09 | INFO | Processing VTK 160/698 (22.9%): E_S_WW_WM_160.vtk
+No-cluster nodes: 89984 / 476195 (18.90%)
+Multi-cluster nodes: 0 / 476195 (0.00%)
+2026-09-26 16:25:49 | INFO | Saved simulation 160: nodes=476195, segments=79, elapsed=40.0s
+2026-09-26 16:25:49 | INFO | Processing VTK 161/698 (23.1%): E_S_WW_WM_161.vtk
+No-cluster nodes: 91722 / 478238 (19.18%)
+Multi-cluster nodes: 0 / 478238 (0.00%)
+2026-09-26 16:26:29 | INFO | Saved simulation 161: nodes=478238, segments=71, elapsed=40.2s
+2026-09-26 16:26:29 | INFO | Processing VTK 162/698 (23.2%): E_S_WW_WM_162.vtk
+No-cluster nodes: 90228 / 514489 (17.54%)
+Multi-cluster nodes: 0 / 514489 (0.00%)
+2026-09-26 16:27:13 | INFO | Saved simulation 162: nodes=514489, segments=69, elapsed=43.7s
+2026-09-26 16:27:13 | INFO | Processing VTK 163/698 (23.4%): E_S_WW_WM_163.vtk
+No-cluster nodes: 92818 / 494966 (18.75%)
+Multi-cluster nodes: 0 / 494966 (0.00%)
+2026-09-26 16:27:54 | INFO | Saved simulation 163: nodes=494966, segments=75, elapsed=41.8s
+2026-09-26 16:27:54 | INFO | Processing VTK 164/698 (23.5%): E_S_WW_WM_164.vtk
+No-cluster nodes: 92336 / 489501 (18.86%)
+Multi-cluster nodes: 0 / 489501 (0.00%)
+2026-09-26 16:28:36 | INFO | Saved simulation 164: nodes=489501, segments=79, elapsed=41.3s
+2026-09-26 16:28:36 | INFO | Processing VTK 165/698 (23.6%): E_S_WW_WM_165.vtk
+No-cluster nodes: 92030 / 508698 (18.09%)
+Multi-cluster nodes: 0 / 508698 (0.00%)
+2026-09-26 16:29:19 | INFO | Saved simulation 165: nodes=508698, segments=77, elapsed=43.2s
+2026-09-26 16:29:19 | INFO | Processing VTK 166/698 (23.8%): E_S_WW_WM_166.vtk
+No-cluster nodes: 90206 / 484067 (18.64%)
+Multi-cluster nodes: 0 / 484067 (0.00%)
+2026-09-26 16:30:00 | INFO | Saved simulation 166: nodes=484067, segments=85, elapsed=40.8s
+2026-09-26 16:30:00 | INFO | Processing VTK 167/698 (23.9%): E_S_WW_WM_167.vtk
+No-cluster nodes: 90504 / 523184 (17.30%)
+Multi-cluster nodes: 0 / 523184 (0.00%)
+2026-09-26 16:30:44 | INFO | Saved simulation 167: nodes=523184, segments=77, elapsed=44.6s
+2026-09-26 16:30:44 | INFO | Processing VTK 168/698 (24.1%): E_S_WW_WM_168.vtk
+No-cluster nodes: 90172 / 503677 (17.90%)
+Multi-cluster nodes: 0 / 503677 (0.00%)
+2026-09-26 16:31:27 | INFO | Saved simulation 168: nodes=503677, segments=87, elapsed=43.0s
+2026-09-26 16:31:27 | INFO | Processing VTK 169/698 (24.2%): E_S_WW_WM_169.vtk
+No-cluster nodes: 92032 / 481902 (19.10%)
+Multi-cluster nodes: 0 / 481902 (0.00%)
+2026-09-26 16:32:08 | INFO | Saved simulation 169: nodes=481902, segments=93, elapsed=40.7s
+2026-09-26 16:32:08 | INFO | Processing VTK 170/698 (24.4%): E_S_WW_WM_170.vtk
+No-cluster nodes: 91530 / 511648 (17.89%)
+Multi-cluster nodes: 0 / 511648 (0.00%)
+2026-09-26 16:32:52 | INFO | Saved simulation 170: nodes=511648, segments=73, elapsed=43.6s
+2026-09-26 16:32:52 | INFO | Processing VTK 171/698 (24.5%): E_S_WW_WM_171.vtk
+No-cluster nodes: 91936 / 483236 (19.03%)
+Multi-cluster nodes: 0 / 483236 (0.00%)
+2026-09-26 16:33:33 | INFO | Saved simulation 171: nodes=483236, segments=77, elapsed=41.0s
+2026-09-26 16:33:33 | INFO | Processing VTK 172/698 (24.6%): E_S_WW_WM_172.vtk
+No-cluster nodes: 90176 / 529916 (17.02%)
+Multi-cluster nodes: 0 / 529916 (0.00%)
+2026-09-26 16:34:18 | INFO | Saved simulation 172: nodes=529916, segments=89, elapsed=45.4s
+2026-09-26 16:34:18 | INFO | Processing VTK 173/698 (24.8%): E_S_WW_WM_173.vtk
+No-cluster nodes: 91502 / 522475 (17.51%)
+Multi-cluster nodes: 0 / 522475 (0.00%)
+2026-09-26 16:35:03 | INFO | Saved simulation 173: nodes=522475, segments=81, elapsed=44.8s
+2026-09-26 16:35:03 | INFO | Processing VTK 174/698 (24.9%): E_S_WW_WM_174.vtk
+No-cluster nodes: 92148 / 493992 (18.65%)
+Multi-cluster nodes: 0 / 493992 (0.00%)
+2026-09-26 16:35:45 | INFO | Saved simulation 174: nodes=493992, segments=69, elapsed=42.2s
+2026-09-26 16:35:45 | INFO | Processing VTK 175/698 (25.1%): E_S_WW_WM_175.vtk
+No-cluster nodes: 91904 / 471474 (19.49%)
+Multi-cluster nodes: 0 / 471474 (0.00%)
+2026-09-26 16:36:24 | INFO | Saved simulation 175: nodes=471474, segments=79, elapsed=39.5s
+2026-09-26 16:36:24 | INFO | Processing VTK 176/698 (25.2%): E_S_WW_WM_176.vtk
+No-cluster nodes: 91150 / 507379 (17.96%)
+Multi-cluster nodes: 0 / 507379 (0.00%)
+2026-09-26 16:37:08 | INFO | Saved simulation 176: nodes=507379, segments=83, elapsed=43.4s
+2026-09-26 16:37:08 | INFO | Processing VTK 177/698 (25.4%): E_S_WW_WM_177.vtk
+No-cluster nodes: 91520 / 510835 (17.92%)
+Multi-cluster nodes: 0 / 510835 (0.00%)
+2026-09-26 16:37:51 | INFO | Saved simulation 177: nodes=510835, segments=91, elapsed=43.6s
+2026-09-26 16:37:51 | INFO | Processing VTK 178/698 (25.5%): E_S_WW_WM_178.vtk
+No-cluster nodes: 91764 / 530556 (17.30%)
+Multi-cluster nodes: 0 / 530556 (0.00%)
+2026-09-26 16:38:37 | INFO | Saved simulation 178: nodes=530556, segments=75, elapsed=45.2s
+2026-09-26 16:38:37 | INFO | Processing VTK 179/698 (25.6%): E_S_WW_WM_179.vtk
+No-cluster nodes: 92634 / 524165 (17.67%)
+Multi-cluster nodes: 0 / 524165 (0.00%)
+2026-09-26 16:39:22 | INFO | Saved simulation 179: nodes=524165, segments=69, elapsed=44.9s
+2026-09-26 16:39:22 | INFO | Processing VTK 180/698 (25.8%): E_S_WW_WM_180.vtk
+No-cluster nodes: 91702 / 481480 (19.05%)
+Multi-cluster nodes: 0 / 481480 (0.00%)
+2026-09-26 16:40:02 | INFO | Saved simulation 180: nodes=481480, segments=75, elapsed=40.7s
+2026-09-26 16:40:02 | INFO | Processing VTK 181/698 (25.9%): E_S_WW_WM_181.vtk
+No-cluster nodes: 90548 / 496540 (18.24%)
+Multi-cluster nodes: 0 / 496540 (0.00%)
+2026-09-26 16:40:45 | INFO | Saved simulation 181: nodes=496540, segments=83, elapsed=42.4s
+2026-09-26 16:40:45 | INFO | Processing VTK 182/698 (26.1%): E_S_WW_WM_182.vtk
+No-cluster nodes: 90690 / 465094 (19.50%)
+Multi-cluster nodes: 0 / 465094 (0.00%)
+2026-09-26 16:41:24 | INFO | Saved simulation 182: nodes=465094, segments=65, elapsed=39.1s
+2026-09-26 16:41:24 | INFO | Processing VTK 183/698 (26.2%): E_S_WW_WM_183.vtk
+No-cluster nodes: 90766 / 486893 (18.64%)
+Multi-cluster nodes: 0 / 486893 (0.00%)
+2026-09-26 16:42:05 | INFO | Saved simulation 183: nodes=486893, segments=81, elapsed=41.1s
+2026-09-26 16:42:05 | INFO | Processing VTK 184/698 (26.4%): E_S_WW_WM_184.vtk
+No-cluster nodes: 90700 / 509206 (17.81%)
+Multi-cluster nodes: 0 / 509206 (0.00%)
+2026-09-26 16:42:48 | INFO | Saved simulation 184: nodes=509206, segments=81, elapsed=43.6s
+2026-09-26 16:42:48 | INFO | Processing VTK 185/698 (26.5%): E_S_WW_WM_185.vtk
+No-cluster nodes: 91800 / 504681 (18.19%)
+Multi-cluster nodes: 0 / 504681 (0.00%)
+2026-09-26 16:43:32 | INFO | Saved simulation 185: nodes=504681, segments=73, elapsed=43.1s
+2026-09-26 16:43:32 | INFO | Processing VTK 186/698 (26.6%): E_S_WW_WM_186.vtk
+No-cluster nodes: 92340 / 512079 (18.03%)
+Multi-cluster nodes: 0 / 512079 (0.00%)
+2026-09-26 16:44:15 | INFO | Saved simulation 186: nodes=512079, segments=81, elapsed=43.8s
+2026-09-26 16:44:15 | INFO | Processing VTK 187/698 (26.8%): E_S_WW_WM_187.vtk
+No-cluster nodes: 91292 / 519007 (17.59%)
+Multi-cluster nodes: 0 / 519007 (0.00%)
+2026-09-26 16:45:00 | INFO | Saved simulation 187: nodes=519007, segments=77, elapsed=44.6s
+2026-09-26 16:45:00 | INFO | Processing VTK 188/698 (26.9%): E_S_WW_WM_188.vtk
+No-cluster nodes: 89718 / 461617 (19.44%)
+Multi-cluster nodes: 0 / 461617 (0.00%)
+2026-09-26 16:45:39 | INFO | Saved simulation 188: nodes=461617, segments=81, elapsed=39.0s
+2026-09-26 16:45:39 | INFO | Processing VTK 189/698 (27.1%): E_S_WW_WM_189.vtk
+No-cluster nodes: 90414 / 470758 (19.21%)
+Multi-cluster nodes: 0 / 470758 (0.00%)
+2026-09-26 16:46:20 | INFO | Saved simulation 189: nodes=470758, segments=77, elapsed=41.0s
+2026-09-26 16:46:20 | INFO | Processing VTK 190/698 (27.2%): E_S_WW_WM_190.vtk
+No-cluster nodes: 91772 / 525204 (17.47%)
+Multi-cluster nodes: 0 / 525204 (0.00%)
+2026-09-26 16:47:05 | INFO | Saved simulation 190: nodes=525204, segments=71, elapsed=45.2s
+2026-09-26 16:47:05 | INFO | Processing VTK 191/698 (27.4%): E_S_WW_WM_191.vtk
+No-cluster nodes: 90548 / 461836 (19.61%)
+Multi-cluster nodes: 0 / 461836 (0.00%)
+2026-09-26 16:47:44 | INFO | Saved simulation 191: nodes=461836, segments=83, elapsed=38.8s
+2026-09-26 16:47:44 | INFO | Processing VTK 192/698 (27.5%): E_S_WW_WM_192.vtk
+No-cluster nodes: 91392 / 474782 (19.25%)
+Multi-cluster nodes: 0 / 474782 (0.00%)
+2026-09-26 16:48:24 | INFO | Saved simulation 192: nodes=474782, segments=81, elapsed=39.7s
+2026-09-26 16:48:24 | INFO | Processing VTK 193/698 (27.7%): E_S_WW_WM_193.vtk
+No-cluster nodes: 91386 / 542142 (16.86%)
+Multi-cluster nodes: 0 / 542142 (0.00%)
+2026-09-26 16:49:10 | INFO | Saved simulation 193: nodes=542142, segments=67, elapsed=46.7s
+2026-09-26 16:49:10 | INFO | Processing VTK 194/698 (27.8%): E_S_WW_WM_194.vtk
+No-cluster nodes: 91188 / 495959 (18.39%)
+Multi-cluster nodes: 0 / 495959 (0.00%)
+2026-09-26 16:49:52 | INFO | Saved simulation 194: nodes=495959, segments=87, elapsed=42.0s
+2026-09-26 16:49:52 | INFO | Processing VTK 195/698 (27.9%): E_S_WW_WM_195.vtk
+No-cluster nodes: 91930 / 511457 (17.97%)
+Multi-cluster nodes: 0 / 511457 (0.00%)
+2026-09-26 16:50:36 | INFO | Saved simulation 195: nodes=511457, segments=75, elapsed=43.4s
+2026-09-26 16:50:36 | INFO | Processing VTK 196/698 (28.1%): E_S_WW_WM_196.vtk
+No-cluster nodes: 91766 / 493057 (18.61%)
+Multi-cluster nodes: 0 / 493057 (0.00%)
+2026-09-26 16:51:18 | INFO | Saved simulation 196: nodes=493057, segments=85, elapsed=41.9s
+2026-09-26 16:51:18 | INFO | Processing VTK 197/698 (28.2%): E_S_WW_WM_197.vtk
+No-cluster nodes: 92312 / 493233 (18.72%)
+Multi-cluster nodes: 0 / 493233 (0.00%)
+2026-09-26 16:51:59 | INFO | Saved simulation 197: nodes=493233, segments=87, elapsed=41.6s
+2026-09-26 16:51:59 | INFO | Processing VTK 198/698 (28.4%): E_S_WW_WM_198.vtk
+No-cluster nodes: 90628 / 476819 (19.01%)
+Multi-cluster nodes: 0 / 476819 (0.00%)
+2026-09-26 16:52:39 | INFO | Saved simulation 198: nodes=476819, segments=81, elapsed=40.1s
+2026-09-26 16:52:39 | INFO | Processing VTK 199/698 (28.5%): E_S_WW_WM_199.vtk
+No-cluster nodes: 91490 / 450216 (20.32%)
+Multi-cluster nodes: 0 / 450216 (0.00%)
+2026-09-26 16:53:17 | INFO | Saved simulation 199: nodes=450216, segments=91, elapsed=37.4s
+2026-09-26 16:53:17 | INFO | Processing VTK 200/698 (28.7%): E_S_WW_WM_200.vtk
+No-cluster nodes: 92182 / 507104 (18.18%)
+Multi-cluster nodes: 0 / 507104 (0.00%)
+2026-09-26 16:54:00 | INFO | Saved simulation 200: nodes=507104, segments=71, elapsed=43.1s
+2026-09-26 16:54:00 | INFO | Processing VTK 201/698 (28.8%): E_S_WW_WM_201.vtk
+No-cluster nodes: 91986 / 496638 (18.52%)
+Multi-cluster nodes: 0 / 496638 (0.00%)
+2026-09-26 16:54:42 | INFO | Saved simulation 201: nodes=496638, segments=87, elapsed=42.2s
+2026-09-26 16:54:42 | INFO | Processing VTK 202/698 (28.9%): E_S_WW_WM_202.vtk
+No-cluster nodes: 91696 / 484138 (18.94%)
+Multi-cluster nodes: 0 / 484138 (0.00%)
+2026-09-26 16:55:23 | INFO | Saved simulation 202: nodes=484138, segments=87, elapsed=41.0s
+2026-09-26 16:55:23 | INFO | Processing VTK 203/698 (29.1%): E_S_WW_WM_203.vtk
+No-cluster nodes: 92214 / 513713 (17.95%)
+Multi-cluster nodes: 0 / 513713 (0.00%)
+2026-09-26 16:56:07 | INFO | Saved simulation 203: nodes=513713, segments=77, elapsed=44.0s
+2026-09-26 16:56:07 | INFO | Processing VTK 204/698 (29.2%): E_S_WW_WM_204.vtk
+No-cluster nodes: 92036 / 468825 (19.63%)
+Multi-cluster nodes: 0 / 468825 (0.00%)
+2026-09-26 16:56:47 | INFO | Saved simulation 204: nodes=468825, segments=81, elapsed=39.8s
+2026-09-26 16:56:47 | INFO | Processing VTK 205/698 (29.4%): E_S_WW_WM_205.vtk
+No-cluster nodes: 91368 / 461514 (19.80%)
+Multi-cluster nodes: 0 / 461514 (0.00%)
+2026-09-26 16:57:26 | INFO | Saved simulation 205: nodes=461514, segments=67, elapsed=38.9s
+2026-09-26 16:57:26 | INFO | Processing VTK 206/698 (29.5%): E_S_WW_WM_206.vtk
+No-cluster nodes: 90974 / 500443 (18.18%)
+Multi-cluster nodes: 0 / 500443 (0.00%)
+2026-09-26 16:58:09 | INFO | Saved simulation 206: nodes=500443, segments=83, elapsed=42.9s
+2026-09-26 16:58:09 | INFO | Processing VTK 207/698 (29.7%): E_S_WW_WM_207.vtk
+No-cluster nodes: 91242 / 468976 (19.46%)
+Multi-cluster nodes: 0 / 468976 (0.00%)
+2026-09-26 16:58:48 | INFO | Saved simulation 207: nodes=468976, segments=89, elapsed=39.6s
+2026-09-26 16:58:48 | INFO | Processing VTK 208/698 (29.8%): E_S_WW_WM_208.vtk
+No-cluster nodes: 91544 / 540913 (16.92%)
+Multi-cluster nodes: 0 / 540913 (0.00%)
+2026-09-26 16:59:35 | INFO | Saved simulation 208: nodes=540913, segments=69, elapsed=46.9s
+2026-09-26 16:59:35 | INFO | Processing VTK 209/698 (29.9%): E_S_WW_WM_209.vtk
+No-cluster nodes: 91900 / 487334 (18.86%)
+Multi-cluster nodes: 0 / 487334 (0.00%)
+2026-09-26 17:00:17 | INFO | Saved simulation 209: nodes=487334, segments=85, elapsed=41.4s
+2026-09-26 17:00:17 | INFO | Processing VTK 210/698 (30.1%): E_S_WW_WM_210.vtk
+No-cluster nodes: 91544 / 472188 (19.39%)
+Multi-cluster nodes: 0 / 472188 (0.00%)
+2026-09-26 17:00:57 | INFO | Saved simulation 210: nodes=472188, segments=69, elapsed=40.0s
+2026-09-26 17:00:57 | INFO | Processing VTK 211/698 (30.2%): E_S_WW_WM_211.vtk
+No-cluster nodes: 90980 / 486093 (18.72%)
+Multi-cluster nodes: 0 / 486093 (0.00%)
+2026-09-26 17:01:38 | INFO | Saved simulation 211: nodes=486093, segments=85, elapsed=41.1s
+2026-09-26 17:01:38 | INFO | Processing VTK 212/698 (30.4%): E_S_WW_WM_212.vtk
+No-cluster nodes: 93268 / 483617 (19.29%)
+Multi-cluster nodes: 0 / 483617 (0.00%)
+2026-09-26 17:02:19 | INFO | Saved simulation 212: nodes=483617, segments=67, elapsed=41.1s
+2026-09-26 17:02:19 | INFO | Processing VTK 213/698 (30.5%): E_S_WW_WM_213.vtk
+No-cluster nodes: 92620 / 494466 (18.73%)
+Multi-cluster nodes: 0 / 494466 (0.00%)
+2026-09-26 17:03:01 | INFO | Saved simulation 213: nodes=494466, segments=75, elapsed=42.0s
+2026-09-26 17:03:01 | INFO | Processing VTK 214/698 (30.7%): E_S_WW_WM_214.vtk
+No-cluster nodes: 90910 / 487643 (18.64%)
+Multi-cluster nodes: 0 / 487643 (0.00%)
+2026-09-26 17:03:43 | INFO | Saved simulation 214: nodes=487643, segments=69, elapsed=42.5s
+2026-09-26 17:03:43 | INFO | Processing VTK 215/698 (30.8%): E_S_WW_WM_215.vtk
+No-cluster nodes: 92712 / 505589 (18.34%)
+Multi-cluster nodes: 0 / 505589 (0.00%)
+2026-09-26 17:04:26 | INFO | Saved simulation 215: nodes=505589, segments=77, elapsed=43.0s
+2026-09-26 17:04:26 | INFO | Processing VTK 216/698 (30.9%): E_S_WW_WM_216.vtk
+No-cluster nodes: 91178 / 485969 (18.76%)
+Multi-cluster nodes: 0 / 485969 (0.00%)
+2026-09-26 17:05:07 | INFO | Saved simulation 216: nodes=485969, segments=85, elapsed=40.8s
+2026-09-26 17:05:07 | INFO | Processing VTK 217/698 (31.1%): E_S_WW_WM_217.vtk
+No-cluster nodes: 90626 / 526246 (17.22%)
+Multi-cluster nodes: 0 / 526246 (0.00%)
+2026-09-26 17:05:52 | INFO | Saved simulation 217: nodes=526246, segments=79, elapsed=44.7s
+2026-09-26 17:05:52 | INFO | Processing VTK 218/698 (31.2%): E_S_WW_WM_218.vtk
+No-cluster nodes: 91142 / 472813 (19.28%)
+Multi-cluster nodes: 0 / 472813 (0.00%)
+2026-09-26 17:06:32 | INFO | Saved simulation 218: nodes=472813, segments=83, elapsed=39.8s
+2026-09-26 17:06:32 | INFO | Processing VTK 219/698 (31.4%): E_S_WW_WM_219.vtk
+No-cluster nodes: 91038 / 467231 (19.48%)
+Multi-cluster nodes: 0 / 467231 (0.00%)
+2026-09-26 17:07:11 | INFO | Saved simulation 219: nodes=467231, segments=87, elapsed=39.0s
+2026-09-26 17:07:11 | INFO | Processing VTK 220/698 (31.5%): E_S_WW_WM_220.vtk
+No-cluster nodes: 89640 / 514942 (17.41%)
+Multi-cluster nodes: 0 / 514942 (0.00%)
+2026-09-26 17:07:54 | INFO | Saved simulation 220: nodes=514942, segments=77, elapsed=43.9s
+2026-09-26 17:07:54 | INFO | Processing VTK 221/698 (31.7%): E_S_WW_WM_221.vtk
+No-cluster nodes: 91898 / 514803 (17.85%)
+Multi-cluster nodes: 0 / 514803 (0.00%)
+2026-09-26 17:08:38 | INFO | Saved simulation 221: nodes=514803, segments=75, elapsed=43.7s
+2026-09-26 17:08:38 | INFO | Processing VTK 222/698 (31.8%): E_S_WW_WM_222.vtk
+No-cluster nodes: 91754 / 485844 (18.89%)
+Multi-cluster nodes: 0 / 485844 (0.00%)
+2026-09-26 17:09:19 | INFO | Saved simulation 222: nodes=485844, segments=83, elapsed=41.1s
+2026-09-26 17:09:19 | INFO | Processing VTK 223/698 (31.9%): E_S_WW_WM_223.vtk
+No-cluster nodes: 90632 / 512629 (17.68%)
+Multi-cluster nodes: 0 / 512629 (0.00%)
+2026-09-26 17:10:04 | INFO | Saved simulation 223: nodes=512629, segments=73, elapsed=44.3s
+2026-09-26 17:10:04 | INFO | Processing VTK 224/698 (32.1%): E_S_WW_WM_224.vtk
+No-cluster nodes: 92048 / 481803 (19.10%)
+Multi-cluster nodes: 0 / 481803 (0.00%)
+2026-09-26 17:10:45 | INFO | Saved simulation 224: nodes=481803, segments=85, elapsed=41.3s
+2026-09-26 17:10:45 | INFO | Processing VTK 225/698 (32.2%): E_S_WW_WM_225.vtk
+No-cluster nodes: 91482 / 501760 (18.23%)
+Multi-cluster nodes: 0 / 501760 (0.00%)
+2026-09-26 17:11:28 | INFO | Saved simulation 225: nodes=501760, segments=83, elapsed=42.8s
+2026-09-26 17:11:28 | INFO | Processing VTK 226/698 (32.4%): E_S_WW_WM_226.vtk
+No-cluster nodes: 91620 / 518352 (17.68%)
+Multi-cluster nodes: 0 / 518352 (0.00%)
+2026-09-26 17:12:13 | INFO | Saved simulation 226: nodes=518352, segments=83, elapsed=45.4s
+2026-09-26 17:12:13 | INFO | Processing VTK 227/698 (32.5%): E_S_WW_WM_227.vtk
+No-cluster nodes: 91916 / 458027 (20.07%)
+Multi-cluster nodes: 0 / 458027 (0.00%)
+2026-09-26 17:12:52 | INFO | Saved simulation 227: nodes=458027, segments=69, elapsed=38.8s
+2026-09-26 17:12:52 | INFO | Processing VTK 228/698 (32.7%): E_S_WW_WM_228.vtk
+No-cluster nodes: 90088 / 467136 (19.29%)
+Multi-cluster nodes: 0 / 467136 (0.00%)
+2026-09-26 17:13:31 | INFO | Saved simulation 228: nodes=467136, segments=75, elapsed=39.4s
+2026-09-26 17:13:31 | INFO | Processing VTK 229/698 (32.8%): E_S_WW_WM_229.vtk
+No-cluster nodes: 90596 / 468918 (19.32%)
+Multi-cluster nodes: 0 / 468918 (0.00%)
+2026-09-26 17:14:11 | INFO | Saved simulation 229: nodes=468918, segments=73, elapsed=39.5s
+2026-09-26 17:14:11 | INFO | Processing VTK 230/698 (33.0%): E_S_WW_WM_230.vtk
+No-cluster nodes: 89306 / 443823 (20.12%)
+Multi-cluster nodes: 0 / 443823 (0.00%)
+2026-09-26 17:14:48 | INFO | Saved simulation 230: nodes=443823, segments=85, elapsed=37.1s
+2026-09-26 17:14:48 | INFO | Processing VTK 231/698 (33.1%): E_S_WW_WM_231.vtk
+No-cluster nodes: 89946 / 489540 (18.37%)
+Multi-cluster nodes: 0 / 489540 (0.00%)
+2026-09-26 17:15:30 | INFO | Saved simulation 231: nodes=489540, segments=81, elapsed=41.6s
+2026-09-26 17:15:30 | INFO | Processing VTK 232/698 (33.2%): E_S_WW_WM_232.vtk
+No-cluster nodes: 92368 / 494173 (18.69%)
+Multi-cluster nodes: 0 / 494173 (0.00%)
+2026-09-26 17:16:12 | INFO | Saved simulation 232: nodes=494173, segments=71, elapsed=42.2s
+2026-09-26 17:16:12 | INFO | Processing VTK 233/698 (33.4%): E_S_WW_WM_233.vtk
+No-cluster nodes: 92762 / 499303 (18.58%)
+Multi-cluster nodes: 0 / 499303 (0.00%)
+2026-09-26 17:16:55 | INFO | Saved simulation 233: nodes=499303, segments=73, elapsed=42.7s
+2026-09-26 17:16:55 | INFO | Processing VTK 234/698 (33.5%): E_S_WW_WM_234.vtk
+No-cluster nodes: 91178 / 501777 (18.17%)
+Multi-cluster nodes: 0 / 501777 (0.00%)
+2026-09-26 17:17:38 | INFO | Saved simulation 234: nodes=501777, segments=77, elapsed=42.9s
+2026-09-26 17:17:38 | INFO | Processing VTK 235/698 (33.7%): E_S_WW_WM_235.vtk
+No-cluster nodes: 90570 / 506926 (17.87%)
+Multi-cluster nodes: 0 / 506926 (0.00%)
+2026-09-26 17:18:21 | INFO | Saved simulation 235: nodes=506926, segments=81, elapsed=43.5s
+2026-09-26 17:18:21 | INFO | Processing VTK 236/698 (33.8%): E_S_WW_WM_236.vtk
+No-cluster nodes: 91334 / 480548 (19.01%)
+Multi-cluster nodes: 0 / 480548 (0.00%)
+2026-09-26 17:19:02 | INFO | Saved simulation 236: nodes=480548, segments=69, elapsed=41.1s
+2026-09-26 17:19:02 | INFO | Processing VTK 237/698 (34.0%): E_S_WW_WM_237.vtk
+No-cluster nodes: 91618 / 519253 (17.64%)
+Multi-cluster nodes: 0 / 519253 (0.00%)
+2026-09-26 17:19:47 | INFO | Saved simulation 237: nodes=519253, segments=75, elapsed=44.8s
+2026-09-26 17:19:47 | INFO | Processing VTK 238/698 (34.1%): E_S_WW_WM_238.vtk
+No-cluster nodes: 92940 / 482928 (19.25%)
+Multi-cluster nodes: 0 / 482928 (0.00%)
+2026-09-26 17:20:28 | INFO | Saved simulation 238: nodes=482928, segments=83, elapsed=41.0s
+2026-09-26 17:20:28 | INFO | Processing VTK 239/698 (34.2%): E_S_WW_WM_239.vtk
+No-cluster nodes: 92044 / 539411 (17.06%)
+Multi-cluster nodes: 0 / 539411 (0.00%)
+2026-09-26 17:21:15 | INFO | Saved simulation 239: nodes=539411, segments=83, elapsed=46.8s
+2026-09-26 17:21:15 | INFO | Processing VTK 240/698 (34.4%): E_S_WW_WM_240.vtk
+No-cluster nodes: 92650 / 530476 (17.47%)
+Multi-cluster nodes: 0 / 530476 (0.00%)
+2026-09-26 17:22:01 | INFO | Saved simulation 240: nodes=530476, segments=83, elapsed=45.9s
+2026-09-26 17:22:01 | INFO | Processing VTK 241/698 (34.5%): E_S_WW_WM_241.vtk
+No-cluster nodes: 90346 / 472729 (19.11%)
+Multi-cluster nodes: 0 / 472729 (0.00%)
+2026-09-26 17:22:41 | INFO | Saved simulation 241: nodes=472729, segments=79, elapsed=40.2s
+2026-09-26 17:22:41 | INFO | Processing VTK 242/698 (34.7%): E_S_WW_WM_242.vtk
+No-cluster nodes: 91502 / 528443 (17.32%)
+Multi-cluster nodes: 0 / 528443 (0.00%)
+2026-09-26 17:23:27 | INFO | Saved simulation 242: nodes=528443, segments=87, elapsed=45.7s
+2026-09-26 17:23:27 | INFO | Processing VTK 243/698 (34.8%): E_S_WW_WM_243.vtk
+No-cluster nodes: 91584 / 517435 (17.70%)
+Multi-cluster nodes: 0 / 517435 (0.00%)
+2026-09-26 17:24:11 | INFO | Saved simulation 243: nodes=517435, segments=71, elapsed=44.7s
+2026-09-26 17:24:11 | INFO | Processing VTK 244/698 (35.0%): E_S_WW_WM_244.vtk
+No-cluster nodes: 90214 / 468482 (19.26%)
+Multi-cluster nodes: 0 / 468482 (0.00%)
+2026-09-26 17:24:51 | INFO | Saved simulation 244: nodes=468482, segments=83, elapsed=39.8s
+2026-09-26 17:24:51 | INFO | Processing VTK 245/698 (35.1%): E_S_WW_WM_245.vtk
+No-cluster nodes: 90452 / 477841 (18.93%)
+Multi-cluster nodes: 0 / 477841 (0.00%)
+2026-09-26 17:25:32 | INFO | Saved simulation 245: nodes=477841, segments=69, elapsed=40.8s
+2026-09-26 17:25:32 | INFO | Processing VTK 246/698 (35.2%): E_S_WW_WM_246.vtk
+No-cluster nodes: 91678 / 497839 (18.42%)
+Multi-cluster nodes: 0 / 497839 (0.00%)
+2026-09-26 17:26:15 | INFO | Saved simulation 246: nodes=497839, segments=85, elapsed=42.8s
+2026-09-26 17:26:15 | INFO | Processing VTK 247/698 (35.4%): E_S_WW_WM_247.vtk
+No-cluster nodes: 91488 / 482784 (18.95%)
+Multi-cluster nodes: 0 / 482784 (0.00%)
+2026-09-26 17:26:56 | INFO | Saved simulation 247: nodes=482784, segments=81, elapsed=41.0s
+2026-09-26 17:26:56 | INFO | Processing VTK 248/698 (35.5%): E_S_WW_WM_248.vtk
+No-cluster nodes: 92090 / 540404 (17.04%)
+Multi-cluster nodes: 0 / 540404 (0.00%)
+2026-09-26 17:27:42 | INFO | Saved simulation 248: nodes=540404, segments=77, elapsed=46.7s
+2026-09-26 17:27:42 | INFO | Processing VTK 249/698 (35.7%): E_S_WW_WM_249.vtk
+No-cluster nodes: 91532 / 477329 (19.18%)
+Multi-cluster nodes: 0 / 477329 (0.00%)
+2026-09-26 17:28:23 | INFO | Saved simulation 249: nodes=477329, segments=77, elapsed=40.7s
+2026-09-26 17:28:23 | INFO | Processing VTK 250/698 (35.8%): E_S_WW_WM_250.vtk
+No-cluster nodes: 90734 / 483439 (18.77%)
+Multi-cluster nodes: 0 / 483439 (0.00%)
+2026-09-26 17:29:04 | INFO | Saved simulation 250: nodes=483439, segments=81, elapsed=41.2s
+2026-09-26 17:29:04 | INFO | Processing VTK 251/698 (36.0%): E_S_WW_WM_251.vtk
+No-cluster nodes: 92146 / 481767 (19.13%)
+Multi-cluster nodes: 0 / 481767 (0.00%)
+2026-09-26 17:29:45 | INFO | Saved simulation 251: nodes=481767, segments=93, elapsed=40.9s
+2026-09-26 17:29:45 | INFO | Processing VTK 252/698 (36.1%): E_S_WW_WM_252.vtk
+No-cluster nodes: 91806 / 498919 (18.40%)
+Multi-cluster nodes: 0 / 498919 (0.00%)
+2026-09-26 17:30:28 | INFO | Saved simulation 252: nodes=498919, segments=73, elapsed=42.9s
+2026-09-26 17:30:28 | INFO | Processing VTK 253/698 (36.2%): E_S_WW_WM_253.vtk
+No-cluster nodes: 91992 / 512778 (17.94%)
+Multi-cluster nodes: 0 / 512778 (0.00%)
+2026-09-26 17:31:12 | INFO | Saved simulation 253: nodes=512778, segments=75, elapsed=44.3s
+2026-09-26 17:31:12 | INFO | Processing VTK 254/698 (36.4%): E_S_WW_WM_254.vtk
+No-cluster nodes: 90450 / 501633 (18.03%)
+Multi-cluster nodes: 0 / 501633 (0.00%)
+2026-09-26 17:31:55 | INFO | Saved simulation 254: nodes=501633, segments=73, elapsed=43.1s
+2026-09-26 17:31:55 | INFO | Processing VTK 255/698 (36.5%): E_S_WW_WM_255.vtk
+No-cluster nodes: 90390 / 482100 (18.75%)
+Multi-cluster nodes: 0 / 482100 (0.00%)
+2026-09-26 17:32:36 | INFO | Saved simulation 255: nodes=482100, segments=73, elapsed=41.2s
+2026-09-26 17:32:36 | INFO | Processing VTK 256/698 (36.7%): E_S_WW_WM_256.vtk
+No-cluster nodes: 92784 / 493058 (18.82%)
+Multi-cluster nodes: 0 / 493058 (0.00%)
+2026-09-26 17:33:19 | INFO | Saved simulation 256: nodes=493058, segments=73, elapsed=42.2s
+2026-09-26 17:33:19 | INFO | Processing VTK 257/698 (36.8%): E_S_WW_WM_257.vtk
+No-cluster nodes: 89918 / 475167 (18.92%)
+Multi-cluster nodes: 0 / 475167 (0.00%)
+2026-09-26 17:33:59 | INFO | Saved simulation 257: nodes=475167, segments=75, elapsed=40.7s
+2026-09-26 17:33:59 | INFO | Processing VTK 258/698 (37.0%): E_S_WW_WM_258.vtk
+No-cluster nodes: 91100 / 502060 (18.15%)
+Multi-cluster nodes: 0 / 502060 (0.00%)
+2026-09-26 17:34:42 | INFO | Saved simulation 258: nodes=502060, segments=71, elapsed=43.1s
+2026-09-26 17:34:42 | INFO | Processing VTK 259/698 (37.1%): E_S_WW_WM_259.vtk
+No-cluster nodes: 91734 / 497808 (18.43%)
+Multi-cluster nodes: 0 / 497808 (0.00%)
+2026-09-26 17:35:25 | INFO | Saved simulation 259: nodes=497808, segments=71, elapsed=42.7s
+2026-09-26 17:35:25 | INFO | Processing VTK 260/698 (37.2%): E_S_WW_WM_260.vtk
+No-cluster nodes: 90404 / 470760 (19.20%)
+Multi-cluster nodes: 0 / 470760 (0.00%)
+2026-09-26 17:36:05 | INFO | Saved simulation 260: nodes=470760, segments=67, elapsed=40.0s
+2026-09-26 17:36:05 | INFO | Processing VTK 261/698 (37.4%): E_S_WW_WM_261.vtk
+No-cluster nodes: 91090 / 488945 (18.63%)
+Multi-cluster nodes: 0 / 488945 (0.00%)
+2026-09-26 17:36:47 | INFO | Saved simulation 261: nodes=488945, segments=79, elapsed=41.6s
+2026-09-26 17:36:47 | INFO | Processing VTK 262/698 (37.5%): E_S_WW_WM_262.vtk
+No-cluster nodes: 91342 / 474721 (19.24%)
+Multi-cluster nodes: 0 / 474721 (0.00%)
+2026-09-26 17:37:27 | INFO | Saved simulation 262: nodes=474721, segments=79, elapsed=40.3s
+2026-09-26 17:37:27 | INFO | Processing VTK 263/698 (37.7%): E_S_WW_WM_263.vtk
+No-cluster nodes: 92316 / 540347 (17.08%)
+Multi-cluster nodes: 0 / 540347 (0.00%)
+2026-09-26 17:38:14 | INFO | Saved simulation 263: nodes=540347, segments=69, elapsed=46.9s
+2026-09-26 17:38:14 | INFO | Processing VTK 264/698 (37.8%): E_S_WW_WM_264.vtk
+No-cluster nodes: 90404 / 476705 (18.96%)
+Multi-cluster nodes: 0 / 476705 (0.00%)
+2026-09-26 17:38:54 | INFO | Saved simulation 264: nodes=476705, segments=81, elapsed=40.4s
+2026-09-26 17:38:54 | INFO | Processing VTK 265/698 (38.0%): E_S_WW_WM_265.vtk
+No-cluster nodes: 90736 / 487090 (18.63%)
+Multi-cluster nodes: 0 / 487090 (0.00%)
+2026-09-26 17:39:36 | INFO | Saved simulation 265: nodes=487090, segments=85, elapsed=41.7s
+2026-09-26 17:39:36 | INFO | Processing VTK 266/698 (38.1%): E_S_WW_WM_266.vtk
+No-cluster nodes: 91232 / 503684 (18.11%)
+Multi-cluster nodes: 0 / 503684 (0.00%)
+2026-09-26 17:40:19 | INFO | Saved simulation 266: nodes=503684, segments=81, elapsed=43.1s
+2026-09-26 17:40:19 | INFO | Processing VTK 267/698 (38.3%): E_S_WW_WM_267.vtk
+No-cluster nodes: 90456 / 510837 (17.71%)
+Multi-cluster nodes: 0 / 510837 (0.00%)
+2026-09-26 17:41:03 | INFO | Saved simulation 267: nodes=510837, segments=73, elapsed=43.9s
+2026-09-26 17:41:03 | INFO | Processing VTK 268/698 (38.4%): E_S_WW_WM_268.vtk
+No-cluster nodes: 91932 / 498281 (18.45%)
+Multi-cluster nodes: 0 / 498281 (0.00%)
+2026-09-26 17:41:46 | INFO | Saved simulation 268: nodes=498281, segments=75, elapsed=42.5s
+2026-09-26 17:41:46 | INFO | Processing VTK 269/698 (38.5%): E_S_WW_WM_269.vtk
+No-cluster nodes: 90882 / 507331 (17.91%)
+Multi-cluster nodes: 0 / 507331 (0.00%)
+2026-09-26 17:42:29 | INFO | Saved simulation 269: nodes=507331, segments=71, elapsed=43.6s
+2026-09-26 17:42:29 | INFO | Processing VTK 270/698 (38.7%): E_S_WW_WM_270.vtk
+No-cluster nodes: 90816 / 512331 (17.73%)
+Multi-cluster nodes: 0 / 512331 (0.00%)
+2026-09-26 17:43:13 | INFO | Saved simulation 270: nodes=512331, segments=79, elapsed=44.1s
+2026-09-26 17:43:13 | INFO | Processing VTK 271/698 (38.8%): E_S_WW_WM_271.vtk
+No-cluster nodes: 91598 / 492096 (18.61%)
+Multi-cluster nodes: 0 / 492096 (0.00%)
+2026-09-26 17:43:55 | INFO | Saved simulation 271: nodes=492096, segments=75, elapsed=41.9s
+2026-09-26 17:43:55 | INFO | Processing VTK 272/698 (39.0%): E_S_WW_WM_272.vtk
+No-cluster nodes: 92768 / 509148 (18.22%)
+Multi-cluster nodes: 0 / 509148 (0.00%)
+2026-09-26 17:44:39 | INFO | Saved simulation 272: nodes=509148, segments=75, elapsed=43.7s
+2026-09-26 17:44:39 | INFO | Processing VTK 273/698 (39.1%): E_S_WW_WM_273.vtk
+No-cluster nodes: 90316 / 487855 (18.51%)
+Multi-cluster nodes: 0 / 487855 (0.00%)
+2026-09-26 17:45:21 | INFO | Saved simulation 273: nodes=487855, segments=69, elapsed=41.6s
+2026-09-26 17:45:21 | INFO | Processing VTK 274/698 (39.3%): E_S_WW_WM_274.vtk
+No-cluster nodes: 90342 / 473093 (19.10%)
+Multi-cluster nodes: 0 / 473093 (0.00%)
+2026-09-26 17:46:01 | INFO | Saved simulation 274: nodes=473093, segments=97, elapsed=40.2s
+2026-09-26 17:46:01 | INFO | Processing VTK 275/698 (39.4%): E_S_WW_WM_275.vtk
+No-cluster nodes: 90052 / 493239 (18.26%)
+Multi-cluster nodes: 0 / 493239 (0.00%)
+2026-09-26 17:46:43 | INFO | Saved simulation 275: nodes=493239, segments=71, elapsed=42.1s
+2026-09-26 17:46:43 | INFO | Processing VTK 276/698 (39.5%): E_S_WW_WM_276.vtk
+No-cluster nodes: 91902 / 512673 (17.93%)
+Multi-cluster nodes: 0 / 512673 (0.00%)
+2026-09-26 17:47:27 | INFO | Saved simulation 276: nodes=512673, segments=67, elapsed=44.1s
+2026-09-26 17:47:27 | INFO | Processing VTK 277/698 (39.7%): E_S_WW_WM_277.vtk
+No-cluster nodes: 91978 / 512205 (17.96%)
+Multi-cluster nodes: 0 / 512205 (0.00%)
+2026-09-26 17:48:11 | INFO | Saved simulation 277: nodes=512205, segments=73, elapsed=43.9s
+2026-09-26 17:48:11 | INFO | Processing VTK 278/698 (39.8%): E_S_WW_WM_278.vtk
+No-cluster nodes: 90526 / 501884 (18.04%)
+Multi-cluster nodes: 0 / 501884 (0.00%)
+2026-09-26 17:48:54 | INFO | Saved simulation 278: nodes=501884, segments=73, elapsed=43.0s
+2026-09-26 17:48:54 | INFO | Processing VTK 279/698 (40.0%): E_S_WW_WM_279.vtk
+No-cluster nodes: 90610 / 473809 (19.12%)
+Multi-cluster nodes: 0 / 473809 (0.00%)
+2026-09-26 17:49:34 | INFO | Saved simulation 279: nodes=473809, segments=85, elapsed=40.1s
+2026-09-26 17:49:34 | INFO | Processing VTK 280/698 (40.1%): E_S_WW_WM_280.vtk
+No-cluster nodes: 90658 / 528006 (17.17%)
+Multi-cluster nodes: 0 / 528006 (0.00%)
+2026-09-26 17:50:19 | INFO | Saved simulation 280: nodes=528006, segments=81, elapsed=45.4s
+2026-09-26 17:50:19 | INFO | Processing VTK 281/698 (40.3%): E_S_WW_WM_281.vtk
+No-cluster nodes: 90048 / 459011 (19.62%)
+Multi-cluster nodes: 0 / 459011 (0.00%)
+2026-09-26 17:50:58 | INFO | Saved simulation 281: nodes=459011, segments=81, elapsed=38.9s
+2026-09-26 17:50:58 | INFO | Processing VTK 282/698 (40.4%): E_S_WW_WM_282.vtk
+No-cluster nodes: 91622 / 520973 (17.59%)
+Multi-cluster nodes: 0 / 520973 (0.00%)
+2026-09-26 17:51:43 | INFO | Saved simulation 282: nodes=520973, segments=77, elapsed=44.6s
+2026-09-26 17:51:43 | INFO | Processing VTK 283/698 (40.5%): E_S_WW_WM_283.vtk
+No-cluster nodes: 90568 / 491634 (18.42%)
+Multi-cluster nodes: 0 / 491634 (0.00%)
+2026-09-26 17:52:25 | INFO | Saved simulation 283: nodes=491634, segments=75, elapsed=41.9s
+2026-09-26 17:52:25 | INFO | Processing VTK 284/698 (40.7%): E_S_WW_WM_284.vtk
+No-cluster nodes: 91608 / 505994 (18.10%)
+Multi-cluster nodes: 0 / 505994 (0.00%)
+2026-09-26 17:53:08 | INFO | Saved simulation 284: nodes=505994, segments=63, elapsed=43.4s
+2026-09-26 17:53:08 | INFO | Processing VTK 285/698 (40.8%): E_S_WW_WM_285.vtk
+No-cluster nodes: 89602 / 500535 (17.90%)
+Multi-cluster nodes: 0 / 500535 (0.00%)
+2026-09-26 17:53:51 | INFO | Saved simulation 285: nodes=500535, segments=73, elapsed=43.0s
+2026-09-26 17:53:51 | INFO | Processing VTK 286/698 (41.0%): E_S_WW_WM_286.vtk
+No-cluster nodes: 92496 / 521554 (17.73%)
+Multi-cluster nodes: 0 / 521554 (0.00%)
+2026-09-26 17:54:36 | INFO | Saved simulation 286: nodes=521554, segments=85, elapsed=44.8s
+2026-09-26 17:54:36 | INFO | Processing VTK 287/698 (41.1%): E_S_WW_WM_287.vtk
+No-cluster nodes: 92048 / 506495 (18.17%)
+Multi-cluster nodes: 0 / 506495 (0.00%)
+2026-09-26 17:55:19 | INFO | Saved simulation 287: nodes=506495, segments=67, elapsed=43.4s
+2026-09-26 17:55:19 | INFO | Processing VTK 288/698 (41.3%): E_S_WW_WM_288.vtk
+No-cluster nodes: 91900 / 513624 (17.89%)
+Multi-cluster nodes: 0 / 513624 (0.00%)
+2026-09-26 17:56:04 | INFO | Saved simulation 288: nodes=513624, segments=81, elapsed=44.3s
+2026-09-26 17:56:04 | INFO | Processing VTK 289/698 (41.4%): E_S_WW_WM_289.vtk
+No-cluster nodes: 90490 / 453833 (19.94%)
+Multi-cluster nodes: 0 / 453833 (0.00%)
+2026-09-26 17:56:42 | INFO | Saved simulation 289: nodes=453833, segments=85, elapsed=38.5s
+2026-09-26 17:56:42 | INFO | Processing VTK 290/698 (41.5%): E_S_WW_WM_290.vtk
+No-cluster nodes: 92112 / 522998 (17.61%)
+Multi-cluster nodes: 0 / 522998 (0.00%)
+2026-09-26 17:57:27 | INFO | Saved simulation 290: nodes=522998, segments=71, elapsed=45.1s
+2026-09-26 17:57:27 | INFO | Processing VTK 291/698 (41.7%): E_S_WW_WM_291.vtk
+No-cluster nodes: 91990 / 487492 (18.87%)
+Multi-cluster nodes: 0 / 487492 (0.00%)
+2026-09-26 17:58:08 | INFO | Saved simulation 291: nodes=487492, segments=73, elapsed=41.3s
+2026-09-26 17:58:08 | INFO | Processing VTK 292/698 (41.8%): E_S_WW_WM_292.vtk
+No-cluster nodes: 91126 / 503402 (18.10%)
+Multi-cluster nodes: 0 / 503402 (0.00%)
+2026-09-26 17:58:52 | INFO | Saved simulation 292: nodes=503402, segments=79, elapsed=43.2s
+2026-09-26 17:58:52 | INFO | Processing VTK 293/698 (42.0%): E_S_WW_WM_293.vtk
+No-cluster nodes: 90372 / 486214 (18.59%)
+Multi-cluster nodes: 0 / 486214 (0.00%)
+2026-09-26 17:59:33 | INFO | Saved simulation 293: nodes=486214, segments=83, elapsed=41.1s
+2026-09-26 17:59:33 | INFO | Processing VTK 294/698 (42.1%): E_S_WW_WM_294.vtk
+No-cluster nodes: 92162 / 540226 (17.06%)
+Multi-cluster nodes: 0 / 540226 (0.00%)
+2026-09-26 18:00:19 | INFO | Saved simulation 294: nodes=540226, segments=79, elapsed=46.6s
+2026-09-26 18:00:19 | INFO | Processing VTK 295/698 (42.3%): E_S_WW_WM_295.vtk
+No-cluster nodes: 91298 / 473808 (19.27%)
+Multi-cluster nodes: 0 / 473808 (0.00%)
+2026-09-26 18:01:00 | INFO | Saved simulation 295: nodes=473808, segments=81, elapsed=40.3s
+2026-09-26 18:01:00 | INFO | Processing VTK 296/698 (42.4%): E_S_WW_WM_296.vtk
+No-cluster nodes: 92610 / 532972 (17.38%)
+Multi-cluster nodes: 0 / 532972 (0.00%)
+2026-09-26 18:01:46 | INFO | Saved simulation 296: nodes=532972, segments=79, elapsed=45.9s
+2026-09-26 18:01:46 | INFO | Processing VTK 297/698 (42.6%): E_S_WW_WM_297.vtk
+No-cluster nodes: 93296 / 539874 (17.28%)
+Multi-cluster nodes: 0 / 539874 (0.00%)
+2026-09-26 18:02:32 | INFO | Saved simulation 297: nodes=539874, segments=85, elapsed=46.7s
+2026-09-26 18:02:32 | INFO | Processing VTK 298/698 (42.7%): E_S_WW_WM_298.vtk
+No-cluster nodes: 91356 / 509248 (17.94%)
+Multi-cluster nodes: 0 / 509248 (0.00%)
+2026-09-26 18:03:16 | INFO | Saved simulation 298: nodes=509248, segments=91, elapsed=43.8s
+2026-09-26 18:03:16 | INFO | Processing VTK 299/698 (42.8%): E_S_WW_WM_299.vtk
+No-cluster nodes: 91730 / 477053 (19.23%)
+Multi-cluster nodes: 0 / 477053 (0.00%)
+2026-09-26 18:03:56 | INFO | Saved simulation 299: nodes=477053, segments=83, elapsed=40.4s
+2026-09-26 18:03:56 | INFO | Processing VTK 300/698 (43.0%): E_S_WW_WM_300.vtk
+No-cluster nodes: 92218 / 506230 (18.22%)
+Multi-cluster nodes: 0 / 506230 (0.00%)
+2026-09-26 18:04:40 | INFO | Saved simulation 300: nodes=506230, segments=67, elapsed=43.5s
+2026-09-26 18:04:40 | INFO | Processing VTK 301/698 (43.1%): E_S_WW_WM_301.vtk
+No-cluster nodes: 90068 / 474745 (18.97%)
+Multi-cluster nodes: 0 / 474745 (0.00%)
+2026-09-26 18:05:20 | INFO | Saved simulation 301: nodes=474745, segments=87, elapsed=40.3s
+2026-09-26 18:05:20 | INFO | Processing VTK 302/698 (43.3%): E_S_WW_WM_302.vtk
+No-cluster nodes: 90836 / 454618 (19.98%)
+Multi-cluster nodes: 0 / 454618 (0.00%)
+2026-09-26 18:05:59 | INFO | Saved simulation 302: nodes=454618, segments=81, elapsed=38.4s
+2026-09-26 18:05:59 | INFO | Processing VTK 303/698 (43.4%): E_S_WW_WM_303.vtk
+No-cluster nodes: 92176 / 530542 (17.37%)
+Multi-cluster nodes: 0 / 530542 (0.00%)
+2026-09-26 18:06:44 | INFO | Saved simulation 303: nodes=530542, segments=69, elapsed=45.8s
+2026-09-26 18:06:44 | INFO | Processing VTK 304/698 (43.6%): E_S_WW_WM_304.vtk
+No-cluster nodes: 92100 / 513428 (17.94%)
+Multi-cluster nodes: 0 / 513428 (0.00%)
+2026-09-26 18:07:29 | INFO | Saved simulation 304: nodes=513428, segments=85, elapsed=44.1s
+2026-09-26 18:07:29 | INFO | Processing VTK 305/698 (43.7%): E_S_WW_WM_305.vtk
+No-cluster nodes: 92572 / 492925 (18.78%)
+Multi-cluster nodes: 0 / 492925 (0.00%)
+2026-09-26 18:08:11 | INFO | Saved simulation 305: nodes=492925, segments=83, elapsed=42.3s
+2026-09-26 18:08:11 | INFO | Processing VTK 306/698 (43.8%): E_S_WW_WM_306.vtk
+No-cluster nodes: 91254 / 491532 (18.57%)
+Multi-cluster nodes: 0 / 491532 (0.00%)
+2026-09-26 18:08:53 | INFO | Saved simulation 306: nodes=491532, segments=81, elapsed=42.0s
+2026-09-26 18:08:53 | INFO | Processing VTK 307/698 (44.0%): E_S_WW_WM_308.vtk
+No-cluster nodes: 91992 / 488909 (18.82%)
+Multi-cluster nodes: 0 / 488909 (0.00%)
+2026-09-26 18:09:35 | INFO | Saved simulation 308: nodes=488909, segments=93, elapsed=41.8s
+2026-09-26 18:09:35 | INFO | Processing VTK 308/698 (44.1%): E_S_WW_WM_309.vtk
+No-cluster nodes: 91044 / 511952 (17.78%)
+Multi-cluster nodes: 0 / 511952 (0.00%)
+2026-09-26 18:10:20 | INFO | Saved simulation 309: nodes=511952, segments=93, elapsed=45.9s
+2026-09-26 18:10:20 | INFO | Processing VTK 309/698 (44.3%): E_S_WW_WM_310.vtk
+No-cluster nodes: 91712 / 533489 (17.19%)
+Multi-cluster nodes: 0 / 533489 (0.00%)
+2026-09-26 18:11:07 | INFO | Saved simulation 310: nodes=533489, segments=71, elapsed=46.2s
+2026-09-26 18:11:07 | INFO | Processing VTK 310/698 (44.4%): E_S_WW_WM_311.vtk
+No-cluster nodes: 90624 / 450284 (20.13%)
+Multi-cluster nodes: 0 / 450284 (0.00%)
+2026-09-26 18:11:45 | INFO | Saved simulation 311: nodes=450284, segments=81, elapsed=38.2s
+2026-09-26 18:11:45 | INFO | Processing VTK 311/698 (44.6%): E_S_WW_WM_312.vtk
+No-cluster nodes: 91396 / 462261 (19.77%)
+Multi-cluster nodes: 0 / 462261 (0.00%)
+2026-09-26 18:12:24 | INFO | Saved simulation 312: nodes=462261, segments=67, elapsed=39.2s
+2026-09-26 18:12:24 | INFO | Processing VTK 312/698 (44.7%): E_S_WW_WM_313.vtk
+No-cluster nodes: 92520 / 505925 (18.29%)
+Multi-cluster nodes: 0 / 505925 (0.00%)
+2026-09-26 18:13:07 | INFO | Saved simulation 313: nodes=505925, segments=89, elapsed=43.4s
+2026-09-26 18:13:07 | INFO | Processing VTK 313/698 (44.8%): E_S_WW_WM_314.vtk
+No-cluster nodes: 92534 / 515751 (17.94%)
+Multi-cluster nodes: 0 / 515751 (0.00%)
+2026-09-26 18:13:52 | INFO | Saved simulation 314: nodes=515751, segments=81, elapsed=44.3s
+2026-09-26 18:13:52 | INFO | Processing VTK 314/698 (45.0%): E_S_WW_WM_315.vtk
+No-cluster nodes: 91400 / 480168 (19.04%)
+Multi-cluster nodes: 0 / 480168 (0.00%)
+2026-09-26 18:14:33 | INFO | Saved simulation 315: nodes=480168, segments=87, elapsed=41.0s
+2026-09-26 18:14:33 | INFO | Processing VTK 315/698 (45.1%): E_S_WW_WM_316.vtk
+No-cluster nodes: 90716 / 496405 (18.27%)
+Multi-cluster nodes: 0 / 496405 (0.00%)
+2026-09-26 18:15:15 | INFO | Saved simulation 316: nodes=496405, segments=79, elapsed=42.6s
+2026-09-26 18:15:15 | INFO | Processing VTK 316/698 (45.3%): E_S_WW_WM_317.vtk
+No-cluster nodes: 91296 / 497995 (18.33%)
+Multi-cluster nodes: 0 / 497995 (0.00%)
+2026-09-26 18:15:58 | INFO | Saved simulation 317: nodes=497995, segments=87, elapsed=42.7s
+2026-09-26 18:15:58 | INFO | Processing VTK 317/698 (45.4%): E_S_WW_WM_318.vtk
+No-cluster nodes: 91656 / 514963 (17.80%)
+Multi-cluster nodes: 0 / 514963 (0.00%)
+2026-09-26 18:16:42 | INFO | Saved simulation 318: nodes=514963, segments=79, elapsed=44.1s
+2026-09-26 18:16:42 | INFO | Processing VTK 318/698 (45.6%): E_S_WW_WM_319.vtk
+No-cluster nodes: 90478 / 469093 (19.29%)
+Multi-cluster nodes: 0 / 469093 (0.00%)
+2026-09-26 18:17:22 | INFO | Saved simulation 319: nodes=469093, segments=91, elapsed=40.0s
+2026-09-26 18:17:22 | INFO | Processing VTK 319/698 (45.7%): E_S_WW_WM_320.vtk
+No-cluster nodes: 92132 / 521056 (17.68%)
+Multi-cluster nodes: 0 / 521056 (0.00%)
+2026-09-26 18:18:07 | INFO | Saved simulation 320: nodes=521056, segments=81, elapsed=45.0s
+2026-09-26 18:18:07 | INFO | Processing VTK 320/698 (45.8%): E_S_WW_WM_321.vtk
+No-cluster nodes: 91836 / 486502 (18.88%)
+Multi-cluster nodes: 0 / 486502 (0.00%)
+2026-09-26 18:18:49 | INFO | Saved simulation 321: nodes=486502, segments=93, elapsed=41.6s
+2026-09-26 18:18:49 | INFO | Processing VTK 321/698 (46.0%): E_S_WW_WM_322.vtk
+No-cluster nodes: 90060 / 473546 (19.02%)
+Multi-cluster nodes: 0 / 473546 (0.00%)
+2026-09-26 18:19:29 | INFO | Saved simulation 322: nodes=473546, segments=81, elapsed=40.2s
+2026-09-26 18:19:29 | INFO | Processing VTK 322/698 (46.1%): E_S_WW_WM_323.vtk
+No-cluster nodes: 90036 / 533235 (16.88%)
+Multi-cluster nodes: 0 / 533235 (0.00%)
+2026-09-26 18:20:15 | INFO | Saved simulation 323: nodes=533235, segments=79, elapsed=46.1s
+2026-09-26 18:20:15 | INFO | Processing VTK 323/698 (46.3%): E_S_WW_WM_324.vtk
+No-cluster nodes: 91724 / 517146 (17.74%)
+Multi-cluster nodes: 0 / 517146 (0.00%)
+2026-09-26 18:20:59 | INFO | Saved simulation 324: nodes=517146, segments=85, elapsed=44.5s
+2026-09-26 18:20:59 | INFO | Processing VTK 324/698 (46.4%): E_S_WW_WM_325.vtk
+No-cluster nodes: 89916 / 495763 (18.14%)
+Multi-cluster nodes: 0 / 495763 (0.00%)
+2026-09-26 18:21:42 | INFO | Saved simulation 325: nodes=495763, segments=83, elapsed=42.5s
+2026-09-26 18:21:42 | INFO | Processing VTK 325/698 (46.6%): E_S_WW_WM_326.vtk
+No-cluster nodes: 92248 / 498237 (18.51%)
+Multi-cluster nodes: 0 / 498237 (0.00%)
+2026-09-26 18:22:25 | INFO | Saved simulation 326: nodes=498237, segments=87, elapsed=42.7s
+2026-09-26 18:22:25 | INFO | Processing VTK 326/698 (46.7%): E_S_WW_WM_327.vtk
+No-cluster nodes: 92502 / 520968 (17.76%)
+Multi-cluster nodes: 0 / 520968 (0.00%)
+2026-09-26 18:23:10 | INFO | Saved simulation 327: nodes=520968, segments=73, elapsed=45.1s
+2026-09-26 18:23:10 | INFO | Processing VTK 327/698 (46.8%): E_S_WW_WM_328.vtk
+No-cluster nodes: 89878 / 482865 (18.61%)
+Multi-cluster nodes: 0 / 482865 (0.00%)
+2026-09-26 18:23:51 | INFO | Saved simulation 328: nodes=482865, segments=77, elapsed=41.3s
+2026-09-26 18:23:51 | INFO | Processing VTK 328/698 (47.0%): E_S_WW_WM_329.vtk
+No-cluster nodes: 91032 / 518953 (17.54%)
+Multi-cluster nodes: 0 / 518953 (0.00%)
+2026-09-26 18:24:36 | INFO | Saved simulation 329: nodes=518953, segments=73, elapsed=44.8s
+2026-09-26 18:24:36 | INFO | Processing VTK 329/698 (47.1%): E_S_WW_WM_330.vtk
+No-cluster nodes: 91472 / 508577 (17.99%)
+Multi-cluster nodes: 0 / 508577 (0.00%)
+2026-09-26 18:25:20 | INFO | Saved simulation 330: nodes=508577, segments=75, elapsed=43.8s
+2026-09-26 18:25:20 | INFO | Processing VTK 330/698 (47.3%): E_S_WW_WM_331.vtk
+No-cluster nodes: 91752 / 475726 (19.29%)
+Multi-cluster nodes: 0 / 475726 (0.00%)
+2026-09-26 18:26:00 | INFO | Saved simulation 331: nodes=475726, segments=81, elapsed=40.5s
+2026-09-26 18:26:00 | INFO | Processing VTK 331/698 (47.4%): E_S_WW_WM_332.vtk
+No-cluster nodes: 90554 / 489051 (18.52%)
+Multi-cluster nodes: 0 / 489051 (0.00%)
+2026-09-26 18:26:42 | INFO | Saved simulation 332: nodes=489051, segments=77, elapsed=41.8s
+2026-09-26 18:26:42 | INFO | Processing VTK 332/698 (47.6%): E_S_WW_WM_333.vtk
+No-cluster nodes: 91294 / 465412 (19.62%)
+Multi-cluster nodes: 0 / 465412 (0.00%)
+2026-09-26 18:27:21 | INFO | Saved simulation 333: nodes=465412, segments=77, elapsed=39.5s
+2026-09-26 18:27:21 | INFO | Processing VTK 333/698 (47.7%): E_S_WW_WM_334.vtk
+No-cluster nodes: 91850 / 525638 (17.47%)
+Multi-cluster nodes: 0 / 525638 (0.00%)
+2026-09-26 18:28:07 | INFO | Saved simulation 334: nodes=525638, segments=77, elapsed=45.4s
+2026-09-26 18:28:07 | INFO | Processing VTK 334/698 (47.9%): E_S_WW_WM_335.vtk
+No-cluster nodes: 90822 / 477613 (19.02%)
+Multi-cluster nodes: 0 / 477613 (0.00%)
+2026-09-26 18:28:47 | INFO | Saved simulation 335: nodes=477613, segments=77, elapsed=40.7s
+2026-09-26 18:28:47 | INFO | Processing VTK 335/698 (48.0%): E_S_WW_WM_336.vtk
+No-cluster nodes: 91620 / 479927 (19.09%)
+Multi-cluster nodes: 0 / 479927 (0.00%)
+2026-09-26 18:29:28 | INFO | Saved simulation 336: nodes=479927, segments=85, elapsed=40.8s
+2026-09-26 18:29:28 | INFO | Processing VTK 336/698 (48.1%): E_S_WW_WM_337.vtk
+No-cluster nodes: 90940 / 499882 (18.19%)
+Multi-cluster nodes: 0 / 499882 (0.00%)
+2026-09-26 18:30:11 | INFO | Saved simulation 337: nodes=499882, segments=73, elapsed=42.7s
+2026-09-26 18:30:11 | INFO | Processing VTK 337/698 (48.3%): E_S_WW_WM_338.vtk
+No-cluster nodes: 90288 / 466842 (19.34%)
+Multi-cluster nodes: 0 / 466842 (0.00%)
+2026-09-26 18:30:51 | INFO | Saved simulation 338: nodes=466842, segments=91, elapsed=39.7s
+2026-09-26 18:30:51 | INFO | Processing VTK 338/698 (48.4%): E_S_WW_WM_339.vtk
+No-cluster nodes: 91216 / 480321 (18.99%)
+Multi-cluster nodes: 0 / 480321 (0.00%)
+2026-09-26 18:31:32 | INFO | Saved simulation 339: nodes=480321, segments=81, elapsed=41.0s
+2026-09-26 18:31:32 | INFO | Processing VTK 339/698 (48.6%): E_S_WW_WM_340.vtk
+No-cluster nodes: 90614 / 487245 (18.60%)
+Multi-cluster nodes: 0 / 487245 (0.00%)
+2026-09-26 18:32:13 | INFO | Saved simulation 340: nodes=487245, segments=75, elapsed=41.5s
+2026-09-26 18:32:13 | INFO | Processing VTK 340/698 (48.7%): E_S_WW_WM_341.vtk
+No-cluster nodes: 91422 / 485990 (18.81%)
+Multi-cluster nodes: 0 / 485990 (0.00%)
+2026-09-26 18:32:55 | INFO | Saved simulation 341: nodes=485990, segments=85, elapsed=41.4s
+2026-09-26 18:32:55 | INFO | Processing VTK 341/698 (48.9%): E_S_WW_WM_342.vtk
+No-cluster nodes: 90344 / 498126 (18.14%)
+Multi-cluster nodes: 0 / 498126 (0.00%)
+2026-09-26 18:33:37 | INFO | Saved simulation 342: nodes=498126, segments=87, elapsed=42.7s
+2026-09-26 18:33:37 | INFO | Processing VTK 342/698 (49.0%): E_S_WW_WM_343.vtk
+No-cluster nodes: 91588 / 499990 (18.32%)
+Multi-cluster nodes: 0 / 499990 (0.00%)
+2026-09-26 18:34:20 | INFO | Saved simulation 343: nodes=499990, segments=73, elapsed=43.0s
+2026-09-26 18:34:20 | INFO | Processing VTK 343/698 (49.1%): E_S_WW_WM_344.vtk
+No-cluster nodes: 91510 / 514813 (17.78%)
+Multi-cluster nodes: 0 / 514813 (0.00%)
+2026-09-26 18:35:05 | INFO | Saved simulation 344: nodes=514813, segments=73, elapsed=44.3s
+2026-09-26 18:35:05 | INFO | Processing VTK 344/698 (49.3%): E_S_WW_WM_345.vtk
+No-cluster nodes: 92444 / 497681 (18.57%)
+Multi-cluster nodes: 0 / 497681 (0.00%)
+2026-09-26 18:35:47 | INFO | Saved simulation 345: nodes=497681, segments=73, elapsed=42.6s
+2026-09-26 18:35:47 | INFO | Processing VTK 345/698 (49.4%): E_S_WW_WM_346.vtk
+No-cluster nodes: 90982 / 492784 (18.46%)
+Multi-cluster nodes: 0 / 492784 (0.00%)
+2026-09-26 18:36:29 | INFO | Saved simulation 346: nodes=492784, segments=91, elapsed=42.1s
+2026-09-26 18:36:29 | INFO | Processing VTK 346/698 (49.6%): E_S_WW_WM_347.vtk
+No-cluster nodes: 90944 / 458814 (19.82%)
+Multi-cluster nodes: 0 / 458814 (0.00%)
+2026-09-26 18:37:08 | INFO | Saved simulation 347: nodes=458814, segments=83, elapsed=38.9s
+2026-09-26 18:37:08 | INFO | Processing VTK 347/698 (49.7%): E_S_WW_WM_348.vtk
+No-cluster nodes: 91072 / 527307 (17.27%)
+Multi-cluster nodes: 0 / 527307 (0.00%)
+2026-09-26 18:37:54 | INFO | Saved simulation 348: nodes=527307, segments=71, elapsed=45.5s
+2026-09-26 18:37:54 | INFO | Processing VTK 348/698 (49.9%): E_S_WW_WM_349.vtk
+No-cluster nodes: 91588 / 520841 (17.58%)
+Multi-cluster nodes: 0 / 520841 (0.00%)
+2026-09-26 18:38:39 | INFO | Saved simulation 349: nodes=520841, segments=87, elapsed=44.8s
+2026-09-26 18:38:39 | INFO | Processing VTK 349/698 (50.0%): E_S_WW_WM_350.vtk
+No-cluster nodes: 90242 / 458775 (19.67%)
+Multi-cluster nodes: 0 / 458775 (0.00%)
+2026-09-26 18:39:18 | INFO | Saved simulation 350: nodes=458775, segments=81, elapsed=38.9s
+2026-09-26 18:39:18 | INFO | Processing VTK 350/698 (50.1%): E_S_WW_WM_351.vtk
+No-cluster nodes: 92084 / 493570 (18.66%)
+Multi-cluster nodes: 0 / 493570 (0.00%)
+2026-09-26 18:40:00 | INFO | Saved simulation 351: nodes=493570, segments=81, elapsed=42.7s
+2026-09-26 18:40:00 | INFO | Processing VTK 351/698 (50.3%): E_S_WW_WM_352.vtk
+No-cluster nodes: 91888 / 502481 (18.29%)
+Multi-cluster nodes: 0 / 502481 (0.00%)
+2026-09-26 18:40:43 | INFO | Saved simulation 352: nodes=502481, segments=85, elapsed=43.0s
+2026-09-26 18:40:43 | INFO | Processing VTK 352/698 (50.4%): E_S_WW_WM_353.vtk
+No-cluster nodes: 91664 / 540021 (16.97%)
+Multi-cluster nodes: 0 / 540021 (0.00%)
+2026-09-26 18:41:30 | INFO | Saved simulation 353: nodes=540021, segments=79, elapsed=46.9s
+2026-09-26 18:41:30 | INFO | Processing VTK 353/698 (50.6%): E_S_WW_WM_354.vtk
+No-cluster nodes: 90970 / 490888 (18.53%)
+Multi-cluster nodes: 0 / 490888 (0.00%)
+2026-09-26 18:42:13 | INFO | Saved simulation 354: nodes=490888, segments=91, elapsed=42.6s
+2026-09-26 18:42:13 | INFO | Processing VTK 354/698 (50.7%): E_S_WW_WM_355.vtk
+No-cluster nodes: 91796 / 498968 (18.40%)
+Multi-cluster nodes: 0 / 498968 (0.00%)
+2026-09-26 18:42:56 | INFO | Saved simulation 355: nodes=498968, segments=79, elapsed=42.8s
+2026-09-26 18:42:56 | INFO | Processing VTK 355/698 (50.9%): E_S_WW_WM_356.vtk
+No-cluster nodes: 93104 / 542533 (17.16%)
+Multi-cluster nodes: 0 / 542533 (0.00%)
+2026-09-26 18:43:44 | INFO | Saved simulation 356: nodes=542533, segments=63, elapsed=48.3s
+2026-09-26 18:43:44 | INFO | Processing VTK 356/698 (51.0%): E_S_WW_WM_357.vtk
+No-cluster nodes: 90526 / 466016 (19.43%)
+Multi-cluster nodes: 0 / 466016 (0.00%)
+2026-09-26 18:44:26 | INFO | Saved simulation 357: nodes=466016, segments=85, elapsed=41.9s
+2026-09-26 18:44:26 | INFO | Processing VTK 357/698 (51.1%): E_S_WW_WM_358.vtk
+No-cluster nodes: 91884 / 527360 (17.42%)
+Multi-cluster nodes: 0 / 527360 (0.00%)
+2026-09-26 18:45:11 | INFO | Saved simulation 358: nodes=527360, segments=87, elapsed=45.3s
+2026-09-26 18:45:11 | INFO | Processing VTK 358/698 (51.3%): E_S_WW_WM_359.vtk
+No-cluster nodes: 92080 / 507601 (18.14%)
+Multi-cluster nodes: 0 / 507601 (0.00%)
+2026-09-26 18:45:55 | INFO | Saved simulation 359: nodes=507601, segments=69, elapsed=44.3s
+2026-09-26 18:45:55 | INFO | Processing VTK 359/698 (51.4%): E_S_WW_WM_360.vtk
+No-cluster nodes: 90336 / 522866 (17.28%)
+Multi-cluster nodes: 0 / 522866 (0.00%)
+2026-09-26 18:46:40 | INFO | Saved simulation 360: nodes=522866, segments=79, elapsed=45.2s
+2026-09-26 18:46:40 | INFO | Processing VTK 360/698 (51.6%): E_S_WW_WM_361.vtk
+No-cluster nodes: 92190 / 492619 (18.71%)
+Multi-cluster nodes: 0 / 492619 (0.00%)
+2026-09-26 18:47:23 | INFO | Saved simulation 361: nodes=492619, segments=93, elapsed=42.2s
+2026-09-26 18:47:23 | INFO | Processing VTK 361/698 (51.7%): E_S_WW_WM_362.vtk
+No-cluster nodes: 90822 / 488170 (18.60%)
+Multi-cluster nodes: 0 / 488170 (0.00%)
+2026-09-26 18:48:04 | INFO | Saved simulation 362: nodes=488170, segments=67, elapsed=41.9s
+2026-09-26 18:48:04 | INFO | Processing VTK 362/698 (51.9%): E_S_WW_WM_363.vtk
+No-cluster nodes: 92966 / 531609 (17.49%)
+Multi-cluster nodes: 0 / 531609 (0.00%)
+2026-09-26 18:48:50 | INFO | Saved simulation 363: nodes=531609, segments=69, elapsed=45.9s
+2026-09-26 18:48:50 | INFO | Processing VTK 363/698 (52.0%): E_S_WW_WM_364.vtk
+No-cluster nodes: 91002 / 517481 (17.59%)
+Multi-cluster nodes: 0 / 517481 (0.00%)
+2026-09-26 18:49:35 | INFO | Saved simulation 364: nodes=517481, segments=91, elapsed=44.6s
+2026-09-26 18:49:35 | INFO | Processing VTK 364/698 (52.1%): E_S_WW_WM_365.vtk
+No-cluster nodes: 91746 / 500077 (18.35%)
+Multi-cluster nodes: 0 / 500077 (0.00%)
+2026-09-26 18:50:18 | INFO | Saved simulation 365: nodes=500077, segments=73, elapsed=42.7s
+2026-09-26 18:50:18 | INFO | Processing VTK 365/698 (52.3%): E_S_WW_WM_366.vtk
+No-cluster nodes: 90704 / 467932 (19.38%)
+Multi-cluster nodes: 0 / 467932 (0.00%)
+2026-09-26 18:50:57 | INFO | Saved simulation 366: nodes=467932, segments=77, elapsed=39.5s
+2026-09-26 18:50:57 | INFO | Processing VTK 366/698 (52.4%): E_S_WW_WM_367.vtk
+No-cluster nodes: 90670 / 471460 (19.23%)
+Multi-cluster nodes: 0 / 471460 (0.00%)
+2026-09-26 18:51:37 | INFO | Saved simulation 367: nodes=471460, segments=77, elapsed=39.9s
+2026-09-26 18:51:37 | INFO | Processing VTK 367/698 (52.6%): E_S_WW_WM_368.vtk
+No-cluster nodes: 92290 / 516510 (17.87%)
+Multi-cluster nodes: 0 / 516510 (0.00%)
+2026-09-26 18:52:21 | INFO | Saved simulation 368: nodes=516510, segments=83, elapsed=44.2s
+2026-09-26 18:52:21 | INFO | Processing VTK 368/698 (52.7%): E_S_WW_WM_369.vtk
+No-cluster nodes: 91982 / 495450 (18.57%)
+Multi-cluster nodes: 0 / 495450 (0.00%)
+2026-09-26 18:53:04 | INFO | Saved simulation 369: nodes=495450, segments=77, elapsed=42.3s
+2026-09-26 18:53:04 | INFO | Processing VTK 369/698 (52.9%): E_S_WW_WM_370.vtk
+No-cluster nodes: 91968 / 522037 (17.62%)
+Multi-cluster nodes: 0 / 522037 (0.00%)
+2026-09-26 18:53:49 | INFO | Saved simulation 370: nodes=522037, segments=69, elapsed=45.1s
+2026-09-26 18:53:49 | INFO | Processing VTK 370/698 (53.0%): E_S_WW_WM_371.vtk
+No-cluster nodes: 90208 / 450589 (20.02%)
+Multi-cluster nodes: 0 / 450589 (0.00%)
+2026-09-26 18:54:27 | INFO | Saved simulation 371: nodes=450589, segments=85, elapsed=38.0s
+2026-09-26 18:54:27 | INFO | Processing VTK 371/698 (53.2%): E_S_WW_WM_372.vtk
+No-cluster nodes: 91360 / 495611 (18.43%)
+Multi-cluster nodes: 0 / 495611 (0.00%)
+2026-09-26 18:55:09 | INFO | Saved simulation 372: nodes=495611, segments=65, elapsed=42.5s
+2026-09-26 18:55:09 | INFO | Processing VTK 372/698 (53.3%): E_S_WW_WM_373.vtk
+No-cluster nodes: 90214 / 498793 (18.09%)
+Multi-cluster nodes: 0 / 498793 (0.00%)
+2026-09-26 18:55:54 | INFO | Saved simulation 373: nodes=498793, segments=67, elapsed=44.7s
+2026-09-26 18:55:54 | INFO | Processing VTK 373/698 (53.4%): E_S_WW_WM_374.vtk
+No-cluster nodes: 91322 / 520451 (17.55%)
+Multi-cluster nodes: 0 / 520451 (0.00%)
+2026-09-26 18:56:39 | INFO | Saved simulation 374: nodes=520451, segments=73, elapsed=45.2s
+2026-09-26 18:56:39 | INFO | Processing VTK 374/698 (53.6%): E_S_WW_WM_375.vtk
+No-cluster nodes: 91944 / 481890 (19.08%)
+Multi-cluster nodes: 0 / 481890 (0.00%)
+2026-09-26 18:57:20 | INFO | Saved simulation 375: nodes=481890, segments=79, elapsed=41.1s
+2026-09-26 18:57:20 | INFO | Processing VTK 375/698 (53.7%): E_S_WW_WM_376.vtk
+No-cluster nodes: 92116 / 485502 (18.97%)
+Multi-cluster nodes: 0 / 485502 (0.00%)
+2026-09-26 18:58:01 | INFO | Saved simulation 376: nodes=485502, segments=85, elapsed=41.2s
+2026-09-26 18:58:01 | INFO | Processing VTK 376/698 (53.9%): E_S_WW_WM_377.vtk
+No-cluster nodes: 91130 / 492398 (18.51%)
+Multi-cluster nodes: 0 / 492398 (0.00%)
+2026-09-26 18:58:43 | INFO | Saved simulation 377: nodes=492398, segments=77, elapsed=41.7s
+2026-09-26 18:58:43 | INFO | Processing VTK 377/698 (54.0%): E_S_WW_WM_378.vtk
+No-cluster nodes: 90572 / 467015 (19.39%)
+Multi-cluster nodes: 0 / 467015 (0.00%)
+2026-09-26 18:59:22 | INFO | Saved simulation 378: nodes=467015, segments=73, elapsed=39.3s
+2026-09-26 18:59:22 | INFO | Processing VTK 378/698 (54.2%): E_S_WW_WM_379.vtk
+No-cluster nodes: 90756 / 472700 (19.20%)
+Multi-cluster nodes: 0 / 472700 (0.00%)
+2026-09-26 19:00:02 | INFO | Saved simulation 379: nodes=472700, segments=71, elapsed=39.8s
+2026-09-26 19:00:02 | INFO | Processing VTK 379/698 (54.3%): E_S_WW_WM_380.vtk
+No-cluster nodes: 91234 / 473620 (19.26%)
+Multi-cluster nodes: 0 / 473620 (0.00%)
+2026-09-26 19:00:42 | INFO | Saved simulation 380: nodes=473620, segments=79, elapsed=40.0s
+2026-09-26 19:00:42 | INFO | Processing VTK 380/698 (54.4%): E_S_WW_WM_381.vtk
+No-cluster nodes: 92136 / 513649 (17.94%)
+Multi-cluster nodes: 0 / 513649 (0.00%)
+2026-09-26 19:01:29 | INFO | Saved simulation 381: nodes=513649, segments=75, elapsed=46.4s
+2026-09-26 19:01:29 | INFO | Processing VTK 381/698 (54.6%): E_S_WW_WM_382.vtk
+No-cluster nodes: 91608 / 517975 (17.69%)
+Multi-cluster nodes: 0 / 517975 (0.00%)
+2026-09-26 19:02:13 | INFO | Saved simulation 382: nodes=517975, segments=85, elapsed=44.3s
+2026-09-26 19:02:13 | INFO | Processing VTK 382/698 (54.7%): E_S_WW_WM_383.vtk
+No-cluster nodes: 91640 / 528318 (17.35%)
+Multi-cluster nodes: 0 / 528318 (0.00%)
+2026-09-26 19:02:59 | INFO | Saved simulation 383: nodes=528318, segments=75, elapsed=46.5s
+2026-09-26 19:02:59 | INFO | Processing VTK 383/698 (54.9%): E_S_WW_WM_384.vtk
+No-cluster nodes: 92538 / 512333 (18.06%)
+Multi-cluster nodes: 0 / 512333 (0.00%)
+2026-09-26 19:03:43 | INFO | Saved simulation 384: nodes=512333, segments=67, elapsed=43.9s
+2026-09-26 19:03:43 | INFO | Processing VTK 384/698 (55.0%): E_S_WW_WM_385.vtk
+No-cluster nodes: 90214 / 469878 (19.20%)
+Multi-cluster nodes: 0 / 469878 (0.00%)
+2026-09-26 19:04:23 | INFO | Saved simulation 385: nodes=469878, segments=75, elapsed=39.8s
+2026-09-26 19:04:23 | INFO | Processing VTK 385/698 (55.2%): E_S_WW_WM_386.vtk
+No-cluster nodes: 91040 / 499132 (18.24%)
+Multi-cluster nodes: 0 / 499132 (0.00%)
+2026-09-26 19:05:05 | INFO | Saved simulation 386: nodes=499132, segments=77, elapsed=42.4s
+2026-09-26 19:05:05 | INFO | Processing VTK 386/698 (55.3%): E_S_WW_WM_387.vtk
+No-cluster nodes: 92788 / 489524 (18.95%)
+Multi-cluster nodes: 0 / 489524 (0.00%)
+2026-09-26 19:05:47 | INFO | Saved simulation 387: nodes=489524, segments=85, elapsed=41.4s
+2026-09-26 19:05:47 | INFO | Processing VTK 387/698 (55.4%): E_S_WW_WM_388.vtk
+No-cluster nodes: 91744 / 505241 (18.16%)
+Multi-cluster nodes: 0 / 505241 (0.00%)
+2026-09-26 19:06:30 | INFO | Saved simulation 388: nodes=505241, segments=71, elapsed=43.1s
+2026-09-26 19:06:30 | INFO | Processing VTK 388/698 (55.6%): E_S_WW_WM_389.vtk
+No-cluster nodes: 91156 / 456623 (19.96%)
+Multi-cluster nodes: 0 / 456623 (0.00%)
+2026-09-26 19:07:09 | INFO | Saved simulation 389: nodes=456623, segments=79, elapsed=38.5s
+2026-09-26 19:07:09 | INFO | Processing VTK 389/698 (55.7%): E_S_WW_WM_390.vtk
+No-cluster nodes: 91680 / 491158 (18.67%)
+Multi-cluster nodes: 0 / 491158 (0.00%)
+2026-09-26 19:07:50 | INFO | Saved simulation 390: nodes=491158, segments=73, elapsed=41.9s
+2026-09-26 19:07:50 | INFO | Processing VTK 390/698 (55.9%): E_S_WW_WM_391.vtk
+No-cluster nodes: 92294 / 521205 (17.71%)
+Multi-cluster nodes: 0 / 521205 (0.00%)
+2026-09-26 19:08:35 | INFO | Saved simulation 391: nodes=521205, segments=73, elapsed=44.6s
+2026-09-26 19:08:35 | INFO | Processing VTK 391/698 (56.0%): E_S_WW_WM_392.vtk
+No-cluster nodes: 90516 / 508575 (17.80%)
+Multi-cluster nodes: 0 / 508575 (0.00%)
+2026-09-26 19:09:19 | INFO | Saved simulation 392: nodes=508575, segments=75, elapsed=43.7s
+2026-09-26 19:09:19 | INFO | Processing VTK 392/698 (56.2%): E_S_WW_WM_393.vtk
+No-cluster nodes: 90306 / 453833 (19.90%)
+Multi-cluster nodes: 0 / 453833 (0.00%)
+2026-09-26 19:09:57 | INFO | Saved simulation 393: nodes=453833, segments=69, elapsed=38.2s
+2026-09-26 19:09:57 | INFO | Processing VTK 393/698 (56.3%): E_S_WW_WM_394.vtk
+No-cluster nodes: 92558 / 500433 (18.50%)
+Multi-cluster nodes: 0 / 500433 (0.00%)
+2026-09-26 19:10:40 | INFO | Saved simulation 394: nodes=500433, segments=67, elapsed=42.7s
+2026-09-26 19:10:40 | INFO | Processing VTK 394/698 (56.4%): E_S_WW_WM_395.vtk
+No-cluster nodes: 91844 / 502650 (18.27%)
+Multi-cluster nodes: 0 / 502650 (0.00%)
+2026-09-26 19:11:22 | INFO | Saved simulation 395: nodes=502650, segments=69, elapsed=42.7s
+2026-09-26 19:11:22 | INFO | Processing VTK 395/698 (56.6%): E_S_WW_WM_396.vtk
+No-cluster nodes: 92764 / 539424 (17.20%)
+Multi-cluster nodes: 0 / 539424 (0.00%)
+2026-09-26 19:12:09 | INFO | Saved simulation 396: nodes=539424, segments=83, elapsed=46.3s
+2026-09-26 19:12:09 | INFO | Processing VTK 396/698 (56.7%): E_S_WW_WM_397.vtk
+No-cluster nodes: 91964 / 486595 (18.90%)
+Multi-cluster nodes: 0 / 486595 (0.00%)
+2026-09-26 19:12:50 | INFO | Saved simulation 397: nodes=486595, segments=79, elapsed=41.1s
+2026-09-26 19:12:50 | INFO | Processing VTK 397/698 (56.9%): E_S_WW_WM_398.vtk
+No-cluster nodes: 92548 / 512546 (18.06%)
+Multi-cluster nodes: 0 / 512546 (0.00%)
+2026-09-26 19:13:33 | INFO | Saved simulation 398: nodes=512546, segments=75, elapsed=43.5s
+2026-09-26 19:13:33 | INFO | Processing VTK 398/698 (57.0%): E_S_WW_WM_399.vtk
+No-cluster nodes: 91574 / 453533 (20.19%)
+Multi-cluster nodes: 0 / 453533 (0.00%)
+2026-09-26 19:14:11 | INFO | Saved simulation 399: nodes=453533, segments=73, elapsed=38.2s
+2026-09-26 19:14:11 | INFO | Processing VTK 399/698 (57.2%): E_S_WW_WM_400.vtk
+No-cluster nodes: 93012 / 525565 (17.70%)
+Multi-cluster nodes: 0 / 525565 (0.00%)
+2026-09-26 19:14:56 | INFO | Saved simulation 400: nodes=525565, segments=61, elapsed=44.9s
+2026-09-26 19:14:56 | INFO | Processing VTK 400/698 (57.3%): E_S_WW_WM_401.vtk
+No-cluster nodes: 91960 / 507575 (18.12%)
+Multi-cluster nodes: 0 / 507575 (0.00%)
+2026-09-26 19:15:40 | INFO | Saved simulation 401: nodes=507575, segments=91, elapsed=43.4s
+2026-09-26 19:15:40 | INFO | Processing VTK 401/698 (57.4%): E_S_WW_WM_402.vtk
+No-cluster nodes: 90784 / 487011 (18.64%)
+Multi-cluster nodes: 0 / 487011 (0.00%)
+2026-09-26 19:16:21 | INFO | Saved simulation 402: nodes=487011, segments=87, elapsed=41.2s
+2026-09-26 19:16:21 | INFO | Processing VTK 402/698 (57.6%): E_S_WW_WM_403.vtk
+No-cluster nodes: 92340 / 512610 (18.01%)
+Multi-cluster nodes: 0 / 512610 (0.00%)
+2026-09-26 19:17:05 | INFO | Saved simulation 403: nodes=512610, segments=83, elapsed=43.6s
+2026-09-26 19:17:05 | INFO | Processing VTK 403/698 (57.7%): E_S_WW_WM_404.vtk
+No-cluster nodes: 90928 / 496685 (18.31%)
+Multi-cluster nodes: 0 / 496685 (0.00%)
+2026-09-26 19:17:47 | INFO | Saved simulation 404: nodes=496685, segments=85, elapsed=42.1s
+2026-09-26 19:17:47 | INFO | Processing VTK 404/698 (57.9%): E_S_WW_WM_405.vtk
+No-cluster nodes: 90974 / 514004 (17.70%)
+Multi-cluster nodes: 0 / 514004 (0.00%)
+2026-09-26 19:18:31 | INFO | Saved simulation 405: nodes=514004, segments=87, elapsed=43.9s
+2026-09-26 19:18:31 | INFO | Processing VTK 405/698 (58.0%): E_S_WW_WM_406.vtk
+No-cluster nodes: 91124 / 501734 (18.16%)
+Multi-cluster nodes: 0 / 501734 (0.00%)
+2026-09-26 19:19:13 | INFO | Saved simulation 406: nodes=501734, segments=77, elapsed=42.8s
+2026-09-26 19:19:13 | INFO | Processing VTK 406/698 (58.2%): E_S_WW_WM_407.vtk
+No-cluster nodes: 91816 / 535201 (17.16%)
+Multi-cluster nodes: 0 / 535201 (0.00%)
+2026-09-26 19:19:59 | INFO | Saved simulation 407: nodes=535201, segments=75, elapsed=46.1s
+2026-09-26 19:19:59 | INFO | Processing VTK 407/698 (58.3%): E_S_WW_WM_408.vtk
+No-cluster nodes: 90566 / 473851 (19.11%)
+Multi-cluster nodes: 0 / 473851 (0.00%)
+2026-09-26 19:20:39 | INFO | Saved simulation 408: nodes=473851, segments=93, elapsed=40.0s
+2026-09-26 19:20:39 | INFO | Processing VTK 408/698 (58.5%): E_S_WW_WM_409.vtk
+No-cluster nodes: 91328 / 508782 (17.95%)
+Multi-cluster nodes: 0 / 508782 (0.00%)
+2026-09-26 19:21:23 | INFO | Saved simulation 409: nodes=508782, segments=63, elapsed=43.5s
+2026-09-26 19:21:23 | INFO | Processing VTK 409/698 (58.6%): E_S_WW_WM_410.vtk
+No-cluster nodes: 90716 / 510759 (17.76%)
+Multi-cluster nodes: 0 / 510759 (0.00%)
+2026-09-26 19:22:06 | INFO | Saved simulation 410: nodes=510759, segments=71, elapsed=43.4s
+2026-09-26 19:22:06 | INFO | Processing VTK 410/698 (58.7%): E_S_WW_WM_411.vtk
+No-cluster nodes: 92080 / 518423 (17.76%)
+Multi-cluster nodes: 0 / 518423 (0.00%)
+2026-09-26 19:22:51 | INFO | Saved simulation 411: nodes=518423, segments=85, elapsed=44.4s
+2026-09-26 19:22:51 | INFO | Processing VTK 411/698 (58.9%): E_S_WW_WM_412.vtk
+No-cluster nodes: 91936 / 535432 (17.17%)
+Multi-cluster nodes: 0 / 535432 (0.00%)
+2026-09-26 19:23:36 | INFO | Saved simulation 412: nodes=535432, segments=83, elapsed=45.8s
+2026-09-26 19:23:36 | INFO | Processing VTK 412/698 (59.0%): E_S_WW_WM_413.vtk
+No-cluster nodes: 90884 / 533975 (17.02%)
+Multi-cluster nodes: 0 / 533975 (0.00%)
+2026-09-26 19:24:22 | INFO | Saved simulation 413: nodes=533975, segments=79, elapsed=45.7s
+2026-09-26 19:24:22 | INFO | Processing VTK 413/698 (59.2%): E_S_WW_WM_414.vtk
+No-cluster nodes: 90148 / 470354 (19.17%)
+Multi-cluster nodes: 0 / 470354 (0.00%)
+2026-09-26 19:25:02 | INFO | Saved simulation 414: nodes=470354, segments=71, elapsed=39.8s
+2026-09-26 19:25:02 | INFO | Processing VTK 414/698 (59.3%): E_S_WW_WM_415.vtk
+No-cluster nodes: 91584 / 520942 (17.58%)
+Multi-cluster nodes: 0 / 520942 (0.00%)
+2026-09-26 19:25:46 | INFO | Saved simulation 415: nodes=520942, segments=71, elapsed=44.5s
+2026-09-26 19:25:46 | INFO | Processing VTK 415/698 (59.5%): E_S_WW_WM_416.vtk
+No-cluster nodes: 91484 / 503174 (18.18%)
+Multi-cluster nodes: 0 / 503174 (0.00%)
+2026-09-26 19:26:29 | INFO | Saved simulation 416: nodes=503174, segments=85, elapsed=42.9s
+2026-09-26 19:26:29 | INFO | Processing VTK 416/698 (59.6%): E_S_WW_WM_417.vtk
+No-cluster nodes: 92448 / 492478 (18.77%)
+Multi-cluster nodes: 0 / 492478 (0.00%)
+2026-09-26 19:27:11 | INFO | Saved simulation 417: nodes=492478, segments=65, elapsed=41.7s
+2026-09-26 19:27:11 | INFO | Processing VTK 417/698 (59.7%): E_S_WW_WM_418.vtk
+No-cluster nodes: 90672 / 464804 (19.51%)
+Multi-cluster nodes: 0 / 464804 (0.00%)
+2026-09-26 19:27:50 | INFO | Saved simulation 418: nodes=464804, segments=73, elapsed=39.1s
+2026-09-26 19:27:50 | INFO | Processing VTK 418/698 (59.9%): E_S_WW_WM_419.vtk
+No-cluster nodes: 91236 / 480298 (19.00%)
+Multi-cluster nodes: 0 / 480298 (0.00%)
+2026-09-26 19:28:31 | INFO | Saved simulation 419: nodes=480298, segments=73, elapsed=40.6s
+2026-09-26 19:28:31 | INFO | Processing VTK 419/698 (60.0%): E_S_WW_WM_420.vtk
+No-cluster nodes: 91906 / 507485 (18.11%)
+Multi-cluster nodes: 0 / 507485 (0.00%)
+2026-09-26 19:29:14 | INFO | Saved simulation 420: nodes=507485, segments=81, elapsed=43.4s
+2026-09-26 19:29:14 | INFO | Processing VTK 420/698 (60.2%): E_S_WW_WM_421.vtk
+No-cluster nodes: 90932 / 498315 (18.25%)
+Multi-cluster nodes: 0 / 498315 (0.00%)
+2026-09-26 19:29:57 | INFO | Saved simulation 421: nodes=498315, segments=79, elapsed=42.5s
+2026-09-26 19:29:57 | INFO | Processing VTK 421/698 (60.3%): E_S_WW_WM_422.vtk
+No-cluster nodes: 90550 / 479648 (18.88%)
+Multi-cluster nodes: 0 / 479648 (0.00%)
+2026-09-26 19:30:37 | INFO | Saved simulation 422: nodes=479648, segments=89, elapsed=40.5s
+2026-09-26 19:30:37 | INFO | Processing VTK 422/698 (60.5%): E_S_WW_WM_423.vtk
+No-cluster nodes: 92218 / 465014 (19.83%)
+Multi-cluster nodes: 0 / 465014 (0.00%)
+2026-09-26 19:31:17 | INFO | Saved simulation 423: nodes=465014, segments=87, elapsed=39.4s
+2026-09-26 19:31:17 | INFO | Processing VTK 423/698 (60.6%): E_S_WW_WM_424.vtk
+No-cluster nodes: 92818 / 533012 (17.41%)
+Multi-cluster nodes: 0 / 533012 (0.00%)
+2026-09-26 19:32:03 | INFO | Saved simulation 424: nodes=533012, segments=77, elapsed=46.1s
+2026-09-26 19:32:03 | INFO | Processing VTK 424/698 (60.7%): E_S_WW_WM_425.vtk
+No-cluster nodes: 92382 / 556988 (16.59%)
+Multi-cluster nodes: 0 / 556988 (0.00%)
+2026-09-26 19:32:52 | INFO | Saved simulation 425: nodes=556988, segments=77, elapsed=48.9s
+2026-09-26 19:32:52 | INFO | Processing VTK 425/698 (60.9%): E_S_WW_WM_426.vtk
+No-cluster nodes: 93482 / 508703 (18.38%)
+Multi-cluster nodes: 0 / 508703 (0.00%)
+2026-09-26 19:33:36 | INFO | Saved simulation 426: nodes=508703, segments=69, elapsed=43.9s
+2026-09-26 19:33:36 | INFO | Processing VTK 426/698 (61.0%): E_S_WW_WM_427.vtk
+No-cluster nodes: 90484 / 502572 (18.00%)
+Multi-cluster nodes: 0 / 502572 (0.00%)
+2026-09-26 19:34:19 | INFO | Saved simulation 427: nodes=502572, segments=67, elapsed=43.3s
+2026-09-26 19:34:19 | INFO | Processing VTK 427/698 (61.2%): E_S_WW_WM_428.vtk
+No-cluster nodes: 90028 / 464987 (19.36%)
+Multi-cluster nodes: 0 / 464987 (0.00%)
+2026-09-26 19:34:59 | INFO | Saved simulation 428: nodes=464987, segments=85, elapsed=39.7s
+2026-09-26 19:34:59 | INFO | Processing VTK 428/698 (61.3%): E_S_WW_WM_429.vtk
+No-cluster nodes: 91646 / 512815 (17.87%)
+Multi-cluster nodes: 0 / 512815 (0.00%)
+2026-09-26 19:35:43 | INFO | Saved simulation 429: nodes=512815, segments=71, elapsed=44.0s
+2026-09-26 19:35:43 | INFO | Processing VTK 429/698 (61.5%): E_S_WW_WM_430.vtk
+No-cluster nodes: 89790 / 498170 (18.02%)
+Multi-cluster nodes: 0 / 498170 (0.00%)
+2026-09-26 19:36:25 | INFO | Saved simulation 430: nodes=498170, segments=67, elapsed=42.7s
+2026-09-26 19:36:25 | INFO | Processing VTK 430/698 (61.6%): E_S_WW_WM_431.vtk
+No-cluster nodes: 90684 / 483938 (18.74%)
+Multi-cluster nodes: 0 / 483938 (0.00%)
+2026-09-26 19:37:07 | INFO | Saved simulation 431: nodes=483938, segments=75, elapsed=41.6s
+2026-09-26 19:37:07 | INFO | Processing VTK 431/698 (61.7%): E_S_WW_WM_432.vtk
+No-cluster nodes: 91562 / 482074 (18.99%)
+Multi-cluster nodes: 0 / 482074 (0.00%)
+2026-09-26 19:37:48 | INFO | Saved simulation 432: nodes=482074, segments=85, elapsed=40.9s
+2026-09-26 19:37:48 | INFO | Processing VTK 432/698 (61.9%): E_S_WW_WM_433.vtk
+No-cluster nodes: 91800 / 518260 (17.71%)
+Multi-cluster nodes: 0 / 518260 (0.00%)
+2026-09-26 19:38:32 | INFO | Saved simulation 433: nodes=518260, segments=67, elapsed=44.3s
+2026-09-26 19:38:32 | INFO | Processing VTK 433/698 (62.0%): E_S_WW_WM_434.vtk
+No-cluster nodes: 91176 / 515449 (17.69%)
+Multi-cluster nodes: 0 / 515449 (0.00%)
+2026-09-26 19:39:16 | INFO | Saved simulation 434: nodes=515449, segments=79, elapsed=44.4s
+2026-09-26 19:39:16 | INFO | Processing VTK 434/698 (62.2%): E_S_WW_WM_435.vtk
+No-cluster nodes: 90464 / 509616 (17.75%)
+Multi-cluster nodes: 0 / 509616 (0.00%)
+2026-09-26 19:40:00 | INFO | Saved simulation 435: nodes=509616, segments=81, elapsed=43.7s
+2026-09-26 19:40:00 | INFO | Processing VTK 435/698 (62.3%): E_S_WW_WM_436.vtk
+No-cluster nodes: 91710 / 523320 (17.52%)
+Multi-cluster nodes: 0 / 523320 (0.00%)
+2026-09-26 19:40:45 | INFO | Saved simulation 436: nodes=523320, segments=73, elapsed=44.8s
+2026-09-26 19:40:45 | INFO | Processing VTK 436/698 (62.5%): E_S_WW_WM_437.vtk
+No-cluster nodes: 92108 / 496417 (18.55%)
+Multi-cluster nodes: 0 / 496417 (0.00%)
+2026-09-26 19:41:27 | INFO | Saved simulation 437: nodes=496417, segments=83, elapsed=42.4s
+2026-09-26 19:41:27 | INFO | Processing VTK 437/698 (62.6%): E_S_WW_WM_438.vtk
+No-cluster nodes: 92028 / 509240 (18.07%)
+Multi-cluster nodes: 0 / 509240 (0.00%)
+2026-09-26 19:42:11 | INFO | Saved simulation 438: nodes=509240, segments=87, elapsed=43.6s
+2026-09-26 19:42:11 | INFO | Processing VTK 438/698 (62.8%): E_S_WW_WM_439.vtk
+No-cluster nodes: 91308 / 493495 (18.50%)
+Multi-cluster nodes: 0 / 493495 (0.00%)
+2026-09-26 19:42:53 | INFO | Saved simulation 439: nodes=493495, segments=77, elapsed=41.8s
+2026-09-26 19:42:53 | INFO | Processing VTK 439/698 (62.9%): E_S_WW_WM_440.vtk
+No-cluster nodes: 90914 / 499221 (18.21%)
+Multi-cluster nodes: 0 / 499221 (0.00%)
+2026-09-26 19:43:35 | INFO | Saved simulation 440: nodes=499221, segments=85, elapsed=42.5s
+2026-09-26 19:43:35 | INFO | Processing VTK 440/698 (63.0%): E_S_WW_WM_441.vtk
+No-cluster nodes: 90026 / 458031 (19.66%)
+Multi-cluster nodes: 0 / 458031 (0.00%)
+2026-09-26 19:44:14 | INFO | Saved simulation 441: nodes=458031, segments=91, elapsed=38.7s
+2026-09-26 19:44:14 | INFO | Processing VTK 441/698 (63.2%): E_S_WW_WM_442.vtk
+No-cluster nodes: 90472 / 486298 (18.60%)
+Multi-cluster nodes: 0 / 486298 (0.00%)
+2026-09-26 19:44:55 | INFO | Saved simulation 442: nodes=486298, segments=81, elapsed=41.1s
+2026-09-26 19:44:55 | INFO | Processing VTK 442/698 (63.3%): E_S_WW_WM_443.vtk
+No-cluster nodes: 91650 / 513193 (17.86%)
+Multi-cluster nodes: 0 / 513193 (0.00%)
+2026-09-26 19:45:39 | INFO | Saved simulation 443: nodes=513193, segments=75, elapsed=43.7s
+2026-09-26 19:45:39 | INFO | Processing VTK 443/698 (63.5%): E_S_WW_WM_444.vtk
+No-cluster nodes: 93172 / 521604 (17.86%)
+Multi-cluster nodes: 0 / 521604 (0.00%)
+2026-09-26 19:46:23 | INFO | Saved simulation 444: nodes=521604, segments=71, elapsed=44.6s
+2026-09-26 19:46:23 | INFO | Processing VTK 444/698 (63.6%): E_S_WW_WM_445.vtk
+No-cluster nodes: 90212 / 469481 (19.22%)
+Multi-cluster nodes: 0 / 469481 (0.00%)
+2026-09-26 19:47:03 | INFO | Saved simulation 445: nodes=469481, segments=85, elapsed=39.7s
+2026-09-26 19:47:03 | INFO | Processing VTK 445/698 (63.8%): E_S_WW_WM_446.vtk
+No-cluster nodes: 91120 / 509796 (17.87%)
+Multi-cluster nodes: 0 / 509796 (0.00%)
+2026-09-26 19:47:47 | INFO | Saved simulation 446: nodes=509796, segments=83, elapsed=43.9s
+2026-09-26 19:47:47 | INFO | Processing VTK 446/698 (63.9%): E_S_WW_WM_447.vtk
+No-cluster nodes: 90906 / 506643 (17.94%)
+Multi-cluster nodes: 0 / 506643 (0.00%)
+2026-09-26 19:48:30 | INFO | Saved simulation 447: nodes=506643, segments=87, elapsed=43.4s
+2026-09-26 19:48:30 | INFO | Processing VTK 447/698 (64.0%): E_S_WW_WM_448.vtk
+No-cluster nodes: 89930 / 467609 (19.23%)
+Multi-cluster nodes: 0 / 467609 (0.00%)
+2026-09-26 19:49:10 | INFO | Saved simulation 448: nodes=467609, segments=83, elapsed=39.5s
+2026-09-26 19:49:10 | INFO | Processing VTK 448/698 (64.2%): E_S_WW_WM_449.vtk
+No-cluster nodes: 91866 / 473801 (19.39%)
+Multi-cluster nodes: 0 / 473801 (0.00%)
+2026-09-26 19:49:50 | INFO | Saved simulation 449: nodes=473801, segments=83, elapsed=39.9s
+2026-09-26 19:49:50 | INFO | Processing VTK 449/698 (64.3%): E_S_WW_WM_450.vtk
+No-cluster nodes: 93052 / 519657 (17.91%)
+Multi-cluster nodes: 0 / 519657 (0.00%)
+2026-09-26 19:50:34 | INFO | Saved simulation 450: nodes=519657, segments=85, elapsed=44.5s
+2026-09-26 19:50:34 | INFO | Processing VTK 450/698 (64.5%): E_S_WW_WM_451.vtk
+No-cluster nodes: 92734 / 534708 (17.34%)
+Multi-cluster nodes: 0 / 534708 (0.00%)
+2026-09-26 19:51:21 | INFO | Saved simulation 451: nodes=534708, segments=79, elapsed=46.3s
+2026-09-26 19:51:21 | INFO | Processing VTK 451/698 (64.6%): E_S_WW_WM_452.vtk
+No-cluster nodes: 91616 / 525183 (17.44%)
+Multi-cluster nodes: 0 / 525183 (0.00%)
+2026-09-26 19:52:06 | INFO | Saved simulation 452: nodes=525183, segments=63, elapsed=45.2s
+2026-09-26 19:52:06 | INFO | Processing VTK 452/698 (64.8%): E_S_WW_WM_453.vtk
+No-cluster nodes: 91138 / 466805 (19.52%)
+Multi-cluster nodes: 0 / 466805 (0.00%)
+2026-09-26 19:52:46 | INFO | Saved simulation 453: nodes=466805, segments=81, elapsed=39.5s
+2026-09-26 19:52:46 | INFO | Processing VTK 453/698 (64.9%): E_S_WW_WM_454.vtk
+No-cluster nodes: 90922 / 456694 (19.91%)
+Multi-cluster nodes: 0 / 456694 (0.00%)
+2026-09-26 19:53:24 | INFO | Saved simulation 454: nodes=456694, segments=75, elapsed=38.6s
+2026-09-26 19:53:24 | INFO | Processing VTK 454/698 (65.0%): E_S_WW_WM_455.vtk
+No-cluster nodes: 90680 / 519007 (17.47%)
+Multi-cluster nodes: 0 / 519007 (0.00%)
+2026-09-26 19:54:09 | INFO | Saved simulation 455: nodes=519007, segments=81, elapsed=44.6s
+2026-09-26 19:54:09 | INFO | Processing VTK 455/698 (65.2%): E_S_WW_WM_456.vtk
+No-cluster nodes: 90168 / 464605 (19.41%)
+Multi-cluster nodes: 0 / 464605 (0.00%)
+2026-09-26 19:54:48 | INFO | Saved simulation 456: nodes=464605, segments=79, elapsed=39.4s
+2026-09-26 19:54:48 | INFO | Processing VTK 456/698 (65.3%): E_S_WW_WM_457.vtk
+No-cluster nodes: 90224 / 533494 (16.91%)
+Multi-cluster nodes: 0 / 533494 (0.00%)
+2026-09-26 19:55:34 | INFO | Saved simulation 457: nodes=533494, segments=83, elapsed=46.0s
+2026-09-26 19:55:34 | INFO | Processing VTK 457/698 (65.5%): E_S_WW_WM_458.vtk
+No-cluster nodes: 90216 / 475212 (18.98%)
+Multi-cluster nodes: 0 / 475212 (0.00%)
+2026-09-26 19:56:15 | INFO | Saved simulation 458: nodes=475212, segments=77, elapsed=40.4s
+2026-09-26 19:56:15 | INFO | Processing VTK 458/698 (65.6%): E_S_WW_WM_459.vtk
+No-cluster nodes: 91564 / 505902 (18.10%)
+Multi-cluster nodes: 0 / 505902 (0.00%)
+2026-09-26 19:56:58 | INFO | Saved simulation 459: nodes=505902, segments=89, elapsed=43.3s
+2026-09-26 19:56:58 | INFO | Processing VTK 459/698 (65.8%): E_S_WW_WM_460.vtk
+No-cluster nodes: 91188 / 494070 (18.46%)
+Multi-cluster nodes: 0 / 494070 (0.00%)
+2026-09-26 19:57:40 | INFO | Saved simulation 460: nodes=494070, segments=93, elapsed=42.2s
+2026-09-26 19:57:40 | INFO | Processing VTK 460/698 (65.9%): E_S_WW_WM_461.vtk
+No-cluster nodes: 89890 / 463629 (19.39%)
+Multi-cluster nodes: 0 / 463629 (0.00%)
+2026-09-26 19:58:20 | INFO | Saved simulation 461: nodes=463629, segments=89, elapsed=39.4s
+2026-09-26 19:58:20 | INFO | Processing VTK 461/698 (66.0%): E_S_WW_WM_462.vtk
+No-cluster nodes: 90756 / 475548 (19.08%)
+Multi-cluster nodes: 0 / 475548 (0.00%)
+2026-09-26 19:59:00 | INFO | Saved simulation 462: nodes=475548, segments=85, elapsed=40.2s
+2026-09-26 19:59:00 | INFO | Processing VTK 462/698 (66.2%): E_S_WW_WM_463.vtk
+No-cluster nodes: 91748 / 511283 (17.94%)
+Multi-cluster nodes: 0 / 511283 (0.00%)
+2026-09-26 19:59:44 | INFO | Saved simulation 463: nodes=511283, segments=83, elapsed=44.3s
+2026-09-26 19:59:44 | INFO | Processing VTK 463/698 (66.3%): E_S_WW_WM_464.vtk
+No-cluster nodes: 91744 / 528248 (17.37%)
+Multi-cluster nodes: 0 / 528248 (0.00%)
+2026-09-26 20:00:30 | INFO | Saved simulation 464: nodes=528248, segments=79, elapsed=45.6s
+2026-09-26 20:00:30 | INFO | Processing VTK 464/698 (66.5%): E_S_WW_WM_465.vtk
+No-cluster nodes: 90706 / 464915 (19.51%)
+Multi-cluster nodes: 0 / 464915 (0.00%)
+2026-09-26 20:01:09 | INFO | Saved simulation 465: nodes=464915, segments=71, elapsed=39.5s
+2026-09-26 20:01:09 | INFO | Processing VTK 465/698 (66.6%): E_S_WW_WM_466.vtk
+No-cluster nodes: 91086 / 508056 (17.93%)
+Multi-cluster nodes: 0 / 508056 (0.00%)
+2026-09-26 20:01:52 | INFO | Saved simulation 466: nodes=508056, segments=87, elapsed=43.3s
+2026-09-26 20:01:52 | INFO | Processing VTK 466/698 (66.8%): E_S_WW_WM_467.vtk
+No-cluster nodes: 89746 / 465372 (19.28%)
+Multi-cluster nodes: 0 / 465372 (0.00%)
+2026-09-26 20:02:33 | INFO | Saved simulation 467: nodes=465372, segments=93, elapsed=40.6s
+2026-09-26 20:02:33 | INFO | Processing VTK 467/698 (66.9%): E_S_WW_WM_468.vtk
+No-cluster nodes: 91822 / 492991 (18.63%)
+Multi-cluster nodes: 0 / 492991 (0.00%)
+2026-09-26 20:03:15 | INFO | Saved simulation 468: nodes=492991, segments=87, elapsed=42.4s
+2026-09-26 20:03:15 | INFO | Processing VTK 468/698 (67.0%): E_S_WW_WM_469.vtk
+No-cluster nodes: 90814 / 476565 (19.06%)
+Multi-cluster nodes: 0 / 476565 (0.00%)
+2026-09-26 20:03:56 | INFO | Saved simulation 469: nodes=476565, segments=85, elapsed=40.5s
+2026-09-26 20:03:56 | INFO | Processing VTK 469/698 (67.2%): E_S_WW_WM_470.vtk
+No-cluster nodes: 90360 / 500025 (18.07%)
+Multi-cluster nodes: 0 / 500025 (0.00%)
+2026-09-26 20:04:39 | INFO | Saved simulation 470: nodes=500025, segments=85, elapsed=43.1s
+2026-09-26 20:04:39 | INFO | Processing VTK 470/698 (67.3%): E_S_WW_WM_471.vtk
+No-cluster nodes: 91364 / 510442 (17.90%)
+Multi-cluster nodes: 0 / 510442 (0.00%)
+2026-09-26 20:05:23 | INFO | Saved simulation 471: nodes=510442, segments=89, elapsed=44.2s
+2026-09-26 20:05:23 | INFO | Processing VTK 471/698 (67.5%): E_S_WW_WM_472.vtk
+No-cluster nodes: 90510 / 496029 (18.25%)
+Multi-cluster nodes: 0 / 496029 (0.00%)
+2026-09-26 20:06:06 | INFO | Saved simulation 472: nodes=496029, segments=81, elapsed=42.7s
+2026-09-26 20:06:06 | INFO | Processing VTK 472/698 (67.6%): E_S_WW_WM_473.vtk
+No-cluster nodes: 90844 / 474413 (19.15%)
+Multi-cluster nodes: 0 / 474413 (0.00%)
+2026-09-26 20:06:46 | INFO | Saved simulation 473: nodes=474413, segments=73, elapsed=40.3s
+2026-09-26 20:06:46 | INFO | Processing VTK 473/698 (67.8%): E_S_WW_WM_474.vtk
+No-cluster nodes: 91842 / 531804 (17.27%)
+Multi-cluster nodes: 0 / 531804 (0.00%)
+2026-09-26 20:07:32 | INFO | Saved simulation 474: nodes=531804, segments=79, elapsed=45.9s
+2026-09-26 20:07:32 | INFO | Processing VTK 474/698 (67.9%): E_S_WW_WM_475.vtk
+No-cluster nodes: 89806 / 479154 (18.74%)
+Multi-cluster nodes: 0 / 479154 (0.00%)
+2026-09-26 20:08:13 | INFO | Saved simulation 475: nodes=479154, segments=77, elapsed=41.1s
+2026-09-26 20:08:13 | INFO | Processing VTK 475/698 (68.1%): E_S_WW_WM_476.vtk
+No-cluster nodes: 91576 / 517464 (17.70%)
+Multi-cluster nodes: 0 / 517464 (0.00%)
+2026-09-26 20:08:58 | INFO | Saved simulation 476: nodes=517464, segments=81, elapsed=44.5s
+2026-09-26 20:08:58 | INFO | Processing VTK 476/698 (68.2%): E_S_WW_WM_477.vtk
+No-cluster nodes: 90622 / 514697 (17.61%)
+Multi-cluster nodes: 0 / 514697 (0.00%)
+2026-09-26 20:09:42 | INFO | Saved simulation 477: nodes=514697, segments=73, elapsed=44.5s
+2026-09-26 20:09:42 | INFO | Processing VTK 477/698 (68.3%): E_S_WW_WM_478.vtk
+No-cluster nodes: 91634 / 519767 (17.63%)
+Multi-cluster nodes: 0 / 519767 (0.00%)
+2026-09-26 20:10:27 | INFO | Saved simulation 478: nodes=519767, segments=75, elapsed=44.9s
+2026-09-26 20:10:27 | INFO | Processing VTK 478/698 (68.5%): E_S_WW_WM_479.vtk
+No-cluster nodes: 90652 / 461198 (19.66%)
+Multi-cluster nodes: 0 / 461198 (0.00%)
+2026-09-26 20:11:06 | INFO | Saved simulation 479: nodes=461198, segments=85, elapsed=39.2s
+2026-09-26 20:11:06 | INFO | Processing VTK 479/698 (68.6%): E_S_WW_WM_480.vtk
+No-cluster nodes: 93556 / 490857 (19.06%)
+Multi-cluster nodes: 0 / 490857 (0.00%)
+2026-09-26 20:11:48 | INFO | Saved simulation 480: nodes=490857, segments=81, elapsed=41.8s
+2026-09-26 20:11:48 | INFO | Processing VTK 480/698 (68.8%): E_S_WW_WM_481.vtk
+No-cluster nodes: 92164 / 489765 (18.82%)
+Multi-cluster nodes: 0 / 489765 (0.00%)
+2026-09-26 20:12:30 | INFO | Saved simulation 481: nodes=489765, segments=75, elapsed=42.1s
+2026-09-26 20:12:30 | INFO | Processing VTK 481/698 (68.9%): E_S_WW_WM_482.vtk
+No-cluster nodes: 90562 / 517594 (17.50%)
+Multi-cluster nodes: 0 / 517594 (0.00%)
+2026-09-26 20:13:15 | INFO | Saved simulation 482: nodes=517594, segments=67, elapsed=44.6s
+2026-09-26 20:13:15 | INFO | Processing VTK 482/698 (69.1%): E_S_WW_WM_483.vtk
+No-cluster nodes: 90428 / 495277 (18.26%)
+Multi-cluster nodes: 0 / 495277 (0.00%)
+2026-09-26 20:13:57 | INFO | Saved simulation 483: nodes=495277, segments=69, elapsed=42.5s
+2026-09-26 20:13:57 | INFO | Processing VTK 483/698 (69.2%): E_S_WW_WM_484.vtk
+No-cluster nodes: 91230 / 518268 (17.60%)
+Multi-cluster nodes: 0 / 518268 (0.00%)
+2026-09-26 20:14:42 | INFO | Saved simulation 484: nodes=518268, segments=85, elapsed=44.8s
+2026-09-26 20:14:42 | INFO | Processing VTK 484/698 (69.3%): E_S_WW_WM_485.vtk
+No-cluster nodes: 90576 / 463427 (19.54%)
+Multi-cluster nodes: 0 / 463427 (0.00%)
+2026-09-26 20:15:22 | INFO | Saved simulation 485: nodes=463427, segments=85, elapsed=39.6s
+2026-09-26 20:15:22 | INFO | Processing VTK 485/698 (69.5%): E_S_WW_WM_486.vtk
+No-cluster nodes: 92022 / 480195 (19.16%)
+Multi-cluster nodes: 0 / 480195 (0.00%)
+2026-09-26 20:16:03 | INFO | Saved simulation 486: nodes=480195, segments=77, elapsed=41.3s
+2026-09-26 20:16:03 | INFO | Processing VTK 486/698 (69.6%): E_S_WW_WM_487.vtk
+No-cluster nodes: 90124 / 464236 (19.41%)
+Multi-cluster nodes: 0 / 464236 (0.00%)
+2026-09-26 20:16:42 | INFO | Saved simulation 487: nodes=464236, segments=73, elapsed=39.5s
+2026-09-26 20:16:42 | INFO | Processing VTK 487/698 (69.8%): E_S_WW_WM_488.vtk
+No-cluster nodes: 93214 / 466437 (19.98%)
+Multi-cluster nodes: 0 / 466437 (0.00%)
+2026-09-26 20:17:22 | INFO | Saved simulation 488: nodes=466437, segments=71, elapsed=39.6s
+2026-09-26 20:17:22 | INFO | Processing VTK 488/698 (69.9%): E_S_WW_WM_489.vtk
+No-cluster nodes: 91294 / 541151 (16.87%)
+Multi-cluster nodes: 0 / 541151 (0.00%)
+2026-09-26 20:18:09 | INFO | Saved simulation 489: nodes=541151, segments=77, elapsed=46.9s
+2026-09-26 20:18:09 | INFO | Processing VTK 489/698 (70.1%): E_S_WW_WM_490.vtk
+No-cluster nodes: 91742 / 517560 (17.73%)
+Multi-cluster nodes: 0 / 517560 (0.00%)
+2026-09-26 20:18:54 | INFO | Saved simulation 490: nodes=517560, segments=73, elapsed=44.7s
+2026-09-26 20:18:54 | INFO | Processing VTK 490/698 (70.2%): E_S_WW_WM_491.vtk
+No-cluster nodes: 90844 / 479890 (18.93%)
+Multi-cluster nodes: 0 / 479890 (0.00%)
+2026-09-26 20:19:35 | INFO | Saved simulation 491: nodes=479890, segments=83, elapsed=41.1s
+2026-09-26 20:19:35 | INFO | Processing VTK 491/698 (70.3%): E_S_WW_WM_492.vtk
+No-cluster nodes: 90378 / 469091 (19.27%)
+Multi-cluster nodes: 0 / 469091 (0.00%)
+2026-09-26 20:20:15 | INFO | Saved simulation 492: nodes=469091, segments=85, elapsed=40.0s
+2026-09-26 20:20:15 | INFO | Processing VTK 492/698 (70.5%): E_S_WW_WM_493.vtk
+No-cluster nodes: 91878 / 475830 (19.31%)
+Multi-cluster nodes: 0 / 475830 (0.00%)
+2026-09-26 20:20:55 | INFO | Saved simulation 493: nodes=475830, segments=79, elapsed=40.5s
+2026-09-26 20:20:55 | INFO | Processing VTK 493/698 (70.6%): E_S_WW_WM_494.vtk
+No-cluster nodes: 91806 / 480725 (19.10%)
+Multi-cluster nodes: 0 / 480725 (0.00%)
+2026-09-26 20:21:36 | INFO | Saved simulation 494: nodes=480725, segments=75, elapsed=41.3s
+2026-09-26 20:21:36 | INFO | Processing VTK 494/698 (70.8%): E_S_WW_WM_495.vtk
+No-cluster nodes: 91684 / 538202 (17.04%)
+Multi-cluster nodes: 0 / 538202 (0.00%)
+2026-09-26 20:22:23 | INFO | Saved simulation 495: nodes=538202, segments=81, elapsed=46.6s
+2026-09-26 20:22:23 | INFO | Processing VTK 495/698 (70.9%): E_S_WW_WM_496.vtk
+No-cluster nodes: 90000 / 504028 (17.86%)
+Multi-cluster nodes: 0 / 504028 (0.00%)
+2026-09-26 20:23:07 | INFO | Saved simulation 496: nodes=504028, segments=81, elapsed=43.5s
+2026-09-26 20:23:07 | INFO | Processing VTK 496/698 (71.1%): E_S_WW_WM_497.vtk
+No-cluster nodes: 93406 / 516470 (18.09%)
+Multi-cluster nodes: 0 / 516470 (0.00%)
+2026-09-26 20:23:51 | INFO | Saved simulation 497: nodes=516470, segments=81, elapsed=44.7s
+2026-09-26 20:23:51 | INFO | Processing VTK 497/698 (71.2%): E_S_WW_WM_498.vtk
+No-cluster nodes: 90020 / 460470 (19.55%)
+Multi-cluster nodes: 0 / 460470 (0.00%)
+2026-09-26 20:24:30 | INFO | Saved simulation 498: nodes=460470, segments=85, elapsed=39.2s
+2026-09-26 20:24:30 | INFO | Processing VTK 498/698 (71.3%): E_S_WW_WM_499.vtk
+No-cluster nodes: 91366 / 478959 (19.08%)
+Multi-cluster nodes: 0 / 478959 (0.00%)
+2026-09-26 20:25:11 | INFO | Saved simulation 499: nodes=478959, segments=77, elapsed=40.8s
+2026-09-26 20:25:11 | INFO | Processing VTK 499/698 (71.5%): E_S_WW_WM_500.vtk
+No-cluster nodes: 92468 / 532600 (17.36%)
+Multi-cluster nodes: 0 / 532600 (0.00%)
+2026-09-26 20:25:57 | INFO | Saved simulation 500: nodes=532600, segments=63, elapsed=46.0s
+2026-09-26 20:25:57 | INFO | Processing VTK 500/698 (71.6%): E_S_WW_WM_501.vtk
+No-cluster nodes: 91852 / 497581 (18.46%)
+Multi-cluster nodes: 0 / 497581 (0.00%)
+2026-09-26 20:26:40 | INFO | Saved simulation 501: nodes=497581, segments=75, elapsed=42.8s
+2026-09-26 20:26:40 | INFO | Processing VTK 501/698 (71.8%): E_S_WW_WM_502.vtk
+No-cluster nodes: 91448 / 484472 (18.88%)
+Multi-cluster nodes: 0 / 484472 (0.00%)
+2026-09-26 20:27:21 | INFO | Saved simulation 502: nodes=484472, segments=83, elapsed=41.2s
+2026-09-26 20:27:21 | INFO | Processing VTK 502/698 (71.9%): E_S_WW_WM_503.vtk
+No-cluster nodes: 90966 / 457800 (19.87%)
+Multi-cluster nodes: 0 / 457800 (0.00%)
+2026-09-26 20:28:00 | INFO | Saved simulation 503: nodes=457800, segments=95, elapsed=38.9s
+2026-09-26 20:28:00 | INFO | Processing VTK 503/698 (72.1%): E_S_WW_WM_504.vtk
+No-cluster nodes: 90694 / 480469 (18.88%)
+Multi-cluster nodes: 0 / 480469 (0.00%)
+2026-09-26 20:28:41 | INFO | Saved simulation 504: nodes=480469, segments=83, elapsed=40.8s
+2026-09-26 20:28:41 | INFO | Processing VTK 504/698 (72.2%): E_S_WW_WM_505.vtk
+No-cluster nodes: 91176 / 501296 (18.19%)
+Multi-cluster nodes: 0 / 501296 (0.00%)
+2026-09-26 20:29:24 | INFO | Saved simulation 505: nodes=501296, segments=79, elapsed=43.0s
+2026-09-26 20:29:24 | INFO | Processing VTK 505/698 (72.3%): E_S_WW_WM_506.vtk
+No-cluster nodes: 91254 / 459870 (19.84%)
+Multi-cluster nodes: 0 / 459870 (0.00%)
+2026-09-26 20:30:03 | INFO | Saved simulation 506: nodes=459870, segments=87, elapsed=39.0s
+2026-09-26 20:30:03 | INFO | Processing VTK 506/698 (72.5%): E_S_WW_WM_507.vtk
+No-cluster nodes: 91742 / 507386 (18.08%)
+Multi-cluster nodes: 0 / 507386 (0.00%)
+2026-09-26 20:30:47 | INFO | Saved simulation 507: nodes=507386, segments=69, elapsed=44.2s
+2026-09-26 20:30:47 | INFO | Processing VTK 507/698 (72.6%): E_S_WW_WM_508.vtk
+No-cluster nodes: 91454 / 477290 (19.16%)
+Multi-cluster nodes: 0 / 477290 (0.00%)
+2026-09-26 20:31:28 | INFO | Saved simulation 508: nodes=477290, segments=69, elapsed=40.7s
+2026-09-26 20:31:28 | INFO | Processing VTK 508/698 (72.8%): E_S_WW_WM_509.vtk
+No-cluster nodes: 92288 / 518402 (17.80%)
+Multi-cluster nodes: 0 / 518402 (0.00%)
+2026-09-26 20:32:12 | INFO | Saved simulation 509: nodes=518402, segments=69, elapsed=44.7s
+2026-09-26 20:32:12 | INFO | Processing VTK 509/698 (72.9%): E_S_WW_WM_510.vtk
+No-cluster nodes: 91248 / 528157 (17.28%)
+Multi-cluster nodes: 0 / 528157 (0.00%)
+2026-09-26 20:32:58 | INFO | Saved simulation 510: nodes=528157, segments=73, elapsed=45.7s
+2026-09-26 20:32:58 | INFO | Processing VTK 510/698 (73.1%): E_S_WW_WM_511.vtk
+No-cluster nodes: 92402 / 514360 (17.96%)
+Multi-cluster nodes: 0 / 514360 (0.00%)
+2026-09-26 20:33:43 | INFO | Saved simulation 511: nodes=514360, segments=67, elapsed=44.4s
+2026-09-26 20:33:43 | INFO | Processing VTK 511/698 (73.2%): E_S_WW_WM_512.vtk
+No-cluster nodes: 91908 / 468079 (19.64%)
+Multi-cluster nodes: 0 / 468079 (0.00%)
+2026-09-26 20:34:22 | INFO | Saved simulation 512: nodes=468079, segments=83, elapsed=39.9s
+2026-09-26 20:34:22 | INFO | Processing VTK 512/698 (73.4%): E_S_WW_WM_513.vtk
+No-cluster nodes: 92318 / 516522 (17.87%)
+Multi-cluster nodes: 0 / 516522 (0.00%)
+2026-09-26 20:35:07 | INFO | Saved simulation 513: nodes=516522, segments=69, elapsed=44.6s
+2026-09-26 20:35:07 | INFO | Processing VTK 513/698 (73.5%): E_S_WW_WM_514.vtk
+No-cluster nodes: 91520 / 474534 (19.29%)
+Multi-cluster nodes: 0 / 474534 (0.00%)
+2026-09-26 20:35:48 | INFO | Saved simulation 514: nodes=474534, segments=99, elapsed=40.4s
+2026-09-26 20:35:48 | INFO | Processing VTK 514/698 (73.6%): E_S_WW_WM_515.vtk
+No-cluster nodes: 91408 / 526078 (17.38%)
+Multi-cluster nodes: 0 / 526078 (0.00%)
+2026-09-26 20:36:33 | INFO | Saved simulation 515: nodes=526078, segments=67, elapsed=45.5s
+2026-09-26 20:36:33 | INFO | Processing VTK 515/698 (73.8%): E_S_WW_WM_516.vtk
+No-cluster nodes: 90556 / 513702 (17.63%)
+Multi-cluster nodes: 0 / 513702 (0.00%)
+2026-09-26 20:37:18 | INFO | Saved simulation 516: nodes=513702, segments=89, elapsed=44.6s
+2026-09-26 20:37:18 | INFO | Processing VTK 516/698 (73.9%): E_S_WW_WM_517.vtk
+No-cluster nodes: 91058 / 490325 (18.57%)
+Multi-cluster nodes: 0 / 490325 (0.00%)
+2026-09-26 20:37:59 | INFO | Saved simulation 517: nodes=490325, segments=91, elapsed=41.8s
+2026-09-26 20:37:59 | INFO | Processing VTK 517/698 (74.1%): E_S_WW_WM_518.vtk
+No-cluster nodes: 92622 / 533285 (17.37%)
+Multi-cluster nodes: 0 / 533285 (0.00%)
+2026-09-26 20:38:46 | INFO | Saved simulation 518: nodes=533285, segments=71, elapsed=46.3s
+2026-09-26 20:38:46 | INFO | Processing VTK 518/698 (74.2%): E_S_WW_WM_519.vtk
+No-cluster nodes: 90038 / 517318 (17.40%)
+Multi-cluster nodes: 0 / 517318 (0.00%)
+2026-09-26 20:39:30 | INFO | Saved simulation 519: nodes=517318, segments=79, elapsed=44.6s
+2026-09-26 20:39:30 | INFO | Processing VTK 519/698 (74.4%): E_S_WW_WM_520.vtk
+No-cluster nodes: 91514 / 480946 (19.03%)
+Multi-cluster nodes: 0 / 480946 (0.00%)
+2026-09-26 20:40:11 | INFO | Saved simulation 520: nodes=480946, segments=83, elapsed=40.9s
+2026-09-26 20:40:11 | INFO | Processing VTK 520/698 (74.5%): E_S_WW_WM_521.vtk
+No-cluster nodes: 91184 / 517512 (17.62%)
+Multi-cluster nodes: 0 / 517512 (0.00%)
+2026-09-26 20:40:56 | INFO | Saved simulation 521: nodes=517512, segments=81, elapsed=44.6s
+2026-09-26 20:40:56 | INFO | Processing VTK 521/698 (74.6%): E_S_WW_WM_522.vtk
+No-cluster nodes: 92338 / 486124 (18.99%)
+Multi-cluster nodes: 0 / 486124 (0.00%)
+2026-09-26 20:41:38 | INFO | Saved simulation 522: nodes=486124, segments=79, elapsed=41.7s
+2026-09-26 20:41:38 | INFO | Processing VTK 522/698 (74.8%): E_S_WW_WM_523.vtk
+No-cluster nodes: 90024 / 493186 (18.25%)
+Multi-cluster nodes: 0 / 493186 (0.00%)
+2026-09-26 20:42:20 | INFO | Saved simulation 523: nodes=493186, segments=77, elapsed=42.1s
+2026-09-26 20:42:20 | INFO | Processing VTK 523/698 (74.9%): E_S_WW_WM_524.vtk
+No-cluster nodes: 90980 / 464788 (19.57%)
+Multi-cluster nodes: 0 / 464788 (0.00%)
+2026-09-26 20:42:59 | INFO | Saved simulation 524: nodes=464788, segments=81, elapsed=39.3s
+2026-09-26 20:42:59 | INFO | Processing VTK 524/698 (75.1%): E_S_WW_WM_525.vtk
+No-cluster nodes: 91566 / 489138 (18.72%)
+Multi-cluster nodes: 0 / 489138 (0.00%)
+2026-09-26 20:43:41 | INFO | Saved simulation 525: nodes=489138, segments=81, elapsed=41.8s
+2026-09-26 20:43:41 | INFO | Processing VTK 525/698 (75.2%): E_S_WW_WM_526.vtk
+No-cluster nodes: 90634 / 468723 (19.34%)
+Multi-cluster nodes: 0 / 468723 (0.00%)
+2026-09-26 20:44:21 | INFO | Saved simulation 526: nodes=468723, segments=73, elapsed=39.8s
+2026-09-26 20:44:21 | INFO | Processing VTK 526/698 (75.4%): E_S_WW_WM_527.vtk
+No-cluster nodes: 90580 / 510665 (17.74%)
+Multi-cluster nodes: 0 / 510665 (0.00%)
+2026-09-26 20:45:05 | INFO | Saved simulation 527: nodes=510665, segments=77, elapsed=43.9s
+2026-09-26 20:45:05 | INFO | Processing VTK 527/698 (75.5%): E_S_WW_WM_528.vtk
+No-cluster nodes: 92888 / 478803 (19.40%)
+Multi-cluster nodes: 0 / 478803 (0.00%)
+2026-09-26 20:45:45 | INFO | Saved simulation 528: nodes=478803, segments=61, elapsed=40.9s
+2026-09-26 20:45:45 | INFO | Processing VTK 528/698 (75.6%): E_S_WW_WM_529.vtk
+No-cluster nodes: 92386 / 490231 (18.85%)
+Multi-cluster nodes: 0 / 490231 (0.00%)
+2026-09-26 20:46:27 | INFO | Saved simulation 529: nodes=490231, segments=79, elapsed=42.0s
+2026-09-26 20:46:27 | INFO | Processing VTK 529/698 (75.8%): E_S_WW_WM_530.vtk
+No-cluster nodes: 92722 / 510989 (18.15%)
+Multi-cluster nodes: 0 / 510989 (0.00%)
+2026-09-26 20:47:11 | INFO | Saved simulation 530: nodes=510989, segments=89, elapsed=44.0s
+2026-09-26 20:47:11 | INFO | Processing VTK 530/698 (75.9%): E_S_WW_WM_531.vtk
+No-cluster nodes: 91202 / 463662 (19.67%)
+Multi-cluster nodes: 0 / 463662 (0.00%)
+2026-09-26 20:47:51 | INFO | Saved simulation 531: nodes=463662, segments=77, elapsed=39.7s
+2026-09-26 20:47:51 | INFO | Processing VTK 531/698 (76.1%): E_S_WW_WM_532.vtk
+No-cluster nodes: 92224 / 476203 (19.37%)
+Multi-cluster nodes: 0 / 476203 (0.00%)
+2026-09-26 20:48:32 | INFO | Saved simulation 532: nodes=476203, segments=89, elapsed=40.6s
+2026-09-26 20:48:32 | INFO | Processing VTK 532/698 (76.2%): E_S_WW_WM_533.vtk
+No-cluster nodes: 91340 / 491749 (18.57%)
+Multi-cluster nodes: 0 / 491749 (0.00%)
+2026-09-26 20:49:14 | INFO | Saved simulation 533: nodes=491749, segments=83, elapsed=42.2s
+2026-09-26 20:49:14 | INFO | Processing VTK 533/698 (76.4%): E_S_WW_WM_534.vtk
+No-cluster nodes: 92262 / 487165 (18.94%)
+Multi-cluster nodes: 0 / 487165 (0.00%)
+2026-09-26 20:49:55 | INFO | Saved simulation 534: nodes=487165, segments=77, elapsed=41.6s
+2026-09-26 20:49:55 | INFO | Processing VTK 534/698 (76.5%): E_S_WW_WM_535.vtk
+No-cluster nodes: 90792 / 454094 (19.99%)
+Multi-cluster nodes: 0 / 454094 (0.00%)
+2026-09-26 20:50:34 | INFO | Saved simulation 535: nodes=454094, segments=71, elapsed=38.9s
+2026-09-26 20:50:34 | INFO | Processing VTK 535/698 (76.6%): E_S_WW_WM_536.vtk
+No-cluster nodes: 91578 / 493584 (18.55%)
+Multi-cluster nodes: 0 / 493584 (0.00%)
+2026-09-26 20:51:16 | INFO | Saved simulation 536: nodes=493584, segments=87, elapsed=42.2s
+2026-09-26 20:51:16 | INFO | Processing VTK 536/698 (76.8%): E_S_WW_WM_537.vtk
+No-cluster nodes: 91052 / 495660 (18.37%)
+Multi-cluster nodes: 0 / 495660 (0.00%)
+2026-09-26 20:51:59 | INFO | Saved simulation 537: nodes=495660, segments=81, elapsed=42.2s
+2026-09-26 20:51:59 | INFO | Processing VTK 537/698 (76.9%): E_S_WW_WM_538.vtk
+No-cluster nodes: 91700 / 476479 (19.25%)
+Multi-cluster nodes: 0 / 476479 (0.00%)
+2026-09-26 20:52:39 | INFO | Saved simulation 538: nodes=476479, segments=73, elapsed=40.4s
+2026-09-26 20:52:39 | INFO | Processing VTK 538/698 (77.1%): E_S_WW_WM_539.vtk
+No-cluster nodes: 89948 / 467978 (19.22%)
+Multi-cluster nodes: 0 / 467978 (0.00%)
+2026-09-26 20:53:19 | INFO | Saved simulation 539: nodes=467978, segments=71, elapsed=39.7s
+2026-09-26 20:53:19 | INFO | Processing VTK 539/698 (77.2%): E_S_WW_WM_540.vtk
+No-cluster nodes: 92500 / 516839 (17.90%)
+Multi-cluster nodes: 0 / 516839 (0.00%)
+2026-09-26 20:54:03 | INFO | Saved simulation 540: nodes=516839, segments=83, elapsed=44.4s
+2026-09-26 20:54:03 | INFO | Processing VTK 540/698 (77.4%): E_S_WW_WM_541.vtk
+No-cluster nodes: 91910 / 488493 (18.82%)
+Multi-cluster nodes: 0 / 488493 (0.00%)
+2026-09-26 20:54:45 | INFO | Saved simulation 541: nodes=488493, segments=67, elapsed=41.8s
+2026-09-26 20:54:45 | INFO | Processing VTK 541/698 (77.5%): E_S_WW_WM_542.vtk
+No-cluster nodes: 90946 / 504221 (18.04%)
+Multi-cluster nodes: 0 / 504221 (0.00%)
+2026-09-26 20:55:29 | INFO | Saved simulation 542: nodes=504221, segments=77, elapsed=43.4s
+2026-09-26 20:55:29 | INFO | Processing VTK 542/698 (77.7%): E_S_WW_WM_543.vtk
+No-cluster nodes: 90510 / 524284 (17.26%)
+Multi-cluster nodes: 0 / 524284 (0.00%)
+2026-09-26 20:56:14 | INFO | Saved simulation 543: nodes=524284, segments=77, elapsed=45.5s
+2026-09-26 20:56:14 | INFO | Processing VTK 543/698 (77.8%): E_S_WW_WM_544.vtk
+No-cluster nodes: 91276 / 517642 (17.63%)
+Multi-cluster nodes: 0 / 517642 (0.00%)
+2026-09-26 20:56:59 | INFO | Saved simulation 544: nodes=517642, segments=77, elapsed=44.7s
+2026-09-26 20:56:59 | INFO | Processing VTK 544/698 (77.9%): E_S_WW_WM_545.vtk
+No-cluster nodes: 90876 / 503762 (18.04%)
+Multi-cluster nodes: 0 / 503762 (0.00%)
+2026-09-26 20:57:42 | INFO | Saved simulation 545: nodes=503762, segments=71, elapsed=43.3s
+2026-09-26 20:57:42 | INFO | Processing VTK 545/698 (78.1%): E_S_WW_WM_546.vtk
+No-cluster nodes: 89172 / 468477 (19.03%)
+Multi-cluster nodes: 0 / 468477 (0.00%)
+2026-09-26 20:58:22 | INFO | Saved simulation 546: nodes=468477, segments=71, elapsed=40.0s
+2026-09-26 20:58:22 | INFO | Processing VTK 546/698 (78.2%): E_S_WW_WM_547.vtk
+No-cluster nodes: 91434 / 536176 (17.05%)
+Multi-cluster nodes: 0 / 536176 (0.00%)
+2026-09-26 20:59:09 | INFO | Saved simulation 547: nodes=536176, segments=71, elapsed=46.7s
+2026-09-26 20:59:09 | INFO | Processing VTK 547/698 (78.4%): E_S_WW_WM_548.vtk
+No-cluster nodes: 91398 / 498266 (18.34%)
+Multi-cluster nodes: 0 / 498266 (0.00%)
+2026-09-26 20:59:52 | INFO | Saved simulation 548: nodes=498266, segments=87, elapsed=42.9s
+2026-09-26 20:59:52 | INFO | Processing VTK 548/698 (78.5%): E_S_WW_WM_549.vtk
+No-cluster nodes: 90348 / 463328 (19.50%)
+Multi-cluster nodes: 0 / 463328 (0.00%)
+2026-09-26 21:00:31 | INFO | Saved simulation 549: nodes=463328, segments=75, elapsed=39.4s
+2026-09-26 21:00:31 | INFO | Processing VTK 549/698 (78.7%): E_S_WW_WM_550.vtk
+No-cluster nodes: 90602 / 501823 (18.05%)
+Multi-cluster nodes: 0 / 501823 (0.00%)
+2026-09-26 21:01:15 | INFO | Saved simulation 550: nodes=501823, segments=81, elapsed=43.5s
+2026-09-26 21:01:15 | INFO | Processing VTK 550/698 (78.8%): E_S_WW_WM_551.vtk
+No-cluster nodes: 92162 / 536994 (17.16%)
+Multi-cluster nodes: 0 / 536994 (0.00%)
+2026-09-26 21:02:01 | INFO | Saved simulation 551: nodes=536994, segments=59, elapsed=46.7s
+2026-09-26 21:02:01 | INFO | Processing VTK 551/698 (78.9%): E_S_WW_WM_552.vtk
+No-cluster nodes: 91040 / 502576 (18.11%)
+Multi-cluster nodes: 0 / 502576 (0.00%)
+2026-09-26 21:02:45 | INFO | Saved simulation 552: nodes=502576, segments=77, elapsed=43.4s
+2026-09-26 21:02:45 | INFO | Processing VTK 552/698 (79.1%): E_S_WW_WM_553.vtk
+No-cluster nodes: 89596 / 449923 (19.91%)
+Multi-cluster nodes: 0 / 449923 (0.00%)
+2026-09-26 21:03:23 | INFO | Saved simulation 553: nodes=449923, segments=77, elapsed=38.2s
+2026-09-26 21:03:23 | INFO | Processing VTK 553/698 (79.2%): E_S_WW_WM_554.vtk
+No-cluster nodes: 91346 / 496590 (18.39%)
+Multi-cluster nodes: 0 / 496590 (0.00%)
+2026-09-26 21:04:05 | INFO | Saved simulation 554: nodes=496590, segments=63, elapsed=42.6s
+2026-09-26 21:04:05 | INFO | Processing VTK 554/698 (79.4%): E_S_WW_WM_555.vtk
+No-cluster nodes: 91800 / 511008 (17.96%)
+Multi-cluster nodes: 0 / 511008 (0.00%)
+2026-09-26 21:04:49 | INFO | Saved simulation 555: nodes=511008, segments=81, elapsed=44.0s
+2026-09-26 21:04:49 | INFO | Processing VTK 555/698 (79.5%): E_S_WW_WM_556.vtk
+No-cluster nodes: 92064 / 537008 (17.14%)
+Multi-cluster nodes: 0 / 537008 (0.00%)
+2026-09-26 21:05:36 | INFO | Saved simulation 556: nodes=537008, segments=77, elapsed=46.6s
+2026-09-26 21:05:36 | INFO | Processing VTK 556/698 (79.7%): E_S_WW_WM_557.vtk
+No-cluster nodes: 91238 / 481414 (18.95%)
+Multi-cluster nodes: 0 / 481414 (0.00%)
+2026-09-26 21:06:17 | INFO | Saved simulation 557: nodes=481414, segments=87, elapsed=41.4s
+2026-09-26 21:06:17 | INFO | Processing VTK 557/698 (79.8%): E_S_WW_WM_558.vtk
+No-cluster nodes: 92134 / 468235 (19.68%)
+Multi-cluster nodes: 0 / 468235 (0.00%)
+2026-09-26 21:06:57 | INFO | Saved simulation 558: nodes=468235, segments=73, elapsed=39.9s
+2026-09-26 21:06:57 | INFO | Processing VTK 558/698 (79.9%): E_S_WW_WM_559.vtk
+No-cluster nodes: 90790 / 508507 (17.85%)
+Multi-cluster nodes: 0 / 508507 (0.00%)
+2026-09-26 21:07:41 | INFO | Saved simulation 559: nodes=508507, segments=85, elapsed=43.8s
+2026-09-26 21:07:41 | INFO | Processing VTK 559/698 (80.1%): E_S_WW_WM_560.vtk
+No-cluster nodes: 93020 / 503074 (18.49%)
+Multi-cluster nodes: 0 / 503074 (0.00%)
+2026-09-26 21:08:25 | INFO | Saved simulation 560: nodes=503074, segments=61, elapsed=43.4s
+2026-09-26 21:08:25 | INFO | Processing VTK 560/698 (80.2%): E_S_WW_WM_561.vtk
+No-cluster nodes: 92034 / 507621 (18.13%)
+Multi-cluster nodes: 0 / 507621 (0.00%)
+2026-09-26 21:09:08 | INFO | Saved simulation 561: nodes=507621, segments=75, elapsed=43.8s
+2026-09-26 21:09:08 | INFO | Processing VTK 561/698 (80.4%): E_S_WW_WM_562.vtk
+No-cluster nodes: 91830 / 545026 (16.85%)
+Multi-cluster nodes: 0 / 545026 (0.00%)
+2026-09-26 21:09:56 | INFO | Saved simulation 562: nodes=545026, segments=81, elapsed=47.6s
+2026-09-26 21:09:56 | INFO | Processing VTK 562/698 (80.5%): E_S_WW_WM_563.vtk
+No-cluster nodes: 90902 / 508348 (17.88%)
+Multi-cluster nodes: 0 / 508348 (0.00%)
+2026-09-26 21:10:40 | INFO | Saved simulation 563: nodes=508348, segments=81, elapsed=44.0s
+2026-09-26 21:10:40 | INFO | Processing VTK 563/698 (80.7%): E_S_WW_WM_564.vtk
+No-cluster nodes: 91078 / 506452 (17.98%)
+Multi-cluster nodes: 0 / 506452 (0.00%)
+2026-09-26 21:11:24 | INFO | Saved simulation 564: nodes=506452, segments=75, elapsed=43.7s
+2026-09-26 21:11:24 | INFO | Processing VTK 564/698 (80.8%): E_S_WW_WM_565.vtk
+No-cluster nodes: 91072 / 456498 (19.95%)
+Multi-cluster nodes: 0 / 456498 (0.00%)
+2026-09-26 21:12:03 | INFO | Saved simulation 565: nodes=456498, segments=63, elapsed=38.8s
+2026-09-26 21:12:03 | INFO | Processing VTK 565/698 (80.9%): E_S_WW_WM_566.vtk
+No-cluster nodes: 90482 / 465801 (19.43%)
+Multi-cluster nodes: 0 / 465801 (0.00%)
+2026-09-26 21:12:43 | INFO | Saved simulation 566: nodes=465801, segments=85, elapsed=39.9s
+2026-09-26 21:12:43 | INFO | Processing VTK 566/698 (81.1%): E_S_WW_WM_567.vtk
+No-cluster nodes: 91722 / 493300 (18.59%)
+Multi-cluster nodes: 0 / 493300 (0.00%)
+2026-09-26 21:13:25 | INFO | Saved simulation 567: nodes=493300, segments=77, elapsed=42.2s
+2026-09-26 21:13:25 | INFO | Processing VTK 567/698 (81.2%): E_S_WW_WM_568.vtk
+No-cluster nodes: 91284 / 490299 (18.62%)
+Multi-cluster nodes: 0 / 490299 (0.00%)
+2026-09-26 21:14:07 | INFO | Saved simulation 568: nodes=490299, segments=89, elapsed=41.9s
+2026-09-26 21:14:07 | INFO | Processing VTK 568/698 (81.4%): E_S_WW_WM_569.vtk
+No-cluster nodes: 90418 / 457728 (19.75%)
+Multi-cluster nodes: 0 / 457728 (0.00%)
+2026-09-26 21:14:46 | INFO | Saved simulation 569: nodes=457728, segments=89, elapsed=38.9s
+2026-09-26 21:14:46 | INFO | Processing VTK 569/698 (81.5%): E_S_WW_WM_570.vtk
+No-cluster nodes: 91144 / 515337 (17.69%)
+Multi-cluster nodes: 0 / 515337 (0.00%)
+2026-09-26 21:15:30 | INFO | Saved simulation 570: nodes=515337, segments=85, elapsed=44.5s
+2026-09-26 21:15:30 | INFO | Processing VTK 570/698 (81.7%): E_S_WW_WM_571.vtk
+No-cluster nodes: 93078 / 526918 (17.66%)
+Multi-cluster nodes: 0 / 526918 (0.00%)
+2026-09-26 21:16:16 | INFO | Saved simulation 571: nodes=526918, segments=73, elapsed=45.6s
+2026-09-26 21:16:16 | INFO | Processing VTK 571/698 (81.8%): E_S_WW_WM_572.vtk
+No-cluster nodes: 91186 / 512206 (17.80%)
+Multi-cluster nodes: 0 / 512206 (0.00%)
+2026-09-26 21:17:00 | INFO | Saved simulation 572: nodes=512206, segments=69, elapsed=44.2s
+2026-09-26 21:17:00 | INFO | Processing VTK 572/698 (81.9%): E_S_WW_WM_573.vtk
+No-cluster nodes: 92250 / 460072 (20.05%)
+Multi-cluster nodes: 0 / 460072 (0.00%)
+2026-09-26 21:17:39 | INFO | Saved simulation 573: nodes=460072, segments=63, elapsed=39.2s
+2026-09-26 21:17:39 | INFO | Processing VTK 573/698 (82.1%): E_S_WW_WM_574.vtk
+No-cluster nodes: 92652 / 511536 (18.11%)
+Multi-cluster nodes: 0 / 511536 (0.00%)
+2026-09-26 21:18:23 | INFO | Saved simulation 574: nodes=511536, segments=67, elapsed=44.3s
+2026-09-26 21:18:23 | INFO | Processing VTK 574/698 (82.2%): E_S_WW_WM_575.vtk
+No-cluster nodes: 92458 / 506169 (18.27%)
+Multi-cluster nodes: 0 / 506169 (0.00%)
+2026-09-26 21:19:07 | INFO | Saved simulation 575: nodes=506169, segments=79, elapsed=43.5s
+2026-09-26 21:19:07 | INFO | Processing VTK 575/698 (82.4%): E_S_WW_WM_576.vtk
+No-cluster nodes: 92464 / 495501 (18.66%)
+Multi-cluster nodes: 0 / 495501 (0.00%)
+2026-09-26 21:19:49 | INFO | Saved simulation 576: nodes=495501, segments=91, elapsed=42.2s
+2026-09-26 21:19:49 | INFO | Processing VTK 576/698 (82.5%): E_S_WW_WM_577.vtk
+No-cluster nodes: 90920 / 515869 (17.62%)
+Multi-cluster nodes: 0 / 515869 (0.00%)
+2026-09-26 21:20:34 | INFO | Saved simulation 577: nodes=515869, segments=75, elapsed=44.7s
+2026-09-26 21:20:34 | INFO | Processing VTK 577/698 (82.7%): E_S_WW_WM_578.vtk
+No-cluster nodes: 91316 / 471885 (19.35%)
+Multi-cluster nodes: 0 / 471885 (0.00%)
+2026-09-26 21:21:14 | INFO | Saved simulation 578: nodes=471885, segments=79, elapsed=40.3s
+2026-09-26 21:21:14 | INFO | Processing VTK 578/698 (82.8%): E_S_WW_WM_579.vtk
+No-cluster nodes: 90518 / 486474 (18.61%)
+Multi-cluster nodes: 0 / 486474 (0.00%)
+2026-09-26 21:21:56 | INFO | Saved simulation 579: nodes=486474, segments=79, elapsed=41.9s
+2026-09-26 21:21:56 | INFO | Processing VTK 579/698 (83.0%): E_S_WW_WM_580.vtk
+No-cluster nodes: 91934 / 532225 (17.27%)
+Multi-cluster nodes: 0 / 532225 (0.00%)
+2026-09-26 21:22:42 | INFO | Saved simulation 580: nodes=532225, segments=75, elapsed=46.0s
+2026-09-26 21:22:42 | INFO | Processing VTK 580/698 (83.1%): E_S_WW_WM_581.vtk
+No-cluster nodes: 90218 / 519312 (17.37%)
+Multi-cluster nodes: 0 / 519312 (0.00%)
+2026-09-26 21:23:27 | INFO | Saved simulation 581: nodes=519312, segments=79, elapsed=44.8s
+2026-09-26 21:23:27 | INFO | Processing VTK 581/698 (83.2%): E_S_WW_WM_582.vtk
+No-cluster nodes: 91796 / 475323 (19.31%)
+Multi-cluster nodes: 0 / 475323 (0.00%)
+2026-09-26 21:24:07 | INFO | Saved simulation 582: nodes=475323, segments=69, elapsed=40.8s
+2026-09-26 21:24:07 | INFO | Processing VTK 582/698 (83.4%): E_S_WW_WM_583.vtk
+No-cluster nodes: 92056 / 504300 (18.25%)
+Multi-cluster nodes: 0 / 504300 (0.00%)
+2026-09-26 21:24:51 | INFO | Saved simulation 583: nodes=504300, segments=83, elapsed=43.4s
+2026-09-26 21:24:51 | INFO | Processing VTK 583/698 (83.5%): E_S_WW_WM_584.vtk
+No-cluster nodes: 91310 / 521527 (17.51%)
+Multi-cluster nodes: 0 / 521527 (0.00%)
+2026-09-26 21:25:36 | INFO | Saved simulation 584: nodes=521527, segments=79, elapsed=45.1s
+2026-09-26 21:25:36 | INFO | Processing VTK 584/698 (83.7%): E_S_WW_WM_585.vtk
+No-cluster nodes: 91462 / 507443 (18.02%)
+Multi-cluster nodes: 0 / 507443 (0.00%)
+2026-09-26 21:26:20 | INFO | Saved simulation 585: nodes=507443, segments=73, elapsed=43.7s
+2026-09-26 21:26:20 | INFO | Processing VTK 585/698 (83.8%): E_S_WW_WM_586.vtk
+No-cluster nodes: 90596 / 494935 (18.30%)
+Multi-cluster nodes: 0 / 494935 (0.00%)
+2026-09-26 21:27:02 | INFO | Saved simulation 586: nodes=494935, segments=99, elapsed=42.4s
+2026-09-26 21:27:02 | INFO | Processing VTK 586/698 (84.0%): E_S_WW_WM_587.vtk
+No-cluster nodes: 93306 / 493480 (18.91%)
+Multi-cluster nodes: 0 / 493480 (0.00%)
+2026-09-26 21:27:44 | INFO | Saved simulation 587: nodes=493480, segments=77, elapsed=42.0s
+2026-09-26 21:27:44 | INFO | Processing VTK 587/698 (84.1%): E_S_WW_WM_588.vtk
+No-cluster nodes: 91780 / 520122 (17.65%)
+Multi-cluster nodes: 0 / 520122 (0.00%)
+2026-09-26 21:28:29 | INFO | Saved simulation 588: nodes=520122, segments=81, elapsed=44.7s
+2026-09-26 21:28:29 | INFO | Processing VTK 588/698 (84.2%): E_S_WW_WM_589.vtk
+No-cluster nodes: 89534 / 481294 (18.60%)
+Multi-cluster nodes: 0 / 481294 (0.00%)
+2026-09-26 21:29:10 | INFO | Saved simulation 589: nodes=481294, segments=77, elapsed=41.1s
+2026-09-26 21:29:10 | INFO | Processing VTK 589/698 (84.4%): E_S_WW_WM_590.vtk
+No-cluster nodes: 91030 / 493435 (18.45%)
+Multi-cluster nodes: 0 / 493435 (0.00%)
+2026-09-26 21:29:52 | INFO | Saved simulation 590: nodes=493435, segments=89, elapsed=42.4s
+2026-09-26 21:29:52 | INFO | Processing VTK 590/698 (84.5%): E_S_WW_WM_591.vtk
+No-cluster nodes: 90648 / 479322 (18.91%)
+Multi-cluster nodes: 0 / 479322 (0.00%)
+2026-09-26 21:30:33 | INFO | Saved simulation 591: nodes=479322, segments=93, elapsed=40.9s
+2026-09-26 21:30:33 | INFO | Processing VTK 591/698 (84.7%): E_S_WW_WM_592.vtk
+No-cluster nodes: 91178 / 489374 (18.63%)
+Multi-cluster nodes: 0 / 489374 (0.00%)
+2026-09-26 21:31:15 | INFO | Saved simulation 592: nodes=489374, segments=79, elapsed=42.0s
+2026-09-26 21:31:15 | INFO | Processing VTK 592/698 (84.8%): E_S_WW_WM_593.vtk
+No-cluster nodes: 90930 / 465043 (19.55%)
+Multi-cluster nodes: 0 / 465043 (0.00%)
+2026-09-26 21:31:56 | INFO | Saved simulation 593: nodes=465043, segments=83, elapsed=40.4s
+2026-09-26 21:31:56 | INFO | Processing VTK 593/698 (85.0%): E_S_WW_WM_594.vtk
+No-cluster nodes: 92648 / 536870 (17.26%)
+Multi-cluster nodes: 0 / 536870 (0.00%)
+2026-09-26 21:32:43 | INFO | Saved simulation 594: nodes=536870, segments=69, elapsed=46.9s
+2026-09-26 21:32:43 | INFO | Processing VTK 594/698 (85.1%): E_S_WW_WM_595.vtk
+No-cluster nodes: 90702 / 506815 (17.90%)
+Multi-cluster nodes: 0 / 506815 (0.00%)
+2026-09-26 21:33:26 | INFO | Saved simulation 595: nodes=506815, segments=77, elapsed=43.1s
+2026-09-26 21:33:26 | INFO | Processing VTK 595/698 (85.2%): E_S_WW_WM_596.vtk
+No-cluster nodes: 91472 / 498937 (18.33%)
+Multi-cluster nodes: 0 / 498937 (0.00%)
+2026-09-26 21:34:08 | INFO | Saved simulation 596: nodes=498937, segments=83, elapsed=42.2s
+2026-09-26 21:34:08 | INFO | Processing VTK 596/698 (85.4%): E_S_WW_WM_597.vtk
+No-cluster nodes: 90874 / 473767 (19.18%)
+Multi-cluster nodes: 0 / 473767 (0.00%)
+2026-09-26 21:34:48 | INFO | Saved simulation 597: nodes=473767, segments=89, elapsed=39.7s
+2026-09-26 21:34:48 | INFO | Processing VTK 597/698 (85.5%): E_S_WW_WM_598.vtk
+No-cluster nodes: 91566 / 469169 (19.52%)
+Multi-cluster nodes: 0 / 469169 (0.00%)
+2026-09-26 21:35:27 | INFO | Saved simulation 598: nodes=469169, segments=85, elapsed=39.3s
+2026-09-26 21:35:27 | INFO | Processing VTK 598/698 (85.7%): E_S_WW_WM_600.vtk
+No-cluster nodes: 90774 / 508164 (17.86%)
+Multi-cluster nodes: 0 / 508164 (0.00%)
+2026-09-26 21:36:10 | INFO | Saved simulation 600: nodes=508164, segments=71, elapsed=42.9s
+2026-09-26 21:36:10 | INFO | Processing VTK 599/698 (85.8%): E_S_WW_WM_601.vtk
+No-cluster nodes: 90548 / 500855 (18.08%)
+Multi-cluster nodes: 0 / 500855 (0.00%)
+2026-09-26 21:36:52 | INFO | Saved simulation 601: nodes=500855, segments=87, elapsed=42.5s
+2026-09-26 21:36:52 | INFO | Processing VTK 600/698 (86.0%): E_S_WW_WM_602.vtk
+No-cluster nodes: 91944 / 474670 (19.37%)
+Multi-cluster nodes: 0 / 474670 (0.00%)
+2026-09-26 21:37:32 | INFO | Saved simulation 602: nodes=474670, segments=75, elapsed=39.9s
+2026-09-26 21:37:32 | INFO | Processing VTK 601/698 (86.1%): E_S_WW_WM_603.vtk
+No-cluster nodes: 93494 / 549573 (17.01%)
+Multi-cluster nodes: 0 / 549573 (0.00%)
+2026-09-26 21:38:19 | INFO | Saved simulation 603: nodes=549573, segments=65, elapsed=47.3s
+2026-09-26 21:38:19 | INFO | Processing VTK 602/698 (86.2%): E_S_WW_WM_604.vtk
+No-cluster nodes: 91942 / 535966 (17.15%)
+Multi-cluster nodes: 0 / 535966 (0.00%)
+2026-09-26 21:39:05 | INFO | Saved simulation 604: nodes=535966, segments=81, elapsed=46.0s
+2026-09-26 21:39:05 | INFO | Processing VTK 603/698 (86.4%): E_S_WW_WM_605.vtk
+No-cluster nodes: 90884 / 514150 (17.68%)
+Multi-cluster nodes: 0 / 514150 (0.00%)
+2026-09-26 21:39:49 | INFO | Saved simulation 605: nodes=514150, segments=77, elapsed=43.8s
+2026-09-26 21:39:49 | INFO | Processing VTK 604/698 (86.5%): E_S_WW_WM_606.vtk
+No-cluster nodes: 90622 / 493750 (18.35%)
+Multi-cluster nodes: 0 / 493750 (0.00%)
+2026-09-26 21:40:31 | INFO | Saved simulation 606: nodes=493750, segments=81, elapsed=42.0s
+2026-09-26 21:40:31 | INFO | Processing VTK 605/698 (86.7%): E_S_WW_WM_607.vtk
+No-cluster nodes: 90406 / 469114 (19.27%)
+Multi-cluster nodes: 0 / 469114 (0.00%)
+2026-09-26 21:41:11 | INFO | Saved simulation 607: nodes=469114, segments=77, elapsed=39.7s
+2026-09-26 21:41:11 | INFO | Processing VTK 606/698 (86.8%): E_S_WW_WM_608.vtk
+No-cluster nodes: 91576 / 513156 (17.85%)
+Multi-cluster nodes: 0 / 513156 (0.00%)
+2026-09-26 21:41:54 | INFO | Saved simulation 608: nodes=513156, segments=73, elapsed=43.7s
+2026-09-26 21:41:54 | INFO | Processing VTK 607/698 (87.0%): E_S_WW_WM_609.vtk
+No-cluster nodes: 91876 / 493391 (18.62%)
+Multi-cluster nodes: 0 / 493391 (0.00%)
+2026-09-26 21:42:37 | INFO | Saved simulation 609: nodes=493391, segments=83, elapsed=42.4s
+2026-09-26 21:42:37 | INFO | Processing VTK 608/698 (87.1%): E_S_WW_WM_610.vtk
+No-cluster nodes: 92010 / 515196 (17.86%)
+Multi-cluster nodes: 0 / 515196 (0.00%)
+2026-09-26 21:43:21 | INFO | Saved simulation 610: nodes=515196, segments=71, elapsed=43.9s
+2026-09-26 21:43:21 | INFO | Processing VTK 609/698 (87.2%): E_S_WW_WM_611.vtk
+No-cluster nodes: 91692 / 504337 (18.18%)
+Multi-cluster nodes: 0 / 504337 (0.00%)
+2026-09-26 21:44:04 | INFO | Saved simulation 611: nodes=504337, segments=79, elapsed=42.9s
+2026-09-26 21:44:04 | INFO | Processing VTK 610/698 (87.4%): E_S_WW_WM_612.vtk
+No-cluster nodes: 92082 / 483537 (19.04%)
+Multi-cluster nodes: 0 / 483537 (0.00%)
+2026-09-26 21:44:45 | INFO | Saved simulation 612: nodes=483537, segments=69, elapsed=40.9s
+2026-09-26 21:44:45 | INFO | Processing VTK 611/698 (87.5%): E_S_WW_WM_613.vtk
+No-cluster nodes: 91844 / 526015 (17.46%)
+Multi-cluster nodes: 0 / 526015 (0.00%)
+2026-09-26 21:45:30 | INFO | Saved simulation 613: nodes=526015, segments=83, elapsed=45.0s
+2026-09-26 21:45:30 | INFO | Processing VTK 612/698 (87.7%): E_S_WW_WM_614.vtk
+No-cluster nodes: 90518 / 478905 (18.90%)
+Multi-cluster nodes: 0 / 478905 (0.00%)
+2026-09-26 21:46:10 | INFO | Saved simulation 614: nodes=478905, segments=89, elapsed=40.4s
+2026-09-26 21:46:10 | INFO | Processing VTK 613/698 (87.8%): E_S_WW_WM_615.vtk
+No-cluster nodes: 91720 / 499051 (18.38%)
+Multi-cluster nodes: 0 / 499051 (0.00%)
+2026-09-26 21:46:52 | INFO | Saved simulation 615: nodes=499051, segments=89, elapsed=42.3s
+2026-09-26 21:46:52 | INFO | Processing VTK 614/698 (88.0%): E_S_WW_WM_616.vtk
+No-cluster nodes: 91158 / 524413 (17.38%)
+Multi-cluster nodes: 0 / 524413 (0.00%)
+2026-09-26 21:47:37 | INFO | Saved simulation 616: nodes=524413, segments=77, elapsed=44.8s
+2026-09-26 21:47:37 | INFO | Processing VTK 615/698 (88.1%): E_S_WW_WM_617.vtk
+No-cluster nodes: 90292 / 514724 (17.54%)
+Multi-cluster nodes: 0 / 514724 (0.00%)
+2026-09-26 21:48:21 | INFO | Saved simulation 617: nodes=514724, segments=81, elapsed=44.0s
+2026-09-26 21:48:21 | INFO | Processing VTK 616/698 (88.3%): E_S_WW_WM_618.vtk
+No-cluster nodes: 92132 / 529329 (17.41%)
+Multi-cluster nodes: 0 / 529329 (0.00%)
+2026-09-26 21:49:06 | INFO | Saved simulation 618: nodes=529329, segments=97, elapsed=45.1s
+2026-09-26 21:49:06 | INFO | Processing VTK 617/698 (88.4%): E_S_WW_WM_619.vtk
+No-cluster nodes: 91122 / 483168 (18.86%)
+Multi-cluster nodes: 0 / 483168 (0.00%)
+2026-09-26 21:49:47 | INFO | Saved simulation 619: nodes=483168, segments=67, elapsed=40.7s
+2026-09-26 21:49:47 | INFO | Processing VTK 618/698 (88.5%): E_S_WW_WM_620.vtk
+No-cluster nodes: 92376 / 476570 (19.38%)
+Multi-cluster nodes: 0 / 476570 (0.00%)
+2026-09-26 21:50:27 | INFO | Saved simulation 620: nodes=476570, segments=81, elapsed=40.1s
+2026-09-26 21:50:27 | INFO | Processing VTK 619/698 (88.7%): E_S_WW_WM_621.vtk
+No-cluster nodes: 90858 / 472951 (19.21%)
+Multi-cluster nodes: 0 / 472951 (0.00%)
+2026-09-26 21:51:07 | INFO | Saved simulation 621: nodes=472951, segments=75, elapsed=39.7s
+2026-09-26 21:51:07 | INFO | Processing VTK 620/698 (88.8%): E_S_WW_WM_622.vtk
+No-cluster nodes: 91998 / 507710 (18.12%)
+Multi-cluster nodes: 0 / 507710 (0.00%)
+2026-09-26 21:51:50 | INFO | Saved simulation 622: nodes=507710, segments=73, elapsed=42.9s
+2026-09-26 21:51:50 | INFO | Processing VTK 621/698 (89.0%): E_S_WW_WM_623.vtk
+No-cluster nodes: 89984 / 532255 (16.91%)
+Multi-cluster nodes: 0 / 532255 (0.00%)
+2026-09-26 21:52:35 | INFO | Saved simulation 623: nodes=532255, segments=71, elapsed=45.3s
+2026-09-26 21:52:35 | INFO | Processing VTK 622/698 (89.1%): E_S_WW_WM_624.vtk
+No-cluster nodes: 90568 / 506237 (17.89%)
+Multi-cluster nodes: 0 / 506237 (0.00%)
+2026-09-26 21:53:18 | INFO | Saved simulation 624: nodes=506237, segments=81, elapsed=43.2s
+2026-09-26 21:53:18 | INFO | Processing VTK 623/698 (89.3%): E_S_WW_WM_625.vtk
+No-cluster nodes: 90906 / 505831 (17.97%)
+Multi-cluster nodes: 0 / 505831 (0.00%)
+2026-09-26 21:54:01 | INFO | Saved simulation 625: nodes=505831, segments=67, elapsed=42.8s
+2026-09-26 21:54:01 | INFO | Processing VTK 624/698 (89.4%): E_S_WW_WM_626.vtk
+No-cluster nodes: 91250 / 513468 (17.77%)
+Multi-cluster nodes: 0 / 513468 (0.00%)
+2026-09-26 21:54:44 | INFO | Saved simulation 626: nodes=513468, segments=71, elapsed=43.5s
+2026-09-26 21:54:44 | INFO | Processing VTK 625/698 (89.5%): E_S_WW_WM_627.vtk
+No-cluster nodes: 90552 / 479321 (18.89%)
+Multi-cluster nodes: 0 / 479321 (0.00%)
+2026-09-26 21:55:25 | INFO | Saved simulation 627: nodes=479321, segments=77, elapsed=40.1s
+2026-09-26 21:55:25 | INFO | Processing VTK 626/698 (89.7%): E_S_WW_WM_628.vtk
+No-cluster nodes: 91046 / 503723 (18.07%)
+Multi-cluster nodes: 0 / 503723 (0.00%)
+2026-09-26 21:56:07 | INFO | Saved simulation 628: nodes=503723, segments=85, elapsed=42.5s
+2026-09-26 21:56:07 | INFO | Processing VTK 627/698 (89.8%): E_S_WW_WM_629.vtk
+No-cluster nodes: 93150 / 528591 (17.62%)
+Multi-cluster nodes: 0 / 528591 (0.00%)
+2026-09-26 21:56:52 | INFO | Saved simulation 629: nodes=528591, segments=73, elapsed=44.9s
+2026-09-26 21:56:52 | INFO | Processing VTK 628/698 (90.0%): E_S_WW_WM_630.vtk
+No-cluster nodes: 91436 / 510919 (17.90%)
+Multi-cluster nodes: 0 / 510919 (0.00%)
+2026-09-26 21:57:35 | INFO | Saved simulation 630: nodes=510919, segments=79, elapsed=43.4s
+2026-09-26 21:57:35 | INFO | Processing VTK 629/698 (90.1%): E_S_WW_WM_631.vtk
+No-cluster nodes: 92052 / 495163 (18.59%)
+Multi-cluster nodes: 0 / 495163 (0.00%)
+2026-09-26 21:58:17 | INFO | Saved simulation 631: nodes=495163, segments=75, elapsed=41.7s
+2026-09-26 21:58:17 | INFO | Processing VTK 630/698 (90.3%): E_S_WW_WM_632.vtk
+No-cluster nodes: 91304 / 482397 (18.93%)
+Multi-cluster nodes: 0 / 482397 (0.00%)
+2026-09-26 21:58:57 | INFO | Saved simulation 632: nodes=482397, segments=73, elapsed=40.4s
+2026-09-26 21:58:57 | INFO | Processing VTK 631/698 (90.4%): E_S_WW_WM_633.vtk
+No-cluster nodes: 90860 / 462607 (19.64%)
+Multi-cluster nodes: 0 / 462607 (0.00%)
+2026-09-26 21:59:36 | INFO | Saved simulation 633: nodes=462607, segments=91, elapsed=38.7s
+2026-09-26 21:59:36 | INFO | Processing VTK 632/698 (90.5%): E_S_WW_WM_634.vtk
+No-cluster nodes: 92078 / 485151 (18.98%)
+Multi-cluster nodes: 0 / 485151 (0.00%)
+2026-09-26 22:00:17 | INFO | Saved simulation 634: nodes=485151, segments=87, elapsed=40.5s
+2026-09-26 22:00:17 | INFO | Processing VTK 633/698 (90.7%): E_S_WW_WM_635.vtk
+No-cluster nodes: 92114 / 500094 (18.42%)
+Multi-cluster nodes: 0 / 500094 (0.00%)
+2026-09-26 22:00:59 | INFO | Saved simulation 635: nodes=500094, segments=75, elapsed=42.2s
+2026-09-26 22:00:59 | INFO | Processing VTK 634/698 (90.8%): E_S_WW_WM_636.vtk
+No-cluster nodes: 91812 / 505396 (18.17%)
+Multi-cluster nodes: 0 / 505396 (0.00%)
+2026-09-26 22:01:42 | INFO | Saved simulation 636: nodes=505396, segments=73, elapsed=42.9s
+2026-09-26 22:01:42 | INFO | Processing VTK 635/698 (91.0%): E_S_WW_WM_637.vtk
+No-cluster nodes: 91500 / 491436 (18.62%)
+Multi-cluster nodes: 0 / 491436 (0.00%)
+2026-09-26 22:02:23 | INFO | Saved simulation 637: nodes=491436, segments=79, elapsed=41.4s
+2026-09-26 22:02:23 | INFO | Processing VTK 636/698 (91.1%): E_S_WW_WM_638.vtk
+No-cluster nodes: 91666 / 498992 (18.37%)
+Multi-cluster nodes: 0 / 498992 (0.00%)
+2026-09-26 22:03:05 | INFO | Saved simulation 638: nodes=498992, segments=71, elapsed=42.2s
+2026-09-26 22:03:05 | INFO | Processing VTK 637/698 (91.3%): E_S_WW_WM_639.vtk
+No-cluster nodes: 91056 / 506242 (17.99%)
+Multi-cluster nodes: 0 / 506242 (0.00%)
+2026-09-26 22:03:48 | INFO | Saved simulation 639: nodes=506242, segments=93, elapsed=42.9s
+2026-09-26 22:03:48 | INFO | Processing VTK 638/698 (91.4%): E_S_WW_WM_640.vtk
+No-cluster nodes: 91648 / 528675 (17.34%)
+Multi-cluster nodes: 0 / 528675 (0.00%)
+2026-09-26 22:04:33 | INFO | Saved simulation 640: nodes=528675, segments=77, elapsed=45.1s
+2026-09-26 22:04:33 | INFO | Processing VTK 639/698 (91.5%): E_S_WW_WM_641.vtk
+No-cluster nodes: 90500 / 477046 (18.97%)
+Multi-cluster nodes: 0 / 477046 (0.00%)
+2026-09-26 22:05:14 | INFO | Saved simulation 641: nodes=477046, segments=87, elapsed=40.2s
+2026-09-26 22:05:14 | INFO | Processing VTK 640/698 (91.7%): E_S_WW_WM_642.vtk
+No-cluster nodes: 91972 / 485160 (18.96%)
+Multi-cluster nodes: 0 / 485160 (0.00%)
+2026-09-26 22:05:54 | INFO | Saved simulation 642: nodes=485160, segments=85, elapsed=40.8s
+2026-09-26 22:05:54 | INFO | Processing VTK 641/698 (91.8%): E_S_WW_WM_643.vtk
+No-cluster nodes: 90368 / 468847 (19.27%)
+Multi-cluster nodes: 0 / 468847 (0.00%)
+2026-09-26 22:06:34 | INFO | Saved simulation 643: nodes=468847, segments=85, elapsed=39.3s
+2026-09-26 22:06:34 | INFO | Processing VTK 642/698 (92.0%): E_S_WW_WM_644.vtk
+No-cluster nodes: 91922 / 534914 (17.18%)
+Multi-cluster nodes: 0 / 534914 (0.00%)
+2026-09-26 22:07:20 | INFO | Saved simulation 644: nodes=534914, segments=79, elapsed=45.9s
+2026-09-26 22:07:20 | INFO | Processing VTK 643/698 (92.1%): E_S_WW_WM_645.vtk
+No-cluster nodes: 93158 / 515166 (18.08%)
+Multi-cluster nodes: 0 / 515166 (0.00%)
+2026-09-26 22:08:03 | INFO | Saved simulation 645: nodes=515166, segments=77, elapsed=43.6s
+2026-09-26 22:08:03 | INFO | Processing VTK 644/698 (92.3%): E_S_WW_WM_646.vtk
+No-cluster nodes: 90778 / 513231 (17.69%)
+Multi-cluster nodes: 0 / 513231 (0.00%)
+2026-09-26 22:08:47 | INFO | Saved simulation 646: nodes=513231, segments=81, elapsed=43.6s
+2026-09-26 22:08:47 | INFO | Processing VTK 645/698 (92.4%): E_S_WW_WM_647.vtk
+No-cluster nodes: 92040 / 527774 (17.44%)
+Multi-cluster nodes: 0 / 527774 (0.00%)
+2026-09-26 22:09:32 | INFO | Saved simulation 647: nodes=527774, segments=77, elapsed=44.9s
+2026-09-26 22:09:32 | INFO | Processing VTK 646/698 (92.6%): E_S_WW_WM_648.vtk
+No-cluster nodes: 92248 / 487846 (18.91%)
+Multi-cluster nodes: 0 / 487846 (0.00%)
+2026-09-26 22:10:13 | INFO | Saved simulation 648: nodes=487846, segments=83, elapsed=40.9s
+2026-09-26 22:10:13 | INFO | Processing VTK 647/698 (92.7%): E_S_WW_WM_649.vtk
+No-cluster nodes: 90718 / 466866 (19.43%)
+Multi-cluster nodes: 0 / 466866 (0.00%)
+2026-09-26 22:10:52 | INFO | Saved simulation 649: nodes=466866, segments=83, elapsed=39.0s
+2026-09-26 22:10:52 | INFO | Processing VTK 648/698 (92.8%): E_S_WW_WM_650.vtk
+No-cluster nodes: 92310 / 476057 (19.39%)
+Multi-cluster nodes: 0 / 476057 (0.00%)
+2026-09-26 22:11:31 | INFO | Saved simulation 650: nodes=476057, segments=73, elapsed=39.8s
+2026-09-26 22:11:31 | INFO | Processing VTK 649/698 (93.0%): E_S_WW_WM_651.vtk
+No-cluster nodes: 91908 / 509778 (18.03%)
+Multi-cluster nodes: 0 / 509778 (0.00%)
+2026-09-26 22:12:15 | INFO | Saved simulation 651: nodes=509778, segments=85, elapsed=43.4s
+2026-09-26 22:12:15 | INFO | Processing VTK 650/698 (93.1%): E_S_WW_WM_652.vtk
+No-cluster nodes: 90450 / 496097 (18.23%)
+Multi-cluster nodes: 0 / 496097 (0.00%)
+2026-09-26 22:12:57 | INFO | Saved simulation 652: nodes=496097, segments=91, elapsed=42.2s
+2026-09-26 22:12:57 | INFO | Processing VTK 651/698 (93.3%): E_S_WW_WM_653.vtk
+No-cluster nodes: 91380 / 517440 (17.66%)
+Multi-cluster nodes: 0 / 517440 (0.00%)
+2026-09-26 22:13:41 | INFO | Saved simulation 653: nodes=517440, segments=75, elapsed=43.9s
+2026-09-26 22:13:41 | INFO | Processing VTK 652/698 (93.4%): E_S_WW_WM_654.vtk
+No-cluster nodes: 91284 / 490202 (18.62%)
+Multi-cluster nodes: 0 / 490202 (0.00%)
+2026-09-26 22:14:22 | INFO | Saved simulation 654: nodes=490202, segments=85, elapsed=41.3s
+2026-09-26 22:14:22 | INFO | Processing VTK 653/698 (93.6%): E_S_WW_WM_655.vtk
+No-cluster nodes: 91080 / 471472 (19.32%)
+Multi-cluster nodes: 0 / 471472 (0.00%)
+2026-09-26 22:15:02 | INFO | Saved simulation 655: nodes=471472, segments=71, elapsed=39.5s
+2026-09-26 22:15:02 | INFO | Processing VTK 654/698 (93.7%): E_S_WW_WM_656.vtk
+No-cluster nodes: 91768 / 551531 (16.64%)
+Multi-cluster nodes: 0 / 551531 (0.00%)
+2026-09-26 22:15:49 | INFO | Saved simulation 656: nodes=551531, segments=79, elapsed=47.3s
+2026-09-26 22:15:49 | INFO | Processing VTK 655/698 (93.8%): E_S_WW_WM_657.vtk
+No-cluster nodes: 90742 / 504501 (17.99%)
+Multi-cluster nodes: 0 / 504501 (0.00%)
+2026-09-26 22:16:32 | INFO | Saved simulation 657: nodes=504501, segments=77, elapsed=42.6s
+2026-09-26 22:16:32 | INFO | Processing VTK 656/698 (94.0%): E_S_WW_WM_658.vtk
+No-cluster nodes: 90892 / 513303 (17.71%)
+Multi-cluster nodes: 0 / 513303 (0.00%)
+2026-09-26 22:17:17 | INFO | Saved simulation 658: nodes=513303, segments=67, elapsed=45.1s
+2026-09-26 22:17:17 | INFO | Processing VTK 657/698 (94.1%): E_S_WW_WM_659.vtk
+No-cluster nodes: 90472 / 504367 (17.94%)
+Multi-cluster nodes: 0 / 504367 (0.00%)
+2026-09-26 22:18:00 | INFO | Saved simulation 659: nodes=504367, segments=85, elapsed=42.8s
+2026-09-26 22:18:00 | INFO | Processing VTK 658/698 (94.3%): E_S_WW_WM_660.vtk
+No-cluster nodes: 92880 / 537936 (17.27%)
+Multi-cluster nodes: 0 / 537936 (0.00%)
+2026-09-26 22:18:46 | INFO | Saved simulation 660: nodes=537936, segments=83, elapsed=46.0s
+2026-09-26 22:18:46 | INFO | Processing VTK 659/698 (94.4%): E_S_WW_WM_661.vtk
+No-cluster nodes: 91104 / 502574 (18.13%)
+Multi-cluster nodes: 0 / 502574 (0.00%)
+2026-09-26 22:19:28 | INFO | Saved simulation 661: nodes=502574, segments=81, elapsed=42.5s
+2026-09-26 22:19:28 | INFO | Processing VTK 660/698 (94.6%): E_S_WW_WM_662.vtk
+No-cluster nodes: 92496 / 545674 (16.95%)
+Multi-cluster nodes: 0 / 545674 (0.00%)
+2026-09-26 22:20:15 | INFO | Saved simulation 662: nodes=545674, segments=81, elapsed=46.9s
+2026-09-26 22:20:15 | INFO | Processing VTK 661/698 (94.7%): E_S_WW_WM_663.vtk
+No-cluster nodes: 92390 / 480647 (19.22%)
+Multi-cluster nodes: 0 / 480647 (0.00%)
+2026-09-26 22:20:56 | INFO | Saved simulation 663: nodes=480647, segments=95, elapsed=40.7s
+2026-09-26 22:20:56 | INFO | Processing VTK 662/698 (94.8%): E_S_WW_WM_664.vtk
+No-cluster nodes: 90724 / 476685 (19.03%)
+Multi-cluster nodes: 0 / 476685 (0.00%)
+2026-09-26 22:21:36 | INFO | Saved simulation 664: nodes=476685, segments=75, elapsed=40.1s
+2026-09-26 22:21:36 | INFO | Processing VTK 663/698 (95.0%): E_S_WW_WM_665.vtk
+No-cluster nodes: 91382 / 475465 (19.22%)
+Multi-cluster nodes: 0 / 475465 (0.00%)
+2026-09-26 22:22:16 | INFO | Saved simulation 665: nodes=475465, segments=79, elapsed=39.9s
+2026-09-26 22:22:16 | INFO | Processing VTK 664/698 (95.1%): E_S_WW_WM_666.vtk
+No-cluster nodes: 92652 / 517648 (17.90%)
+Multi-cluster nodes: 0 / 517648 (0.00%)
+2026-09-26 22:23:00 | INFO | Saved simulation 666: nodes=517648, segments=73, elapsed=43.9s
+2026-09-26 22:23:00 | INFO | Processing VTK 665/698 (95.3%): E_S_WW_WM_667.vtk
+No-cluster nodes: 90814 / 460273 (19.73%)
+Multi-cluster nodes: 0 / 460273 (0.00%)
+2026-09-26 22:23:38 | INFO | Saved simulation 667: nodes=460273, segments=81, elapsed=38.8s
+2026-09-26 22:23:38 | INFO | Processing VTK 666/698 (95.4%): E_S_WW_WM_668.vtk
+No-cluster nodes: 89832 / 473802 (18.96%)
+Multi-cluster nodes: 0 / 473802 (0.00%)
+2026-09-26 22:24:18 | INFO | Saved simulation 668: nodes=473802, segments=69, elapsed=39.7s
+2026-09-26 22:24:18 | INFO | Processing VTK 667/698 (95.6%): E_S_WW_WM_669.vtk
+No-cluster nodes: 90250 / 453203 (19.91%)
+Multi-cluster nodes: 0 / 453203 (0.00%)
+2026-09-26 22:24:56 | INFO | Saved simulation 669: nodes=453203, segments=83, elapsed=38.1s
+2026-09-26 22:24:56 | INFO | Processing VTK 668/698 (95.7%): E_S_WW_WM_670.vtk
+No-cluster nodes: 92956 / 540771 (17.19%)
+Multi-cluster nodes: 0 / 540771 (0.00%)
+2026-09-26 22:25:43 | INFO | Saved simulation 670: nodes=540771, segments=79, elapsed=46.4s
+2026-09-26 22:25:43 | INFO | Processing VTK 669/698 (95.8%): E_S_WW_WM_671.vtk
+No-cluster nodes: 91850 / 480700 (19.11%)
+Multi-cluster nodes: 0 / 480700 (0.00%)
+2026-09-26 22:26:23 | INFO | Saved simulation 671: nodes=480700, segments=89, elapsed=40.7s
+2026-09-26 22:26:23 | INFO | Processing VTK 670/698 (96.0%): E_S_WW_WM_672.vtk
+No-cluster nodes: 91146 / 475179 (19.18%)
+Multi-cluster nodes: 0 / 475179 (0.00%)
+2026-09-26 22:27:03 | INFO | Saved simulation 672: nodes=475179, segments=73, elapsed=39.7s
+2026-09-26 22:27:03 | INFO | Processing VTK 671/698 (96.1%): E_S_WW_WM_673.vtk
+No-cluster nodes: 91936 / 545483 (16.85%)
+Multi-cluster nodes: 0 / 545483 (0.00%)
+2026-09-26 22:27:50 | INFO | Saved simulation 673: nodes=545483, segments=71, elapsed=47.0s
+2026-09-26 22:27:50 | INFO | Processing VTK 672/698 (96.3%): E_S_WW_WM_674.vtk
+No-cluster nodes: 92144 / 486095 (18.96%)
+Multi-cluster nodes: 0 / 486095 (0.00%)
+2026-09-26 22:28:31 | INFO | Saved simulation 674: nodes=486095, segments=89, elapsed=40.9s
+2026-09-26 22:28:31 | INFO | Processing VTK 673/698 (96.4%): E_S_WW_WM_675.vtk
+No-cluster nodes: 91266 / 482294 (18.92%)
+Multi-cluster nodes: 0 / 482294 (0.00%)
+2026-09-26 22:29:11 | INFO | Saved simulation 675: nodes=482294, segments=77, elapsed=40.4s
+2026-09-26 22:29:11 | INFO | Processing VTK 674/698 (96.6%): E_S_WW_WM_676.vtk
+No-cluster nodes: 92148 / 501347 (18.38%)
+Multi-cluster nodes: 0 / 501347 (0.00%)
+2026-09-26 22:29:54 | INFO | Saved simulation 676: nodes=501347, segments=83, elapsed=42.3s
+2026-09-26 22:29:54 | INFO | Processing VTK 675/698 (96.7%): E_S_WW_WM_677.vtk
+No-cluster nodes: 90224 / 456776 (19.75%)
+Multi-cluster nodes: 0 / 456776 (0.00%)
+2026-09-26 22:30:32 | INFO | Saved simulation 677: nodes=456776, segments=81, elapsed=38.1s
+2026-09-26 22:30:32 | INFO | Processing VTK 676/698 (96.8%): E_S_WW_WM_678.vtk
+No-cluster nodes: 91786 / 529457 (17.34%)
+Multi-cluster nodes: 0 / 529457 (0.00%)
+2026-09-26 22:31:17 | INFO | Saved simulation 678: nodes=529457, segments=77, elapsed=45.4s
+2026-09-26 22:31:17 | INFO | Processing VTK 677/698 (97.0%): E_S_WW_WM_679.vtk
+No-cluster nodes: 91324 / 532494 (17.15%)
+Multi-cluster nodes: 0 / 532494 (0.00%)
+2026-09-26 22:32:03 | INFO | Saved simulation 679: nodes=532494, segments=77, elapsed=45.5s
+2026-09-26 22:32:03 | INFO | Processing VTK 678/698 (97.1%): E_S_WW_WM_680.vtk
+No-cluster nodes: 89638 / 506207 (17.71%)
+Multi-cluster nodes: 0 / 506207 (0.00%)
+2026-09-26 22:32:46 | INFO | Saved simulation 680: nodes=506207, segments=83, elapsed=43.0s
+2026-09-26 22:32:46 | INFO | Processing VTK 679/698 (97.3%): E_S_WW_WM_681.vtk
+No-cluster nodes: 91338 / 525829 (17.37%)
+Multi-cluster nodes: 0 / 525829 (0.00%)
+2026-09-26 22:33:31 | INFO | Saved simulation 681: nodes=525829, segments=77, elapsed=44.9s
+2026-09-26 22:33:31 | INFO | Processing VTK 680/698 (97.4%): E_S_WW_WM_682.vtk
+No-cluster nodes: 90602 / 488378 (18.55%)
+Multi-cluster nodes: 0 / 488378 (0.00%)
+2026-09-26 22:34:12 | INFO | Saved simulation 682: nodes=488378, segments=83, elapsed=41.4s
+2026-09-26 22:34:12 | INFO | Processing VTK 681/698 (97.6%): E_S_WW_WM_683.vtk
+No-cluster nodes: 91838 / 498820 (18.41%)
+Multi-cluster nodes: 0 / 498820 (0.00%)
+2026-09-26 22:34:54 | INFO | Saved simulation 683: nodes=498820, segments=93, elapsed=42.4s
+2026-09-26 22:34:54 | INFO | Processing VTK 682/698 (97.7%): E_S_WW_WM_684.vtk
+No-cluster nodes: 90190 / 487254 (18.51%)
+Multi-cluster nodes: 0 / 487254 (0.00%)
+2026-09-26 22:35:36 | INFO | Saved simulation 684: nodes=487254, segments=87, elapsed=41.2s
+2026-09-26 22:35:36 | INFO | Processing VTK 683/698 (97.9%): E_S_WW_WM_685.vtk
+No-cluster nodes: 92440 / 531165 (17.40%)
+Multi-cluster nodes: 0 / 531165 (0.00%)
+2026-09-26 22:36:21 | INFO | Saved simulation 685: nodes=531165, segments=75, elapsed=45.3s
+2026-09-26 22:36:21 | INFO | Processing VTK 684/698 (98.0%): E_S_WW_WM_686.vtk
+No-cluster nodes: 92260 / 517179 (17.84%)
+Multi-cluster nodes: 0 / 517179 (0.00%)
+2026-09-26 22:37:05 | INFO | Saved simulation 686: nodes=517179, segments=75, elapsed=44.5s
+2026-09-26 22:37:05 | INFO | Processing VTK 685/698 (98.1%): E_S_WW_WM_687.vtk
+No-cluster nodes: 91022 / 467093 (19.49%)
+Multi-cluster nodes: 0 / 467093 (0.00%)
+2026-09-26 22:37:45 | INFO | Saved simulation 687: nodes=467093, segments=67, elapsed=39.4s
+2026-09-26 22:37:45 | INFO | Processing VTK 686/698 (98.3%): E_S_WW_WM_688.vtk
+No-cluster nodes: 92130 / 534396 (17.24%)
+Multi-cluster nodes: 0 / 534396 (0.00%)
+2026-09-26 22:38:30 | INFO | Saved simulation 688: nodes=534396, segments=59, elapsed=45.7s
+2026-09-26 22:38:30 | INFO | Processing VTK 687/698 (98.4%): E_S_WW_WM_689.vtk
+No-cluster nodes: 90424 / 484626 (18.66%)
+Multi-cluster nodes: 0 / 484626 (0.00%)
+2026-09-26 22:39:11 | INFO | Saved simulation 689: nodes=484626, segments=89, elapsed=41.0s
+2026-09-26 22:39:11 | INFO | Processing VTK 688/698 (98.6%): E_S_WW_WM_690.vtk
+No-cluster nodes: 90918 / 489499 (18.57%)
+Multi-cluster nodes: 0 / 489499 (0.00%)
+2026-09-26 22:39:53 | INFO | Saved simulation 690: nodes=489499, segments=77, elapsed=41.3s
+2026-09-26 22:39:53 | INFO | Processing VTK 689/698 (98.7%): E_S_WW_WM_691.vtk
+No-cluster nodes: 91290 / 516191 (17.69%)
+Multi-cluster nodes: 0 / 516191 (0.00%)
+2026-09-26 22:40:37 | INFO | Saved simulation 691: nodes=516191, segments=83, elapsed=44.2s
+2026-09-26 22:40:37 | INFO | Processing VTK 690/698 (98.9%): E_S_WW_WM_692.vtk
+No-cluster nodes: 90912 / 533294 (17.05%)
+Multi-cluster nodes: 0 / 533294 (0.00%)
+2026-09-26 22:41:22 | INFO | Saved simulation 692: nodes=533294, segments=69, elapsed=45.6s
+2026-09-26 22:41:22 | INFO | Processing VTK 691/698 (99.0%): E_S_WW_WM_693.vtk
+No-cluster nodes: 91876 / 510334 (18.00%)
+Multi-cluster nodes: 0 / 510334 (0.00%)
+2026-09-26 22:42:06 | INFO | Saved simulation 693: nodes=510334, segments=69, elapsed=43.6s
+2026-09-26 22:42:06 | INFO | Processing VTK 692/698 (99.1%): E_S_WW_WM_694.vtk
+No-cluster nodes: 91444 / 535409 (17.08%)
+Multi-cluster nodes: 0 / 535409 (0.00%)
+2026-09-26 22:42:52 | INFO | Saved simulation 694: nodes=535409, segments=71, elapsed=45.7s
+2026-09-26 22:42:52 | INFO | Processing VTK 693/698 (99.3%): E_S_WW_WM_695.vtk
+No-cluster nodes: 92254 / 500480 (18.43%)
+Multi-cluster nodes: 0 / 500480 (0.00%)
+2026-09-26 22:43:34 | INFO | Saved simulation 695: nodes=500480, segments=83, elapsed=42.2s
+2026-09-26 22:43:34 | INFO | Processing VTK 694/698 (99.4%): E_S_WW_WM_696.vtk
+No-cluster nodes: 90280 / 477325 (18.91%)
+Multi-cluster nodes: 0 / 477325 (0.00%)
+2026-09-26 22:44:14 | INFO | Saved simulation 696: nodes=477325, segments=83, elapsed=40.2s
+2026-09-26 22:44:14 | INFO | Processing VTK 695/698 (99.6%): E_S_WW_WM_697.vtk
+No-cluster nodes: 91516 / 496912 (18.42%)
+Multi-cluster nodes: 0 / 496912 (0.00%)
+2026-09-26 22:44:56 | INFO | Saved simulation 697: nodes=496912, segments=73, elapsed=42.1s
+2026-09-26 22:44:56 | INFO | Processing VTK 696/698 (99.7%): E_S_WW_WM_698.vtk
+No-cluster nodes: 91948 / 506374 (18.16%)
+Multi-cluster nodes: 0 / 506374 (0.00%)
+2026-09-26 22:45:39 | INFO | Saved simulation 698: nodes=506374, segments=85, elapsed=43.1s
+2026-09-26 22:45:39 | INFO | Processing VTK 697/698 (99.9%): E_S_WW_WM_699.vtk
+No-cluster nodes: 91828 / 506592 (18.13%)
+Multi-cluster nodes: 0 / 506592 (0.00%)
+2026-09-26 22:46:22 | INFO | Saved simulation 699: nodes=506592, segments=75, elapsed=42.9s
+2026-09-26 22:46:22 | INFO | Processing VTK 698/698 (100.0%): E_S_WW_WM_700.vtk
+No-cluster nodes: 91514 / 495063 (18.49%)
+Multi-cluster nodes: 0 / 495063 (0.00%)
+2026-09-26 22:47:04 | INFO | Saved simulation 700: nodes=495063, segments=75, elapsed=41.8s
+2026-09-26 22:47:04 | INFO | Finished VTK conversion: 698 files in 29623.5s
+2026-09-26 22:47:04 | INFO | Computing global statistics values for normalization...
+2026-09-26 22:47:04 | INFO | Loading 698 pickle files to compute global statistics...
+2026-09-26 22:47:04 | INFO | Statistics loading progress: 1/698 (0.1%)
+2026-09-26 22:47:04 | INFO | Statistics loading progress: 6/698 (0.9%)
+2026-09-26 22:47:04 | INFO | Statistics loading progress: 12/698 (1.7%)
+2026-09-26 22:47:04 | INFO | Statistics loading progress: 18/698 (2.6%)
+2026-09-26 22:47:04 | INFO | Statistics loading progress: 24/698 (3.4%)
+2026-09-26 22:47:04 | INFO | Statistics loading progress: 30/698 (4.3%)
+2026-09-26 22:47:04 | INFO | Statistics loading progress: 36/698 (5.2%)
+2026-09-26 22:47:04 | INFO | Statistics loading progress: 42/698 (6.0%)
+2026-09-26 22:47:04 | INFO | Statistics loading progress: 48/698 (6.9%)
+2026-09-26 22:47:04 | INFO | Statistics loading progress: 54/698 (7.7%)
+2026-09-26 22:47:04 | INFO | Statistics loading progress: 60/698 (8.6%)
+2026-09-26 22:47:05 | INFO | Statistics loading progress: 66/698 (9.5%)
+2026-09-26 22:47:05 | INFO | Statistics loading progress: 72/698 (10.3%)
+2026-09-26 22:47:05 | INFO | Statistics loading progress: 78/698 (11.2%)
+2026-09-26 22:47:05 | INFO | Statistics loading progress: 84/698 (12.0%)
+2026-09-26 22:47:05 | INFO | Statistics loading progress: 90/698 (12.9%)
+2026-09-26 22:47:05 | INFO | Statistics loading progress: 96/698 (13.8%)
+2026-09-26 22:47:05 | INFO | Statistics loading progress: 102/698 (14.6%)
+2026-09-26 22:47:05 | INFO | Statistics loading progress: 108/698 (15.5%)
+2026-09-26 22:47:05 | INFO | Statistics loading progress: 114/698 (16.3%)
+2026-09-26 22:47:05 | INFO | Statistics loading progress: 120/698 (17.2%)
+2026-09-26 22:47:05 | INFO | Statistics loading progress: 126/698 (18.1%)
+2026-09-26 22:47:05 | INFO | Statistics loading progress: 132/698 (18.9%)
+2026-09-26 22:47:05 | INFO | Statistics loading progress: 138/698 (19.8%)
+2026-09-26 22:47:05 | INFO | Statistics loading progress: 144/698 (20.6%)
+2026-09-26 22:47:05 | INFO | Statistics loading progress: 150/698 (21.5%)
+2026-09-26 22:47:05 | INFO | Statistics loading progress: 156/698 (22.3%)
+2026-09-26 22:47:05 | INFO | Statistics loading progress: 162/698 (23.2%)
+2026-09-26 22:47:05 | INFO | Statistics loading progress: 168/698 (24.1%)
+2026-09-26 22:47:05 | INFO | Statistics loading progress: 174/698 (24.9%)
+2026-09-26 22:47:06 | INFO | Statistics loading progress: 180/698 (25.8%)
+2026-09-26 22:47:06 | INFO | Statistics loading progress: 186/698 (26.6%)
+2026-09-26 22:47:06 | INFO | Statistics loading progress: 192/698 (27.5%)
+2026-09-26 22:47:06 | INFO | Statistics loading progress: 198/698 (28.4%)
+2026-09-26 22:47:06 | INFO | Statistics loading progress: 204/698 (29.2%)
+2026-09-26 22:47:06 | INFO | Statistics loading progress: 210/698 (30.1%)
+2026-09-26 22:47:06 | INFO | Statistics loading progress: 216/698 (30.9%)
+2026-09-26 22:47:06 | INFO | Statistics loading progress: 222/698 (31.8%)
+2026-09-26 22:47:06 | INFO | Statistics loading progress: 228/698 (32.7%)
+2026-09-26 22:47:06 | INFO | Statistics loading progress: 234/698 (33.5%)
+2026-09-26 22:47:06 | INFO | Statistics loading progress: 240/698 (34.4%)
+2026-09-26 22:47:06 | INFO | Statistics loading progress: 246/698 (35.2%)
+2026-09-26 22:47:06 | INFO | Statistics loading progress: 252/698 (36.1%)
+2026-09-26 22:47:06 | INFO | Statistics loading progress: 258/698 (37.0%)
+2026-09-26 22:47:06 | INFO | Statistics loading progress: 264/698 (37.8%)
+2026-09-26 22:47:06 | INFO | Statistics loading progress: 270/698 (38.7%)
+2026-09-26 22:47:06 | INFO | Statistics loading progress: 276/698 (39.5%)
+2026-09-26 22:47:06 | INFO | Statistics loading progress: 282/698 (40.4%)
+2026-09-26 22:47:07 | INFO | Statistics loading progress: 288/698 (41.3%)
+2026-09-26 22:47:07 | INFO | Statistics loading progress: 294/698 (42.1%)
+2026-09-26 22:47:07 | INFO | Statistics loading progress: 300/698 (43.0%)
+2026-09-26 22:47:07 | INFO | Statistics loading progress: 306/698 (43.8%)
+2026-09-26 22:47:07 | INFO | Statistics loading progress: 312/698 (44.7%)
+2026-09-26 22:47:07 | INFO | Statistics loading progress: 318/698 (45.6%)
+2026-09-26 22:47:07 | INFO | Statistics loading progress: 324/698 (46.4%)
+2026-09-26 22:47:07 | INFO | Statistics loading progress: 330/698 (47.3%)
+2026-09-26 22:47:07 | INFO | Statistics loading progress: 336/698 (48.1%)
+2026-09-26 22:47:07 | INFO | Statistics loading progress: 342/698 (49.0%)
+2026-09-26 22:47:07 | INFO | Statistics loading progress: 348/698 (49.9%)
+2026-09-26 22:47:07 | INFO | Statistics loading progress: 354/698 (50.7%)
+2026-09-26 22:47:07 | INFO | Statistics loading progress: 360/698 (51.6%)
+2026-09-26 22:47:07 | INFO | Statistics loading progress: 366/698 (52.4%)
+2026-09-26 22:47:07 | INFO | Statistics loading progress: 372/698 (53.3%)
+2026-09-26 22:47:07 | INFO | Statistics loading progress: 378/698 (54.2%)
+2026-09-26 22:47:07 | INFO | Statistics loading progress: 384/698 (55.0%)
+2026-09-26 22:47:08 | INFO | Statistics loading progress: 390/698 (55.9%)
+2026-09-26 22:47:08 | INFO | Statistics loading progress: 396/698 (56.7%)
+2026-09-26 22:47:08 | INFO | Statistics loading progress: 402/698 (57.6%)
+2026-09-26 22:47:08 | INFO | Statistics loading progress: 408/698 (58.5%)
+2026-09-26 22:47:08 | INFO | Statistics loading progress: 414/698 (59.3%)
+2026-09-26 22:47:08 | INFO | Statistics loading progress: 420/698 (60.2%)
+2026-09-26 22:47:08 | INFO | Statistics loading progress: 426/698 (61.0%)
+2026-09-26 22:47:08 | INFO | Statistics loading progress: 432/698 (61.9%)
+2026-09-26 22:47:08 | INFO | Statistics loading progress: 438/698 (62.8%)
+2026-09-26 22:47:08 | INFO | Statistics loading progress: 444/698 (63.6%)
+2026-09-26 22:47:08 | INFO | Statistics loading progress: 450/698 (64.5%)
+2026-09-26 22:47:08 | INFO | Statistics loading progress: 456/698 (65.3%)
+2026-09-26 22:47:08 | INFO | Statistics loading progress: 462/698 (66.2%)
+2026-09-26 22:47:08 | INFO | Statistics loading progress: 468/698 (67.0%)
+2026-09-26 22:47:08 | INFO | Statistics loading progress: 474/698 (67.9%)
+2026-09-26 22:47:08 | INFO | Statistics loading progress: 480/698 (68.8%)
+2026-09-26 22:47:08 | INFO | Statistics loading progress: 486/698 (69.6%)
+2026-09-26 22:47:09 | INFO | Statistics loading progress: 492/698 (70.5%)
+2026-09-26 22:47:09 | INFO | Statistics loading progress: 498/698 (71.3%)
+2026-09-26 22:47:09 | INFO | Statistics loading progress: 504/698 (72.2%)
+2026-09-26 22:47:09 | INFO | Statistics loading progress: 510/698 (73.1%)
+2026-09-26 22:47:09 | INFO | Statistics loading progress: 516/698 (73.9%)
+2026-09-26 22:47:09 | INFO | Statistics loading progress: 522/698 (74.8%)
+2026-09-26 22:47:09 | INFO | Statistics loading progress: 528/698 (75.6%)
+2026-09-26 22:47:09 | INFO | Statistics loading progress: 534/698 (76.5%)
+2026-09-26 22:47:09 | INFO | Statistics loading progress: 540/698 (77.4%)
+2026-09-26 22:47:09 | INFO | Statistics loading progress: 546/698 (78.2%)
+2026-09-26 22:47:09 | INFO | Statistics loading progress: 552/698 (79.1%)
+2026-09-26 22:47:09 | INFO | Statistics loading progress: 558/698 (79.9%)
+2026-09-26 22:47:09 | INFO | Statistics loading progress: 564/698 (80.8%)
+2026-09-26 22:47:09 | INFO | Statistics loading progress: 570/698 (81.7%)
+2026-09-26 22:47:09 | INFO | Statistics loading progress: 576/698 (82.5%)
+2026-09-26 22:47:09 | INFO | Statistics loading progress: 582/698 (83.4%)
+2026-09-26 22:47:09 | INFO | Statistics loading progress: 588/698 (84.2%)
+2026-09-26 22:47:09 | INFO | Statistics loading progress: 594/698 (85.1%)
+2026-09-26 22:47:10 | INFO | Statistics loading progress: 600/698 (86.0%)
+2026-09-26 22:47:10 | INFO | Statistics loading progress: 606/698 (86.8%)
+2026-09-26 22:47:10 | INFO | Statistics loading progress: 612/698 (87.7%)
+2026-09-26 22:47:10 | INFO | Statistics loading progress: 618/698 (88.5%)
+2026-09-26 22:47:10 | INFO | Statistics loading progress: 624/698 (89.4%)
+2026-09-26 22:47:10 | INFO | Statistics loading progress: 630/698 (90.3%)
+2026-09-26 22:47:10 | INFO | Statistics loading progress: 636/698 (91.1%)
+2026-09-26 22:47:10 | INFO | Statistics loading progress: 642/698 (92.0%)
+2026-09-26 22:47:10 | INFO | Statistics loading progress: 648/698 (92.8%)
+2026-09-26 22:47:10 | INFO | Statistics loading progress: 654/698 (93.7%)
+2026-09-26 22:47:10 | INFO | Statistics loading progress: 660/698 (94.6%)
+2026-09-26 22:47:10 | INFO | Statistics loading progress: 666/698 (95.4%)
+2026-09-26 22:47:10 | INFO | Statistics loading progress: 672/698 (96.3%)
+2026-09-26 22:47:10 | INFO | Statistics loading progress: 678/698 (97.1%)
+2026-09-26 22:47:10 | INFO | Statistics loading progress: 684/698 (98.0%)
+2026-09-26 22:47:10 | INFO | Statistics loading progress: 690/698 (98.9%)
+2026-09-26 22:47:10 | INFO | Statistics loading progress: 696/698 (99.7%)
+2026-09-26 22:47:10 | INFO | Statistics loading progress: 698/698 (100.0%)
+2026-09-26 22:47:40 | INFO | Computed global statistics in 35.4s.
+2026-09-26 22:47:40 | INFO | Normalization scalars saved to /data/zhangbojun/DrivAerNet++_dataset/PressureVTK/E_S_WW_WM/pklFile/normalization_scalars.pkl
+2026-09-26 22:47:40 | INFO | Applying normalization...
+2026-09-26 22:47:40 | INFO | Normalization progress: 1/699 (0.1%)
+2026-09-26 22:47:40 | INFO | Normalization progress: 6/699 (0.9%)
+2026-09-26 22:47:41 | INFO | Normalization progress: 12/699 (1.7%)
+2026-09-26 22:47:42 | INFO | Normalization progress: 18/699 (2.6%)
+2026-09-26 22:47:42 | INFO | Normalization progress: 24/699 (3.4%)
+2026-09-26 22:47:43 | INFO | Normalization progress: 30/699 (4.3%)
+2026-09-26 22:47:43 | INFO | Normalization progress: 36/699 (5.2%)
+2026-09-26 22:47:44 | INFO | Normalization progress: 42/699 (6.0%)
+2026-09-26 22:47:45 | INFO | Normalization progress: 48/699 (6.9%)
+2026-09-26 22:47:45 | INFO | Normalization progress: 54/699 (7.7%)
+2026-09-26 22:47:46 | INFO | Normalization progress: 60/699 (8.6%)
+2026-09-26 22:47:46 | INFO | Normalization progress: 66/699 (9.4%)
+2026-09-26 22:47:47 | INFO | Normalization progress: 72/699 (10.3%)
+2026-09-26 22:47:48 | INFO | Normalization progress: 78/699 (11.2%)
+2026-09-26 22:47:48 | INFO | Normalization progress: 84/699 (12.0%)
+2026-09-26 22:47:49 | INFO | Normalization progress: 90/699 (12.9%)
+2026-09-26 22:47:49 | INFO | Normalization progress: 96/699 (13.7%)
+2026-09-26 22:47:50 | INFO | Normalization progress: 102/699 (14.6%)
+2026-09-26 22:47:51 | INFO | Normalization progress: 108/699 (15.5%)
+2026-09-26 22:47:51 | INFO | Normalization progress: 114/699 (16.3%)
+2026-09-26 22:47:52 | INFO | Normalization progress: 120/699 (17.2%)
+2026-09-26 22:47:52 | INFO | Normalization progress: 126/699 (18.0%)
+2026-09-26 22:47:53 | INFO | Normalization progress: 132/699 (18.9%)
+2026-09-26 22:47:54 | INFO | Normalization progress: 138/699 (19.7%)
+2026-09-26 22:47:54 | INFO | Normalization progress: 144/699 (20.6%)
+2026-09-26 22:47:55 | INFO | Normalization progress: 150/699 (21.5%)
+2026-09-26 22:47:55 | INFO | Normalization progress: 156/699 (22.3%)
+2026-09-26 22:47:56 | INFO | Normalization progress: 162/699 (23.2%)
+2026-09-26 22:47:57 | INFO | Normalization progress: 168/699 (24.0%)
+2026-09-26 22:47:57 | INFO | Normalization progress: 174/699 (24.9%)
+2026-09-26 22:47:58 | INFO | Normalization progress: 180/699 (25.8%)
+2026-09-26 22:47:58 | INFO | Normalization progress: 186/699 (26.6%)
+2026-09-26 22:47:59 | INFO | Normalization progress: 192/699 (27.5%)
+2026-09-26 22:48:00 | INFO | Normalization progress: 198/699 (28.3%)
+2026-09-26 22:48:00 | INFO | Normalization progress: 204/699 (29.2%)
+2026-09-26 22:48:01 | INFO | Normalization progress: 210/699 (30.0%)
+2026-09-26 22:48:02 | INFO | Normalization progress: 216/699 (30.9%)
+2026-09-26 22:48:02 | INFO | Normalization progress: 222/699 (31.8%)
+2026-09-26 22:48:03 | INFO | Normalization progress: 228/699 (32.6%)
+2026-09-26 22:48:03 | INFO | Normalization progress: 234/699 (33.5%)
+2026-09-26 22:48:04 | INFO | Normalization progress: 240/699 (34.3%)
+2026-09-26 22:48:05 | INFO | Normalization progress: 246/699 (35.2%)
+2026-09-26 22:48:05 | INFO | Normalization progress: 252/699 (36.1%)
+2026-09-26 22:48:06 | INFO | Normalization progress: 258/699 (36.9%)
+2026-09-26 22:48:06 | INFO | Normalization progress: 264/699 (37.8%)
+2026-09-26 22:48:07 | INFO | Normalization progress: 270/699 (38.6%)
+2026-09-26 22:48:08 | INFO | Normalization progress: 276/699 (39.5%)
+2026-09-26 22:48:08 | INFO | Normalization progress: 282/699 (40.3%)
+2026-09-26 22:48:09 | INFO | Normalization progress: 288/699 (41.2%)
+2026-09-26 22:48:10 | INFO | Normalization progress: 294/699 (42.1%)
+2026-09-26 22:48:10 | INFO | Normalization progress: 300/699 (42.9%)
+2026-09-26 22:48:11 | INFO | Normalization progress: 306/699 (43.8%)
+2026-09-26 22:48:11 | INFO | Normalization progress: 312/699 (44.6%)
+2026-09-26 22:48:12 | INFO | Normalization progress: 318/699 (45.5%)
+2026-09-26 22:48:13 | INFO | Normalization progress: 324/699 (46.4%)
+2026-09-26 22:48:13 | INFO | Normalization progress: 330/699 (47.2%)
+2026-09-26 22:48:14 | INFO | Normalization progress: 336/699 (48.1%)
+2026-09-26 22:48:14 | INFO | Normalization progress: 342/699 (48.9%)
+2026-09-26 22:48:15 | INFO | Normalization progress: 348/699 (49.8%)
+2026-09-26 22:48:15 | INFO | Normalization progress: 354/699 (50.6%)
+2026-09-26 22:48:16 | INFO | Normalization progress: 360/699 (51.5%)
+2026-09-26 22:48:16 | INFO | Normalization progress: 366/699 (52.4%)
+2026-09-26 22:48:17 | INFO | Normalization progress: 372/699 (53.2%)
+2026-09-26 22:48:17 | INFO | Normalization progress: 378/699 (54.1%)
+2026-09-26 22:48:18 | INFO | Normalization progress: 384/699 (54.9%)
+2026-09-26 22:48:18 | INFO | Normalization progress: 390/699 (55.8%)
+2026-09-26 22:48:19 | INFO | Normalization progress: 396/699 (56.7%)
+2026-09-26 22:48:19 | INFO | Normalization progress: 402/699 (57.5%)
+2026-09-26 22:48:20 | INFO | Normalization progress: 408/699 (58.4%)
+2026-09-26 22:48:20 | INFO | Normalization progress: 414/699 (59.2%)
+2026-09-26 22:48:21 | INFO | Normalization progress: 420/699 (60.1%)
+2026-09-26 22:48:21 | INFO | Normalization progress: 426/699 (60.9%)
+2026-09-26 22:48:22 | INFO | Normalization progress: 432/699 (61.8%)
+2026-09-26 22:48:22 | INFO | Normalization progress: 438/699 (62.7%)
+2026-09-26 22:48:23 | INFO | Normalization progress: 444/699 (63.5%)
+2026-09-26 22:48:23 | INFO | Normalization progress: 450/699 (64.4%)
+2026-09-26 22:48:24 | INFO | Normalization progress: 456/699 (65.2%)
+2026-09-26 22:48:24 | INFO | Normalization progress: 462/699 (66.1%)
+2026-09-26 22:48:25 | INFO | Normalization progress: 468/699 (67.0%)
+2026-09-26 22:48:26 | INFO | Normalization progress: 474/699 (67.8%)
+2026-09-26 22:48:26 | INFO | Normalization progress: 480/699 (68.7%)
+2026-09-26 22:48:27 | INFO | Normalization progress: 486/699 (69.5%)
+2026-09-26 22:48:27 | INFO | Normalization progress: 492/699 (70.4%)
+2026-09-26 22:48:28 | INFO | Normalization progress: 498/699 (71.2%)
+2026-09-26 22:48:28 | INFO | Normalization progress: 504/699 (72.1%)
+2026-09-26 22:48:29 | INFO | Normalization progress: 510/699 (73.0%)
+2026-09-26 22:48:29 | INFO | Normalization progress: 516/699 (73.8%)
+2026-09-26 22:48:30 | INFO | Normalization progress: 522/699 (74.7%)
+2026-09-26 22:48:30 | INFO | Normalization progress: 528/699 (75.5%)
+2026-09-26 22:48:31 | INFO | Normalization progress: 534/699 (76.4%)
+2026-09-26 22:48:31 | INFO | Normalization progress: 540/699 (77.3%)
+2026-09-26 22:48:32 | INFO | Normalization progress: 546/699 (78.1%)
+2026-09-26 22:48:32 | INFO | Normalization progress: 552/699 (79.0%)
+2026-09-26 22:48:33 | INFO | Normalization progress: 558/699 (79.8%)
+2026-09-26 22:48:33 | INFO | Normalization progress: 564/699 (80.7%)
+2026-09-26 22:48:34 | INFO | Normalization progress: 570/699 (81.5%)
+2026-09-26 22:48:34 | INFO | Normalization progress: 576/699 (82.4%)
+2026-09-26 22:48:35 | INFO | Normalization progress: 582/699 (83.3%)
+2026-09-26 22:48:35 | INFO | Normalization progress: 588/699 (84.1%)
+2026-09-26 22:48:36 | INFO | Normalization progress: 594/699 (85.0%)
+2026-09-26 22:48:36 | INFO | Normalization progress: 600/699 (85.8%)
+2026-09-26 22:48:37 | INFO | Normalization progress: 606/699 (86.7%)
+2026-09-26 22:48:37 | INFO | Normalization progress: 612/699 (87.6%)
+2026-09-26 22:48:38 | INFO | Normalization progress: 618/699 (88.4%)
+2026-09-26 22:48:38 | INFO | Normalization progress: 624/699 (89.3%)
+2026-09-26 22:48:39 | INFO | Normalization progress: 630/699 (90.1%)
+2026-09-26 22:48:39 | INFO | Normalization progress: 636/699 (91.0%)
+2026-09-26 22:48:40 | INFO | Normalization progress: 642/699 (91.8%)
+2026-09-26 22:48:40 | INFO | Normalization progress: 648/699 (92.7%)
+2026-09-26 22:48:41 | INFO | Normalization progress: 654/699 (93.6%)
+2026-09-26 22:48:41 | INFO | Normalization progress: 660/699 (94.4%)
+2026-09-26 22:48:42 | INFO | Normalization progress: 666/699 (95.3%)
+2026-09-26 22:48:42 | INFO | Normalization progress: 672/699 (96.1%)
+2026-09-26 22:48:43 | INFO | Normalization progress: 678/699 (97.0%)
+2026-09-26 22:48:44 | INFO | Normalization progress: 684/699 (97.9%)
+2026-09-26 22:48:44 | INFO | Normalization progress: 690/699 (98.7%)
+2026-09-26 22:48:45 | INFO | Normalization progress: 696/699 (99.6%)
+2026-09-26 22:48:45 | INFO | Normalization complete in 65.4s.
+2026-09-26 22:48:45 | INFO | Total simulations processed: 698
+2026-09-26 22:48:45 | INFO | Total simulations normalized: 698
+2026-09-26 22:48:45 | INFO | Example data access:
+2026-09-26 22:48:45 | INFO | Simulation 1:
+2026-09-26 22:48:45 | INFO |   - Coordinates: (482634, 3)
+2026-09-26 22:48:45 | INFO |   - Pressure: (482634, 1)
+2026-09-26 22:48:45 | INFO |   - Normals: (482634, 3)
+2026-09-26 22:48:45 | INFO |   - 6D Features: (482634, 6)
+2026-09-26 22:48:45 | INFO |   - First 3 normalized coordinates (min-max to [0,1]): [[0.20121801 0.5        0.10115602]
+ [0.20121779 0.5026263  0.10115602]
+ [0.2034061  0.5        0.10122623]]
+2026-09-26 22:48:45 | INFO |   - First 3 normalized pressure values: [-1.0181847 -1.0181847 -1.0053818]
+2026-09-26 22:48:45 | INFO |   - First 3 normal vectors: [[ 8.9891776e-03  0.0000000e+00 -9.9995959e-01]
+ [ 8.9891702e-03  1.1848629e-06 -9.9995959e-01]
+ [ 8.9891655e-03 -2.8421709e-14 -9.9995959e-01]]
+2026-09-26 22:48:45 | INFO |   - First 3 6D features: [[ 2.01218009e-01  5.00000000e-01  1.01156019e-01  8.98917764e-03
+   0.00000000e+00 -9.99959588e-01]
+ [ 2.01217785e-01  5.02626300e-01  1.01156019e-01  8.98917019e-03
+   1.18486287e-06 -9.99959588e-01]
+ [ 2.03406096e-01  5.00000000e-01  1.01226225e-01  8.98916554e-03
+  -2.84217094e-14 -9.99959588e-01]]
+2026-09-26 22:48:45 | INFO | process_data.py completed successfully in 29724.4s.

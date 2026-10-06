@@ -1,0 +1,7 @@
+usage: main.py [-h] [--config CONFIG] [--model_name MODEL_NAME]
+               [--predicted_feature_name PREDICTED_FEATURE_NAME]
+               [--phase {train,restart_train,test}] [--num_epochs NUM_EPOCHS]
+               [--eval_freq EVAL_FREQ] [--learning_rate LEARNING_RATE]
+               [--data_path DATA_PATH] [--batch_size BATCH_SIZE]
+               [--shuffle | --no-shuffle]
+main.py: error: unrecognized arguments: config.yml
