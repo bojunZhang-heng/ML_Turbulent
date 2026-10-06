@@ -4,6 +4,7 @@
 # model_name: SegLinearNO, transolver_seg, transolver_seg_v2, transolver, LinearNO
 
 model_name: SegLinearNO
+exp: ShapeNet
 predicted_feature_name: pressure
 phase: restart_train
 num_epochs: 300
