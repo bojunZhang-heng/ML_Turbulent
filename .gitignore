@@ -21,3 +21,4 @@ __pycache__/
 .vscode
 LinearNO/LinearNO.yml
 PGD-NO/driver/config_mac.yml
+SegLinearNO/driver/logs/
