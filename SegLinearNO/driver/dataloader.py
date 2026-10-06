@@ -4,6 +4,8 @@ from torch.utils.data import Dataset, DataLoader
 import numpy as np
 import pickle
 import os
+from pathlib import Path
+from collections.abc import Sequence
 from scipy.sparse import csr_matrix
 
 
@@ -26,6 +28,13 @@ def custom_collate_fn(batch):
 
     def _to_tensor(x):
         return x if torch.is_tensor(x) else torch.as_tensor(x, dtype=torch.float32)
+
+    shapes = [(tuple(x.shape), tuple(m.shape), tuple(y.shape)) for x, m, y, _ in batch]
+    if len(set(shapes)) != 1:
+        raise ValueError(
+            "Samples with different mesh shapes cannot share a batch. "
+            f"Use batch_size=1 or implement padding; received shapes={shapes}."
+        )
 
     coorf_batch = torch.stack([_to_tensor(x) for x in coorf_list], dim=0)
     seg_matrix_batch = torch.stack([_to_tensor(x) for x in seg_matrix_list], dim=0)
@@ -55,96 +64,70 @@ class _NumpyCoreAliasUnpickler(pickle.Unpickler):
 
 class VTKDataset(Dataset):
     """
-    Custom Dataset for VTK data with 6D features (coordinates + normal vectors)
-    and pressure or x-force, when everything is already loaded in a single
-    in-memory dictionary (legacy mode).
+    In-memory dataset exposing only input, geometry partition and pressure.
     """
 
     def __init__(self, data_dict, indices, predicted_feature_name="pressure"):
         self.data = []
         self.indices = indices
         self.sim_ids = []  # Track simulation IDs
-        self.predicted_feature_name = predicted_feature_name
 
         # Extract data for specified indices
         for idx in indices:
             if idx in data_dict and idx != "normalization_scalars":
-                # Use 6D features (min-max normalized coords + normal vectors)
-                features_6d = torch.FloatTensor(data_dict[idx]["features_6d"])
-                node_cluster_flags = data_dict[idx]["node_cluster_flags"]
+                sample = data_dict[idx]
+                features_6d = _get_input(sample)
 
-                if "seg_matrix" in data_dict[idx].keys():
+                if "seg_matrix" in sample:
                     # Check if seg_matrix is already a sparse matrix
                     if isinstance(data_dict[idx]["seg_matrix"], csr_matrix):
                         # Convert sparse matrix to dense tensor
-                        seg_matrix = torch.FloatTensor(
-                            data_dict[idx]["seg_matrix"].toarray()
-                        )
+                        seg_matrix = torch.as_tensor(sample["seg_matrix"].toarray(), dtype=torch.float32)
                     else:
                         # Convert dense matrix to tensor
-                        seg_matrix = torch.FloatTensor(data_dict[idx]["seg_matrix"])
+                        seg_matrix = torch.as_tensor(sample["seg_matrix"], dtype=torch.float32)
                 else:
                     # Create empty tensor if no seg_matrix
                     seg_matrix = torch.FloatTensor(np.zeros((1, 1, 1)))
 
-                # extract predicted features
-                pressure = torch.FloatTensor(data_dict[idx]["pressure"])
-                force = torch.FloatTensor(data_dict[idx]["surface_force"])
-
-                # Extract target based on predicted_feature_name
-                if self.predicted_feature_name == "x_force":
-                    # Extract first dimension (x-component) of force
-                    target = force[:, 0:1]  # Keep dimension as (N, 1) for consistency
-                elif self.predicted_feature_name == "y_force":
-                    # Extract second dimension (y-component) of force
-                    target = force[:, 1:2]  # Keep dimension as (N, 1) for consistency
-                elif self.predicted_feature_name == "z_force":
-                    # Extract third dimension (z-component) of force
-                    target = force[:, 2:3]  # Keep dimension as (N, 1) for consistency
-                else:  # default to pressure
-                    target = pressure
-
-                coef_Cp = torch.FloatTensor(data_dict[idx]["integrate_coef"])
-                integrated_cp_actual = torch.FloatTensor(
-                    np.array([data_dict[idx]["integrated_cp_actual"]])
-                )
-
-                # append the data
-                self.data.append(
-                    (
-                        features_6d,
-                        node_cluster_flags,
-                        target,
-                        seg_matrix,
-                        coef_Cp,
-                        integrated_cp_actual,
-                    )
-                )
+                target = _get_pressure(sample)
+                self.data.append((features_6d, seg_matrix, target))
                 self.sim_ids.append(idx)  # Store the simulation ID
 
     def __len__(self):
         return len(self.data)
 
     def __getitem__(self, idx):
-        (
-            features_6d,
-            node_cluster_flags,
-            target,
-            seg_matrix,
-            coef_Cp,
-            integrated_cp_actual,
-        ) = self.data[idx]
+        features_6d, seg_matrix, target = self.data[idx]
         sim_id = self.sim_ids[idx]
 
-        return (
-            features_6d,
-            node_cluster_flags,
-            target,
-            seg_matrix,
-            coef_Cp,
-            integrated_cp_actual,
-            sim_id,
-        )
+        return features_6d, seg_matrix, target, sim_id
+
+
+def _get_input(sample):
+    """Return exactly six features: three coordinates and three normals."""
+    if "features_6d" in sample:
+        features = np.asarray(sample["features_6d"], dtype=np.float32)
+    elif "coor" in sample and "normals" in sample:
+        features = np.concatenate(
+            [np.asarray(sample["coor"]), np.asarray(sample["normals"])], axis=1
+        ).astype(np.float32, copy=False)
+    else:
+        raise KeyError("Sample must contain features_6d or both coor and normals")
+    if features.ndim != 2 or features.shape[1] != 6:
+        raise ValueError(f"Expected input shape (N, 6), got {features.shape}")
+    return torch.as_tensor(features, dtype=torch.float32)
+
+
+def _get_pressure(sample):
+    if "pressure" not in sample:
+        raise KeyError("Sample must contain the pressure field")
+    pressure = np.asarray(sample["pressure"], dtype=np.float32)
+    if pressure.ndim == 1:
+        pressure = pressure[:, None]
+    if pressure.ndim != 2 or pressure.shape[1] != 1:
+        raise ValueError(f"Expected pressure shape (N, 1), got {pressure.shape}")
+    return torch.as_tensor(pressure, dtype=torch.float32)
 
 
 class PerFileVTKDataset(Dataset):
@@ -162,20 +145,25 @@ class PerFileVTKDataset(Dataset):
     """
 
     def __init__(self, data_root, indices, predicted_feature_name="pressure"):
-        self.data_root = data_root
+        if isinstance(data_root, (str, os.PathLike)):
+            data_root = [data_root]
+        if not isinstance(data_root, Sequence) or not data_root:
+            raise TypeError("data_root must be a directory or a non-empty sequence of directories")
+        self.data_roots = [Path(root) for root in data_root]
         self.indices = indices
-        self.predicted_feature_name = predicted_feature_name
 
     def _sample_path(self, sim_id):
         # If your naming is different (e.g. f"sample_{sim_id}.pkl"),
         # we can tweak this in the next step.
-        return os.path.join(self.data_root, f"{sim_id}.pkl")
+        for data_root in self.data_roots:
+            candidate = data_root / f"{sim_id}.pkl"
+            if candidate.exists():
+                return candidate
+        roots = ", ".join(str(root) for root in self.data_roots)
+        raise FileNotFoundError(f"Sample {sim_id}.pkl not found in: {roots}")
 
     def _load_sample(self, sim_id):
         file_path = self._sample_path(sim_id)
-        if not os.path.exists(file_path):
-            raise FileNotFoundError(f"Per-sample file not found: {file_path}")
-
         with open(file_path, "rb") as f:
             sample = pickle.load(f)
         return sample
@@ -187,16 +175,16 @@ class PerFileVTKDataset(Dataset):
         # Map from dataset index to simulation id
         sim_id = self.indices[idx]
         sample = self._load_sample(sim_id)
-        coorf = sample["features_6d"]
+        coorf = _get_input(sample)
 
         # Ensure seg_matrix is dense (mirror behavior of VTKDataset)
         seg_matrix = sample["seg_matrix"]
         if isinstance(seg_matrix, csr_matrix):
             seg_matrix = seg_matrix.toarray()
+        seg_matrix = torch.as_tensor(seg_matrix, dtype=torch.float32)
+        p = _get_pressure(sample)
 
-        p = sample["pressure"]
-
-        return (coorf, seg_matrix, p, sim_id)
+        return coorf, seg_matrix, p, sim_id
 
 
 
@@ -235,7 +223,7 @@ def create_data_loaders(
     """
 
     is_dict_mode = isinstance(data_source, dict)
-    is_path_mode = isinstance(data_source, str)
+    is_path_mode = isinstance(data_source, (str, os.PathLike, Sequence)) and not isinstance(data_source, dict)
 
     if not (is_dict_mode or is_path_mode):
         raise TypeError(
@@ -269,7 +257,7 @@ def create_data_loaders(
 
     else:
         data_root = data_source
-        print(f"Per-file data root: {data_root}")
+        print(f"Per-file data root(s): {data_root}")
         # We don't know normalization_scalars location yet in per-file mode.
         normalization_scalars = None
 
