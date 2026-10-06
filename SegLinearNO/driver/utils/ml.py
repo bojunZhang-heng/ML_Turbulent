@@ -58,7 +58,6 @@ def train(model_name, model, train_loader, val_loader, normalization_scalars,
     }
 
     print(f"Starting training for {num_epochs} epochs (model_name='{model_name}', assuming 'transolver' and coorf-only input)...")
-    hooks, layer_stats = register_mem_hooks(model)
 
     for epoch in range(num_epochs):
         # Training phase
@@ -100,19 +99,9 @@ def train(model_name, model, train_loader, val_loader, normalization_scalars,
                #     h.remove()
                 raise
 
-            #print_mem_report(layer_stats)
-            #for h in hooks:
-            #    h.remove()
-            #hooks, _ = register_mem_hooks(model)   # 若还想继续可重挂
-
-            # ── 3. 反向 + 更新换成 scaler 接口
-            #scaler.scale(loss).backward()
             loss.backward()
             optimizer.step()
             lr_scheduler.step()
-            #scaler.step(optimizer)
-            #scaler.update()
-            # lr_scheduler.step(loss.item())
 
             train_loss += loss.item()
             train_progress.set_postfix(loss=f"{loss.item():.4e}")
