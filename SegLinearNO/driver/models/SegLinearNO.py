@@ -29,7 +29,6 @@ def gumbel_softmax(logits, tau=1, hard=False):
         y = (y_one_hot - y).detach() + y
     return y
 
-#class Physics_Attention_seg(nn.Module):
 class SegLinearAttention(nn.Module):
     def __init__(
         self,
