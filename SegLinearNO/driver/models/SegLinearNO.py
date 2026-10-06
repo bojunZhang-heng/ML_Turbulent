@@ -11,23 +11,6 @@ import torch.nn.functional as F
 ACTIVATION = {'gelu': nn.GELU, 'tanh': nn.Tanh, 'sigmoid': nn.Sigmoid, 'relu': nn.ReLU, 'leaky_relu': nn.LeakyReLU(0.1),
               'softplus': nn.Softplus, 'ELU': nn.ELU, 'silu': nn.SiLU}
 
-def matmul_single(fx_mid, slice_weights):
-    return fx_mid.T @ slice_weights
-
-def gumbel_softmax(logits, tau=1, hard=False):
-    u = torch.rand_like(logits)
-    gumbel_noise = -torch.log(-torch.log(u + 1e-8) + 1e-8)
-
-    y = logits + gumbel_noise
-    y = y / tau
-
-    y = F.softmax(y, dim=-1)
-
-    if hard:
-        _, y_hard = y.max(dim=-1)
-        y_one_hot = torch.zeros_like(y).scatter_(-1, y_hard.unsqueeze(-1), 1.0)
-        y = (y_one_hot - y).detach() + y
-    return y
 
 class SegLinearAttention(nn.Module):
     def __init__(
@@ -35,166 +18,230 @@ class SegLinearAttention(nn.Module):
         dim,
         heads=8,
         dim_head=64,
-        dropout=0.0,
         key_ratio=4,
+        dropout=0.0,
+        eps=1e-5,
+        use_token_self_attention=False,
     ):
         super().__init__()
 
         inner_dim = heads * dim_head
         key_dim = key_ratio * dim_head
 
-        self.dim_head = dim_head
+        self.dim = dim
         self.heads = heads
+        self.dim_head = dim_head
         self.key_dim = key_dim
+        self.eps = eps
+        self.use_token_self_attention = use_token_self_attention
 
-        self.in_project_x = nn.Linear(dim, inner_dim)
+        self.in_project_query = nn.Linear(dim, inner_dim)
+        self.in_project_surface = nn.Linear(dim, inner_dim)
+        self.token_linear = nn.Linear(dim_head, dim_head, bias=False)
 
-        # 节点 Query
-        self.to_q = nn.Linear(dim_head, key_dim, bias=False)
+        self.cross_to_q = nn.Linear(dim_head, key_dim, bias=False)
+        self.cross_to_k = nn.Linear(dim_head, key_dim, bias=False)
+        self.cross_to_v = nn.Linear(dim_head, dim_head, bias=False)
 
-        # 几何 token Key
-        self.to_k = nn.Linear(dim_head, key_dim, bias=False)
+        self.temperature_q = nn.Parameter(torch.ones(1, heads, 1, 1) * 0.5)
+        self.temperature_k = nn.Parameter(torch.ones(1, heads, 1, 1) * 0.5)
 
-        # 几何 token Value
-        self.to_v = nn.Linear(dim_head, dim_head, bias=False)
-
-        self.temperature_q = nn.Parameter(
-            torch.ones(1, heads, 1, 1) * 0.5
-        )
-
-        self.temperature_k = nn.Parameter(
-            torch.ones(1, heads, 1, 1) * 0.5
-        )
+        if use_token_self_attention:
+            self.token_to_q = nn.Linear(dim_head, dim_head, bias=False)
+            self.token_to_k = nn.Linear(dim_head, dim_head, bias=False)
+            self.token_to_v = nn.Linear(dim_head, dim_head, bias=False)
+            self.token_out = nn.Linear(dim_head, dim_head, bias=False)
 
         self.to_out = nn.Sequential(
             nn.Linear(inner_dim, dim),
             nn.GELU(),
             nn.Linear(dim, dim),
-            nn.Dropout(dropout),
+            nn.Dropout(dropout)
         )
 
-    def forward(self, x, seg_matrix):
-        """
-        x:
-            [B, N, C]
+    def _prepare_seg_matrix(
+        self,
+        seg_matrix,
+        batch_size,
+        num_surface_points,
+        device,
+        dtype,
+    ):
+        if seg_matrix.dim() == 2:
+            seg_matrix = seg_matrix.unsqueeze(0)
 
-        seg_matrix:
-            [B, S, N]
-
-        return:
-            [B, N, C]
-        """
-
-        B, N, _ = x.shape
-        _, S, N_seg = seg_matrix.shape
-
-        if N != N_seg:
-            raise ValueError(
-                f"x and seg_matrix node dimensions do not match: "
-                f"x has N={N}, seg_matrix has N={N_seg}"
+        if seg_matrix.shape[0] == 1:
+            seg_matrix = seg_matrix.expand(
+                batch_size,
+                -1,
+                -1
             )
 
-        # -------------------------------------------------
-        # 1. 节点特征投影
-        # -------------------------------------------------
-        x_mid = self.in_project_x(x)
+        if seg_matrix.shape[0] != batch_size:
+            raise ValueError(
+                "seg_matrix batch size does not match input"
+            )
 
-        x_mid = rearrange(
-            x_mid,
+        if seg_matrix.shape[-1] != num_surface_points:
+            raise ValueError(
+                "seg_matrix must have shape [B, S, Ns], "
+                "where Ns is the number of surface points"
+            )
+
+        seg_matrix = seg_matrix.to(
+            device=device,
+            dtype=dtype
+        )
+
+        token_mass = seg_matrix.sum(
+            dim=-1,
+            keepdim=True
+        ).clamp_min(self.eps)
+
+        seg_matrix = (
+            seg_matrix / token_mass
+        )
+
+        return seg_matrix
+
+    def _build_geometry_tokens(
+        self,
+        x_surface,
+        seg_matrix,
+    ):
+        batch_size, num_surface_points, _ = x_surface.shape
+
+        surface_features = self.in_project_surface(x_surface)
+        surface_features = rearrange(
+            surface_features,
             "b n (h d) -> b h n d",
             h=self.heads,
-            d=self.dim_head,
+            d=self.dim_head
         )
-        # [B, H, N, D]
 
-        # -------------------------------------------------
-        # 2. 使用 seg_matrix 聚合几何 token
-        # -------------------------------------------------
+        seg_matrix = self._prepare_seg_matrix(
+            seg_matrix=seg_matrix,
+            batch_size=batch_size,
+            num_surface_points=num_surface_points,
+            device=x_surface.device,
+            dtype=x_surface.dtype,
+        )
+
         geometry_tokens = torch.einsum(
             "bsn,bhnd->bhsd",
             seg_matrix,
-            x_mid,
+            surface_features
         )
-        # [B, H, S, D]
 
-        # -------------------------------------------------
-        # 3. 节点生成 Query
-        # -------------------------------------------------
-        q = self.to_q(x_mid)
-        # [B, H, N, key_dim]
+        geometry_tokens = self.token_linear(geometry_tokens)
 
-        # -------------------------------------------------
-        # 4. 区域 token 生成 Key/Value
-        # -------------------------------------------------
-        k = self.to_k(geometry_tokens)
-        # [B, H, S, key_dim]
+        return geometry_tokens
 
-        v = self.to_v(geometry_tokens)
-        # [B, H, S, D]
+    def _token_self_attention(
+        self,
+        geometry_tokens,
+    ):
+        if not self.use_token_self_attention:
+            return geometry_tokens
 
-        # -------------------------------------------------
-        # 5. Linear Attention 归一化
-        # -------------------------------------------------
+        q_token = self.token_to_q(geometry_tokens)
+        k_token = self.token_to_k(geometry_tokens)
+        v_token = self.token_to_v(geometry_tokens)
+
+        updated_tokens = F.scaled_dot_product_attention(q_token, k_token, v_token)
+        updated_tokens = self.token_out(updated_tokens)
+
+        return updated_tokens
+
+    def forward(
+        self,
+        x,
+        seg_matrix,
+        x_surface=None,
+        return_factors=False,
+    ):
+        """
+        x_query:
+            [B, Nq, C]
+
+        seg_matrix:
+            [B, S, Ns] or [S, Ns]
+
+        x_surface:
+            [B, Ns, C]
+
+        return:
+            output:
+                [B, Nq, C]
+        """
+
+        if x_surface is None:
+            x_surface = x
+        query_features = self.in_project_query(x)
+
+        query_features = rearrange(
+            query_features,
+            "b n (h d) -> b h n d",
+            h=self.heads,
+            d=self.dim_head
+        )
+
+        geometry_tokens = self._build_geometry_tokens(
+            x_surface=x_surface,
+            seg_matrix=seg_matrix,
+        )
+
+        geometry_tokens = self._token_self_attention(geometry_tokens)
+
+        q = self.cross_to_q(query_features)
+        k = self.cross_to_k(geometry_tokens)
+        v = self.cross_to_v(geometry_tokens)
+
         temperature_q = torch.clamp(
             self.temperature_q,
             min=0.1,
-            max=2.0,
+            max=2.0
         )
 
         temperature_k = torch.clamp(
             self.temperature_k,
             min=0.1,
-            max=2.0,
+            max=2.0
         )
 
-        # Query 在 key/channel 维度归一化
-        q = F.softmax(
-            q / temperature_q,
-            dim=-1,
-        )
-        # [B, H, N, key_dim]
+        q = F.softmax(q / temperature_q, dim=-1)
+        k = F.softmax(k / temperature_k, dim=-2)
 
-        # Key 在区域维度归一化
-        #
-        # 与原始 LinearNO 不同：
-        # 原始 LinearNO 的 K 长度为 N
-        # 现在几何 token 的长度为 S
-        k = F.softmax(
-            k / temperature_k,
-            dim=-2,
-        )
-        # [B, H, S, key_dim]
-
-        # -------------------------------------------------
-        # 6. 先聚合区域 token 的 K/V
-        # -------------------------------------------------
         kv = torch.einsum(
-            "bhsk,bhsd->bhkd",
+            "bhsm,bhsd->bhmd",
             k,
-            v,
+            v
         )
-        # [B, H, key_dim, D]
-
-        # -------------------------------------------------
-        # 7. 每个节点 Query 区域信息
-        # -------------------------------------------------
+        
         qkv = torch.einsum(
-            "bhnk,bhkd->bhnd",
+            "bhnm,bhmd->bhnd",
             q,
-            kv,
+            kv
         )
-        # [B, H, N, D]
 
-        # -------------------------------------------------
-        # 8. 合并多头
-        # -------------------------------------------------
         qkv = rearrange(
             qkv,
-            "b h n d -> b n (h d)",
+            "b h n d -> b n (h d)"
         )
-        # [B, N, inner_dim]
 
-        return self.to_out(qkv)
+        output = self.to_out(qkv)
+
+        if return_factors:
+            return output, {
+                "query_factor": q,
+                "key_factor": k,
+                "value": v,
+                "geometry_tokens": geometry_tokens,
+                "latent_summary": kv,
+            }
+
+        return output
+
 class MLP(nn.Module):
     def __init__(self, n_input, n_hidden, n_output, n_layers=1, act='gelu', res=True):
         super(MLP, self).__init__()
