@@ -191,7 +191,7 @@ def main():
             num_epochs=num_epochs,        # Increased epochs
             learning_rate=args.learning_rate,    # Increased learning rate for AdamW
             eval_freq=args.eval_freq,
-            save_path=save_path
+            save_path=save_path,
             predicted_feature_name=predicted_feature_name
         )
 
@@ -203,7 +203,7 @@ def main():
         model=model,
         test_loader=test_loader,
         normalization_scalars=normalization_scalars,
-        model_path=save_path
+        model_path=save_path,
         predicted_feature_name=predicted_feature_name
     )
     print("\n✅ Pipeline completed!")
