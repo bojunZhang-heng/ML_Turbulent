@@ -84,7 +84,7 @@ def train(model_name, model, train_loader, val_loader, normalization_scalars,
                 with autocast(device_type="cuda", dtype=AMP_DTYPE):
                     if model_name == 'transolver':
                         outputs = model(coorf)
-                    elif model_name in ('transolver_seg', 'transolver_seg_v2', 'SegLinearNO'):
+                    elif model_name in ('transolver_seg', 'transolver_seg_v2', 'SegLinearNO', 'SegLinearNO_v2'):
                         outputs = model((coorf, seg_matrix))
                     elif model_name == 'LinearNO':
                         outputs = model(coorf)
@@ -129,7 +129,7 @@ def train(model_name, model, train_loader, val_loader, normalization_scalars,
                     #with autocast(device_type="cuda", dtype=torch.float16):
                     if model_name == 'transolver':
                         outputs = model(coorf)
-                    elif model_name in ('transolver_seg', 'transolver_seg_v2', 'SegLinearNO'):
+                    elif model_name in ('transolver_seg', 'transolver_seg_v2', 'SegLinearNO', 'SegLinearNO_v2'):
                         outputs = model((coorf, seg_matrix))
                     elif model_name == 'LinearNO':
                         outputs = model(coorf)
@@ -216,7 +216,7 @@ def test(model_name, model, test_loader, normalization_scalars, model_path="mode
 
             if model_name == 'transolver':
                 outputs = model(coorf)
-            elif model_name in ('transolver_seg', 'transolver_seg_v2', 'SegLinearNO'):
+            elif model_name in ('transolver_seg', 'transolver_seg_v2', 'SegLinearNO', 'SegLinearNO_v2'):
                 outputs = model((coorf, seg_matrix))
             elif model_name == 'LinearNO':
                 outputs = model(coorf)
