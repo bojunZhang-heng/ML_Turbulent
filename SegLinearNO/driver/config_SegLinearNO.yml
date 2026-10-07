@@ -3,8 +3,8 @@
 #   python main.py --config config.yml
 # model_name: SegLinearNO, transolver_seg, transolver_seg_v2, transolver, LinearNO
 
-model_name: SegLinearNO
 exp: ShapeNet
+model_name: SegLinearNO
 predicted_feature_name: pressure
 phase: restart_train
 num_epochs: 300
@@ -13,7 +13,6 @@ learning_rate: 2.0e-5
 
 #data_path: /data/zhangbojun/DrivAerNet++_dataset/PressureVTK/E_S_WWC_WM/pklFile/
 data_path: /data/zhangbojun/ShapeNet_dataset/vtk/pklFile
-exp: ShapeNet
 batch_size: 1
 shuffle: true
 
