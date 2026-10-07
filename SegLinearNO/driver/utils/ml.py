@@ -8,6 +8,101 @@ from tqdm import tqdm
 from utils.metric import compute_relative_error
 from utils.metric import denormalize_pressure
 
+
+def register_mem_hooks(model):
+    """Register temporary CUDA-memory hooks on leaf modules."""
+    hooks = []
+    layer_stats = []
+
+    def make_hook(name):
+        def hook(module, inputs, output):
+            torch.cuda.synchronize()
+            allocated_gb = torch.cuda.memory_allocated() / 1024**3
+            peak_gb = torch.cuda.max_memory_allocated() / 1024**3
+
+            if isinstance(output, torch.Tensor):
+                output_shape = tuple(output.shape)
+                output_mb = output.numel() * output.element_size() / 1024**2
+            elif isinstance(output, (tuple, list)):
+                output_shape = "tuple"
+                output_mb = sum(
+                    item.numel() * item.element_size() / 1024**2
+                    for item in output
+                    if isinstance(item, torch.Tensor)
+                )
+            else:
+                output_shape = type(output).__name__
+                output_mb = 0.0
+
+            if inputs and isinstance(inputs[0], torch.Tensor):
+                input_shape = tuple(inputs[0].shape)
+            else:
+                input_shape = "-"
+
+            layer_stats.append(
+                {
+                    "name": name,
+                    "module": module.__class__.__name__,
+                    "input_shape": input_shape,
+                    "output_shape": output_shape,
+                    "output_mb": output_mb,
+                    "allocated_gb": allocated_gb,
+                    "peak_gb": peak_gb,
+                }
+            )
+
+        return hook
+
+    for name, module in model.named_modules():
+        if not list(module.children()):
+            hooks.append(module.register_forward_hook(make_hook(name)))
+    return hooks, layer_stats
+
+
+def remove_mem_hooks(hooks):
+    for hook in hooks:
+        hook.remove()
+
+
+def print_mem_report(layer_stats, top_k=20):
+    """Print one layer-level CUDA-memory report."""
+    print("\n" + "=" * 100)
+    print(
+        f"{'layer':50s} {'module':18s} {'output_shape':22s} "
+        f"{'out_MB':>8s} {'alloc_GB':>9s}"
+    )
+    print("-" * 100)
+    for stat in layer_stats:
+        print(
+            f"{stat['name'][:50]:50s} {stat['module'][:18]:18s} "
+            f"{str(stat['output_shape'])[:22]:22s} "
+            f"{stat['output_mb']:>8.1f} {stat['allocated_gb']:>9.2f}"
+        )
+    print("-" * 100)
+
+    print("\n>>> Top output-size layers:")
+    for stat in sorted(layer_stats, key=lambda item: -item["output_mb"])[:top_k]:
+        print(
+            f"  {stat['name'][:60]:60s} out={stat['output_mb']:>8.1f}MB "
+            f"shape={stat['output_shape']} alloc={stat['allocated_gb']:.2f}GB"
+        )
+
+    print("\n>>> Biggest alloc jumps (per-layer, ordered):")
+    previous_allocated = 0.0
+    jumps = []
+    for stat in layer_stats:
+        jumps.append(
+            (
+                stat["name"],
+                stat["allocated_gb"] - previous_allocated,
+                stat["allocated_gb"],
+            )
+        )
+        previous_allocated = stat["allocated_gb"]
+    for name, jump, allocated in sorted(jumps, key=lambda item: -item[1])[:top_k]:
+        print(f"  {name[:60]:60s} Δ={jump:+.2f}GB  (累计 {allocated:.2f}GB)")
+    print("=" * 100 + "\n")
+
 def train(model_name, model, train_loader, val_loader, normalization_scalars,
           num_epochs=100, learning_rate=0.0001, eval_freq = 10,
           save_path="models/best_model.pth", predicted_feature_name="pressure"):
@@ -59,6 +154,10 @@ def train(model_name, model, train_loader, val_loader, normalization_scalars,
 
     print(f"Starting training for {num_epochs} epochs (model_name='{model_name}', assuming 'transolver' and coorf-only input)...")
 
+    memory_report_pending = device.type == "cuda"
+    memory_hooks = []
+    memory_stats = []
+
     for epoch in range(num_epochs):
         # Training phase
         model.train()
@@ -71,6 +170,10 @@ def train(model_name, model, train_loader, val_loader, normalization_scalars,
             leave=False,
         )
         for batch_data in train_progress:
+            if memory_report_pending:
+                torch.cuda.reset_peak_memory_stats(device)
+                memory_hooks, memory_stats = register_mem_hooks(model)
+
             # New dataloader format: (coorf, seg_matrix, p, sim_id)
             coorf, seg_matrix, target, sim_ids = batch_data
             coorf, target = coorf.to(device), target.to(device)
@@ -90,12 +193,18 @@ def train(model_name, model, train_loader, val_loader, normalization_scalars,
                         raise ValueError(f"Model name {model_name} not supported")
                     loss = criterion(outputs, target)
 
-            except torch.OutOfMemoryError as e:
+            except torch.OutOfMemoryError:
                 print(f"\n❌ OOM! 当前已分配 {torch.cuda.memory_allocated()/1024**3:.2f}GB")
-               # print_mem_report(layer_stats)
-               # for h in hooks:
-               #     h.remove()
+                if memory_report_pending:
+                    print_mem_report(memory_stats)
+                    remove_mem_hooks(memory_hooks)
+                    memory_report_pending = False
                 raise
+
+            if memory_report_pending:
+                print_mem_report(memory_stats)
+                remove_mem_hooks(memory_hooks)
+                memory_report_pending = False
 
             loss.backward()
             optimizer.step()
