@@ -111,7 +111,7 @@ def main():
     if model_name == 'transolver':
         # Improved hyperparameters for better performance
         model = Transolver_Model(
-            space_dim=6,
+            space_dim=3,
             out_dim=1,
             n_layers=8,        # Increased from 8 to 12
             n_hidden=256,       # Increased from 256 to 512
