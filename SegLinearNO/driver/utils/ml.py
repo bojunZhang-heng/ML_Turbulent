@@ -77,8 +77,6 @@ def train(model_name, model, train_loader, val_loader, normalization_scalars,
             seg_matrix = seg_matrix.to(device)
 
             optimizer.zero_grad()
-            torch.cuda.reset_peak_memory_stats()
-
 
             try:
                 with autocast(device_type="cuda", dtype=AMP_DTYPE):
