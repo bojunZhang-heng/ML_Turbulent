@@ -262,14 +262,19 @@ class LinearAttentionNeuralOperator(nn.Module):
         fx = self.preprocess(self.pos_embed(coords))
         fx = fx + self.placeholder[None, None, :]
 
+        if self.training:
+            return checkpoint(
+                self._forward_blocks,
+                fx,
+                attn_kwargs["freqs"],
+                use_reentrant=False,
+            )
+        return self._forward_blocks(fx, attn_kwargs["freqs"])
+
+    def _forward_blocks(
+        self, fx: torch.Tensor, freqs: torch.Tensor
+    ) -> torch.Tensor:
+        attn_kwargs = {"freqs": freqs}
         for block in self.blocks:
-            if self.training:
-                fx = checkpoint(
-                    block,
-                    fx,
-                    attn_kwargs=attn_kwargs,
-                    use_reentrant=False,
-                )
-            else:
-                fx = block(fx, attn_kwargs=attn_kwargs)
+            fx = block(fx, attn_kwargs=attn_kwargs)
         return fx
