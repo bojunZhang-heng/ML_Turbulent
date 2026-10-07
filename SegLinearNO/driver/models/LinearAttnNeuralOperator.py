@@ -124,7 +124,7 @@ class LinearAttentionNeuralOperator(nn.Module):
 
     def __init__(
         self,
-        space_dim=1,
+        space_dim=3,
         n_layers=5,
         n_hidden=256,
         dropout=0.0,
@@ -132,7 +132,7 @@ class LinearAttentionNeuralOperator(nn.Module):
         Time_Input=False,
         act='gelu',
         mlp_ratio=1,
-        fun_dim=1,
+        fun_dim=0,
         out_dim=1,
         key_ratio=4,
         ref=8,
@@ -142,6 +142,12 @@ class LinearAttentionNeuralOperator(nn.Module):
         isregular=False,
     ):
         super(LinearAttentionNeuralOperator, self).__init__()
+        if space_dim != 3:
+            raise ValueError(f"LinearNO expects space_dim=3, got {space_dim}")
+        if fun_dim != 0:
+            raise ValueError("Coordinate-only LinearNO requires fun_dim=0")
+        if unified_pos:
+            raise ValueError("unified_pos is not supported for 3D point clouds")
         self.H = H
         self.W = W
         self.ref = ref
@@ -230,7 +236,16 @@ class LinearAttentionNeuralOperator(nn.Module):
         return pos
 
     def forward(self,data):
-        x, fx, T = data, None, None
+        if not torch.is_tensor(data) or data.ndim != 3:
+            raise ValueError("Input must be a tensor shaped (batch, points, channels)")
+        if data.shape[-1] < self.space_dim:
+            raise ValueError(
+                f"Input needs at least {self.space_dim} XYZ channels, got {data.shape[-1]}"
+            )
+
+        # Use XYZ only. Existing six-channel coordinate-plus-normal inputs
+        # remain compatible, but normals are intentionally ignored.
+        x, fx, T = data[..., :self.space_dim], None, None
         if self.unified_pos:
             x = self.pos.repeat(x.shape[0], 1, 1,
                                 1).reshape(x.shape[0], self.H * self.W,
@@ -240,7 +255,8 @@ class LinearAttentionNeuralOperator(nn.Module):
             fx = self.preprocess(fx)
         else:
             fx = self.preprocess(x)
-            fx = fx + self.placeholder[None, None, :]
+            placeholder = self.placeholder.to(dtype=fx.dtype)
+            fx = fx + placeholder[None, None, :]
 
         if T is not None:
             Time_emb = timestep_embedding(T, self.n_hidden).repeat(
