@@ -202,6 +202,7 @@ class LinearAttentionNeuralOperator(nn.Module):
 
         self.space_dim = space_dim
         self.n_hidden = n_hidden
+        self.checkpoint_segment_size = 2
         rotary_dim = key_ratio * n_hidden
         self.rope = RopeFrequency(dim=rotary_dim, ndim=space_dim)
         self.pos_embed = ContinuousSincosEmbed(dim=n_hidden, ndim=space_dim)
@@ -260,21 +261,40 @@ class LinearAttentionNeuralOperator(nn.Module):
         coords = data[..., : self.space_dim]
         attn_kwargs = {"freqs": self.rope(coords)}
         fx = self.preprocess(self.pos_embed(coords))
-        fx = fx + self.placeholder[None, None, :]
+        placeholder = self.placeholder.to(dtype=fx.dtype)
+        fx = fx + placeholder[None, None, :]
 
         if self.training:
-            return checkpoint(
-                self._forward_blocks,
-                fx,
-                attn_kwargs["freqs"],
-                use_reentrant=False,
-            )
+            for start in range(0, len(self.blocks), self.checkpoint_segment_size):
+                end = min(start + self.checkpoint_segment_size, len(self.blocks))
+
+                def run_segment(segment_fx, freqs, start=start, end=end):
+                    return self._forward_block_range(
+                        segment_fx, freqs, start=start, end=end
+                    )
+
+                fx = checkpoint(
+                    run_segment,
+                    fx,
+                    attn_kwargs["freqs"],
+                    use_reentrant=False,
+                )
+            return fx
         return self._forward_blocks(fx, attn_kwargs["freqs"])
+
+    def _forward_block_range(
+        self,
+        fx: torch.Tensor,
+        freqs: torch.Tensor,
+        start: int,
+        end: int,
+    ) -> torch.Tensor:
+        attn_kwargs = {"freqs": freqs}
+        for block_index in range(start, end):
+            fx = self.blocks[block_index](fx, attn_kwargs=attn_kwargs)
+        return fx
 
     def _forward_blocks(
         self, fx: torch.Tensor, freqs: torch.Tensor
     ) -> torch.Tensor:
-        attn_kwargs = {"freqs": freqs}
-        for block in self.blocks:
-            fx = block(fx, attn_kwargs=attn_kwargs)
-        return fx
+        return self._forward_block_range(fx, freqs, 0, len(self.blocks))
