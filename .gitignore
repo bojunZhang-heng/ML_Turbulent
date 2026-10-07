@@ -22,3 +22,5 @@ __pycache__/
 LinearNO/LinearNO.yml
 PGD-NO/driver/config_mac.yml
 SegLinearNO/driver/logs/
+SegLinearNO/driver/config*.yml
+
