@@ -167,7 +167,7 @@ def main():
         )
     elif model_name == 'LinearNO':
         model = LinearNO(
-            space_dim=6,
+            space_dim=3,
             n_layers=8,
             n_hidden=256,
             n_head=8,
