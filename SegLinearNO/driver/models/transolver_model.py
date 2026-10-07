@@ -130,7 +130,7 @@ class Transolver_block(nn.Module):
 
 class Model(nn.Module):
     def __init__(self,
-                 space_dim=1,
+                 space_dim=3,
                  n_layers=8,
                  n_hidden=256,
                  dropout=0,
@@ -144,6 +144,10 @@ class Model(nn.Module):
                  unified_pos=False
                  ):
         super(Model, self).__init__()
+        if space_dim != 3:
+            raise ValueError(f"Transolver expects space_dim=3, got {space_dim}")
+        if fun_dim != 0:
+            raise ValueError("Coordinate-only Transolver requires fun_dim=0")
         self.__name__ = 'UniPDE_3D'
         self.ref = ref
         self.unified_pos = unified_pos
@@ -201,12 +205,24 @@ class Model(nn.Module):
 
     def forward(self, x):
         '''
-        x: (B, N, F)
-        '''
+        x: (B, N, 3) or (B, N, 6)
 
-        x, fx = x, None
-        fx = self.preprocess(x)
-        fx = fx + self.placeholder[None, None, :]
+        Only the first three XYZ channels are used. Six-dimensional
+        coordinate-plus-normal inputs remain compatible, but normals are
+        intentionally ignored.
+        '''
+        if not torch.is_tensor(x) or x.ndim != 3:
+            raise ValueError("Input must be a tensor shaped (batch, points, channels)")
+        if x.shape[-1] < self.space_dim:
+            raise ValueError(
+                f"Input needs at least {self.space_dim} XYZ channels, got {x.shape[-1]}"
+            )
+
+        coords = x[..., :self.space_dim]
+        model_input = self.get_grid(coords) if self.unified_pos else coords
+        fx = self.preprocess(model_input)
+        placeholder = self.placeholder.to(dtype=fx.dtype)
+        fx = fx + placeholder[None, None, :]
 
         for block in self.blocks:
             fx = block(fx)
