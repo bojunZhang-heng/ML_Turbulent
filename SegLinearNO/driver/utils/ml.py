@@ -9,6 +9,28 @@ from utils.metric import compute_relative_error
 from utils.metric import denormalize_pressure
 
 
+SEGMENTED_MODELS = {
+    "transolver_seg",
+    "transolver_seg_v2",
+    "SegLinearNO",
+    "SegLinearNO_v2",
+}
+
+
+def configure_amp(device):
+    amp_enabled = device.type == "cuda"
+    amp_dtype = (
+        torch.bfloat16
+        if amp_enabled and torch.cuda.is_bf16_supported()
+        else torch.float16
+    )
+    scaler = GradScaler(
+        device="cuda",
+        enabled=amp_enabled and amp_dtype == torch.float16,
+    )
+    return amp_enabled, amp_dtype, scaler
+
+
 def register_mem_hooks(model):
     """Register temporary CUDA-memory hooks on leaf modules."""
     hooks = []
@@ -123,9 +145,9 @@ def train(model_name, model, train_loader, val_loader, normalization_scalars,
     """
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
-    AMP_DTYPE = torch.float32
-    #AMP_DTYPE = torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16
-    #scaler = GradScaler(device=device)
+    amp_enabled, amp_dtype, scaler = configure_amp(device)
+    if amp_enabled:
+        print(f"AMP enabled with dtype={amp_dtype}")
 
     model = model.float().to(device)
     criterion = nn.MSELoss()
@@ -177,15 +199,20 @@ def train(model_name, model, train_loader, val_loader, normalization_scalars,
             # New dataloader format: (coorf, seg_matrix, p, sim_id)
             coorf, seg_matrix, target, sim_ids = batch_data
             coorf, target = coorf.to(device), target.to(device)
-            seg_matrix = seg_matrix.to(device)
+            if model_name in SEGMENTED_MODELS:
+                seg_matrix = seg_matrix.to(device)
 
-            optimizer.zero_grad()
+            optimizer.zero_grad(set_to_none=True)
 
             try:
-                with autocast(device_type="cuda", dtype=AMP_DTYPE):
+                with autocast(
+                    device_type=device.type,
+                    dtype=amp_dtype,
+                    enabled=amp_enabled,
+                ):
                     if model_name == 'transolver':
                         outputs = model(coorf)
-                    elif model_name in ('transolver_seg', 'transolver_seg_v2', 'SegLinearNO', 'SegLinearNO_v2'):
+                    elif model_name in SEGMENTED_MODELS:
                         outputs = model((coorf, seg_matrix))
                     elif model_name in ('LinearNO', 'RopeLinearNO'):
                         outputs = model(coorf)
@@ -206,8 +233,9 @@ def train(model_name, model, train_loader, val_loader, normalization_scalars,
                 remove_mem_hooks(memory_hooks)
                 memory_report_pending = False
 
-            loss.backward()
-            optimizer.step()
+            scaler.scale(loss).backward()
+            scaler.step(optimizer)
+            scaler.update()
             lr_scheduler.step()
 
             train_loss += loss.item()
@@ -232,23 +260,27 @@ def train(model_name, model, train_loader, val_loader, normalization_scalars,
                     # New dataloader format: (coorf, seg_matrix, p, sim_id)
                     coorf, seg_matrix, target, sim_ids = batch_data
                     coorf, target = coorf.to(device), target.to(device)
-                    seg_matrix = seg_matrix.to(device)
-                    #with autocast(device_type="cuda", dtype=torch.float16):
-                    if model_name == 'transolver':
-                        outputs = model(coorf)
-                    elif model_name in ('transolver_seg', 'transolver_seg_v2', 'SegLinearNO', 'SegLinearNO_v2'):
-                        outputs = model((coorf, seg_matrix))
-                    elif model_name in ('LinearNO', 'RopeLinearNO'):
-                        outputs = model(coorf)
-                    else:
-                        raise ValueError(f"Model name {model_name} not supported")
-
-                    loss = criterion(outputs, target)
+                    if model_name in SEGMENTED_MODELS:
+                        seg_matrix = seg_matrix.to(device)
+                    with autocast(
+                        device_type=device.type,
+                        dtype=amp_dtype,
+                        enabled=amp_enabled,
+                    ):
+                        if model_name == 'transolver':
+                            outputs = model(coorf)
+                        elif model_name in SEGMENTED_MODELS:
+                            outputs = model((coorf, seg_matrix))
+                        elif model_name in ('LinearNO', 'RopeLinearNO'):
+                            outputs = model(coorf)
+                        else:
+                            raise ValueError(f"Model name {model_name} not supported")
+                        loss = criterion(outputs, target)
                     val_loss += loss.detach().cpu().item()
 
                     # Compute relative error
                     relative_error = compute_relative_error(
-                        outputs.detach().cpu().numpy(),
+                        outputs.detach().float().cpu().numpy(),
                         target.detach().cpu().numpy(), normalization_scalars)
                     val_relative_error += relative_error
                     val_progress.set_postfix(loss=f"{loss.item():.4e}")
@@ -291,6 +323,7 @@ def test(model_name, model, test_loader, normalization_scalars, model_path="mode
         dict: Test results
     """
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    amp_enabled, amp_dtype, _ = configure_amp(device)
 
     # Load the best model
     if os.path.exists(model_path):
@@ -319,30 +352,36 @@ def test(model_name, model, test_loader, normalization_scalars, model_path="mode
             # New dataloader format: (coorf, seg_matrix, p, sim_id)
             coorf, seg_matrix, target, sim_ids = batch_data
             coorf, target = coorf.to(device), target.to(device)
-            seg_matrix = seg_matrix.to(device)
+            if model_name in SEGMENTED_MODELS:
+                seg_matrix = seg_matrix.to(device)
 
-            if model_name == 'transolver':
-                outputs = model(coorf)
-            elif model_name in ('transolver_seg', 'transolver_seg_v2', 'SegLinearNO', 'SegLinearNO_v2'):
-                outputs = model((coorf, seg_matrix))
-            elif model_name in ('LinearNO', 'RopeLinearNO'):
-                outputs = model(coorf)
-            else:
-                raise ValueError(f"Model name {model_name} not supported")
-            loss = criterion(outputs, target)
+            with autocast(
+                device_type=device.type,
+                dtype=amp_dtype,
+                enabled=amp_enabled,
+            ):
+                if model_name == 'transolver':
+                    outputs = model(coorf)
+                elif model_name in SEGMENTED_MODELS:
+                    outputs = model((coorf, seg_matrix))
+                elif model_name in ('LinearNO', 'RopeLinearNO'):
+                    outputs = model(coorf)
+                else:
+                    raise ValueError(f"Model name {model_name} not supported")
+                loss = criterion(outputs, target)
             test_loss += loss.item()
 
             # Compute field-level relative error
             relative_error = compute_relative_error(
-                outputs.detach().cpu().numpy(),
+                outputs.detach().float().cpu().numpy(),
                 target.detach().cpu().numpy(), normalization_scalars)
             test_relative_error += relative_error
             test_progress.set_postfix(loss=f"{loss.item():.4e}")
 
             # Store predictions and targets for detailed analysis
             SIM_ID = sim_ids[0]
-            all_predictions[SIM_ID] = outputs
-            all_targets[SIM_ID] = target
+            all_predictions[SIM_ID] = outputs.detach().float().cpu()
+            all_targets[SIM_ID] = target.detach().cpu()
 
     test_loss /= len(test_loader)
     test_relative_error /= len(test_loader)
