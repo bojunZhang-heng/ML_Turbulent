@@ -6,6 +6,9 @@ from models.Transolver_seg_v2 import Model as Transolver_SEG_V2_Model
 from models.SegLinearNO import Model as SegLinearNO
 from models.SegLinearNO_v2 import Model as SegLinearNO_v2
 from models.LinearAttnNeuralOperator import LinearAttentionNeuralOperator as LinearNO
+from models.RopeLinearNO import LinearAttentionNeuralOperator as RopeLinearNO
+
+
 # from models.mlp import MLP as MLP_Model
 # from models.figconv import FigConv_Model
 # from models.figconv import Multi_grid_model
@@ -165,6 +168,15 @@ def main():
     elif model_name == 'LinearNO':
         model = LinearNO(
             space_dim=6,
+            n_layers=8,
+            n_hidden=256,
+            n_head=8,
+            Time_Input=False,
+            mlp_ratio=2,fun_dim=0,out_dim=1,key_ratio=1,
+            unified_pos=False,isregular=False)
+    elif model_name == 'RopeLinearNO':
+        model = RopeLinearNO(
+            space_dim=3,
             n_layers=8,
             n_hidden=256,
             n_head=8,
