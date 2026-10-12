@@ -212,8 +212,8 @@ def main():
             train_loader=train_loader,
             val_loader=val_loader,
             normalization_scalars=normalization_scalars,
+            args = args,
             num_epochs=num_epochs,        # Increased epochs
-            learning_rate=args.learning_rate,    # Increased learning rate for AdamW
             eval_freq=args.eval_freq,
             save_path=save_path,
             predicted_feature_name=predicted_feature_name
