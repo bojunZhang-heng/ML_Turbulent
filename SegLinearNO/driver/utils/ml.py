@@ -125,8 +125,8 @@ def print_mem_report(layer_stats, top_k=20):
         print(f"  {name[:60]:60s} Δ={jump:+.2f}GB  (累计 {allocated:.2f}GB)")
     print("=" * 100 + "\n")
 
-def train(model_name, model, train_loader, val_loader, normalization_scalars,
-          num_epochs=100, learning_rate=0.0001, eval_freq = 10,
+def train(model_name, model, train_loader, val_loader,
+          normalization_scalars, args, num_epochs=100, eval_freq = 10,
           save_path="models/best_model.pth", predicted_feature_name="pressure"):
     """
     Train the model with validation monitoring.
@@ -137,7 +137,6 @@ def train(model_name, model, train_loader, val_loader, normalization_scalars,
         val_loader: Validation data loader
         normalization_scalars: Normalization scalars for denormalization
         num_epochs: Number of training epochs
-        learning_rate: Learning rate for optimizer
         save_path: Path to save the best model
 
     Returns:
@@ -150,15 +149,29 @@ def train(model_name, model, train_loader, val_loader, normalization_scalars,
         print(f"AMP enabled with dtype={amp_dtype}")
 
     model = model.float().to(device)
-    criterion = nn.MSELoss()
-    optimizer = optim.Adam(model.parameters(), lr=learning_rate)
     batch_size = 1
-    lr_scheduler = torch.optim.lr_scheduler.OneCycleLR(
-        optimizer,
-        max_lr=learning_rate,
-        total_steps=(len(train_loader) // batch_size + 1) * num_epochs,
-        final_div_factor=1000.,
+
+    criterion = nn.MSELoss()
+
+    # RETO module
+    optimizer = optim.AdamW(
+        model.parameters(), lr=args.learning_rate, weight_decay=args.weight_decay
     )
+    lr_scheduler = torch.optim.lr_scheduler.StepLR(
+        optimizer,
+        step_size=args.scheduler_step,
+        gamma=args.scheduler_gamma
+    )
+
+    # PGD-NO module
+    #optimizer = optim.Adam(model.parameters(), lr=args.learning_rate)
+    #lr_scheduler = torch.optim.lr_scheduler.OneCycleLR(
+    #    optimizer,
+    #    max_lr=args.learning_rate,
+    #    total_steps=(len(train_loader) // batch_size + 1) * num_epochs,
+    #    final_div_factor=1000.,
+    #)
+
     # lr_scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
     #     optimizer, factor=0.7, patience=20)
     # optimizer = optim.SGD(model.parameters(), lr=learning_rate)
@@ -236,11 +249,11 @@ def train(model_name, model, train_loader, val_loader, normalization_scalars,
             scaler.scale(loss).backward()
             scaler.step(optimizer)
             scaler.update()
-            lr_scheduler.step()
 
             train_loss += loss.item()
             train_progress.set_postfix(loss=f"{loss.item():.4e}")
 
+        lr_scheduler.step()
         train_loss /= len(train_loader)
 
         # Validation phase
