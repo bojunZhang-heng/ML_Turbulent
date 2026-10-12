@@ -7,7 +7,7 @@ def get_samples(root):
     samples = []
     for fold in folds:
         fold_samples = []
-        files = os.listdir(os.path.join(root, fold))
+        files = sorted(os.listdir(os.path.join(root, fold)))
         for file in files:
             path = os.path.join(root, os.path.join(fold, file))
             if os.path.isdir(path):
