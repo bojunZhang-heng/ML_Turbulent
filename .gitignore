@@ -27,3 +27,5 @@ SegLinearNO/driver/config*.yml
 preprocess/data/
 preprocess/run_DrivAerNet.sh
 preprocess/run_ShapeNet.sh
+**/.DS_Store
+
