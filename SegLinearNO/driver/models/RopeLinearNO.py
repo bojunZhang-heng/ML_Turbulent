@@ -260,6 +260,7 @@ class LinearAttentionNeuralOperator(nn.Module):
 
         coords = data[..., : self.space_dim]
         attn_kwargs = {"freqs": self.rope(coords)}
+
         fx = self.preprocess(self.pos_embed(coords))
         placeholder = self.placeholder.to(dtype=fx.dtype)
         fx = fx + placeholder[None, None, :]
