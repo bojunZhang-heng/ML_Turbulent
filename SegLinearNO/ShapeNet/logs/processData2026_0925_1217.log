@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/home/zhangbojun/ML_Turbulent/PGD-NO/driver/process_data.py", line 5, in <module>
+    import vtk
+  File "/home/zhangbojun/.conda/envs/pgd-no/lib/python3.10/site-packages/vtk.py", line 38, in <module>
+    from vtkmodules.vtkInteractionWidgets import *
+ImportError: libOSMesa.so.8: cannot open shared object file: No such file or directory

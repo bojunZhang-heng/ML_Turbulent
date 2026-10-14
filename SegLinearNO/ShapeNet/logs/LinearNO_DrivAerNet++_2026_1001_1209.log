@@ -1,0 +1,795 @@
+🚀 Starting VTK Data Processing Pipeline
+
+🔄 Creating data loaders...
+Total samples found in /data/zhangbojun/DrivAerNet++_dataset/PressureVTK/E_S_WWC_WM/pklFile/: 688
+Train: 483, Val: 69, Test: 136
+Per-file data root: /data/zhangbojun/DrivAerNet++_dataset/PressureVTK/E_S_WWC_WM/pklFile/
+Data split:
+  - Training: 483 simulations (indices: [5, 6, 7, 8, 9, 10, 11, 15, 16, 17, 18, 19, 20, 21, 25, 26, 27, 28, 29, 30, 31, 35, 36, 37, 38, 39, 40, 41, 45, 46, 47, 48, 49, 50, 51, 55, 56, 57, 58, 59, 60, 61, 65, 66, 67, 68, 69, 70, 71, 75, 76, 77, 78, 79, 80, 81, 85, 86, 87, 88, 89, 90, 91, 95, 96, 97, 98, 99, 100, 101, 105, 106, 107, 108, 109, 110, 111, 115, 116, 117, 118, 119, 120, 121, 125, 126, 127, 128, 129, 130, 131, 135, 136, 137, 139, 140, 141, 142, 146, 147, 148, 149, 150, 151, 152, 156, 157, 158, 159, 160, 161, 162, 166, 167, 168, 169, 170, 171, 172, 176, 177, 178, 179, 180, 181, 182, 186, 187, 188, 189, 190, 191, 192, 196, 197, 198, 199, 200, 201, 202, 206, 207, 208, 209, 210, 211, 212, 216, 217, 218, 219, 220, 221, 222, 226, 227, 228, 229, 230, 231, 232, 236, 237, 238, 239, 240, 241, 242, 246, 247, 248, 249, 250, 251, 252, 256, 257, 258, 259, 260, 261, 262, 266, 267, 268, 270, 271, 272, 273, 277, 278, 279, 280, 281, 282, 283, 287, 288, 289, 290, 291, 292, 293, 297, 298, 299, 300, 301, 302, 303, 307, 308, 309, 310, 311, 312, 313, 317, 318, 319, 320, 322, 323, 324, 328, 329, 330, 331, 332, 333, 334, 339, 340, 341, 342, 343, 344, 345, 349, 350, 351, 352, 353, 354, 355, 359, 360, 361, 362, 363, 364, 365, 369, 370, 371, 372, 373, 374, 375, 379, 380, 381, 382, 383, 384, 385, 389, 390, 391, 392, 393, 394, 395, 399, 400, 401, 402, 403, 404, 405, 409, 410, 411, 412, 413, 414, 415, 419, 420, 421, 422, 423, 424, 425, 429, 430, 431, 432, 433, 434, 435, 439, 440, 441, 442, 443, 444, 445, 449, 450, 451, 452, 453, 454, 455, 459, 460, 461, 462, 463, 464, 465, 469, 470, 471, 472, 473, 474, 475, 479, 480, 481, 482, 483, 484, 485, 489, 490, 491, 492, 493, 494, 495, 499, 500, 501, 502, 503, 504, 505, 509, 510, 511, 512, 513, 514, 515, 519, 520, 521, 522, 523, 524, 525, 529, 530, 531, 532, 533, 534, 535, 539, 540, 541, 542, 543, 544, 545, 549, 550, 551, 552, 553, 554, 555, 559, 560, 561, 562, 563, 564, 565, 569, 570, 571, 572, 573, 574, 575, 579, 580, 581, 582, 583, 584, 585, 589, 590, 591, 592, 593, 594, 595, 599, 600, 601, 602, 603, 604, 605, 609, 610, 611, 612, 613, 614, 615, 620, 621, 622, 623, 624, 625, 627, 632, 633, 634, 635, 636, 637, 638, 643, 644, 645, 646, 647, 648, 649, 653, 654, 655, 656, 657, 658, 659, 663, 664, 665, 666, 667, 668, 669, 673, 674, 675, 676, 677, 678, 679, 683, 684, 685, 686, 687, 688, 689, 693, 694, 695, 696, 697, 698, 699])
+  - Validation: 69 simulations (indices: [12, 22, 32, 42, 52, 62, 72, 82, 92, 102, 112, 122, 132, 143, 153, 163, 173, 183, 193, 203, 213, 223, 233, 243, 253, 263, 274, 284, 294, 304, 314, 325, 335, 346, 356, 366, 376, 386, 396, 406, 416, 426, 436, 446, 456, 466, 476, 486, 496, 506, 516, 526, 536, 546, 556, 566, 576, 586, 596, 606, 616, 628, 639, 650, 660, 670, 680, 690, 700])
+  - Testing: 136 simulations (indices: [13, 14, 23, 24, 33, 34, 43, 44, 53, 54, 63, 64, 73, 74, 83, 84, 93, 94, 103, 104, 113, 114, 123, 124, 133, 134, 144, 145, 154, 155, 164, 165, 174, 175, 184, 185, 194, 195, 204, 205, 214, 215, 224, 225, 234, 235, 244, 245, 254, 255, 264, 265, 275, 276, 285, 286, 295, 296, 305, 306, 315, 316, 326, 327, 336, 337, 347, 348, 357, 358, 367, 368, 377, 378, 387, 388, 397, 398, 407, 408, 417, 418, 427, 428, 437, 438, 447, 448, 457, 458, 467, 468, 477, 478, 487, 488, 497, 498, 507, 508, 517, 518, 527, 528, 537, 538, 547, 548, 557, 558, 567, 568, 577, 578, 587, 588, 597, 598, 607, 608, 617, 618, 629, 631, 641, 642, 651, 652, 661, 662, 671, 672, 681, 682, 691, 692])
+  - Predicting: pressure
+
+🏗️  Creating model...
+Model parameters: 3851137
+
+🎯 Starting training...
+Using device: cuda
+Starting training for 300 epochs (model_name='LinearNO', assuming 'transolver' and coorf-only input)...
+Epoch 1/300 - Train:   0%|          | 0/483 [00:00<?, ?batch/s]/home/zhangbojun/.conda/envs/pgd-no/lib/python3.10/site-packages/torch/nn/modules/loss.py:608: UserWarning: Using a target size (torch.Size([1, 529107, 1])) that is different to the input size (torch.Size([529107, 1])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return F.mse_loss(input, target, reduction=self.reduction)
+
+====================================================================================================
+layer                                              module             out_shape                out_MB  alloc_GB
+----------------------------------------------------------------------------------------------------
+preprocess.linear_pre.0                            Linear             (1, 529107, 512)          516.7      0.71
+preprocess.linear_pre.1                            GELU               (1, 529107, 512)          516.7      1.22
+preprocess.linear_post                             Linear             (1, 529107, 256)          258.4      1.47
+blocks.0.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      2.23
+blocks.0.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      2.48
+blocks.0.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      2.73
+blocks.0.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      2.99
+blocks.0.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      3.24
+blocks.0.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      4.25
+blocks.0.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      4.50
+blocks.0.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      4.50
+blocks.0.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      4.25
+blocks.0.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      2.73
+blocks.0.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      3.24
+blocks.0.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      3.74
+blocks.0.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      3.49
+blocks.1.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      2.73
+blocks.1.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      2.99
+blocks.1.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      3.24
+blocks.1.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      3.49
+blocks.1.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      3.74
+blocks.1.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      4.75
+blocks.1.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      5.00
+blocks.1.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      5.00
+blocks.1.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      4.75
+blocks.1.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      3.24
+blocks.1.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      3.74
+blocks.1.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      4.25
+blocks.1.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      4.00
+blocks.2.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      3.24
+blocks.2.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      3.49
+blocks.2.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      3.74
+blocks.2.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      4.00
+blocks.2.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      4.25
+blocks.2.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      5.26
+blocks.2.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      5.51
+blocks.2.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      5.51
+blocks.2.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      5.26
+blocks.2.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      3.74
+blocks.2.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      4.25
+blocks.2.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      4.75
+blocks.2.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      4.50
+blocks.3.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      3.74
+blocks.3.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      4.00
+blocks.3.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      4.25
+blocks.3.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      4.50
+blocks.3.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      4.75
+blocks.3.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      5.76
+blocks.3.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      6.02
+blocks.3.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      6.02
+blocks.3.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      5.76
+blocks.3.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      4.25
+blocks.3.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      4.75
+blocks.3.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      5.26
+blocks.3.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      5.01
+blocks.4.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      4.25
+blocks.4.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      4.50
+blocks.4.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      4.75
+blocks.4.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      5.01
+blocks.4.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      5.26
+blocks.4.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      6.27
+blocks.4.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      6.52
+blocks.4.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      6.52
+blocks.4.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      6.27
+blocks.4.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      4.75
+blocks.4.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      5.26
+blocks.4.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      5.76
+blocks.4.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      5.51
+blocks.5.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      4.76
+blocks.5.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      5.01
+blocks.5.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      5.26
+blocks.5.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      5.51
+blocks.5.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      5.76
+blocks.5.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      6.77
+blocks.5.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      7.03
+blocks.5.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      7.03
+blocks.5.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      6.77
+blocks.5.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      5.26
+blocks.5.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      5.77
+blocks.5.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      6.27
+blocks.5.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      6.02
+blocks.6.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      5.26
+blocks.6.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      5.51
+blocks.6.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      5.77
+blocks.6.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      6.02
+blocks.6.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      6.27
+blocks.6.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      7.28
+blocks.6.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      7.53
+blocks.6.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      7.53
+blocks.6.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      7.28
+blocks.6.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      5.77
+blocks.6.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      6.27
+blocks.6.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      6.78
+blocks.6.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      6.52
+blocks.7.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      5.77
+blocks.7.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      6.02
+blocks.7.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      6.27
+blocks.7.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      6.52
+blocks.7.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      6.78
+blocks.7.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      7.79
+blocks.7.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      8.04
+blocks.7.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      8.04
+blocks.7.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      7.79
+blocks.7.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      6.27
+blocks.7.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      6.78
+blocks.7.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      7.28
+blocks.7.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      7.03
+blocks.7.ln_3                                      LayerNorm          (1, 529107, 256)          516.7      6.27
+blocks.7.mlp2                                      Linear             (1, 529107, 1)              1.0      6.27
+----------------------------------------------------------------------------------------------------
+
+>>> Top output-size layers:
+  preprocess.linear_pre.0                                      out=   516.7MB shape=(1, 529107, 512) alloc=0.71GB
+  preprocess.linear_pre.1                                      out=   516.7MB shape=(1, 529107, 512) alloc=1.22GB
+  blocks.0.ln_1                                                out=   516.7MB shape=(1, 529107, 256) alloc=2.23GB
+  blocks.0.ln_2                                                out=   516.7MB shape=(1, 529107, 256) alloc=2.73GB
+  blocks.0.mlp.linear_pre.0                                    out=   516.7MB shape=(1, 529107, 512) alloc=3.24GB
+  blocks.0.mlp.linear_pre.1                                    out=   516.7MB shape=(1, 529107, 512) alloc=3.74GB
+  blocks.1.ln_1                                                out=   516.7MB shape=(1, 529107, 256) alloc=2.73GB
+  blocks.1.ln_2                                                out=   516.7MB shape=(1, 529107, 256) alloc=3.24GB
+  blocks.1.mlp.linear_pre.0                                    out=   516.7MB shape=(1, 529107, 512) alloc=3.74GB
+  blocks.1.mlp.linear_pre.1                                    out=   516.7MB shape=(1, 529107, 512) alloc=4.25GB
+  blocks.2.ln_1                                                out=   516.7MB shape=(1, 529107, 256) alloc=3.24GB
+  blocks.2.ln_2                                                out=   516.7MB shape=(1, 529107, 256) alloc=3.74GB
+  blocks.2.mlp.linear_pre.0                                    out=   516.7MB shape=(1, 529107, 512) alloc=4.25GB
+  blocks.2.mlp.linear_pre.1                                    out=   516.7MB shape=(1, 529107, 512) alloc=4.75GB
+  blocks.3.ln_1                                                out=   516.7MB shape=(1, 529107, 256) alloc=3.74GB
+  blocks.3.ln_2                                                out=   516.7MB shape=(1, 529107, 256) alloc=4.25GB
+  blocks.3.mlp.linear_pre.0                                    out=   516.7MB shape=(1, 529107, 512) alloc=4.75GB
+  blocks.3.mlp.linear_pre.1                                    out=   516.7MB shape=(1, 529107, 512) alloc=5.26GB
+  blocks.4.ln_1                                                out=   516.7MB shape=(1, 529107, 256) alloc=4.25GB
+  blocks.4.ln_2                                                out=   516.7MB shape=(1, 529107, 256) alloc=4.75GB
+
+>>> Biggest alloc jumps (per-layer, ordered):
+  blocks.0.Attn.to_out.0                                       Δ=+1.01GB  (累计 4.25GB)
+  blocks.1.Attn.to_out.0                                       Δ=+1.01GB  (累计 4.75GB)
+  blocks.2.Attn.to_out.0                                       Δ=+1.01GB  (累计 5.26GB)
+  blocks.3.Attn.to_out.0                                       Δ=+1.01GB  (累计 5.76GB)
+  blocks.4.Attn.to_out.0                                       Δ=+1.01GB  (累计 6.27GB)
+  blocks.5.Attn.to_out.0                                       Δ=+1.01GB  (累计 6.77GB)
+  blocks.6.Attn.to_out.0                                       Δ=+1.01GB  (累计 7.28GB)
+  blocks.7.Attn.to_out.0                                       Δ=+1.01GB  (累计 7.79GB)
+  blocks.0.ln_1                                                Δ=+0.76GB  (累计 2.23GB)
+  preprocess.linear_pre.0                                      Δ=+0.71GB  (累计 0.71GB)
+  blocks.0.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 3.24GB)
+  blocks.1.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 3.74GB)
+  blocks.2.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 4.25GB)
+  blocks.3.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 4.75GB)
+  blocks.4.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 5.26GB)
+/home/zhangbojun/.conda/envs/pgd-no/lib/python3.10/site-packages/torch/optim/lr_scheduler.py:224: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  warnings.warn(
+Epoch 1/300 - Train:   0%|          | 0/483 [00:18<?, ?batch/s, loss=1.1707e+00]Epoch 1/300 - Train:   0%|          | 1/483 [00:18<2:28:45, 18.52s/batch, loss=1.1707e+00]/home/zhangbojun/.conda/envs/pgd-no/lib/python3.10/site-packages/torch/nn/modules/loss.py:608: UserWarning: Using a target size (torch.Size([1, 523421, 1])) that is different to the input size (torch.Size([523421, 1])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return F.mse_loss(input, target, reduction=self.reduction)
+  blocks.5.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 5.77GB)
+  blocks.6.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 6.27GB)
+  blocks.7.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 6.78GB)
+  preprocess.linear_pre.1                                      Δ=+0.50GB  (累计 1.22GB)
+  blocks.0.mlp.linear_pre.1                                    Δ=+0.50GB  (累计 3.74GB)
+====================================================================================================
+
+
+====================================================================================================
+layer                                              module             out_shape                out_MB  alloc_GB
+----------------------------------------------------------------------------------------------------
+preprocess.linear_pre.0                            Linear             (1, 529107, 512)          516.7      0.71
+preprocess.linear_pre.1                            GELU               (1, 529107, 512)          516.7      1.22
+preprocess.linear_post                             Linear             (1, 529107, 256)          258.4      1.47
+blocks.0.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      2.23
+blocks.0.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      2.48
+blocks.0.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      2.73
+blocks.0.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      2.99
+blocks.0.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      3.24
+blocks.0.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      4.25
+blocks.0.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      4.50
+blocks.0.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      4.50
+blocks.0.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      4.25
+blocks.0.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      2.73
+blocks.0.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      3.24
+blocks.0.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      3.74
+blocks.0.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      3.49
+blocks.1.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      2.73
+blocks.1.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      2.99
+blocks.1.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      3.24
+blocks.1.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      3.49
+blocks.1.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      3.74
+blocks.1.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      4.75
+blocks.1.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      5.00
+blocks.1.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      5.00
+blocks.1.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      4.75
+blocks.1.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      3.24
+blocks.1.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      3.74
+blocks.1.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      4.25
+blocks.1.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      4.00
+blocks.2.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      3.24
+blocks.2.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      3.49
+blocks.2.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      3.74
+blocks.2.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      4.00
+blocks.2.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      4.25
+blocks.2.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      5.26
+blocks.2.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      5.51
+blocks.2.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      5.51
+blocks.2.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      5.26
+blocks.2.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      3.74
+blocks.2.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      4.25
+blocks.2.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      4.75
+blocks.2.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      4.50
+blocks.3.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      3.74
+blocks.3.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      4.00
+blocks.3.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      4.25
+blocks.3.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      4.50
+blocks.3.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      4.75
+blocks.3.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      5.76
+blocks.3.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      6.02
+blocks.3.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      6.02
+blocks.3.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      5.76
+blocks.3.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      4.25
+blocks.3.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      4.75
+blocks.3.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      5.26
+blocks.3.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      5.01
+blocks.4.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      4.25
+blocks.4.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      4.50
+blocks.4.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      4.75
+blocks.4.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      5.01
+blocks.4.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      5.26
+blocks.4.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      6.27
+blocks.4.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      6.52
+blocks.4.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      6.52
+blocks.4.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      6.27
+blocks.4.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      4.75
+blocks.4.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      5.26
+blocks.4.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      5.76
+blocks.4.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      5.51
+blocks.5.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      4.76
+blocks.5.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      5.01
+blocks.5.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      5.26
+blocks.5.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      5.51
+blocks.5.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      5.76
+blocks.5.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      6.77
+blocks.5.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      7.03
+blocks.5.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      7.03
+blocks.5.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      6.77
+blocks.5.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      5.26
+blocks.5.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      5.77
+blocks.5.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      6.27
+blocks.5.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      6.02
+blocks.6.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      5.26
+blocks.6.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      5.51
+blocks.6.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      5.77
+blocks.6.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      6.02
+blocks.6.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      6.27
+blocks.6.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      7.28
+blocks.6.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      7.53
+blocks.6.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      7.53
+blocks.6.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      7.28
+blocks.6.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      5.77
+blocks.6.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      6.27
+blocks.6.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      6.78
+blocks.6.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      6.52
+blocks.7.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      5.77
+blocks.7.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      6.02
+blocks.7.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      6.27
+blocks.7.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      6.52
+blocks.7.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      6.78
+blocks.7.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      7.79
+blocks.7.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      8.04
+blocks.7.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      8.04
+blocks.7.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      7.79
+blocks.7.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      6.27
+blocks.7.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      6.78
+blocks.7.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      7.28
+blocks.7.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      7.03
+blocks.7.ln_3                                      LayerNorm          (1, 529107, 256)          516.7      6.27
+blocks.7.mlp2                                      Linear             (1, 529107, 1)              1.0      6.27
+----------------------------------------------------------------------------------------------------
+
+>>> Top output-size layers:
+  preprocess.linear_pre.0                                      out=   516.7MB shape=(1, 529107, 512) alloc=0.71GB
+  preprocess.linear_pre.1                                      out=   516.7MB shape=(1, 529107, 512) alloc=1.22GB
+  blocks.0.ln_1                                                out=   516.7MB shape=(1, 529107, 256) alloc=2.23GB
+  blocks.0.ln_2                                                out=   516.7MB shape=(1, 529107, 256) alloc=2.73GB
+  blocks.0.mlp.linear_pre.0                                    out=   516.7MB shape=(1, 529107, 512) alloc=3.24GB
+  blocks.0.mlp.linear_pre.1                                    out=   516.7MB shape=(1, 529107, 512) alloc=3.74GB
+  blocks.1.ln_1                                                out=   516.7MB shape=(1, 529107, 256) alloc=2.73GB
+  blocks.1.ln_2                                                out=   516.7MB shape=(1, 529107, 256) alloc=3.24GB
+  blocks.1.mlp.linear_pre.0                                    out=   516.7MB shape=(1, 529107, 512) alloc=3.74GB
+  blocks.1.mlp.linear_pre.1                                    out=   516.7MB shape=(1, 529107, 512) alloc=4.25GB
+  blocks.2.ln_1                                                out=   516.7MB shape=(1, 529107, 256) alloc=3.24GB
+  blocks.2.ln_2                                                out=   516.7MB shape=(1, 529107, 256) alloc=3.74GB
+  blocks.2.mlp.linear_pre.0                                    out=   516.7MB shape=(1, 529107, 512) alloc=4.25GB
+  blocks.2.mlp.linear_pre.1                                    out=   516.7MB shape=(1, 529107, 512) alloc=4.75GB
+  blocks.3.ln_1                                                out=   516.7MB shape=(1, 529107, 256) alloc=3.74GB
+  blocks.3.ln_2                                                out=   516.7MB shape=(1, 529107, 256) alloc=4.25GB
+  blocks.3.mlp.linear_pre.0                                    out=   516.7MB shape=(1, 529107, 512) alloc=4.75GB
+  blocks.3.mlp.linear_pre.1                                    out=   516.7MB shape=(1, 529107, 512) alloc=5.26GB
+  blocks.4.ln_1                                                out=   516.7MB shape=(1, 529107, 256) alloc=4.25GB
+  blocks.4.ln_2                                                out=   516.7MB shape=(1, 529107, 256) alloc=4.75GB
+
+>>> Biggest alloc jumps (per-layer, ordered):
+  blocks.0.Attn.to_out.0                                       Δ=+1.01GB  (累计 4.25GB)
+  blocks.1.Attn.to_out.0                                       Δ=+1.01GB  (累计 4.75GB)
+  blocks.2.Attn.to_out.0                                       Δ=+1.01GB  (累计 5.26GB)
+  blocks.3.Attn.to_out.0                                       Δ=+1.01GB  (累计 5.76GB)
+  blocks.4.Attn.to_out.0                                       Δ=+1.01GB  (累计 6.27GB)
+  blocks.5.Attn.to_out.0                                       Δ=+1.01GB  (累计 6.77GB)
+  blocks.6.Attn.to_out.0                                       Δ=+1.01GB  (累计 7.28GB)
+  blocks.7.Attn.to_out.0                                       Δ=+1.01GB  (累计 7.79GB)
+Epoch 1/300 - Train:   0%|          | 1/483 [00:36<2:28:45, 18.52s/batch, loss=9.9303e-01]Epoch 1/300 - Train:   0%|          | 2/483 [00:36<2:25:59, 18.21s/batch, loss=9.9303e-01]/home/zhangbojun/.conda/envs/pgd-no/lib/python3.10/site-packages/torch/nn/modules/loss.py:608: UserWarning: Using a target size (torch.Size([1, 477375, 1])) that is different to the input size (torch.Size([477375, 1])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return F.mse_loss(input, target, reduction=self.reduction)
+  blocks.0.ln_1                                                Δ=+0.76GB  (累计 2.23GB)
+  preprocess.linear_pre.0                                      Δ=+0.71GB  (累计 0.71GB)
+  blocks.0.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 3.24GB)
+  blocks.1.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 3.74GB)
+  blocks.2.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 4.25GB)
+  blocks.3.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 4.75GB)
+  blocks.4.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 5.26GB)
+  blocks.5.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 5.77GB)
+  blocks.6.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 6.27GB)
+  blocks.7.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 6.78GB)
+  preprocess.linear_pre.1                                      Δ=+0.50GB  (累计 1.22GB)
+  blocks.0.mlp.linear_pre.1                                    Δ=+0.50GB  (累计 3.74GB)
+====================================================================================================
+
+
+====================================================================================================
+layer                                              module             out_shape                out_MB  alloc_GB
+----------------------------------------------------------------------------------------------------
+preprocess.linear_pre.0                            Linear             (1, 529107, 512)          516.7      0.71
+preprocess.linear_pre.1                            GELU               (1, 529107, 512)          516.7      1.22
+preprocess.linear_post                             Linear             (1, 529107, 256)          258.4      1.47
+blocks.0.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      2.23
+blocks.0.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      2.48
+blocks.0.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      2.73
+blocks.0.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      2.99
+blocks.0.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      3.24
+blocks.0.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      4.25
+blocks.0.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      4.50
+blocks.0.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      4.50
+blocks.0.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      4.25
+blocks.0.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      2.73
+blocks.0.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      3.24
+blocks.0.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      3.74
+blocks.0.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      3.49
+blocks.1.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      2.73
+blocks.1.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      2.99
+blocks.1.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      3.24
+blocks.1.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      3.49
+blocks.1.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      3.74
+blocks.1.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      4.75
+blocks.1.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      5.00
+blocks.1.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      5.00
+blocks.1.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      4.75
+blocks.1.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      3.24
+blocks.1.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      3.74
+blocks.1.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      4.25
+blocks.1.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      4.00
+blocks.2.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      3.24
+blocks.2.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      3.49
+blocks.2.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      3.74
+blocks.2.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      4.00
+blocks.2.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      4.25
+blocks.2.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      5.26
+blocks.2.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      5.51
+blocks.2.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      5.51
+blocks.2.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      5.26
+blocks.2.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      3.74
+blocks.2.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      4.25
+blocks.2.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      4.75
+blocks.2.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      4.50
+blocks.3.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      3.74
+blocks.3.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      4.00
+blocks.3.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      4.25
+blocks.3.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      4.50
+blocks.3.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      4.75
+blocks.3.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      5.76
+blocks.3.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      6.02
+blocks.3.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      6.02
+blocks.3.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      5.76
+blocks.3.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      4.25
+blocks.3.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      4.75
+blocks.3.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      5.26
+blocks.3.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      5.01
+blocks.4.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      4.25
+blocks.4.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      4.50
+blocks.4.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      4.75
+blocks.4.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      5.01
+blocks.4.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      5.26
+blocks.4.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      6.27
+blocks.4.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      6.52
+blocks.4.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      6.52
+blocks.4.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      6.27
+blocks.4.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      4.75
+blocks.4.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      5.26
+blocks.4.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      5.76
+blocks.4.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      5.51
+blocks.5.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      4.76
+blocks.5.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      5.01
+blocks.5.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      5.26
+blocks.5.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      5.51
+blocks.5.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      5.76
+blocks.5.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      6.77
+blocks.5.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      7.03
+blocks.5.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      7.03
+blocks.5.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      6.77
+blocks.5.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      5.26
+blocks.5.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      5.77
+blocks.5.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      6.27
+blocks.5.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      6.02
+blocks.6.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      5.26
+blocks.6.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      5.51
+blocks.6.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      5.77
+blocks.6.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      6.02
+blocks.6.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      6.27
+blocks.6.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      7.28
+blocks.6.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      7.53
+blocks.6.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      7.53
+blocks.6.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      7.28
+blocks.6.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      5.77
+blocks.6.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      6.27
+blocks.6.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      6.78
+blocks.6.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      6.52
+blocks.7.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      5.77
+blocks.7.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      6.02
+blocks.7.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      6.27
+blocks.7.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      6.52
+blocks.7.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      6.78
+blocks.7.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      7.79
+blocks.7.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      8.04
+blocks.7.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      8.04
+blocks.7.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      7.79
+blocks.7.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      6.27
+blocks.7.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      6.78
+blocks.7.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      7.28
+blocks.7.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      7.03
+blocks.7.ln_3                                      LayerNorm          (1, 529107, 256)          516.7      6.27
+blocks.7.mlp2                                      Linear             (1, 529107, 1)              1.0      6.27
+----------------------------------------------------------------------------------------------------
+
+>>> Top output-size layers:
+  preprocess.linear_pre.0                                      out=   516.7MB shape=(1, 529107, 512) alloc=0.71GB
+  preprocess.linear_pre.1                                      out=   516.7MB shape=(1, 529107, 512) alloc=1.22GB
+  blocks.0.ln_1                                                out=   516.7MB shape=(1, 529107, 256) alloc=2.23GB
+  blocks.0.ln_2                                                out=   516.7MB shape=(1, 529107, 256) alloc=2.73GB
+  blocks.0.mlp.linear_pre.0                                    out=   516.7MB shape=(1, 529107, 512) alloc=3.24GB
+  blocks.0.mlp.linear_pre.1                                    out=   516.7MB shape=(1, 529107, 512) alloc=3.74GB
+  blocks.1.ln_1                                                out=   516.7MB shape=(1, 529107, 256) alloc=2.73GB
+  blocks.1.ln_2                                                out=   516.7MB shape=(1, 529107, 256) alloc=3.24GB
+  blocks.1.mlp.linear_pre.0                                    out=   516.7MB shape=(1, 529107, 512) alloc=3.74GB
+  blocks.1.mlp.linear_pre.1                                    out=   516.7MB shape=(1, 529107, 512) alloc=4.25GB
+  blocks.2.ln_1                                                out=   516.7MB shape=(1, 529107, 256) alloc=3.24GB
+  blocks.2.ln_2                                                out=   516.7MB shape=(1, 529107, 256) alloc=3.74GB
+  blocks.2.mlp.linear_pre.0                                    out=   516.7MB shape=(1, 529107, 512) alloc=4.25GB
+  blocks.2.mlp.linear_pre.1                                    out=   516.7MB shape=(1, 529107, 512) alloc=4.75GB
+  blocks.3.ln_1                                                out=   516.7MB shape=(1, 529107, 256) alloc=3.74GB
+  blocks.3.ln_2                                                out=   516.7MB shape=(1, 529107, 256) alloc=4.25GB
+  blocks.3.mlp.linear_pre.0                                    out=   516.7MB shape=(1, 529107, 512) alloc=4.75GB
+  blocks.3.mlp.linear_pre.1                                    out=   516.7MB shape=(1, 529107, 512) alloc=5.26GB
+  blocks.4.ln_1                                                out=   516.7MB shape=(1, 529107, 256) alloc=4.25GB
+  blocks.4.ln_2                                                out=   516.7MB shape=(1, 529107, 256) alloc=4.75GB
+
+>>> Biggest alloc jumps (per-layer, ordered):
+  blocks.0.Attn.to_out.0                                       Δ=+1.01GB  (累计 4.25GB)
+Epoch 1/300 - Train:   0%|          | 2/483 [00:52<2:25:59, 18.21s/batch, loss=9.8259e-01]Epoch 1/300 - Train:   1%|          | 3/483 [00:52<2:19:10, 17.40s/batch, loss=9.8259e-01]/home/zhangbojun/.conda/envs/pgd-no/lib/python3.10/site-packages/torch/nn/modules/loss.py:608: UserWarning: Using a target size (torch.Size([1, 506131, 1])) that is different to the input size (torch.Size([506131, 1])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return F.mse_loss(input, target, reduction=self.reduction)
+  blocks.1.Attn.to_out.0                                       Δ=+1.01GB  (累计 4.75GB)
+  blocks.2.Attn.to_out.0                                       Δ=+1.01GB  (累计 5.26GB)
+  blocks.3.Attn.to_out.0                                       Δ=+1.01GB  (累计 5.76GB)
+  blocks.4.Attn.to_out.0                                       Δ=+1.01GB  (累计 6.27GB)
+  blocks.5.Attn.to_out.0                                       Δ=+1.01GB  (累计 6.77GB)
+  blocks.6.Attn.to_out.0                                       Δ=+1.01GB  (累计 7.28GB)
+  blocks.7.Attn.to_out.0                                       Δ=+1.01GB  (累计 7.79GB)
+  blocks.0.ln_1                                                Δ=+0.76GB  (累计 2.23GB)
+  preprocess.linear_pre.0                                      Δ=+0.71GB  (累计 0.71GB)
+  blocks.0.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 3.24GB)
+  blocks.1.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 3.74GB)
+  blocks.2.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 4.25GB)
+  blocks.3.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 4.75GB)
+  blocks.4.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 5.26GB)
+  blocks.5.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 5.77GB)
+  blocks.6.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 6.27GB)
+  blocks.7.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 6.78GB)
+  preprocess.linear_pre.1                                      Δ=+0.50GB  (累计 1.22GB)
+  blocks.0.mlp.linear_pre.1                                    Δ=+0.50GB  (累计 3.74GB)
+====================================================================================================
+
+
+====================================================================================================
+layer                                              module             out_shape                out_MB  alloc_GB
+----------------------------------------------------------------------------------------------------
+preprocess.linear_pre.0                            Linear             (1, 529107, 512)          516.7      0.71
+preprocess.linear_pre.1                            GELU               (1, 529107, 512)          516.7      1.22
+preprocess.linear_post                             Linear             (1, 529107, 256)          258.4      1.47
+blocks.0.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      2.23
+blocks.0.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      2.48
+blocks.0.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      2.73
+blocks.0.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      2.99
+blocks.0.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      3.24
+blocks.0.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      4.25
+blocks.0.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      4.50
+blocks.0.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      4.50
+blocks.0.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      4.25
+blocks.0.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      2.73
+blocks.0.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      3.24
+blocks.0.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      3.74
+blocks.0.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      3.49
+blocks.1.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      2.73
+blocks.1.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      2.99
+blocks.1.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      3.24
+blocks.1.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      3.49
+blocks.1.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      3.74
+blocks.1.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      4.75
+blocks.1.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      5.00
+blocks.1.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      5.00
+blocks.1.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      4.75
+blocks.1.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      3.24
+blocks.1.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      3.74
+blocks.1.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      4.25
+blocks.1.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      4.00
+blocks.2.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      3.24
+blocks.2.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      3.49
+blocks.2.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      3.74
+blocks.2.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      4.00
+blocks.2.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      4.25
+blocks.2.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      5.26
+blocks.2.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      5.51
+blocks.2.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      5.51
+blocks.2.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      5.26
+blocks.2.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      3.74
+blocks.2.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      4.25
+blocks.2.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      4.75
+blocks.2.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      4.50
+blocks.3.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      3.74
+blocks.3.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      4.00
+blocks.3.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      4.25
+blocks.3.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      4.50
+blocks.3.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      4.75
+blocks.3.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      5.76
+blocks.3.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      6.02
+blocks.3.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      6.02
+blocks.3.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      5.76
+blocks.3.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      4.25
+blocks.3.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      4.75
+blocks.3.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      5.26
+blocks.3.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      5.01
+blocks.4.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      4.25
+blocks.4.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      4.50
+blocks.4.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      4.75
+blocks.4.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      5.01
+blocks.4.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      5.26
+blocks.4.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      6.27
+blocks.4.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      6.52
+blocks.4.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      6.52
+blocks.4.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      6.27
+blocks.4.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      4.75
+blocks.4.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      5.26
+blocks.4.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      5.76
+blocks.4.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      5.51
+blocks.5.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      4.76
+blocks.5.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      5.01
+blocks.5.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      5.26
+blocks.5.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      5.51
+blocks.5.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      5.76
+blocks.5.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      6.77
+blocks.5.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      7.03
+blocks.5.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      7.03
+blocks.5.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      6.77
+blocks.5.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      5.26
+blocks.5.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      5.77
+blocks.5.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      6.27
+blocks.5.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      6.02
+blocks.6.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      5.26
+blocks.6.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      5.51
+blocks.6.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      5.77
+blocks.6.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      6.02
+blocks.6.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      6.27
+blocks.6.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      7.28
+blocks.6.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      7.53
+blocks.6.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      7.53
+blocks.6.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      7.28
+blocks.6.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      5.77
+blocks.6.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      6.27
+blocks.6.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      6.78
+blocks.6.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      6.52
+blocks.7.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      5.77
+blocks.7.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      6.02
+blocks.7.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      6.27
+blocks.7.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      6.52
+blocks.7.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      6.78
+blocks.7.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      7.79
+blocks.7.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      8.04
+blocks.7.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      8.04
+blocks.7.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      7.79
+blocks.7.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      6.27
+blocks.7.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      6.78
+blocks.7.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      7.28
+blocks.7.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      7.03
+blocks.7.ln_3                                      LayerNorm          (1, 529107, 256)          516.7      6.27
+blocks.7.mlp2                                      Linear             (1, 529107, 1)              1.0      6.27
+----------------------------------------------------------------------------------------------------
+
+>>> Top output-size layers:
+  preprocess.linear_pre.0                                      out=   516.7MB shape=(1, 529107, 512) alloc=0.71GB
+  preprocess.linear_pre.1                                      out=   516.7MB shape=(1, 529107, 512) alloc=1.22GB
+  blocks.0.ln_1                                                out=   516.7MB shape=(1, 529107, 256) alloc=2.23GB
+  blocks.0.ln_2                                                out=   516.7MB shape=(1, 529107, 256) alloc=2.73GB
+  blocks.0.mlp.linear_pre.0                                    out=   516.7MB shape=(1, 529107, 512) alloc=3.24GB
+  blocks.0.mlp.linear_pre.1                                    out=   516.7MB shape=(1, 529107, 512) alloc=3.74GB
+  blocks.1.ln_1                                                out=   516.7MB shape=(1, 529107, 256) alloc=2.73GB
+  blocks.1.ln_2                                                out=   516.7MB shape=(1, 529107, 256) alloc=3.24GB
+  blocks.1.mlp.linear_pre.0                                    out=   516.7MB shape=(1, 529107, 512) alloc=3.74GB
+  blocks.1.mlp.linear_pre.1                                    out=   516.7MB shape=(1, 529107, 512) alloc=4.25GB
+  blocks.2.ln_1                                                out=   516.7MB shape=(1, 529107, 256) alloc=3.24GB
+  blocks.2.ln_2                                                out=   516.7MB shape=(1, 529107, 256) alloc=3.74GB
+  blocks.2.mlp.linear_pre.0                                    out=   516.7MB shape=(1, 529107, 512) alloc=4.25GB
+  blocks.2.mlp.linear_pre.1                                    out=   516.7MB shape=(1, 529107, 512) alloc=4.75GB
+  blocks.3.ln_1                                                out=   516.7MB shape=(1, 529107, 256) alloc=3.74GB
+Epoch 1/300 - Train:   1%|          | 3/483 [01:10<2:19:10, 17.40s/batch, loss=9.5834e-01]Epoch 1/300 - Train:   1%|          | 4/483 [01:10<2:18:50, 17.39s/batch, loss=9.5834e-01]/home/zhangbojun/.conda/envs/pgd-no/lib/python3.10/site-packages/torch/nn/modules/loss.py:608: UserWarning: Using a target size (torch.Size([1, 458716, 1])) that is different to the input size (torch.Size([458716, 1])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return F.mse_loss(input, target, reduction=self.reduction)
+  blocks.3.ln_2                                                out=   516.7MB shape=(1, 529107, 256) alloc=4.25GB
+  blocks.3.mlp.linear_pre.0                                    out=   516.7MB shape=(1, 529107, 512) alloc=4.75GB
+  blocks.3.mlp.linear_pre.1                                    out=   516.7MB shape=(1, 529107, 512) alloc=5.26GB
+  blocks.4.ln_1                                                out=   516.7MB shape=(1, 529107, 256) alloc=4.25GB
+  blocks.4.ln_2                                                out=   516.7MB shape=(1, 529107, 256) alloc=4.75GB
+
+>>> Biggest alloc jumps (per-layer, ordered):
+  blocks.0.Attn.to_out.0                                       Δ=+1.01GB  (累计 4.25GB)
+  blocks.1.Attn.to_out.0                                       Δ=+1.01GB  (累计 4.75GB)
+  blocks.2.Attn.to_out.0                                       Δ=+1.01GB  (累计 5.26GB)
+  blocks.3.Attn.to_out.0                                       Δ=+1.01GB  (累计 5.76GB)
+  blocks.4.Attn.to_out.0                                       Δ=+1.01GB  (累计 6.27GB)
+  blocks.5.Attn.to_out.0                                       Δ=+1.01GB  (累计 6.77GB)
+  blocks.6.Attn.to_out.0                                       Δ=+1.01GB  (累计 7.28GB)
+  blocks.7.Attn.to_out.0                                       Δ=+1.01GB  (累计 7.79GB)
+  blocks.0.ln_1                                                Δ=+0.76GB  (累计 2.23GB)
+  preprocess.linear_pre.0                                      Δ=+0.71GB  (累计 0.71GB)
+  blocks.0.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 3.24GB)
+  blocks.1.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 3.74GB)
+  blocks.2.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 4.25GB)
+  blocks.3.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 4.75GB)
+  blocks.4.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 5.26GB)
+  blocks.5.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 5.77GB)
+  blocks.6.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 6.27GB)
+  blocks.7.mlp.linear_pre.0                                    Δ=+0.50GB  (累计 6.78GB)
+  preprocess.linear_pre.1                                      Δ=+0.50GB  (累计 1.22GB)
+  blocks.0.mlp.linear_pre.1                                    Δ=+0.50GB  (累计 3.74GB)
+====================================================================================================
+
+
+====================================================================================================
+layer                                              module             out_shape                out_MB  alloc_GB
+----------------------------------------------------------------------------------------------------
+preprocess.linear_pre.0                            Linear             (1, 529107, 512)          516.7      0.71
+preprocess.linear_pre.1                            GELU               (1, 529107, 512)          516.7      1.22
+preprocess.linear_post                             Linear             (1, 529107, 256)          258.4      1.47
+blocks.0.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      2.23
+blocks.0.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      2.48
+blocks.0.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      2.73
+blocks.0.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      2.99
+blocks.0.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      3.24
+blocks.0.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      4.25
+blocks.0.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      4.50
+blocks.0.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      4.50
+blocks.0.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      4.25
+blocks.0.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      2.73
+blocks.0.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      3.24
+blocks.0.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      3.74
+blocks.0.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      3.49
+blocks.1.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      2.73
+blocks.1.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      2.99
+blocks.1.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      3.24
+blocks.1.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      3.49
+blocks.1.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      3.74
+blocks.1.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      4.75
+blocks.1.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      5.00
+blocks.1.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      5.00
+blocks.1.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      4.75
+blocks.1.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      3.24
+blocks.1.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      3.74
+blocks.1.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      4.25
+blocks.1.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      4.00
+blocks.2.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      3.24
+blocks.2.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      3.49
+blocks.2.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      3.74
+blocks.2.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      4.00
+blocks.2.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      4.25
+blocks.2.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      5.26
+blocks.2.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      5.51
+blocks.2.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      5.51
+blocks.2.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      5.26
+blocks.2.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      3.74
+blocks.2.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      4.25
+blocks.2.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      4.75
+blocks.2.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      4.50
+blocks.3.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      3.74
+blocks.3.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      4.00
+blocks.3.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      4.25
+blocks.3.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      4.50
+blocks.3.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      4.75
+blocks.3.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      5.76
+blocks.3.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      6.02
+blocks.3.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      6.02
+blocks.3.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      5.76
+blocks.3.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      4.25
+blocks.3.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      4.75
+blocks.3.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      5.26
+blocks.3.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      5.01
+blocks.4.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      4.25
+blocks.4.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      4.50
+blocks.4.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      4.75
+blocks.4.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      5.01
+blocks.4.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      5.26
+blocks.4.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      6.27
+blocks.4.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      6.52
+blocks.4.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      6.52
+blocks.4.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      6.27
+blocks.4.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      4.75
+blocks.4.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      5.26
+blocks.4.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      5.76
+blocks.4.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      5.51
+blocks.5.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      4.76
+blocks.5.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      5.01
+blocks.5.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      5.26
+blocks.5.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      5.51
+blocks.5.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      5.76
+blocks.5.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      6.77
+blocks.5.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      7.03
+blocks.5.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      7.03
+blocks.5.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      6.77
+blocks.5.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      5.26
+blocks.5.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      5.77
+blocks.5.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      6.27
+blocks.5.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      6.02
+blocks.6.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      5.26
+blocks.6.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      5.51
+blocks.6.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      5.77
+blocks.6.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      6.02
+blocks.6.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      6.27
+blocks.6.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      7.28
+blocks.6.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      7.53
+blocks.6.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      7.53
+blocks.6.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      7.28
+blocks.6.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      5.77
+blocks.6.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      6.27
+blocks.6.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      6.78
+blocks.6.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      6.52
+blocks.7.ln_1                                      LayerNorm          (1, 529107, 256)          516.7      5.77
+blocks.7.Attn.in_project_x                         Linear             (1, 529107, 256)          258.4      6.02
+blocks.7.Attn.to_q                                 Linear             (1, 8, 529107, 32)        258.4      6.27
+blocks.7.Attn.to_k                                 Linear             (1, 8, 529107, 32)        258.4      6.52
+blocks.7.Attn.to_v                                 Linear             (1, 8, 529107, 32)        258.4      6.78
+blocks.7.Attn.to_out.0                             Linear             (1, 529107, 256)          258.4      7.79
+blocks.7.Attn.to_out.1                             GELU               (1, 529107, 256)          258.4      8.04
+blocks.7.Attn.to_out.2                             Linear             (1, 529107, 256)          258.4      8.04
+blocks.7.Attn.to_out.3                             Dropout            (1, 529107, 256)          258.4      7.79
+blocks.7.ln_2                                      LayerNorm          (1, 529107, 256)          516.7      6.27
+blocks.7.mlp.linear_pre.0                          Linear             (1, 529107, 512)          516.7      6.78
+blocks.7.mlp.linear_pre.1                          GELU               (1, 529107, 512)          516.7      7.28
+blocks.7.mlp.linear_post                           Linear             (1, 529107, 256)          258.4      7.03
+blocks.7.ln_3                                      LayerNorm          (1, 529107, 256)          516.7      6.27
+blocks.7.mlp2                                      Linear             (1, 529107, 1)              1.0      6.27
+----------------------------------------------------------------------------------------------------
+
+>>> Top output-size layers:
+  preprocess.linear_pre.0                                      out=   516.7MB shape=(1, 529107, 512) alloc=0.71GB
+  preprocess.linear_pre.1                                      out=   516.7MB shape=(1, 529107, 512) alloc=1.22GB
+  blocks.0.ln_1                                                out=   516.7MB shape=(1, 529107, 256) alloc=2.23GB
+  blocks.0.ln_2                                                out=   516.7MB shape=(1, 529107, 256) alloc=2.73GB
+  blocks.0.mlp.linear_pre.0                                    out=   516.7MB shape=(1, 529107, 512) alloc=3.24GB
+  blocks.0.mlp.linear_pre.1                                    out=   516.7MB shape=(1, 529107, 512) alloc=3.74GB
+  blocks.1.ln_1                                                out=   516.7MB shape=(1, 529107, 256) alloc=2.73GB
+  blocks.1.ln_2                                                out=   516.7MB shape=(1, 529107, 256) alloc=3.24GB
+  blocks.1.mlp.linear_pre.0                                    out=   516.7MB shape=(1, 529107, 512) alloc=3.74GB

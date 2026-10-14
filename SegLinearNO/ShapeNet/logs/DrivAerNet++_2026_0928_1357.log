@@ -1,0 +1,336 @@
+🚀 Starting VTK Data Processing Pipeline
+
+🔄 Creating data loaders...
+Total samples found in /data/zhangbojun/DrivAerNet++_dataset/PressureVTK/E_S_WWC_WM/pklFile/: 688
+Train: 483, Val: 69, Test: 136
+Per-file data root: /data/zhangbojun/DrivAerNet++_dataset/PressureVTK/E_S_WWC_WM/pklFile/
+Data split:
+  - Training: 483 simulations (indices: [5, 6, 7, 8, 9, 10, 11, 15, 16, 17, 18, 19, 20, 21, 25, 26, 27, 28, 29, 30, 31, 35, 36, 37, 38, 39, 40, 41, 45, 46, 47, 48, 49, 50, 51, 55, 56, 57, 58, 59, 60, 61, 65, 66, 67, 68, 69, 70, 71, 75, 76, 77, 78, 79, 80, 81, 85, 86, 87, 88, 89, 90, 91, 95, 96, 97, 98, 99, 100, 101, 105, 106, 107, 108, 109, 110, 111, 115, 116, 117, 118, 119, 120, 121, 125, 126, 127, 128, 129, 130, 131, 135, 136, 137, 139, 140, 141, 142, 146, 147, 148, 149, 150, 151, 152, 156, 157, 158, 159, 160, 161, 162, 166, 167, 168, 169, 170, 171, 172, 176, 177, 178, 179, 180, 181, 182, 186, 187, 188, 189, 190, 191, 192, 196, 197, 198, 199, 200, 201, 202, 206, 207, 208, 209, 210, 211, 212, 216, 217, 218, 219, 220, 221, 222, 226, 227, 228, 229, 230, 231, 232, 236, 237, 238, 239, 240, 241, 242, 246, 247, 248, 249, 250, 251, 252, 256, 257, 258, 259, 260, 261, 262, 266, 267, 268, 270, 271, 272, 273, 277, 278, 279, 280, 281, 282, 283, 287, 288, 289, 290, 291, 292, 293, 297, 298, 299, 300, 301, 302, 303, 307, 308, 309, 310, 311, 312, 313, 317, 318, 319, 320, 322, 323, 324, 328, 329, 330, 331, 332, 333, 334, 339, 340, 341, 342, 343, 344, 345, 349, 350, 351, 352, 353, 354, 355, 359, 360, 361, 362, 363, 364, 365, 369, 370, 371, 372, 373, 374, 375, 379, 380, 381, 382, 383, 384, 385, 389, 390, 391, 392, 393, 394, 395, 399, 400, 401, 402, 403, 404, 405, 409, 410, 411, 412, 413, 414, 415, 419, 420, 421, 422, 423, 424, 425, 429, 430, 431, 432, 433, 434, 435, 439, 440, 441, 442, 443, 444, 445, 449, 450, 451, 452, 453, 454, 455, 459, 460, 461, 462, 463, 464, 465, 469, 470, 471, 472, 473, 474, 475, 479, 480, 481, 482, 483, 484, 485, 489, 490, 491, 492, 493, 494, 495, 499, 500, 501, 502, 503, 504, 505, 509, 510, 511, 512, 513, 514, 515, 519, 520, 521, 522, 523, 524, 525, 529, 530, 531, 532, 533, 534, 535, 539, 540, 541, 542, 543, 544, 545, 549, 550, 551, 552, 553, 554, 555, 559, 560, 561, 562, 563, 564, 565, 569, 570, 571, 572, 573, 574, 575, 579, 580, 581, 582, 583, 584, 585, 589, 590, 591, 592, 593, 594, 595, 599, 600, 601, 602, 603, 604, 605, 609, 610, 611, 612, 613, 614, 615, 620, 621, 622, 623, 624, 625, 627, 632, 633, 634, 635, 636, 637, 638, 643, 644, 645, 646, 647, 648, 649, 653, 654, 655, 656, 657, 658, 659, 663, 664, 665, 666, 667, 668, 669, 673, 674, 675, 676, 677, 678, 679, 683, 684, 685, 686, 687, 688, 689, 693, 694, 695, 696, 697, 698, 699])
+  - Validation: 69 simulations (indices: [12, 22, 32, 42, 52, 62, 72, 82, 92, 102, 112, 122, 132, 143, 153, 163, 173, 183, 193, 203, 213, 223, 233, 243, 253, 263, 274, 284, 294, 304, 314, 325, 335, 346, 356, 366, 376, 386, 396, 406, 416, 426, 436, 446, 456, 466, 476, 486, 496, 506, 516, 526, 536, 546, 556, 566, 576, 586, 596, 606, 616, 628, 639, 650, 660, 670, 680, 690, 700])
+  - Testing: 136 simulations (indices: [13, 14, 23, 24, 33, 34, 43, 44, 53, 54, 63, 64, 73, 74, 83, 84, 93, 94, 103, 104, 113, 114, 123, 124, 133, 134, 144, 145, 154, 155, 164, 165, 174, 175, 184, 185, 194, 195, 204, 205, 214, 215, 224, 225, 234, 235, 244, 245, 254, 255, 264, 265, 275, 276, 285, 286, 295, 296, 305, 306, 315, 316, 326, 327, 336, 337, 347, 348, 357, 358, 367, 368, 377, 378, 387, 388, 397, 398, 407, 408, 417, 418, 427, 428, 437, 438, 447, 448, 457, 458, 467, 468, 477, 478, 487, 488, 497, 498, 507, 508, 517, 518, 527, 528, 537, 538, 547, 548, 557, 558, 567, 568, 577, 578, 587, 588, 597, 598, 607, 608, 617, 618, 629, 631, 641, 642, 651, 652, 661, 662, 671, 672, 681, 682, 691, 692])
+  - Predicting: pressure
+
+🏗️  Creating model...
+Model parameters: 3868489
+
+🎯 Starting training...
+Using device: cuda
+Starting training for 300 epochs (model_name='transolver_seg', assuming 'transolver' and coorf-only input)...
+Epoch 1/300 - Train:   0%|          | 0/483 [00:00<?, ?batch/s]Epoch 1/300 - Train:   0%|          | 0/483 [00:03<?, ?batch/s, loss=1.0119e+00]Epoch 1/300 - Train:   0%|          | 1/483 [00:03<27:37,  3.44s/batch, loss=1.0119e+00]Epoch 1/300 - Train:   0%|          | 1/483 [00:07<27:37,  3.44s/batch, loss=9.6999e-01]Epoch 1/300 - Train:   0%|          | 2/483 [00:07<30:18,  3.78s/batch, loss=9.6999e-01]Epoch 1/300 - Train:   0%|          | 2/483 [00:10<30:18,  3.78s/batch, loss=8.9469e-01]Epoch 1/300 - Train:   1%|          | 3/483 [00:10<29:07,  3.64s/batch, loss=8.9469e-01]Epoch 1/300 - Train:   1%|          | 3/483 [00:14<29:07,  3.64s/batch, loss=9.9614e-01]Epoch 1/300 - Train:   1%|          | 4/483 [00:14<28:50,  3.61s/batch, loss=9.9614e-01]Epoch 1/300 - Train:   1%|          | 4/483 [00:18<28:50,  3.61s/batch, loss=1.0671e+00]Epoch 1/300 - Train:   1%|          | 5/483 [00:18<29:11,  3.66s/batch, loss=1.0671e+00]Epoch 1/300 - Train:   1%|          | 5/483 [00:21<29:11,  3.66s/batch, loss=9.5120e-01]Epoch 1/300 - Train:   1%|          | 6/483 [00:21<29:02,  3.65s/batch, loss=9.5120e-01]Epoch 1/300 - Train:   1%|          | 6/483 [00:25<29:02,  3.65s/batch, loss=8.8202e-01]Epoch 1/300 - Train:   1%|▏         | 7/483 [00:25<28:06,  3.54s/batch, loss=8.8202e-01]Epoch 1/300 - Train:   1%|▏         | 7/483 [00:28<28:06,  3.54s/batch, loss=9.0632e-01]Epoch 1/300 - Train:   2%|▏         | 8/483 [00:28<28:29,  3.60s/batch, loss=9.0632e-01]Epoch 1/300 - Train:   2%|▏         | 8/483 [00:32<28:29,  3.60s/batch, loss=9.5459e-01]Epoch 1/300 - Train:   2%|▏         | 9/483 [00:32<28:39,  3.63s/batch, loss=9.5459e-01]Epoch 1/300 - Train:   2%|▏         | 9/483 [00:36<28:39,  3.63s/batch, loss=1.1013e+00]Epoch 1/300 - Train:   2%|▏         | 10/483 [00:36<28:48,  3.65s/batch, loss=1.1013e+00]Epoch 1/300 - Train:   2%|▏         | 10/483 [00:39<28:48,  3.65s/batch, loss=9.4427e-01]Epoch 1/300 - Train:   2%|▏         | 11/483 [00:39<28:27,  3.62s/batch, loss=9.4427e-01]Epoch 1/300 - Train:   2%|▏         | 11/483 [00:43<28:27,  3.62s/batch, loss=1.0243e+00]Epoch 1/300 - Train:   2%|▏         | 12/483 [00:43<29:28,  3.75s/batch, loss=1.0243e+00]Epoch 1/300 - Train:   2%|▏         | 12/483 [00:47<29:28,  3.75s/batch, loss=9.7855e-01]Epoch 1/300 - Train:   3%|▎         | 13/483 [00:47<29:29,  3.76s/batch, loss=9.7855e-01]Epoch 1/300 - Train:   3%|▎         | 13/483 [00:51<29:29,  3.76s/batch, loss=9.2820e-01]Epoch 1/300 - Train:   3%|▎         | 14/483 [00:51<29:11,  3.73s/batch, loss=9.2820e-01]Epoch 1/300 - Train:   3%|▎         | 14/483 [00:54<29:11,  3.73s/batch, loss=8.9152e-01]Epoch 1/300 - Train:   3%|▎         | 15/483 [00:54<28:07,  3.61s/batch, loss=8.9152e-01]Epoch 1/300 - Train:   3%|▎         | 15/483 [00:58<28:07,  3.61s/batch, loss=9.9519e-01]Epoch 1/300 - Train:   3%|▎         | 16/483 [00:58<28:29,  3.66s/batch, loss=9.9519e-01]Epoch 1/300 - Train:   3%|▎         | 16/483 [01:02<28:29,  3.66s/batch, loss=9.2100e-01]Epoch 1/300 - Train:   4%|▎         | 17/483 [01:02<28:47,  3.71s/batch, loss=9.2100e-01]Epoch 1/300 - Train:   4%|▎         | 17/483 [01:05<28:47,  3.71s/batch, loss=8.3904e-01]Epoch 1/300 - Train:   4%|▎         | 18/483 [01:05<27:52,  3.60s/batch, loss=8.3904e-01]Epoch 1/300 - Train:   4%|▎         | 18/483 [01:09<27:52,  3.60s/batch, loss=1.0297e+00]Epoch 1/300 - Train:   4%|▍         | 19/483 [01:09<27:40,  3.58s/batch, loss=1.0297e+00]Epoch 1/300 - Train:   4%|▍         | 19/483 [01:12<27:40,  3.58s/batch, loss=1.0345e+00]Epoch 1/300 - Train:   4%|▍         | 20/483 [01:12<27:13,  3.53s/batch, loss=1.0345e+00]Epoch 1/300 - Train:   4%|▍         | 20/483 [01:16<27:13,  3.53s/batch, loss=8.5205e-01]Epoch 1/300 - Train:   4%|▍         | 21/483 [01:16<27:48,  3.61s/batch, loss=8.5205e-01]Epoch 1/300 - Train:   4%|▍         | 21/483 [01:20<27:48,  3.61s/batch, loss=9.8558e-01]Epoch 1/300 - Train:   5%|▍         | 22/483 [01:20<28:03,  3.65s/batch, loss=9.8558e-01]Epoch 1/300 - Train:   5%|▍         | 22/483 [01:23<28:03,  3.65s/batch, loss=9.2501e-01]Epoch 1/300 - Train:   5%|▍         | 23/483 [01:23<27:52,  3.64s/batch, loss=9.2501e-01]Epoch 1/300 - Train:   5%|▍         | 23/483 [01:27<27:52,  3.64s/batch, loss=9.5403e-01]Epoch 1/300 - Train:   5%|▍         | 24/483 [01:27<28:28,  3.72s/batch, loss=9.5403e-01]Epoch 1/300 - Train:   5%|▍         | 24/483 [01:31<28:28,  3.72s/batch, loss=7.8297e-01]Epoch 1/300 - Train:   5%|▌         | 25/483 [01:31<27:37,  3.62s/batch, loss=7.8297e-01]Epoch 1/300 - Train:   5%|▌         | 25/483 [01:34<27:37,  3.62s/batch, loss=9.2954e-01]Epoch 1/300 - Train:   5%|▌         | 26/483 [01:34<27:31,  3.61s/batch, loss=9.2954e-01]Epoch 1/300 - Train:   5%|▌         | 26/483 [01:38<27:31,  3.61s/batch, loss=9.7731e-01]Epoch 1/300 - Train:   6%|▌         | 27/483 [01:38<27:10,  3.58s/batch, loss=9.7731e-01]Epoch 1/300 - Train:   6%|▌         | 27/483 [01:41<27:10,  3.58s/batch, loss=9.7503e-01]Epoch 1/300 - Train:   6%|▌         | 28/483 [01:41<27:07,  3.58s/batch, loss=9.7503e-01]Epoch 1/300 - Train:   6%|▌         | 28/483 [01:45<27:07,  3.58s/batch, loss=1.0836e+00]Epoch 1/300 - Train:   6%|▌         | 29/483 [01:45<27:14,  3.60s/batch, loss=1.0836e+00]Epoch 1/300 - Train:   6%|▌         | 29/483 [01:49<27:14,  3.60s/batch, loss=7.5517e-01]Epoch 1/300 - Train:   6%|▌         | 30/483 [01:49<27:32,  3.65s/batch, loss=7.5517e-01]Epoch 1/300 - Train:   6%|▌         | 30/483 [01:52<27:32,  3.65s/batch, loss=8.7093e-01]Epoch 1/300 - Train:   6%|▋         | 31/483 [01:52<27:15,  3.62s/batch, loss=8.7093e-01]Epoch 1/300 - Train:   6%|▋         | 31/483 [01:56<27:15,  3.62s/batch, loss=9.9965e-01]Epoch 1/300 - Train:   7%|▋         | 32/483 [01:56<27:09,  3.61s/batch, loss=9.9965e-01]Epoch 1/300 - Train:   7%|▋         | 32/483 [02:00<27:09,  3.61s/batch, loss=9.1328e-01]Epoch 1/300 - Train:   7%|▋         | 33/483 [02:00<27:33,  3.67s/batch, loss=9.1328e-01]Epoch 1/300 - Train:   7%|▋         | 33/483 [02:03<27:33,  3.67s/batch, loss=9.9828e-01]Epoch 1/300 - Train:   7%|▋         | 34/483 [02:03<27:35,  3.69s/batch, loss=9.9828e-01]Epoch 1/300 - Train:   7%|▋         | 34/483 [02:07<27:35,  3.69s/batch, loss=9.1947e-01]Epoch 1/300 - Train:   7%|▋         | 35/483 [02:07<27:52,  3.73s/batch, loss=9.1947e-01]Epoch 1/300 - Train:   7%|▋         | 35/483 [02:11<27:52,  3.73s/batch, loss=8.3750e-01]Epoch 1/300 - Train:   7%|▋         | 36/483 [02:11<27:01,  3.63s/batch, loss=8.3750e-01]Epoch 1/300 - Train:   7%|▋         | 36/483 [02:14<27:01,  3.63s/batch, loss=9.6223e-01]Epoch 1/300 - Train:   8%|▊         | 37/483 [02:14<26:47,  3.60s/batch, loss=9.6223e-01]Epoch 1/300 - Train:   8%|▊         | 37/483 [02:18<26:47,  3.60s/batch, loss=9.8939e-01]Epoch 1/300 - Train:   8%|▊         | 38/483 [02:18<26:29,  3.57s/batch, loss=9.8939e-01]Epoch 1/300 - Train:   8%|▊         | 38/483 [02:21<26:29,  3.57s/batch, loss=8.6697e-01]Epoch 1/300 - Train:   8%|▊         | 39/483 [02:21<26:31,  3.58s/batch, loss=8.6697e-01]Epoch 1/300 - Train:   8%|▊         | 39/483 [02:25<26:31,  3.58s/batch, loss=9.2212e-01]Epoch 1/300 - Train:   8%|▊         | 40/483 [02:25<26:12,  3.55s/batch, loss=9.2212e-01]Epoch 1/300 - Train:   8%|▊         | 40/483 [02:28<26:12,  3.55s/batch, loss=9.7676e-01]Epoch 1/300 - Train:   8%|▊         | 41/483 [02:28<26:40,  3.62s/batch, loss=9.7676e-01]Epoch 1/300 - Train:   8%|▊         | 41/483 [02:32<26:40,  3.62s/batch, loss=1.0856e+00]Epoch 1/300 - Train:   9%|▊         | 42/483 [02:32<26:16,  3.57s/batch, loss=1.0856e+00]Epoch 1/300 - Train:   9%|▊         | 42/483 [02:35<26:16,  3.57s/batch, loss=7.8094e-01]Epoch 1/300 - Train:   9%|▉         | 43/483 [02:35<25:37,  3.49s/batch, loss=7.8094e-01]Epoch 1/300 - Train:   9%|▉         | 43/483 [02:39<25:37,  3.49s/batch, loss=8.1423e-01]Epoch 1/300 - Train:   9%|▉         | 44/483 [02:39<25:44,  3.52s/batch, loss=8.1423e-01]Epoch 1/300 - Train:   9%|▉         | 44/483 [02:42<25:44,  3.52s/batch, loss=9.7211e-01]Epoch 1/300 - Train:   9%|▉         | 45/483 [02:42<25:50,  3.54s/batch, loss=9.7211e-01]Epoch 1/300 - Train:   9%|▉         | 45/483 [02:46<25:50,  3.54s/batch, loss=1.0297e+00]Epoch 1/300 - Train:  10%|▉         | 46/483 [02:46<26:17,  3.61s/batch, loss=1.0297e+00]Epoch 1/300 - Train:  10%|▉         | 46/483 [02:50<26:17,  3.61s/batch, loss=8.6311e-01]Epoch 1/300 - Train:  10%|▉         | 47/483 [02:50<26:27,  3.64s/batch, loss=8.6311e-01]Epoch 1/300 - Train:  10%|▉         | 47/483 [02:53<26:27,  3.64s/batch, loss=8.7232e-01]Epoch 1/300 - Train:  10%|▉         | 48/483 [02:53<26:10,  3.61s/batch, loss=8.7232e-01]Epoch 1/300 - Train:  10%|▉         | 48/483 [02:57<26:10,  3.61s/batch, loss=9.2165e-01]Epoch 1/300 - Train:  10%|█         | 49/483 [02:57<26:39,  3.69s/batch, loss=9.2165e-01]Epoch 1/300 - Train:  10%|█         | 49/483 [03:01<26:39,  3.69s/batch, loss=9.2782e-01]Epoch 1/300 - Train:  10%|█         | 50/483 [03:01<26:53,  3.73s/batch, loss=9.2782e-01]Epoch 1/300 - Train:  10%|█         | 50/483 [03:05<26:53,  3.73s/batch, loss=9.3992e-01]Epoch 1/300 - Train:  11%|█         | 51/483 [03:05<26:31,  3.68s/batch, loss=9.3992e-01]Epoch 1/300 - Train:  11%|█         | 51/483 [03:08<26:31,  3.68s/batch, loss=9.4559e-01]Epoch 1/300 - Train:  11%|█         | 52/483 [03:08<26:42,  3.72s/batch, loss=9.4559e-01]Epoch 1/300 - Train:  11%|█         | 52/483 [03:12<26:42,  3.72s/batch, loss=7.6555e-01]Epoch 1/300 - Train:  11%|█         | 53/483 [03:12<26:32,  3.70s/batch, loss=7.6555e-01]Epoch 1/300 - Train:  11%|█         | 53/483 [03:15<26:32,  3.70s/batch, loss=9.0253e-01]Epoch 1/300 - Train:  11%|█         | 54/483 [03:15<25:42,  3.60s/batch, loss=9.0253e-01]Epoch 1/300 - Train:  11%|█         | 54/483 [03:20<25:42,  3.60s/batch, loss=8.7279e-01]Epoch 1/300 - Train:  11%|█▏        | 55/483 [03:20<26:58,  3.78s/batch, loss=8.7279e-01]Epoch 1/300 - Train:  11%|█▏        | 55/483 [03:23<26:58,  3.78s/batch, loss=8.9091e-01]Epoch 1/300 - Train:  12%|█▏        | 56/483 [03:23<26:20,  3.70s/batch, loss=8.9091e-01]Epoch 1/300 - Train:  12%|█▏        | 56/483 [03:27<26:20,  3.70s/batch, loss=8.9693e-01]Epoch 1/300 - Train:  12%|█▏        | 57/483 [03:27<26:29,  3.73s/batch, loss=8.9693e-01]Epoch 1/300 - Train:  12%|█▏        | 57/483 [03:31<26:29,  3.73s/batch, loss=8.9003e-01]Epoch 1/300 - Train:  12%|█▏        | 58/483 [03:31<26:18,  3.72s/batch, loss=8.9003e-01]Epoch 1/300 - Train:  12%|█▏        | 58/483 [03:34<26:18,  3.72s/batch, loss=9.6283e-01]Epoch 1/300 - Train:  12%|█▏        | 59/483 [03:34<26:06,  3.69s/batch, loss=9.6283e-01]Epoch 1/300 - Train:  12%|█▏        | 59/483 [03:38<26:06,  3.69s/batch, loss=8.9398e-01]Epoch 1/300 - Train:  12%|█▏        | 60/483 [03:38<25:40,  3.64s/batch, loss=8.9398e-01]Epoch 1/300 - Train:  12%|█▏        | 60/483 [03:41<25:40,  3.64s/batch, loss=9.7165e-01]Epoch 1/300 - Train:  13%|█▎        | 61/483 [03:41<25:35,  3.64s/batch, loss=9.7165e-01]Epoch 1/300 - Train:  13%|█▎        | 61/483 [03:45<25:35,  3.64s/batch, loss=8.2268e-01]Epoch 1/300 - Train:  13%|█▎        | 62/483 [03:45<25:27,  3.63s/batch, loss=8.2268e-01]Epoch 1/300 - Train:  13%|█▎        | 62/483 [03:49<25:27,  3.63s/batch, loss=9.0285e-01]Epoch 1/300 - Train:  13%|█▎        | 63/483 [03:49<25:00,  3.57s/batch, loss=9.0285e-01]Epoch 1/300 - Train:  13%|█▎        | 63/483 [03:52<25:00,  3.57s/batch, loss=9.7721e-01]Epoch 1/300 - Train:  13%|█▎        | 64/483 [03:52<25:27,  3.65s/batch, loss=9.7721e-01]Epoch 1/300 - Train:  13%|█▎        | 64/483 [03:56<25:27,  3.65s/batch, loss=1.0087e+00]Epoch 1/300 - Train:  13%|█▎        | 65/483 [03:56<25:13,  3.62s/batch, loss=1.0087e+00]Epoch 1/300 - Train:  13%|█▎        | 65/483 [03:59<25:13,  3.62s/batch, loss=8.0420e-01]Epoch 1/300 - Train:  14%|█▎        | 66/483 [03:59<25:02,  3.60s/batch, loss=8.0420e-01]Epoch 1/300 - Train:  14%|█▎        | 66/483 [04:03<25:02,  3.60s/batch, loss=8.9411e-01]Epoch 1/300 - Train:  14%|█▍        | 67/483 [04:03<25:10,  3.63s/batch, loss=8.9411e-01]Epoch 1/300 - Train:  14%|█▍        | 67/483 [04:07<25:10,  3.63s/batch, loss=8.9917e-01]Epoch 1/300 - Train:  14%|█▍        | 68/483 [04:07<24:57,  3.61s/batch, loss=8.9917e-01]Epoch 1/300 - Train:  14%|█▍        | 68/483 [04:10<24:57,  3.61s/batch, loss=8.1425e-01]Epoch 1/300 - Train:  14%|█▍        | 69/483 [04:10<24:59,  3.62s/batch, loss=8.1425e-01]Epoch 1/300 - Train:  14%|█▍        | 69/483 [04:14<24:59,  3.62s/batch, loss=7.5395e-01]Epoch 1/300 - Train:  14%|█▍        | 70/483 [04:14<24:53,  3.62s/batch, loss=7.5395e-01]Epoch 1/300 - Train:  14%|█▍        | 70/483 [04:18<24:53,  3.62s/batch, loss=8.9963e-01]Epoch 1/300 - Train:  15%|█▍        | 71/483 [04:18<24:46,  3.61s/batch, loss=8.9963e-01]Epoch 1/300 - Train:  15%|█▍        | 71/483 [04:21<24:46,  3.61s/batch, loss=9.1122e-01]Epoch 1/300 - Train:  15%|█▍        | 72/483 [04:21<24:27,  3.57s/batch, loss=9.1122e-01]Epoch 1/300 - Train:  15%|█▍        | 72/483 [04:25<24:27,  3.57s/batch, loss=9.4393e-01]Epoch 1/300 - Train:  15%|█▌        | 73/483 [04:25<24:49,  3.63s/batch, loss=9.4393e-01]Epoch 1/300 - Train:  15%|█▌        | 73/483 [04:28<24:49,  3.63s/batch, loss=8.6845e-01]Epoch 1/300 - Train:  15%|█▌        | 74/483 [04:28<24:21,  3.57s/batch, loss=8.6845e-01]Epoch 1/300 - Train:  15%|█▌        | 74/483 [04:32<24:21,  3.57s/batch, loss=9.6848e-01]Epoch 1/300 - Train:  16%|█▌        | 75/483 [04:32<24:48,  3.65s/batch, loss=9.6848e-01]Epoch 1/300 - Train:  16%|█▌        | 75/483 [04:36<24:48,  3.65s/batch, loss=8.6395e-01]Epoch 1/300 - Train:  16%|█▌        | 76/483 [04:36<24:24,  3.60s/batch, loss=8.6395e-01]Epoch 1/300 - Train:  16%|█▌        | 76/483 [04:39<24:24,  3.60s/batch, loss=8.8688e-01]Epoch 1/300 - Train:  16%|█▌        | 77/483 [04:39<24:43,  3.65s/batch, loss=8.8688e-01]Epoch 1/300 - Train:  16%|█▌        | 77/483 [04:43<24:43,  3.65s/batch, loss=7.9239e-01]Epoch 1/300 - Train:  16%|█▌        | 78/483 [04:43<24:54,  3.69s/batch, loss=7.9239e-01]Epoch 1/300 - Train:  16%|█▌        | 78/483 [04:47<24:54,  3.69s/batch, loss=8.7043e-01]Epoch 1/300 - Train:  16%|█▋        | 79/483 [04:47<24:38,  3.66s/batch, loss=8.7043e-01]Epoch 1/300 - Train:  16%|█▋        | 79/483 [04:51<24:38,  3.66s/batch, loss=9.2616e-01]Epoch 1/300 - Train:  17%|█▋        | 80/483 [04:51<25:07,  3.74s/batch, loss=9.2616e-01]Epoch 1/300 - Train:  17%|█▋        | 80/483 [04:54<25:07,  3.74s/batch, loss=8.6554e-01]Epoch 1/300 - Train:  17%|█▋        | 81/483 [04:54<24:39,  3.68s/batch, loss=8.6554e-01]Epoch 1/300 - Train:  17%|█▋        | 81/483 [04:58<24:39,  3.68s/batch, loss=9.3394e-01]Epoch 1/300 - Train:  17%|█▋        | 82/483 [04:58<24:42,  3.70s/batch, loss=9.3394e-01]Epoch 1/300 - Train:  17%|█▋        | 82/483 [05:02<24:42,  3.70s/batch, loss=7.4275e-01]Epoch 1/300 - Train:  17%|█▋        | 83/483 [05:02<24:49,  3.72s/batch, loss=7.4275e-01]Epoch 1/300 - Train:  17%|█▋        | 83/483 [05:05<24:49,  3.72s/batch, loss=1.0138e+00]Epoch 1/300 - Train:  17%|█▋        | 84/483 [05:05<24:36,  3.70s/batch, loss=1.0138e+00]Epoch 1/300 - Train:  17%|█▋        | 84/483 [05:09<24:36,  3.70s/batch, loss=7.9506e-01]Epoch 1/300 - Train:  18%|█▊        | 85/483 [05:09<24:52,  3.75s/batch, loss=7.9506e-01]Epoch 1/300 - Train:  18%|█▊        | 85/483 [05:13<24:52,  3.75s/batch, loss=9.1197e-01]Epoch 1/300 - Train:  18%|█▊        | 86/483 [05:13<24:38,  3.72s/batch, loss=9.1197e-01]Epoch 1/300 - Train:  18%|█▊        | 86/483 [05:16<24:38,  3.72s/batch, loss=7.8630e-01]Epoch 1/300 - Train:  18%|█▊        | 87/483 [05:16<23:41,  3.59s/batch, loss=7.8630e-01]Epoch 1/300 - Train:  18%|█▊        | 87/483 [05:20<23:41,  3.59s/batch, loss=9.3700e-01]Epoch 1/300 - Train:  18%|█▊        | 88/483 [05:20<23:37,  3.59s/batch, loss=9.3700e-01]Epoch 1/300 - Train:  18%|█▊        | 88/483 [05:23<23:37,  3.59s/batch, loss=8.7133e-01]Epoch 1/300 - Train:  18%|█▊        | 89/483 [05:23<23:42,  3.61s/batch, loss=8.7133e-01]Epoch 1/300 - Train:  18%|█▊        | 89/483 [05:27<23:42,  3.61s/batch, loss=9.7978e-01]Epoch 1/300 - Train:  19%|█▊        | 90/483 [05:27<23:19,  3.56s/batch, loss=9.7978e-01]Epoch 1/300 - Train:  19%|█▊        | 90/483 [05:31<23:19,  3.56s/batch, loss=9.8364e-01]Epoch 1/300 - Train:  19%|█▉        | 91/483 [05:31<23:44,  3.64s/batch, loss=9.8364e-01]Epoch 1/300 - Train:  19%|█▉        | 91/483 [05:34<23:44,  3.64s/batch, loss=1.0112e+00]Epoch 1/300 - Train:  19%|█▉        | 92/483 [05:34<23:56,  3.67s/batch, loss=1.0112e+00]Epoch 1/300 - Train:  19%|█▉        | 92/483 [05:38<23:56,  3.67s/batch, loss=8.3640e-01]Epoch 1/300 - Train:  19%|█▉        | 93/483 [05:38<23:53,  3.68s/batch, loss=8.3640e-01]Epoch 1/300 - Train:  19%|█▉        | 93/483 [05:42<23:53,  3.68s/batch, loss=8.0620e-01]Epoch 1/300 - Train:  19%|█▉        | 94/483 [05:42<23:42,  3.66s/batch, loss=8.0620e-01]Epoch 1/300 - Train:  19%|█▉        | 94/483 [05:46<23:42,  3.66s/batch, loss=8.4469e-01]Epoch 1/300 - Train:  20%|█▉        | 95/483 [05:46<24:11,  3.74s/batch, loss=8.4469e-01]Epoch 1/300 - Train:  20%|█▉        | 95/483 [05:49<24:11,  3.74s/batch, loss=8.8695e-01]Epoch 1/300 - Train:  20%|█▉        | 96/483 [05:49<23:23,  3.63s/batch, loss=8.8695e-01]Epoch 1/300 - Train:  20%|█▉        | 96/483 [05:53<23:23,  3.63s/batch, loss=9.3624e-01]Epoch 1/300 - Train:  20%|██        | 97/483 [05:53<23:26,  3.64s/batch, loss=9.3624e-01]seg_matrix.shape:torch.Size([1, 81, 462058])
+coorf.shape:torch.Size([1, 462058, 6])
+seg_matrix.shape:torch.Size([1, 77, 528636])
+coorf.shape:torch.Size([1, 528636, 6])
+seg_matrix.shape:torch.Size([1, 77, 485131])
+coorf.shape:torch.Size([1, 485131, 6])
+seg_matrix.shape:torch.Size([1, 77, 475545])
+coorf.shape:torch.Size([1, 475545, 6])
+seg_matrix.shape:torch.Size([1, 67, 515205])
+coorf.shape:torch.Size([1, 515205, 6])
+seg_matrix.shape:torch.Size([1, 71, 506783])
+coorf.shape:torch.Size([1, 506783, 6])
+seg_matrix.shape:torch.Size([1, 69, 458716])
+coorf.shape:torch.Size([1, 458716, 6])
+seg_matrix.shape:torch.Size([1, 83, 509554])
+coorf.shape:torch.Size([1, 509554, 6])
+seg_matrix.shape:torch.Size([1, 77, 515933])
+coorf.shape:torch.Size([1, 515933, 6])
+seg_matrix.shape:torch.Size([1, 75, 501545])
+coorf.shape:torch.Size([1, 501545, 6])
+seg_matrix.shape:torch.Size([1, 95, 489387])
+coorf.shape:torch.Size([1, 489387, 6])
+seg_matrix.shape:torch.Size([1, 75, 537919])
+coorf.shape:torch.Size([1, 537919, 6])
+seg_matrix.shape:torch.Size([1, 73, 515896])
+coorf.shape:torch.Size([1, 515896, 6])
+seg_matrix.shape:torch.Size([1, 73, 498138])
+coorf.shape:torch.Size([1, 498138, 6])
+seg_matrix.shape:torch.Size([1, 83, 448382])
+coorf.shape:torch.Size([1, 448382, 6])
+seg_matrix.shape:torch.Size([1, 87, 516873])
+coorf.shape:torch.Size([1, 516873, 6])
+seg_matrix.shape:torch.Size([1, 73, 519864])
+coorf.shape:torch.Size([1, 519864, 6])
+seg_matrix.shape:torch.Size([1, 69, 462172])
+coorf.shape:torch.Size([1, 462172, 6])
+seg_matrix.shape:torch.Size([1, 71, 474687])
+coorf.shape:torch.Size([1, 474687, 6])
+seg_matrix.shape:torch.Size([1, 79, 470010])
+coorf.shape:torch.Size([1, 470010, 6])
+seg_matrix.shape:torch.Size([1, 75, 521218])
+coorf.shape:torch.Size([1, 521218, 6])
+seg_matrix.shape:torch.Size([1, 69, 508962])
+coorf.shape:torch.Size([1, 508962, 6])
+seg_matrix.shape:torch.Size([1, 87, 482981])
+coorf.shape:torch.Size([1, 482981, 6])
+seg_matrix.shape:torch.Size([1, 79, 529612])
+coorf.shape:torch.Size([1, 529612, 6])
+seg_matrix.shape:torch.Size([1, 85, 455497])
+coorf.shape:torch.Size([1, 455497, 6])
+seg_matrix.shape:torch.Size([1, 93, 486603])
+coorf.shape:torch.Size([1, 486603, 6])
+seg_matrix.shape:torch.Size([1, 87, 482459])
+coorf.shape:torch.Size([1, 482459, 6])
+seg_matrix.shape:torch.Size([1, 77, 486551])
+coorf.shape:torch.Size([1, 486551, 6])
+seg_matrix.shape:torch.Size([1, 71, 500740])
+coorf.shape:torch.Size([1, 500740, 6])
+seg_matrix.shape:torch.Size([1, 73, 508979])
+coorf.shape:torch.Size([1, 508979, 6])
+seg_matrix.shape:torch.Size([1, 77, 484043])
+coorf.shape:torch.Size([1, 484043, 6])
+seg_matrix.shape:torch.Size([1, 59, 537603])
+coorf.shape:torch.Size([1, 537603, 6])
+seg_matrix.shape:torch.Size([1, 89, 518291])
+coorf.shape:torch.Size([1, 518291, 6])
+seg_matrix.shape:torch.Size([1, 67, 504159])
+coorf.shape:torch.Size([1, 504159, 6])
+seg_matrix.shape:torch.Size([1, 77, 516114])
+coorf.shape:torch.Size([1, 516114, 6])
+seg_matrix.shape:torch.Size([1, 73, 466033])
+coorf.shape:torch.Size([1, 466033, 6])
+seg_matrix.shape:torch.Size([1, 65, 494579])
+coorf.shape:torch.Size([1, 494579, 6])
+seg_matrix.shape:torch.Size([1, 75, 486189])
+coorf.shape:torch.Size([1, 486189, 6])
+seg_matrix.shape:torch.Size([1, 73, 492646])
+coorf.shape:torch.Size([1, 492646, 6])
+seg_matrix.shape:torch.Size([1, 83, 481171])
+coorf.shape:torch.Size([1, 481171, 6])
+seg_matrix.shape:torch.Size([1, 85, 512712])
+coorf.shape:torch.Size([1, 512712, 6])
+seg_matrix.shape:torch.Size([1, 73, 475036])
+coorf.shape:torch.Size([1, 475036, 6])
+seg_matrix.shape:torch.Size([1, 85, 459200])
+coorf.shape:torch.Size([1, 459200, 6])
+seg_matrix.shape:torch.Size([1, 87, 485186])
+coorf.shape:torch.Size([1, 485186, 6])
+seg_matrix.shape:torch.Size([1, 73, 491315])
+coorf.shape:torch.Size([1, 491315, 6])
+seg_matrix.shape:torch.Size([1, 79, 506748])
+coorf.shape:torch.Size([1, 506748, 6])
+seg_matrix.shape:torch.Size([1, 71, 507984])
+coorf.shape:torch.Size([1, 507984, 6])
+seg_matrix.shape:torch.Size([1, 79, 472444])
+coorf.shape:torch.Size([1, 472444, 6])
+seg_matrix.shape:torch.Size([1, 75, 524213])
+coorf.shape:torch.Size([1, 524213, 6])
+seg_matrix.shape:torch.Size([1, 73, 513166])
+coorf.shape:torch.Size([1, 513166, 6])
+seg_matrix.shape:torch.Size([1, 85, 496585])
+coorf.shape:torch.Size([1, 496585, 6])
+seg_matrix.shape:torch.Size([1, 75, 513022])
+coorf.shape:torch.Size([1, 513022, 6])
+seg_matrix.shape:torch.Size([1, 81, 499424])
+coorf.shape:torch.Size([1, 499424, 6])
+seg_matrix.shape:torch.Size([1, 87, 451937])
+coorf.shape:torch.Size([1, 451937, 6])
+seg_matrix.shape:torch.Size([1, 73, 541457])
+coorf.shape:torch.Size([1, 541457, 6])
+seg_matrix.shape:torch.Size([1, 73, 477375])
+coorf.shape:torch.Size([1, 477375, 6])
+seg_matrix.shape:torch.Size([1, 81, 514907])
+coorf.shape:torch.Size([1, 514907, 6])
+seg_matrix.shape:torch.Size([1, 77, 508916])
+coorf.shape:torch.Size([1, 508916, 6])
+seg_matrix.shape:torch.Size([1, 87, 493341])
+coorf.shape:torch.Size([1, 493341, 6])
+seg_matrix.shape:torch.Size([1, 83, 470077])
+coorf.shape:torch.Size([1, 470077, 6])
+seg_matrix.shape:torch.Size([1, 69, 503876])
+coorf.shape:torch.Size([1, 503876, 6])
+seg_matrix.shape:torch.Size([1, 69, 486172])
+coorf.shape:torch.Size([1, 486172, 6])
+seg_matrix.shape:torch.Size([1, 77, 457800])
+coorf.shape:torch.Size([1, 457800, 6])
+seg_matrix.shape:torch.Size([1, 75, 516713])
+coorf.shape:torch.Size([1, 516713, 6])
+seg_matrix.shape:torch.Size([1, 77, 470800])
+coorf.shape:torch.Size([1, 470800, 6])
+seg_matrix.shape:torch.Size([1, 85, 485056])
+coorf.shape:torch.Size([1, 485056, 6])
+seg_matrix.shape:torch.Size([1, 79, 512674])
+coorf.shape:torch.Size([1, 512674, 6])
+seg_matrix.shape:torch.Size([1, 83, 474723])
+coorf.shape:torch.Size([1, 474723, 6])
+seg_matrix.shape:torch.Size([1, 79, 491628])
+coorf.shape:torch.Size([1, 491628, 6])
+seg_matrix.shape:torch.Size([1, 81, 497889])
+coorf.shape:torch.Size([1, 497889, 6])
+seg_matrix.shape:torch.Size([1, 89, 482803])
+coorf.shape:torch.Size([1, 482803, 6])
+seg_matrix.shape:torch.Size([1, 89, 480140])
+coorf.shape:torch.Size([1, 480140, 6])
+seg_matrix.shape:torch.Size([1, 81, 523075])
+coorf.shape:torch.Size([1, 523075, 6])
+seg_matrix.shape:torch.Size([1, 67, 459536])
+coorf.shape:torch.Size([1, 459536, 6])
+seg_matrix.shape:torch.Size([1, 83, 513001])
+coorf.shape:torch.Size([1, 513001, 6])
+seg_matrix.shape:torch.Size([1, 63, 517659])
+coorf.shape:torch.Size([1, 517659, 6])
+seg_matrix.shape:torch.Size([1, 67, 508942])
+coorf.shape:torch.Size([1, 508942, 6])
+seg_matrix.shape:torch.Size([1, 83, 513260])
+coorf.shape:torch.Size([1, 513260, 6])
+seg_matrix.shape:torch.Size([1, 77, 485688])
+coorf.shape:torch.Size([1, 485688, 6])
+seg_matrix.shape:torch.Size([1, 81, 529450])
+coorf.shape:torch.Size([1, 529450, 6])
+seg_matrix.shape:torch.Size([1, 77, 471012])
+coorf.shape:torch.Size([1, 471012, 6])
+seg_matrix.shape:torch.Size([1, 73, 518148])
+coorf.shape:torch.Size([1, 518148, 6])
+seg_matrix.shape:torch.Size([1, 87, 523466])
+coorf.shape:torch.Size([1, 523466, 6])
+seg_matrix.shape:torch.Size([1, 79, 494992])
+coorf.shape:torch.Size([1, 494992, 6])
+seg_matrix.shape:torch.Size([1, 85, 526004])
+coorf.shape:torch.Size([1, 526004, 6])
+seg_matrix.shape:torch.Size([1, 73, 509048])
+coorf.shape:torch.Size([1, 509048, 6])
+seg_matrix.shape:torch.Size([1, 63, 466329])
+coorf.shape:torch.Size([1, 466329, 6])
+seg_matrix.shape:torch.Size([1, 91, 475880])
+coorf.shape:torch.Size([1, 475880, 6])
+seg_matrix.shape:torch.Size([1, 87, 495117])
+coorf.shape:torch.Size([1, 495117, 6])
+seg_matrix.shape:torch.Size([1, 57, 518496])
+coorf.shape:torch.Size([1, 518496, 6])
+seg_matrix.shape:torch.Size([1, 85, 526127])
+coorf.shape:torch.Size([1, 526127, 6])
+seg_matrix.shape:torch.Size([1, 85, 511811])
+coorf.shape:torch.Size([1, 511811, 6])
+seg_matrix.shape:torch.Size([1, 81, 499320])
+coorf.shape:torch.Size([1, 499320, 6])
+seg_matrix.shape:torch.Size([1, 67, 488465])
+coorf.shape:torch.Size([1, 488465, 6])
+seg_matrix.shape:torch.Size([1, 73, 532211])
+coorf.shape:torch.Size([1, 532211, 6])
+seg_matrix.shape:torch.Size([1, 63, 498117])
+coorf.shape:torch.Size([1, 498117, 6])
+seg_matrix.shape:torch.Size([1, 81, 507714])
+coorf.shape:torch.Size([1, 507714, 6])
+seg_matrix.shape:torch.Size([1, 85, 474578])Epoch 1/300 - Train:  20%|██        | 97/483 [05:56<23:26,  3.64s/batch, loss=7.5962e-01]Epoch 1/300 - Train:  20%|██        | 98/483 [05:56<23:02,  3.59s/batch, loss=7.5962e-01]Epoch 1/300 - Train:  20%|██        | 98/483 [06:00<23:02,  3.59s/batch, loss=9.8492e-01]Epoch 1/300 - Train:  20%|██        | 99/483 [06:00<22:49,  3.57s/batch, loss=9.8492e-01]Epoch 1/300 - Train:  20%|██        | 99/483 [06:03<22:49,  3.57s/batch, loss=8.6638e-01]Epoch 1/300 - Train:  21%|██        | 100/483 [06:03<23:04,  3.62s/batch, loss=8.6638e-01]Epoch 1/300 - Train:  21%|██        | 100/483 [06:07<23:04,  3.62s/batch, loss=8.5443e-01]Epoch 1/300 - Train:  21%|██        | 101/483 [06:07<23:09,  3.64s/batch, loss=8.5443e-01]Epoch 1/300 - Train:  21%|██        | 101/483 [06:11<23:09,  3.64s/batch, loss=9.0894e-01]Epoch 1/300 - Train:  21%|██        | 102/483 [06:11<23:07,  3.64s/batch, loss=9.0894e-01]Epoch 1/300 - Train:  21%|██        | 102/483 [06:15<23:07,  3.64s/batch, loss=8.7987e-01]Epoch 1/300 - Train:  21%|██▏       | 103/483 [06:15<23:22,  3.69s/batch, loss=8.7987e-01]Epoch 1/300 - Train:  21%|██▏       | 103/483 [06:18<23:22,  3.69s/batch, loss=8.7036e-01]Epoch 1/300 - Train:  22%|██▏       | 104/483 [06:18<23:34,  3.73s/batch, loss=8.7036e-01]Epoch 1/300 - Train:  22%|██▏       | 104/483 [06:22<23:34,  3.73s/batch, loss=8.0734e-01]Epoch 1/300 - Train:  22%|██▏       | 105/483 [06:22<23:27,  3.72s/batch, loss=8.0734e-01]Epoch 1/300 - Train:  22%|██▏       | 105/483 [06:26<23:27,  3.72s/batch, loss=9.3325e-01]Epoch 1/300 - Train:  22%|██▏       | 106/483 [06:26<22:50,  3.64s/batch, loss=9.3325e-01]Epoch 1/300 - Train:  22%|██▏       | 106/483 [06:29<22:50,  3.64s/batch, loss=9.1729e-01]Epoch 1/300 - Train:  22%|██▏       | 107/483 [06:29<22:35,  3.60s/batch, loss=9.1729e-01]Epoch 1/300 - Train:  22%|██▏       | 107/483 [06:32<22:35,  3.60s/batch, loss=7.7294e-01]Epoch 1/300 - Train:  22%|██▏       | 108/483 [06:32<22:12,  3.55s/batch, loss=7.7294e-01]Epoch 1/300 - Train:  22%|██▏       | 108/483 [06:36<22:12,  3.55s/batch, loss=8.6712e-01]Epoch 1/300 - Train:  23%|██▎       | 109/483 [06:36<22:19,  3.58s/batch, loss=8.6712e-01]Epoch 1/300 - Train:  23%|██▎       | 109/483 [06:40<22:19,  3.58s/batch, loss=9.2333e-01]Epoch 1/300 - Train:  23%|██▎       | 110/483 [06:40<22:35,  3.63s/batch, loss=9.2333e-01]Epoch 1/300 - Train:  23%|██▎       | 110/483 [06:43<22:35,  3.63s/batch, loss=9.1488e-01]Epoch 1/300 - Train:  23%|██▎       | 111/483 [06:43<22:21,  3.61s/batch, loss=9.1488e-01]Epoch 1/300 - Train:  23%|██▎       | 111/483 [06:47<22:21,  3.61s/batch, loss=8.3641e-01]Epoch 1/300 - Train:  23%|██▎       | 112/483 [06:47<22:36,  3.66s/batch, loss=8.3641e-01]Epoch 1/300 - Train:  23%|██▎       | 112/483 [06:51<22:36,  3.66s/batch, loss=9.5890e-01]Epoch 1/300 - Train:  23%|██▎       | 113/483 [06:51<22:14,  3.61s/batch, loss=9.5890e-01]Epoch 1/300 - Train:  23%|██▎       | 113/483 [06:55<22:14,  3.61s/batch, loss=8.8021e-01]Epoch 1/300 - Train:  24%|██▎       | 114/483 [06:55<22:43,  3.69s/batch, loss=8.8021e-01]Epoch 1/300 - Train:  24%|██▎       | 114/483 [06:58<22:43,  3.69s/batch, loss=7.6208e-01]Epoch 1/300 - Train:  24%|██▍       | 115/483 [06:58<22:08,  3.61s/batch, loss=7.6208e-01]Epoch 1/300 - Train:  24%|██▍       | 115/483 [07:02<22:08,  3.61s/batch, loss=7.9811e-01]Epoch 1/300 - Train:  24%|██▍       | 116/483 [07:02<21:57,  3.59s/batch, loss=7.9811e-01]Epoch 1/300 - Train:  24%|██▍       | 116/483 [07:05<21:57,  3.59s/batch, loss=7.9830e-01]Epoch 1/300 - Train:  24%|██▍       | 117/483 [07:05<21:47,  3.57s/batch, loss=7.9830e-01]Epoch 1/300 - Train:  24%|██▍       | 117/483 [07:09<21:47,  3.57s/batch, loss=8.8067e-01]Epoch 1/300 - Train:  24%|██▍       | 118/483 [07:09<22:08,  3.64s/batch, loss=8.8067e-01]Epoch 1/300 - Train:  24%|██▍       | 118/483 [07:13<22:08,  3.64s/batch, loss=8.6157e-01]Epoch 1/300 - Train:  25%|██▍       | 119/483 [07:13<22:11,  3.66s/batch, loss=8.6157e-01]Epoch 1/300 - Train:  25%|██▍       | 119/483 [07:16<22:11,  3.66s/batch, loss=8.7872e-01]Epoch 1/300 - Train:  25%|██▍       | 120/483 [07:16<22:04,  3.65s/batch, loss=8.7872e-01]Epoch 1/300 - Train:  25%|██▍       | 120/483 [07:20<22:04,  3.65s/batch, loss=8.6807e-01]Epoch 1/300 - Train:  25%|██▌       | 121/483 [07:20<22:03,  3.65s/batch, loss=8.6807e-01]Epoch 1/300 - Train:  25%|██▌       | 121/483 [07:24<22:03,  3.65s/batch, loss=8.1173e-01]Epoch 1/300 - Train:  25%|██▌       | 122/483 [07:24<22:15,  3.70s/batch, loss=8.1173e-01]Epoch 1/300 - Train:  25%|██▌       | 122/483 [07:27<22:15,  3.70s/batch, loss=8.1105e-01]Epoch 1/300 - Train:  25%|██▌       | 123/483 [07:27<22:16,  3.71s/batch, loss=8.1105e-01]Epoch 1/300 - Train:  25%|██▌       | 123/483 [07:31<22:16,  3.71s/batch, loss=8.5492e-01]Epoch 1/300 - Train:  26%|██▌       | 124/483 [07:31<22:16,  3.72s/batch, loss=8.5492e-01]Epoch 1/300 - Train:  26%|██▌       | 124/483 [07:35<22:16,  3.72s/batch, loss=8.8453e-01]Epoch 1/300 - Train:  26%|██▌       | 125/483 [07:35<22:05,  3.70s/batch, loss=8.8453e-01]Epoch 1/300 - Train:  26%|██▌       | 125/483 [07:38<22:05,  3.70s/batch, loss=7.7775e-01]Epoch 1/300 - Train:  26%|██▌       | 126/483 [07:38<21:28,  3.61s/batch, loss=7.7775e-01]Epoch 1/300 - Train:  26%|██▌       | 126/483 [07:42<21:28,  3.61s/batch, loss=8.5837e-01]Epoch 1/300 - Train:  26%|██▋       | 127/483 [07:42<20:55,  3.53s/batch, loss=8.5837e-01]Epoch 1/300 - Train:  26%|██▋       | 127/483 [07:45<20:55,  3.53s/batch, loss=8.4528e-01]Epoch 1/300 - Train:  27%|██▋       | 128/483 [07:45<20:33,  3.47s/batch, loss=8.4528e-01]Epoch 1/300 - Train:  27%|██▋       | 128/483 [07:49<20:33,  3.47s/batch, loss=1.0033e+00]Epoch 1/300 - Train:  27%|██▋       | 129/483 [07:49<20:55,  3.55s/batch, loss=1.0033e+00]Epoch 1/300 - Train:  27%|██▋       | 129/483 [07:53<20:55,  3.55s/batch, loss=7.8439e-01]Epoch 1/300 - Train:  27%|██▋       | 130/483 [07:53<21:33,  3.66s/batch, loss=7.8439e-01]Epoch 1/300 - Train:  27%|██▋       | 130/483 [07:56<21:33,  3.66s/batch, loss=8.5461e-01]Epoch 1/300 - Train:  27%|██▋       | 131/483 [07:56<21:40,  3.70s/batch, loss=8.5461e-01]Epoch 1/300 - Train:  27%|██▋       | 131/483 [08:00<21:40,  3.70s/batch, loss=9.0370e-01]Epoch 1/300 - Train:  27%|██▋       | 132/483 [08:00<21:07,  3.61s/batch, loss=9.0370e-01]Epoch 1/300 - Train:  27%|██▋       | 132/483 [08:03<21:07,  3.61s/batch, loss=6.9472e-01]Epoch 1/300 - Train:  28%|██▊       | 133/483 [08:03<20:56,  3.59s/batch, loss=6.9472e-01]Epoch 1/300 - Train:  28%|██▊       | 133/483 [08:07<20:56,  3.59s/batch, loss=7.9215e-01]Epoch 1/300 - Train:  28%|██▊       | 134/483 [08:07<20:28,  3.52s/batch, loss=7.9215e-01]Epoch 1/300 - Train:  28%|██▊       | 134/483 [08:10<20:28,  3.52s/batch, loss=8.1430e-01]Epoch 1/300 - Train:  28%|██▊       | 135/483 [08:10<20:54,  3.60s/batch, loss=8.1430e-01]Epoch 1/300 - Train:  28%|██▊       | 135/483 [08:14<20:54,  3.60s/batch, loss=7.9931e-01]Epoch 1/300 - Train:  28%|██▊       | 136/483 [08:14<20:50,  3.60s/batch, loss=7.9931e-01]Epoch 1/300 - Train:  28%|██▊       | 136/483 [08:18<20:50,  3.60s/batch, loss=7.7144e-01]Epoch 1/300 - Train:  28%|██▊       | 137/483 [08:18<20:43,  3.59s/batch, loss=7.7144e-01]Epoch 1/300 - Train:  28%|██▊       | 137/483 [08:21<20:43,  3.59s/batch, loss=7.6048e-01]Epoch 1/300 - Train:  29%|██▊       | 138/483 [08:21<20:49,  3.62s/batch, loss=7.6048e-01]Epoch 1/300 - Train:  29%|██▊       | 138/483 [08:25<20:49,  3.62s/batch, loss=8.7916e-01]Epoch 1/300 - Train:  29%|██▉       | 139/483 [08:25<21:12,  3.70s/batch, loss=8.7916e-01]Epoch 1/300 - Train:  29%|██▉       | 139/483 [08:29<21:12,  3.70s/batch, loss=9.4327e-01]Epoch 1/300 - Train:  29%|██▉       | 140/483 [08:29<20:40,  3.62s/batch, loss=9.4327e-01]Epoch 1/300 - Train:  29%|██▉       | 140/483 [08:32<20:40,  3.62s/batch, loss=8.9462e-01]Epoch 1/300 - Train:  29%|██▉       | 141/483 [08:32<20:35,  3.61s/batch, loss=8.9462e-01]Epoch 1/300 - Train:  29%|██▉       | 141/483 [08:36<20:35,  3.61s/batch, loss=7.6383e-01]Epoch 1/300 - Train:  29%|██▉       | 142/483 [08:36<20:20,  3.58s/batch, loss=7.6383e-01]Epoch 1/300 - Train:  29%|██▉       | 142/483 [08:39<20:20,  3.58s/batch, loss=8.4581e-01]Epoch 1/300 - Train:  30%|██▉       | 143/483 [08:39<20:16,  3.58s/batch, loss=8.4581e-01]Epoch 1/300 - Train:  30%|██▉       | 143/483 [08:43<20:16,  3.58s/batch, loss=8.9923e-01]Epoch 1/300 - Train:  30%|██▉       | 144/483 [08:43<19:53,  3.52s/batch, loss=8.9923e-01]Epoch 1/300 - Train:  30%|██▉       | 144/483 [08:46<19:53,  3.52s/batch, loss=8.7443e-01]Epoch 1/300 - Train:  30%|███       | 145/483 [08:46<19:54,  3.53s/batch, loss=8.7443e-01]Epoch 1/300 - Train:  30%|███       | 145/483 [08:50<19:54,  3.53s/batch, loss=9.1111e-01]Epoch 1/300 - Train:  30%|███       | 146/483 [08:50<20:20,  3.62s/batch, loss=9.1111e-01]Epoch 1/300 - Train:  30%|███       | 146/483 [08:54<20:20,  3.62s/batch, loss=6.9112e-01]Epoch 1/300 - Train:  30%|███       | 147/483 [08:54<20:06,  3.59s/batch, loss=6.9112e-01]                                                                                          
+coorf.shape:torch.Size([1, 474578, 6])
+seg_matrix.shape:torch.Size([1, 75, 472992])
+coorf.shape:torch.Size([1, 472992, 6])
+seg_matrix.shape:torch.Size([1, 87, 516159])
+coorf.shape:torch.Size([1, 516159, 6])
+seg_matrix.shape:torch.Size([1, 77, 498412])
+coorf.shape:torch.Size([1, 498412, 6])
+seg_matrix.shape:torch.Size([1, 71, 507912])
+coorf.shape:torch.Size([1, 507912, 6])
+seg_matrix.shape:torch.Size([1, 91, 525320])
+coorf.shape:torch.Size([1, 525320, 6])
+seg_matrix.shape:torch.Size([1, 79, 518788])
+coorf.shape:torch.Size([1, 518788, 6])
+seg_matrix.shape:torch.Size([1, 83, 510963])
+coorf.shape:torch.Size([1, 510963, 6])
+seg_matrix.shape:torch.Size([1, 83, 461533])
+coorf.shape:torch.Size([1, 461533, 6])
+seg_matrix.shape:torch.Size([1, 83, 487891])
+coorf.shape:torch.Size([1, 487891, 6])
+seg_matrix.shape:torch.Size([1, 83, 457253])
+coorf.shape:torch.Size([1, 457253, 6])
+seg_matrix.shape:torch.Size([1, 77, 492934])
+coorf.shape:torch.Size([1, 492934, 6])
+seg_matrix.shape:torch.Size([1, 71, 511982])
+coorf.shape:torch.Size([1, 511982, 6])
+seg_matrix.shape:torch.Size([1, 83, 482483])
+coorf.shape:torch.Size([1, 482483, 6])
+seg_matrix.shape:torch.Size([1, 85, 510444])
+coorf.shape:torch.Size([1, 510444, 6])
+seg_matrix.shape:torch.Size([1, 85, 470659])
+coorf.shape:torch.Size([1, 470659, 6])
+seg_matrix.shape:torch.Size([1, 71, 532275])
+coorf.shape:torch.Size([1, 532275, 6])
+seg_matrix.shape:torch.Size([1, 75, 469800])
+coorf.shape:torch.Size([1, 469800, 6])
+seg_matrix.shape:torch.Size([1, 89, 469382])
+coorf.shape:torch.Size([1, 469382, 6])
+seg_matrix.shape:torch.Size([1, 83, 472209])
+coorf.shape:torch.Size([1, 472209, 6])
+seg_matrix.shape:torch.Size([1, 65, 517201])
+coorf.shape:torch.Size([1, 517201, 6])
+seg_matrix.shape:torch.Size([1, 87, 503000])
+coorf.shape:torch.Size([1, 503000, 6])
+seg_matrix.shape:torch.Size([1, 75, 502192])
+coorf.shape:torch.Size([1, 502192, 6])
+seg_matrix.shape:torch.Size([1, 81, 495884])
+coorf.shape:torch.Size([1, 495884, 6])
+seg_matrix.shape:torch.Size([1, 77, 516614])
+coorf.shape:torch.Size([1, 516614, 6])
+seg_matrix.shape:torch.Size([1, 77, 506131])
+coorf.shape:torch.Size([1, 506131, 6])
+seg_matrix.shape:torch.Size([1, 87, 516933])
+coorf.shape:torch.Size([1, 516933, 6])
+seg_matrix.shape:torch.Size([1, 93, 491066])
+coorf.shape:torch.Size([1, 491066, 6])
+seg_matrix.shape:torch.Size([1, 75, 456979])
+coorf.shape:torch.Size([1, 456979, 6])
+seg_matrix.shape:torch.Size([1, 69, 452156])
+coorf.shape:torch.Size([1, 452156, 6])
+seg_matrix.shape:torch.Size([1, 77, 454380])
+coorf.shape:torch.Size([1, 454380, 6])
+seg_matrix.shape:torch.Size([1, 67, 502489])
+coorf.shape:torch.Size([1, 502489, 6])
+seg_matrix.shape:torch.Size([1, 73, 532246])
+coorf.shape:torch.Size([1, 532246, 6])
+seg_matrix.shape:torch.Size([1, 75, 521801])
+coorf.shape:torch.Size([1, 521801, 6])
+seg_matrix.shape:torch.Size([1, 77, 459897])
+coorf.shape:torch.Size([1, 459897, 6])
+seg_matrix.shape:torch.Size([1, 83, 473748])
+coorf.shape:torch.Size([1, 473748, 6])
+seg_matrix.shape:torch.Size([1, 91, 452555])
+coorf.shape:torch.Size([1, 452555, 6])
+seg_matrix.shape:torch.Size([1, 79, 511531])
+coorf.shape:torch.Size([1, 511531, 6])
+seg_matrix.shape:torch.Size([1, 91, 485165])
+coorf.shape:torch.Size([1, 485165, 6])
+seg_matrix.shape:torch.Size([1, 83, 485743])
+coorf.shape:torch.Size([1, 485743, 6])
+seg_matrix.shape:torch.Size([1, 89, 494137])
+coorf.shape:torch.Size([1, 494137, 6])
+seg_matrix.shape:torch.Size([1, 91, 523357])
+coorf.shape:torch.Size([1, 523357, 6])
+seg_matrix.shape:torch.Size([1, 93, 467556])
+coorf.shape:torch.Size([1, 467556, 6])
+seg_matrix.shape:torch.Size([1, 81, 499223])
+coorf.shape:torch.Size([1, 499223, 6])
+seg_matrix.shape:torch.Size([1, 73, 487262])
+coorf.shape:torch.Size([1, 487262, 6])
+seg_matrix.shape:torch.Size([1, 83, 479697])
+coorf.shape:torch.Size([1, 479697, 6])
+seg_matrix.shape:torch.Size([1, 83, 465084])
+coorf.shape:torch.Size([1, 465084, 6])
+seg_matrix.shape:torch.Size([1, 83, 473542])
+coorf.shape:torch.Size([1, 473542, 6])
+seg_matrix.shape:torch.Size([1, 81, 516037])
+coorf.shape:torch.Size([1, 516037, 6])
+seg_matrix.shape:torch.Size([1, 77, 489397])
+coorf.shape:torch.Size([1, 489397, 6])
+seg_matrix.shape:torch.Size([1, 83, 538837])
+coorf.shape:torch.Size([1, 538837, 6])
+Traceback (most recent call last):
+  File "/home/zhangbojun/ML_Turbulent/PGD-NO/driver/main.py", line 200, in <module>
+    main()
+  File "/home/zhangbojun/ML_Turbulent/PGD-NO/driver/main.py", line 172, in main
+    history = train(
+  File "/home/zhangbojun/ML_Turbulent/PGD-NO/driver/utils/ml.py", line 86, in train
+    loss.backward()
+  File "/home/zhangbojun/.conda/envs/pgd-no/lib/python3.10/site-packages/torch/_tensor.py", line 581, in backward
+    torch.autograd.backward(
+  File "/home/zhangbojun/.conda/envs/pgd-no/lib/python3.10/site-packages/torch/autograd/__init__.py", line 347, in backward
+    _engine_run_backward(
+  File "/home/zhangbojun/.conda/envs/pgd-no/lib/python3.10/site-packages/torch/autograd/graph.py", line 825, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+  File "/home/zhangbojun/.conda/envs/pgd-no/lib/python3.10/site-packages/torch/autograd/function.py", line 307, in apply
+    return user_fn(self, *args)
+  File "/home/zhangbojun/.conda/envs/pgd-no/lib/python3.10/site-packages/torch/utils/checkpoint.py", line 321, in backward
+    torch.autograd.backward(outputs_with_grad, args_with_grad)
+  File "/home/zhangbojun/.conda/envs/pgd-no/lib/python3.10/site-packages/torch/autograd/__init__.py", line 347, in backward
+    _engine_run_backward(
+  File "/home/zhangbojun/.conda/envs/pgd-no/lib/python3.10/site-packages/torch/autograd/graph.py", line 825, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1.03 GiB. GPU 0 has a total capacity of 31.73 GiB of which 519.62 MiB is free. Including non-PyTorch memory, this process has 31.22 GiB memory in use. Of the allocated memory 21.89 GiB is allocated by PyTorch, and 8.95 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
