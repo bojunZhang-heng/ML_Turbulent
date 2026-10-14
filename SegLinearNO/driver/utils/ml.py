@@ -154,23 +154,23 @@ def train(model_name, model, train_loader, val_loader,
     criterion = nn.MSELoss()
 
     # RETO module
-    optimizer = optim.AdamW(
-        model.parameters(), lr=args.learning_rate, weight_decay=args.weight_decay
-    )
-    lr_scheduler = torch.optim.lr_scheduler.StepLR(
-        optimizer,
-        step_size=args.scheduler_step,
-        gamma=args.scheduler_gamma
-    )
+    #optimizer = optim.AdamW(
+    #    model.parameters(), lr=args.learning_rate, weight_decay=args.weight_decay
+    #)
+    #lr_scheduler = torch.optim.lr_scheduler.StepLR(
+    #    optimizer,
+    #    step_size=args.scheduler_step,
+    #    gamma=args.scheduler_gamma
+    #)
 
     # PGD-NO module
-    #optimizer = optim.Adam(model.parameters(), lr=args.learning_rate)
-    #lr_scheduler = torch.optim.lr_scheduler.OneCycleLR(
-    #    optimizer,
-    #    max_lr=args.learning_rate,
-    #    total_steps=(len(train_loader) // batch_size + 1) * num_epochs,
-    #    final_div_factor=1000.,
-    #)
+    optimizer = optim.Adam(model.parameters(), lr=args.learning_rate)
+    lr_scheduler = torch.optim.lr_scheduler.OneCycleLR(
+        optimizer,
+        max_lr=args.learning_rate,
+        total_steps=(len(train_loader) // batch_size + 1) * num_epochs,
+        final_div_factor=1000.,
+    )
 
     # lr_scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
     #     optimizer, factor=0.7, patience=20)
