@@ -1,11 +1,14 @@
 import pickle
 
-file_path="/Users/zhangbojun/Downloads/ShapeNet_dataset/vtk/pklFile/0.pkl"
+
+file_path="/data/zhangbojun/ShapeNet_dataset/vtk/pklFile/0.pkl"
 with open(file_path, "rb") as f:
     data = pickle.load(f)
 
 coor = data['coor']
 features_6d = data['features_6d']
+print(coor[0,:])
+print(features_6d[0,:])
 
 def describe(x, name="data", depth=0, max_depth=9):
     indent = "  " * depth
