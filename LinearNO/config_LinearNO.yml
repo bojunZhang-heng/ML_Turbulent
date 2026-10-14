@@ -1,0 +1,48 @@
+# prepare | train | evaluate | train_and_evaluate
+mode: train_and_evaluate
+
+runtime:
+  device:  auto                # auto, cpu, cuda:0, ...
+  seed: 0
+  deterministic: true
+
+dataset:
+  root: /data/zhangbojun/mlcfd_data
+  training_subdir: training_data
+  cache_subdir: preprocessed_data
+  fold_id: 0                   # param0 is test/validation; param1-param8 are training
+  auto_extract: true           # extracts param0.tar.gz ... param8.tar.gz on first run
+  preprocessed: true           # auto reuses a complete cache and builds a missing cache
+  graph:
+    use_cfd_mesh: true
+    radius: 0.2                # only used when use_cfd_mesh is false
+
+model:
+  space_dim: 3
+  fun_dim: 4
+  out_dim: 4
+  n_layers: 8
+  n_hidden: 256
+  n_head: 8
+  dropout: 0.0
+  mlp_ratio: 2
+  key_ratio: 1
+  Time_Input: false
+  unified_pos: false
+  isregular: false
+
+training:
+  epochs: 200
+  batch_size: 1               # the ShapeNetCar implementation requires 1
+  learning_rate: 0.001
+  pressure_loss_weight: 0.5
+  validation_interval: 10
+
+output:
+  directory: outputs/shapenet/fold0
+
+evaluation:
+  checkpoint: null            # null => output.directory/model_<epochs>.pth
+  results_directory: results/shapenet/fold0
+  save_predictions: true
+  compute_drag: true
