@@ -35,7 +35,7 @@ def analyze_attention(model_name, model_path, data_path, sample_idx, predicted_f
     
     # Get the sample
     for batch_data in test_loader:
-        coorf, seg_matrix, target, sim_ids = batch_data
+        coorf, raw_coords, seg_matrix, target, sim_ids = batch_data
         coorf = coorf.to(device)
         seg_matrix = seg_matrix.to(device)
         sim_id = sim_ids[0]
