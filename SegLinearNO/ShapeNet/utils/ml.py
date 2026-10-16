@@ -4,7 +4,6 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.amp import GradScaler, autocast
-from tqdm import tqdm
 
 from utils.drag_coefficient import calculate_cd
 
@@ -261,8 +260,7 @@ def validate(
     predictions = {}
     targets = {}
 
-    progress = tqdm(data_loader, desc=description, unit="batch", leave=False)
-    for batch_data in progress:
+    for batch_data in data_loader:
         model_input, seg_matrix, target, surface_mask, sim_ids, metadata = _unpack_batch(batch_data)
         model_input = model_input.to(device)
         target = target.to(device)
@@ -286,8 +284,6 @@ def validate(
             for index, sim_id in enumerate(sim_ids):
                 predictions[sim_id] = output_denormalized[index]
                 targets[sim_id] = target_denormalized[index]
-        progress.set_postfix(loss=f"{loss.item():.4e}")
-
     batch_count = len(data_loader)
     if batch_count == 0:
         raise ValueError(f"{description} loader is empty")
@@ -348,13 +344,7 @@ def train(
     for epoch in range(num_epochs):
         model.train()
         train_totals = {"loss": 0.0, "velocity_loss": 0.0, "pressure_loss": 0.0}
-        progress = tqdm(
-            train_loader,
-            desc=f"Epoch {epoch + 1}/{num_epochs} - Train",
-            unit="batch",
-            leave=False,
-        )
-        for batch_data in progress:
+        for batch_data in train_loader:
             model_input, seg_matrix, target, surface_mask, _, _ = _unpack_batch(batch_data)
             model_input = model_input.to(device)
             target = target.to(device)
@@ -390,12 +380,6 @@ def train(
             train_totals["loss"] += loss.item()
             train_totals["velocity_loss"] += velocity_loss.item()
             train_totals["pressure_loss"] += pressure_loss.item()
-            progress.set_postfix(
-                loss=f"{loss.item():.3e}",
-                velocity=f"{velocity_loss.item():.3e}",
-                pressure=f"{pressure_loss.item():.3e}",
-            )
-
         batch_count = len(train_loader)
         if batch_count == 0:
             raise ValueError("Training loader is empty")
@@ -403,6 +387,13 @@ def train(
         history["train_loss"].append(train_results["loss"])
         history["train_velocity_loss"].append(train_results["velocity_loss"])
         history["train_pressure_loss"].append(train_results["pressure_loss"])
+
+        print(f"Epoch {epoch + 1}/{num_epochs} | LR={optimizer.param_groups[0]['lr']:.3e}")
+        print(
+            f"  Train normalized loss: {train_results['loss']:.6e} "
+            f"(velocity={train_results['velocity_loss']:.6e}, "
+            f"pressure={train_results['pressure_loss']:.6e})"
+        )
 
         if epoch % eval_freq == 0 or epoch == num_epochs - 1:
             val_results = validate(
@@ -420,12 +411,6 @@ def train(
             history["val_cd_relative_error"].append(val_results["cd_relative_error"])
             selection_error = (
                 val_results["velocity_relative_l2"] + val_results["pressure_relative_l2"]
-            )
-            print(f"Epoch {epoch + 1}/{num_epochs} | LR={optimizer.param_groups[0]['lr']:.3e}")
-            print(
-                f"  Train normalized loss: {train_results['loss']:.6e} "
-                f"(velocity={train_results['velocity_loss']:.6e}, "
-                f"pressure={train_results['pressure_loss']:.6e})"
             )
             _print_metrics("Val", val_results)
             if selection_error < history["best_val_error"]:
