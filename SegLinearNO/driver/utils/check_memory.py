@@ -151,8 +151,7 @@ def train(model_name, model, train_loader, val_loader, normalization_scalars,
             leave=False,
         )
         for batch_data in train_progress:
-            # New dataloader format: (coorf, seg_matrix, p, sim_id)
-            coorf, seg_matrix, target, sim_ids = batch_data
+            coorf, raw_coords, seg_matrix, target, sim_ids = batch_data
             coorf, target = coorf.to(device), target.to(device)
             seg_matrix = seg_matrix.to(device)
 
@@ -210,8 +209,7 @@ def train(model_name, model, train_loader, val_loader, normalization_scalars,
                     leave=False,
                 )
                 for batch_data in val_progress:
-                    # New dataloader format: (coorf, seg_matrix, p, sim_id)
-                    coorf, seg_matrix, target, sim_ids = batch_data
+                    coorf, raw_coords, seg_matrix, target, sim_ids = batch_data
                     coorf, target = coorf.to(device), target.to(device)
                     seg_matrix = seg_matrix.to(device)
                     #with autocast(device_type="cuda", dtype=torch.float16):
@@ -297,8 +295,7 @@ def test(model_name, model, test_loader, normalization_scalars, model_path="mode
             leave=True,
         )
         for batch_data in test_progress:
-            # New dataloader format: (coorf, seg_matrix, p, sim_id)
-            coorf, seg_matrix, target, sim_ids = batch_data
+            coorf, raw_coords, seg_matrix, target, sim_ids = batch_data
             coorf, target = coorf.to(device), target.to(device)
             seg_matrix = seg_matrix.to(device)
 

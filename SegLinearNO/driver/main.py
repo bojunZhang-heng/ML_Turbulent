@@ -1,5 +1,4 @@
 from dataloader import create_data_loaders
-from utils.metric import compute_relative_error
 from models.transolver_model import Model as Transolver_Model
 from models.Transolver_seg import Model as Transolver_SEG_Model
 from models.Transolver_seg_v2 import Model as Transolver_SEG_V2_Model
@@ -7,6 +6,7 @@ from models.SegLinearNO import Model as SegLinearNO
 from models.SegLinearNO_v2 import Model as SegLinearNO_v2
 from models.LinearAttnNeuralOperator import LinearAttentionNeuralOperator as LinearNO
 from models.RopeLinearNO import LinearAttentionNeuralOperator as RopeLinearNO
+from models.RopeLinearNO_v2 import LinearAttentionNeuralOperator as RopeLinearNO_v2
 
 
 # from models.mlp import MLP as MLP_Model
@@ -18,8 +18,6 @@ from utils.ml import train, test
 import os
 import torch
 import argparse
-import pickle
-import numpy as np
 import yaml
 from pathlib import Path
 
@@ -34,6 +32,7 @@ if config_args.config:
 
 parser = argparse.ArgumentParser(parents=[config_parser])
 parser.set_defaults(**config)
+parser.add_argument('--exp', type=str, default=config.get('exp', 'ShapeNet'))
 parser.add_argument('--model_name', type=str, default=config.get('model_name', "transolver"))
 parser.add_argument('--predicted_feature_name', type=str, default=config.get('predicted_feature_name', "pressure"))
 parser.add_argument('--phase', type=str, default=config.get('phase', "train"), choices=["train", "restart_train", "test"])
@@ -81,11 +80,11 @@ def main():
 
     for i, idx in enumerate(ALL_INDEX):
         r = i % 10
-        if r < 7:        # 0–6 → 7/10 → train
+        if r < 6:        # 0–5 → 6/10 → train
             TRAIN_index.append(idx)
-        elif r == 7:     # 7 → 1/10 → val
+        elif r < 9:      # 6–8 → 3/10 → val
             VAL_index.append(idx)
-        else:            # 8–9 → 2/10 → test
+        else:            # 9 → 1/10 → test
             TEST_index.append(idx)
 
     #Debug
@@ -94,17 +93,27 @@ def main():
     #TEST_index = config.get('test_index', [9, 10])
     print(f"Train: {len(TRAIN_index)}, Val: {len(VAL_index)}, Test: {len(TEST_index)}")
 
-    with open(DATA_PATH + "normalization_scalars.pkl", "rb") as f:
-        normalization_scalars = pickle.load(f)
-    train_loader, val_loader, test_loader, _ = create_data_loaders(
+    coordinate_only_models = {
+        'transolver',
+        'LinearNO',
+        'RopeLinearNO',
+        'RopeLinearNO_v2',
+    }
+    train_loader, val_loader, test_loader, normalization_scalars = create_data_loaders(
         DATA_PATH,
         batch_size=args.batch_size,
         train_index=TRAIN_index,
         val_index=VAL_index,
         test_index=TEST_index,
         shuffle=args.shuffle,
-        predicted_feature_name=predicted_feature_name
+        predicted_feature_name=predicted_feature_name,
+        coordinate_only=model_name in coordinate_only_models,
     )
+    if normalization_scalars is None:
+        raise FileNotFoundError(
+            f"normalization_scalars.pkl was not found in {DATA_PATH}. "
+            "Run preprocess/process_data.py before training."
+        )
 
     # Create model
     print("\n🏗️  Creating model...")
@@ -183,25 +192,33 @@ def main():
             Time_Input=False,
             mlp_ratio=2,fun_dim=0,out_dim=1,key_ratio=1,
             unified_pos=False,isregular=False)
+    elif model_name == 'RopeLinearNO_v2':
+        model = RopeLinearNO_v2(
+            space_dim=3,
+            n_layers=8,
+            n_hidden=256,
+            n_head=8,
+            Time_Input=False,
+            mlp_ratio=2, fun_dim=0, out_dim=1, key_ratio=1,
+            unified_pos=False, isregular=False,
+        )
     else:
         raise ValueError(f"Model name {model_name} not supported")
     print(f"Model parameters: {sum(p.numel() for p in model.parameters())}")
 
     # load the pre-trained model if it exists
-    if phase != 'restart_train':
+    if phase != 'restart_train' and save_path.exists():
         try:
-            if os.path.exists("trained_models/best_model_{}.pth".format(model_flag)):
-                # weights_only=False is safe here since we're loading our own trained models
-                model.load_state_dict(
-                    torch.load(
-                        "trained_models/best_model_{}.pth".format(model_flag),
-                        map_location=torch.device('cpu'),
-                        weights_only=False
-                    )
+            model.load_state_dict(
+                torch.load(
+                    save_path,
+                    map_location=torch.device('cpu'),
+                    weights_only=True,
                 )
-                print("Loaded pre-trained model")
-        except:
-            print("No compatible pre-trained model found")
+            )
+            print(f"Loaded pre-trained model from {save_path}")
+        except (RuntimeError, TypeError, ValueError) as error:
+            print(f"No compatible pre-trained model found at {save_path}: {error}")
 
     # Training
     if phase == 'train' or phase == 'restart_train':

@@ -12,24 +12,27 @@ from scipy.sparse import csr_matrix
 def custom_collate_fn(batch):
     """
     Custom collate function for batch processing.
-    Expects 4-tuples from `PerFileVTKDataset`:
-        (coorf, seg_matrix, p, sim_id)
+    Expects 5-tuples from `PerFileVTKDataset`:
+        (coorf, raw_coords, seg_matrix, p, sim_id)
     """
     first = batch[0]
     n_fields = len(first)
 
-    if n_fields != 4:
+    if n_fields != 5:
         raise ValueError(
             f"Unexpected number of fields in batch elements: {n_fields}. "
-            "Expected 4-tuple: (coorf, seg_matrix, p, sim_id)."
+            "Expected 5-tuple: (coorf, raw_coords, seg_matrix, p, sim_id)."
         )
 
-    coorf_list, seg_matrix_list, p_list, sim_id = zip(*batch)
+    coorf_list, raw_coords_list, seg_matrix_list, p_list, sim_id = zip(*batch)
 
     def _to_tensor(x):
         return x if torch.is_tensor(x) else torch.as_tensor(x, dtype=torch.float32)
 
-    shapes = [(tuple(x.shape), tuple(m.shape), tuple(y.shape)) for x, m, y, _ in batch]
+    shapes = [
+        (tuple(x.shape), tuple(raw.shape), tuple(m.shape), tuple(y.shape))
+        for x, raw, m, y, _ in batch
+    ]
     if len(set(shapes)) != 1:
         raise ValueError(
             "Samples with different mesh shapes cannot share a batch. "
@@ -37,11 +40,12 @@ def custom_collate_fn(batch):
         )
 
     coorf_batch = torch.stack([_to_tensor(x) for x in coorf_list], dim=0)
+    raw_coords_batch = torch.stack([_to_tensor(x) for x in raw_coords_list], dim=0)
     seg_matrix_batch = torch.stack([_to_tensor(x) for x in seg_matrix_list], dim=0)
     p_batch = torch.stack([_to_tensor(x) for x in p_list], dim=0)
     sim_id_batch = list(sim_id)
 
-    return coorf_batch, seg_matrix_batch, p_batch, sim_id_batch
+    return coorf_batch, raw_coords_batch, seg_matrix_batch, p_batch, sim_id_batch
 
 
 class _NumpyCoreAliasUnpickler(pickle.Unpickler):
@@ -67,7 +71,13 @@ class VTKDataset(Dataset):
     In-memory dataset exposing only input, geometry partition and pressure.
     """
 
-    def __init__(self, data_dict, indices, predicted_feature_name="pressure"):
+    def __init__(
+        self,
+        data_dict,
+        indices,
+        predicted_feature_name="pressure",
+        coordinate_only=False,
+    ):
         self.data = []
         self.indices = indices
         self.sim_ids = []  # Track simulation IDs
@@ -76,7 +86,7 @@ class VTKDataset(Dataset):
         for idx in indices:
             if idx in data_dict and idx != "normalization_scalars":
                 sample = data_dict[idx]
-                features_6d = _get_input(sample)
+                model_input = _get_input(sample, coordinate_only=coordinate_only)
 
                 if "seg_matrix" in sample:
                     # Check if seg_matrix is already a sparse matrix
@@ -88,24 +98,36 @@ class VTKDataset(Dataset):
                         seg_matrix = torch.as_tensor(sample["seg_matrix"], dtype=torch.float32)
                 else:
                     # Create empty tensor if no seg_matrix
-                    seg_matrix = torch.FloatTensor(np.zeros((1, 1, 1)))
+                    seg_matrix = torch.zeros((1, model_input.shape[0]), dtype=torch.float32)
 
+                raw_coords = _get_raw_coords(sample, data_dict.get("normalization_scalars"))
                 target = _get_pressure(sample)
-                self.data.append((features_6d, seg_matrix, target))
+                self.data.append((model_input, raw_coords, seg_matrix, target))
                 self.sim_ids.append(idx)  # Store the simulation ID
 
     def __len__(self):
         return len(self.data)
 
     def __getitem__(self, idx):
-        features_6d, seg_matrix, target = self.data[idx]
+        model_input, raw_coords, seg_matrix, target = self.data[idx]
         sim_id = self.sim_ids[idx]
 
-        return features_6d, seg_matrix, target, sim_id
+        return model_input, raw_coords, seg_matrix, target, sim_id
 
 
-def _get_input(sample):
-    """Return exactly six features: three coordinates and three normals."""
+def _get_input(sample, coordinate_only=False):
+    """Return normalized XYZ, optionally followed by the three normals."""
+    if coordinate_only:
+        if "coor" in sample:
+            features = np.asarray(sample["coor"], dtype=np.float32)
+        elif "features_6d" in sample:
+            features = np.asarray(sample["features_6d"], dtype=np.float32)[..., :3]
+        else:
+            raise KeyError("Sample must contain coor or features_6d")
+        if features.ndim != 2 or features.shape[1] != 3:
+            raise ValueError(f"Expected coordinate input shape (N, 3), got {features.shape}")
+        return torch.as_tensor(features, dtype=torch.float32)
+
     if "features_6d" in sample:
         features = np.asarray(sample["features_6d"], dtype=np.float32)
     elif "coor" in sample and "normals" in sample:
@@ -130,6 +152,39 @@ def _get_pressure(sample):
     return torch.as_tensor(pressure, dtype=torch.float32)
 
 
+def _get_raw_coords(sample, normalization_scalars=None):
+    """Return unnormalized XYZ coordinates for relative-position encoding."""
+    if "coor_raw" in sample:
+        raw_coords = np.asarray(sample["coor_raw"], dtype=np.float32)
+    elif "coor" in sample and normalization_scalars is not None:
+        coords = np.asarray(sample["coor"], dtype=np.float32)
+        normalization = sample.get("normalization", {})
+        coordinates_are_normalized = normalization.get("coor") == "min_max"
+        if not normalization:
+            coordinates_are_normalized = bool(
+                np.all(coords >= -1e-5) and np.all(coords <= 1.0 + 1e-5)
+            )
+        if coordinates_are_normalized:
+            coords_min = np.asarray(
+                normalization_scalars["coords_min"], dtype=np.float32
+            )
+            coords_range = np.asarray(
+                normalization_scalars["coords_range"], dtype=np.float32
+            )
+            raw_coords = coords * coords_range + coords_min
+        else:
+            raw_coords = coords
+    elif "coor" in sample:
+        raw_coords = np.asarray(sample["coor"], dtype=np.float32)
+    else:
+        raise KeyError(
+            "Sample must contain coor_raw or coor for relative-position encoding."
+        )
+    if raw_coords.ndim != 2 or raw_coords.shape[1] != 3:
+        raise ValueError(f"Expected raw coordinate shape (N, 3), got {raw_coords.shape}")
+    return torch.as_tensor(raw_coords, dtype=torch.float32)
+
+
 class PerFileVTKDataset(Dataset):
     """
     Dataset variant that loads **one simulation per file** on demand.
@@ -144,13 +199,29 @@ class PerFileVTKDataset(Dataset):
     previously stored in `data_dict[idx]`.
     """
 
-    def __init__(self, data_root, indices, predicted_feature_name="pressure"):
+    def __init__(
+        self,
+        data_root,
+        indices,
+        predicted_feature_name="pressure",
+        coordinate_only=False,
+    ):
         if isinstance(data_root, (str, os.PathLike)):
             data_root = [data_root]
         if not isinstance(data_root, Sequence) or not data_root:
             raise TypeError("data_root must be a directory or a non-empty sequence of directories")
         self.data_roots = [Path(root) for root in data_root]
         self.indices = indices
+        self.coordinate_only = coordinate_only
+        self.normalization_scalars = self._load_normalization_scalars()
+
+    def _load_normalization_scalars(self):
+        for data_root in self.data_roots:
+            scalar_path = data_root / "normalization_scalars.pkl"
+            if scalar_path.exists():
+                with open(scalar_path, "rb") as handle:
+                    return pickle.load(handle)
+        return None
 
     def _sample_path(self, sim_id):
         # If your naming is different (e.g. f"sample_{sim_id}.pkl"),
@@ -175,16 +246,19 @@ class PerFileVTKDataset(Dataset):
         # Map from dataset index to simulation id
         sim_id = self.indices[idx]
         sample = self._load_sample(sim_id)
-        coorf = _get_input(sample)
+        coorf = _get_input(sample, coordinate_only=self.coordinate_only)
+        raw_coords = _get_raw_coords(sample, self.normalization_scalars)
 
         # Ensure seg_matrix is dense (mirror behavior of VTKDataset)
-        seg_matrix = sample["seg_matrix"]
+        seg_matrix = sample.get("seg_matrix")
+        if seg_matrix is None:
+            seg_matrix = np.zeros((1, coorf.shape[0]), dtype=np.float32)
         if isinstance(seg_matrix, csr_matrix):
             seg_matrix = seg_matrix.toarray()
         seg_matrix = torch.as_tensor(seg_matrix, dtype=torch.float32)
         p = _get_pressure(sample)
 
-        return coorf, seg_matrix, p, sim_id
+        return coorf, raw_coords, seg_matrix, p, sim_id
 
 
 
@@ -196,6 +270,7 @@ def create_data_loaders(
     test_index=[66],
     shuffle=True,
     predicted_feature_name="pressure",
+    coordinate_only=False,
 ):
     """
     Create train, validation, and test data loaders based on specific indices.
@@ -215,11 +290,11 @@ def create_data_loaders(
         shuffle (bool): Whether to shuffle training data
         predicted_feature_name (str): Name of the feature to predict
             ("pressure", "x_force", "y_force", "z_force")
+        coordinate_only (bool): Return normalized XYZ only instead of
+            normalized XYZ concatenated with normals.
 
     Returns:
         tuple: (train_loader, val_loader, test_loader, normalization_scalars)
-            In per-file mode, `normalization_scalars` is returned as None
-            (we can wire this up in a later step if needed).
     """
 
     is_dict_mode = isinstance(data_source, dict)
@@ -246,31 +321,47 @@ def create_data_loaders(
 
         # Create datasets with predicted_feature_name (legacy in-memory)
         train_dataset = VTKDataset(
-            data_dict, train_indices, predicted_feature_name=predicted_feature_name
+            data_dict,
+            train_indices,
+            predicted_feature_name=predicted_feature_name,
+            coordinate_only=coordinate_only,
         )
         val_dataset = VTKDataset(
-            data_dict, val_indices, predicted_feature_name=predicted_feature_name
+            data_dict,
+            val_indices,
+            predicted_feature_name=predicted_feature_name,
+            coordinate_only=coordinate_only,
         )
         test_dataset = VTKDataset(
-            data_dict, test_indices, predicted_feature_name=predicted_feature_name
+            data_dict,
+            test_indices,
+            predicted_feature_name=predicted_feature_name,
+            coordinate_only=coordinate_only,
         )
 
     else:
         data_root = data_source
         print(f"Per-file data root(s): {data_root}")
-        # We don't know normalization_scalars location yet in per-file mode.
-        normalization_scalars = None
-
         # Create datasets that load one file per sample on demand
         train_dataset = PerFileVTKDataset(
-            data_root, train_indices, predicted_feature_name=predicted_feature_name
+            data_root,
+            train_indices,
+            predicted_feature_name=predicted_feature_name,
+            coordinate_only=coordinate_only,
         )
         val_dataset = PerFileVTKDataset(
-            data_root, val_indices, predicted_feature_name=predicted_feature_name
+            data_root,
+            val_indices,
+            predicted_feature_name=predicted_feature_name,
+            coordinate_only=coordinate_only,
         )
         test_dataset = PerFileVTKDataset(
-            data_root, test_indices, predicted_feature_name=predicted_feature_name
+            data_root,
+            test_indices,
+            predicted_feature_name=predicted_feature_name,
+            coordinate_only=coordinate_only,
         )
+        normalization_scalars = train_dataset.normalization_scalars
 
     print("Data split:")
     print(f"  - Training: {len(train_indices)} simulations (indices: {train_indices})")
@@ -311,8 +402,9 @@ if __name__ == "__main__":
 
     # print the first batch
     for batch in train_loader:
-        coorf, seg_matrix, p, sim_id = batch
+        coorf, raw_coords, seg_matrix, p, sim_id = batch
         print(coorf.shape)
+        print(raw_coords.shape)
         print(seg_matrix.shape)
         print(p.shape)
         print(sim_id)

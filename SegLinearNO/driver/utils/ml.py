@@ -15,6 +15,20 @@ SEGMENTED_MODELS = {
     "SegLinearNO",
     "SegLinearNO_v2",
 }
+LINEAR_MODELS = {"LinearNO", "RopeLinearNO"}
+RAW_COORD_ROPE_MODELS = {"RopeLinearNO_v2"}
+
+
+def forward_model(model_name, model, coorf, raw_coords, seg_matrix):
+    if model_name == "transolver":
+        return model(coorf)
+    if model_name in SEGMENTED_MODELS:
+        return model((coorf, seg_matrix))
+    if model_name in LINEAR_MODELS:
+        return model(coorf)
+    if model_name in RAW_COORD_ROPE_MODELS:
+        return model(coorf[..., :3], rope_coords=raw_coords)
+    raise ValueError(f"Model name {model_name} not supported")
 
 
 def configure_amp(device):
@@ -149,8 +163,6 @@ def train(model_name, model, train_loader, val_loader,
         print(f"AMP enabled with dtype={amp_dtype}")
 
     model = model.float().to(device)
-    batch_size = 1
-
     criterion = nn.MSELoss()
 
     # RETO module
@@ -168,7 +180,7 @@ def train(model_name, model, train_loader, val_loader,
     lr_scheduler = torch.optim.lr_scheduler.OneCycleLR(
         optimizer,
         max_lr=args.learning_rate,
-        total_steps=(len(train_loader) // batch_size + 1) * num_epochs,
+        total_steps=max(1, len(train_loader) * num_epochs),
         final_div_factor=1000.,
     )
 
@@ -187,7 +199,7 @@ def train(model_name, model, train_loader, val_loader,
         'best_val_error': float('inf')
     }
 
-    print(f"Starting training for {num_epochs} epochs (model_name='{model_name}', assuming 'transolver' and coorf-only input)...")
+    print(f"Starting training for {num_epochs} epochs (model_name='{model_name}')...")
 
     memory_report_pending = device.type == "cuda"
     memory_hooks = []
@@ -209,9 +221,11 @@ def train(model_name, model, train_loader, val_loader,
                 torch.cuda.reset_peak_memory_stats(device)
                 memory_hooks, memory_stats = register_mem_hooks(model)
 
-            # New dataloader format: (coorf, seg_matrix, p, sim_id)
-            coorf, seg_matrix, target, sim_ids = batch_data
-            coorf, target = coorf.to(device), target.to(device)
+            # Dataloader format: normalized features, raw XYZ, segmentation, target, ID
+            coorf, raw_coords, seg_matrix, target, sim_ids = batch_data
+            coorf, raw_coords, target = (
+                coorf.to(device), raw_coords.to(device), target.to(device)
+            )
             if model_name in SEGMENTED_MODELS:
                 seg_matrix = seg_matrix.to(device)
 
@@ -223,14 +237,9 @@ def train(model_name, model, train_loader, val_loader,
                     dtype=amp_dtype,
                     enabled=amp_enabled,
                 ):
-                    if model_name == 'transolver':
-                        outputs = model(coorf)
-                    elif model_name in SEGMENTED_MODELS:
-                        outputs = model((coorf, seg_matrix))
-                    elif model_name in ('LinearNO', 'RopeLinearNO'):
-                        outputs = model(coorf)
-                    else:
-                        raise ValueError(f"Model name {model_name} not supported")
+                    outputs = forward_model(
+                        model_name, model, coorf, raw_coords, seg_matrix
+                    )
                     loss = criterion(outputs, target)
 
             except torch.OutOfMemoryError:
@@ -249,11 +258,11 @@ def train(model_name, model, train_loader, val_loader,
             scaler.scale(loss).backward()
             scaler.step(optimizer)
             scaler.update()
+            lr_scheduler.step()
 
             train_loss += loss.item()
             train_progress.set_postfix(loss=f"{loss.item():.4e}")
 
-        lr_scheduler.step()
         train_loss /= len(train_loader)
 
         # Validation phase
@@ -270,9 +279,10 @@ def train(model_name, model, train_loader, val_loader,
                     leave=False,
                 )
                 for batch_data in val_progress:
-                    # New dataloader format: (coorf, seg_matrix, p, sim_id)
-                    coorf, seg_matrix, target, sim_ids = batch_data
-                    coorf, target = coorf.to(device), target.to(device)
+                    coorf, raw_coords, seg_matrix, target, sim_ids = batch_data
+                    coorf, raw_coords, target = (
+                        coorf.to(device), raw_coords.to(device), target.to(device)
+                    )
                     if model_name in SEGMENTED_MODELS:
                         seg_matrix = seg_matrix.to(device)
                     with autocast(
@@ -280,14 +290,9 @@ def train(model_name, model, train_loader, val_loader,
                         dtype=amp_dtype,
                         enabled=amp_enabled,
                     ):
-                        if model_name == 'transolver':
-                            outputs = model(coorf)
-                        elif model_name in SEGMENTED_MODELS:
-                            outputs = model((coorf, seg_matrix))
-                        elif model_name in ('LinearNO', 'RopeLinearNO'):
-                            outputs = model(coorf)
-                        else:
-                            raise ValueError(f"Model name {model_name} not supported")
+                        outputs = forward_model(
+                            model_name, model, coorf, raw_coords, seg_matrix
+                        )
                         loss = criterion(outputs, target)
                     val_loss += loss.detach().cpu().item()
 
@@ -340,7 +345,9 @@ def test(model_name, model, test_loader, normalization_scalars, model_path="mode
 
     # Load the best model
     if os.path.exists(model_path):
-        model.load_state_dict(torch.load(model_path, map_location=device))
+        model.load_state_dict(
+            torch.load(model_path, map_location=device, weights_only=True)
+        )
         print(f"Loaded model from {model_path}")
     else:
         print(f"Warning: Model file not found at {model_path}")
@@ -362,9 +369,10 @@ def test(model_name, model, test_loader, normalization_scalars, model_path="mode
             leave=True,
         )
         for batch_data in test_progress:
-            # New dataloader format: (coorf, seg_matrix, p, sim_id)
-            coorf, seg_matrix, target, sim_ids = batch_data
-            coorf, target = coorf.to(device), target.to(device)
+            coorf, raw_coords, seg_matrix, target, sim_ids = batch_data
+            coorf, raw_coords, target = (
+                coorf.to(device), raw_coords.to(device), target.to(device)
+            )
             if model_name in SEGMENTED_MODELS:
                 seg_matrix = seg_matrix.to(device)
 
@@ -373,14 +381,9 @@ def test(model_name, model, test_loader, normalization_scalars, model_path="mode
                 dtype=amp_dtype,
                 enabled=amp_enabled,
             ):
-                if model_name == 'transolver':
-                    outputs = model(coorf)
-                elif model_name in SEGMENTED_MODELS:
-                    outputs = model((coorf, seg_matrix))
-                elif model_name in ('LinearNO', 'RopeLinearNO'):
-                    outputs = model(coorf)
-                else:
-                    raise ValueError(f"Model name {model_name} not supported")
+                outputs = forward_model(
+                    model_name, model, coorf, raw_coords, seg_matrix
+                )
                 loss = criterion(outputs, target)
             test_loss += loss.item()
 
