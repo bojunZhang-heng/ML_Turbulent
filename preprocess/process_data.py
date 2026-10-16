@@ -147,9 +147,17 @@ def compute_statistics(output_files):
 def normalize_files(output_files, scalars):
     for file_path in output_files:
         with file_path.open("rb") as handle: sample = pickle.load(handle)
-        sample["coor"] = ((sample["coor"] - scalars["coords_min"]) / scalars["coords_range"]).astype(np.float32, copy=False)
+        raw_coords = np.asarray(sample.get("coor_raw", sample["coor"]), dtype=np.float32)
+        sample["coor_raw"] = raw_coords.copy()
+        sample["coor"] = ((raw_coords - scalars["coords_min"]) / scalars["coords_range"]).astype(np.float32, copy=False)
         sample["pressure"] = ((sample["pressure"] - scalars["pressure_mean"]) / scalars["pressure_std"]).astype(np.float32, copy=False)
         sample["features_6d"] = np.concatenate([sample["coor"], sample["normals"]], axis=1).astype(np.float32, copy=False)
+        sample["normalization"] = {
+            "coor": "min_max",
+            "pressure": "mean_std",
+            "normals": "unchanged_unit_vectors",
+            "coor_raw": "unnormalized",
+        }
         with file_path.open("wb") as handle: pickle.dump(sample, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 
@@ -162,7 +170,7 @@ def process_folder(input_dir, output_dir=DEFAULT_OUTPUT, input_format="auto", pa
     for index, vtk_file in enumerate(vtk_files, start=1):
         file_started = time.monotonic(); coords, pressure, normals, original_ids, surface, metadata = read_vtk(vtk_file, input_format)
         seg_matrix, labels = create_seg_matrix(coords, surface, threshold_angles, min_graph_size_ratio, max_segments)
-        sample = {"coor": coords, "normals": normals, "pressure": pressure, "seg_matrix": seg_matrix, "node_cluster_flags": labels, "original_point_ids": original_ids, "features_6d": np.concatenate([coords, normals], axis=1).astype(np.float32), "source_file": vtk_file.name, "metadata": metadata}
+        sample = {"coor": coords, "coor_raw": coords.copy(), "normals": normals, "pressure": pressure, "seg_matrix": seg_matrix, "node_cluster_flags": labels, "original_point_ids": original_ids, "features_6d": np.concatenate([coords, normals], axis=1).astype(np.float32), "source_file": vtk_file.name, "metadata": metadata}
         output_file = output_dir / f"{sample_id(vtk_file)}.pkl"
         with output_file.open("wb") as handle: pickle.dump(sample, handle, protocol=pickle.HIGHEST_PROTOCOL)
         output_files.append(output_file)
