@@ -144,8 +144,6 @@ class Model(nn.Module):
                  unified_pos=False
                  ):
         super(Model, self).__init__()
-        if space_dim != 3:
-            raise ValueError(f"Transolver expects space_dim=3, got {space_dim}")
         if fun_dim != 0:
             raise ValueError("Coordinate-only Transolver requires fun_dim=0")
         self.__name__ = 'UniPDE_3D'
