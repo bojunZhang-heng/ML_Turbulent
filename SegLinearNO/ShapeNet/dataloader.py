@@ -166,13 +166,22 @@ def _get_surface_mask(sample, num_nodes):
     return torch.as_tensor(mask, dtype=torch.bool)
 
 
-def _get_metadata(sample, sim_id, data_root=None):
+def _get_metadata(sample, sim_id, data_root=None, vtk_data_path=None):
     source = sample.get("source", {})
-    pressure_path = source.get("pressure_ref")
-    if data_root is not None:
-        fallback = Path(data_root).parent / "raw_data" / f"{sim_id}_pressure.vtk"
-        if not pressure_path or not Path(pressure_path).exists():
-            pressure_path = str(fallback)
+    if vtk_data_path is not None:
+        pressure_path = Path(vtk_data_path) / f"{sim_id}_pressure.vtk"
+        if not pressure_path.is_file():
+            raise FileNotFoundError(
+                f"Pressure VTK for sample {sim_id} not found: {pressure_path}"
+            )
+    else:
+        pressure_path = source.get("pressure_ref")
+        if data_root is not None and (
+            not pressure_path or not Path(pressure_path).exists()
+        ):
+            pressure_path = Path(data_root).parent / "raw_data" / f"{sim_id}_pressure.vtk"
+
+    pressure_path = str(pressure_path) if pressure_path else None
     return {
         "sample_id": sample.get("sample_id", str(sim_id)),
         "pressure_path": pressure_path,
@@ -194,13 +203,22 @@ class PerFileVTKDataset(Dataset):
     previously stored in `data_dict[idx]`.
     """
 
-    def __init__(self, data_root, indices, predicted_feature_name="pressure"):
+    def __init__(
+        self,
+        data_root,
+        indices,
+        predicted_feature_name="pressure",
+        vtk_data_path=None,
+    ):
         if isinstance(data_root, (str, os.PathLike)):
             data_root = [data_root]
         if not isinstance(data_root, Sequence) or not data_root:
             raise TypeError("data_root must be a directory or a non-empty sequence of directories")
         self.data_roots = [Path(root) for root in data_root]
         self.indices = indices
+        self.vtk_data_path = Path(vtk_data_path) if vtk_data_path else None
+        if self.vtk_data_path is not None and not self.vtk_data_path.is_dir():
+            raise FileNotFoundError(f"VTK data directory not found: {self.vtk_data_path}")
 
     def _sample_path(self, sim_id):
         # If your naming is different (e.g. f"sample_{sim_id}.pkl"),
@@ -239,7 +257,12 @@ class PerFileVTKDataset(Dataset):
             seg_matrix = torch.full((1, len(model_input)), 1.0 / len(model_input))
         target = _get_output(sample)
         surface_mask = _get_surface_mask(sample, len(target))
-        metadata = _get_metadata(sample, sim_id, self._sample_path(sim_id).parent)
+        metadata = _get_metadata(
+            sample,
+            sim_id,
+            self._sample_path(sim_id).parent,
+            vtk_data_path=self.vtk_data_path,
+        )
 
         return model_input, seg_matrix, target, surface_mask, sim_id, metadata
 
@@ -253,6 +276,7 @@ def create_data_loaders(
     test_index=[66],
     shuffle=True,
     predicted_feature_name="pressure",
+    vtk_data_path=None,
 ):
     """
     Create train, validation, and test data loaders based on specific indices.
@@ -272,6 +296,8 @@ def create_data_loaders(
         shuffle (bool): Whether to shuffle training data
         predicted_feature_name (str): Name of the feature to predict
             ("pressure", "x_force", "y_force", "z_force")
+        vtk_data_path (str | None): Directory containing original pressure VTK
+            files named <simulation_id>_pressure.vtk.
 
     Returns:
         tuple: (train_loader, val_loader, test_loader, normalization_scalars)
@@ -320,13 +346,22 @@ def create_data_loaders(
 
         # Create datasets that load one file per sample on demand
         train_dataset = PerFileVTKDataset(
-            data_root, train_indices, predicted_feature_name=predicted_feature_name
+            data_root,
+            train_indices,
+            predicted_feature_name=predicted_feature_name,
+            vtk_data_path=vtk_data_path,
         )
         val_dataset = PerFileVTKDataset(
-            data_root, val_indices, predicted_feature_name=predicted_feature_name
+            data_root,
+            val_indices,
+            predicted_feature_name=predicted_feature_name,
+            vtk_data_path=vtk_data_path,
         )
         test_dataset = PerFileVTKDataset(
-            data_root, test_indices, predicted_feature_name=predicted_feature_name
+            data_root,
+            test_indices,
+            predicted_feature_name=predicted_feature_name,
+            vtk_data_path=vtk_data_path,
         )
 
     print("Data split:")
