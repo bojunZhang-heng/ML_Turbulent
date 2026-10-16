@@ -7,6 +7,7 @@ from einops import rearrange
 from timm.layers.weight_init import trunc_normal_
 from torch.utils.checkpoint import checkpoint
 
+from models.continuous_sincos_embed import ContinuousSincosEmbed
 from models.rope import rope
 from models.rope_frequency import RopeFrequency
 
@@ -220,8 +221,9 @@ class LinearAttentionNeuralOperator(nn.Module):
         self.log_position_scale = nn.Parameter(
             torch.zeros(1, n_head, 1, space_dim, dtype=torch.float)
         )
+        self.pos_embed = ContinuousSincosEmbed(dim=n_hidden, ndim=space_dim)
         self.preprocess = MLP(
-            space_dim,
+            n_hidden,
             n_hidden * 2,
             n_hidden,
             n_layers=0,
@@ -289,7 +291,7 @@ class LinearAttentionNeuralOperator(nn.Module):
         scaled_rope_coords = rope_coords.float().unsqueeze(1) * position_scale
         attn_kwargs = {"freqs": self.rope(scaled_rope_coords)}
 
-        fx = self.preprocess(coords)
+        fx = self.preprocess(self.pos_embed(coords))
         placeholder = self.placeholder.to(dtype=fx.dtype)
         fx = fx + placeholder[None, None, :]
 
