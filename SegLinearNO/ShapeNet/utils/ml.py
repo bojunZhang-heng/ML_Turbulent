@@ -4,6 +4,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.amp import GradScaler, autocast
+from tqdm import tqdm
 
 from utils.drag_coefficient import calculate_cd
 
@@ -260,7 +261,15 @@ def validate(
     predictions = {}
     targets = {}
 
-    for batch_data in data_loader:
+    progress = tqdm(
+        data_loader,
+        desc=description,
+        unit="batch",
+        leave=False,
+        dynamic_ncols=True,
+        mininterval=0.5,
+    )
+    for batch_data in progress:
         model_input, seg_matrix, target, surface_mask, sim_ids, metadata = _unpack_batch(batch_data)
         model_input = model_input.to(device)
         target = target.to(device)
@@ -284,6 +293,7 @@ def validate(
             for index, sim_id in enumerate(sim_ids):
                 predictions[sim_id] = output_denormalized[index]
                 targets[sim_id] = target_denormalized[index]
+        progress.set_postfix(loss=f"{loss.item():.4e}")
     batch_count = len(data_loader)
     if batch_count == 0:
         raise ValueError(f"{description} loader is empty")
@@ -344,7 +354,15 @@ def train(
     for epoch in range(num_epochs):
         model.train()
         train_totals = {"loss": 0.0, "velocity_loss": 0.0, "pressure_loss": 0.0}
-        for batch_data in train_loader:
+        progress = tqdm(
+            train_loader,
+            desc=f"Epoch {epoch + 1}/{num_epochs} - Train",
+            unit="batch",
+            leave=False,
+            dynamic_ncols=True,
+            mininterval=0.5,
+        )
+        for batch_data in progress:
             model_input, seg_matrix, target, surface_mask, _, _ = _unpack_batch(batch_data)
             model_input = model_input.to(device)
             target = target.to(device)
@@ -380,6 +398,11 @@ def train(
             train_totals["loss"] += loss.item()
             train_totals["velocity_loss"] += velocity_loss.item()
             train_totals["pressure_loss"] += pressure_loss.item()
+            progress.set_postfix(
+                loss=f"{loss.item():.3e}",
+                velocity=f"{velocity_loss.item():.3e}",
+                pressure=f"{pressure_loss.item():.3e}",
+            )
         batch_count = len(train_loader)
         if batch_count == 0:
             raise ValueError("Training loader is empty")
