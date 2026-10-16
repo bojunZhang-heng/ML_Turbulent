@@ -41,6 +41,7 @@ parser.add_argument('--eval_freq', type=int, default=config.get('eval_freq', 10)
 parser.add_argument('--learning_rate', type=float, default=config.get('learning_rate', 2e-5))
 parser.add_argument('--pressure_weight', type=float, default=config.get('pressure_weight', 0.5))
 parser.add_argument('--data_path', type=str, default=config.get('data_path', ""))
+parser.add_argument('--vtk_data_path', type=str, default=config.get('vtk_data_path', ""))
 parser.add_argument('--batch_size', type=int, default=config.get('batch_size', 1))
 parser.add_argument('--shuffle', action=argparse.BooleanOptionalAction, default=config.get('shuffle', True))
 parser.add_argument('--exp', type=str, default=config.get('exp', "ShapeNet"))
@@ -126,12 +127,13 @@ def main():
         val_index=VAL_index,
         test_index=TEST_index,
         shuffle=args.shuffle,
-        predicted_feature_name=predicted_feature_name
+        predicted_feature_name=predicted_feature_name,
+        vtk_data_path=args.vtk_data_path or None,
     )
 
     # Create model
     print("\n🏗️  Creating model...")
-    if model_name == 'transolver':
+    if model_name == 'Transolver':
         # Improved hyperparameters for better performance
         model = Transolver_Model(
             space_dim=input_dim,
