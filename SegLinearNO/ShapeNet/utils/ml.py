@@ -118,7 +118,7 @@ def _unpack_batch(batch_data):
 
 
 def _forward_model(model_name, model, model_input, seg_matrix):
-    if model_name == "transolver":
+    if model_name == "Transolver":
         output = model(model_input)
     elif model_name in SEGMENTED_MODELS:
         output = model((model_input, seg_matrix))
