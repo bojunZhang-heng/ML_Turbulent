@@ -9,7 +9,6 @@ from models.RopeLinearNO import LinearAttentionNeuralOperator as RopeLinearNO
 from models.RopeLinearNO_v2 import LinearAttentionNeuralOperator as RopeLinearNO_v2
 from models.LinearNO_se import LinearAttentionNeuralOperator as LinearNO_se
 
-
 # from models.mlp import MLP as MLP_Model
 # from models.figconv import FigConv_Model
 # from models.figconv import Multi_grid_model
