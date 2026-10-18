@@ -30,3 +30,4 @@ preprocess/run_DrivAerNet.sh
 preprocess/run_ShapeNet.sh
 **/.DS_Store
 
+SegLinearNO/ShapeNet/logs/
