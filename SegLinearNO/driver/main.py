@@ -7,13 +7,15 @@ from models.SegLinearNO_v2 import Model as SegLinearNO_v2
 from models.LinearAttnNeuralOperator import LinearAttentionNeuralOperator as LinearNO
 from models.RopeLinearNO import LinearAttentionNeuralOperator as RopeLinearNO
 from models.RopeLinearNO_v2 import LinearAttentionNeuralOperator as RopeLinearNO_v2
+from models.LinearNO_se import LinearAttentionNeuralOperator as LinearNO_se
 
 
 # from models.mlp import MLP as MLP_Model
 # from models.figconv import FigConv_Model
 # from models.figconv import Multi_grid_model
 
-from utils.ml import train, test
+#from utils.ml import train, test
+from utils.ml_SATO import train, test
 
 import os
 import torch
@@ -120,7 +122,7 @@ def main():
     if model_name == 'transolver':
         # Improved hyperparameters for better performance
         model = Transolver_Model(
-            space_dim=3,
+            space_dim=args.space_dim,
             out_dim=1,
             n_layers=8,        # Increased from 8 to 12
             n_hidden=256,       # Increased from 256 to 512
@@ -132,7 +134,7 @@ def main():
         )
     elif model_name == 'transolver_seg':
         model = Transolver_SEG_Model(
-            space_dim=6,
+            space_dim=args.space_dim,
             out_dim=1,
             n_layers=8,        # Increased from 8 to 12
             n_hidden=256,       # Increased from 256 to 512
@@ -143,7 +145,7 @@ def main():
         )  # Changed from 3 to 6 for 6D features
     elif model_name == 'transolver_seg_v2':
         model = Transolver_SEG_V2_Model(
-            space_dim=6,
+            space_dim=args.space_dim,
             out_dim=1,
             n_layers=8,        # Increased from 8 to 12
             n_hidden=256,       # Increased from 256 to 512
@@ -154,7 +156,7 @@ def main():
         )
     elif model_name == 'SegLinearNO':
         model = SegLinearNO(
-            space_dim=6,
+            space_dim=args.space_dim,
             out_dim=1,
             n_layers=8,        # Increased from 8 to 12
             n_hidden=256,       # Increased from 256 to 512
@@ -165,7 +167,7 @@ def main():
         )
     elif model_name == 'SegLinearNO_v2':
         model = SegLinearNO_v2(
-            space_dim=6,
+            space_dim=args.space_dim,
             out_dim=1,
             n_layers=8,        # Increased from 8 to 12
             n_hidden=256,       # Increased from 256 to 512
@@ -176,7 +178,7 @@ def main():
         )
     elif model_name == 'LinearNO':
         model = LinearNO(
-            space_dim=3,
+            space_dim=args.space_dim,
             n_layers=8,
             n_hidden=256,
             n_head=8,
@@ -185,7 +187,7 @@ def main():
             unified_pos=False,isregular=False)
     elif model_name == 'RopeLinearNO':
         model = RopeLinearNO(
-            space_dim=3,
+            space_dim=args.space_dim,
             n_layers=8,
             n_hidden=256,
             n_head=8,
@@ -194,13 +196,25 @@ def main():
             unified_pos=False,isregular=False)
     elif model_name == 'RopeLinearNO_v2':
         model = RopeLinearNO_v2(
-            space_dim=3,
+            space_dim=args.space_dim,
             n_layers=8,
             n_hidden=256,
             n_head=8,
             Time_Input=False,
             mlp_ratio=2, fun_dim=0, out_dim=1, key_ratio=1,
             unified_pos=False, isregular=False,
+        )
+    elif model_name == 'LinearNO_se':
+        model = LinearNO_se(
+            space_dim=args.space_dim,
+            n_layers=8,
+            n_hidden=256,
+            n_head=8,
+            Time_Input=False,
+            mlp_ratio=2, fun_dim=0, out_dim=1, key_ratio=1,
+            unified_pos=False, isregular=False,
+            patch_size=args.patch_size,
+            shift=args.shift,
         )
     else:
         raise ValueError(f"Model name {model_name} not supported")
