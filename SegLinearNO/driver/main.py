@@ -8,6 +8,7 @@ from models.LinearAttnNeuralOperator import LinearAttentionNeuralOperator as Lin
 from models.RopeLinearNO import LinearAttentionNeuralOperator as RopeLinearNO
 from models.RopeLinearNO_v2 import LinearAttentionNeuralOperator as RopeLinearNO_v2
 from models.LinearNO_se import LinearAttentionNeuralOperator as LinearNO_se
+from models.SATO import Model as SATO
 
 # from models.mlp import MLP as MLP_Model
 # from models.figconv import FigConv_Model
@@ -214,6 +215,18 @@ def main():
             unified_pos=False, isregular=False,
             patch_size=args.patch_size,
             shift=args.shift,
+        )
+    elif model_name == 'SATO':
+        model = SATO(
+            space_dim=args.space_dim,
+            n_layers=8,
+            n_hidden=256,
+            n_head=8,
+            slice_num=64,
+            mlp_ratio=2, fun_dim=0, 
+            patch_size=args.patch_size,
+            shift=args.shift,
+            n_iter=1
         )
     else:
         raise ValueError(f"Model name {model_name} not supported")
