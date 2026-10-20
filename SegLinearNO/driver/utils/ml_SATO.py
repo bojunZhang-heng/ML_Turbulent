@@ -228,13 +228,15 @@ def train(model_name, model, train_loader, val_loader,
 
             # Dataloader format: normalized features, raw XYZ, segmentation, target, ID
             coorf, raw_coords, seg_matrix, target, sim_ids = batch_data
-            coorf, raw_coords, target = (
-                coorf.to(device), raw_coords.to(device), target.to(device)
-            )
+    
             coorf = coorf[...,:3]
             order, inverse = pos_to_order_inverse_index(coorf, device, tensor=True)
-
+            coorf, raw_coords, target, order, inverse = (
+                coorf.to(device), raw_coords.to(device), target.to(device), order.to(device), inverse.to(device)
+            )
             if model_name in SEGMENTED_MODELS:
+                seg_matrix = seg_matrix.to(device)
+            if model_name in SEGMENTED_SER:
                 seg_matrix = seg_matrix.to(device)
 
             optimizer.zero_grad(set_to_none=True)
