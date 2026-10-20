@@ -119,7 +119,7 @@ def main():
 
     # Create model
     print("\n🏗️  Creating model...")
-    if model_name == 'transolver':
+    if model_name == 'Transolver':
         # Improved hyperparameters for better performance
         model = Transolver_Model(
             space_dim=args.space_dim,
@@ -132,7 +132,7 @@ def main():
             mlp_ratio=2,        # Increased from 2 to 4
             slice_num=64
         )
-    elif model_name == 'transolver_seg':
+    elif model_name == 'Transolver_seg':
         model = Transolver_SEG_Model(
             space_dim=args.space_dim,
             out_dim=1,
@@ -143,7 +143,7 @@ def main():
             act='gelu',
             mlp_ratio=2,        # Increased from 2 to 4
         )  # Changed from 3 to 6 for 6D features
-    elif model_name == 'transolver_seg_v2':
+    elif model_name == 'Transolver_seg_v2':
         model = Transolver_SEG_V2_Model(
             space_dim=args.space_dim,
             out_dim=1,
