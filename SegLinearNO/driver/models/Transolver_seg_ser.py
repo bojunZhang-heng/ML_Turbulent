@@ -20,9 +20,9 @@ def gumbel_softmax(logits, tau=1, hard=False):
 
     y = logits + gumbel_noise
     y = y / tau
-    
+
     y = F.softmax(y, dim=-1)
-    
+
     if hard:
         _, y_hard = y.max(dim=-1)
         y_one_hot = torch.zeros_like(y).scatter_(-1, y_hard.unsqueeze(-1), 1.0)
@@ -39,18 +39,18 @@ class Serialized_Attention(nn.Module):
         self.num_heads = num_heads
         self.head_dim = dim // num_heads
         self.scale = self.head_dim ** -0.5
-        
+
         index = torch.tensor([i for i in range(0, patch_size*shift, shift)], dtype=torch.int64)[None, ...]
         self.group_index = torch.cat([index+i for i in range(shift)], dim=0)
-        
+
         self.qkv_proj = nn.Linear(dim, dim * 3, bias=False)
         self.out_proj = nn.Linear(dim, dim)
         self.softmax = nn.Softmax(dim=-1)
         self.dropout = nn.Dropout(dropout)
-        
+
     def forward(self, x):
         B, N, C = x.shape
-        
+
         # padding
         pad_size = int((self.patch_size*self.shift) - N % (self.patch_size*self.shift))
         x_pad = torch.cat([x, torch.zeros(B, pad_size, C).to(x.device)], dim=1)
@@ -62,34 +62,34 @@ class Serialized_Attention(nn.Module):
             index = index + (self.patch_size*self.shift)
             index_list.append(index)
         patch_index = torch.cat(index_list, dim=0)
-        
+
         # pad2patch
         x_patch = x_pad[:, patch_index, :] # (B, patch_num, patch_size, C)
-        
+
         # patch attention
         x_patch = rearrange(x_patch, 'b n s c -> (b n) s c')
         B_p, S_p, C = x_patch.shape
-        
+
         qkv = self.qkv_proj(x_patch)
         qkv = qkv.reshape(B_p, S_p, 3, self.num_heads, self.head_dim)
         qkv = qkv.permute(2, 0, 3, 1, 4)
         q_token, k_token, v_token = qkv[0], qkv[1], qkv[2]
-        
+
         dots = torch.matmul(q_token, k_token.transpose(-1, -2)) * self.scale
         attn = self.softmax(dots)
         attn = self.dropout(attn)
         attn_token = torch.matmul(attn, v_token)
-        
+
         attn_token = attn_token.transpose(1, 2).reshape(B_p, S_p, self.dim)
         out_token = attn_token
-        
+
         out_token = rearrange(out_token, '(b n) s c -> b n s c', b=B)
-        
+
         # patch2pad
         x_pad[:, patch_index, :] = out_token
-        
+
         return self.out_proj(x_pad[:, :N, :])
-    
+
 class Physics_Attention_seg(nn.Module):
     def __init__(self, dim, heads=8, dim_head=64, dropout=0., slice_num=64):
         super().__init__()
@@ -123,7 +123,7 @@ class Physics_Attention_seg(nn.Module):
             nn.Linear(inner_dim, dim),
             nn.Dropout(dropout)
         )
-    
+
     def forward(self, x, seg_matrix):
         '''
         x: (B, N, C)
@@ -131,7 +131,7 @@ class Physics_Attention_seg(nn.Module):
         '''
         # B N C
         B, N, C = x.shape
-        
+
         # compute the slice tokens
         query_x = self.in_project_x(x).reshape(B, N, self.heads, self.dim_head) \
             .permute(0, 2, 1, 3).contiguous()  # B H N C
@@ -204,7 +204,7 @@ class Transolver_plus_block(nn.Module):
                                          dropout=dropout, slice_num=slice_num)
         self.ln_2 = nn.LayerNorm(hidden_dim)
         self.mlp = MLP(hidden_dim, hidden_dim * mlp_ratio, hidden_dim, n_layers=0, res=False, act=act)
-        
+
         self.local_ln_1 = nn.LayerNorm(hidden_dim)
         self.local_attention = Serialized_Attention(patch_size, shift, hidden_dim, num_heads, dropout=0.1)
         self.local_ln_2 = nn.LayerNorm(hidden_dim)
@@ -218,12 +218,12 @@ class Transolver_plus_block(nn.Module):
             self.mlp2 = nn.Linear(hidden_dim, out_dim)
 
     def forward(self, fx, seg_matrix, order, inverse):
-        x0 = fx 
+        x0 = fx
         fxn = self.ln_1(fx)
 
         # global_attention
         fx1 = self.global_attention(fxn, seg_matrix)
-    
+
         # local_attention
         fx2 = torch.zeros_like(fx1)
         for i in range(fx2.shape[0]):
@@ -231,9 +231,9 @@ class Transolver_plus_block(nn.Module):
         fx2 = self.local_ln_2(self.local_attention(self.local_ln_1(fx2)))
         for i in range(fx2.shape[0]):
             fx2[i] = fx2[i, inverse[i], :]  # deserialized
-        
+
         fx = self.mlp(self.ln_3(x0 + fx1 + self.local_gate * fx2)) + x0
-        
+
         if self.last_layer:
             return self.mlp2(self.ln_4(fx))
         else:
@@ -319,12 +319,12 @@ class Model(nn.Module):
         else:
             fx = self.preprocess(x)
             fx = fx + self.placeholder[None, None, :]    # (B, N, C)
-        
+
         # geometry information processing
         for i, block in enumerate(self.blocks):
             serialization_type = int(i % order.shape[1])
             fx = block(fx, seg_matrix, order[:, serialization_type, :], inverse[:, serialization_type, :])
-        
+
         fx = self.Cp_decoder(fx)
 
         return fx
