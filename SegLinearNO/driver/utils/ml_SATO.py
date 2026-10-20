@@ -10,18 +10,18 @@ from utils.metric import denormalize_pressure
 from SATO_dataset.Dataset import pos_to_order_inverse_index
 
 SEGMENTED_MODELS = {
-    "transolver_seg",
-    "transolver_seg_v2",
+    "Transolver_seg",
+    "Transolver_seg_v2",
     "SegLinearNO",
     "SegLinearNO_v2",
 }
 LINEAR_MODELS = {"LinearNO", "RopeLinearNO"}
 LINEAR_MODEL_SE = {"LinearNO_se", "SATO"}
 RAW_COORD_ROPE_MODELS = {"RopeLinearNO_v2"}
-
+SEGMENTED_SER = {"Transolver_seg_ser"}
 
 def forward_model(model_name, model, coorf, raw_coords, seg_matrix, order, inverse):
-    if model_name == "transolver":
+    if model_name == "Transolver":
         return model(coorf)
     if model_name in SEGMENTED_MODELS:
         return model((coorf, seg_matrix))
@@ -31,6 +31,8 @@ def forward_model(model_name, model, coorf, raw_coords, seg_matrix, order, inver
         return model(coorf[..., :3], rope_coords=raw_coords)
     if model_name in LINEAR_MODEL_SE:
         return model(coorf, order, inverse)
+    if model_name in SEGMENTED_SER:
+        return model(coorf, seg_matrix, order, inverse)
     raise ValueError(f"Model name {model_name} not supported")
 
 
@@ -291,6 +293,8 @@ def train(model_name, model, train_loader, val_loader,
                         coorf.to(device), raw_coords.to(device), target.to(device)
                     )
                     if model_name in SEGMENTED_MODELS:
+                        seg_matrix = seg_matrix.to(device)
+                    if model_name in SEGMENTED_SER:
                         seg_matrix = seg_matrix.to(device)
                     with autocast(
                         device_type=device.type,
