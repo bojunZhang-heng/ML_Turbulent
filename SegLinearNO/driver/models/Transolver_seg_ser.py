@@ -86,7 +86,7 @@ class Serialized_Attention(nn.Module):
         out_token = rearrange(out_token, '(b n) s c -> b n s c', b=B)
 
         # patch2pad
-        x_pad[:, patch_index, :] = out_token
+        x_pad[:, patch_index, :] = out_token.to(x_pad.dtype)
 
         return self.out_proj(x_pad[:, :N, :])
 
