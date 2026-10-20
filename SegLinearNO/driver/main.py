@@ -2,6 +2,8 @@ from dataloader import create_data_loaders
 from models.transolver_model import Model as Transolver_Model
 from models.Transolver_seg import Model as Transolver_SEG_Model
 from models.Transolver_seg_v2 import Model as Transolver_SEG_V2_Model
+from models.Transolver_seg_ser import Model as Transolver_SEG_ser_Model
+
 from models.SegLinearNO import Model as SegLinearNO
 from models.SegLinearNO_v2 import Model as SegLinearNO_v2
 from models.LinearAttnNeuralOperator import LinearAttentionNeuralOperator as LinearNO
@@ -145,6 +147,17 @@ def main():
         )  # Changed from 3 to 6 for 6D features
     elif model_name == 'Transolver_seg_v2':
         model = Transolver_SEG_V2_Model(
+            space_dim=args.space_dim,
+            out_dim=1,
+            n_layers=8,        # Increased from 8 to 12
+            n_hidden=256,       # Increased from 256 to 512
+            dropout=0.0,        # Added dropout for regularization
+            n_head=8,
+            act='gelu',
+            mlp_ratio=2
+        )
+    elif model_name == 'Transolver_seg_ser':
+        model = Transolver_SEG_ser_Model(
             space_dim=args.space_dim,
             out_dim=1,
             n_layers=8,        # Increased from 8 to 12
