@@ -228,9 +228,9 @@ def train(model_name, model, train_loader, val_loader,
 
             # Dataloader format: normalized features, raw XYZ, segmentation, target, ID
             coorf, raw_coords, seg_matrix, target, sim_ids = batch_data
-    
             coorf = coorf[...,:3]
             order, inverse = pos_to_order_inverse_index(coorf, device, tensor=True)
+
             coorf, raw_coords, target, order, inverse = (
                 coorf.to(device), raw_coords.to(device), target.to(device), order.to(device), inverse.to(device)
             )
@@ -291,6 +291,7 @@ def train(model_name, model, train_loader, val_loader,
                 )
                 for batch_data in val_progress:
                     coorf, raw_coords, seg_matrix, target, sim_ids = batch_data
+                    coorf = coorf[...,:3]
                     coorf, raw_coords, target = (
                         coorf.to(device), raw_coords.to(device), target.to(device)
                     )
@@ -383,6 +384,7 @@ def test(model_name, model, test_loader, normalization_scalars, model_path="mode
         )
         for batch_data in test_progress:
             coorf, raw_coords, seg_matrix, target, sim_ids = batch_data
+            coorf = coorf[...,:3]
             coorf, raw_coords, target = (
                 coorf.to(device), raw_coords.to(device), target.to(device)
             )
