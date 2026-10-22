@@ -6,6 +6,7 @@ from models.SegLinearNO import Model as SegLinearNO
 from models.SegLinearNO_v2 import Model as SegLinearNO_v2
 from models.LinearAttnNeuralOperator import LinearAttentionNeuralOperator as LinearNO
 from models.RopeLinearNO import LinearAttentionNeuralOperator as RopeLinearNO
+from models.RopeLinearNO_v2 import LinearAttentionNeuralOperator as RopeLinearNO_v2
 
 
 # from models.mlp import MLP as MLP_Model
@@ -201,6 +202,15 @@ def main():
             unified_pos=False,isregular=False)
     elif model_name == 'RopeLinearNO':
         model = RopeLinearNO(
+            space_dim=input_dim,
+            n_layers=8,
+            n_hidden=256,
+            n_head=8,
+            Time_Input=False,
+            mlp_ratio=2,fun_dim=0,out_dim=4,key_ratio=1,
+            unified_pos=False,isregular=False)
+    elif model_name == 'RopeLinearNO_v2':
+        model = RopeLinearNO_v2(
             space_dim=input_dim,
             n_layers=8,
             n_hidden=256,
