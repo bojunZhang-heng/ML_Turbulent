@@ -9,6 +9,7 @@ from models.SegLinearNO_v2 import Model as SegLinearNO_v2
 from models.LinearAttnNeuralOperator import LinearAttentionNeuralOperator as LinearNO
 from models.RopeLinearNO import LinearAttentionNeuralOperator as RopeLinearNO
 from models.RopeLinearNO_v2 import LinearAttentionNeuralOperator as RopeLinearNO_v2
+from models.RopeLinearNO_v3 import LinearAttentionNeuralOperator as RopeLinearNO_v3
 from models.LinearNO_se import LinearAttentionNeuralOperator as LinearNO_se
 from models.SATO import Model as SATO
 
@@ -102,6 +103,7 @@ def main():
         'LinearNO',
         'RopeLinearNO',
         'RopeLinearNO_v2',
+        'RopeLinearNO_v3',
     }
     train_loader, val_loader, test_loader, normalization_scalars = create_data_loaders(
         DATA_PATH,
@@ -216,6 +218,18 @@ def main():
             Time_Input=False,
             mlp_ratio=2, fun_dim=0, out_dim=1, key_ratio=1,
             unified_pos=False, isregular=False,
+        )
+    elif model_name == 'RopeLinearNO_v3':
+        model = RopeLinearNO_v3(
+            space_dim=args.space_dim,
+            n_layers=8,
+            n_hidden=256,
+            n_head=8,
+            Time_Input=False,
+            mlp_ratio=2, fun_dim=0, out_dim=1, key_ratio=1,
+            unified_pos=False, isregular=False,
+            num_position_frequencies=args.num_position_frequencies,
+            initial_relative_gate=args.initial_relative_gate,
         )
     elif model_name == 'LinearNO_se':
         model = LinearNO_se(
