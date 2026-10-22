@@ -199,18 +199,6 @@ class LinearAttentionNeuralOperator(nn.Module):
         isregular=False,
     ):
         super().__init__()
-        if space_dim != 3:
-            raise ValueError(f"RopeLinearNO expects space_dim=3, got {space_dim}")
-        if fun_dim != 0:
-            raise ValueError("RopeLinearNO is coordinate-only, so fun_dim must be 0")
-        if unified_pos:
-            raise ValueError("unified_pos is not supported for irregular 3D point clouds")
-        if Time_Input:
-            raise ValueError("Time_Input is not supported by the coordinate-only interface")
-        if n_hidden % n_head != 0:
-            raise ValueError(
-                f"n_hidden ({n_hidden}) must be divisible by n_head ({n_head})"
-            )
 
         self.space_dim = space_dim
         self.n_hidden = n_hidden
