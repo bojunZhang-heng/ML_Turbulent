@@ -17,7 +17,7 @@ SEGMENTED_MODELS = {
 }
 LINEAR_MODELS = {"LinearNO", "RopeLinearNO"}
 LINEAR_MODEL_SE = {"LinearNO_se", "SATO"}
-RAW_COORD_ROPE_MODELS = {"RopeLinearNO_v2"}
+RAW_COORD_ROPE_MODELS = {"RopeLinearNO_v2", "RopeLinearNO_v3"}
 SEGMENTED_SER = {"Transolver_seg_ser"}
 
 def forward_model(model_name, model, coorf, raw_coords, seg_matrix, order, inverse):
