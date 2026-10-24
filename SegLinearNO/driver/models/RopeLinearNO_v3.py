@@ -80,6 +80,7 @@ class LinearNO(nn.Module):
         key_ratio=4,
         num_position_frequencies=6,
         initial_relative_gate=0.05,
+        checkpoint_relative_terms=True,
         eps=1e-6,
     ):
         super().__init__()
@@ -92,6 +93,7 @@ class LinearNO(nn.Module):
         self.key_dim = key_dim
         self.heads = heads
         self.num_position_frequencies = num_position_frequencies
+        self.checkpoint_relative_terms = checkpoint_relative_terms
         self.eps = eps
 
         self.tempreature_q = nn.Parameter(torch.ones([1, heads, 1, 1]) * 0.5)
@@ -157,21 +159,65 @@ class LinearNO(nn.Module):
 
         for index in range(self.num_position_frequencies):
             phase = phases[..., index]
-            for position_feature in (torch.cos(phase), torch.sin(phase)):
-                weighted_k = k * position_feature.unsqueeze(-1)
-                weighted_kv = torch.einsum("bhnd,bhnc->bhdc", weighted_k, v)
-                contribution = torch.einsum("bhnd,bhdc->bhnc", q, weighted_kv)
-                numerator = numerator + coefficient * (
-                    position_feature.unsqueeze(-1) * contribution
-                )
+            for use_sine in (False, True):
+                if (
+                    self.checkpoint_relative_terms
+                    and self.training
+                    and torch.is_grad_enabled()
+                ):
+                    # The full-node weighted K and query contribution are the
+                    # dominant saved activations for DrivAerNet meshes. Keep
+                    # only the inputs here and recompute one Fourier term at a
+                    # time during backward. This is mathematically exact; it
+                    # trades extra compute for a much smaller memory peak.
+                    def run_term(q_, k_, v_, phase_, use_sine=use_sine):
+                        return self._relative_phase_term(
+                            q_, k_, v_, phase_, use_sine=use_sine
+                        )
 
-                key_mass = weighted_k.sum(dim=-2)
-                mass_contribution = torch.einsum("bhnd,bhd->bhn", q, key_mass)
-                denominator = denominator + coefficient * (
-                    position_feature * mass_contribution
-                )
+                    contribution, mass_contribution = checkpoint(
+                        run_term,
+                        q,
+                        k,
+                        v,
+                        phase,
+                        use_reentrant=False,
+                    )
+                else:
+                    contribution, mass_contribution = self._relative_phase_term(
+                        q, k, v, phase, use_sine=use_sine
+                    )
+
+                numerator = numerator + coefficient * contribution
+                denominator = denominator + coefficient * mass_contribution
 
         return numerator / denominator.clamp_min(self.eps).unsqueeze(-1)
+
+    @staticmethod
+    def _relative_phase_term(
+        q: torch.Tensor,
+        k: torch.Tensor,
+        v: torch.Tensor,
+        phase: torch.Tensor,
+        *,
+        use_sine: bool,
+    ) -> tuple[torch.Tensor, torch.Tensor]:
+        """Return one exact sine/cosine low-rank kernel contribution.
+
+        Keeping this operation in a separate checkpoint boundary prevents all
+        ``2 * num_position_frequencies`` large weighted-key tensors from being
+        retained together during the backward recomputation.
+        """
+        position_feature = torch.sin(phase) if use_sine else torch.cos(phase)
+        weighted_k = k * position_feature.unsqueeze(-1)
+        weighted_kv = torch.einsum("bhnd,bhnc->bhdc", weighted_k, v)
+        query_contribution = torch.einsum("bhnd,bhdc->bhnc", q, weighted_kv)
+        numerator_contribution = position_feature.unsqueeze(-1) * query_contribution
+
+        key_mass = weighted_k.sum(dim=-2)
+        mass_contribution = torch.einsum("bhnd,bhd->bhn", q, key_mass)
+        denominator_contribution = position_feature * mass_contribution
+        return numerator_contribution, denominator_contribution
 
     def forward(self, x: torch.Tensor, position_phases: torch.Tensor) -> torch.Tensor:
         x_mid = rearrange(
@@ -253,6 +299,7 @@ class LinearNOBlock(nn.Module):
         out_dim=1,
         num_position_frequencies=6,
         initial_relative_gate=0.05,
+        checkpoint_relative_terms=True,
         **_,
     ):
         super().__init__()
@@ -269,6 +316,7 @@ class LinearNOBlock(nn.Module):
             key_ratio=key_ratio,
             num_position_frequencies=num_position_frequencies,
             initial_relative_gate=initial_relative_gate,
+            checkpoint_relative_terms=checkpoint_relative_terms,
         )
         self.ln_2 = nn.LayerNorm(hidden_dim)
         self.mlp = MLP(
@@ -316,6 +364,8 @@ class LinearAttentionNeuralOperator(nn.Module):
         isregular=False,
         num_position_frequencies=6,
         initial_relative_gate=0.05,
+        checkpoint_segment_size=1,
+        checkpoint_relative_terms=True,
     ):
         super().__init__()
         if space_dim != 3:
@@ -324,10 +374,16 @@ class LinearAttentionNeuralOperator(nn.Module):
             raise ValueError("RopeLinearNO_v3 is coordinate-only, so fun_dim must be 0")
         if unified_pos or Time_Input:
             raise ValueError("unified_pos and Time_Input are not supported")
+        if checkpoint_segment_size < 1:
+            raise ValueError("checkpoint_segment_size must be at least 1")
 
         self.space_dim = space_dim
         self.n_hidden = n_hidden
-        self.checkpoint_segment_size = 2
+        # A single DrivAerNet surface can contain roughly half a million
+        # points. Recomputing two complete blocks at once retains both blocks'
+        # backward activations and can exceed a 32 GiB GPU, so one block per
+        # checkpoint segment is the memory-safe default.
+        self.checkpoint_segment_size = checkpoint_segment_size
         self.position_kernel = PositiveRelativePositionKernel(
             heads=n_head,
             num_frequencies=num_position_frequencies,
@@ -354,6 +410,7 @@ class LinearAttentionNeuralOperator(nn.Module):
                 out_dim=out_dim,
                 num_position_frequencies=num_position_frequencies,
                 initial_relative_gate=initial_relative_gate,
+                checkpoint_relative_terms=checkpoint_relative_terms,
                 last_layer=layer_index == n_layers - 1,
                 H=H,
                 W=W,

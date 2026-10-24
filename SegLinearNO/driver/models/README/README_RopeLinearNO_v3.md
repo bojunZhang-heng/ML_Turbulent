@@ -252,13 +252,40 @@ O(NRKD).
 
 它对节点数 `N` 仍是线性的，但相对于普通 LinearNO，大约增加 `2R` 次 cosine/sine 聚合，因此 `R` 不宜设置过大。
 
-模型训练时还采用分段 gradient checkpoint：
+DrivAerNet 的单个表面可接近 50 万个节点。虽然算法没有生成
+`N × N` 矩阵，旧实现仍会在一次反向重计算中同时保存多个完整节点张量：
 
-```python
-self.checkpoint_segment_size = 2
+```text
+weighted_k:   (B, H, N, K)
+contribution: (B, H, N, D)
 ```
 
-每两个 block 组成一个 checkpoint segment，以计算时间换取较低的激活显存。验证和测试阶段不会启用 checkpoint。
+每个频率包含 cosine 和 sine 两项。当 `R=6` 时，一层 attention
+共有 12 个低秩项；把这些项的反向激活同时保留仍可能耗尽显存。
+
+当前实现采用两级 gradient checkpoint：
+
+1. 每个 cosine/sine 低秩项独立 checkpoint，反向时逐项重计算；
+2. 每个 LinearNO block 独立成为一个 checkpoint segment。
+
+默认设置为：
+
+```python
+checkpoint_relative_terms = True
+checkpoint_segment_size = 1
+```
+
+这不会改变前向公式、参数量或模型输出，只用额外计算时间换取较低的反向峰值显存。
+验证和测试阶段处于 `eval()`/`no_grad()`，不会执行这些 checkpoint 重计算。
+
+如果节点数很少、显存充足，可以在构造模型时改为：
+
+```python
+checkpoint_relative_terms=False,
+checkpoint_segment_size=2,
+```
+
+但对于 DrivAerNet 大网格不推荐关闭逐项 checkpoint。
 
 ## 9. main.py 中的调用
 
