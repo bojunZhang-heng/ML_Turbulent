@@ -31,9 +31,10 @@ import vtk
 from vtk.util.numpy_support import vtk_to_numpy
 
 
+
 SCRIPT_DIR = Path(__file__).resolve().parent
-DEFAULT_INPUT_DIR = Path("/Users/zhangbojun/Desktop/E_S_WW_WM_small")
-DEFAULT_OUTPUT_DIR = SCRIPT_DIR / "DrivAerNet_data"
+DEFAULT_INPUT_DIR = Path("/data/zhangbojun/DrivAerNet++_dataset/PressureVTK/E_S_WWC_WM")
+DEFAULT_OUTPUT_DIR = Path("/data/zhangbojun/DrivAerNet++_dataset/PressureVTK/E_S_WWC_WM_pklFile")
 LOGGER = logging.getLogger("process_DrivAerNet")
 
 FIELD_ALIASES = {
