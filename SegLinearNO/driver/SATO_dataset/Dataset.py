@@ -11,18 +11,39 @@ from torch.utils.data import Dataset
 def pos_to_order_inverse_index(pos, device, tensor=False):
     if pos.dim() == 2:
         pos = pos.unsqueeze(0)
-    data_dict = dict(coord=pos, grid_size = torch.tensor([0.05,0.05,0.05]))
-    B,N,C = data_dict['coord'].shape
-    data_dict['batch'] = torch.arange(B).repeat_interleave(N).to(device)
-    data_dict['coord'] = data_dict['coord'].view(B*N,C).to(device)
-    point = Point(data_dict)
-    point.serialization(order=["z", "z-trans", "hilbert", "hilbert-trans"], device=device, shuffle_orders=False)
-    if torch == False:
-        order = point['serialized_order'][None, ...].cpu().numpy()
-        inverse = point['serialized_inverse'][None, ...].cpu().numpy()
-    else:
-        order = point['serialized_order'][None, ...]
-        inverse = point['serialized_inverse'][None, ...]      
+    if pos.ndim != 3 or pos.shape[-1] != 3:
+        raise ValueError(f"Expected positions shaped (B, N, 3), got {tuple(pos.shape)}")
+
+    # Serialize each sample independently. The previous implementation flattened
+    # B and N and returned a leading dimension of one, which was only valid for
+    # batch_size=1.
+    orders = []
+    inverses = []
+    for batch_index in range(pos.shape[0]):
+        coordinates = pos[batch_index].to(device)
+        data_dict = {
+            'coord': coordinates,
+            'grid_size': torch.tensor(
+                [0.05, 0.05, 0.05], device=device, dtype=coordinates.dtype
+            ),
+            'batch': torch.zeros(
+                coordinates.shape[0], device=device, dtype=torch.long
+            ),
+        }
+        point = Point(data_dict)
+        point.serialization(
+            order=["z", "z-trans", "hilbert", "hilbert-trans"],
+            device=device,
+            shuffle_orders=False,
+        )
+        orders.append(point['serialized_order'])
+        inverses.append(point['serialized_inverse'])
+
+    order = torch.stack(orders, dim=0)
+    inverse = torch.stack(inverses, dim=0)
+    if not tensor:
+        order = order.cpu().numpy()
+        inverse = inverse.cpu().numpy()
     return order, inverse
 
 

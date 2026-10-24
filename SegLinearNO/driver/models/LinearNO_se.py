@@ -1,3 +1,4 @@
+import math
 import numpy as np
 from timm.layers.weight_init import trunc_normal_
 from models.Embedding import timestep_embedding
@@ -19,8 +20,12 @@ class Serialized_Attention(nn.Module):
         self.head_dim = dim // num_heads
         self.scale = self.head_dim ** -0.5
 
-        index = torch.tensor([i for i in range(0, patch_size*shift, shift)], dtype=torch.int64)[None, ...]
-        self.group_index = torch.cat([index+i for i in range(shift)], dim=0)
+        index = torch.arange(0, patch_size * shift, shift, dtype=torch.int64)[None, ...]
+        self.register_buffer(
+            "group_index",
+            torch.cat([index + offset for offset in range(shift)], dim=0),
+            persistent=False,
+        )
 
         self.qkv_proj = nn.Linear(dim, dim * 3, bias=False)
         self.out_proj = nn.Linear(dim, dim)
@@ -30,17 +35,22 @@ class Serialized_Attention(nn.Module):
     def forward(self, x):
         B, N, C = x.shape
 
-        # padding
-        pad_size = int((self.patch_size*self.shift) - N % (self.patch_size*self.shift))
-        x_pad = torch.cat([x, torch.zeros(B, pad_size, C).to(x.device)], dim=1)
+        # Pad only when necessary. ``patch_size * shift`` points form one
+        # complete interleaved serialization block.
+        block_size = self.patch_size * self.shift
+        pad_size = (-N) % block_size
+        x_pad = F.pad(x, (0, 0, 0, pad_size))
 
-        # index_generation
-        index = self.group_index
-        index_list = [self.group_index]
-        while index[-1,-1].item() < N:
-            index = index + (self.patch_size*self.shift)
-            index_list.append(index)
-        patch_index = torch.cat(index_list, dim=0)
+        num_blocks = (N + pad_size) // block_size
+        block_offsets = (
+            torch.arange(num_blocks, device=x.device, dtype=torch.long)
+            * block_size
+        )
+        patch_index = (
+            self.group_index.to(x.device)[None, :, :]
+            + block_offsets[:, None, None]
+        ).reshape(-1, self.patch_size)
+        valid_key = patch_index < N
 
         # pad2patch
         x_patch = x_pad[:, patch_index, :] # (B, patch_num, patch_size, C)
@@ -55,6 +65,10 @@ class Serialized_Attention(nn.Module):
         q_token, k_token, v_token = qkv[0], qkv[1], qkv[2]
 
         dots = torch.matmul(q_token, k_token.transpose(-1, -2)) * self.scale
+        # Padded values must not participate as keys in the final local patch.
+        key_mask = valid_key[None, :, :].expand(B, -1, -1)
+        key_mask = rearrange(key_mask, 'b n s -> (b n) 1 1 s')
+        dots = dots.masked_fill(~key_mask, torch.finfo(dots.dtype).min)
         attn = self.softmax(dots)
         attn = self.dropout(attn)
         attn_token = torch.matmul(attn, v_token)
@@ -161,13 +175,14 @@ class LinearNO_block(nn.Module):
                                          dropout=dropout,
                                          key_ratio=key_ratio)
         self.ln_2 = nn.LayerNorm(hidden_dim)
-        self.ln_3 = nn.LayerNorm(hidden_dim)
-
-
         self.local_ln_1 = nn.LayerNorm(hidden_dim)
         self.local_ln_2 = nn.LayerNorm(hidden_dim)
-        self.local_gate = nn.Parameter(torch.tensor([0.0]))
-        self.local_attention = Serialized_Attention(patch_size, shift, hidden_dim, num_heads, dropout=0.1)
+        initial_local_gate = 0.05
+        gate_logit = math.log(initial_local_gate / (1.0 - initial_local_gate))
+        self.local_gate_logit = nn.Parameter(torch.tensor([gate_logit]))
+        self.local_attention = Serialized_Attention(
+            patch_size, shift, hidden_dim, num_heads, dropout=dropout
+        )
 
         self.mlp = MLP(hidden_dim,
                        hidden_dim * mlp_ratio,
@@ -176,27 +191,37 @@ class LinearNO_block(nn.Module):
                        res=False,
                        act=act)
         if self.last_layer:
-            self.ln_4 = nn.LayerNorm(hidden_dim)
+            self.ln_3 = nn.LayerNorm(hidden_dim)
             self.mlp2 = nn.Linear(hidden_dim, out_dim)
     def forward(self, fx, order, inverse):
-        x0 = fx
-        fxn = self.ln_1(fx)
+        if order.shape != inverse.shape or order.shape != fx.shape[:2]:
+            raise ValueError(
+                "order and inverse must both have shape (B, N); "
+                f"got order={tuple(order.shape)}, inverse={tuple(inverse.shape)}, "
+                f"features={tuple(fx.shape)}"
+            )
 
-        # global_attention
-        fx1 = self.global_attention(fxn)
+        # This is exactly the ordinary LinearNO global residual path.
+        fx = fx + self.global_attention(self.ln_1(fx))
 
-        # local_attention
-        fx2 = torch.zeros_like(fx1)
-        for i in range(fx2.shape[0]):
-            fx2[i] = (fxn - fx1)[i, order[i], :] # serialized
-        fx2 = self.local_ln_2(self.local_attention(self.local_ln_1(fx2)))
-        for i in range(fx2.shape[0]):
-            fx2[i] = fx2[i, inverse[i], :]  # deserialized
+        # Serialize the globally updated features, apply local attention, then
+        # restore the original node order without in-place batch loops.
+        gather_order = order.unsqueeze(-1).expand(-1, -1, fx.shape[-1])
+        gather_inverse = inverse.unsqueeze(-1).expand(-1, -1, fx.shape[-1])
+        serialized = torch.gather(self.local_ln_1(fx), 1, gather_order)
+        local_out = self.local_ln_2(self.local_attention(serialized))
+        local_out = torch.gather(local_out, 1, gather_inverse)
 
-        fx = self.mlp(self.ln_3(x0 + fx1 + self.local_gate * fx2)) + x0
+        # A bounded, small positive gate lets the local branch learn from the
+        # first optimizer step without overwhelming the LinearNO baseline.
+        local_gate = torch.sigmoid(self.local_gate_logit).to(fx.dtype)
+        fx = fx + local_gate * local_out
+
+        # Preserve the ordinary LinearNO MLP residual path as well.
+        fx = fx + self.mlp(self.ln_2(fx))
 
         if self.last_layer:
-            return self.mlp2(self.ln_4(fx))
+            return self.mlp2(self.ln_3(fx))
         else:
             return fx
 
@@ -337,4 +362,9 @@ class LinearAttentionNeuralOperator(nn.Module):
             serialization_type = int(i % order.shape[1])
             fx = block(fx, order[:, serialization_type, :], inverse[:, serialization_type, :])
 
-        return fx[0]
+        return fx
+
+    def local_gate_values(self):
+        return torch.stack(
+            [torch.sigmoid(block.local_gate_logit).flatten() for block in self.blocks]
+        )

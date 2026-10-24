@@ -54,7 +54,12 @@ class Point(Dict):
             assert {"grid_size", "coord"}.issubset(self.keys())
             # b,n,c = self.coord.shape
             # self.coord = self.coord.reshape(b*n,c)
-            self.grid_size = torch.tensor([0.05,0.05,0.05]).to(device)
+            coord_device = self.coord.device if device is None else device
+            self.grid_size = torch.as_tensor(
+                self.grid_size,
+                device=coord_device,
+                dtype=self.coord.dtype,
+            )
             self["grid_coord"] = torch.div(
                 self.coord - self.coord.min(0)[0], self.grid_size, rounding_mode="trunc"
             ).int().to(device)

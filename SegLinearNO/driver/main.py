@@ -10,6 +10,9 @@ from models.LinearAttnNeuralOperator import LinearAttentionNeuralOperator as Lin
 from models.RopeLinearNO import LinearAttentionNeuralOperator as RopeLinearNO
 from models.RopeLinearNO_v2 import LinearAttentionNeuralOperator as RopeLinearNO_v2
 from models.RopeLinearNO_v3 import LinearAttentionNeuralOperator as RopeLinearNO_v3
+from models.CANO import LinearAttentionNeuralOperator as CANO
+from models.CANO_Rope import LinearAttentionNeuralOperator as CANO_Rope
+from models.CANO_GatedRope import LinearAttentionNeuralOperator as CANO_GatedRope
 from models.LinearNO_se import LinearAttentionNeuralOperator as LinearNO_se
 from models.SATO import Model as SATO
 
@@ -47,6 +50,13 @@ parser.add_argument('--learning_rate', type=float, default=config.get('learning_
 parser.add_argument('--data_path', type=str, default=config.get('data_path', ""))
 parser.add_argument('--batch_size', type=int, default=config.get('batch_size', 1))
 parser.add_argument('--shuffle', action=argparse.BooleanOptionalAction, default=config.get('shuffle', True))
+parser.add_argument('--space_dim', type=int, default=config.get('space_dim', 3))
+parser.add_argument('--patch_size', type=int, default=config.get('patch_size', 20))
+parser.add_argument('--shift', type=int, default=config.get('shift', 2))
+parser.add_argument('--num_position_frequencies', type=int, default=config.get('num_position_frequencies', 6))
+parser.add_argument('--initial_relative_gate', type=float, default=config.get('initial_relative_gate', 0.05))
+parser.add_argument('--cluster_num', type=int, default=config.get('cluster_num', 64))
+parser.add_argument('--initial_rope_gate', type=float, default=config.get('initial_rope_gate', 0.05))
 args = parser.parse_args()
 
 # set the experiment settings
@@ -104,6 +114,10 @@ def main():
         'RopeLinearNO',
         'RopeLinearNO_v2',
         'RopeLinearNO_v3',
+        'CANO',
+        'CANO_Rope',
+        'CANO_GatedRope',
+        'LinearNO_se',
     }
     train_loader, val_loader, test_loader, normalization_scalars = create_data_loaders(
         DATA_PATH,
@@ -230,6 +244,42 @@ def main():
             unified_pos=False, isregular=False,
             num_position_frequencies=args.num_position_frequencies,
             initial_relative_gate=args.initial_relative_gate,
+        )
+    elif model_name == 'CANO':
+        model = CANO(
+            space_dim=args.space_dim,
+            n_layers=8,
+            n_hidden=256,
+            n_head=8,
+            Time_Input=False,
+            mlp_ratio=2, fun_dim=0, out_dim=1, key_ratio=1,
+            unified_pos=False, isregular=False,
+            cluster_num=args.cluster_num,
+        )
+    elif model_name == 'CANO_Rope':
+        model = CANO_Rope(
+            space_dim=args.space_dim,
+            n_layers=8,
+            n_hidden=256,
+            n_head=8,
+            Time_Input=False,
+            mlp_ratio=2, fun_dim=0, out_dim=1, key_ratio=1,
+            unified_pos=False, isregular=False,
+            cluster_num=args.cluster_num,
+            num_position_frequencies=args.num_position_frequencies,
+        )
+    elif model_name == 'CANO_GatedRope':
+        model = CANO_GatedRope(
+            space_dim=args.space_dim,
+            n_layers=8,
+            n_hidden=256,
+            n_head=8,
+            Time_Input=False,
+            mlp_ratio=2, fun_dim=0, out_dim=1, key_ratio=1,
+            unified_pos=False, isregular=False,
+            cluster_num=args.cluster_num,
+            num_position_frequencies=args.num_position_frequencies,
+            initial_rope_gate=args.initial_rope_gate,
         )
     elif model_name == 'LinearNO_se':
         model = LinearNO_se(

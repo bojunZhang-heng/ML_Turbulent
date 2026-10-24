@@ -15,10 +15,28 @@ SEGMENTED_MODELS = {
     "SegLinearNO",
     "SegLinearNO_v2",
 }
-LINEAR_MODELS = {"LinearNO", "RopeLinearNO"}
+LINEAR_MODELS = {"LinearNO", "RopeLinearNO", "CANO"}
 LINEAR_MODEL_SE = {"LinearNO_se", "SATO"}
-RAW_COORD_ROPE_MODELS = {"RopeLinearNO_v2", "RopeLinearNO_v3"}
+RAW_COORD_ROPE_MODELS = {
+    "RopeLinearNO_v2",
+    "RopeLinearNO_v3",
+    "CANO_Rope",
+    "CANO_GatedRope",
+}
 SEGMENTED_SER = {"Transolver_seg_ser"}
+SERIALIZED_MODELS = LINEAR_MODEL_SE | SEGMENTED_SER
+
+
+def serialization_coordinates(model_name, normalized_coords, raw_coords):
+    """Select coordinates for serialization without changing other models.
+
+    LinearNO_se uses physical coordinates, matching the original SATO workflow
+    where ordering is computed before input normalization. Existing serialized
+    models retain their previous normalized-coordinate behavior.
+    """
+    if model_name == "LinearNO_se":
+        return raw_coords
+    return normalized_coords
 
 def forward_model(model_name, model, coorf, raw_coords, seg_matrix, order, inverse):
     if model_name == "Transolver":
@@ -229,11 +247,17 @@ def train(model_name, model, train_loader, val_loader,
             # Dataloader format: normalized features, raw XYZ, segmentation, target, ID
             coorf, raw_coords, seg_matrix, target, sim_ids = batch_data
             coorf = coorf[...,:3]
-            order, inverse = pos_to_order_inverse_index(coorf, device, tensor=True)
-
-            coorf, raw_coords, target, order, inverse = (
-                coorf.to(device), raw_coords.to(device), target.to(device), order.to(device), inverse.to(device)
+            coorf, raw_coords, target = (
+                coorf.to(device), raw_coords.to(device), target.to(device)
             )
+            order = inverse = None
+            if model_name in SERIALIZED_MODELS:
+                serialization_coords = serialization_coordinates(
+                    model_name, coorf, raw_coords
+                )
+                order, inverse = pos_to_order_inverse_index(
+                    serialization_coords, device, tensor=True
+                )
             if model_name in SEGMENTED_MODELS:
                 seg_matrix = seg_matrix.to(device)
             if model_name in SEGMENTED_SER:
@@ -280,8 +304,6 @@ def train(model_name, model, train_loader, val_loader,
             model.eval()
             val_loss = 0.0
             val_relative_error = 0.0
-            order, inverse = pos_to_order_inverse_index(coorf, device, tensor=True)
-
             with torch.no_grad():
                 val_progress = tqdm(
                     val_loader,
@@ -295,6 +317,14 @@ def train(model_name, model, train_loader, val_loader,
                     coorf, raw_coords, target = (
                         coorf.to(device), raw_coords.to(device), target.to(device)
                     )
+                    order = inverse = None
+                    if model_name in SERIALIZED_MODELS:
+                        serialization_coords = serialization_coordinates(
+                            model_name, coorf, raw_coords
+                        )
+                        order, inverse = pos_to_order_inverse_index(
+                            serialization_coords, device, tensor=True
+                        )
                     if model_name in SEGMENTED_MODELS:
                         seg_matrix = seg_matrix.to(device)
                     if model_name in SEGMENTED_SER:
@@ -388,7 +418,14 @@ def test(model_name, model, test_loader, normalization_scalars, model_path="mode
             coorf, raw_coords, target = (
                 coorf.to(device), raw_coords.to(device), target.to(device)
             )
-            order, inverse = pos_to_order_inverse_index(coorf, device, tensor=True)
+            order = inverse = None
+            if model_name in SERIALIZED_MODELS:
+                serialization_coords = serialization_coordinates(
+                    model_name, coorf, raw_coords
+                )
+                order, inverse = pos_to_order_inverse_index(
+                    serialization_coords, device, tensor=True
+                )
 
             if model_name in SEGMENTED_MODELS:
                 seg_matrix = seg_matrix.to(device)
