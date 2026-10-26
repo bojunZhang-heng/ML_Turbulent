@@ -20,6 +20,7 @@ LINEAR_MODEL_SE = {"LinearNO_se", "SATO"}
 RAW_COORD_ROPE_MODELS = {
     "RopeLinearNO_v2",
     "RopeLinearNO_v3",
+    "RopeLinearNO_v4",
     "CANO_Rope",
     "CANO_GatedRope",
 }
