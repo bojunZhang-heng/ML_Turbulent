@@ -10,6 +10,7 @@ from models.LinearAttnNeuralOperator import LinearAttentionNeuralOperator as Lin
 from models.RopeLinearNO import LinearAttentionNeuralOperator as RopeLinearNO
 from models.RopeLinearNO_v2 import LinearAttentionNeuralOperator as RopeLinearNO_v2
 from models.RopeLinearNO_v3 import LinearAttentionNeuralOperator as RopeLinearNO_v3
+from models.RopeLinearNO_v4 import LinearAttentionNeuralOperator as RopeLinearNO_v4
 from models.CANO import LinearAttentionNeuralOperator as CANO
 from models.CANO_Rope import LinearAttentionNeuralOperator as CANO_Rope
 from models.CANO_GatedRope import LinearAttentionNeuralOperator as CANO_GatedRope
@@ -114,6 +115,7 @@ def main():
         'RopeLinearNO',
         'RopeLinearNO_v2',
         'RopeLinearNO_v3',
+        'RopeLinearNO_v4',
         'CANO',
         'CANO_Rope',
         'CANO_GatedRope',
@@ -244,6 +246,19 @@ def main():
             unified_pos=False, isregular=False,
             num_position_frequencies=args.num_position_frequencies,
             initial_relative_gate=args.initial_relative_gate,
+        )
+    elif model_name == 'RopeLinearNO_v4':
+        model = RopeLinearNO_v4(
+            space_dim=args.space_dim,
+            n_layers=8,
+            n_hidden=256,
+            n_head=8,
+            Time_Input=False,
+            mlp_ratio=2, fun_dim=0, out_dim=1, key_ratio=1,
+            unified_pos=False, isregular=False,
+            num_position_frequencies=args.num_position_frequencies,
+            checkpoint_segment_size=1,
+            checkpoint_relative_terms=True,
         )
     elif model_name == 'CANO':
         model = CANO(
