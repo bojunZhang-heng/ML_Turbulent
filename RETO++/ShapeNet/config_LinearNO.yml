@@ -1,0 +1,27 @@
+# PGD-NO training configuration.
+# Run from PGD-NO/driver:
+#   python main.py --config config.yml
+# model_name: SegLinearNO, transolver_seg, transolver_seg_v2, transolver, LinearNO
+
+#exp: DrivAerNet++
+exp: ShapeNet
+model_name: LinearNO
+predicted_feature_name: pressure
+phase: restart_train
+num_epochs: 200 
+eval_freq: 1
+learning_rate: 1.0e-3
+scheduler_step: 50
+scheduler_gamma: 0.5
+max_grad_norm: 0.1
+weight_decay: 0.00000
+
+data_path: /data/zhangbojun/mlcfd_data/pkl_data
+vtk_data_path: /data/zhangbojun/mlcfd_data/raw_data
+batch_size: 1
+shuffle: true
+
+# Simulation IDs used by the per-file data loader.
+train_index: [1, 2, 3, 4]
+val_index: [5, 6, 7, 8]
+test_index: [9, 10]
