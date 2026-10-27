@@ -39,7 +39,6 @@ class PureRopeLinearAttention(nn.Module):
         dropout: float = 0.0,
         key_ratio: int = 4,
         num_position_frequencies: int = 6,
-        checkpoint_relative_terms: bool = True,
         eps: float = 1e-6,
     ):
         super().__init__()
@@ -54,7 +53,6 @@ class PureRopeLinearAttention(nn.Module):
         self.key_dim = key_dim
         self.heads = heads
         self.num_position_frequencies = num_position_frequencies
-        self.checkpoint_relative_terms = checkpoint_relative_terms
         self.eps = eps
 
         self.tempreature_q = nn.Parameter(torch.ones(1, heads, 1, 1) * 0.5)
@@ -129,28 +127,9 @@ class PureRopeLinearAttention(nn.Module):
         for frequency_index in range(self.num_position_frequencies):
             phase = phases[..., frequency_index]
             for use_sine in (False, True):
-                if (
-                    self.checkpoint_relative_terms
-                    and self.training
-                    and torch.is_grad_enabled()
-                ):
-                    def run_term(q_, k_, v_, phase_, use_sine=use_sine):
-                        return self._relative_phase_term(
-                            q_, k_, v_, phase_, use_sine=use_sine
-                        )
-
-                    numerator_term, denominator_term = checkpoint(
-                        run_term,
-                        q,
-                        k,
-                        v,
-                        phase,
-                        use_reentrant=False,
-                    )
-                else:
-                    numerator_term, denominator_term = self._relative_phase_term(
-                        q, k, v, phase, use_sine=use_sine
-                    )
+                numerator_term, denominator_term = self._relative_phase_term(
+                    q, k, v, phase, use_sine=use_sine
+                )
 
                 numerator = numerator + coefficient * numerator_term
                 denominator = denominator + coefficient * denominator_term
@@ -192,7 +171,6 @@ class PureRopeLinearNOBlock(nn.Module):
         last_layer: bool = False,
         out_dim: int = 1,
         num_position_frequencies: int = 6,
-        checkpoint_relative_terms: bool = True,
         **_,
     ):
         super().__init__()
@@ -208,7 +186,6 @@ class PureRopeLinearNOBlock(nn.Module):
             dropout=dropout,
             key_ratio=key_ratio,
             num_position_frequencies=num_position_frequencies,
-            checkpoint_relative_terms=checkpoint_relative_terms,
         )
         self.ln_2 = nn.LayerNorm(hidden_dim)
         self.mlp = MLP(
@@ -255,8 +232,6 @@ class LinearAttentionNeuralOperator(nn.Module):
         W: int = 85,
         isregular: bool = False,
         num_position_frequencies: int = 6,
-        checkpoint_segment_size: int = 1,
-        checkpoint_relative_terms: bool = True,
     ):
         super().__init__()
         if space_dim != 3:
@@ -267,12 +242,13 @@ class LinearAttentionNeuralOperator(nn.Module):
             raise ValueError("unified_pos and Time_Input are not supported")
         if n_layers < 1:
             raise ValueError("n_layers must be at least 1")
-        if checkpoint_segment_size < 1:
-            raise ValueError("checkpoint_segment_size must be at least 1")
 
         self.space_dim = space_dim
         self.n_hidden = n_hidden
-        self.checkpoint_segment_size = checkpoint_segment_size
+        # Match RopeLinearNO_v3: checkpoint two complete blocks per segment.
+        # Fourier sine/cosine terms are evaluated normally, without nested
+        # checkpoints, to avoid excessive backward recomputation overhead.
+        self.checkpoint_segment_size = 2
         self.position_kernel = PositiveRelativePositionKernel(
             heads=n_head,
             num_frequencies=num_position_frequencies,
@@ -299,7 +275,6 @@ class LinearAttentionNeuralOperator(nn.Module):
                 key_ratio=key_ratio,
                 out_dim=out_dim,
                 num_position_frequencies=num_position_frequencies,
-                checkpoint_relative_terms=checkpoint_relative_terms,
                 last_layer=layer_index == n_layers - 1,
                 H=H,
                 W=W,
