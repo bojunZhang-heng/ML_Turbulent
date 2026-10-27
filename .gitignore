@@ -29,5 +29,6 @@ preprocess/data/
 preprocess/run_DrivAerNet.sh
 preprocess/run_ShapeNet.sh
 **/.DS_Store
+**/logs/
 
 SegLinearNO/ShapeNet/logs/
