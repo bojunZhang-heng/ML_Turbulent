@@ -11,6 +11,7 @@ from models.RopeLinearNO import LinearAttentionNeuralOperator as RopeLinearNO
 from models.RopeLinearNO_v2 import LinearAttentionNeuralOperator as RopeLinearNO_v2
 from models.RopeLinearNO_v3 import LinearAttentionNeuralOperator as RopeLinearNO_v3
 from models.RopeLinearNO_v4 import LinearAttentionNeuralOperator as RopeLinearNO_v4
+from models.InfSA import Model as InfSA
 from models.CANO import LinearAttentionNeuralOperator as CANO
 from models.CANO_Rope import LinearAttentionNeuralOperator as CANO_Rope
 from models.CANO_GatedRope import LinearAttentionNeuralOperator as CANO_GatedRope
@@ -58,6 +59,14 @@ parser.add_argument('--num_position_frequencies', type=int, default=config.get('
 parser.add_argument('--initial_relative_gate', type=float, default=config.get('initial_relative_gate', 0.05))
 parser.add_argument('--cluster_num', type=int, default=config.get('cluster_num', 64))
 parser.add_argument('--initial_rope_gate', type=float, default=config.get('initial_rope_gate', 0.05))
+parser.add_argument('--infsa_gamma', type=float, default=config.get('infsa_gamma', 0.7))
+parser.add_argument('--infsa_n_layers', type=int, default=config.get('infsa_n_layers', 4))
+parser.add_argument('--infsa_n_head', type=int, default=config.get('infsa_n_head', 64))
+parser.add_argument(
+    '--infsa_trainable_gamma',
+    action=argparse.BooleanOptionalAction,
+    default=config.get('infsa_trainable_gamma', True),
+)
 args = parser.parse_args()
 
 # set the experiment settings
@@ -116,6 +125,7 @@ def main():
         'RopeLinearNO_v2',
         'RopeLinearNO_v3',
         'RopeLinearNO_v4',
+        'InfSA',
         'CANO',
         'CANO_Rope',
         'CANO_GatedRope',
@@ -257,8 +267,21 @@ def main():
             mlp_ratio=2, fun_dim=0, out_dim=1, key_ratio=1,
             unified_pos=False, isregular=False,
             num_position_frequencies=args.num_position_frequencies,
-            checkpoint_segment_size=1,
-            checkpoint_relative_terms=True,
+        )
+    elif model_name == 'InfSA':
+        model = InfSA(
+            space_dim=args.space_dim,
+            n_layers=args.infsa_n_layers,
+            n_hidden=256,
+            dropout=0.0,
+            n_head=args.infsa_n_head,
+            act='gelu',
+            mlp_ratio=2,
+            fun_dim=0,
+            out_dim=1,
+            gamma_init=args.infsa_gamma,
+            gamma_trainable=args.infsa_trainable_gamma,
+            unified_pos=False,
         )
     elif model_name == 'CANO':
         model = CANO(
