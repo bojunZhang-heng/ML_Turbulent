@@ -28,8 +28,8 @@ class GatedRopeClusterAttention(RopeClusterAttention):
 
         q_rope = apply_rotary_embedding(q, position_phases)
         k_rope = apply_rotary_embedding(k, position_phases)
-        clustered_q_rope = torch.einsum(
-            "bhnk,bhnd->bhkd", cluster_assignment, q_rope
+        clustered_q_rope = self._aggregate_cluster_queries(
+            cluster_assignment, q_rope
         )
 
         gate = torch.sigmoid(self.rope_gate_logit).to(dtype=q.dtype)
