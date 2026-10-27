@@ -168,8 +168,8 @@ cluster_assignment = self._cluster_assignment(q)
 q_rope = apply_rotary_embedding(q, position_phases)
 k_rope = apply_rotary_embedding(k, position_phases)
 
-clustered_q_rope = torch.einsum(
-    "bhnk,bhnd->bhkd", cluster_assignment, q_rope
+clustered_q_rope = self._aggregate_cluster_queries(
+    cluster_assignment, q_rope
 )
 
 cluster_features = self._cross_attention(
@@ -181,6 +181,13 @@ output = self._broadcast_clusters(
 ```
 
 注意：Value 不执行 RoPE。RoPE 只修改 Query/Key 的相关性计算。
+
+`_aggregate_cluster_queries()` 与普通 CANO 共用稳定聚合：先除以 cluster
+mass，再将每个 cluster query 定标到固定 L2 范数。L2 定标只改变向量幅值，
+不改变 RoPE 编码后的方向，因此可避免大型网格导致 logits 饱和。
+
+本模型也继承 CANO 的可学习 assignment temperature 和两条 LayerScale
+残差。结构已经变化，重新实验时必须使用 `phase: restart_train`。
 
 ## 7. 复杂度
 

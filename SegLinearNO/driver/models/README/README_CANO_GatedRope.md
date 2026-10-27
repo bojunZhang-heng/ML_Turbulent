@@ -41,17 +41,20 @@ Cluster assignment 由未旋转 Query 产生：
 C=\operatorname{Softmax}_{K_c}(QW_c).
 \]
 
-普通 CANO cluster query：
+普通 CANO cluster query 会先经过与节点数无关的稳定聚合：
 
 \[
-Q_c=C^\top Q.
+Q_c=\operatorname{StableAggregate}(C,Q).
 \]
 
 节点级 RoPE 后的 cluster query：
 
 \[
-\widetilde Q_c=C^\top R(p_i)Q_i.
+\widetilde Q_c=\operatorname{StableAggregate}(C,R(p_i)Q_i).
 \]
+
+`StableAggregate` 先除以 cluster mass，再固定 query 的 L2 尺度，避免汽车
+大网格上的 cross-attention logits 随节点数增长。
 
 完整 Key 的 RoPE 形式为：
 
@@ -235,6 +238,10 @@ print(model.rope_gate_values())
 ```
 
 如果训练损失震荡且门控快速变化，可以降低初始门控或学习率。
+
+三个 CANO 版本现在统一继承可学习 assignment temperature 和 LayerScale
+残差。由于新增参数且聚合公式改变，必须使用 `phase: restart_train`，不能从
+旧 checkpoint 继续训练。
 
 ## 8. 复杂度与显存
 

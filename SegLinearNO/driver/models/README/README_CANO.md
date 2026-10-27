@@ -38,13 +38,20 @@ C=\operatorname{Softmax}_{K_c}(QW_c),
 C\in\mathbb{R}^{N\times K_c}.
 \]
 
-然后只聚合 Query：
+然后只聚合 Query。原始论文直接采用 `C^T Q`，但该公式的实验网格规模远小于
+DrivAerNet。当前实现先除以 cluster mass 得到加权中心，再将每个中心定标为
+固定 RMS/L2 尺度：
 
 \[
-Q_c=C^\top Q,
+\bar Q_c=
+\frac{C^\top Q}{C^\top\mathbf 1+\varepsilon},
+\qquad
+Q_c=\sqrt d\frac{\bar Q_c}{\|\bar Q_c\|_2+\varepsilon},
 \qquad
 Q_c\in\mathbb{R}^{K_c\times d}.
 \]
+
+这样 cross-attention logits 不会随着网格节点数或 cluster 占用量增长。
 
 聚类后的 Query 对全分辨率 Key/Value 执行 cross-attention：
 
@@ -120,8 +127,8 @@ cluster_logits = torch.einsum(
     "bhnd,hdk->bhnk", q, self.cluster_projection
 )
 cluster_assignment = F.softmax(cluster_logits, dim=-1)
-clustered_q = torch.einsum(
-    "bhnk,bhnd->bhkd", cluster_assignment, q
+clustered_q = self._aggregate_cluster_queries(
+    cluster_assignment, q
 )
 ```
 
@@ -159,12 +166,15 @@ CANO：      压缩 Q，完整 K / V 保持不变
 
 ## 6. Block 结构
 
-每个 block 保持和 `RopeLinearNO_v3.py` 一致的 Pre-LayerNorm 残差形式：
+每个 block 使用 Pre-LayerNorm，并在两条残差分支上加入可学习 LayerScale：
 
 ```python
-fx = self.attn(self.ln_1(fx)) + fx
-fx = self.mlp(self.ln_2(fx)) + fx
+fx = fx + attn_layer_scale * self.attn(self.ln_1(fx))
+fx = fx + mlp_layer_scale * self.mlp(self.ln_2(fx))
 ```
+
+默认 LayerScale 从 `0.1` 开始，使动态 cluster assignment 在中后期变尖锐时，
+不会突然以完整幅值冲击残差主干；scale 本身仍可学习，因此不会限制最终容量。
 
 最后一个 block 使用：
 
@@ -243,7 +253,19 @@ phase: restart_train
 space_dim: 3
 cluster_num: 64
 batch_size: 1
+learning_rate: 2.0e-4
 ```
+
+稳定训练示例已经写入：
+
+```text
+driver/config_CANO_stable.yml
+```
+
+统一训练器将 `learning_rate` 用作 `OneCycleLR.max_lr`。默认 OneCycle 在约
+30% 训练进度达到峰值；若总 epoch 为 150–200，最高学习率正好出现在约
+第 45–60 epoch。原来的 `1e-3` 与你观察到的失稳时刻高度吻合，因此建议先用
+`2e-4`，仍震荡时再试 `1e-4`。
 
 建议消融：
 
@@ -273,4 +295,28 @@ cluster_num
 每个模型应使用 `phase: restart_train` 重新训练，不能交叉加载 checkpoint。
 
 当前独立 Q/K/V 结构与早期共享前置投影版本的参数形状不同，早期 CANO checkpoint 也不能直接加载。
+
+## 12. 稳定性参数与诊断
+
+cluster assignment 现在使用每个 head 独立的可学习温度：
+
+```python
+temperature = exp(cluster_log_temperature).clamp(0.25, 4.0)
+C = softmax(cluster_logits / temperature, dim=-1)
+```
+
+训练后可以检查：
+
+```python
+stats = model.stability_values()
+print(stats["cluster_temperature"])
+print(stats["attention_layer_scale"])
+print(stats["mlp_layer_scale"])
+```
+
+若 temperature 大量贴近 `0.25`，说明 cluster assignment 过度尖锐；若
+LayerScale 快速增大且 loss 同时恶化，说明学习率仍然过高。
+
+本次结构新增了 temperature 和 LayerScale 参数，并改变了 cluster-query
+聚合方式，因此必须使用 `phase: restart_train`，不能继续加载旧 CANO 权重。
 
