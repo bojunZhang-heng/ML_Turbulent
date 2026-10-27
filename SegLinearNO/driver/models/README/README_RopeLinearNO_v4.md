@@ -117,21 +117,24 @@ fx = preprocess(data)
 `data` 与 `rope_coords` 必须使用完全相同的节点顺序，并具有相同的
 `(B,N,3)` 形状。
 
-## 6. DrivAerNet 显存优化
+## 6. Gradient checkpoint
 
-DrivAerNet 单个表面可能接近 50 万节点。V4 默认启用两级 checkpoint：
+V4 的 checkpoint 策略已经与 V3 保持一致：
 
 ```python
-checkpoint_relative_terms=True
-checkpoint_segment_size=1
+self.checkpoint_segment_size = 2
 ```
 
-- 每个 cosine/sine 低秩项单独 checkpoint；
-- 每个网络 block 单独 checkpoint；
-- 不降低隐藏维度、层数或位置频率数；
-- 用额外的反向重计算换取更低的峰值显存。
+- 每两个完整网络 block 构成一个 checkpoint segment；
+- cosine/sine Fourier 项内部不再嵌套 checkpoint；
+- 相比逐 Fourier 项 checkpoint，反向重计算次数明显减少，训练更快；
+- 模型结构、参数量和前向数学公式不变。
 
-验证和测试阶段处于 `eval()` 和 `no_grad()`，不会执行训练 checkpoint。
+这是速度优先设置，代价是训练峰值显存高于逐项 checkpoint 版本。对于接近
+50 万节点的 DrivAerNet 网格，应继续使用 BF16 和 `batch_size: 1`。如果仍然
+OOM，需要在速度和显存之间重新选择，或者减少频率数、隐藏维度或节点数。
+
+验证和测试阶段处于 `eval()` 和 `no_grad()`，不会执行 checkpoint 重计算。
 
 ## 7. main.py 配置
 
@@ -179,8 +182,8 @@ model(coorf[..., :3], rope_coords=raw_coords)
 | 门控参数 | 每层、每个 head 一个 | 无 |
 | 输出融合 | `(1-g)Y_base + gY_rel` | `Y_rel` |
 | 非负 Fourier 核 | 有 | 有 |
-| 逐项 checkpoint | 有 | 有 |
-| block checkpoint | 每层 | 每层 |
+| Fourier 项内 checkpoint | 无 | 无 |
+| block checkpoint | 每 2 层 | 每 2 层 |
 
 V4 是新的模型结构，不能直接严格加载 V3 checkpoint。训练时应使用：
 
