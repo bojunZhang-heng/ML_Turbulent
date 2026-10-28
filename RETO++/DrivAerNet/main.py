@@ -51,6 +51,7 @@ parser.add_argument('--num_position_frequencies', type=int, default=config.get('
 parser.add_argument('--initial_relative_gate', type=float, default=config.get('initial_relative_gate', 0.05))
 parser.add_argument('--cluster_num', type=int, default=config.get('cluster_num', 64))
 parser.add_argument('--checkpoint_segment_size', type=int, default=config.get('checkpoint_segment_size', 2))
+parser.add_argument('--checkpoint_num_blocks', type=int, default=config.get('checkpoint_num_blocks', None))
 parser.add_argument('--layer_scale_init', type=float, default=config.get('layer_scale_init', 0.1))
 parser.add_argument('--initial_rope_gate', type=float, default=config.get('initial_rope_gate', 0.05))
 args = parser.parse_args()
@@ -192,6 +193,7 @@ def main():
             cluster_num=args.cluster_num,
             num_position_frequencies=args.num_position_frequencies,
             checkpoint_segment_size=args.checkpoint_segment_size,
+            checkpoint_num_blocks=args.checkpoint_num_blocks,
             layer_scale_init=args.layer_scale_init,
         )
     elif model_name == 'CANO_GatedRope':
