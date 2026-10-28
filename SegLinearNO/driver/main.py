@@ -71,6 +71,26 @@ parser.add_argument(
 )
 args = parser.parse_args()
 
+
+def print_effective_args(parsed_args):
+    """Print the final arguments after YAML defaults and CLI overrides merge."""
+    args_dict = vars(parsed_args).copy()
+    config_path = args_dict.get('config')
+
+    print("\n" + "=" * 72)
+    print("🛠️  Effective training arguments")
+    print(f"Config source: {config_path if config_path else '<built-in defaults>'}")
+    print("-" * 72)
+    print(
+        yaml.safe_dump(
+            args_dict,
+            sort_keys=True,
+            allow_unicode=True,
+            default_flow_style=False,
+        ).rstrip()
+    )
+    print("=" * 72 + "\n")
+
 # set the experiment settings
 model_name = args.model_name
 predicted_feature_name = args.predicted_feature_name
@@ -86,6 +106,7 @@ def main():
     """
     Main function to run training and testing.
     """
+    print_effective_args(args)
     print("🚀 Starting VTK Data Processing Pipeline")
 
     # Create data loaders
