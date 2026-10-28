@@ -22,13 +22,13 @@ class GatedRopeClusterAttention(RETOPlusAttention):
             torch.full((1, self.heads, 1, 1), gate_logit)
         )
 
-    def forward(self, x, position_phases):
+    def forward(self, x, position_cosine, position_sine):
         q, k, v = self._project_qkv(x)
         cluster_assignment = self._cluster_assignment(q)
         clustered_q = self._aggregate_cluster_queries(cluster_assignment, q)
 
-        q_rope = apply_rotary_embedding(q, position_phases)
-        k_rope = apply_rotary_embedding(k, position_phases)
+        q_rope = apply_rotary_embedding(q, position_cosine, position_sine)
+        k_rope = apply_rotary_embedding(k, position_cosine, position_sine)
         clustered_q_rope = self._aggregate_cluster_queries(
             cluster_assignment, q_rope
         )
