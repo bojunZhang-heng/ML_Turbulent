@@ -1,5 +1,7 @@
 from typing import Any
 
+import math
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -55,11 +57,29 @@ class ClusterAttention(nn.Module):
         dropout=0.0,
         key_ratio=1,
         cluster_num=64,
+        cluster_temperature_init=1.0,
+        cluster_temperature_min=0.25,
+        cluster_temperature_max=4.0,
+        cluster_eps=1e-6,
         **_,
     ):
         super().__init__()
         if cluster_num < 1:
             raise ValueError("cluster_num must be at least 1")
+        if cluster_temperature_init <= 0.0:
+            raise ValueError("cluster_temperature_init must be positive")
+        if not 0.0 < cluster_temperature_min <= cluster_temperature_init:
+            raise ValueError(
+                "cluster_temperature_min must be positive and no larger than "
+                "cluster_temperature_init"
+            )
+        if cluster_temperature_max < cluster_temperature_init:
+            raise ValueError(
+                "cluster_temperature_max must be no smaller than "
+                "cluster_temperature_init"
+            )
+        if cluster_eps <= 0.0:
+            raise ValueError("cluster_eps must be positive")
 
         inner_dim = dim_head * heads
         key_dim = key_ratio * dim_head
@@ -69,6 +89,9 @@ class ClusterAttention(nn.Module):
         self.cluster_num = cluster_num
         self.scale = key_dim**-0.5
         self.attention_dropout = dropout
+        self.cluster_temperature_min = cluster_temperature_min
+        self.cluster_temperature_max = cluster_temperature_max
+        self.cluster_eps = cluster_eps
 
         # Q, K and V are projected independently from the complete hidden
         # feature. Each output head occupies its own channel slice, so neither
@@ -80,6 +103,9 @@ class ClusterAttention(nn.Module):
             torch.empty(heads, key_dim, cluster_num)
         )
         trunc_normal_(self.cluster_projection, std=0.02)
+        self.cluster_log_temperature = nn.Parameter(
+            torch.full((1, heads, 1, 1), math.log(cluster_temperature_init))
+        )
         self.to_out = nn.Sequential(
             nn.Linear(inner_dim, dim),
             nn.GELU(),
@@ -112,14 +138,40 @@ class ClusterAttention(nn.Module):
         cluster_logits = torch.einsum(
             "bhnd,hdk->bhnk", q, self.cluster_projection
         )
-        return F.softmax(cluster_logits, dim=-1)
+        temperature = self.cluster_log_temperature.exp().clamp(
+            min=self.cluster_temperature_min,
+            max=self.cluster_temperature_max,
+        )
+        return F.softmax(cluster_logits / temperature, dim=-1)
+
+    def _aggregate_cluster_queries(self, cluster_assignment, q):
+        """Create resolution-stable cluster centroids from node queries.
+
+        The paper uses ``C^T Q`` directly.  On meshes with roughly 500k nodes,
+        its norm grows with cluster population and saturates the following
+        cross-attention.  Dividing by cluster mass gives the weighted centroid;
+        unit-RMS rescaling preserves its direction while keeping the SDPA logit
+        scale independent of node count and cluster occupancy.
+        """
+        cluster_sum = torch.einsum(
+            "bhnk,bhnd->bhkd", cluster_assignment, q
+        )
+        cluster_mass = cluster_assignment.sum(dim=-2).unsqueeze(-1)
+        cluster_mean = cluster_sum / cluster_mass.clamp_min(self.cluster_eps)
+        return F.normalize(
+            cluster_mean, p=2.0, dim=-1, eps=self.cluster_eps
+        ) * math.sqrt(self.key_dim)
 
     def _cluster_queries(self, q):
         cluster_assignment = self._cluster_assignment(q)
-        clustered_q = torch.einsum(
-            "bhnk,bhnd->bhkd", cluster_assignment, q
-        )
+        clustered_q = self._aggregate_cluster_queries(cluster_assignment, q)
         return cluster_assignment, clustered_q
+
+    def cluster_temperature(self):
+        return self.cluster_log_temperature.exp().clamp(
+            min=self.cluster_temperature_min,
+            max=self.cluster_temperature_max,
+        )
 
     def _cross_attention(self, clustered_q, k, v):
         return F.scaled_dot_product_attention(
@@ -158,11 +210,14 @@ class CANOBlock(nn.Module):
         out_dim=1,
         attention_cls=ClusterAttention,
         attention_kwargs=None,
+        layer_scale_init=0.1,
         **_,
     ):
         super().__init__()
         if hidden_dim % num_heads != 0:
             raise ValueError("hidden_dim must be divisible by num_heads")
+        if layer_scale_init <= 0.0:
+            raise ValueError("layer_scale_init must be positive")
 
         self.last_layer = last_layer
         self.ln_1 = nn.LayerNorm(hidden_dim)
@@ -184,6 +239,15 @@ class CANOBlock(nn.Module):
             res=False,
             act=act,
         )
+        # LayerScale limits abrupt residual updates when cluster assignments
+        # sharpen during training.  A learnable per-channel scale retains full
+        # model capacity after the stable initialization.
+        self.attn_layer_scale = nn.Parameter(
+            torch.full((hidden_dim,), layer_scale_init)
+        )
+        self.mlp_layer_scale = nn.Parameter(
+            torch.full((hidden_dim,), layer_scale_init)
+        )
         if last_layer:
             self.ln_3 = nn.LayerNorm(hidden_dim)
             self.mlp2 = nn.Linear(hidden_dim, out_dim)
@@ -191,8 +255,10 @@ class CANOBlock(nn.Module):
     def forward(
         self, fx: torch.Tensor, attn_kwargs: dict[str, Any] | None = None
     ) -> torch.Tensor:
-        fx = self.attn(self.ln_1(fx), **(attn_kwargs or {})) + fx
-        fx = self.mlp(self.ln_2(fx)) + fx
+        attn_update = self.attn(self.ln_1(fx), **(attn_kwargs or {}))
+        fx = fx + self.attn_layer_scale.to(dtype=fx.dtype) * attn_update
+        mlp_update = self.mlp(self.ln_2(fx))
+        fx = fx + self.mlp_layer_scale.to(dtype=fx.dtype) * mlp_update
         if self.last_layer:
             return self.mlp2(self.ln_3(fx))
         return fx
@@ -221,6 +287,8 @@ class ClusterAttentionNeuralOperator(nn.Module):
         isregular=False,
         cluster_num=64,
         checkpoint_segment_size=2,
+        layer_scale_init=0.1,
+        cluster_temperature_init=1.0,
         _attention_cls=ClusterAttention,
         _attention_kwargs=None,
         **_,
@@ -234,6 +302,11 @@ class ClusterAttentionNeuralOperator(nn.Module):
             raise ValueError("unified_pos and Time_Input are not supported")
         if checkpoint_segment_size < 1:
             raise ValueError("checkpoint_segment_size must be at least 1")
+
+        attention_kwargs = dict(_attention_kwargs or {})
+        attention_kwargs.setdefault(
+            "cluster_temperature_init", cluster_temperature_init
+        )
 
         self.space_dim = space_dim
         self.n_hidden = n_hidden
@@ -258,7 +331,8 @@ class ClusterAttentionNeuralOperator(nn.Module):
                 cluster_num=cluster_num,
                 out_dim=out_dim,
                 attention_cls=_attention_cls,
-                attention_kwargs=_attention_kwargs,
+                attention_kwargs=attention_kwargs,
+                layer_scale_init=layer_scale_init,
                 last_layer=layer_index == n_layers - 1,
                 H=H,
                 W=W,
@@ -333,6 +407,20 @@ class ClusterAttentionNeuralOperator(nn.Module):
         if self.training:
             return self._forward_with_checkpoint(fx)
         return self._forward_blocks(fx)
+
+    def stability_values(self):
+        """Return small CPU tensors for monitoring CANO training stability."""
+        return {
+            "cluster_temperature": torch.stack(
+                [block.attn.cluster_temperature().detach().flatten() for block in self.blocks]
+            ).cpu(),
+            "attention_layer_scale": torch.stack(
+                [block.attn_layer_scale.detach() for block in self.blocks]
+            ).cpu(),
+            "mlp_layer_scale": torch.stack(
+                [block.mlp_layer_scale.detach() for block in self.blocks]
+            ).cpu(),
+        }
 
 
 LinearAttentionNeuralOperator = ClusterAttentionNeuralOperator

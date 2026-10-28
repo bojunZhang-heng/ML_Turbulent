@@ -7,6 +7,7 @@ from models.SegLinearNO_v2 import Model as SegLinearNO_v2
 from models.LinearAttnNeuralOperator import LinearAttentionNeuralOperator as LinearNO
 from models.RopeLinearNO import LinearAttentionNeuralOperator as RopeLinearNO
 from models.RopeLinearNO_v2 import LinearAttentionNeuralOperator as RopeLinearNO_v2
+from models.RETO_plus import LinearAttentionNeuralOperator as RETO_plus
 
 
 # from models.mlp import MLP as MLP_Model
@@ -46,6 +47,10 @@ parser.add_argument('--vtk_data_path', type=str, default=config.get('vtk_data_pa
 parser.add_argument('--batch_size', type=int, default=config.get('batch_size', 1))
 parser.add_argument('--shuffle', action=argparse.BooleanOptionalAction, default=config.get('shuffle', True))
 parser.add_argument('--exp', type=str, default=config.get('exp', "ShapeNet"))
+parser.add_argument('--cluster_num', type=int, default=config.get('cluster_num', 64))
+parser.add_argument('--num_position_frequencies', type=int, default=config.get('num_position_frequencies', 6))
+parser.add_argument('--checkpoint_segment_size', type=int, default=config.get('checkpoint_segment_size', 2))
+parser.add_argument('--layer_scale_init', type=float, default=config.get('layer_scale_init', 0.1))
 args = parser.parse_args()
 
 # set the experiment settings
@@ -115,6 +120,12 @@ def main():
     if first_input is None:
         raise KeyError("Sample pickle must contain input or x")
     input_dim = int(np.asarray(first_input).shape[-1])
+    if model_name == "RETO_plus" and input_dim != 7:
+        raise ValueError(
+            "ShapeNet RETO_plus expects seven input channels "
+            "[x, y, z, sdf, normal_x, normal_y, normal_z], "
+            f"but the dataset provides {input_dim}."
+        )
     if model_name in {"transolver_seg", "transolver_seg_v2", "SegLinearNO", "SegLinearNO_v2"}:
         if "seg_matrix" not in first_sample:
             raise ValueError(
@@ -218,6 +229,25 @@ def main():
             Time_Input=False,
             mlp_ratio=2,fun_dim=0,out_dim=4,key_ratio=1,
             unified_pos=False,isregular=False)
+    elif model_name == 'RETO_plus':
+        model = RETO_plus(
+            space_dim=input_dim,
+            n_layers=8,
+            n_hidden=256,
+            dropout=0.0,
+            n_head=8,
+            Time_Input=False,
+            act='gelu',
+            mlp_ratio=2,
+            fun_dim=0,
+            out_dim=4,
+            key_ratio=1,
+            unified_pos=False,
+            cluster_num=args.cluster_num,
+            num_position_frequencies=args.num_position_frequencies,
+            checkpoint_segment_size=args.checkpoint_segment_size,
+            layer_scale_init=args.layer_scale_init,
+        )
     else:
         raise ValueError(f"Model name {model_name} not supported")
     print(f"Model parameters: {sum(p.numel() for p in model.parameters())}")

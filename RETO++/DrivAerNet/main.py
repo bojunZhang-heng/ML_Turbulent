@@ -1,17 +1,10 @@
 from dataloader import create_data_loaders
 from models.transolver_model import Model as Transolver_Model
-from models.Transolver_seg import Model as Transolver_SEG_Model
-from models.Transolver_seg_v2 import Model as Transolver_SEG_V2_Model
-from models.Transolver_seg_ser import Model as Transolver_SEG_ser_Model
 
-from models.SegLinearNO import Model as SegLinearNO
-from models.SegLinearNO_v2 import Model as SegLinearNO_v2
 from models.LinearAttnNeuralOperator import LinearAttentionNeuralOperator as LinearNO
-from models.RopeLinearNO import LinearAttentionNeuralOperator as RopeLinearNO
-from models.RopeLinearNO_v2 import LinearAttentionNeuralOperator as RopeLinearNO_v2
 from models.RopeLinearNO_v3 import LinearAttentionNeuralOperator as RopeLinearNO_v3
 from models.CANO import LinearAttentionNeuralOperator as CANO
-from models.CANO_Rope import LinearAttentionNeuralOperator as CANO_Rope
+from models.RETO_plus import Model as RETO_plus
 from models.CANO_GatedRope import LinearAttentionNeuralOperator as CANO_GatedRope
 from models.LinearNO_se import LinearAttentionNeuralOperator as LinearNO_se
 from models.SATO import Model as SATO
@@ -57,6 +50,8 @@ parser.add_argument('--shift', type=int, default=config.get('shift', 2))
 parser.add_argument('--num_position_frequencies', type=int, default=config.get('num_position_frequencies', 6))
 parser.add_argument('--initial_relative_gate', type=float, default=config.get('initial_relative_gate', 0.05))
 parser.add_argument('--cluster_num', type=int, default=config.get('cluster_num', 64))
+parser.add_argument('--checkpoint_segment_size', type=int, default=config.get('checkpoint_segment_size', 2))
+parser.add_argument('--layer_scale_init', type=float, default=config.get('layer_scale_init', 0.1))
 parser.add_argument('--initial_rope_gate', type=float, default=config.get('initial_rope_gate', 0.05))
 args = parser.parse_args()
 
@@ -118,7 +113,7 @@ def main():
         'RopeLinearNO_v2',
         'RopeLinearNO_v3',
         'CANO',
-        'CANO_Rope',
+        'RETO_plus',
         'CANO_GatedRope',
         'LinearNO_se',
     }
@@ -153,61 +148,6 @@ def main():
             mlp_ratio=2,        # Increased from 2 to 4
             slice_num=64
         )
-    elif model_name == 'Transolver_seg':
-        model = Transolver_SEG_Model(
-            space_dim=args.space_dim,
-            out_dim=1,
-            n_layers=8,        # Increased from 8 to 12
-            n_hidden=256,       # Increased from 256 to 512
-            dropout=0.0,        # Added dropout for regularization
-            n_head=8,
-            act='gelu',
-            mlp_ratio=2,        # Increased from 2 to 4
-        )  # Changed from 3 to 6 for 6D features
-    elif model_name == 'Transolver_seg_v2':
-        model = Transolver_SEG_V2_Model(
-            space_dim=args.space_dim,
-            out_dim=1,
-            n_layers=8,        # Increased from 8 to 12
-            n_hidden=256,       # Increased from 256 to 512
-            dropout=0.0,        # Added dropout for regularization
-            n_head=8,
-            act='gelu',
-            mlp_ratio=2
-        )
-    elif model_name == 'Transolver_seg_ser':
-        model = Transolver_SEG_ser_Model(
-            space_dim=args.space_dim,
-            out_dim=1,
-            n_layers=8,        # Increased from 8 to 12
-            n_hidden=256,       # Increased from 256 to 512
-            dropout=0.0,        # Added dropout for regularization
-            n_head=8,
-            act='gelu',
-            mlp_ratio=2
-        )
-    elif model_name == 'SegLinearNO':
-        model = SegLinearNO(
-            space_dim=args.space_dim,
-            out_dim=1,
-            n_layers=8,        # Increased from 8 to 12
-            n_hidden=256,       # Increased from 256 to 512
-            dropout=0.0,        # Added dropout for regularization
-            n_head=8,
-            act='gelu',
-            mlp_ratio=2
-        )
-    elif model_name == 'SegLinearNO_v2':
-        model = SegLinearNO_v2(
-            space_dim=args.space_dim,
-            out_dim=1,
-            n_layers=8,        # Increased from 8 to 12
-            n_hidden=256,       # Increased from 256 to 512
-            dropout=0.0,        # Added dropout for regularization
-            n_head=8,
-            act='gelu',
-            mlp_ratio=2
-        )
     elif model_name == 'LinearNO':
         model = LinearNO(
             space_dim=args.space_dim,
@@ -217,25 +157,6 @@ def main():
             Time_Input=False,
             mlp_ratio=2,fun_dim=0,out_dim=1,key_ratio=1,
             unified_pos=False,isregular=False)
-    elif model_name == 'RopeLinearNO':
-        model = RopeLinearNO(
-            space_dim=args.space_dim,
-            n_layers=8,
-            n_hidden=256,
-            n_head=8,
-            Time_Input=False,
-            mlp_ratio=2,fun_dim=0,out_dim=1,key_ratio=1,
-            unified_pos=False,isregular=False)
-    elif model_name == 'RopeLinearNO_v2':
-        model = RopeLinearNO_v2(
-            space_dim=args.space_dim,
-            n_layers=8,
-            n_hidden=256,
-            n_head=8,
-            Time_Input=False,
-            mlp_ratio=2, fun_dim=0, out_dim=1, key_ratio=1,
-            unified_pos=False, isregular=False,
-        )
     elif model_name == 'RopeLinearNO_v3':
         model = RopeLinearNO_v3(
             space_dim=args.space_dim,
@@ -259,8 +180,8 @@ def main():
             unified_pos=False, isregular=False,
             cluster_num=args.cluster_num,
         )
-    elif model_name == 'CANO_Rope':
-        model = CANO_Rope(
+    elif model_name == 'RETO_plus':
+        model = RETO_plus(
             space_dim=args.space_dim,
             n_layers=8,
             n_hidden=256,
@@ -270,6 +191,8 @@ def main():
             unified_pos=False, isregular=False,
             cluster_num=args.cluster_num,
             num_position_frequencies=args.num_position_frequencies,
+            checkpoint_segment_size=args.checkpoint_segment_size,
+            layer_scale_init=args.layer_scale_init,
         )
     elif model_name == 'CANO_GatedRope':
         model = CANO_GatedRope(
