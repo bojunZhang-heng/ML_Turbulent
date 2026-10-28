@@ -16,7 +16,6 @@ from einops import rearrange
 from timm.layers.weight_init import trunc_normal_
 from torch.utils.checkpoint import checkpoint
 
-
 ACTIVATION = {
     "gelu": nn.GELU,
     "tanh": nn.Tanh,
