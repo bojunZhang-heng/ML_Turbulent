@@ -21,20 +21,13 @@ __pycache__/
 **/.DS_Store
 **/logs/
 **/experiment_ShapeNet/
+**/experiment_DrivAerNet/
+**/*.yml
 
 .vscode
-LinearNO/LinearNO.yml
-PGD-NO/driver/config_mac.yml
-
-SegLinearNO/driver/logs/
-SegLinearNO/ShapeNet/logs/
-SegLinearNO/driver/config*.yml
-SegLinearNO/ShapeNet/config*.yml
 
 preprocess/data/
 preprocess/run_DrivAerNet.sh
 preprocess/run_ShapeNet.sh
-
-
-
 preprocess/E_S_WW_WM_small
+preprocess/mlcfd_data
