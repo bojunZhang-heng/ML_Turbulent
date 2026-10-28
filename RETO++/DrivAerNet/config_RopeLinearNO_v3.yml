@@ -10,7 +10,7 @@ model_name: RopeLinearNO_v3
 predicted_feature_name: pressure
 phase: restart_train
 
-space_dim: 3
+space_dim: 7
 patch_size: 20
 shift: 2
 
@@ -39,8 +39,8 @@ weight_decay: 0.00000
 num_position_frequencies: 6
 initial_relative_gate: 0.05
 
-#data_path: /data/zhangbojun/DrivAerNet++_dataset/PressureVTK/E_S_WWC_WMpklFile
-data_path: /data/zhangbojun/ShapeNet_dataset/vtk/pklFile
+data_path: /data/zhangbojun/DrivAerNet++_dataset/PressureVTK/E_S_WWC_WMpklFile
+#data_path: /data/zhangbojun/ShapeNet_dataset/vtk/pklFile
 batch_size: 1
 shuffle: true
 
