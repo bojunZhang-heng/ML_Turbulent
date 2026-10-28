@@ -15,6 +15,7 @@ from models.CANO_Rope import LinearAttentionNeuralOperator as CANO_Rope
 from models.CANO_GatedRope import LinearAttentionNeuralOperator as CANO_GatedRope
 from models.LinearNO_se import LinearAttentionNeuralOperator as LinearNO_se
 from models.SATO import Model as SATO
+from datetime import datetime
 
 # from models.mlp import MLP as MLP_Model
 # from models.figconv import FigConv_Model
@@ -63,8 +64,10 @@ args = parser.parse_args()
 model_name = args.model_name
 predicted_feature_name = args.predicted_feature_name
 phase = args.phase
-model_flag = model_name + '_' + predicted_feature_name
 num_epochs = args.num_epochs
+
+ts = datetime.now().strftime('%Y%m%d_%H%M')  # 整个实验共用一个时间戳
+model_flag = f"{model_name}_{predicted_feature_name}_{ts}"
 
 save_path = Path(f"experiment_{args.exp}") / f"best_model_{model_flag}.pth"
 
@@ -300,7 +303,7 @@ def main():
             n_hidden=256,
             n_head=8,
             slice_num=64,
-            mlp_ratio=2, fun_dim=0, 
+            mlp_ratio=2, fun_dim=0,
             patch_size=args.patch_size,
             shift=args.shift,
             n_iter=1
