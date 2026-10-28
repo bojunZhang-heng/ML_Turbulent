@@ -437,10 +437,6 @@ class LinearAttentionNeuralOperator(nn.Module):
     def forward(
         self, data: torch.Tensor, rope_coords: torch.Tensor | None = None
     ) -> torch.Tensor:
-        if not torch.is_tensor(data) or data.ndim != 3:
-            raise ValueError("Input must be a tensor shaped (B, N, 3)")
-        if data.shape[-1] != self.space_dim:
-            raise ValueError(f"Expected {self.space_dim} input channels")
 
         coords = data
         position_coords = coords if rope_coords is None else rope_coords
