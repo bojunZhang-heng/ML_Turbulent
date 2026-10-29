@@ -32,6 +32,35 @@ if config_args.config:
     with open(config_args.config, 'r', encoding='utf-8') as config_file:
         config = yaml.safe_load(config_file) or {}
 
+
+CONFIG_SECTIONS = (
+    "experiment",
+    "model",
+    "attention",
+    "position_encoding",
+    "serialization",
+    "checkpoint",
+    "training",
+    "data",
+)
+
+
+def flatten_config(raw_config):
+    """Support categorized YAML while remaining compatible with flat files."""
+    flat = {key: value for key, value in raw_config.items() if not isinstance(value, dict)}
+    for section in CONFIG_SECTIONS:
+        values = raw_config.get(section, {})
+        if values is None:
+            continue
+        if not isinstance(values, dict):
+            raise TypeError(f"YAML section {section!r} must be a mapping")
+        flat.update(values)
+    return flat
+
+
+grouped_config = config
+config = flatten_config(grouped_config)
+
 parser = argparse.ArgumentParser(parents=[config_parser])
 parser.set_defaults(**config)
 parser.add_argument('--exp', type=str, default=config.get('exp', 'ShapeNet'))
@@ -45,11 +74,30 @@ parser.add_argument('--data_path', type=str, default=config.get('data_path', "")
 parser.add_argument('--batch_size', type=int, default=config.get('batch_size', 1))
 parser.add_argument('--shuffle', action=argparse.BooleanOptionalAction, default=config.get('shuffle', True))
 parser.add_argument('--space_dim', type=int, default=config.get('space_dim', 3))
+parser.add_argument('--out_dim', type=int, default=config.get('out_dim', 1))
+parser.add_argument('--n_layers', type=int, default=config.get('n_layers', 8))
+parser.add_argument('--n_hidden', type=int, default=config.get('n_hidden', 256))
+parser.add_argument('--dropout', type=float, default=config.get('dropout', 0.0))
+parser.add_argument('--n_head', type=int, default=config.get('n_head', 8))
+parser.add_argument('--act', type=str, default=config.get('act', 'gelu'))
+parser.add_argument('--mlp_ratio', type=float, default=config.get('mlp_ratio', 2.0))
+parser.add_argument('--fun_dim', type=int, default=config.get('fun_dim', 0))
+parser.add_argument('--key_ratio', type=int, default=config.get('key_ratio', 1))
+parser.add_argument('--slice_num', type=int, default=config.get('slice_num', 64))
+parser.add_argument('--ref', type=int, default=config.get('ref', 8))
+parser.add_argument('--H', type=int, default=config.get('H', 85))
+parser.add_argument('--W', type=int, default=config.get('W', 85))
+parser.add_argument('--unified_pos', action=argparse.BooleanOptionalAction, default=config.get('unified_pos', False))
+parser.add_argument('--isregular', action=argparse.BooleanOptionalAction, default=config.get('isregular', False))
+parser.add_argument('--time_input', action=argparse.BooleanOptionalAction, default=config.get('time_input', False))
 parser.add_argument('--patch_size', type=int, default=config.get('patch_size', 20))
 parser.add_argument('--shift', type=int, default=config.get('shift', 2))
+parser.add_argument('--n_iter', type=int, default=config.get('n_iter', 1))
 parser.add_argument('--num_position_frequencies', type=int, default=config.get('num_position_frequencies', 6))
 parser.add_argument('--initial_relative_gate', type=float, default=config.get('initial_relative_gate', 0.05))
+parser.add_argument('--checkpoint_relative_terms', action=argparse.BooleanOptionalAction, default=config.get('checkpoint_relative_terms', True))
 parser.add_argument('--cluster_num', type=int, default=config.get('cluster_num', 64))
+parser.add_argument('--cluster_temperature_init', type=float, default=config.get('cluster_temperature_init', 1.0))
 parser.add_argument('--checkpoint_segment_size', type=int, default=config.get('checkpoint_segment_size', 2))
 parser.add_argument('--checkpoint_num_blocks', type=int, default=config.get('checkpoint_num_blocks', None))
 parser.add_argument('--layer_scale_init', type=float, default=config.get('layer_scale_init', 0.1))
@@ -72,6 +120,9 @@ def main():
     Main function to run training and testing.
     """
     print("🚀 Starting VTK Data Processing Pipeline")
+    if config_args.config:
+        print(f"\n📋 Configuration: {config_args.config}")
+        print(yaml.safe_dump(grouped_config, sort_keys=False, allow_unicode=True))
 
     # Create data loaders
     print("\n🔄 Creating data loaders...")
@@ -108,7 +159,7 @@ def main():
     print(f"Train: {len(TRAIN_index)}, Val: {len(VAL_index)}, Test: {len(TEST_index)}")
 
     coordinate_only_models = {
-        'transolver',
+        'Transolver',
         'LinearNO',
         'RopeLinearNO',
         'RopeLinearNO_v2',
@@ -137,101 +188,145 @@ def main():
     # Create model
     print("\n🏗️  Creating model...")
     if model_name == 'Transolver':
-        # Improved hyperparameters for better performance
         model = Transolver_Model(
             space_dim=args.space_dim,
-            out_dim=1,
-            n_layers=8,        # Increased from 8 to 12
-            n_hidden=256,       # Increased from 256 to 512
-            dropout=0.0,        # Added dropout for regularization
-            n_head=8,
-            act='gelu',
-            mlp_ratio=2,        # Increased from 2 to 4
-            slice_num=64
+            out_dim=args.out_dim,
+            n_layers=args.n_layers,
+            n_hidden=args.n_hidden,
+            dropout=args.dropout,
+            n_head=args.n_head,
+            act=args.act,
+            mlp_ratio=args.mlp_ratio,
+            fun_dim=args.fun_dim,
+            slice_num=args.slice_num,
+            ref=args.ref,
+            unified_pos=args.unified_pos,
         )
     elif model_name == 'LinearNO':
         model = LinearNO(
             space_dim=args.space_dim,
-            n_layers=8,
-            n_hidden=256,
-            n_head=8,
-            Time_Input=False,
-            mlp_ratio=2,fun_dim=0,out_dim=1,key_ratio=1,
-            unified_pos=False,isregular=False)
+            n_layers=args.n_layers,
+            n_hidden=args.n_hidden,
+            dropout=args.dropout,
+            n_head=args.n_head,
+            Time_Input=args.time_input,
+            act=args.act,
+            mlp_ratio=args.mlp_ratio,
+            fun_dim=args.fun_dim,
+            out_dim=args.out_dim,
+            key_ratio=args.key_ratio,
+            ref=args.ref,
+            unified_pos=args.unified_pos,
+            H=args.H,
+            W=args.W,
+            isregular=args.isregular,
+        )
     elif model_name == 'RopeLinearNO_v3':
         model = RopeLinearNO_v3(
             space_dim=args.space_dim,
-            n_layers=8,
-            n_hidden=256,
-            n_head=8,
-            Time_Input=False,
-            mlp_ratio=2, fun_dim=0, out_dim=1, key_ratio=1,
-            unified_pos=False, isregular=False,
+            n_layers=args.n_layers,
+            n_hidden=args.n_hidden,
+            dropout=args.dropout,
+            n_head=args.n_head,
+            Time_Input=args.time_input,
+            act=args.act,
+            mlp_ratio=args.mlp_ratio, fun_dim=args.fun_dim,
+            out_dim=args.out_dim, key_ratio=args.key_ratio,
+            ref=args.ref, unified_pos=args.unified_pos,
+            H=args.H, W=args.W, isregular=args.isregular,
             num_position_frequencies=args.num_position_frequencies,
             initial_relative_gate=args.initial_relative_gate,
+            checkpoint_segment_size=args.checkpoint_segment_size,
+            checkpoint_relative_terms=args.checkpoint_relative_terms,
         )
     elif model_name == 'CANO':
         model = CANO(
             space_dim=args.space_dim,
-            n_layers=8,
-            n_hidden=256,
-            n_head=8,
-            Time_Input=False,
-            mlp_ratio=2, fun_dim=0, out_dim=1, key_ratio=1,
-            unified_pos=False, isregular=False,
+            n_layers=args.n_layers,
+            n_hidden=args.n_hidden,
+            dropout=args.dropout,
+            n_head=args.n_head,
+            Time_Input=args.time_input,
+            act=args.act,
+            mlp_ratio=args.mlp_ratio, fun_dim=args.fun_dim,
+            out_dim=args.out_dim, key_ratio=args.key_ratio,
+            ref=args.ref, unified_pos=args.unified_pos,
+            H=args.H, W=args.W, isregular=args.isregular,
             cluster_num=args.cluster_num,
+            checkpoint_segment_size=args.checkpoint_segment_size,
+            layer_scale_init=args.layer_scale_init,
+            cluster_temperature_init=args.cluster_temperature_init,
         )
     elif model_name == 'RETO_plus':
         model = RETO_plus(
             space_dim=args.space_dim,
-            n_layers=8,
-            n_hidden=256,
-            n_head=8,
-            Time_Input=False,
-            mlp_ratio=2, fun_dim=0, out_dim=1, key_ratio=1,
-            unified_pos=False, isregular=False,
+            n_layers=args.n_layers,
+            n_hidden=args.n_hidden,
+            dropout=args.dropout,
+            n_head=args.n_head,
+            Time_Input=args.time_input,
+            act=args.act,
+            mlp_ratio=args.mlp_ratio, fun_dim=args.fun_dim,
+            out_dim=args.out_dim, key_ratio=args.key_ratio,
+            ref=args.ref, unified_pos=args.unified_pos,
+            isregular=args.isregular,
             cluster_num=args.cluster_num,
             num_position_frequencies=args.num_position_frequencies,
             checkpoint_segment_size=args.checkpoint_segment_size,
             checkpoint_num_blocks=args.checkpoint_num_blocks,
             layer_scale_init=args.layer_scale_init,
+            cluster_temperature_init=args.cluster_temperature_init,
         )
     elif model_name == 'CANO_GatedRope':
         model = CANO_GatedRope(
             space_dim=args.space_dim,
-            n_layers=8,
-            n_hidden=256,
-            n_head=8,
-            Time_Input=False,
-            mlp_ratio=2, fun_dim=0, out_dim=1, key_ratio=1,
-            unified_pos=False, isregular=False,
+            n_layers=args.n_layers,
+            n_hidden=args.n_hidden,
+            dropout=args.dropout,
+            n_head=args.n_head,
+            Time_Input=args.time_input,
+            act=args.act,
+            mlp_ratio=args.mlp_ratio, fun_dim=args.fun_dim,
+            out_dim=args.out_dim, key_ratio=args.key_ratio,
+            ref=args.ref, unified_pos=args.unified_pos,
+            H=args.H, W=args.W, isregular=args.isregular,
             cluster_num=args.cluster_num,
             num_position_frequencies=args.num_position_frequencies,
             initial_rope_gate=args.initial_rope_gate,
+            cluster_temperature_init=args.cluster_temperature_init,
+            checkpoint_segment_size=args.checkpoint_segment_size,
+            checkpoint_num_blocks=args.checkpoint_num_blocks,
+            layer_scale_init=args.layer_scale_init,
         )
     elif model_name == 'LinearNO_se':
         model = LinearNO_se(
             space_dim=args.space_dim,
-            n_layers=8,
-            n_hidden=256,
-            n_head=8,
-            Time_Input=False,
-            mlp_ratio=2, fun_dim=0, out_dim=1, key_ratio=1,
-            unified_pos=False, isregular=False,
+            n_layers=args.n_layers,
+            n_hidden=args.n_hidden,
+            dropout=args.dropout,
+            n_head=args.n_head,
+            Time_Input=args.time_input,
+            act=args.act,
+            mlp_ratio=args.mlp_ratio, fun_dim=args.fun_dim,
+            out_dim=args.out_dim, key_ratio=args.key_ratio,
+            ref=args.ref, unified_pos=args.unified_pos,
+            H=args.H, W=args.W, isregular=args.isregular,
             patch_size=args.patch_size,
             shift=args.shift,
         )
     elif model_name == 'SATO':
         model = SATO(
             space_dim=args.space_dim,
-            n_layers=8,
-            n_hidden=256,
-            n_head=8,
-            slice_num=64,
-            mlp_ratio=2, fun_dim=0,
+            n_layers=args.n_layers,
+            n_hidden=args.n_hidden,
+            dropout=args.dropout,
+            n_head=args.n_head,
+            act=args.act,
+            slice_num=args.slice_num,
+            mlp_ratio=args.mlp_ratio, fun_dim=args.fun_dim,
             patch_size=args.patch_size,
             shift=args.shift,
-            n_iter=1
+            n_iter=args.n_iter,
         )
     else:
         raise ValueError(f"Model name {model_name} not supported")
