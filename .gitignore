@@ -31,3 +31,5 @@ preprocess/run_DrivAerNet.sh
 preprocess/run_ShapeNet.sh
 preprocess/E_S_WW_WM_small
 preprocess/mlcfd_data
+preprocess/DrivAerStar/
+preprocess/drivaerML_N100_000
