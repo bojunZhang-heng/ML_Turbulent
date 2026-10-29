@@ -116,23 +116,37 @@ class ContinuousRotaryEmbedding3D(nn.Module):
                 "bnc,hrc->bhnr", normalized, self.frequencies.float()
             )
 
+    def factors(
+        self, coords: torch.Tensor, dtype: torch.dtype
+    ) -> tuple[torch.Tensor, torch.Tensor]:
+        """Compute cosine/sine once and reuse them in every RETO+ block."""
+        phases = self(coords)
+        return torch.cos(phases).to(dtype=dtype), torch.sin(phases).to(dtype=dtype)
+
 
 def apply_rotary_embedding(
-    features: torch.Tensor, phases: torch.Tensor
+    features: torch.Tensor,
+    cosine_or_phases: torch.Tensor,
+    sine: torch.Tensor | None = None,
 ) -> torch.Tensor:
-    """Rotate adjacent feature pairs using continuous position-dependent phases."""
+    """Rotate adjacent pairs using precomputed factors or legacy phases."""
     if features.shape[-1] % 2 != 0:
         raise ValueError("RoPE features must have an even final dimension")
     expected = (*features.shape[:-1], features.shape[-1] // 2)
-    if tuple(phases.shape) != expected:
+    if tuple(cosine_or_phases.shape) != expected:
         raise ValueError(
-            f"Expected phases {expected} for features {tuple(features.shape)}, "
-            f"got {tuple(phases.shape)}"
+            f"Expected rotary factors {expected} for features {tuple(features.shape)}, "
+            f"got {tuple(cosine_or_phases.shape)}"
         )
-
-    phases = phases.to(dtype=features.dtype)
-    cosine = torch.cos(phases)
-    sine = torch.sin(phases)
+    if sine is None:
+        phases = cosine_or_phases.to(dtype=features.dtype)
+        cosine = torch.cos(phases)
+        sine = torch.sin(phases)
+    else:
+        if tuple(sine.shape) != expected:
+            raise ValueError(f"Expected sine factors {expected}, got {tuple(sine.shape)}")
+        cosine = cosine_or_phases.to(dtype=features.dtype)
+        sine = sine.to(dtype=features.dtype)
     even = features[..., 0::2]
     odd = features[..., 1::2]
     rotated_even = even * cosine - odd * sine
@@ -237,15 +251,18 @@ class RETOPlusAttention(nn.Module):
         )
 
     def forward(
-        self, x: torch.Tensor, position_phases: torch.Tensor
+        self,
+        x: torch.Tensor,
+        position_cosine: torch.Tensor,
+        position_sine: torch.Tensor,
     ) -> torch.Tensor:
         q, k, v = self._project_qkv(x)
 
         # Clustering remains content-driven; RoPE modifies spatial similarity
         # in the following cluster-to-node cross-attention.
         assignment = self._cluster_assignment(q)
-        q_rope = apply_rotary_embedding(q, position_phases)
-        k_rope = apply_rotary_embedding(k, position_phases)
+        q_rope = apply_rotary_embedding(q, position_cosine, position_sine)
+        k_rope = apply_rotary_embedding(k, position_cosine, position_sine)
         cluster_queries = self._aggregate_cluster_queries(assignment, q_rope)
 
         cluster_features = F.scaled_dot_product_attention(
@@ -310,9 +327,12 @@ class RETOPlusBlock(nn.Module):
         )
 
     def forward(
-        self, fx: torch.Tensor, position_phases: torch.Tensor
+        self,
+        fx: torch.Tensor,
+        position_cosine: torch.Tensor,
+        position_sine: torch.Tensor,
     ) -> torch.Tensor:
-        attn_update = self.attn(self.ln_1(fx), position_phases)
+        attn_update = self.attn(self.ln_1(fx), position_cosine, position_sine)
         fx = fx + self.attn_layer_scale.to(dtype=fx.dtype) * attn_update
         mlp_update = self.mlp(self.ln_2(fx))
         return fx + self.mlp_layer_scale.to(dtype=fx.dtype) * mlp_update
@@ -343,6 +363,7 @@ class RETOPlusNeuralOperator(nn.Module):
         cluster_num: int = 64,
         num_position_frequencies: int = 6,
         checkpoint_segment_size: int = 2,
+        checkpoint_num_blocks: int | None = None,
         layer_scale_init: float = 0.1,
         cluster_temperature_init: float = 1.0,
         **_: Any,
@@ -362,11 +383,17 @@ class RETOPlusNeuralOperator(nn.Module):
             raise ValueError("key_ratio * head_dim must be even for RoPE")
         if checkpoint_segment_size < 1:
             raise ValueError("checkpoint_segment_size must be at least 1")
+        if checkpoint_num_blocks is not None and not 0 <= checkpoint_num_blocks <= n_layers:
+            raise ValueError("checkpoint_num_blocks must be between 0 and n_layers")
 
         self.space_dim = space_dim
         self.n_hidden = n_hidden
         self.cluster_num = cluster_num
         self.checkpoint_segment_size = checkpoint_segment_size
+        self.checkpoint_num_blocks = (
+            n_layers if checkpoint_num_blocks is None else checkpoint_num_blocks
+        )
+        self.checkpoint_preserve_rng_state = dropout > 0.0
         self.preprocess = MLP(
             space_dim,
             n_hidden * 2,
@@ -429,49 +456,85 @@ class RETOPlusNeuralOperator(nn.Module):
     def _forward_block_range(
         self,
         fx: torch.Tensor,
-        phases: torch.Tensor,
+        position_cosine: torch.Tensor,
+        position_sine: torch.Tensor,
         start: int,
         end: int,
     ) -> torch.Tensor:
         for block_index in range(start, end):
-            fx = self.blocks[block_index](fx, phases)
+            fx = self.blocks[block_index](fx, position_cosine, position_sine)
         return fx
 
     def _forward_blocks(
-        self, fx: torch.Tensor, phases: torch.Tensor
+        self,
+        fx: torch.Tensor,
+        position_cosine: torch.Tensor,
+        position_sine: torch.Tensor,
+        start: int = 0,
+        end: int | None = None,
     ) -> torch.Tensor:
-        return self._forward_block_range(fx, phases, 0, len(self.blocks))
+        if end is None:
+            end = len(self.blocks)
+        return self._forward_block_range(
+            fx, position_cosine, position_sine, start, end
+        )
 
     def _forward_with_checkpoint(
-        self, fx: torch.Tensor, phases: torch.Tensor
+        self,
+        fx: torch.Tensor,
+        position_cosine: torch.Tensor,
+        position_sine: torch.Tensor,
+        end_block: int,
     ) -> torch.Tensor:
-        for start in range(0, len(self.blocks), self.checkpoint_segment_size):
-            end = min(start + self.checkpoint_segment_size, len(self.blocks))
+        for start in range(0, end_block, self.checkpoint_segment_size):
+            end = min(start + self.checkpoint_segment_size, end_block)
 
             def run_segment(
                 segment_fx: torch.Tensor,
-                segment_phases: torch.Tensor,
+                segment_cosine: torch.Tensor,
+                segment_sine: torch.Tensor,
                 start: int = start,
                 end: int = end,
             ) -> torch.Tensor:
                 return self._forward_block_range(
-                    segment_fx, segment_phases, start, end
+                    segment_fx, segment_cosine, segment_sine, start, end
                 )
 
-            fx = checkpoint(run_segment, fx, phases, use_reentrant=False)
+            fx = checkpoint(
+                run_segment,
+                fx,
+                position_cosine,
+                position_sine,
+                use_reentrant=False,
+                preserve_rng_state=self.checkpoint_preserve_rng_state,
+            )
         return fx
 
     def forward(
         self, data: torch.Tensor, rope_coords: torch.Tensor | None = None
     ) -> torch.Tensor:
         coords = self._validate_input(data, rope_coords)
-        phases = self.rotary_embedding(coords)
         fx = self.preprocess(data)
         fx = fx + self.placeholder.to(dtype=fx.dtype)[None, None, :]
-        if self.training:
-            fx = self._forward_with_checkpoint(fx, phases)
+        position_cosine, position_sine = self.rotary_embedding.factors(
+            coords, dtype=fx.dtype
+        )
+        if self.training and self.checkpoint_num_blocks > 0:
+            fx = self._forward_with_checkpoint(
+                fx,
+                position_cosine,
+                position_sine,
+                end_block=self.checkpoint_num_blocks,
+            )
+            if self.checkpoint_num_blocks < len(self.blocks):
+                fx = self._forward_blocks(
+                    fx,
+                    position_cosine,
+                    position_sine,
+                    start=self.checkpoint_num_blocks,
+                )
         else:
-            fx = self._forward_blocks(fx, phases)
+            fx = self._forward_blocks(fx, position_cosine, position_sine)
         return self.output_decoder(self.output_norm(fx))
 
     def stability_values(self) -> dict[str, torch.Tensor]:
@@ -494,4 +557,3 @@ class RETOPlusNeuralOperator(nn.Module):
 
 # Both aliases match the import conventions used elsewhere in this repository.
 Model = RETOPlusNeuralOperator
-LinearAttentionNeuralOperator = RETOPlusNeuralOperator
