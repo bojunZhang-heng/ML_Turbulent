@@ -1,0 +1,46 @@
+# Run from RETO++/ShapeNet:
+#   python main.py --config config_CANO.yml
+
+experiment:
+  exp: ShapeNet_CANO
+  model_name: CANO
+  predicted_feature_name: p_and_v
+  phase: restart_train
+
+model:
+  space_dim: 7
+  out_dim: 4
+  n_layers: 8
+  n_hidden: 256
+  dropout: 0.0
+  act: gelu
+  fun_dim: 0
+  ref: 8
+  H: 85
+  W: 85
+  time_input: false
+  unified_pos: false
+  isregular: false
+
+attention:
+  n_head: 8
+  mlp_ratio: 2
+  key_ratio: 1
+  cluster_num: 64
+  cluster_temperature_init: 1.0
+  layer_scale_init: 0.1
+
+checkpoint:
+  checkpoint_segment_size: 2
+
+training:
+  num_epochs: 200
+  eval_freq: 1
+  learning_rate: 5.0e-4
+  pressure_weight: 0.5
+  batch_size: 1
+  shuffle: true
+
+data:
+  data_path: /Users/zhangbojun/ML_Turbulent/preprocess/mlcfd_data/pkl_test
+  vtk_data_path: /Users/zhangbojun/ML_Turbulent/preprocess/mlcfd_data/raw_test

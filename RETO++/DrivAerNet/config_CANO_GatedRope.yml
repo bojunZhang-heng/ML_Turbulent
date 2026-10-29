@@ -1,0 +1,47 @@
+# Run from RETO++/DrivAerNet:
+#   python main.py --config config_CANO_GatedRope.yml
+
+experiment:
+  exp: DrivAerNet_CANO_GatedRope
+  model_name: CANO_GatedRope
+  predicted_feature_name: pressure
+  phase: restart_train
+
+model:
+  space_dim: 3
+  out_dim: 1
+  n_layers: 8
+  n_hidden: 256
+  dropout: 0.0
+  act: gelu
+  fun_dim: 0
+  ref: 8
+  time_input: false
+  unified_pos: false
+  isregular: false
+
+attention:
+  n_head: 8
+  mlp_ratio: 2
+  key_ratio: 1
+  cluster_num: 64
+  cluster_temperature_init: 1.0
+  layer_scale_init: 0.1
+
+position_encoding:
+  num_position_frequencies: 6
+  initial_rope_gate: 0.05
+
+checkpoint:
+  checkpoint_segment_size: 2
+  checkpoint_num_blocks: 6
+
+training:
+  num_epochs: 200
+  eval_freq: 1
+  learning_rate: 1.0e-3
+  batch_size: 1
+  shuffle: true
+
+data:
+  data_path: /Users/zhangbojun/ML_Turbulent/preprocess/E_S_WW_WM_small/pklFile

@@ -1,50 +1,47 @@
-# PGD-NO training configuration.
-# Run from PGD-NO/driver:
-#   python main.py --config config.yml
-# model_name: SegLinearNO, transolver_seg, transolver_seg_v2, transolver, LinearNO
+# Run from RETO++/DrivAerNet:
+#   python main.py --config config_RopeLinearNO_v3.yml
 
-#exp: DrivAerNet++
-#exp: DrivAerNet++_E_S_WWC_WM
-exp: ShapeNet
-model_name: RopeLinearNO_v3
-predicted_feature_name: pressure
-phase: restart_train
+experiment:
+  exp: DrivAerNet_RopeLinearNO_v3
+  model_name: RopeLinearNO_v3
+  predicted_feature_name: pressure
+  phase: restart_train
 
-space_dim: 7
-patch_size: 20
-shift: 2
+model:
+  space_dim: 3
+  out_dim: 1
+  n_layers: 8
+  n_hidden: 256
+  dropout: 0.0
+  act: gelu
+  fun_dim: 0
+  ref: 8
+  H: 85
+  W: 85
+  time_input: false
+  unified_pos: false
+  isregular: false
 
-num_epochs: 200 
-eval_freq: 1
-learning_rate: 1.0e-3
-scheduler_step: 50
-scheduler_gamma: 0.5
-max_grad_norm: 0.1
-weight_decay: 0.00000
+attention:
+  n_head: 8
+  mlp_ratio: 2
+  key_ratio: 1
+  slice_num: 64
 
-#num_position_frequencies: 3 / 6/ 9
-#initial_relative_gate: 0.01 / 0.05 / 0.10
-# 1022-0936: 6/0.05   效果最好 val 0.070 待test测试
-# 1022-0938: 6/0.01   0.089
-# 1022-0939: 6/0.10   0.082
-#
-# 1022-1054: 3/0.01   0.081
-# 1022-1057: 3/0.05   0.076
-# 1022-1058: 3/0.10   0.073
-#
-# 1023-1105: 9/0.01
-# 1023-1106: 9/0.05
-# 1023-1104: 9/0.10
+position_encoding:
+  num_position_frequencies: 6
+  initial_relative_gate: 0.05
 
-num_position_frequencies: 6
-initial_relative_gate: 0.05
+checkpoint:
+  checkpoint_segment_size: 1
+  checkpoint_relative_terms: true
 
-data_path: /data/zhangbojun/DrivAerNet++_dataset/PressureVTK/E_S_WWC_WMpklFile
-#data_path: /data/zhangbojun/ShapeNet_dataset/vtk/pklFile
-batch_size: 1
-shuffle: true
+training:
+  num_epochs: 200
+  eval_freq: 1
+  learning_rate: 1.0e-3
+  batch_size: 1
+  shuffle: true
 
-# Simulation IDs used by the per-file data loader.
-train_index: [1, 2, 3, 4]
-val_index: [5, 6, 7, 8]
-test_index: [9, 10]
+data:
+  data_path: /Users/zhangbojun/ML_Turbulent/preprocess/E_S_WW_WM_small/pklFile
