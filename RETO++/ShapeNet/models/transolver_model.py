@@ -130,7 +130,7 @@ class Transolver_block(nn.Module):
 
 class Model(nn.Module):
     def __init__(self,
-                 space_dim=3,
+                 space_dim=7,
                  n_layers=8,
                  n_hidden=256,
                  dropout=0,
@@ -138,7 +138,7 @@ class Model(nn.Module):
                  act='gelu',
                  mlp_ratio=2,
                  fun_dim=0,
-                 out_dim=1,
+                 out_dim=4,
                  slice_num=64,
                  ref=8,
                  unified_pos=False
@@ -169,7 +169,6 @@ class Model(nn.Module):
         self.initialize_weights()
         self.placeholder = nn.Parameter((1 / (n_hidden)) * torch.rand(n_hidden, dtype=torch.float))
         self.Cp_decoder = nn.Linear(n_hidden, out_dim)
-        self.integrated_cp_decoder = nn.Linear(1, 1)
 
     def initialize_weights(self):
         self.apply(self._init_weights)
@@ -187,13 +186,27 @@ class Model(nn.Module):
         # my_pos 1 N 3
         batchsize = my_pos.shape[0]
 
-        gridx = torch.tensor(np.linspace(-1.5, 1.5, self.ref), dtype=torch.float)
+        gridx = torch.tensor(
+            np.linspace(-1.5, 1.5, self.ref),
+            dtype=my_pos.dtype,
+            device=my_pos.device,
+        )
         gridx = gridx.reshape(1, self.ref, 1, 1, 1).repeat([batchsize, 1, self.ref, self.ref, 1])
-        gridy = torch.tensor(np.linspace(0, 2, self.ref), dtype=torch.float)
+        gridy = torch.tensor(
+            np.linspace(0, 2, self.ref),
+            dtype=my_pos.dtype,
+            device=my_pos.device,
+        )
         gridy = gridy.reshape(1, 1, self.ref, 1, 1).repeat([batchsize, self.ref, 1, self.ref, 1])
-        gridz = torch.tensor(np.linspace(-4, 4, self.ref), dtype=torch.float)
+        gridz = torch.tensor(
+            np.linspace(-4, 4, self.ref),
+            dtype=my_pos.dtype,
+            device=my_pos.device,
+        )
         gridz = gridz.reshape(1, 1, 1, self.ref, 1).repeat([batchsize, self.ref, self.ref, 1, 1])
-        grid_ref = torch.cat((gridx, gridy, gridz), dim=-1).cuda().reshape(batchsize, self.ref ** 3, 3)  # B 4 4 4 3
+        grid_ref = torch.cat((gridx, gridy, gridz), dim=-1).reshape(
+            batchsize, self.ref ** 3, 3
+        )
 
         pos = torch.sqrt(
             torch.sum((my_pos[:, :, None, :] - grid_ref[:, None, :, :]) ** 2,
@@ -203,21 +216,23 @@ class Model(nn.Module):
 
     def forward(self, x):
         '''
-        x: (B, N, 3) or (B, N, 6)
+        x: (B, N, 7)
 
-        Only the first three XYZ channels are used. Six-dimensional
-        coordinate-plus-normal inputs remain compatible, but normals are
-        intentionally ignored.
+        ShapeNet-Car channels are [x, y, z, sdf, normal_x, normal_y,
+        normal_z]. All configured input channels are encoded.
         '''
         if not torch.is_tensor(x) or x.ndim != 3:
             raise ValueError("Input must be a tensor shaped (batch, points, channels)")
         if x.shape[-1] < self.space_dim:
             raise ValueError(
-                f"Input needs at least {self.space_dim} XYZ channels, got {x.shape[-1]}"
+                f"Input needs at least {self.space_dim} channels, got {x.shape[-1]}"
             )
 
-        coords = x[..., :self.space_dim]
-        model_input = self.get_grid(coords) if self.unified_pos else coords
+        model_input = (
+            self.get_grid(x[..., :3])
+            if self.unified_pos
+            else x[..., :self.space_dim]
+        )
         fx = self.preprocess(model_input)
         placeholder = self.placeholder.to(dtype=fx.dtype)
         fx = fx + placeholder[None, None, :]
@@ -225,7 +240,7 @@ class Model(nn.Module):
         for block in self.blocks:
             fx = block(fx)
         
-        # Make the prediction for surface pressure
+        # Predict [velocity_x, velocity_y, velocity_z, pressure].
         Cp_pred = self.Cp_decoder(fx)
 
         return Cp_pred

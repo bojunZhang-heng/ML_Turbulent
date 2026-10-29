@@ -1,5 +1,6 @@
 from dataloader import create_data_loaders
 from models.transolver_model import Model as Transolver_Model
+from models.CANO import Model as CANO
 from models.LinearAttnNeuralOperator import LinearAttentionNeuralOperator as LinearNO
 from models.RETO_plus import Model as RETO_plus
 
@@ -115,9 +116,9 @@ def main():
     if first_input is None:
         raise KeyError("Sample pickle must contain input or x")
     input_dim = int(np.asarray(first_input).shape[-1])
-    if model_name == "RETO_plus" and input_dim != 7:
+    if model_name in {"RETO_plus", "CANO", "Transolver"} and input_dim != 7:
         raise ValueError(
-            "ShapeNet RETO_plus expects seven input channels "
+            f"ShapeNet {model_name} expects seven input channels "
             "[x, y, z, sdf, normal_x, normal_y, normal_z], "
             f"but the dataset provides {input_dim}."
         )
@@ -162,6 +163,24 @@ def main():
             Time_Input=False,
             mlp_ratio=2,fun_dim=0,out_dim=4,key_ratio=1,
             unified_pos=False,isregular=False)
+    elif model_name == 'CANO':
+        model = CANO(
+            space_dim=input_dim,
+            n_layers=8,
+            n_hidden=256,
+            dropout=0.0,
+            n_head=8,
+            Time_Input=False,
+            act='gelu',
+            mlp_ratio=2,
+            fun_dim=0,
+            out_dim=4,
+            key_ratio=1,
+            unified_pos=False,
+            cluster_num=args.cluster_num,
+            checkpoint_segment_size=args.checkpoint_segment_size,
+            layer_scale_init=args.layer_scale_init,
+        )
     elif model_name == 'RETO_plus':
         model = RETO_plus(
             space_dim=input_dim,

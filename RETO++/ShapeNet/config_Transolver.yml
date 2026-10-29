@@ -5,11 +5,12 @@
 
 exp: ShapeNet
 model_name: Transolver
-predicted_feature_name: pressure
+predicted_feature_name: p_and_v
 phase: restart_train
 num_epochs: 200
 eval_freq: 1
 learning_rate: 1.0e-3
+pressure_weight: 0.5
 scheduler_step: 50
 scheduler_gamma: 0.5
 max_grad_norm: 0.1
