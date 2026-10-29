@@ -27,8 +27,8 @@ __pycache__/
 .vscode
 
 preprocess/data/
-preprocess/run_DrivAerNet.sh
-preprocess/run_ShapeNet.sh
+preprocess/*.sh
+preprocess/*.log
 preprocess/E_S_WW_WM_small
 preprocess/mlcfd_data
 preprocess/DrivAerStar/
