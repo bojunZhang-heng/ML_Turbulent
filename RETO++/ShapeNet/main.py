@@ -1,13 +1,7 @@
 from dataloader import create_data_loaders
 from models.transolver_model import Model as Transolver_Model
-from models.Transolver_seg import Model as Transolver_SEG_Model
-from models.Transolver_seg_v2 import Model as Transolver_SEG_V2_Model
-from models.SegLinearNO import Model as SegLinearNO
-from models.SegLinearNO_v2 import Model as SegLinearNO_v2
 from models.LinearAttnNeuralOperator import LinearAttentionNeuralOperator as LinearNO
-from models.RopeLinearNO import LinearAttentionNeuralOperator as RopeLinearNO
-from models.RopeLinearNO_v2 import LinearAttentionNeuralOperator as RopeLinearNO_v2
-from models.RETO_plus import LinearAttentionNeuralOperator as RETO_plus
+from models.RETO_plus import Model as RETO_plus
 
 
 # from models.mlp import MLP as MLP_Model
@@ -50,6 +44,7 @@ parser.add_argument('--exp', type=str, default=config.get('exp', "ShapeNet"))
 parser.add_argument('--cluster_num', type=int, default=config.get('cluster_num', 64))
 parser.add_argument('--num_position_frequencies', type=int, default=config.get('num_position_frequencies', 6))
 parser.add_argument('--checkpoint_segment_size', type=int, default=config.get('checkpoint_segment_size', 2))
+parser.add_argument('--checkpoint_num_blocks', type=int, default=config.get('checkpoint_num_blocks', None))
 parser.add_argument('--layer_scale_init', type=float, default=config.get('layer_scale_init', 0.1))
 args = parser.parse_args()
 
@@ -158,70 +153,8 @@ def main():
             mlp_ratio=2,        # Increased from 2 to 4
             slice_num=64
         )
-    elif model_name == 'transolver_seg':
-        model = Transolver_SEG_Model(
-            space_dim=input_dim,
-            out_dim=4,
-            n_layers=8,        # Increased from 8 to 12
-            n_hidden=256,       # Increased from 256 to 512
-            dropout=0.0,        # Added dropout for regularization
-            n_head=8,
-            act='gelu',
-            mlp_ratio=2,        # Increased from 2 to 4
-        )  # Changed from 3 to 6 for 6D features
-    elif model_name == 'transolver_seg_v2':
-        model = Transolver_SEG_V2_Model(
-            space_dim=input_dim,
-            out_dim=4,
-            n_layers=8,        # Increased from 8 to 12
-            n_hidden=256,       # Increased from 256 to 512
-            dropout=0.0,        # Added dropout for regularization
-            n_head=8,
-            act='gelu',
-            mlp_ratio=2
-        )
-    elif model_name == 'SegLinearNO':
-        model = SegLinearNO(
-            space_dim=input_dim,
-            out_dim=4,
-            n_layers=8,        # Increased from 8 to 12
-            n_hidden=256,       # Increased from 256 to 512
-            dropout=0.0,        # Added dropout for regularization
-            n_head=8,
-            act='gelu',
-            mlp_ratio=2
-        )
-    elif model_name == 'SegLinearNO_v2':
-        model = SegLinearNO_v2(
-            space_dim=input_dim,
-            out_dim=4,
-            n_layers=8,        # Increased from 8 to 12
-            n_hidden=256,       # Increased from 256 to 512
-            dropout=0.0,        # Added dropout for regularization
-            n_head=8,
-            act='gelu',
-            mlp_ratio=2
-        )
     elif model_name == 'LinearNO':
         model = LinearNO(
-            space_dim=input_dim,
-            n_layers=8,
-            n_hidden=256,
-            n_head=8,
-            Time_Input=False,
-            mlp_ratio=2,fun_dim=0,out_dim=4,key_ratio=1,
-            unified_pos=False,isregular=False)
-    elif model_name == 'RopeLinearNO':
-        model = RopeLinearNO(
-            space_dim=input_dim,
-            n_layers=8,
-            n_hidden=256,
-            n_head=8,
-            Time_Input=False,
-            mlp_ratio=2,fun_dim=0,out_dim=4,key_ratio=1,
-            unified_pos=False,isregular=False)
-    elif model_name == 'RopeLinearNO_v2':
-        model = RopeLinearNO_v2(
             space_dim=input_dim,
             n_layers=8,
             n_hidden=256,
@@ -246,6 +179,7 @@ def main():
             cluster_num=args.cluster_num,
             num_position_frequencies=args.num_position_frequencies,
             checkpoint_segment_size=args.checkpoint_segment_size,
+            checkpoint_num_blocks=args.checkpoint_num_blocks,
             layer_scale_init=args.layer_scale_init,
         )
     else:
