@@ -4,6 +4,7 @@ from torch.utils.data import Dataset, DataLoader
 import numpy as np
 import pickle
 import os
+import random
 from pathlib import Path
 from collections.abc import Sequence
 from scipy.sparse import csr_matrix
@@ -206,16 +207,41 @@ class PerFileVTKDataset(Dataset):
         predicted_feature_name="pressure",
         coordinate_only=False,
     ):
-        if isinstance(data_root, (str, os.PathLike)):
+        if isinstance(data_root, dict):
+            if not data_root:
+                raise TypeError("data_root mapping cannot be empty")
+            self.data_roots = {
+                str(vehicle): Path(root) for vehicle, root in data_root.items()
+            }
+        elif isinstance(data_root, (str, os.PathLike)):
             data_root = [data_root]
-        if not isinstance(data_root, Sequence) or not data_root:
-            raise TypeError("data_root must be a directory or a non-empty sequence of directories")
-        self.data_roots = [Path(root) for root in data_root]
+            self.data_roots = [Path(root) for root in data_root]
+        elif isinstance(data_root, Sequence) and data_root:
+            self.data_roots = [Path(root) for root in data_root]
+        else:
+            raise TypeError(
+                "data_root must be a directory, a non-empty sequence, or a "
+                "vehicle-to-directory mapping"
+            )
         self.indices = indices
         self.coordinate_only = coordinate_only
         self.normalization_scalars = self._load_normalization_scalars()
 
     def _load_normalization_scalars(self):
+        if isinstance(self.data_roots, dict):
+            by_vehicle = {}
+            for vehicle, data_root in self.data_roots.items():
+                scalar_path = data_root / "normalization_scalars.pkl"
+                if not scalar_path.is_file():
+                    raise FileNotFoundError(
+                        f"Missing normalization scalars for {vehicle}: {scalar_path}"
+                    )
+                with scalar_path.open("rb") as handle:
+                    by_vehicle[vehicle] = pickle.load(handle)
+            return {
+                "schema_version": "multi-vehicle-normalization-v1",
+                "by_vehicle": by_vehicle,
+            }
         for data_root in self.data_roots:
             scalar_path = data_root / "normalization_scalars.pkl"
             if scalar_path.exists():
@@ -224,6 +250,20 @@ class PerFileVTKDataset(Dataset):
         return None
 
     def _sample_path(self, sim_id):
+        if isinstance(self.data_roots, dict):
+            if not isinstance(sim_id, tuple) or len(sim_id) != 2:
+                raise TypeError(
+                    "Multi-vehicle sample IDs must be (vehicle_name, sample_id)"
+                )
+            vehicle, sample_id = sim_id
+            if vehicle not in self.data_roots:
+                raise KeyError(f"Unknown vehicle type: {vehicle}")
+            candidate = self.data_roots[vehicle] / f"{sample_id}.pkl"
+            if not candidate.is_file():
+                raise FileNotFoundError(
+                    f"Sample {vehicle}/{sample_id}.pkl not found: {candidate}"
+                )
+            return candidate
         # If your naming is different (e.g. f"sample_{sim_id}.pkl"),
         # we can tweak this in the next step.
         for data_root in self.data_roots:
@@ -247,7 +287,11 @@ class PerFileVTKDataset(Dataset):
         sim_id = self.indices[idx]
         sample = self._load_sample(sim_id)
         coorf = _get_input(sample, coordinate_only=self.coordinate_only)
-        raw_coords = _get_raw_coords(sample, self.normalization_scalars)
+        sample_scalars = self.normalization_scalars
+        if isinstance(sample_scalars, dict) and "by_vehicle" in sample_scalars:
+            vehicle, _ = sim_id
+            sample_scalars = sample_scalars["by_vehicle"][vehicle]
+        raw_coords = _get_raw_coords(sample, sample_scalars)
 
         # Ensure seg_matrix is dense (mirror behavior of VTKDataset)
         seg_matrix = sample.get("seg_matrix")
@@ -259,6 +303,102 @@ class PerFileVTKDataset(Dataset):
         p = _get_pressure(sample)
 
         return coorf, raw_coords, seg_matrix, p, sim_id
+
+
+def discover_multi_vehicle_samples(
+    vehicle_configs,
+    data_root=None,
+    selection_mode="random",
+    selection_seed=42,
+    train_ratio=0.6,
+    val_ratio=0.3,
+    test_ratio=0.1,
+):
+    """Resolve enabled vehicle directories, sample them, and split per vehicle.
+
+    Returns a vehicle-to-directory mapping plus train/validation/test lists of
+    composite IDs ``(vehicle_name, numeric_sample_id)``. Numeric PKL names may
+    therefore restart from 1 in every vehicle directory without collisions.
+    """
+    if not isinstance(vehicle_configs, dict) or not vehicle_configs:
+        raise ValueError("data.vehicle_datasets must be a non-empty mapping")
+    if selection_mode not in {"first", "random"}:
+        raise ValueError("selection_mode must be 'first' or 'random'")
+    ratios = (float(train_ratio), float(val_ratio), float(test_ratio))
+    if any(value < 0 for value in ratios) or not np.isclose(sum(ratios), 1.0):
+        raise ValueError(f"train/val/test ratios must be non-negative and sum to 1, got {ratios}")
+
+    base = Path(data_root).expanduser() if data_root else None
+    roots = {}
+    splits = {"train": [], "val": [], "test": []}
+    summary = {}
+
+    for vehicle, raw_options in vehicle_configs.items():
+        options = raw_options or {}
+        if not isinstance(options, dict):
+            raise TypeError(f"Configuration for {vehicle} must be a mapping")
+        if not options.get("enabled", True):
+            continue
+        configured_path = options.get("path", vehicle)
+        path = Path(configured_path).expanduser()
+        if not path.is_absolute():
+            if base is None:
+                raise ValueError(
+                    f"Relative path for {vehicle} requires data.dataset_root"
+                )
+            path = base / path
+        path = path.resolve()
+        if not path.is_dir():
+            raise NotADirectoryError(f"Vehicle dataset not found for {vehicle}: {path}")
+        available = sorted(
+            int(file.stem)
+            for file in path.glob("*.pkl")
+            if file.stem.isdigit()
+        )
+        if not available:
+            raise FileNotFoundError(f"No numbered PKL samples found for {vehicle}: {path}")
+        requested = options.get("count", len(available))
+        if requested is None or requested == "all":
+            requested = len(available)
+        requested = int(requested)
+        if requested < 1:
+            raise ValueError(f"Sample count for enabled vehicle {vehicle} must be positive")
+        if requested > len(available):
+            raise ValueError(
+                f"{vehicle} requests {requested} samples, but only {len(available)} are available"
+            )
+        selected = available[:]
+        if selection_mode == "random":
+            random.Random(f"{selection_seed}:{vehicle}").shuffle(selected)
+        selected = selected[:requested]
+
+        train_count = int(requested * ratios[0])
+        val_count = int(requested * ratios[1])
+        test_count = requested - train_count - val_count
+        vehicle_train = selected[:train_count]
+        vehicle_val = selected[train_count:train_count + val_count]
+        vehicle_test = selected[train_count + val_count:]
+        splits["train"].extend((vehicle, value) for value in vehicle_train)
+        splits["val"].extend((vehicle, value) for value in vehicle_val)
+        splits["test"].extend((vehicle, value) for value in vehicle_test)
+        roots[vehicle] = path
+        summary[vehicle] = {
+            "available": len(available),
+            "selected": requested,
+            "train": train_count,
+            "val": val_count,
+            "test": test_count,
+            "path": str(path),
+        }
+
+    if not roots:
+        raise ValueError("No vehicle dataset is enabled")
+    if any(not splits[name] for name in ("train", "val", "test")):
+        raise ValueError(
+            "The combined train/validation/test splits must all be non-empty; "
+            "increase the selected sample counts"
+        )
+    return roots, splits["train"], splits["val"], splits["test"], summary
 
 
 
@@ -297,12 +437,21 @@ def create_data_loaders(
         tuple: (train_loader, val_loader, test_loader, normalization_scalars)
     """
 
-    is_dict_mode = isinstance(data_source, dict)
-    is_path_mode = isinstance(data_source, (str, os.PathLike, Sequence)) and not isinstance(data_source, dict)
+    is_vehicle_root_mode = (
+        isinstance(data_source, dict)
+        and bool(data_source)
+        and all(isinstance(value, (str, os.PathLike, Path)) for value in data_source.values())
+    )
+    is_dict_mode = isinstance(data_source, dict) and not is_vehicle_root_mode
+    is_path_mode = is_vehicle_root_mode or (
+        isinstance(data_source, (str, os.PathLike, Sequence))
+        and not isinstance(data_source, dict)
+    )
 
     if not (is_dict_mode or is_path_mode):
         raise TypeError(
-            f"data_source must be either a dict or a str (path), got {type(data_source)}"
+            "data_source must be an in-memory sample dict, a path, a path "
+            f"sequence, or a vehicle-to-path mapping; got {type(data_source)}"
         )
 
     # Use provided indices

@@ -38,6 +38,34 @@ def serialization_coordinates(model_name, normalized_coords, raw_coords):
         return raw_coords
     return normalized_coords
 
+
+def batch_relative_error(outputs, targets, sim_ids, normalization_scalars):
+    """Compute physical-scale error with the correct scalars for each vehicle."""
+    outputs_np = outputs.detach().float().cpu().numpy()
+    targets_np = targets.detach().cpu().numpy()
+    by_vehicle = (
+        normalization_scalars.get("by_vehicle")
+        if isinstance(normalization_scalars, dict)
+        else None
+    )
+    if by_vehicle is None:
+        return compute_relative_error(outputs_np, targets_np, normalization_scalars)
+    errors = []
+    for batch_index, composite_id in enumerate(sim_ids):
+        if not isinstance(composite_id, tuple) or len(composite_id) != 2:
+            raise TypeError(
+                "Multi-vehicle metrics require (vehicle_name, sample_id) IDs"
+            )
+        vehicle, _ = composite_id
+        errors.append(
+            compute_relative_error(
+                outputs_np[batch_index:batch_index + 1],
+                targets_np[batch_index:batch_index + 1],
+                by_vehicle[vehicle],
+            )
+        )
+    return float(np.mean(errors))
+
 def forward_model(model_name, model, coorf, raw_coords, seg_matrix, order, inverse):
     if model_name == "Transolver":
         return model(coorf)
@@ -341,9 +369,9 @@ def train(model_name, model, train_loader, val_loader,
                     val_loss += loss.detach().cpu().item()
 
                     # Compute relative error
-                    relative_error = compute_relative_error(
-                        outputs.detach().float().cpu().numpy(),
-                        target.detach().cpu().numpy(), normalization_scalars)
+                    relative_error = batch_relative_error(
+                        outputs, target, sim_ids, normalization_scalars
+                    )
                     val_relative_error += relative_error
                     val_progress.set_postfix(loss=f"{loss.item():.4e}")
 
@@ -442,9 +470,9 @@ def test(model_name, model, test_loader, normalization_scalars, model_path="mode
             test_loss += loss.item()
 
             # Compute field-level relative error
-            relative_error = compute_relative_error(
-                outputs.detach().float().cpu().numpy(),
-                target.detach().cpu().numpy(), normalization_scalars)
+            relative_error = batch_relative_error(
+                outputs, target, sim_ids, normalization_scalars
+            )
             test_relative_error += relative_error
             test_progress.set_postfix(loss=f"{loss.item():.4e}")
 

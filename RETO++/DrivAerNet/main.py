@@ -1,4 +1,4 @@
-from dataloader import create_data_loaders
+from dataloader import create_data_loaders, discover_multi_vehicle_samples
 from models.transolver_model import Model as Transolver_Model
 
 from models.LinearAttnNeuralOperator import LinearAttentionNeuralOperator as LinearNO
@@ -71,6 +71,12 @@ parser.add_argument('--num_epochs', type=int, default=config.get('num_epochs', 5
 parser.add_argument('--eval_freq', type=int, default=config.get('eval_freq', 10))
 parser.add_argument('--learning_rate', type=float, default=config.get('learning_rate', 2e-5))
 parser.add_argument('--data_path', type=str, default=config.get('data_path', ""))
+parser.add_argument('--dataset_root', type=str, default=config.get('dataset_root', ""))
+parser.add_argument('--selection_mode', type=str, choices=['first', 'random'], default=config.get('selection_mode', 'random'))
+parser.add_argument('--selection_seed', type=int, default=config.get('selection_seed', 42))
+parser.add_argument('--train_ratio', type=float, default=config.get('train_ratio', 0.6))
+parser.add_argument('--val_ratio', type=float, default=config.get('val_ratio', 0.3))
+parser.add_argument('--test_ratio', type=float, default=config.get('test_ratio', 0.1))
 parser.add_argument('--batch_size', type=int, default=config.get('batch_size', 1))
 parser.add_argument('--shuffle', action=argparse.BooleanOptionalAction, default=config.get('shuffle', True))
 parser.add_argument('--space_dim', type=int, default=config.get('space_dim', 3))
@@ -127,36 +133,60 @@ def main():
     # Create data loaders
     print("\n🔄 Creating data loaders...")
 
-    DATA_PATH = args.data_path
-    if not DATA_PATH.endswith(os.sep):
-        DATA_PATH += os.sep
-
-    # 动态扫描 DATA_PATH 下的样本文件，生成索引列表
-    # 假设样本文件为 .pkl 格式，文件名（不含扩展名）即为索引
-    sample_files = [f for f in os.listdir(DATA_PATH) if f.endswith('.pkl')]
-    # 提取索引，假设文件名是纯数字
-    ALL_INDEX = sorted([int(os.path.splitext(f)[0]) for f in sample_files
-                        if os.path.splitext(f)[0].isdigit()])
-
-    num_samples = len(ALL_INDEX)
-    print(f"Total samples found in {DATA_PATH}: {num_samples}")
-
-    TRAIN_index, VAL_index, TEST_index = [], [], []
-
-    for i, idx in enumerate(ALL_INDEX):
-        r = i % 10
-        if r < 6:        # 0–5 → 6/10 → train
-            TRAIN_index.append(idx)
-        elif r < 9:      # 6–8 → 3/10 → val
-            VAL_index.append(idx)
-        else:            # 9 → 1/10 → test
-            TEST_index.append(idx)
-
-    #Debug
-    #TRAIN_index = config.get('train_index', [1, 2, 3, 4])
-    #VAL_index = config.get('val_index', [5, 6, 7, 8])
-    #TEST_index = config.get('test_index', [9, 10])
-    print(f"Train: {len(TRAIN_index)}, Val: {len(VAL_index)}, Test: {len(TEST_index)}")
+    data_config = grouped_config.get("data", {})
+    vehicle_configs = data_config.get("vehicle_datasets")
+    if vehicle_configs:
+        DATA_SOURCE, TRAIN_index, VAL_index, TEST_index, vehicle_summary = (
+            discover_multi_vehicle_samples(
+                vehicle_configs=vehicle_configs,
+                data_root=args.dataset_root or None,
+                selection_mode=args.selection_mode,
+                selection_seed=args.selection_seed,
+                train_ratio=args.train_ratio,
+                val_ratio=args.val_ratio,
+                test_ratio=args.test_ratio,
+            )
+        )
+        print("\nVehicle sampling summary:")
+        for vehicle, values in vehicle_summary.items():
+            print(
+                f"  {vehicle}: available={values['available']}, "
+                f"selected={values['selected']}, train={values['train']}, "
+                f"val={values['val']}, test={values['test']}"
+            )
+        print(
+            f"Combined: train={len(TRAIN_index)}, val={len(VAL_index)}, "
+            f"test={len(TEST_index)}"
+        )
+    else:
+        DATA_PATH = args.data_path
+        if not DATA_PATH:
+            raise ValueError(
+                "Configure data.vehicle_datasets or provide data.data_path"
+            )
+        if not DATA_PATH.endswith(os.sep):
+            DATA_PATH += os.sep
+        sample_files = [f for f in os.listdir(DATA_PATH) if f.endswith('.pkl')]
+        ALL_INDEX = sorted(
+            int(os.path.splitext(file)[0])
+            for file in sample_files
+            if os.path.splitext(file)[0].isdigit()
+        )
+        print(f"Total samples found in {DATA_PATH}: {len(ALL_INDEX)}")
+        TRAIN_index, VAL_index, TEST_index = [], [], []
+        for position, sample_id in enumerate(ALL_INDEX):
+            ratio_position = position % 10
+            if ratio_position < 6:
+                TRAIN_index.append(sample_id)
+            elif ratio_position < 9:
+                VAL_index.append(sample_id)
+            else:
+                TEST_index.append(sample_id)
+        DATA_SOURCE = DATA_PATH
+        print(
+            f"Train: {len(TRAIN_index)}, Val: {len(VAL_index)}, "
+            f"Test: {len(TEST_index)}"
+        )
 
     coordinate_only_models = {
         'Transolver',
@@ -170,7 +200,7 @@ def main():
         'LinearNO_se',
     }
     train_loader, val_loader, test_loader, normalization_scalars = create_data_loaders(
-        DATA_PATH,
+        DATA_SOURCE,
         batch_size=args.batch_size,
         train_index=TRAIN_index,
         val_index=VAL_index,
@@ -181,7 +211,7 @@ def main():
     )
     if normalization_scalars is None:
         raise FileNotFoundError(
-            f"normalization_scalars.pkl was not found in {DATA_PATH}. "
+            "normalization_scalars.pkl was not found for the selected data. "
             "Run preprocess/process_data.py before training."
         )
 
