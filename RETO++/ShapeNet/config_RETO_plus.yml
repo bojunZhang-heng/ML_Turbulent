@@ -38,11 +38,11 @@ checkpoint:
 training:
   num_epochs: 200
   eval_freq: 1
-  learning_rate: 5.0e-4
+  learning_rate: 1.0e-3
   pressure_weight: 0.5
   batch_size: 1
   shuffle: true
 
 data:
-  data_path: /Users/zhangbojun/ML_Turbulent/preprocess/mlcfd_data/pkl_test
-  vtk_data_path: /Users/zhangbojun/ML_Turbulent/preprocess/mlcfd_data/raw_test
+  data_path: /data/zhangbojun/mlcfd_data/pkl_data
+  vtk_data_path: /data/zhangbojun/mlcfd_data/raw_data
