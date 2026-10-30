@@ -2,11 +2,8 @@ from dataloader import create_data_loaders, discover_multi_vehicle_samples
 from models.transolver_model import Model as Transolver_Model
 
 from models.LinearAttnNeuralOperator import LinearAttentionNeuralOperator as LinearNO
-from models.RopeLinearNO_v3 import LinearAttentionNeuralOperator as RopeLinearNO_v3
 from models.CANO import LinearAttentionNeuralOperator as CANO
 from models.RETO_plus import Model as RETO_plus
-from models.CANO_GatedRope import LinearAttentionNeuralOperator as CANO_GatedRope
-from models.LinearNO_se import LinearAttentionNeuralOperator as LinearNO_se
 from models.SATO import Model as SATO
 from datetime import datetime
 
@@ -191,13 +188,8 @@ def main():
     coordinate_only_models = {
         'Transolver',
         'LinearNO',
-        'RopeLinearNO',
-        'RopeLinearNO_v2',
-        'RopeLinearNO_v3',
         'CANO',
         'RETO_plus',
-        'CANO_GatedRope',
-        'LinearNO_se',
     }
     train_loader, val_loader, test_loader, normalization_scalars = create_data_loaders(
         DATA_SOURCE,
@@ -251,24 +243,6 @@ def main():
             W=args.W,
             isregular=args.isregular,
         )
-    elif model_name == 'RopeLinearNO_v3':
-        model = RopeLinearNO_v3(
-            space_dim=args.space_dim,
-            n_layers=args.n_layers,
-            n_hidden=args.n_hidden,
-            dropout=args.dropout,
-            n_head=args.n_head,
-            Time_Input=args.time_input,
-            act=args.act,
-            mlp_ratio=args.mlp_ratio, fun_dim=args.fun_dim,
-            out_dim=args.out_dim, key_ratio=args.key_ratio,
-            ref=args.ref, unified_pos=args.unified_pos,
-            H=args.H, W=args.W, isregular=args.isregular,
-            num_position_frequencies=args.num_position_frequencies,
-            initial_relative_gate=args.initial_relative_gate,
-            checkpoint_segment_size=args.checkpoint_segment_size,
-            checkpoint_relative_terms=args.checkpoint_relative_terms,
-        )
     elif model_name == 'CANO':
         model = CANO(
             space_dim=args.space_dim,
@@ -306,43 +280,6 @@ def main():
             checkpoint_num_blocks=args.checkpoint_num_blocks,
             layer_scale_init=args.layer_scale_init,
             cluster_temperature_init=args.cluster_temperature_init,
-        )
-    elif model_name == 'CANO_GatedRope':
-        model = CANO_GatedRope(
-            space_dim=args.space_dim,
-            n_layers=args.n_layers,
-            n_hidden=args.n_hidden,
-            dropout=args.dropout,
-            n_head=args.n_head,
-            Time_Input=args.time_input,
-            act=args.act,
-            mlp_ratio=args.mlp_ratio, fun_dim=args.fun_dim,
-            out_dim=args.out_dim, key_ratio=args.key_ratio,
-            ref=args.ref, unified_pos=args.unified_pos,
-            H=args.H, W=args.W, isregular=args.isregular,
-            cluster_num=args.cluster_num,
-            num_position_frequencies=args.num_position_frequencies,
-            initial_rope_gate=args.initial_rope_gate,
-            cluster_temperature_init=args.cluster_temperature_init,
-            checkpoint_segment_size=args.checkpoint_segment_size,
-            checkpoint_num_blocks=args.checkpoint_num_blocks,
-            layer_scale_init=args.layer_scale_init,
-        )
-    elif model_name == 'LinearNO_se':
-        model = LinearNO_se(
-            space_dim=args.space_dim,
-            n_layers=args.n_layers,
-            n_hidden=args.n_hidden,
-            dropout=args.dropout,
-            n_head=args.n_head,
-            Time_Input=args.time_input,
-            act=args.act,
-            mlp_ratio=args.mlp_ratio, fun_dim=args.fun_dim,
-            out_dim=args.out_dim, key_ratio=args.key_ratio,
-            ref=args.ref, unified_pos=args.unified_pos,
-            H=args.H, W=args.W, isregular=args.isregular,
-            patch_size=args.patch_size,
-            shift=args.shift,
         )
     elif model_name == 'SATO':
         model = SATO(
