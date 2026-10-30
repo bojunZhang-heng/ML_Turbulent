@@ -1,0 +1,84 @@
+# RETO++ 在 DrivAerML 上的训练说明
+
+## 数据
+
+默认数据目录：
+
+```text
+/Users/zhangbojun/ML_Turbulent/preprocess/drivaerML_N100_000
+```
+
+PKL 已由预处理阶段完成归一化，训练代码不会再次归一化：
+
+- `x_surface`、`x_volume`：全数据集 min-max；
+- `y_spressure`、`y_wss`、`y_velocity`、`volume_cell_totalpcoeff`：全数据集逐分量 mean-std；
+- 验证和测试：使用 `normalization_scalars.pkl` 反归一化后计算物理尺度相对 L2。
+
+可选任务：
+
+| `predicted_feature_name` | 输入 | 输出 | 输出维数 |
+|---|---|---|---:|
+| `surface_pressure` | `x_surface` | `y_spressure` | 1 |
+| `surface_wss` | `x_surface` | `y_wss` | 3 |
+| `volume_velocity` | `x_volume` | `y_velocity` | 3 |
+| `volume_totalpcoeff` | `x_volume` | `volume_cell_totalpcoeff` | 1 |
+
+`main.py` 会自动根据任务校正 `out_dim`。缺少所选输入或输出字段的部分样本会被自动排除；当前表面任务可用 484 个样本，体场任务可用 465 个样本。
+
+## 已适配模型
+
+```text
+Transolver
+LinearNO
+RopeLinearNO
+RopeLinearNO_v2
+RopeLinearNO_v3
+CANO
+RETO_plus
+CANO_GatedRope
+LinearNO_se
+SATO
+```
+
+每个模型都有对应的 `config_<model>.yml`。所有配置默认训练表面压强，并使用相同随机种子与 6:3:1 划分，便于公平对比。
+
+## macOS M1 启动示例
+
+进入训练目录：
+
+```bash
+cd /Users/zhangbojun/ML_Turbulent/RETO++/DrivAerML
+```
+
+训练表面压强：
+
+```bash
+/opt/anaconda3/envs/pgd-no/bin/python main.py --config config_RETO_plus.yml
+```
+
+用同一模型训练体速度：
+
+```bash
+/opt/anaconda3/envs/pgd-no/bin/python main.py \
+  --config config_RETO_plus.yml \
+  --predicted_feature_name volume_velocity \
+  --exp DrivAerML_RETO_plus_velocity
+```
+
+训练壁面剪切应力：
+
+```bash
+/opt/anaconda3/envs/pgd-no/bin/python main.py \
+  --config config_Transolver.yml \
+  --predicted_feature_name surface_wss \
+  --exp DrivAerML_Transolver_wss
+```
+
+远端服务器只需将 YAML 中的 `data.data_path` 改成远端 PKL 目录。对于 10 万点样本建议保持 `batch_size: 1`；不同模型对显存需求不同，优先用 AMP 和已有 checkpoint 参数。
+
+## 指标
+
+- 训练损失：归一化空间中的逐点 MSE；
+- 验证/测试主指标：反归一化后的整体相对 L2；
+- 三分量速度和 WSS：额外打印 x、y、z 分量各自的相对 L2；
+- 最优权重：按验证集物理尺度相对 L2 保存。
