@@ -33,4 +33,59 @@ training:
   shuffle: true
 
 data:
-  data_path: /Users/zhangbojun/ML_Turbulent/preprocess/E_S_WW_WM_small/pklFile
+  # Parent directory containing all vehicle-specific PKL directories.
+  dataset_root: /data/zhangbojun/DrivAerNet_dataset/PressureVTK
+
+  # "random" selects a deterministic random subset; "first" selects the
+  # lowest numeric PKL IDs. Change the seed to obtain another random subset.
+  selection_mode: random
+  selection_seed: 42
+
+  # Split independently inside every enabled vehicle type.
+  train_ratio: 0.6
+  val_ratio: 0.3
+  test_ratio: 0.1
+
+  # Each directory may contain 1.pkl, 2.pkl, ... independently. Composite
+  # (vehicle, ID) keys prevent collisions between equal numeric filenames.
+  vehicle_datasets:
+    E_S_WWC_WM:
+      #path: E_S_WWC_WMpklFile_10k
+      path: E_S_WWC_WMpklFile
+      count: 100
+      enabled: true
+    E_S_WW_WM:
+      #path: E_S_WW_WMpklFile_10k
+      path: E_S_WW_WMpklFile
+      count: 100
+      enabled: true
+    F_S_WWC_WM:
+      #path: F_S_WWC_WMpklFile_10k
+      path: F_S_WWC_WMpklFile
+      count: 100
+      enabled: true
+    F_S_WWS_WM:
+      #path: F_S_WWS_WMpklFile_10k
+      path: F_S_WWS_WMpklFile
+      count: 100
+      enabled: true
+    N_S_WWS_WM:
+      #path: N_S_WWS_WMpklFile_10k
+      path: N_S_WWS_WMpklFile
+      count: 100
+      enabled: true
+    N_S_WWC_WM:
+      #path: N_S_WWC_WMpklFile_10k
+      path: N_S_WWC_WMpklFile
+      count: 100
+      enabled: true
+    N_S_WW_WM:
+      #path: N_S_WW_WMpklFile_10k
+      path: N_S_WW_WMpklFile
+      count: 100
+      enabled: true
+    F_D_WM_WW:
+      #path: F_D_WM_WWpklFile_10k
+      path: F_D_WM_WWpklFile
+      count: 100
+      enabled: true

@@ -29,6 +29,7 @@ __pycache__/
 preprocess/data/
 preprocess/*.sh
 preprocess/*.log
+preprocess/log.*
 preprocess/E_S_WW_WM_small
 preprocess/mlcfd_data
 preprocess/DrivAerStar/
