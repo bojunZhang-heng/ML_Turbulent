@@ -1,0 +1,669 @@
+import torch
+import torch.nn as nn
+from torch.utils.data import Dataset, DataLoader
+import numpy as np
+import pickle
+import os
+import random
+from pathlib import Path
+from collections.abc import Sequence
+from scipy.sparse import csr_matrix
+
+
+# DrivAerStar stores normalized coordinates and targets directly in each PKL.
+# A task selects a geometrically compatible input/target pair.
+TASK_SPECS = {
+    "surface_pressure": ("x_surface", "y_spressure"),
+    "pressure": ("x_surface", "y_spressure"),
+    "y_spressure": ("x_surface", "y_spressure"),
+    "surface_wss": ("x_surface", "y_wss"),
+    "wss": ("x_surface", "y_wss"),
+    "y_wss": ("x_surface", "y_wss"),
+    "volume_velocity": ("x_volume", "y_velocity"),
+    "velocity": ("x_volume", "y_velocity"),
+    "y_velocity": ("x_volume", "y_velocity"),
+}
+
+
+def resolve_task(predicted_feature_name):
+    task = str(predicted_feature_name).strip().lower()
+    if task not in TASK_SPECS:
+        choices = ", ".join(sorted(TASK_SPECS))
+        raise ValueError(f"Unknown DrivAerStar task {predicted_feature_name!r}; choose one of: {choices}")
+    input_key, target_key = TASK_SPECS[task]
+    return task, input_key, target_key
+
+
+def discover_drivaerstar_samples(data_root, predicted_feature_name):
+    """Return numbered samples that contain both fields required by a task."""
+    root = Path(data_root).expanduser().resolve()
+    if not root.is_dir():
+        raise NotADirectoryError(f"DrivAerStar data directory not found: {root}")
+    _, input_key, target_key = resolve_task(predicted_feature_name)
+    numbered_paths = {
+        int(path.stem): path for path in root.glob("*.pkl") if path.stem.isdigit()
+    }
+
+    # The preprocessing manifest contains every complete emitted case. Reading
+    # it avoids unpickling hundreds of multi-GB DrivAerStar samples merely to
+    # inspect their dictionary keys at every launch.
+    scalar_path = root / "normalization_scalars.pkl"
+    if scalar_path.is_file():
+        with scalar_path.open("rb") as handle:
+            scalars = pickle.load(handle)
+        manifest = scalars.get("samples") if isinstance(scalars, dict) else None
+        required_stats_exist = (
+            f"{target_key}_mean" in scalars and f"{target_key}_std" in scalars
+        )
+        if manifest and required_stats_exist:
+            manifest_ids = {
+                int(item["sample_id"])
+                for item in manifest
+                if isinstance(item, dict) and "sample_id" in item
+            }
+            valid = sorted(manifest_ids & numbered_paths.keys())
+            skipped = sorted(numbered_paths.keys() - manifest_ids)
+            if valid:
+                return valid, skipped
+
+    valid, skipped = [], []
+    for path in (numbered_paths[key] for key in sorted(numbered_paths)):
+        try:
+            with path.open("rb") as handle:
+                sample = pickle.load(handle)
+            if input_key in sample and target_key in sample:
+                valid.append(int(path.stem))
+            else:
+                skipped.append(int(path.stem))
+        except (OSError, pickle.UnpicklingError, EOFError, AttributeError, TypeError):
+            skipped.append(int(path.stem))
+    if not valid:
+        raise FileNotFoundError(
+            f"No PKL contains both {input_key!r} and {target_key!r} in {root}"
+        )
+    return valid, skipped
+
+
+def custom_collate_fn(batch):
+    """
+    Custom collate function for batch processing.
+    Expects 5-tuples from `PerFileVTKDataset`:
+        (coorf, raw_coords, seg_matrix, p, sim_id)
+    """
+    first = batch[0]
+    n_fields = len(first)
+
+    if n_fields != 5:
+        raise ValueError(
+            f"Unexpected number of fields in batch elements: {n_fields}. "
+            "Expected 5-tuple: (coorf, raw_coords, seg_matrix, p, sim_id)."
+        )
+
+    coorf_list, raw_coords_list, seg_matrix_list, p_list, sim_id = zip(*batch)
+
+    def _to_tensor(x):
+        return x if torch.is_tensor(x) else torch.as_tensor(x, dtype=torch.float32)
+
+    shapes = [
+        (tuple(x.shape), tuple(raw.shape), tuple(m.shape), tuple(y.shape))
+        for x, raw, m, y, _ in batch
+    ]
+    if len(set(shapes)) != 1:
+        raise ValueError(
+            "Samples with different mesh shapes cannot share a batch. "
+            f"Use batch_size=1 or implement padding; received shapes={shapes}."
+        )
+
+    coorf_batch = torch.stack([_to_tensor(x) for x in coorf_list], dim=0)
+    raw_coords_batch = torch.stack([_to_tensor(x) for x in raw_coords_list], dim=0)
+    seg_matrix_batch = torch.stack([_to_tensor(x) for x in seg_matrix_list], dim=0)
+    p_batch = torch.stack([_to_tensor(x) for x in p_list], dim=0)
+    sim_id_batch = list(sim_id)
+
+    return coorf_batch, raw_coords_batch, seg_matrix_batch, p_batch, sim_id_batch
+
+
+class _NumpyCoreAliasUnpickler(pickle.Unpickler):
+    """
+    Unpickler that remaps modules from environments that saved pickles with
+    old/private NumPy package paths (e.g., 'numpy._core') to current paths
+    (e.g., 'numpy.core'). This helps load pickles across NumPy versions.
+    """
+
+    MODULE_ALIASES = {
+        "numpy._core": "numpy.core",
+        # Add other common aliases here if encountered in the future
+        # "numpy._multiarray_umath": "numpy.core._multiarray_umath",
+    }
+
+    def find_class(self, module, name):
+        remapped_module = self.MODULE_ALIASES.get(module, module)
+        return super().find_class(remapped_module, name)
+
+
+class VTKDataset(Dataset):
+    """
+    In-memory dataset exposing only input, geometry partition and pressure.
+    """
+
+    def __init__(
+        self,
+        data_dict,
+        indices,
+        predicted_feature_name="pressure",
+        coordinate_only=False,
+    ):
+        self.data = []
+        self.indices = indices
+        self.sim_ids = []  # Track simulation IDs
+
+        # Extract data for specified indices
+        for idx in indices:
+            if idx in data_dict and idx != "normalization_scalars":
+                sample = data_dict[idx]
+                model_input = _get_input(
+                    sample, predicted_feature_name, coordinate_only=coordinate_only
+                )
+
+                if "seg_matrix" in sample:
+                    # Check if seg_matrix is already a sparse matrix
+                    if isinstance(data_dict[idx]["seg_matrix"], csr_matrix):
+                        # Convert sparse matrix to dense tensor
+                        seg_matrix = torch.as_tensor(sample["seg_matrix"].toarray(), dtype=torch.float32)
+                    else:
+                        # Convert dense matrix to tensor
+                        seg_matrix = torch.as_tensor(sample["seg_matrix"], dtype=torch.float32)
+                else:
+                    # Create empty tensor if no seg_matrix
+                    seg_matrix = torch.zeros((1, model_input.shape[0]), dtype=torch.float32)
+
+                raw_coords = _get_raw_coords(
+                    sample, data_dict.get("normalization_scalars"), predicted_feature_name
+                )
+                target = _get_target(sample, predicted_feature_name)
+                self.data.append((model_input, raw_coords, seg_matrix, target))
+                self.sim_ids.append(idx)  # Store the simulation ID
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, idx):
+        model_input, raw_coords, seg_matrix, target = self.data[idx]
+        sim_id = self.sim_ids[idx]
+
+        return model_input, raw_coords, seg_matrix, target, sim_id
+
+
+def _get_input(sample, predicted_feature_name="surface_pressure", coordinate_only=False):
+    """Return the normalized XYZ belonging to the selected DrivAerML field."""
+    _, input_key, _ = resolve_task(predicted_feature_name)
+    if input_key in sample:
+        features = np.asarray(sample[input_key], dtype=np.float32)
+        if features.ndim != 2 or features.shape[1] != 3:
+            raise ValueError(f"Expected {input_key} shape (N, 3), got {features.shape}")
+        return torch.as_tensor(features, dtype=torch.float32)
+
+    # Compatibility with the earlier DrivAerNet PKL schema.
+    if coordinate_only:
+        if "coor" in sample:
+            features = np.asarray(sample["coor"], dtype=np.float32)
+        elif "features_6d" in sample:
+            features = np.asarray(sample["features_6d"], dtype=np.float32)[..., :3]
+        else:
+            raise KeyError("Sample must contain coor or features_6d")
+        if features.ndim != 2 or features.shape[1] != 3:
+            raise ValueError(f"Expected coordinate input shape (N, 3), got {features.shape}")
+        return torch.as_tensor(features, dtype=torch.float32)
+
+    if "features_6d" in sample:
+        features = np.asarray(sample["features_6d"], dtype=np.float32)
+    elif "coor" in sample and "normals" in sample:
+        features = np.concatenate(
+            [np.asarray(sample["coor"]), np.asarray(sample["normals"])], axis=1
+        ).astype(np.float32, copy=False)
+    else:
+        raise KeyError("Sample must contain features_6d or both coor and normals")
+    if features.ndim != 2 or features.shape[1] != 6:
+        raise ValueError(f"Expected input shape (N, 6), got {features.shape}")
+    return torch.as_tensor(features, dtype=torch.float32)
+
+
+def _get_target(sample, predicted_feature_name="surface_pressure"):
+    """Return an already standardized physical field without normalizing again."""
+    _, _, target_key = resolve_task(predicted_feature_name)
+    if target_key not in sample and target_key == "y_spressure" and "pressure" in sample:
+        target_key = "pressure"
+    if target_key not in sample:
+        raise KeyError(f"Sample must contain target field {target_key!r}")
+    target = np.asarray(sample[target_key], dtype=np.float32)
+    if target.ndim == 1:
+        target = target[:, None]
+    if target.ndim != 2:
+        raise ValueError(f"Expected {target_key} shape (N, C), got {target.shape}")
+    return torch.as_tensor(target, dtype=torch.float32)
+
+
+def _get_raw_coords(sample, normalization_scalars=None, predicted_feature_name="surface_pressure"):
+    """Return unnormalized XYZ coordinates for relative-position encoding."""
+    _, input_key, _ = resolve_task(predicted_feature_name)
+    if input_key in sample:
+        coords = np.asarray(sample[input_key], dtype=np.float32)
+        if normalization_scalars is None:
+            raw_coords = coords
+        else:
+            coords_min = np.asarray(normalization_scalars["coords_min"], dtype=np.float32)
+            coords_range = np.asarray(normalization_scalars["coords_range"], dtype=np.float32)
+            raw_coords = coords * coords_range + coords_min
+    elif "coor_raw" in sample:
+        raw_coords = np.asarray(sample["coor_raw"], dtype=np.float32)
+    elif "coor" in sample and normalization_scalars is not None:
+        coords = np.asarray(sample["coor"], dtype=np.float32)
+        normalization = sample.get("normalization", {})
+        coordinates_are_normalized = normalization.get("coor") == "min_max"
+        if not normalization:
+            coordinates_are_normalized = bool(
+                np.all(coords >= -1e-5) and np.all(coords <= 1.0 + 1e-5)
+            )
+        if coordinates_are_normalized:
+            coords_min = np.asarray(
+                normalization_scalars["coords_min"], dtype=np.float32
+            )
+            coords_range = np.asarray(
+                normalization_scalars["coords_range"], dtype=np.float32
+            )
+            raw_coords = coords * coords_range + coords_min
+        else:
+            raw_coords = coords
+    elif "coor" in sample:
+        raw_coords = np.asarray(sample["coor"], dtype=np.float32)
+    else:
+        raise KeyError(
+            "Sample must contain coor_raw or coor for relative-position encoding."
+        )
+    if raw_coords.ndim != 2 or raw_coords.shape[1] != 3:
+        raise ValueError(f"Expected raw coordinate shape (N, 3), got {raw_coords.shape}")
+    return torch.as_tensor(raw_coords, dtype=torch.float32)
+
+
+class PerFileVTKDataset(Dataset):
+    """
+    Dataset variant that loads **one simulation per file** on demand.
+
+    Expected layout (can be adjusted if your naming is different):
+        data_root/
+            1.pkl
+            2.pkl
+            ...
+
+    Each per-index pickle is expected to contain the same fields that were
+    previously stored in `data_dict[idx]`.
+    """
+
+    def __init__(
+        self,
+        data_root,
+        indices,
+        predicted_feature_name="pressure",
+        coordinate_only=False,
+    ):
+        if isinstance(data_root, dict):
+            if not data_root:
+                raise TypeError("data_root mapping cannot be empty")
+            self.data_roots = {
+                str(vehicle): Path(root) for vehicle, root in data_root.items()
+            }
+        elif isinstance(data_root, (str, os.PathLike)):
+            data_root = [data_root]
+            self.data_roots = [Path(root) for root in data_root]
+        elif isinstance(data_root, Sequence) and data_root:
+            self.data_roots = [Path(root) for root in data_root]
+        else:
+            raise TypeError(
+                "data_root must be a directory, a non-empty sequence, or a "
+                "vehicle-to-directory mapping"
+            )
+        self.indices = indices
+        self.coordinate_only = coordinate_only
+        self.predicted_feature_name = predicted_feature_name
+        self.normalization_scalars = self._load_normalization_scalars()
+
+    def _load_normalization_scalars(self):
+        if isinstance(self.data_roots, dict):
+            by_vehicle = {}
+            for vehicle, data_root in self.data_roots.items():
+                scalar_path = data_root / "normalization_scalars.pkl"
+                if not scalar_path.is_file():
+                    raise FileNotFoundError(
+                        f"Missing normalization scalars for {vehicle}: {scalar_path}"
+                    )
+                with scalar_path.open("rb") as handle:
+                    by_vehicle[vehicle] = pickle.load(handle)
+            return {
+                "schema_version": "multi-vehicle-normalization-v1",
+                "by_vehicle": by_vehicle,
+            }
+        for data_root in self.data_roots:
+            scalar_path = data_root / "normalization_scalars.pkl"
+            if scalar_path.exists():
+                with open(scalar_path, "rb") as handle:
+                    return pickle.load(handle)
+        return None
+
+    def _sample_path(self, sim_id):
+        if isinstance(self.data_roots, dict):
+            if not isinstance(sim_id, tuple) or len(sim_id) != 2:
+                raise TypeError(
+                    "Multi-vehicle sample IDs must be (vehicle_name, sample_id)"
+                )
+            vehicle, sample_id = sim_id
+            if vehicle not in self.data_roots:
+                raise KeyError(f"Unknown vehicle type: {vehicle}")
+            candidate = self.data_roots[vehicle] / f"{sample_id}.pkl"
+            if not candidate.is_file():
+                raise FileNotFoundError(
+                    f"Sample {vehicle}/{sample_id}.pkl not found: {candidate}"
+                )
+            return candidate
+        # If your naming is different (e.g. f"sample_{sim_id}.pkl"),
+        # we can tweak this in the next step.
+        for data_root in self.data_roots:
+            candidate = data_root / f"{sim_id}.pkl"
+            if candidate.exists():
+                return candidate
+        roots = ", ".join(str(root) for root in self.data_roots)
+        raise FileNotFoundError(f"Sample {sim_id}.pkl not found in: {roots}")
+
+    def _load_sample(self, sim_id):
+        file_path = self._sample_path(sim_id)
+        with open(file_path, "rb") as f:
+            sample = pickle.load(f)
+        return sample
+
+    def __len__(self):
+        return len(self.indices)
+
+    def __getitem__(self, idx):
+        # Map from dataset index to simulation id
+        sim_id = self.indices[idx]
+        sample = self._load_sample(sim_id)
+        coorf = _get_input(
+            sample,
+            self.predicted_feature_name,
+            coordinate_only=self.coordinate_only,
+        )
+        sample_scalars = self.normalization_scalars
+        if isinstance(sample_scalars, dict) and "by_vehicle" in sample_scalars:
+            vehicle, _ = sim_id
+            sample_scalars = sample_scalars["by_vehicle"][vehicle]
+        raw_coords = _get_raw_coords(
+            sample, sample_scalars, self.predicted_feature_name
+        )
+
+        seg_matrix = sample.get("seg_matrix")
+        p = _get_target(sample, self.predicted_feature_name)
+
+        # These five DrivAerStar models do not consume seg_matrix. Keep a
+        # compatibility placeholder matching the complete PKL point count.
+        if seg_matrix is None:
+            seg_matrix = torch.zeros((1, coorf.shape[0]), dtype=torch.float32)
+        else:
+            if isinstance(seg_matrix, csr_matrix):
+                seg_matrix = seg_matrix.toarray()
+            seg_matrix = torch.as_tensor(seg_matrix, dtype=torch.float32)
+
+        return coorf, raw_coords, seg_matrix, p, sim_id
+
+
+def discover_multi_vehicle_samples(
+    vehicle_configs,
+    data_root=None,
+    selection_mode="random",
+    selection_seed=42,
+    train_ratio=0.6,
+    val_ratio=0.3,
+    test_ratio=0.1,
+):
+    """Resolve enabled vehicle directories, sample them, and split per vehicle.
+
+    Returns a vehicle-to-directory mapping plus train/validation/test lists of
+    composite IDs ``(vehicle_name, numeric_sample_id)``. Numeric PKL names may
+    therefore restart from 1 in every vehicle directory without collisions.
+    """
+    if not isinstance(vehicle_configs, dict) or not vehicle_configs:
+        raise ValueError("data.vehicle_datasets must be a non-empty mapping")
+    if selection_mode not in {"first", "random"}:
+        raise ValueError("selection_mode must be 'first' or 'random'")
+    ratios = (float(train_ratio), float(val_ratio), float(test_ratio))
+    if any(value < 0 for value in ratios) or not np.isclose(sum(ratios), 1.0):
+        raise ValueError(f"train/val/test ratios must be non-negative and sum to 1, got {ratios}")
+
+    base = Path(data_root).expanduser() if data_root else None
+    roots = {}
+    splits = {"train": [], "val": [], "test": []}
+    summary = {}
+
+    for vehicle, raw_options in vehicle_configs.items():
+        options = raw_options or {}
+        if not isinstance(options, dict):
+            raise TypeError(f"Configuration for {vehicle} must be a mapping")
+        if not options.get("enabled", True):
+            continue
+        configured_path = options.get("path", vehicle)
+        path = Path(configured_path).expanduser()
+        if not path.is_absolute():
+            if base is None:
+                raise ValueError(
+                    f"Relative path for {vehicle} requires data.dataset_root"
+                )
+            path = base / path
+        path = path.resolve()
+        if not path.is_dir():
+            raise NotADirectoryError(f"Vehicle dataset not found for {vehicle}: {path}")
+        available = sorted(
+            int(file.stem)
+            for file in path.glob("*.pkl")
+            if file.stem.isdigit()
+        )
+        if not available:
+            raise FileNotFoundError(f"No numbered PKL samples found for {vehicle}: {path}")
+        requested = options.get("count", len(available))
+        if requested is None or requested == "all":
+            requested = len(available)
+        requested = int(requested)
+        if requested < 1:
+            raise ValueError(f"Sample count for enabled vehicle {vehicle} must be positive")
+        if requested > len(available):
+            raise ValueError(
+                f"{vehicle} requests {requested} samples, but only {len(available)} are available"
+            )
+        selected = available[:]
+        if selection_mode == "random":
+            random.Random(f"{selection_seed}:{vehicle}").shuffle(selected)
+        selected = selected[:requested]
+
+        train_count = int(requested * ratios[0])
+        val_count = int(requested * ratios[1])
+        test_count = requested - train_count - val_count
+        vehicle_train = selected[:train_count]
+        vehicle_val = selected[train_count:train_count + val_count]
+        vehicle_test = selected[train_count + val_count:]
+        splits["train"].extend((vehicle, value) for value in vehicle_train)
+        splits["val"].extend((vehicle, value) for value in vehicle_val)
+        splits["test"].extend((vehicle, value) for value in vehicle_test)
+        roots[vehicle] = path
+        summary[vehicle] = {
+            "available": len(available),
+            "selected": requested,
+            "train": train_count,
+            "val": val_count,
+            "test": test_count,
+            "path": str(path),
+        }
+
+    if not roots:
+        raise ValueError("No vehicle dataset is enabled")
+    if any(not splits[name] for name in ("train", "val", "test")):
+        raise ValueError(
+            "The combined train/validation/test splits must all be non-empty; "
+            "increase the selected sample counts"
+        )
+    return roots, splits["train"], splits["val"], splits["test"], summary
+
+
+
+def create_data_loaders(
+    data_source,
+    batch_size=1,
+    train_index=[66],
+    val_index=[66],
+    test_index=[66],
+    shuffle=True,
+    predicted_feature_name="pressure",
+    coordinate_only=False,
+):
+    """
+    Create train, validation, and test data loaders based on specific indices.
+
+    There are two modes:
+      1. Legacy in-memory mode: `data_source` is a dict like the old `data_dict`.
+      2. Per-file lazy mode:  `data_source` is a directory path. Each sample
+         with index `i` is loaded from a file like `<data_source>/<i>.pkl`.
+
+    Args:
+        data_source (dict | str): Either the in-memory data_dict, or the
+            directory containing one file per sample.
+        batch_size (int): Batch size for data loaders
+        train_index (list): List of indices for training data
+        val_index (list): List of indices for validation data
+        test_index (list): List of indices for testing data
+        shuffle (bool): Whether to shuffle training data
+        predicted_feature_name (str): Name of the feature to predict
+            ("pressure", "x_force", "y_force", "z_force")
+        coordinate_only (bool): Return normalized XYZ only instead of
+            normalized XYZ concatenated with normals.
+
+    Returns:
+        tuple: (train_loader, val_loader, test_loader, normalization_scalars)
+    """
+
+    is_vehicle_root_mode = (
+        isinstance(data_source, dict)
+        and bool(data_source)
+        and all(isinstance(value, (str, os.PathLike, Path)) for value in data_source.values())
+    )
+    is_dict_mode = isinstance(data_source, dict) and not is_vehicle_root_mode
+    is_path_mode = is_vehicle_root_mode or (
+        isinstance(data_source, (str, os.PathLike, Sequence))
+        and not isinstance(data_source, dict)
+    )
+
+    if not (is_dict_mode or is_path_mode):
+        raise TypeError(
+            "data_source must be an in-memory sample dict, a path, a path "
+            f"sequence, or a vehicle-to-path mapping; got {type(data_source)}"
+        )
+
+    # Use provided indices
+    train_indices = train_index
+    val_indices = val_index
+    test_indices = test_index
+
+    if is_dict_mode:
+        data_dict = data_source
+        # Get simulation indices (excluding normalization_scalars)
+        sim_indices = [idx for idx in data_dict.keys() if idx != "normalization_scalars"]
+        sim_indices.sort()
+        print(f"Available simulation indices: {sim_indices}")
+
+        normalization_scalars = data_dict.get("normalization_scalars", None)
+
+        # Create datasets with predicted_feature_name (legacy in-memory)
+        train_dataset = VTKDataset(
+            data_dict,
+            train_indices,
+            predicted_feature_name=predicted_feature_name,
+            coordinate_only=coordinate_only,
+        )
+        val_dataset = VTKDataset(
+            data_dict,
+            val_indices,
+            predicted_feature_name=predicted_feature_name,
+            coordinate_only=coordinate_only,
+        )
+        test_dataset = VTKDataset(
+            data_dict,
+            test_indices,
+            predicted_feature_name=predicted_feature_name,
+            coordinate_only=coordinate_only,
+        )
+
+    else:
+        data_root = data_source
+        print(f"Per-file data root(s): {data_root}")
+        # Create datasets that load one file per sample on demand
+        train_dataset = PerFileVTKDataset(
+            data_root,
+            train_indices,
+            predicted_feature_name=predicted_feature_name,
+            coordinate_only=coordinate_only,
+        )
+        val_dataset = PerFileVTKDataset(
+            data_root,
+            val_indices,
+            predicted_feature_name=predicted_feature_name,
+            coordinate_only=coordinate_only,
+        )
+        test_dataset = PerFileVTKDataset(
+            data_root,
+            test_indices,
+            predicted_feature_name=predicted_feature_name,
+            coordinate_only=coordinate_only,
+        )
+        normalization_scalars = train_dataset.normalization_scalars
+
+    print("Data split:")
+    print(f"  - Training: {len(train_indices)} simulations (indices: {train_indices})")
+    print(f"  - Validation: {len(val_indices)} simulations (indices: {val_indices})")
+    print(f"  - Testing: {len(test_indices)} simulations (indices: {test_indices})")
+    print(f"  - Predicting: {predicted_feature_name}")
+
+    # Create data loaders with custom collate function for sparse tensors
+    train_loader = DataLoader(
+        train_dataset,
+        batch_size=batch_size,
+        shuffle=shuffle,
+        collate_fn=custom_collate_fn,
+    )
+    val_loader = DataLoader(
+        val_dataset, batch_size=batch_size, shuffle=False, collate_fn=custom_collate_fn
+    )
+    test_loader = DataLoader(
+        test_dataset, batch_size=batch_size, shuffle=False, collate_fn=custom_collate_fn
+    )
+
+    return train_loader, val_loader, test_loader, normalization_scalars
+
+
+if __name__ == "__main__":
+
+    DATA_PATH = "/taiga/illinois/eng/cee/meidani/Vincent/FC4NO/driver_plus/PressureVTK/processed/"
+    with open(DATA_PATH + "normalization_scalars.pkl", "rb") as f:
+        normalization_scalars = pickle.load(f)
+    train_loader, val_loader, test_loader, _ = create_data_loaders(
+        DATA_PATH, batch_size=1
+    )
+
+    print(f"\nDataLoader test:")
+    print(f"  - Train batches: {len(train_loader)}")
+    print(f"  - Val batches: {len(val_loader)}")
+    print(f"  - Test batches: {len(test_loader)}")
+
+    # print the first batch
+    for batch in train_loader:
+        coorf, raw_coords, seg_matrix, p, sim_id = batch
+        print(coorf.shape)
+        print(raw_coords.shape)
+        print(seg_matrix.shape)
+        print(p.shape)
+        print(sim_id)
+        break
