@@ -1,0 +1,40 @@
+# DrivAerML: surface pressure by default
+experiment:
+  exp: DrivAerML_RopeLinearNO_v3
+  model_name: RopeLinearNO_v3
+  predicted_feature_name: surface_pressure
+  phase: restart_train
+model:
+  space_dim: 3
+  out_dim: 1
+  n_layers: 8
+  n_hidden: 256
+  dropout: 0.0
+  act: gelu
+  fun_dim: 0
+  time_input: false
+  unified_pos: false
+attention:
+  n_head: 8
+  mlp_ratio: 2
+  key_ratio: 1
+position_encoding:
+  num_position_frequencies: 6
+  initial_relative_gate: 0.05
+checkpoint:
+  checkpoint_segment_size: 2
+  checkpoint_relative_terms: true
+training:
+  num_epochs: 200
+  eval_freq: 1
+  learning_rate: 1.0e-3
+  batch_size: 1
+  shuffle: true
+data:
+  data_path: /Users/zhangbojun/ML_Turbulent/preprocess/drivaerML_N100_000
+  selection_mode: random
+  selection_seed: 42
+  train_ratio: 0.6
+  val_ratio: 0.3
+  test_ratio: 0.1
+
