@@ -25,6 +25,11 @@ attention:
   key_ratio: 1
   slice_num: 64
 
+checkpoint:
+  # Full-car balance for V100 32GB: recompute the first 6 of 8 blocks.
+  checkpoint_segment_size: 2
+  checkpoint_num_blocks: 6
+
 training:
   num_epochs: 200
   eval_freq: 1

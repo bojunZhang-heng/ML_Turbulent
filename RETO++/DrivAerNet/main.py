@@ -223,6 +223,8 @@ def main():
             slice_num=args.slice_num,
             ref=args.ref,
             unified_pos=args.unified_pos,
+            checkpoint_segment_size=args.checkpoint_segment_size,
+            checkpoint_num_blocks=args.checkpoint_num_blocks,
         )
     elif model_name == 'LinearNO':
         model = LinearNO(
@@ -258,6 +260,7 @@ def main():
             H=args.H, W=args.W, isregular=args.isregular,
             cluster_num=args.cluster_num,
             checkpoint_segment_size=args.checkpoint_segment_size,
+            checkpoint_num_blocks=args.checkpoint_num_blocks,
             layer_scale_init=args.layer_scale_init,
             cluster_temperature_init=args.cluster_temperature_init,
         )

@@ -205,13 +205,17 @@ attention:          B × H × Kc × N
 
 ## 8. Gradient Checkpoint
 
-训练阶段默认每两个 block 使用一次 gradient checkpoint：
+全车训练默认将前 6/8 个 block 每两个组成一个 checkpoint 段：
 
-```python
-checkpoint_segment_size = 2
+```yaml
+checkpoint_segment_size: 2
+checkpoint_num_blocks: 6
 ```
 
-这会减少激活显存，但增加一部分反向重计算时间。验证和测试阶段不启用 checkpoint。
+最后两个 block 保留普通 autograd 激活，用一部分显存换取速度。将
+`checkpoint_num_blocks` 改为 8 会进一步节省显存但训练更慢；改为 0
+表示完全关闭 checkpoint。`dropout=0` 时不会保存 checkpoint RNG 状态。
+验证和测试阶段不启用 checkpoint。
 
 ## 9. main.py 调用
 

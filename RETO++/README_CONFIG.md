@@ -59,8 +59,20 @@ data:
 ```
 
 每个模型只需保留它实际使用的分类和字段。例如 Transolver 使用
-`slice_num`，RETO+ 使用 `cluster_num` 和 checkpoint 参数，SATO 使用
+`slice_num`，Transolver、CANO 和 RETO+ 均支持 checkpoint 参数，SATO 使用
 `patch_size/shift/n_iter`。
+
+DrivAerNet 全车点云、V100 32GB 的建议折中配置为：
+
+```yaml
+checkpoint:
+  checkpoint_segment_size: 2
+  checkpoint_num_blocks: 6
+```
+
+含义是 8 层模型只重计算前 6 层，最后两层保留正常反向激活。显存仍然
+不足时将 `checkpoint_num_blocks` 调为 8；显存充足且更重视速度时可调为
+4 或 0。三种设置不改变模型参数和数学输出。
 
 ## 已适配的训练入口模型
 

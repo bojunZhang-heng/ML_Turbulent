@@ -287,6 +287,7 @@ class ClusterAttentionNeuralOperator(nn.Module):
         isregular=False,
         cluster_num=64,
         checkpoint_segment_size=2,
+        checkpoint_num_blocks=None,
         layer_scale_init=0.1,
         cluster_temperature_init=1.0,
         _attention_cls=ClusterAttention,
@@ -302,6 +303,10 @@ class ClusterAttentionNeuralOperator(nn.Module):
             raise ValueError("unified_pos and Time_Input are not supported")
         if checkpoint_segment_size < 1:
             raise ValueError("checkpoint_segment_size must be at least 1")
+        if n_layers < 1:
+            raise ValueError("n_layers must be at least 1")
+        if checkpoint_num_blocks is not None and not 0 <= checkpoint_num_blocks <= n_layers:
+            raise ValueError("checkpoint_num_blocks must be between 0 and n_layers")
 
         attention_kwargs = dict(_attention_kwargs or {})
         attention_kwargs.setdefault(
@@ -312,6 +317,10 @@ class ClusterAttentionNeuralOperator(nn.Module):
         self.n_hidden = n_hidden
         self.cluster_num = cluster_num
         self.checkpoint_segment_size = checkpoint_segment_size
+        self.checkpoint_num_blocks = (
+            n_layers if checkpoint_num_blocks is None else checkpoint_num_blocks
+        )
+        self.checkpoint_preserve_rng_state = dropout > 0.0
         self.preprocess = MLP(
             space_dim,
             n_hidden * 2,
@@ -371,18 +380,27 @@ class ClusterAttentionNeuralOperator(nn.Module):
             fx = self.blocks[block_index](fx, attn_kwargs=attn_kwargs)
         return fx
 
-    def _forward_blocks(self, fx, attn_kwargs=None):
-        return self._forward_block_range(fx, 0, len(self.blocks), attn_kwargs)
+    def _forward_blocks(self, fx, attn_kwargs=None, start=0, end=None):
+        if end is None:
+            end = len(self.blocks)
+        return self._forward_block_range(fx, start, end, attn_kwargs)
 
-    def _forward_with_checkpoint(self, fx, extra_tensor=None, kwargs_factory=None):
-        for start in range(0, len(self.blocks), self.checkpoint_segment_size):
-            end = min(start + self.checkpoint_segment_size, len(self.blocks))
+    def _forward_with_checkpoint(
+        self, fx, end_block, extra_tensor=None, kwargs_factory=None
+    ):
+        for start in range(0, end_block, self.checkpoint_segment_size):
+            end = min(start + self.checkpoint_segment_size, end_block)
             if extra_tensor is None:
 
                 def run_segment(segment_fx, start=start, end=end):
                     return self._forward_block_range(segment_fx, start, end)
 
-                fx = checkpoint(run_segment, fx, use_reentrant=False)
+                fx = checkpoint(
+                    run_segment,
+                    fx,
+                    use_reentrant=False,
+                    preserve_rng_state=self.checkpoint_preserve_rng_state,
+                )
             else:
 
                 def run_segment(segment_fx, tensor, start=start, end=end):
@@ -398,15 +416,17 @@ class ClusterAttentionNeuralOperator(nn.Module):
                     fx,
                     extra_tensor,
                     use_reentrant=False,
+                    preserve_rng_state=self.checkpoint_preserve_rng_state,
                 )
         return fx
 
     def forward(self, data: torch.Tensor) -> torch.Tensor:
         self._validate_input(data)
         fx = self._encode(data)
-        if self.training:
-            return self._forward_with_checkpoint(fx)
-        return self._forward_blocks(fx)
+        checkpoint_end = self.checkpoint_num_blocks if self.training else 0
+        if checkpoint_end:
+            fx = self._forward_with_checkpoint(fx, checkpoint_end)
+        return self._forward_blocks(fx, start=checkpoint_end)
 
     def stability_values(self):
         """Return small CPU tensors for monitoring CANO training stability."""

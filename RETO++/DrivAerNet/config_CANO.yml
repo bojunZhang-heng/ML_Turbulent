@@ -32,11 +32,14 @@ attention:
 
 checkpoint:
   checkpoint_segment_size: 2
+  # Last two blocks keep normal autograd state to recover training speed.
+  checkpoint_num_blocks: 6
 
 training:
   num_epochs: 200
   eval_freq: 1
-  learning_rate: 1.0e-3
+  # OneCycleLR max_lr; 1e-3 previously caused late-epoch CANO divergence.
+  learning_rate: 2.0e-4
   batch_size: 1
   shuffle: true
 
@@ -58,35 +61,35 @@ data:
   # (vehicle, ID) keys prevent collisions between equal numeric filenames.
   vehicle_datasets:
     E_S_WWC_WM:
-      path: E_S_WWC_WMpklFile_10k
+      path: E_S_WWC_WMpklFile
       count: 100
       enabled: true
     E_S_WW_WM:
-      path: E_S_WW_WMpklFile_10k
+      path: E_S_WW_WMpklFile
       count: 100
       enabled: true
     F_S_WWC_WM:
-      path: F_S_WWC_WMpklFile_10k
+      path: F_S_WWC_WMpklFile
       count: 100
       enabled: true
     F_S_WWS_WM:
-      path: F_S_WWS_WMpklFile_10k
+      path: F_S_WWS_WMpklFile
       count: 100
       enabled: true
     N_S_WWS_WM:
-      path: N_S_WWS_WMpklFile_10k
+      path: N_S_WWS_WMpklFile
       count: 100
       enabled: true
     N_S_WWC_WM:
-      path: N_S_WWC_WMpklFile_10k
+      path: N_S_WWC_WMpklFile
       count: 100
       enabled: true
     N_S_WW_WM:
-      path: N_S_WW_WMpklFile_10k
+      path: N_S_WW_WMpklFile
       count: 100
       enabled: true
     F_D_WM_WW:
-      path: F_D_WM_WWpklFile_10k
+      path: F_D_WM_WWpklFile
       count: 100
       enabled: true
 

@@ -1,8 +1,9 @@
 import torch
-import numpy as np
 import torch.nn as nn
+import torch.nn.functional as F
 from timm.layers import trunc_normal_
-from einops import rearrange, repeat
+from einops import rearrange
+from torch.utils.checkpoint import checkpoint
 
 ACTIVATION = {'gelu': nn.GELU, 'tanh': nn.Tanh, 'sigmoid': nn.Sigmoid, 'relu': nn.ReLU, 'leaky_relu': nn.LeakyReLU(0.1),
               'softplus': nn.Softplus, 'ELU': nn.ELU, 'silu': nn.SiLU}
@@ -48,16 +49,20 @@ class Physics_Attention_Irregular_Mesh(nn.Module):
         slice_weights = self.softmax(self.in_project_slice(x_mid) / self.temperature)  # B H N G
         slice_norm = slice_weights.sum(2)  # B H G
         slice_token = torch.einsum("bhnc,bhng->bhgc", fx_mid, slice_weights)
-        slice_token = slice_token / ((slice_norm + 1e-5)[:, :, :, None].repeat(1, 1, 1, self.dim_head))
+        # Broadcasting avoids materializing a repeated (B,H,G,D) denominator.
+        slice_token = slice_token / (slice_norm[..., None] + 1e-5)
 
         ### (2) Attention among slice tokens
         q_slice_token = self.to_q(slice_token)
         k_slice_token = self.to_k(slice_token)
         v_slice_token = self.to_v(slice_token)
-        dots = torch.matmul(q_slice_token, k_slice_token.transpose(-1, -2)) * self.scale
-        attn = self.softmax(dots)
-        attn = self.dropout(attn)
-        out_slice_token = torch.matmul(attn, v_slice_token)  # B H G D
+        out_slice_token = F.scaled_dot_product_attention(
+            q_slice_token,
+            k_slice_token,
+            v_slice_token,
+            dropout_p=self.dropout.p if self.training else 0.0,
+            scale=self.scale,
+        )
 
         ### (3) Deslice
         out_x = torch.einsum("bhgc,bhng->bhnc", out_slice_token, slice_weights)
@@ -141,13 +146,21 @@ class Model(nn.Module):
                  out_dim=1,
                  slice_num=64,
                  ref=8,
-                 unified_pos=False
+                 unified_pos=False,
+                 checkpoint_segment_size=2,
+                 checkpoint_num_blocks=None,
                  ):
         super(Model, self).__init__()
         if space_dim != 3:
             raise ValueError(f"Transolver expects space_dim=3, got {space_dim}")
         if fun_dim != 0:
             raise ValueError("Coordinate-only Transolver requires fun_dim=0")
+        if n_layers < 1:
+            raise ValueError("n_layers must be at least 1")
+        if checkpoint_segment_size < 1:
+            raise ValueError("checkpoint_segment_size must be at least 1")
+        if checkpoint_num_blocks is not None and not 0 <= checkpoint_num_blocks <= n_layers:
+            raise ValueError("checkpoint_num_blocks must be between 0 and n_layers")
         self.__name__ = 'UniPDE_3D'
         self.ref = ref
         self.unified_pos = unified_pos
@@ -159,6 +172,11 @@ class Model(nn.Module):
 
         self.n_hidden = n_hidden
         self.space_dim = space_dim
+        self.checkpoint_segment_size = checkpoint_segment_size
+        self.checkpoint_num_blocks = (
+            n_layers if checkpoint_num_blocks is None else checkpoint_num_blocks
+        )
+        self.checkpoint_preserve_rng_state = dropout > 0.0
 
         self.blocks = nn.ModuleList([Transolver_block(num_heads=n_head, hidden_dim=n_hidden,
                                                       dropout=dropout,
@@ -189,19 +207,47 @@ class Model(nn.Module):
         # my_pos 1 N 3
         batchsize = my_pos.shape[0]
 
-        gridx = torch.tensor(np.linspace(-1.5, 1.5, self.ref), dtype=torch.float)
+        gridx = torch.linspace(
+            -1.5, 1.5, self.ref, device=my_pos.device, dtype=my_pos.dtype
+        )
         gridx = gridx.reshape(1, self.ref, 1, 1, 1).repeat([batchsize, 1, self.ref, self.ref, 1])
-        gridy = torch.tensor(np.linspace(0, 2, self.ref), dtype=torch.float)
+        gridy = torch.linspace(
+            0, 2, self.ref, device=my_pos.device, dtype=my_pos.dtype
+        )
         gridy = gridy.reshape(1, 1, self.ref, 1, 1).repeat([batchsize, self.ref, 1, self.ref, 1])
-        gridz = torch.tensor(np.linspace(-4, 4, self.ref), dtype=torch.float)
+        gridz = torch.linspace(
+            -4, 4, self.ref, device=my_pos.device, dtype=my_pos.dtype
+        )
         gridz = gridz.reshape(1, 1, 1, self.ref, 1).repeat([batchsize, self.ref, self.ref, 1, 1])
-        grid_ref = torch.cat((gridx, gridy, gridz), dim=-1).cuda().reshape(batchsize, self.ref ** 3, 3)  # B 4 4 4 3
+        grid_ref = torch.cat((gridx, gridy, gridz), dim=-1).reshape(
+            batchsize, self.ref ** 3, 3
+        )
 
         pos = torch.sqrt(
             torch.sum((my_pos[:, :, None, :] - grid_ref[:, None, :, :]) ** 2,
                       dim=-1)). \
             reshape(batchsize, my_pos.shape[1], self.ref * self.ref * self.ref).contiguous()
         return pos
+
+    def _forward_block_range(self, fx, start, end):
+        for block_index in range(start, end):
+            fx = self.blocks[block_index](fx)
+        return fx
+
+    def _forward_with_checkpoint(self, fx, end_block):
+        for start in range(0, end_block, self.checkpoint_segment_size):
+            end = min(start + self.checkpoint_segment_size, end_block)
+
+            def run_segment(segment_fx, start=start, end=end):
+                return self._forward_block_range(segment_fx, start, end)
+
+            fx = checkpoint(
+                run_segment,
+                fx,
+                use_reentrant=False,
+                preserve_rng_state=self.checkpoint_preserve_rng_state,
+            )
+        return fx
 
     def forward(self, x):
         '''
@@ -224,8 +270,10 @@ class Model(nn.Module):
         placeholder = self.placeholder.to(dtype=fx.dtype)
         fx = fx + placeholder[None, None, :]
 
-        for block in self.blocks:
-            fx = block(fx)
+        checkpoint_end = self.checkpoint_num_blocks if self.training else 0
+        if checkpoint_end:
+            fx = self._forward_with_checkpoint(fx, checkpoint_end)
+        fx = self._forward_block_range(fx, checkpoint_end, len(self.blocks))
         
         # Make the prediction for surface pressure
         Cp_pred = self.Cp_decoder(fx)
