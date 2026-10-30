@@ -1,0 +1,87 @@
+# RETO++ 在 DrivAerStar 上的训练说明
+
+## 1. 数据与任务
+
+默认目录：
+
+```text
+/Users/zhangbojun/ML_Turbulent/preprocess/DrivAerStar
+```
+
+PKL 已由前处理完成归一化，训练阶段不会再次归一化：
+
+- `x_surface`、`x_volume`：全数据集 min-max；
+- `y_spressure`、`y_wss`、`y_velocity`：全数据集逐分量 mean-std；
+- 验证和测试会使用 `normalization_scalars.pkl` 恢复物理量后计算相对 L2。
+
+| 任务 | 输入 | 输出 | 维数 |
+|---|---|---|---:|
+| `surface_pressure` | `x_surface` | `y_spressure` | 1 |
+| `surface_wss` | `x_surface` | `y_wss` | 3 |
+| `volume_velocity` | `x_volume` | `y_velocity` | 3 |
+
+`main.py` 会根据任务自动设置正确的 `out_dim`。
+
+## 2. 支持模型
+
+```text
+CANO
+LinearNO
+Transolver
+RETO_plus
+SATO
+```
+
+对应配置：
+
+```text
+config_CANO.yml
+config_LinearNO.yml
+config_Transolver.yml
+config_RETO_plus.yml
+config_SATO.yml
+```
+
+五份配置使用相同的随机种子和 6:3:1 划分，便于公平比较。
+目录中其他旧 YAML 是历史拷贝，本次 DrivAerStar 入口不会加载对应模型。
+
+## 3. 数据加载说明
+
+训练代码不再执行任何在线下采样。每次读取一个 PKL 时，将直接使用其中保存的全部坐标和物理量。正式训练请将 YAML 中的 `data.data_path` 指向已经离线采样完成的小样本数据集。
+
+坐标和物理量必须已经在离线采样阶段使用相同索引处理，以保证节点一一对应。小样本目录仍需包含与其归一化方式匹配的 `normalization_scalars.pkl`。
+
+## 4. 运行
+
+```bash
+cd /Users/zhangbojun/ML_Turbulent/RETO++/DrivAerStar
+
+/opt/anaconda3/envs/pgd-no/bin/python main.py --config config_RETO_plus.yml
+```
+
+训练体速度：
+
+```bash
+/opt/anaconda3/envs/pgd-no/bin/python main.py \
+  --config config_RETO_plus.yml \
+  --predicted_feature_name volume_velocity \
+  --exp DrivAerStar_RETO_plus_velocity
+```
+
+训练壁面剪切应力：
+
+```bash
+/opt/anaconda3/envs/pgd-no/bin/python main.py \
+  --config config_Transolver.yml \
+  --predicted_feature_name surface_wss \
+  --exp DrivAerStar_Transolver_wss
+```
+
+远端训练时，只需要修改 YAML 中的 `data.data_path`。建议保持 `batch_size: 1`。
+
+## 5. 指标
+
+- 训练损失：归一化空间逐点 MSE；
+- 验证/测试主指标：物理尺度整体相对 L2；
+- WSS 和速度：额外输出 x、y、z 三个分量的物理尺度相对 L2；
+- 最优模型：按照验证集物理尺度相对 L2 保存。
