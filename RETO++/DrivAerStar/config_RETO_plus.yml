@@ -34,7 +34,7 @@ training:
   batch_size: 1
   shuffle: true
 data:
-  data_path: /Users/zhangbojun/ML_Turbulent/preprocess/DrivAerStar
+  data_path: /data/zhangbojun/DrivAerStar/pklFile_10k/
   selection_mode: random
   selection_seed: 42
   train_ratio: 0.6
