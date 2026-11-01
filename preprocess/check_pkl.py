@@ -1,14 +1,9 @@
 import pickle
 
-
-file_path="/Users/zhangbojun/ML_Turbulent/preprocess/DrivAerStar/1301.pkl"
+file_path="/data/zhangbojun/DrivAerStar/pklFile_v2/normalization_scalars.pkl"
 with open(file_path, "rb") as f:
     data = pickle.load(f)
 
-x_surface = data['x_surface']
-y_spressure = data['y_spressure']
-print(x_surface.shape)
-print(y_spressure.shape)
 
 def describe(x, name="data", depth=0, max_depth=9):
     indent = "  " * depth
