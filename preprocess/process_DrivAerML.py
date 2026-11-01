@@ -582,6 +582,11 @@ def migrate_processed_pkls(
 
 def main() -> int:
     args = parse_args()
+    print("=" * 72)
+    print("Preprocessing configuration: process_DrivAerML.py")
+    for name, value in sorted(vars(args).items()):
+        print(f"{name:<24}: {value}")
+    print("=" * 72)
     data_dir = args.data_dir.expanduser().resolve()
     output_dir = (
         args.output_dir.expanduser().resolve()

@@ -66,6 +66,15 @@ def configure_logging() -> None:
     )
 
 
+def print_run_configuration(args: argparse.Namespace) -> None:
+    """Print the effective CLI configuration without changing processing."""
+    print("=" * 72)
+    print("Preprocessing configuration: process_DrivAerNet.py")
+    for name, value in sorted(vars(args).items()):
+        print(f"{name:<24}: {value}")
+    print("=" * 72)
+
+
 def canonical_name(name: str | None) -> str:
     """Return a case/punctuation-insensitive VTK array name."""
 
@@ -533,6 +542,7 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
+    print_run_configuration(args)
     process_dataset(
         input_dir=args.input_dir,
         output_dir=args.output_dir,

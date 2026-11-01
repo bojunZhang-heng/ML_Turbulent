@@ -606,6 +606,12 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main() -> None:
     args = build_parser().parse_args()
+    print("=" * 72)
+    print("Preprocessing configuration: process_mlcfd.py")
+    for name, value in sorted(vars(args).items()):
+        if name != "handler":
+            print(f"{name:<24}: {value}")
+    print("=" * 72)
     args.handler(args)
 
 

@@ -23,6 +23,15 @@ def configure_logging():
     logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(message)s", datefmt="%Y-%m-%d %H:%M:%S", handlers=[logging.StreamHandler(sys.stdout)], force=True)
 
 
+def print_run_configuration(args):
+    """Print the effective CLI configuration without changing processing."""
+    print("=" * 72)
+    print("Preprocessing configuration: process_data.py")
+    for name, value in sorted(vars(args).items()):
+        print(f"{name:<24}: {value}")
+    print("=" * 72)
+
+
 def _id_filter():
     return (vtk.vtkIdFilter if hasattr(vtk, "vtkIdFilter") else vtk.vtkGenerateIds)()
 
@@ -196,6 +205,7 @@ def parse_args():
 
 def main():
     args = parse_args()
+    print_run_configuration(args)
     process_folder(args.input_dir, args.output_dir, args.format, args.pattern, args.threshold_angles, args.min_graph_size_ratio, args.max_segments)
 
 
