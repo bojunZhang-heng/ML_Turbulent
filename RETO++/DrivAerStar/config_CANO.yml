@@ -2,6 +2,7 @@
 experiment:
   exp: DrivAerStar_CANO
   model_name: CANO
+  # surface_wss | surface_pressure | volume_velocity
   predicted_feature_name: surface_pressure
   phase: restart_train
 model:
