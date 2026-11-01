@@ -4,13 +4,14 @@
 
 ```text
 /Users/zhangbojun/ML_Turbulent/preprocess/process_DrivAerStar.py
+/Users/zhangbojun/ML_Turbulent/preprocess/downsample_DrivAerStar.py
 ```
 
 脚本将 DrivAerStar 的 EnSight Gold CFD 文件转换为逐案例 PKL，并执行：
 
 - 从 EnSight 网格提取表面压力、壁面剪切应力和体积速度；
 - 使用单元中心作为物理量对应的坐标；
-- 坐标按全数据集 XYZ 分量进行 min-max 归一化；
+- 表面坐标与体场坐标分别按全数据集 XYZ 分量进行 min-max 归一化；
 - 物理量按全数据集、逐分量进行 mean-std 归一化；
 - 保存统一的 `normalization_scalars.pkl`；
 - 检查坐标与物理量是否逐单元对齐；
@@ -48,7 +49,7 @@ DrivAerStar/
 目录大小：约 1.5 GB
 ```
 
-这 6 个本地测试案例是在“保留原始案例”功能加入前处理的，因此原始 `case_E_batch_*` 已全部删除。新脚本在远端处理数据时会默认把前 10 个完整案例保存在 `raw_data/`，用于拓扑可视化。
+这 6 个本地测试案例是在“保留原始案例”功能加入前处理的，因此原始 `case_E_batch_*` 已全部删除。现在可以使用旧 PKL 及其 `normalization_scalars.pkl` 恢复物理坐标并迁移为 v2，不需要原始 EnSight 文件。新脚本在远端处理原始数据时仍可把前 10 个完整案例保存在 `raw_data/`，用于拓扑可视化。
 
 原始案例采用 EnSight Gold 格式，例如：
 
@@ -122,10 +123,10 @@ E_03210.case -> 3210.pkl
 
 | PKL 字段 | 形状 | 含义 | 归一化 |
 |---|---:|---|---|
-| `x_surface` | `(Ns, 3)` | 汽车表面单元中心 | 全局共享 min-max |
+| `x_surface` | `(Ns, 3)` | 汽车表面单元中心 | 全数据集 surface min-max |
 | `y_spressure` | `(Ns, 1)` | 表面压力 | 全局 mean-std |
 | `y_wss` | `(Ns, 3)` | 壁面剪切应力 XYZ | 全局逐分量 mean-std |
-| `x_volume` | `(Nv, 3)` | 体网格单元中心 | 全局共享 min-max |
+| `x_volume` | `(Nv, 3)` | 体网格单元中心 | 全数据集 volume min-max |
 | `y_velocity` | `(Nv, 3)` | 速度 XYZ | 全局逐分量 mean-std |
 
 所有数组均保存为 `numpy.float32`。
@@ -134,7 +135,7 @@ E_03210.case -> 3210.pkl
 
 ```python
 {
-    "schema_version": "drivaerstar-normalized-v1",
+    "schema_version": "drivaerstar-normalized-v2",
     "sample_id": 1301,
     "x_surface": np.ndarray,
     "y_spressure": np.ndarray,
@@ -164,14 +165,21 @@ E_03210.case -> 3210.pkl
 
 ### 5.1 坐标 min-max
 
-`x_surface` 与 `x_volume` 位于相同物理坐标系，共享同一套 XYZ 范围：
+`x_surface` 与 `x_volume` 位于相同物理坐标系，但数值范围相差很大。若共享风洞范围，汽车表面坐标只占约 7%～11%，会削弱模型对表面几何的分辨能力。因此 v2 分别统计：
 
-```python
-x_norm = (x_raw - coords_min) / coords_range
-coords_range = coords_max - coords_min
+```text
+surface_coords_min / surface_coords_max / surface_coords_range
+volume_coords_min  / volume_coords_max  / volume_coords_range
 ```
 
-三个分量分别归一化。正常情况下，全数据集归一化坐标范围接近 `[0, 1]`。
+对应公式为：
+
+```python
+x_surface_norm = (x_surface_raw - surface_coords_min) / surface_coords_range
+x_volume_norm = (x_volume_raw - volume_coords_min) / volume_coords_range
+```
+
+它们都是“全数据集统一归一化”，不是每辆车单独归一化，因此不会丢失车型间的绝对尺寸差异。
 
 ### 5.2 物理量 mean-std
 
@@ -202,8 +210,11 @@ velocity = velocity_norm * scalars["y_velocity_std"] \
 wss = wss_norm * scalars["y_wss_std"] \
       + scalars["y_wss_mean"]
 
-x_surface = x_surface_norm * scalars["coords_range"] \
-            + scalars["coords_min"]
+x_surface = x_surface_norm * scalars["surface_coords_range"] \
+            + scalars["surface_coords_min"]
+
+x_volume = x_volume_norm * scalars["volume_coords_range"] \
+           + scalars["volume_coords_min"]
 ```
 
 ## 6. normalization_scalars.pkl
@@ -211,7 +222,8 @@ x_surface = x_surface_norm * scalars["coords_range"] \
 该文件包含：
 
 ```text
-coords_min / coords_max / coords_range
+surface_coords_min / surface_coords_max / surface_coords_range
+volume_coords_min / volume_coords_max / volume_coords_range
 y_spressure_mean / y_spressure_std / y_spressure_count
 y_velocity_mean / y_velocity_std / y_velocity_count
 y_wss_mean / y_wss_std / y_wss_count
@@ -227,13 +239,33 @@ normalization
 
 `samples` 还保存每个案例的表面/体积单元数量与 part 索引范围。
 
-本次全数据统计得到：
+旧版 v1 的共享风洞统计为：
 
 ```text
 coords_min   = [-14.880000, -14.940001, -0.405689]
 coords_max   = [ 44.880001,  14.940001, 14.807159]
 coords_range = [ 59.760002,  29.880001, 15.212848]
+```
 
+从现有 6 个旧 PKL 恢复物理坐标后得到的 v2 表面统计为：
+
+```text
+surface_coords_min   = [-1.246600, -1.112921, -0.404008]
+surface_coords_max   = [ 4.175174,  1.113005,  1.204642]
+surface_coords_range = [ 5.421774,  2.225925,  1.608650]
+```
+
+体场统计保持为风洞范围：
+
+```text
+volume_coords_min   = [-14.880000, -14.940001, -0.405689]
+volume_coords_max   = [ 44.880001,  14.940001, 14.807159]
+volume_coords_range = [ 59.760002,  29.880001, 15.212848]
+```
+
+物理量统计仍为：
+
+```text
 y_spressure_mean = [-139.510696]
 y_spressure_std  = [ 280.012207]
 
@@ -295,7 +327,83 @@ cd /Users/zhangbojun/ML_Turbulent
 
 脚本总是从原始 EnSight 文件重新计算统计量，因此不会对旧 PKL 中已经归一化的数据再次归一化。
 
-### 8.3 指定输入和输出目录
+### 8.3 原始文件已删除：从旧 PKL 迁移为 v2
+
+旧版 PKL 的坐标变换是可逆的。下面的命令先用旧的 `coords_min/coords_range` 恢复物理坐标，再分别计算 surface/volume 统计量：
+
+```bash
+/opt/anaconda3/envs/pgd-no/bin/python \
+  preprocess/process_DrivAerStar.py \
+  --source-pkl-dir /Users/zhangbojun/ML_Turbulent/preprocess/DrivAerStar \
+  --output-dir /Users/zhangbojun/ML_Turbulent/preprocess/DrivAerStar_v2 \
+  --overwrite
+```
+
+为了保证可恢复性，`--output-dir` 禁止与旧目录相同。迁移过程只修改：
+
+```text
+x_surface
+x_volume
+```
+
+以下物理量保持逐数组完全不变，不会再次 mean-std：
+
+```text
+y_spressure
+y_wss
+y_velocity
+```
+
+本地真实数据验证中，迁移前后恢复的物理坐标最大差异为 `3.82e-6 m`（float32 舍入），三个物理量数组逐元素完全一致。
+
+### 8.4 使用 DrivAerStar 专用脚本重新下采样
+
+如果只训练表面压力，不必先保存一整份巨大的 v2 全量数据。专用脚本可以直接读取旧 v1 PKL：第一遍恢复物理坐标并计算 surface min-max，第二遍重新归一化并写出 10k 表面数据。压强和 WSS 不会再次归一化。
+
+表面压力任务推荐直接执行：
+
+```bash
+/opt/anaconda3/envs/pgd-no/bin/python \
+  preprocess/downsample_DrivAerStar.py \
+  --input-dir /Users/zhangbojun/ML_Turbulent/preprocess/DrivAerStar \
+  --output-dir /Users/zhangbojun/ML_Turbulent/preprocess/DrivAerStar_surface_N10000_v2 \
+  --point-set surface \
+  --num-points 10000 \
+  --method voxel \
+  --overwrite
+```
+
+如果已经通过 8.3 生成了完整 `DrivAerStar_v2`，同一脚本也可直接读取 v2：
+
+```bash
+/opt/anaconda3/envs/pgd-no/bin/python \
+  preprocess/downsample_DrivAerStar.py \
+  --input-dir /Users/zhangbojun/ML_Turbulent/preprocess/DrivAerStar_v2 \
+  --output-dir /Users/zhangbojun/ML_Turbulent/preprocess/DrivAerStar_surface_N10000_v2 \
+  --point-set surface \
+  --num-points 10000 \
+  --method voxel \
+  --overwrite
+```
+
+体场数据规模很大，推荐低临时内存的 random：
+
+```bash
+/opt/anaconda3/envs/pgd-no/bin/python \
+  preprocess/downsample_DrivAerStar.py \
+  --input-dir /Users/zhangbojun/ML_Turbulent/preprocess/DrivAerStar_v2 \
+  --output-dir /Users/zhangbojun/ML_Turbulent/preprocess/DrivAerStar_volume_N100000_v2 \
+  --point-set volume \
+  --num-points 100000 \
+  --method random \
+  --overwrite
+```
+
+下采样不会对物理量进行任何归一化。表面坐标、压力和 WSS 共用同一组 `surface_downsample_indices`；体场坐标和速度共用 `volume_downsample_indices`。
+
+更准确地说：输入为旧 v1 时，脚本只会修正坐标 min-max；输入为 v2 时连坐标也不会重新归一化。两种情况下，所有物理量都保持原 mean-std 数值不变。真实数据验证确认，“v1 直接修正并下采样”和“先生成完整 v2 再下采样”的坐标、物理量和采样索引逐元素完全一致。
+
+### 8.5 指定原始输入和输出目录
 
 ```bash
 /opt/anaconda3/envs/pgd-no/bin/python \
@@ -304,7 +412,7 @@ cd /Users/zhangbojun/ML_Turbulent
   --output-dir /path/to/pkl_output
 ```
 
-### 8.4 保留 10 个原始案例并清理其余原始目录
+### 8.6 保留 10 个原始案例并清理其余原始目录
 
 ```bash
 /opt/anaconda3/envs/pgd-no/bin/python \
