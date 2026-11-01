@@ -10,6 +10,7 @@ from models.RETO_plus import Model as RETO_plus
 # from models.figconv import Multi_grid_model
 
 from utils.ml import train, test
+from datetime import datetime
 
 import os
 import torch
@@ -100,7 +101,9 @@ args = parser.parse_args()
 model_name = args.model_name
 predicted_feature_name = args.predicted_feature_name
 phase = args.phase
-model_flag = model_name + '_' + predicted_feature_name
+
+ts = datetime.now().strftime('%Y%m%d_%H%M')  # 整个实验共用一个时间戳
+model_flag = f"{model_name}_{predicted_feature_name}_{ts}"
 num_epochs = args.num_epochs
 
 save_path = Path(f"experiment_{args.exp}") / f"best_model_{model_flag}.pth"
