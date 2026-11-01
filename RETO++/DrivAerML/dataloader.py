@@ -230,8 +230,17 @@ def _get_raw_coords(sample, normalization_scalars=None, predicted_feature_name="
         if normalization_scalars is None:
             raw_coords = coords
         else:
-            coords_min = np.asarray(normalization_scalars["coords_min"], dtype=np.float32)
-            coords_range = np.asarray(normalization_scalars["coords_range"], dtype=np.float32)
+            prefix = "surface_coords" if input_key == "x_surface" else "volume_coords"
+            min_key = f"{prefix}_min"
+            range_key = f"{prefix}_range"
+            # DrivAerML v2 separates car-surface and volume-domain ranges.
+            # Retain v1 fallback so existing datasets still load correctly.
+            if min_key not in normalization_scalars:
+                min_key = "coords_min"
+            if range_key not in normalization_scalars:
+                range_key = "coords_range"
+            coords_min = np.asarray(normalization_scalars[min_key], dtype=np.float32)
+            coords_range = np.asarray(normalization_scalars[range_key], dtype=np.float32)
             raw_coords = coords * coords_range + coords_min
     elif "coor_raw" in sample:
         raw_coords = np.asarray(sample["coor_raw"], dtype=np.float32)

@@ -5,12 +5,13 @@
 默认数据目录：
 
 ```text
-/Users/zhangbojun/ML_Turbulent/preprocess/drivaerML_N100_000
+/Users/zhangbojun/ML_Turbulent/preprocess/drivaerML_N100_000_v2
 ```
 
 PKL 已由预处理阶段完成归一化，训练代码不会再次归一化：
 
-- `x_surface`、`x_volume`：全数据集 min-max；
+- `x_surface`：使用 `surface_coords_min/range` 做全数据集 min-max；
+- `x_volume`：使用 `volume_coords_min/range` 做全数据集 min-max；
 - `y_spressure`、`y_wss`、`y_velocity`、`volume_cell_totalpcoeff`：全数据集逐分量 mean-std；
 - 验证和测试：使用 `normalization_scalars.pkl` 反归一化后计算物理尺度相对 L2。
 
@@ -24,6 +25,8 @@ PKL 已由预处理阶段完成归一化，训练代码不会再次归一化：
 | `volume_totalpcoeff` | `x_volume` | `volume_cell_totalpcoeff` | 1 |
 
 `main.py` 会自动根据任务校正 `out_dim`。缺少所选输入或输出字段的部分样本会被自动排除；当前表面任务可用 484 个样本，体场任务可用 465 个样本。
+
+DataLoader 会按任务自动选择坐标标尺：表面压力/WSS 使用 surface 统计量，体速度/总压系数使用 volume 统计量。旧 v1 数据仍可读取，但正式训练建议先通过 `preprocess/process_DrivAerML.py --source-pkl-dir ...` 迁移为 v2。
 
 ## 已适配模型
 

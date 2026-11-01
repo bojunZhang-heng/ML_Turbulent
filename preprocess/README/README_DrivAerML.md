@@ -8,7 +8,7 @@
 
 该脚本用于将 DrivAerML 数据集原始的 `run_*` 目录和 NPY 文件转换为逐样本 PKL 文件，并完成：
 
-- 坐标的全数据集 min-max 归一化；
+- 表面坐标和体场坐标分别进行全数据集 min-max 归一化；
 - 物理量的全数据集、逐分量 mean-std 归一化；
 - 归一化统计量保存；
 - 完整样本与残缺样本标记；
@@ -107,7 +107,7 @@ numpy.float32
 
 ```python
 {
-    "schema_version": "drivaerml-normalized-v1",
+    "schema_version": "drivaerml-normalized-v2",
     "sample_id": 1,
     "source_run": "run_1",
     "complete": True,
@@ -121,8 +121,8 @@ numpy.float32
     "volume_cell_totalpcoeff": np.ndarray,  # (100000, 1)
 
     "normalization": {
-        "x_surface": "global_shared_minmax",
-        "x_volume": "global_shared_minmax",
+        "x_surface": "global_surface_minmax",
+        "x_volume": "global_volume_minmax",
         "y_spressure": "global_componentwise_mean_std",
         "y_velocity": "global_componentwise_mean_std",
         "y_wss": "global_componentwise_mean_std",
@@ -178,18 +178,23 @@ normalization_scalars["empty_runs"]
 
 ## 6. 坐标归一化
 
-`x_surface` 和 `x_volume` 属于同一个物理坐标系，因此二者共同统计一套全局坐标范围：
+`x_surface` 和 `x_volume` 虽然属于同一个物理坐标系，但汽车表面只占外流场很小一部分。如果共享外流场范围，表面坐标会被压缩在非常窄的区间。因此 v2 分别统计：
 
 ```python
-coords_min
-coords_max
-coords_range = coords_max - coords_min
+surface_coords_min
+surface_coords_max
+surface_coords_range
+
+volume_coords_min
+volume_coords_max
+volume_coords_range
 ```
 
-归一化公式为：
+归一化公式分别为：
 
 ```text
-x_normalized = (x - coords_min) / coords_range
+x_surface_normalized = (x_surface - surface_coords_min) / surface_coords_range
+x_volume_normalized  = (x_volume  - volume_coords_min)  / volume_coords_range
 ```
 
 数学形式：
@@ -201,14 +206,26 @@ x_normalized = (x - coords_min) / coords_range
 {\boldsymbol x_{\max}-\boldsymbol x_{\min}}
 \]
 
-这里的最小值和最大值是按 XYZ 三个分量分别统计的，不是每个样本单独归一化。
+两套统计量都是对整个数据集计算，不是每个样本单独归一化，因此不会丢失车型间的绝对尺寸差异。
 
-当前数据统计为：
+旧版 v1 共享外流场统计为：
 
 ```text
 coords_min   = [-39.673187, -21.620352, -0.31757465]
 coords_max   = [ 79.66567,   21.620361, 19.329884]
 coords_range = [119.33886,   43.240715, 19.647459]
+```
+
+从当前 484 个旧 PKL 恢复物理坐标后得到的 v2 统计为：
+
+```text
+surface_coords_min   = [-0.942528, -1.131201, -0.317553]
+surface_coords_max   = [ 4.132584,  1.131636,  1.249010]
+surface_coords_range = [ 5.075111,  2.262836,  1.566563]
+
+volume_coords_min   = [-39.673187, -21.620352, -0.317575]
+volume_coords_max   = [ 79.665670,  21.620363, 19.329884]
+volume_coords_range = [119.338860,  43.240715, 19.647459]
 ```
 
 全数据集复核结果为：
@@ -221,7 +238,8 @@ coords_range = [119.33886,   43.240715, 19.647459]
 ### 6.1 坐标反归一化
 
 ```python
-x_physical = x_normalized * coords_range + coords_min
+x_surface_physical = x_surface_normalized * surface_coords_range + surface_coords_min
+x_volume_physical = x_volume_normalized * volume_coords_range + volume_coords_min
 ```
 
 ## 7. 物理量归一化
@@ -300,7 +318,7 @@ velocity = (
 3. 检查 NaN 和 Inf；
 4. 检查表面数据节点数是否一致；
 5. 检查体积数据节点数是否一致；
-6. 统计所有表面和体积坐标的全局 min/max；
+6. 分别统计表面坐标和体积坐标的全局 min/max；
 7. 使用稳定的在线算法统计各物理量 mean/std；
 8. 记录完整、部分和空样本。
 
@@ -333,9 +351,12 @@ velocity = (
 
 ```text
 schema_version
-coords_min
-coords_max
-coords_range
+surface_coords_min
+surface_coords_max
+surface_coords_range
+volume_coords_min
+volume_coords_max
+volume_coords_range
 coordinate_fields
 physical_fields
 field_mapping
@@ -381,7 +402,7 @@ volume_points
 
 ### 10.1 重要前提
 
-当前数据目录中的原始 `run_*` 已经删除，因此不能直接在当前目录重新运行转换。
+当前数据目录中的原始 `run_*` 已经删除，因此不能从 NPY 重新转换，但可以利用旧 PKL 和旧 `normalization_scalars.pkl` 恢复物理坐标并迁移为 v2。
 
 如果以后重新下载或恢复原始数据，需要保证目录类似：
 
@@ -393,7 +414,35 @@ some_original_directory/
 └── run_500/
 ```
 
-### 10.2 保留原始 run 目录进行转换
+### 10.2 原始 NPY 已删除：从现有 PKL 迁移为 v2
+
+```bash
+cd /Users/zhangbojun/ML_Turbulent
+
+/opt/anaconda3/envs/pgd-no/bin/python \
+  preprocess/process_DrivAerML.py \
+  --source-pkl-dir /Users/zhangbojun/ML_Turbulent/preprocess/drivaerML_N100_000 \
+  --output-dir /Users/zhangbojun/ML_Turbulent/preprocess/drivaerML_N100_000_v2 \
+  --overwrite
+```
+
+为了保证旧数据始终可恢复，输入和输出目录禁止相同。迁移过程：
+
+1. 使用旧 `coords_min/coords_range` 恢复物理坐标；
+2. 分别统计 surface 和 volume 的数据集级 min-max；
+3. 只替换 `x_surface/x_volume`；
+4. 原样保留 `y_spressure/y_wss/y_velocity/volume_cell_totalpcoeff`。
+
+真实 484 个样本的验证结果：
+
+```text
+表面归一化全局范围：[0,1]
+体场归一化全局范围：[0,1]
+恢复物理坐标最大误差：2.38e-7
+全部物理量数组逐元素完全不变
+```
+
+### 10.3 保留原始 run 目录进行转换
 
 推荐先使用单独的输出目录：
 
@@ -408,7 +457,7 @@ cd /Users/zhangbojun/ML_Turbulent
 
 这种模式不会修改或删除原始 NPY 数据。
 
-### 10.3 直接在数据根目录生成 PKL
+### 10.4 直接在数据根目录生成 PKL
 
 不指定 `--output-dir` 时，PKL 会直接写入 `--data-dir`：
 
@@ -420,7 +469,7 @@ cd /Users/zhangbojun/ML_Turbulent
 
 执行完成后，PKL 和 `run_*` 会暂时共存。
 
-### 10.4 覆盖已有 PKL
+### 10.5 覆盖已有 PKL
 
 ```bash
 /opt/anaconda3/envs/pgd-no/bin/python \
@@ -431,7 +480,7 @@ cd /Users/zhangbojun/ML_Turbulent
 
 不加 `--overwrite` 时，如果目标 PKL 已存在，程序会停止，防止意外覆盖。
 
-### 10.5 转换完成后删除 run 目录
+### 10.6 转换完成后删除 run 目录
 
 只有明确不再需要原始 NPY 时才使用：
 
@@ -466,6 +515,7 @@ cd /Users/zhangbojun/ML_Turbulent
 | 参数 | 默认值 | 说明 |
 |---|---|---|
 | `--data-dir` | 当前 DrivAerML 路径 | 原始 `run_*` 所在目录 |
+| `--source-pkl-dir` | 关闭 | 已处理的 v1/v2 PKL 输入目录 |
 | `--output-dir` | 与 `data-dir` 相同 | PKL 输出目录 |
 | `--overwrite` | 关闭 | 覆盖已有 PKL |
 | `--remove-source-runs` | 关闭 | 验证成功后永久删除 `run_*` |
@@ -515,8 +565,10 @@ scalars_path = (
 with open(scalars_path, "rb") as file:
     scalars = pickle.load(file)
 
-print(scalars["coords_min"])
-print(scalars["coords_max"])
+print(scalars["surface_coords_min"])
+print(scalars["surface_coords_max"])
+print(scalars["volume_coords_min"])
+print(scalars["volume_coords_max"])
 print(scalars["y_spressure_mean"])
 print(scalars["y_spressure_std"])
 print(scalars["y_velocity_mean"])
@@ -586,10 +638,10 @@ y = sample["y_velocity"]      # (100000, 3)
 ## 16. 注意事项
 
 1. 坐标采用全数据集统一 min-max，不是每辆车独立归一化。
-2. `x_surface` 和 `x_volume` 共用坐标标尺，能够保持二者的相对空间关系。
+2. `x_surface` 和 `x_volume` 使用各自的数据集级标尺；模型按任务选择对应标尺。
 3. 不同物理量分别计算 mean/std，不能使用压力统计量反归一化速度。
 4. 三维速度和 WSS 均为逐分量标准化。
 5. 部分样本不能直接参与表面和体积联合训练。
 6. `--remove-source-runs` 是不可恢复操作，只应在完整验证后使用。
-7. 当前目录已经没有原始 NPY；若需要重新生成，必须重新下载或恢复原始 `run_*` 数据。
+7. 当前目录没有原始 NPY，但可以通过旧 PKL 的可逆 min-max 变换迁移为 v2。
 

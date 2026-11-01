@@ -360,6 +360,17 @@ y_velocity
 
 如果只训练表面压力，不必先保存一整份巨大的 v2 全量数据。专用脚本可以直接读取旧 v1 PKL：第一遍恢复物理坐标并计算 surface min-max，第二遍重新归一化并写出 10k 表面数据。压强和 WSS 不会再次归一化。
 
+cd /Users/zhangbojun/ML_Turbulent
+
+/opt/anaconda3/envs/pgd-no/bin/python \
+  preprocess/downsample_DrivAerStar.py \
+  --input-dir /你的完整v2数据目录 \
+  --output-dir /你的下采样输出目录 \
+  --point-set both \
+  --num-points 100000 \
+  --method random \
+  --overwrite
+  
 表面压力任务推荐直接执行：
 
 ```bash

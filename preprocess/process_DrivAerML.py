@@ -1,16 +1,22 @@
 #!/usr/bin/env python3
-"""Convert DrivAerML run directories into normalized per-sample PKL files.
+"""Convert DrivAerML data into normalized per-sample PKL files.
 
 All non-empty ``run_<id>`` directories are converted.  Complete and partial
 runs are both preserved; each PKL records whether all expected arrays were
 available.  The source run directories are read-only by default and may be
 removed only with the explicit ``--remove-source-runs`` option after every
 output has been verified.
+
+Surface and volume coordinates use independent dataset-wide min-max ranges.
+Legacy v1 PKLs can be migrated without the deleted NPY sources by reversing
+their old shared transform. Physical fields remain unchanged during migration.
 """
 
 from __future__ import annotations
 
 import argparse
+import copy
+import gc
 import os
 import pickle
 import re
@@ -110,6 +116,15 @@ def parse_args() -> argparse.Namespace:
         help="Directory containing run_<id> subdirectories.",
     )
     parser.add_argument(
+        "--source-pkl-dir",
+        type=Path,
+        default=None,
+        help=(
+            "Migrate existing normalized v1/v2 PKLs instead of reading run_* "
+            "NPY directories. Requires normalization_scalars.pkl."
+        ),
+    )
+    parser.add_argument(
         "--output-dir",
         type=Path,
         default=None,
@@ -129,6 +144,43 @@ def parse_args() -> argparse.Namespace:
         ),
     )
     return parser.parse_args()
+
+
+COORDINATE_FIELDS = ("x_surface", "x_volume")
+COORDINATE_PREFIX = {
+    "x_surface": "surface_coords",
+    "x_volume": "volume_coords",
+}
+
+
+def coordinate_scalar_keys(field: str) -> tuple[str, str, str]:
+    try:
+        prefix = COORDINATE_PREFIX[field]
+    except KeyError as error:
+        raise ValueError(f"Unknown coordinate field: {field!r}") from error
+    return f"{prefix}_min", f"{prefix}_max", f"{prefix}_range"
+
+
+def coordinate_scalars(
+    scalars: dict[str, Any], field: str
+) -> tuple[np.ndarray, np.ndarray]:
+    """Resolve v2 field-specific or legacy v1 shared coordinate statistics."""
+
+    min_key, _, range_key = coordinate_scalar_keys(field)
+    if min_key in scalars and range_key in scalars:
+        return (
+            np.asarray(scalars[min_key], dtype=np.float32),
+            np.asarray(scalars[range_key], dtype=np.float32),
+        )
+    if "coords_min" in scalars and "coords_range" in scalars:
+        return (
+            np.asarray(scalars["coords_min"], dtype=np.float32),
+            np.asarray(scalars["coords_range"], dtype=np.float32),
+        )
+    raise KeyError(
+        f"No coordinate statistics for {field!r}; expected {min_key!r}/"
+        f"{range_key!r} or legacy coords_min/coords_range"
+    )
 
 
 def run_id(path: Path) -> int:
@@ -165,8 +217,13 @@ def validate_alignment(arrays: dict[str, np.ndarray], run: Path) -> None:
 
 
 def inspect_runs(run_dirs: list[Path]) -> tuple[list[dict[str, Any]], dict[str, Any]]:
-    coords_min = np.full(3, np.inf, dtype=np.float64)
-    coords_max = np.full(3, -np.inf, dtype=np.float64)
+    coordinate_bounds = {
+        field: {
+            "min": np.full(3, np.inf, dtype=np.float64),
+            "max": np.full(3, -np.inf, dtype=np.float64),
+        }
+        for field in COORDINATE_FIELDS
+    }
     moments = {
         spec.output_name: RunningMoments()
         for spec in FIELD_SPECS
@@ -186,8 +243,9 @@ def inspect_runs(run_dirs: list[Path]) -> tuple[list[dict[str, Any]], dict[str, 
             arrays[spec.output_name] = values
             available_files.append(spec.source_name)
             if spec.kind == "coordinate":
-                coords_min = np.minimum(coords_min, values.min(axis=0))
-                coords_max = np.maximum(coords_max, values.max(axis=0))
+                bounds = coordinate_bounds[spec.output_name]
+                bounds["min"] = np.minimum(bounds["min"], values.min(axis=0))
+                bounds["max"] = np.maximum(bounds["max"], values.max(axis=0))
             else:
                 moments[spec.output_name].update(values)
 
@@ -221,24 +279,19 @@ def inspect_runs(run_dirs: list[Path]) -> tuple[list[dict[str, Any]], dict[str, 
     nonempty = [record for record in records if record["available_files"]]
     if not nonempty:
         raise RuntimeError("All run directories are empty")
-    if not np.isfinite(coords_min).all() or not np.isfinite(coords_max).all():
-        raise RuntimeError("No coordinate arrays were found")
-
-    coords_range = coords_max - coords_min
-    coords_range[coords_range <= np.finfo(np.float32).eps] = 1.0
+    for field, bounds in coordinate_bounds.items():
+        if not np.isfinite(bounds["min"]).all() or not np.isfinite(bounds["max"]).all():
+            raise RuntimeError(f"No coordinate arrays were found for {field}")
     scalars: dict[str, Any] = {
-        "schema_version": "drivaerml-normalized-v1",
-        "coords_min": coords_min.astype(np.float32),
-        "coords_max": coords_max.astype(np.float32),
-        "coords_range": coords_range.astype(np.float32),
-        "coordinate_fields": ("x_surface", "x_volume"),
+        "schema_version": "drivaerml-normalized-v2",
+        "coordinate_fields": COORDINATE_FIELDS,
         "physical_fields": tuple(moments),
         "field_mapping": {
             spec.source_name: spec.output_name for spec in FIELD_SPECS
         },
         "normalization": {
-            "x_surface": "global_shared_minmax",
-            "x_volume": "global_shared_minmax",
+            "x_surface": "global_surface_minmax",
+            "x_volume": "global_volume_minmax",
             **{name: "global_componentwise_mean_std" for name in moments},
         },
         "samples": nonempty,
@@ -250,6 +303,13 @@ def inspect_runs(run_dirs: list[Path]) -> tuple[list[dict[str, Any]], dict[str, 
             record["source_run"] for record in records if not record["available_files"]
         ],
     }
+    for field, bounds in coordinate_bounds.items():
+        values_range = bounds["max"] - bounds["min"]
+        values_range[values_range <= np.finfo(np.float32).eps] = 1.0
+        min_key, max_key, range_key = coordinate_scalar_keys(field)
+        scalars[min_key] = bounds["min"].astype(np.float32)
+        scalars[max_key] = bounds["max"].astype(np.float32)
+        scalars[range_key] = values_range.astype(np.float32)
     for name, accumulator in moments.items():
         mean, std = accumulator.statistics()
         scalars[f"{name}_mean"] = mean
@@ -287,8 +347,11 @@ def convert_run(
             continue
         values = load_array(source, spec)
         if spec.kind == "coordinate":
+            coords_min, coords_range = coordinate_scalars(
+                scalars, spec.output_name
+            )
             values = (
-                (values - scalars["coords_min"]) / scalars["coords_range"]
+                (values - coords_min) / coords_range
             ).astype(np.float32, copy=False)
         else:
             values = (
@@ -323,6 +386,198 @@ def verify_output(
             values = sample[spec.output_name]
             if values.dtype != np.float32 or not np.isfinite(values).all():
                 raise RuntimeError(f"Invalid normalized field in {destination}: {spec.output_name}")
+            if spec.kind == "coordinate" and (
+                np.any(values < -1.0e-5) or np.any(values > 1.0 + 1.0e-5)
+            ):
+                raise RuntimeError(
+                    f"Normalized coordinate outside [0,1] in {destination}: "
+                    f"{spec.output_name}"
+                )
+
+
+def numbered_pkl_paths(directory: Path) -> list[Path]:
+    return sorted(
+        (path for path in directory.glob("*.pkl") if path.stem.isdigit()),
+        key=lambda path: int(path.stem),
+    )
+
+
+def verify_migrated_sample(path: Path) -> None:
+    with path.open("rb") as stream:
+        sample = pickle.load(stream)
+    arrays = {
+        key: value for key, value in sample.items() if isinstance(value, np.ndarray)
+    }
+    validate_alignment(arrays, path)
+    for key, values in arrays.items():
+        if values.dtype != np.float32 or not np.isfinite(values).all():
+            raise RuntimeError(f"Invalid array {key!r} in {path}")
+        if key in COORDINATE_FIELDS and (
+            np.any(values < -1.0e-5) or np.any(values > 1.0 + 1.0e-5)
+        ):
+            raise RuntimeError(f"Migrated {key} outside [0,1] in {path}")
+
+
+def migrate_processed_pkls(
+    source_dir: Path,
+    output_dir: Path,
+    overwrite: bool,
+) -> int:
+    """Migrate old shared-coordinate PKLs to independent v2 coordinates."""
+
+    source_dir = source_dir.expanduser().resolve()
+    output_dir = output_dir.expanduser().resolve()
+    if not source_dir.is_dir():
+        raise NotADirectoryError(f"Source PKL directory not found: {source_dir}")
+    if source_dir == output_dir:
+        raise ValueError(
+            "Migration output must differ from --source-pkl-dir so recoverable "
+            "source PKLs cannot be overwritten"
+        )
+    source_scalar_path = source_dir / SCALARS_FILENAME
+    if not source_scalar_path.is_file():
+        raise FileNotFoundError(f"Missing {source_scalar_path}")
+    with source_scalar_path.open("rb") as stream:
+        source_scalars = pickle.load(stream)
+    if not isinstance(source_scalars, dict):
+        raise TypeError(f"Expected scalar dictionary in {source_scalar_path}")
+    paths = numbered_pkl_paths(source_dir)
+    if not paths:
+        raise FileNotFoundError(f"No numbered PKLs found in {source_dir}")
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+    existing = numbered_pkl_paths(output_dir)
+    output_scalar_path = output_dir / SCALARS_FILENAME
+    if (existing or output_scalar_path.exists()) and not overwrite:
+        first = existing[0] if existing else output_scalar_path
+        raise FileExistsError(f"Migration output exists: {first}; use --overwrite")
+    if overwrite:
+        for path in existing:
+            path.unlink()
+        if output_scalar_path.exists():
+            output_scalar_path.unlink()
+        for path in output_dir.glob("*.pkl.tmp"):
+            path.unlink()
+
+    bounds = {
+        field: {
+            "min": np.full(3, np.inf, dtype=np.float64),
+            "max": np.full(3, -np.inf, dtype=np.float64),
+        }
+        for field in COORDINATE_FIELDS
+    }
+    records: list[dict[str, Any]] = []
+    print(f"PKL migration source : {source_dir}")
+    print(f"PKL migration output : {output_dir}")
+    print(f"Samples              : {len(paths)}")
+
+    # Pass 1: recover physical coordinates and collect independent bounds.
+    for position, path in enumerate(paths, start=1):
+        with path.open("rb") as stream:
+            sample = pickle.load(stream)
+        available_coordinates = []
+        for field in COORDINATE_FIELDS:
+            if field not in sample:
+                continue
+            old_min, old_range = coordinate_scalars(source_scalars, field)
+            physical = (
+                np.asarray(sample[field], dtype=np.float32) * old_range + old_min
+            )
+            bounds[field]["min"] = np.minimum(
+                bounds[field]["min"], physical.min(axis=0)
+            )
+            bounds[field]["max"] = np.maximum(
+                bounds[field]["max"], physical.max(axis=0)
+            )
+            available_coordinates.append(field)
+        if not available_coordinates:
+            raise ValueError(f"{path} contains no coordinate field")
+        records.append(
+            {
+                "run_id": int(path.stem),
+                "surface_points": int(len(sample.get("x_surface", ()))),
+                "volume_points": int(len(sample.get("x_volume", ()))),
+            }
+        )
+        print(f"[recover statistics {position}/{len(paths)}] {path.name}")
+        del sample
+        gc.collect()
+
+    new_scalars = copy.deepcopy(source_scalars)
+    new_scalars.pop("coords_min", None)
+    new_scalars.pop("coords_max", None)
+    new_scalars.pop("coords_range", None)
+    new_scalars["schema_version"] = "drivaerml-normalized-v2"
+    new_scalars["coordinate_fields"] = COORDINATE_FIELDS
+    new_scalars["migrated_from_schema"] = source_scalars.get("schema_version")
+    new_scalars["migrated_from_directory"] = str(source_dir)
+    new_scalars["output_dir"] = str(output_dir)
+    new_scalars["num_converted_samples"] = len(paths)
+    normalization = dict(new_scalars.get("normalization", {}))
+    normalization.update(
+        {
+            "x_surface": "global_surface_minmax",
+            "x_volume": "global_volume_minmax",
+        }
+    )
+    new_scalars["normalization"] = normalization
+    migrated_ids = {int(path.stem) for path in paths}
+    source_records = source_scalars.get("samples")
+    if isinstance(source_records, list):
+        filtered = [
+            record
+            for record in source_records
+            if isinstance(record, dict)
+            and int(record.get("run_id", record.get("sample_id", -1)))
+            in migrated_ids
+        ]
+        new_scalars["samples"] = filtered or records
+    else:
+        new_scalars["samples"] = records
+    for field, field_bounds in bounds.items():
+        if not np.isfinite(field_bounds["min"]).all():
+            raise RuntimeError(f"No {field} arrays found during migration")
+        values_range = field_bounds["max"] - field_bounds["min"]
+        values_range[values_range <= np.finfo(np.float32).eps] = 1.0
+        min_key, max_key, range_key = coordinate_scalar_keys(field)
+        new_scalars[min_key] = field_bounds["min"].astype(np.float32)
+        new_scalars[max_key] = field_bounds["max"].astype(np.float32)
+        new_scalars[range_key] = values_range.astype(np.float32)
+
+    # Pass 2: only replace coordinates; physical arrays stay unchanged.
+    for position, path in enumerate(paths, start=1):
+        with path.open("rb") as stream:
+            sample = pickle.load(stream)
+        for field in COORDINATE_FIELDS:
+            if field not in sample:
+                continue
+            old_min, old_range = coordinate_scalars(source_scalars, field)
+            physical = (
+                np.asarray(sample[field], dtype=np.float32) * old_range + old_min
+            )
+            new_min, new_range = coordinate_scalars(new_scalars, field)
+            sample[field] = ((physical - new_min) / new_range).astype(
+                np.float32, copy=False
+            )
+        sample["schema_version"] = new_scalars["schema_version"]
+        sample_normalization = dict(sample.get("normalization", {}))
+        for field in COORDINATE_FIELDS:
+            if field in sample:
+                group = "surface" if field == "x_surface" else "volume"
+                sample_normalization[field] = f"global_{group}_minmax"
+        sample["normalization"] = sample_normalization
+        destination = output_dir / path.name
+        atomic_pickle_dump(sample, destination)
+        verify_migrated_sample(destination)
+        print(f"[migrate {position}/{len(paths)}] {path.name}")
+        del sample
+        gc.collect()
+
+    atomic_pickle_dump(new_scalars, output_scalar_path)
+    print(f"Migration complete: {len(paths)} samples")
+    print(f"Normalization scalars: {output_scalar_path}")
+    print("Physical fields were copied without re-normalization.")
+    return 0
 
 
 def main() -> int:
@@ -333,6 +588,18 @@ def main() -> int:
         if args.output_dir is not None
         else data_dir
     )
+    if args.source_pkl_dir is not None:
+        if args.remove_source_runs:
+            raise ValueError(
+                "--remove-source-runs cannot be used with --source-pkl-dir"
+            )
+        if args.output_dir is None:
+            raise ValueError(
+                "PKL migration requires --output-dir different from source"
+            )
+        return migrate_processed_pkls(
+            args.source_pkl_dir, output_dir, args.overwrite
+        )
     if not data_dir.is_dir():
         raise NotADirectoryError(f"Dataset directory not found: {data_dir}")
     output_dir.mkdir(parents=True, exist_ok=True)
