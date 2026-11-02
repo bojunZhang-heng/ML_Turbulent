@@ -1,6 +1,5 @@
 import pickle
-
-file_path="/data/zhangbojun/DrivAerStar/pklFile_v2/normalization_scalars.pkl"
+file_path="/Users/zhangbojun/ML_Turbulent/preprocess/drivaerML_N100_000/1.pkl"
 with open(file_path, "rb") as f:
     data = pickle.load(f)
 
