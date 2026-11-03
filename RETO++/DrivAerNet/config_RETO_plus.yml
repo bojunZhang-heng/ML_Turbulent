@@ -60,42 +60,42 @@ data:
   # (vehicle, ID) keys prevent collisions between equal numeric filenames.
   vehicle_datasets:
     E_S_WWC_WM:
-      #path: E_S_WWC_WMpklFile_10k
-      path: E_S_WWC_WMpklFile
-      count: 100
+      path: E_S_WWC_WMpklFile_10k
+      #path: E_S_WWC_WMpklFile
+      count: 200
       enabled: true
     E_S_WW_WM:
-      #path: E_S_WW_WMpklFile_10k
-      path: E_S_WW_WMpklFile
-      count: 100
+      path: E_S_WW_WMpklFile_10k
+      #path: E_S_WW_WMpklFile
+      count: 200
       enabled: true
     F_S_WWC_WM:
-      #path: F_S_WWC_WMpklFile_10k
-      path: F_S_WWC_WMpklFile
-      count: 100
+      path: F_S_WWC_WMpklFile_10k
+      #path: F_S_WWC_WMpklFile
+      count: 200
       enabled: true
     F_S_WWS_WM:
-      #path: F_S_WWS_WMpklFile_10k
-      path: F_S_WWS_WMpklFile
-      count: 100
+      path: F_S_WWS_WMpklFile_10k
+      #path: F_S_WWS_WMpklFile
+      count: 200
       enabled: true
     N_S_WWS_WM:
-      #path: N_S_WWS_WMpklFile_10k
-      path: N_S_WWS_WMpklFile
-      count: 100
+      path: N_S_WWS_WMpklFile_10k
+      #path: N_S_WWS_WMpklFile
+      count: 200
       enabled: true
     N_S_WWC_WM:
-      #path: N_S_WWC_WMpklFile_10k
-      path: N_S_WWC_WMpklFile
-      count: 100
+      path: N_S_WWC_WMpklFile_10k
+      #path: N_S_WWC_WMpklFile
+      count: 200
       enabled: true
     N_S_WW_WM:
-      #path: N_S_WW_WMpklFile_10k
-      path: N_S_WW_WMpklFile
-      count: 100
+      path: N_S_WW_WMpklFile_10k
+      #path: N_S_WW_WMpklFile
+      count: 200
       enabled: true
     F_D_WM_WW:
-      #path: F_D_WM_WWpklFile_10k
-      path: F_D_WM_WWpklFile
-      count: 100
+      path: F_D_WM_WWpklFile_10k
+      #path: F_D_WM_WWpklFile
+      count: 200
       enabled: true
