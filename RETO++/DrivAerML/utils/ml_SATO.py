@@ -20,6 +20,7 @@ RAW_COORD_ROPE_MODELS = {
     "RopeLinearNO_v2",
     "RopeLinearNO_v3",
     "RETO_plus",
+    "RETO_plus_v2",
     "CANO_GatedRope",
 }
 SEGMENTED_SER = {"Transolver_seg_ser"}

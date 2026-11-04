@@ -38,6 +38,7 @@ RopeLinearNO_v2
 RopeLinearNO_v3
 CANO
 RETO_plus
+RETO_plus_v2
 CANO_GatedRope
 LinearNO_se
 SATO
@@ -57,6 +58,12 @@ cd /Users/zhangbojun/ML_Turbulent/RETO++/DrivAerML
 
 ```bash
 /opt/anaconda3/envs/pgd-no/bin/python main.py --config config_RETO_plus.yml
+```
+
+RETO+ v2 将输入预处理替换为连续正余弦坐标编码：
+
+```bash
+/opt/anaconda3/envs/pgd-no/bin/python main.py --config config_RETO_plus_v2.yml
 ```
 
 用同一模型训练体速度：

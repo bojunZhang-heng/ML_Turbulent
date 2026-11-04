@@ -1,8 +1,8 @@
 """Unified DrivAerML training API.
 
 The project historically had separate ``ml.py`` and ``ml_SATO.py`` loops.
-They now share the same implementation so every supported model receives the
-same AMP, serialization, physical-unit validation and testing behavior.
+They now share the same implementation so RETO_plus_v2 receives the same AMP,
+serialization, physical-unit validation and testing behavior as RETO_plus.
 """
 
 from utils.ml_SATO import (  # noqa: F401

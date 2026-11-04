@@ -8,6 +8,7 @@ from models.transolver_model import Model as Transolver_Model
 from models.LinearAttnNeuralOperator import LinearAttentionNeuralOperator as LinearNO
 from models.CANO import LinearAttentionNeuralOperator as CANO
 from models.RETO_plus import Model as RETO_plus
+from models.RETO_plus_v2 import Model as RETO_plus_v2
 from models.SATO import Model as SATO
 from datetime import datetime
 
@@ -115,6 +116,7 @@ parser.add_argument('--checkpoint_segment_size', type=int, default=config.get('c
 parser.add_argument('--checkpoint_num_blocks', type=int, default=config.get('checkpoint_num_blocks', None))
 parser.add_argument('--layer_scale_init', type=float, default=config.get('layer_scale_init', 0.1))
 parser.add_argument('--initial_rope_gate', type=float, default=config.get('initial_rope_gate', 0.05))
+parser.add_argument('--sincos_max_wavelength', type=int, default=config.get('sincos_max_wavelength', 10000))
 args = parser.parse_args()
 
 # set the experiment settings
@@ -133,7 +135,7 @@ def main():
     Main function to run training and testing.
     """
     print("🚀 Starting VTK Data Processing Pipeline")
-    supported_models = {"CANO", "LinearNO", "Transolver", "RETO_plus", "SATO"}
+    supported_models = {"CANO", "LinearNO", "Transolver", "RETO_plus", "RETO_plus_v2", "SATO"}
     if model_name not in supported_models:
         raise ValueError(
             f"DrivAerStar supports {sorted(supported_models)}, got {model_name!r}"
@@ -212,6 +214,7 @@ def main():
         'LinearNO',
         'CANO',
         'RETO_plus',
+        'RETO_plus_v2',
         'SATO',
     }
     train_loader, val_loader, test_loader, normalization_scalars = create_data_loaders(
@@ -319,6 +322,30 @@ def main():
             checkpoint_num_blocks=args.checkpoint_num_blocks,
             layer_scale_init=args.layer_scale_init,
             cluster_temperature_init=args.cluster_temperature_init,
+        )
+    elif model_name == 'RETO_plus_v2':
+        model = RETO_plus_v2(
+            space_dim=args.space_dim,
+            n_layers=args.n_layers,
+            n_hidden=args.n_hidden,
+            dropout=args.dropout,
+            n_head=args.n_head,
+            Time_Input=args.time_input,
+            act=args.act,
+            mlp_ratio=args.mlp_ratio,
+            fun_dim=args.fun_dim,
+            out_dim=args.out_dim,
+            key_ratio=args.key_ratio,
+            ref=args.ref,
+            unified_pos=args.unified_pos,
+            isregular=args.isregular,
+            cluster_num=args.cluster_num,
+            num_position_frequencies=args.num_position_frequencies,
+            checkpoint_segment_size=args.checkpoint_segment_size,
+            checkpoint_num_blocks=args.checkpoint_num_blocks,
+            layer_scale_init=args.layer_scale_init,
+            cluster_temperature_init=args.cluster_temperature_init,
+            sincos_max_wavelength=args.sincos_max_wavelength,
         )
     elif model_name == 'SATO':
         model = SATO(
