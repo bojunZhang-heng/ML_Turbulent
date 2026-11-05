@@ -16,8 +16,9 @@ import sys
 import zipfile
 from pathlib import Path
 
-import requests
-from huggingface_hub import get_token, hf_hub_download
+from huggingface_hub import HfApi, get_token, hf_hub_download
+from huggingface_hub.errors import HfHubHTTPError
+from requests import RequestException
 
 
 REPO_ID = "drivaerstar000/drivaerstar"
@@ -40,13 +41,18 @@ def parse_args() -> argparse.Namespace:
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_WINDOWS_OUTPUT)
-    parser.add_argument("--start-case", type=int, default=401)
-    parser.add_argument("--end-case", type=int, default=800)
+    parser.add_argument("--start-case", type=int, default=1)
+    parser.add_argument("--end-case", type=int, default=200)
     parser.add_argument(
         "--max-cases",
         type=int,
         default=0,
         help="Limit selected cases for a test; zero means no limit.",
+    )
+    parser.add_argument(
+        "--allow-missing-cases",
+        action="store_true",
+        help="Download available cases even when an ID in the range is missing.",
     )
     parser.add_argument(
         "--file-types",
@@ -95,32 +101,62 @@ def resolve_token() -> str:
 
 
 def discover_files(
+    revision: str,
     endpoint: str,
     token: str,
     start_case: int,
     end_case: int,
     file_types: list[str],
 ) -> dict[int, list[str]]:
-    print("Reading the Hugging Face repository file list...")
-    response = requests.get(
-        f"{endpoint.rstrip('/')}/api/datasets/{REPO_ID}",
-        headers={"Authorization": f"Bearer {token}"},
-        timeout=120,
+    """Discover requested files through the paginated repository-tree API."""
+    print("Reading the paginated Hugging Face case_E file tree...")
+    api = HfApi(endpoint=endpoint, token=token)
+    requested_suffixes = {
+        name: FILE_SUFFIXES[name] for name in file_types
+    }
+    discovered: dict[int, dict[str, str]] = {}
+    entries = api.list_repo_tree(
+        repo_id=REPO_ID,
+        path_in_repo="case_E",
+        recursive=True,
+        expand=False,
+        revision=revision,
+        repo_type=REPO_TYPE,
+        token=token,
     )
-    response.raise_for_status()
-    repo_files = [item["rfilename"] for item in response.json().get("siblings", [])]
-    requested_suffixes = tuple(FILE_SUFFIXES[name] for name in file_types)
-    selected: dict[int, list[str]] = {}
-    for filename in repo_files:
+    for entry in entries:
+        filename = getattr(entry, "path", "")
         match = CASE_PATTERN.fullmatch(filename)
         if match is None:
             continue
         case_id = int(match.group(1))
-        if start_case <= case_id <= end_case and filename.endswith(requested_suffixes):
-            selected.setdefault(case_id, []).append(filename)
-    for filenames in selected.values():
-        filenames.sort()
-    return dict(sorted(selected.items()))
+        if not start_case <= case_id <= end_case:
+            continue
+        for file_type, suffix in requested_suffixes.items():
+            if filename.endswith(suffix):
+                case_files = discovered.setdefault(case_id, {})
+                if file_type in case_files:
+                    raise RuntimeError(
+                        f"Case {case_id:05d} has more than one {file_type} file"
+                    )
+                case_files[file_type] = filename
+
+    incomplete = {
+        case_id: sorted(set(file_types) - set(case_files))
+        for case_id, case_files in discovered.items()
+        if set(case_files) != set(file_types)
+    }
+    if incomplete:
+        preview = ", ".join(
+            f"{case_id:05d} missing {missing}"
+            for case_id, missing in list(incomplete.items())[:10]
+        )
+        raise RuntimeError(f"Incomplete cases found: {preview}")
+
+    return {
+        case_id: [case_files[file_type] for file_type in file_types]
+        for case_id, case_files in sorted(discovered.items())
+    }
 
 
 def print_plan(
@@ -203,18 +239,27 @@ def main() -> int:
     token = resolve_token()
     try:
         cases = discover_files(
+            args.revision,
             args.endpoint,
             token,
             args.start_case,
             args.end_case,
             args.file_types,
         )
-    except requests.RequestException as error:
+    except (HfHubHTTPError, RequestException) as error:
         raise RuntimeError(
             "Unable to list the gated DrivAerStar repository. Confirm that the "
             "network is available and the logged-in Hugging Face account has "
             "been approved for access."
         ) from error
+    requested_case_ids = set(range(args.start_case, args.end_case + 1))
+    missing_case_ids = sorted(requested_case_ids - set(cases))
+    if missing_case_ids and not args.allow_missing_cases:
+        preview = ", ".join(f"{case_id:05d}" for case_id in missing_case_ids[:20])
+        raise FileNotFoundError(
+            f"The requested range is missing {len(missing_case_ids)} case IDs: "
+            f"{preview}. Use --allow-missing-cases only if this is expected."
+        )
     available_case_count = len(cases)
     if args.max_cases:
         cases = dict(list(cases.items())[: args.max_cases])
