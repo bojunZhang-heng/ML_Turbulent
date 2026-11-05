@@ -14,7 +14,7 @@ SEGMENTED_MODELS = {
     "SegLinearNO",
     "SegLinearNO_v2",
 }
-LINEAR_MODELS = {"LinearNO", "RopeLinearNO", "CANO"}
+LINEAR_MODELS = {"LinearNO", "RopeLinearNO", "CANO", "RETO"}
 LINEAR_MODEL_SE = {"LinearNO_se", "SATO"}
 RAW_COORD_ROPE_MODELS = {
     "RopeLinearNO_v2",

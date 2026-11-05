@@ -23,6 +23,10 @@ __pycache__/
 **/experiment_ShapeNet/
 **/experiment_DrivAerNet/
 **/*.yml
+!RETO++/DrivAerML/config_RETO.yml
+!RETO++/DrivAerStar/config_RETO.yml
+!RETO++/DrivAerNet/config_RETO.yml
+!RETO++/ShapeNet/config_RETO.yml
 
 .vscode
 

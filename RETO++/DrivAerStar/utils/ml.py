@@ -1,7 +1,7 @@
 """Unified DrivAerStar training API.
 
 The project historically had separate ``ml.py`` and ``ml_SATO.py`` loops.
-They now share the same implementation so RETO_plus_v2 receives the same AMP,
+They now share the same implementation so RETO and RETO_plus_v2 receive the same AMP,
 physical-unit validation and testing behavior as RETO_plus.
 """
 

@@ -9,6 +9,7 @@ from models.LinearAttnNeuralOperator import LinearAttentionNeuralOperator as Lin
 from models.CANO import LinearAttentionNeuralOperator as CANO
 from models.RETO_plus import Model as RETO_plus
 from models.RETO_plus_v2 import Model as RETO_plus_v2
+from models.RETO import Model as RETO
 from models.SATO import Model as SATO
 from datetime import datetime
 
@@ -117,6 +118,7 @@ parser.add_argument('--checkpoint_num_blocks', type=int, default=config.get('che
 parser.add_argument('--layer_scale_init', type=float, default=config.get('layer_scale_init', 0.1))
 parser.add_argument('--initial_rope_gate', type=float, default=config.get('initial_rope_gate', 0.05))
 parser.add_argument('--sincos_max_wavelength', type=int, default=config.get('sincos_max_wavelength', 10000))
+parser.add_argument('--rope_max_wavelength', type=int, default=config.get('rope_max_wavelength', 10000))
 args = parser.parse_args()
 
 # set the experiment settings
@@ -135,7 +137,7 @@ def main():
     Main function to run training and testing.
     """
     print("🚀 Starting VTK Data Processing Pipeline")
-    supported_models = {"CANO", "LinearNO", "Transolver", "RETO_plus", "RETO_plus_v2", "SATO"}
+    supported_models = {"CANO", "LinearNO", "Transolver", "RETO", "RETO_plus", "RETO_plus_v2", "SATO"}
     if model_name not in supported_models:
         raise ValueError(
             f"DrivAerStar supports {sorted(supported_models)}, got {model_name!r}"
@@ -215,6 +217,7 @@ def main():
         'CANO',
         'RETO_plus',
         'RETO_plus_v2',
+        'RETO',
         'SATO',
     }
     train_loader, val_loader, test_loader, normalization_scalars = create_data_loaders(
@@ -346,6 +349,19 @@ def main():
             layer_scale_init=args.layer_scale_init,
             cluster_temperature_init=args.cluster_temperature_init,
             sincos_max_wavelength=args.sincos_max_wavelength,
+        )
+    elif model_name == 'RETO':
+        model = RETO(
+            space_dim=args.space_dim,
+            n_layers=args.n_layers,
+            n_hidden=args.n_hidden,
+            dropout=args.dropout,
+            n_head=args.n_head,
+            act=args.act,
+            mlp_ratio=args.mlp_ratio,
+            out_dim=args.out_dim,
+            sincos_max_wavelength=args.sincos_max_wavelength,
+            rope_max_wavelength=args.rope_max_wavelength,
         )
     elif model_name == 'SATO':
         model = SATO(

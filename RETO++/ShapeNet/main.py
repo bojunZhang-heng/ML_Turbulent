@@ -3,6 +3,8 @@ from models.transolver_model import Model as Transolver_Model
 from models.CANO import Model as CANO
 from models.LinearAttnNeuralOperator import LinearAttentionNeuralOperator as LinearNO
 from models.RETO_plus import Model as RETO_plus
+from models.RETO_plus_v2 import Model as RETO_plus_v2
+from models.RETO import Model as RETO
 
 
 # from models.mlp import MLP as MLP_Model
@@ -92,6 +94,8 @@ parser.add_argument('--time_input', action=argparse.BooleanOptionalAction, defau
 parser.add_argument('--cluster_num', type=int, default=config.get('cluster_num', 64))
 parser.add_argument('--cluster_temperature_init', type=float, default=config.get('cluster_temperature_init', 1.0))
 parser.add_argument('--num_position_frequencies', type=int, default=config.get('num_position_frequencies', 6))
+parser.add_argument('--sincos_max_wavelength', type=int, default=config.get('sincos_max_wavelength', 10000))
+parser.add_argument('--rope_max_wavelength', type=int, default=config.get('rope_max_wavelength', 10000))
 parser.add_argument('--checkpoint_segment_size', type=int, default=config.get('checkpoint_segment_size', 2))
 parser.add_argument('--checkpoint_num_blocks', type=int, default=config.get('checkpoint_num_blocks', None))
 parser.add_argument('--layer_scale_init', type=float, default=config.get('layer_scale_init', 0.1))
@@ -174,7 +178,7 @@ def main():
             f"YAML model.space_dim={args.space_dim}, but the dataset provides "
             f"{input_dim} input channels"
         )
-    if model_name in {"RETO_plus", "CANO", "Transolver"} and input_dim != 7:
+    if model_name in {"RETO", "RETO_plus", "RETO_plus_v2", "CANO", "Transolver"} and input_dim != 7:
         raise ValueError(
             f"ShapeNet {model_name} expects seven input channels "
             "[x, y, z, sdf, normal_x, normal_y, normal_z], "
@@ -277,6 +281,43 @@ def main():
             checkpoint_num_blocks=args.checkpoint_num_blocks,
             layer_scale_init=args.layer_scale_init,
             cluster_temperature_init=args.cluster_temperature_init,
+        )
+    elif model_name == 'RETO_plus_v2':
+        model = RETO_plus_v2(
+            space_dim=args.space_dim,
+            n_layers=args.n_layers,
+            n_hidden=args.n_hidden,
+            dropout=args.dropout,
+            n_head=args.n_head,
+            Time_Input=args.time_input,
+            act=args.act,
+            mlp_ratio=args.mlp_ratio,
+            fun_dim=args.fun_dim,
+            out_dim=args.out_dim,
+            key_ratio=args.key_ratio,
+            ref=args.ref,
+            unified_pos=args.unified_pos,
+            isregular=args.isregular,
+            cluster_num=args.cluster_num,
+            num_position_frequencies=args.num_position_frequencies,
+            checkpoint_segment_size=args.checkpoint_segment_size,
+            checkpoint_num_blocks=args.checkpoint_num_blocks,
+            layer_scale_init=args.layer_scale_init,
+            cluster_temperature_init=args.cluster_temperature_init,
+            sincos_max_wavelength=args.sincos_max_wavelength,
+        )
+    elif model_name == 'RETO':
+        model = RETO(
+            space_dim=args.space_dim,
+            n_layers=args.n_layers,
+            n_hidden=args.n_hidden,
+            dropout=args.dropout,
+            n_head=args.n_head,
+            act=args.act,
+            mlp_ratio=args.mlp_ratio,
+            out_dim=args.out_dim,
+            sincos_max_wavelength=args.sincos_max_wavelength,
+            rope_max_wavelength=args.rope_max_wavelength,
         )
     else:
         raise ValueError(f"Model name {model_name} not supported")
