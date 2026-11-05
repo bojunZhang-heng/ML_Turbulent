@@ -50,9 +50,9 @@ def parse_args() -> argparse.Namespace:
         help="Limit selected cases for a test; zero means no limit.",
     )
     parser.add_argument(
-        "--allow-missing-cases",
+        "--require-complete-range",
         action="store_true",
-        help="Download available cases even when an ID in the range is missing.",
+        help="Fail instead of skipping case IDs that do not exist in the repository.",
     )
     parser.add_argument(
         "--file-types",
@@ -254,11 +254,18 @@ def main() -> int:
         ) from error
     requested_case_ids = set(range(args.start_case, args.end_case + 1))
     missing_case_ids = sorted(requested_case_ids - set(cases))
-    if missing_case_ids and not args.allow_missing_cases:
+    if missing_case_ids and args.require_complete_range:
         preview = ", ".join(f"{case_id:05d}" for case_id in missing_case_ids[:20])
         raise FileNotFoundError(
             f"The requested range is missing {len(missing_case_ids)} case IDs: "
-            f"{preview}. Use --allow-missing-cases only if this is expected."
+            f"{preview}. Remove --require-complete-range to skip them."
+        )
+    if missing_case_ids:
+        preview = ", ".join(f"{case_id:05d}" for case_id in missing_case_ids[:20])
+        suffix = " ..." if len(missing_case_ids) > 20 else ""
+        print(
+            f"WARNING: skipping {len(missing_case_ids)} case IDs that are absent "
+            f"from the repository: {preview}{suffix}"
         )
     available_case_count = len(cases)
     if args.max_cases:
