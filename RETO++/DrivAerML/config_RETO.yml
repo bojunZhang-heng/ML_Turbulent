@@ -1,0 +1,36 @@
+# Run from RETO++/DrivAerML:
+#   python main.py --config config_RETO.yml
+
+experiment:
+  exp: DrivAerML_RETO
+  model_name: RETO
+  predicted_feature_name: surface_pressure
+  phase: restart_train
+
+model:
+  space_dim: 3
+  out_dim: 1
+  n_layers: 8
+  n_hidden: 256
+  dropout: 0.0
+  act: gelu
+  mlp_ratio: 2
+
+position_encoding:
+  sincos_max_wavelength: 10000
+  rope_max_wavelength: 10000
+
+training:
+  num_epochs: 200
+  eval_freq: 1
+  learning_rate: 1.0e-3
+  batch_size: 1
+  shuffle: true
+
+data:
+  data_path: /data/zhangbojun/DrivAerML_10k/
+  selection_mode: random
+  selection_seed: 42
+  train_ratio: 0.6
+  val_ratio: 0.3
+  test_ratio: 0.1
