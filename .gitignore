@@ -38,3 +38,5 @@ preprocess/E_S_WW_WM_small
 preprocess/mlcfd_data
 preprocess/DrivAerStar/
 preprocess/drivaerML_N100_000
+preprocess/drivaerML_N100_000_v2/
+preprocess/DrivAerNet-CFD
