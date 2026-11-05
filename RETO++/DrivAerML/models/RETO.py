@@ -15,6 +15,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from einops import rearrange
 from timm.layers import trunc_normal_
+from torch.utils.checkpoint import checkpoint
 
 
 ACTIVATION = {
@@ -187,6 +188,8 @@ class Model(nn.Module):
         out_dim=1,
         sincos_max_wavelength=10000,
         rope_max_wavelength=10000,
+        checkpoint_segment_size=2,
+        checkpoint_num_blocks=None,
         **_: Any,
     ):
         super().__init__()
@@ -194,8 +197,17 @@ class Model(nn.Module):
             raise ValueError("space_dim must be positive")
         if n_layers < 1 or n_hidden % n_head:
             raise ValueError("Invalid layer count or hidden/head dimensions")
+        if checkpoint_segment_size < 1:
+            raise ValueError("checkpoint_segment_size must be at least 1")
+        if checkpoint_num_blocks is not None and not 0 <= checkpoint_num_blocks <= n_layers:
+            raise ValueError("checkpoint_num_blocks must be between 0 and n_layers")
         self.space_dim = space_dim
         self.n_hidden = n_hidden
+        self.checkpoint_segment_size = checkpoint_segment_size
+        self.checkpoint_num_blocks = (
+            n_layers if checkpoint_num_blocks is None else checkpoint_num_blocks
+        )
+        self.checkpoint_preserve_rng_state = dropout > 0.0
         self.pos_embed = ContinuousSincosEmbed(n_hidden, space_dim, sincos_max_wavelength)
         self.preprocess = MLP(n_hidden, n_hidden * 2, n_hidden, 0, act, False)
         self.rope = RopeFrequency(n_hidden, space_dim, rope_max_wavelength)
@@ -222,6 +234,34 @@ class Model(nn.Module):
             nn.init.constant_(module.bias, 0)
             nn.init.constant_(module.weight, 1.0)
 
+    def _forward_block_range(self, features, freqs, start, end):
+        for block_index in range(start, end):
+            features = self.blocks[block_index](features, freqs)
+        return features
+
+    def _forward_blocks(self, features, freqs, start=0, end=None):
+        if end is None:
+            end = len(self.blocks)
+        return self._forward_block_range(features, freqs, start, end)
+
+    def _forward_with_checkpoint(self, features, freqs, end_block):
+        for start in range(0, end_block, self.checkpoint_segment_size):
+            end = min(start + self.checkpoint_segment_size, end_block)
+
+            def run_segment(segment_features, segment_freqs, start=start, end=end):
+                return self._forward_block_range(
+                    segment_features, segment_freqs, start, end
+                )
+
+            features = checkpoint(
+                run_segment,
+                features,
+                freqs,
+                use_reentrant=False,
+                preserve_rng_state=self.checkpoint_preserve_rng_state,
+            )
+        return features
+
     def forward(self, x):
         if x.ndim != 3 or x.shape[-1] != self.space_dim:
             raise ValueError(
@@ -230,9 +270,16 @@ class Model(nn.Module):
         freqs = self.rope(x)
         features = self.preprocess(self.pos_embed(x))
         features = features + self.placeholder.to(dtype=features.dtype)[None, None, :]
-        for block in self.blocks:
-            features = block(features, freqs)
-        return features
+        if self.training and self.checkpoint_num_blocks > 0:
+            features = self._forward_with_checkpoint(
+                features, freqs, self.checkpoint_num_blocks
+            )
+            if self.checkpoint_num_blocks < len(self.blocks):
+                features = self._forward_blocks(
+                    features, freqs, start=self.checkpoint_num_blocks
+                )
+            return features
+        return self._forward_blocks(features, freqs)
 
 
 LinearAttentionNeuralOperator = Model

@@ -22,3 +22,17 @@ python main.py --config config_RETO.yml
 `model.space_dim` 必须与 pickle 中的输入通道数一致（默认 7），`out_dim` 必须
 为 4。`sincos_max_wavelength` 和 `rope_max_wavelength` 可在配置文件中调整。
 RETO 与 RETO_plus/RETO_plus_v2 的 checkpoint 结构不同，请重新训练。
+
+## Activation checkpoint
+
+默认配置将 8 个 RETO block 的前 6 个按每 2 层一段执行 activation
+checkpoint，最后 2 层正常保存激活：
+
+```yaml
+checkpoint:
+  checkpoint_segment_size: 2
+  checkpoint_num_blocks: 6
+```
+
+设 `checkpoint_num_blocks: 0` 可关闭，设为 8 可对全部层启用。更多 checkpoint
+通常降低显存但增加反向计算时间；验证和测试阶段不会启用重计算。

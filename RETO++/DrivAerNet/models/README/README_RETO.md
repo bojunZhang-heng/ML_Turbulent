@@ -24,3 +24,17 @@ python main.py --config config_RETO.yml
 车型选择、每车型样本数和数据划分在 YAML 的 `data.vehicle_datasets` 中设置。
 `sincos_max_wavelength` 与 `rope_max_wavelength` 位于
 `position_encoding`。该模型的 checkpoint 不能与 RETO_plus 直接复用。
+
+## Activation checkpoint
+
+RETO 使用分段 activation checkpoint 平衡显存与速度。默认 8 层模型重计算
+前 6 层，每段包含 2 层，最后 2 层保持普通 autograd：
+
+```yaml
+checkpoint:
+  checkpoint_segment_size: 2
+  checkpoint_num_blocks: 6
+```
+
+设 `checkpoint_num_blocks: 0` 可关闭；设为与 `n_layers` 相同可获得更大的激活
+显存节省，但训练更慢。该功能只在训练模式启用，验证和测试自动走普通前向。

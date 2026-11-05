@@ -400,6 +400,8 @@ def main():
             out_dim=args.out_dim,
             sincos_max_wavelength=args.sincos_max_wavelength,
             rope_max_wavelength=args.rope_max_wavelength,
+            checkpoint_segment_size=args.checkpoint_segment_size,
+            checkpoint_num_blocks=args.checkpoint_num_blocks,
         )
     elif model_name == 'CANO_GatedRope':
         model = CANO_GatedRope(

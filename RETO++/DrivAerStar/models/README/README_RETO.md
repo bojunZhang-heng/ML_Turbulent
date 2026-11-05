@@ -21,3 +21,16 @@ python main.py --config config_RETO.yml
 
 可在配置中调整模型宽度、层数以及 `sincos_max_wavelength`、
 `rope_max_wavelength`。RETO checkpoint 与 RETO_plus 不兼容，请重新训练。
+
+## Activation checkpoint
+
+默认对 8 层中的前 6 层启用 checkpoint，每 2 层组成一个重计算分段：
+
+```yaml
+checkpoint:
+  checkpoint_segment_size: 2
+  checkpoint_num_blocks: 6
+```
+
+`checkpoint_num_blocks: 0` 表示关闭；提高到 8 会进一步降低训练显存，但增加
+反向重计算时间。checkpoint 只在 `model.train()` 阶段生效，验证和测试不重算。

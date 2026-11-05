@@ -27,5 +27,19 @@ python main.py --config config_RETO.yml
 主要参数位于 `config_RETO.yml`：`n_layers`、`n_hidden`、`n_head`、
 `mlp_ratio`、`sincos_max_wavelength` 和 `rope_max_wavelength`。
 
+## Activation checkpoint
+
+训练阶段支持与 `RETO_plus` 相同的分段 activation checkpoint。默认配置为：
+
+```yaml
+checkpoint:
+  checkpoint_segment_size: 2
+  checkpoint_num_blocks: 6
+```
+
+对于默认 8 层模型，前 6 层按每 2 层一段进行反向重计算，最后 2 层正常保存
+激活，以平衡显存和训练速度。设为 `checkpoint_num_blocks: 0` 可关闭；设为 8
+可对全部层启用，显存更低但训练更慢。验证和测试阶段自动禁用 checkpoint。
+
 旧的 `RETO_plus` checkpoint 与本模型结构不同，不能直接加载；请使用新的
 实验目录，并设置 `phase: restart_train`。
