@@ -1,5 +1,3 @@
-
-
 # 模型记录
 ## DrivAerStar
 ### 569组-10k-pressure
@@ -11,3 +9,4 @@
 0.218    best_model_RETO_plus_surface_pressure_20261102_0922.pth
 
 
+2762924 RETO_plus_v2
