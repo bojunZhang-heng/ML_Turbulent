@@ -14,7 +14,11 @@
 0.175    best_model_RETO_plus_pressure_20261029_1231.pth
 0.178    best_model_CANO_pressure_20261029_1231.pth
 0.180    best_model_Transolver_pressure_20261029_1231.pth
+0.177    best_model_RETO_plus_v2_pressure_20261105_0910.pth
 
+
+2800914 RETO_plus_v2
+2801125 RETO_plus_v2
 
 ### 8种车型-1600组-10k-pressure
 

@@ -14,6 +14,7 @@
   Test Cd relative error: 0.015862
 
 2763192 RETO_plus_v2
+2801581 RETO_plus_v2
 
 ### CANO
 #### best_model_CANO_p_and_v_2026-1101.pth

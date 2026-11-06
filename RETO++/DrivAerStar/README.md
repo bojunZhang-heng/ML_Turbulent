@@ -8,5 +8,4 @@
 
 0.218    best_model_RETO_plus_surface_pressure_20261102_0922.pth
 
-
-2762924 RETO_plus_v2
+0.205    best_model_RETO_plus_v2_surface_pressure_20261105_0915.pth
