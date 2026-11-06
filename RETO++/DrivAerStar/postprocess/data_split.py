@@ -15,8 +15,40 @@ CONFIG_SECTIONS = ("experiment", "model", "attention", "position_encoding",
 
 
 def load_config(path: Path):
-    with Path(path).open("r", encoding="utf-8") as stream:
-        raw = yaml.safe_load(stream) or {}
+    path = Path(path)
+    text = path.read_text(encoding="utf-8")
+    tab_lines = [
+        index for index, line in enumerate(text.splitlines(), start=1)
+        if "\t" in line
+    ]
+    if tab_lines:
+        raise ValueError(
+            f"YAML indentation cannot contain Tab characters: {path}; "
+            f"lines={tab_lines}. Replace each Tab with two spaces."
+        )
+    try:
+        raw = yaml.safe_load(text) or {}
+    except yaml.YAMLError as error:
+        mark = getattr(error, "problem_mark", None)
+        lines = text.splitlines()
+        if mark is None:
+            context = "<line information unavailable>"
+        else:
+            error_line = mark.line + 1
+            start = max(1, error_line - 3)
+            end = min(len(lines), error_line + 3)
+            context = "\n".join(
+                f"{line_number:>5}: {lines[line_number - 1]!r}"
+                for line_number in range(start, end + 1)
+            )
+        raise ValueError(
+            f"Invalid YAML syntax in {path}. YAML hierarchy must use spaces "
+            f"consistently (this project uses two spaces per level).\n"
+            f"Context around the parser error:\n{context}\n"
+            f"Original parser message: {error}"
+        ) from error
+    if not isinstance(raw, dict):
+        raise TypeError(f"YAML root must be a mapping in {path}")
     flat = {key: value for key, value in raw.items() if not isinstance(value, dict)}
     for section in CONFIG_SECTIONS:
         values = raw.get(section, {}) or {}

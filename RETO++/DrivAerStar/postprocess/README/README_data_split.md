@@ -21,6 +21,8 @@ raw_config, flat_config
 - `raw_config` 保留 YAML 层级，用于读取 `vehicle_datasets`；
 - `flat_config` 把各分组键合并，便于按 `cfg["n_hidden"]` 取值。
 
+加载前会检查 Tab，并在 YAML 缩进或语法错误时打印出错行前后三行。YAML 层级统一使用两个空格，不能使用 Tab。
+
 ### `resolve_test_data(raw_cfg, cfg, override=None)`
 
 支持：
