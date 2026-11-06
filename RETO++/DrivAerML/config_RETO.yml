@@ -32,7 +32,7 @@ training:
   shuffle: true
 
 data:
-  data_path: /data/zhangbojun/DrivAerML_10k/
+  data_path: /data/zhangbojun/DrivAerML/pklFile_10k/
   selection_mode: random
   selection_seed: 42
   train_ratio: 0.6
