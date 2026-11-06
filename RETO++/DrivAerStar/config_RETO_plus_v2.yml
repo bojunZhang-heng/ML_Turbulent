@@ -29,13 +29,13 @@ checkpoint:
   checkpoint_segment_size: 2
   checkpoint_num_blocks: 6
 training:
-  num_epochs: 200
+  num_epochs: 3
   eval_freq: 1
   learning_rate: 1.0e-3
   batch_size: 1
   shuffle: true
 data:
-  data_path: /data/zhangbojun/DrivAerStar/pklFile_10k/
+  data_path: /Users/zhangbojun/ML_Turbulent/preprocess/DrivAerStar
   selection_mode: random
   selection_seed: 42
   train_ratio: 0.6
