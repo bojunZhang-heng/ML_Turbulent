@@ -3,6 +3,9 @@
 每个 Python 子文件的逐文件说明位于 `README/`，总索引为
 `README/README_INDEX.md`。
 
+脚本默认打印配置、测试案例、逐案例指标、完整汇总指标和效率数据，可通过
+`> postprocess.log 2>&1` 或 `2>&1 | tee postprocess.log` 保存运行日志。
+
 本目录把模型构建、测试集推理、指标计算和出图分开。主入口是
 `evaluate_models.py`，可以一次比较多个 checkpoint。所有场误差先通过
 `normalization_scalars.pkl` 反归一化，再在真实物理量尺度上计算。

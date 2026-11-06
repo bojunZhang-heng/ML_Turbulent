@@ -44,6 +44,12 @@ def parse_args():
     parser.add_argument("--amp", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--plot-case-id", default=None, help="Case ID for GT/prediction/error field maps")
     parser.add_argument("--save-predictions", action="store_true")
+    parser.add_argument(
+        "--print-per-case",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="Print every case metric so terminal output can be redirected to a log.",
+    )
     parser.add_argument("--bootstrap-samples", type=int, default=2000)
     parser.add_argument("--coefficient-csv", type=Path, default=None)
     parser.add_argument("--attention-npz", type=Path, default=None)
@@ -66,6 +72,50 @@ def parse_args():
         parser.error("every run LABEL must be unique")
     args.runs = [(label, Path(config), Path(checkpoint)) for label, config, checkpoint in runs]
     return args
+
+
+def _print_json(title, value):
+    print(f"\n{'=' * 24} {title} {'=' * 24}", flush=True)
+    print(json.dumps(value, ensure_ascii=False, indent=2, default=str), flush=True)
+
+
+def _print_launch_configuration(args):
+    configuration = {
+        "runs": [
+            {
+                "label": label,
+                "config": str(config.resolve()),
+                "checkpoint": str(checkpoint.resolve()),
+            }
+            for label, config, checkpoint in args.runs
+        ],
+        "data_path_override": str(args.data_path.resolve()) if args.data_path else None,
+        "output_dir": str(args.output_dir.resolve()),
+        "max_test_samples": args.max_test_samples or "all",
+        "device": args.device,
+        "amp_requested": args.amp,
+        "bootstrap_samples": args.bootstrap_samples,
+        "print_per_case": args.print_per_case,
+        "save_predictions": args.save_predictions,
+        "plot_case_id": args.plot_case_id,
+        "coefficient_csv": str(args.coefficient_csv) if args.coefficient_csv else None,
+        "attention_npz": str(args.attention_npz) if args.attention_npz else None,
+        "scaling_csv": str(args.scaling_csv) if args.scaling_csv else None,
+        "ablation_csv": str(args.ablation_csv) if args.ablation_csv else None,
+        "seed": args.seed,
+    }
+    _print_json("POSTPROCESS CONFIGURATION", configuration)
+
+
+def _print_output_inventory(output_dir):
+    files = sorted(path for path in Path(output_dir).rglob("*") if path.is_file())
+    print(f"\n{'=' * 24} OUTPUT FILES {'=' * 24}", flush=True)
+    if not files:
+        print("No output files were generated.", flush=True)
+        return
+    for path in files:
+        size_mb = path.stat().st_size / 1024**2
+        print(f"{path.resolve()}  ({size_mb:.6f} MiB)", flush=True)
 
 
 def _write_case_csv(path, all_rows):
@@ -94,17 +144,25 @@ def _validate_comparison(summaries):
 def main():
     args = parse_args()
     args.output_dir.mkdir(parents=True, exist_ok=True)
+    _print_launch_configuration(args)
     figure_dir = args.output_dir / "figures"
     summaries, all_rows, cases = {}, {}, {}
 
     for label, config_path, checkpoint in args.runs:
         raw_cfg, cfg = load_config(config_path)
+        _print_json(f"FLATTENED YAML: {label}", cfg)
         summary, rows, selected_case = evaluate_run(
             label, config_path, checkpoint, raw_cfg, cfg, args
         )
         summaries[label] = summary
         all_rows[label] = rows
         cases[label] = selected_case
+        printable_summary = dict(summary)
+        printable_summary["test_case_ids"] = {
+            "count": len(summary["test_case_ids"]),
+            "values": summary["test_case_ids"],
+        }
+        _print_json(f"MODEL RESULT: {label}", printable_summary)
 
     _validate_comparison(summaries)
     comparison = {
@@ -129,6 +187,7 @@ def main():
     if args.coefficient_csv:
         coefficient_data, coefficient_metrics = read_coefficient_csv(args.coefficient_csv, labels)
         comparison["aerodynamic_coefficients"] = coefficient_metrics
+        _print_json("AERODYNAMIC COEFFICIENT METRICS", coefficient_metrics)
 
     summary_path = args.output_dir / "summary.json"
     with summary_path.open("w", encoding="utf-8") as stream:
@@ -158,12 +217,17 @@ def main():
     if args.ablation_csv:
         plot_ablation_csv(args.ablation_csv, figure_dir / "ablation.png")
 
+    _print_json("PAIRED MODEL COMPARISON", comparison["paired_relative_l2"])
+
     print("\nModel comparison (physical-unit, equal-case relative L2)")
     for label, summary in summaries.items():
         metric = summary["physical_metrics"]["case_equal_weighted"]["relative_l2"]
         print(f"  {label:20s} mean={metric['mean']:.6g}  median={metric['median']:.6g}  p95={metric['p95']:.6g}")
     print(f"\nSummary: {summary_path.resolve()}")
+    print(f"Per-case CSV: {(args.output_dir / 'per_case_metrics.csv').resolve()}")
     print(f"Figures: {figure_dir.resolve()}")
+    _print_output_inventory(args.output_dir)
+    print("Postprocess completed successfully.", flush=True)
     return 0
 
 

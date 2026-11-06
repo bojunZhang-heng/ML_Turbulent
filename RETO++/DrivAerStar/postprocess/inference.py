@@ -66,6 +66,30 @@ def _component_names(task, count):
     return [f"{prefix}_{axis}" for axis in "xyz"] if count == 3 else [f"component_{i}" for i in range(count)]
 
 
+def _print_run_setup(label, model_name, task, config_path, checkpoint, device,
+                     amp_enabled, test_ids, data_source, parameter_count):
+    print(f"\n{'=' * 24} RUN START: {label} {'=' * 24}", flush=True)
+    print(f"model_name          : {model_name}", flush=True)
+    print(f"task                : {task}", flush=True)
+    print(f"config              : {Path(config_path).resolve()}", flush=True)
+    print(f"checkpoint          : {Path(checkpoint).resolve()}", flush=True)
+    print(f"data_source         : {data_source}", flush=True)
+    print(f"device              : {device}", flush=True)
+    print(f"amp_enabled         : {amp_enabled}", flush=True)
+    print(f"parameter_count     : {parameter_count}", flush=True)
+    print(f"test_case_count     : {len(test_ids)}", flush=True)
+    print(f"test_case_ids       : {test_ids}", flush=True)
+
+
+def _print_case_metrics(label, row):
+    values = "  ".join(
+        f"{key}={value:.8g}" if isinstance(value, (int, float)) and value is not None
+        else f"{key}={value}"
+        for key, value in row.items()
+    )
+    print(f"[case][{label}] {values}", flush=True)
+
+
 def evaluate_run(label, config_path, checkpoint, raw_cfg, cfg, args):
     model_name = str(cfg.get("model_name", ""))
     task = str(cfg.get("predicted_feature_name", "surface_pressure")).lower()
@@ -91,6 +115,11 @@ def evaluate_run(label, config_path, checkpoint, raw_cfg, cfg, args):
     model = model.float().to(device).eval()
     amp_available, amp_dtype, _ = configure_amp(device)
     amp_enabled = bool(args.amp and amp_available)
+    parameter_count = sum(parameter.numel() for parameter in model.parameters())
+    _print_run_setup(
+        label, model_name, task, config_path, checkpoint, device, amp_enabled,
+        test_ids, data_source, parameter_count,
+    )
     if device.type == "cuda":
         torch.cuda.empty_cache()
         torch.cuda.reset_peak_memory_stats(device)
@@ -146,6 +175,8 @@ def evaluate_run(label, config_path, checkpoint, raw_cfg, cfg, args):
                 accumulator.update(prediction, truth)
                 row = {"case_id": case_id, "points": int(truth.shape[0]), **case_metrics(prediction, truth)}
                 rows.append(row)
+                if getattr(args, "print_per_case", True):
+                    _print_case_metrics(label, row)
                 if prediction.shape[-1] == 3:
                     pred_mag = np.linalg.norm(prediction, axis=-1, keepdims=True)
                     true_mag = np.linalg.norm(truth, axis=-1, keepdims=True)
@@ -189,6 +220,8 @@ def evaluate_run(label, config_path, checkpoint, raw_cfg, cfg, args):
         "test_points": int(total_points), "normalized_mse": normalized_sse / max(normalized_count, 1),
         "physical_metrics": physical, "efficiency": efficiency,
     }
+    print(f"\n[run complete] {label}: cases={len(rows)}, points={total_points}, "
+          f"inference_seconds={elapsed:.8g}", flush=True)
     del model
     if device.type == "cuda":
         torch.cuda.empty_cache()
