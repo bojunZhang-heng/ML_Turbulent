@@ -35,7 +35,7 @@ from vtk.util.numpy_support import vtk_to_numpy
 
 
 DEFAULT_DATA_DIR = Path(
-    "/Users/zhangbojun/ML_Turbulent/preprocess/DrivAerStar"
+    r"/Users/zhangbojun/ML_Turbulent/preprocess/DrivAerStar"
 )
 SCALARS_FILENAME = "normalization_scalars.pkl"
 REQUIRED_CASE_SUFFIXES = (".geo", ".Pressure", ".Velocity", ".WallShearStress")
@@ -422,6 +422,16 @@ def collect_statistics(
             "y_velocity": "global_componentwise_mean_std",
             "y_wss": "global_componentwise_mean_std",
         },
+        "coordinate_normalization_scopes": {
+            "x_surface": {
+                "statistics_prefix": "surface_coords",
+                "population": "all selected automotive surface cell centers",
+            },
+            "x_volume": {
+                "statistics_prefix": "volume_coords",
+                "population": "all selected volume cell centers",
+            },
+        },
         "coordinate_semantics": "cell_centers",
         "surface_selection": (
             "2D EnSight parts with Pressure and WallShearStress, excluding "
@@ -627,6 +637,16 @@ def migrate_processed_pkls(
         }
     )
     new_scalars["normalization"] = normalization
+    new_scalars["coordinate_normalization_scopes"] = {
+        "x_surface": {
+            "statistics_prefix": "surface_coords",
+            "population": "all surface coordinates reconstructed from source PKLs",
+        },
+        "x_volume": {
+            "statistics_prefix": "volume_coords",
+            "population": "all volume coordinates reconstructed from source PKLs",
+        },
+    }
     new_scalars["migrated_from_schema"] = source_scalars.get("schema_version")
     new_scalars["migrated_from_directory"] = str(source_dir)
     new_scalars["output_dir"] = str(output_dir)
@@ -814,6 +834,20 @@ def main() -> int:
         verified_scalars = pickle.load(stream)
     if verified_scalars.get("num_samples") != len(case_paths):
         raise RuntimeError("normalization_scalars.pkl verification failed")
+    required_coordinate_keys = {
+        "surface_coords_min",
+        "surface_coords_max",
+        "surface_coords_range",
+        "volume_coords_min",
+        "volume_coords_max",
+        "volume_coords_range",
+    }
+    missing_coordinate_keys = required_coordinate_keys - set(verified_scalars)
+    if missing_coordinate_keys:
+        raise RuntimeError(
+            "Separate surface/volume normalization statistics are missing: "
+            f"{sorted(missing_coordinate_keys)}"
+        )
 
     for case_path in case_paths:
         if not (output_dir / f"{case_id(case_path)}.pkl").is_file():

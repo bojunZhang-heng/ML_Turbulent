@@ -47,7 +47,28 @@ def parse_args() -> argparse.Namespace:
         help="Legacy v1 or corrected v2 DrivAerStar PKL directory.",
     )
     parser.add_argument("--output-dir", type=Path, required=True)
-    parser.add_argument("--num-points", type=int, required=True)
+    parser.add_argument(
+        "--num-points",
+        type=int,
+        default=None,
+        help=(
+            "Backward-compatible point count applied to every selected point "
+            "set. For --point-set both, prefer --surface-num-points and "
+            "--volume-num-points."
+        ),
+    )
+    parser.add_argument(
+        "--surface-num-points",
+        type=int,
+        default=None,
+        help="Number of surface points retained in each output PKL.",
+    )
+    parser.add_argument(
+        "--volume-num-points",
+        type=int,
+        default=None,
+        help="Number of volume points retained in each output PKL.",
+    )
     parser.add_argument(
         "--point-set",
         choices=("surface", "volume", "both"),
@@ -62,9 +83,33 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--overwrite", action="store_true")
     args = parser.parse_args()
-    if args.num_points <= 0:
-        parser.error("--num-points must be positive")
+    for name in ("num_points", "surface_num_points", "volume_num_points"):
+        value = getattr(args, name)
+        if value is not None and value <= 0:
+            parser.error(f"--{name.replace('_', '-')} must be positive")
     return args
+
+
+def resolve_target_counts(args: argparse.Namespace) -> dict[str, int]:
+    """Resolve one target count per selected point set.
+
+    ``--num-points`` remains supported for old commands. Group-specific values
+    take precedence, allowing surface and volume arrays to remain together in
+    one PKL without forcing the same sample count.
+    """
+
+    groups = ("surface", "volume") if args.point_set == "both" else (args.point_set,)
+    targets: dict[str, int] = {}
+    for group in groups:
+        specific = getattr(args, f"{group}_num_points")
+        target = specific if specific is not None else args.num_points
+        if target is None:
+            option = f"--{group}-num-points"
+            raise ValueError(
+                f"No point count supplied for {group}; use {option} or --num-points"
+            )
+        targets[group] = int(target)
+    return targets
 
 
 def numbered_paths(directory: Path) -> list[Path]:
@@ -242,6 +287,14 @@ def prepare_output_scalars(
         output_scalars[range_key] = values_range.astype(np.float32)
         normalization[coordinate_key] = f"global_{group}_minmax"
     output_scalars["normalization"] = normalization
+    scopes = dict(output_scalars.get("coordinate_normalization_scopes", {}))
+    for group in groups:
+        coordinate_key = GROUPS[group]["coordinate"]
+        scopes[coordinate_key] = {
+            "statistics_prefix": f"{group}_coords",
+            "population": f"all {group} coordinates reconstructed from source PKLs",
+        }
+    output_scalars["coordinate_normalization_scopes"] = scopes
     return output_scalars, True
 
 
@@ -251,7 +304,7 @@ def downsample_sample(
     output_scalars: dict[str, Any],
     migrate_coordinates: bool,
     groups: tuple[str, ...],
-    target: int,
+    targets: dict[str, int],
     method: str,
     seed: int,
     sample_id: int,
@@ -283,6 +336,7 @@ def downsample_sample(
         rng = np.random.default_rng(
             np.random.SeedSequence([seed, sample_id, group_position])
         )
+        target = targets[group]
         indices = select_indices(coordinates, target, method, rng)
         for key in spec["fields"]:
             if key not in result:
@@ -329,10 +383,14 @@ def downsample_sample(
 
 
 def verify_output(
-    sample: dict[str, Any], groups: tuple[str, ...], target: int, path: Path
+    sample: dict[str, Any],
+    groups: tuple[str, ...],
+    targets: dict[str, int],
+    path: Path,
 ) -> None:
     for group in groups:
         spec = GROUPS[group]
+        target = targets[group]
         for key in spec["fields"]:
             if key not in sample:
                 continue
@@ -344,6 +402,33 @@ def verify_output(
         coords = sample[spec["coordinate"]]
         if np.any(coords < -1.0e-5) or np.any(coords > 1.0 + 1.0e-5):
             raise RuntimeError(f"Coordinates outside [0,1] in {path}")
+
+
+def verify_separate_coordinate_scalars(
+    scalars: dict[str, Any], groups: tuple[str, ...]
+) -> None:
+    """Require a dedicated min/max/range triplet for every retained point set."""
+
+    for group in groups:
+        missing = [
+            key for key in coordinate_stat_keys(group) if key not in scalars
+        ]
+        if missing:
+            raise RuntimeError(
+                f"Missing independent {group} coordinate statistics: {missing}"
+            )
+        min_key, max_key, range_key = coordinate_stat_keys(group)
+        minimum = np.asarray(scalars[min_key], dtype=np.float32)
+        maximum = np.asarray(scalars[max_key], dtype=np.float32)
+        values_range = np.asarray(scalars[range_key], dtype=np.float32)
+        if minimum.shape != (3,) or maximum.shape != (3,) or values_range.shape != (3,):
+            raise RuntimeError(f"Invalid {group} coordinate statistic shapes")
+        expected_range = maximum - minimum
+        expected_range[expected_range <= np.finfo(np.float32).eps] = 1.0
+        if np.any(values_range <= 0) or not np.allclose(
+            expected_range, values_range, rtol=1.0e-5, atol=1.0e-6
+        ):
+            raise RuntimeError(f"Invalid {group} min-max coordinate statistics")
 
 
 def main() -> int:
@@ -360,12 +445,14 @@ def main() -> int:
     with scalar_path.open("rb") as stream:
         scalars = pickle.load(stream)
     groups = ("surface", "volume") if args.point_set == "both" else (args.point_set,)
+    targets = resolve_target_counts(args)
     paths = numbered_paths(input_dir)
     if not paths:
         raise FileNotFoundError(f"No numbered PKLs found in {input_dir}")
     output_scalars, migrate_coordinates = prepare_output_scalars(
         scalars, paths, groups
     )
+    verify_separate_coordinate_scalars(output_scalars, groups)
 
     output_dir.mkdir(parents=True, exist_ok=True)
     planned = [output_dir / path.name for path in paths]
@@ -386,7 +473,7 @@ def main() -> int:
     print(f"Output      : {output_dir}")
     print(f"Samples     : {len(paths)}")
     print(f"Point sets  : {groups}")
-    print(f"Points/set  : {args.num_points}")
+    print(f"Point counts: {targets}")
     print(f"Method      : {args.method}")
     for position, path in enumerate(paths, start=1):
         with path.open("rb") as stream:
@@ -398,24 +485,34 @@ def main() -> int:
             output_scalars,
             migrate_coordinates,
             groups,
-            args.num_points,
+            targets,
             args.method,
             args.seed,
             sample_id,
         )
         destination = output_dir / path.name
         atomic_pickle_dump(result, destination)
-        verify_output(result, groups, args.num_points, destination)
+        verify_output(result, groups, targets, destination)
         print(f"[{position}/{len(paths)}] {path.name}")
         del sample, result
 
     output_scalars["downsampling"] = {
         "source_directory": str(input_dir),
         "point_sets": list(groups),
-        "num_points": args.num_points,
+        "num_points": dict(targets),
         "method": args.method,
         "seed": args.seed,
     }
+    sample_manifest = output_scalars.get("samples")
+    if isinstance(sample_manifest, list):
+        for record in sample_manifest:
+            if not isinstance(record, dict):
+                continue
+            for group in groups:
+                count_key = f"{group}_cells"
+                if count_key in record:
+                    record[f"original_{count_key}"] = record[count_key]
+                record[count_key] = targets[group]
     output_scalars["output_dir"] = str(output_dir)
     atomic_pickle_dump(output_scalars, output_dir / SCALARS_FILENAME)
     print(f"Completed: {len(paths)} samples")

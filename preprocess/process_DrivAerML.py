@@ -31,7 +31,7 @@ import numpy as np
 
 
 DEFAULT_DATA_DIR = Path(
-    "/Users/zhangbojun/ML_Turbulent/preprocess/drivaerML_N100_000"
+    r"/Users/zhangbojun/ML_Turbulent/preprocess/drivaerML_N100_000"
 )
 SCALARS_FILENAME = "normalization_scalars.pkl"
 
@@ -294,6 +294,16 @@ def inspect_runs(run_dirs: list[Path]) -> tuple[list[dict[str, Any]], dict[str, 
             "x_volume": "global_volume_minmax",
             **{name: "global_componentwise_mean_std" for name in moments},
         },
+        "coordinate_normalization_scopes": {
+            "x_surface": {
+                "statistics_prefix": "surface_coords",
+                "population": "all available DrivAerML surface coordinates",
+            },
+            "x_volume": {
+                "statistics_prefix": "volume_coords",
+                "population": "all available DrivAerML volume coordinates",
+            },
+        },
         "samples": nonempty,
         "num_run_directories": len(records),
         "num_converted_samples": len(nonempty),
@@ -521,6 +531,16 @@ def migrate_processed_pkls(
         }
     )
     new_scalars["normalization"] = normalization
+    new_scalars["coordinate_normalization_scopes"] = {
+        "x_surface": {
+            "statistics_prefix": "surface_coords",
+            "population": "all surface coordinates reconstructed from source PKLs",
+        },
+        "x_volume": {
+            "statistics_prefix": "volume_coords",
+            "population": "all volume coordinates reconstructed from source PKLs",
+        },
+    }
     migrated_ids = {int(path.stem) for path in paths}
     source_records = source_scalars.get("samples")
     if isinstance(source_records, list):
@@ -655,6 +675,20 @@ def main() -> int:
         verified_scalars = pickle.load(stream)
     if verified_scalars["num_converted_samples"] != len(records):
         raise RuntimeError("normalization_scalars.pkl verification failed")
+    required_coordinate_keys = {
+        "surface_coords_min",
+        "surface_coords_max",
+        "surface_coords_range",
+        "volume_coords_min",
+        "volume_coords_max",
+        "volume_coords_range",
+    }
+    missing_coordinate_keys = required_coordinate_keys - set(verified_scalars)
+    if missing_coordinate_keys:
+        raise RuntimeError(
+            "Separate surface/volume normalization statistics are missing: "
+            f"{sorted(missing_coordinate_keys)}"
+        )
 
     expected_outputs = {output_dir / f"{record['run_id']}.pkl" for record in records}
     missing_outputs = [path for path in expected_outputs if not path.is_file()]
