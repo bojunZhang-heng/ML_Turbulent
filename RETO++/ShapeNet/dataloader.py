@@ -9,6 +9,40 @@ from collections.abc import Sequence
 from scipy.sparse import csr_matrix
 
 
+TASK_ALIASES = {
+    "p_and_v": "combined",
+    "combined": "combined",
+    "output": "combined",
+    "seven_to_four": "combined",
+    "pressure": "surface_pressure",
+    "surface_pressure": "surface_pressure",
+    "spressure": "surface_pressure",
+    "velocity": "volume_velocity",
+    "volume_velocity": "volume_velocity",
+}
+
+
+def canonical_task_name(predicted_feature_name):
+    """Map legacy configuration names to one of the three supported tasks."""
+    key = str(predicted_feature_name).strip().lower()
+    try:
+        return TASK_ALIASES[key]
+    except KeyError as error:
+        supported = ", ".join(sorted(TASK_ALIASES))
+        raise ValueError(
+            f"Unsupported predicted_feature_name={predicted_feature_name!r}; "
+            f"supported names: {supported}"
+        ) from error
+
+
+def task_shapes(sample, predicted_feature_name):
+    """Return the input and target shapes selected from one sample."""
+    return (
+        tuple(_get_input(sample, predicted_feature_name).shape),
+        tuple(_get_output(sample, predicted_feature_name).shape),
+    )
+
+
 def custom_collate_fn(batch):
     """
     Custom collate function for batch processing.
@@ -87,24 +121,16 @@ class VTKDataset(Dataset):
         for idx in indices:
             if idx in data_dict and idx != "normalization_scalars":
                 sample = data_dict[idx]
-                model_input = _get_input(sample)
+                model_input = _get_input(sample, predicted_feature_name)
 
-                if "seg_matrix" in sample:
-                    # Check if seg_matrix is already a sparse matrix
-                    if isinstance(data_dict[idx]["seg_matrix"], csr_matrix):
-                        # Convert sparse matrix to dense tensor
-                        seg_matrix = torch.as_tensor(sample["seg_matrix"].toarray(), dtype=torch.float32)
-                    else:
-                        # Convert dense matrix to tensor
-                        seg_matrix = torch.as_tensor(sample["seg_matrix"], dtype=torch.float32)
-                else:
-                    seg_matrix = torch.full(
-                        (1, len(model_input)), 1.0 / len(model_input), dtype=torch.float32
-                    )
-
-                target = _get_output(sample)
-                surface_mask = _get_surface_mask(sample, len(target))
-                metadata = _get_metadata(sample, idx)
+                seg_matrix = _get_seg_matrix(sample, len(model_input), predicted_feature_name)
+                target = _get_output(sample, predicted_feature_name)
+                surface_mask = _get_surface_mask(
+                    sample, len(target), predicted_feature_name
+                )
+                metadata = _get_metadata(
+                    sample, idx, predicted_feature_name=predicted_feature_name
+                )
                 self.data.append((model_input, seg_matrix, target, surface_mask, metadata))
                 self.sim_ids.append(idx)  # Store the simulation ID
 
@@ -118,8 +144,7 @@ class VTKDataset(Dataset):
         return model_input, seg_matrix, target, surface_mask, sim_id, metadata
 
 
-def _get_input(sample):
-    """Return the normalized model input stored by the preprocessor."""
+def _get_combined_input(sample):
     if "input" in sample:
         features = np.asarray(sample["input"], dtype=np.float32)
     elif "x" in sample:
@@ -134,11 +159,33 @@ def _get_input(sample):
         raise KeyError("Sample must contain input/x, features_6d, or coor and normals")
     if features.ndim != 2 or features.shape[1] < 3:
         raise ValueError(f"Expected input shape (N, C>=3), got {features.shape}")
+    return features
+
+
+def _get_input(sample, predicted_feature_name="p_and_v"):
+    """Select normalized input features for the configured physical task."""
+    task = canonical_task_name(predicted_feature_name)
+    if task == "surface_pressure" and "x_surface" in sample:
+        features = np.asarray(sample["x_surface"], dtype=np.float32)
+    elif task == "volume_velocity" and "x_volume" in sample:
+        features = np.asarray(sample["x_volume"], dtype=np.float32)
+    else:
+        features = _get_combined_input(sample)
+        if task != "combined":
+            mask = _get_combined_surface_mask(sample, len(features))
+            features = features[mask if task == "surface_pressure" else ~mask, :3]
+    if features.ndim != 2:
+        raise ValueError(f"Expected two-dimensional model input, got {features.shape}")
+    expected_channels = 7 if task == "combined" else 3
+    if features.shape[1] != expected_channels:
+        raise ValueError(
+            f"Task {task!r} expects input shape (N,{expected_channels}), "
+            f"got {features.shape}"
+        )
     return torch.as_tensor(features, dtype=torch.float32)
 
 
-def _get_output(sample):
-    """Return normalized [velocity_x, velocity_y, velocity_z, pressure]."""
+def _get_combined_output(sample):
     if "output" in sample:
         target = np.asarray(sample["output"], dtype=np.float32)
     elif "y" in sample:
@@ -148,12 +195,37 @@ def _get_output(sample):
         target = pressure[:, None] if pressure.ndim == 1 else pressure
     else:
         raise KeyError("Sample must contain output/y or pressure")
-    if target.ndim != 2 or target.shape[1] not in (1, 4):
-        raise ValueError(f"Expected target shape (N, 4) or legacy (N, 1), got {target.shape}")
+    if target.ndim != 2:
+        raise ValueError(f"Expected target shape (N,C), got {target.shape}")
+    return target
+
+
+def _get_output(sample, predicted_feature_name="p_and_v"):
+    """Select normalized pressure, velocity, or combined targets."""
+    task = canonical_task_name(predicted_feature_name)
+    if task == "surface_pressure" and "y_spressure" in sample:
+        target = np.asarray(sample["y_spressure"], dtype=np.float32)
+    elif task == "volume_velocity" and "y_velocity" in sample:
+        target = np.asarray(sample["y_velocity"], dtype=np.float32)
+    else:
+        combined = _get_combined_output(sample)
+        if task == "combined":
+            target = combined
+        else:
+            mask = _get_combined_surface_mask(sample, len(combined))
+            if task == "surface_pressure":
+                target = combined[mask, -1:]
+            else:
+                target = combined[~mask, :3]
+    expected_channels = {"combined": 4, "surface_pressure": 1, "volume_velocity": 3}[task]
+    if target.ndim != 2 or target.shape[1] != expected_channels:
+        raise ValueError(
+            f"Task {task!r} expects target shape (N,{expected_channels}), got {target.shape}"
+        )
     return torch.as_tensor(target, dtype=torch.float32)
 
 
-def _get_surface_mask(sample, num_nodes):
+def _get_combined_surface_mask(sample, num_nodes):
     mask = sample.get("surface_mask", sample.get("surf"))
     if mask is None:
         if "pressure" in sample:
@@ -163,10 +235,51 @@ def _get_surface_mask(sample, num_nodes):
     mask = np.asarray(mask, dtype=bool).reshape(-1)
     if len(mask) != num_nodes:
         raise ValueError(f"surface_mask length {len(mask)} != number of nodes {num_nodes}")
+    return mask
+
+
+def _get_surface_mask(sample, num_nodes, predicted_feature_name="p_and_v"):
+    task = canonical_task_name(predicted_feature_name)
+    if task == "surface_pressure":
+        mask = np.ones(num_nodes, dtype=bool)
+    elif task == "volume_velocity":
+        mask = np.zeros(num_nodes, dtype=bool)
+    else:
+        mask = _get_combined_surface_mask(sample, num_nodes)
     return torch.as_tensor(mask, dtype=torch.bool)
 
 
-def _get_metadata(sample, sim_id, data_root=None, vtk_data_path=None):
+def _get_seg_matrix(sample, num_nodes, predicted_feature_name="p_and_v"):
+    if "seg_matrix" not in sample:
+        return torch.full((1, num_nodes), 1.0 / num_nodes, dtype=torch.float32)
+    matrix = sample["seg_matrix"]
+    if isinstance(matrix, csr_matrix):
+        matrix = matrix.toarray()
+    matrix = np.asarray(matrix, dtype=np.float32)
+    if matrix.ndim != 2:
+        raise ValueError(f"seg_matrix must be two-dimensional, got {matrix.shape}")
+    if matrix.shape[1] != num_nodes:
+        task = canonical_task_name(predicted_feature_name)
+        if task == "combined":
+            raise ValueError(
+                f"seg_matrix has {matrix.shape[1]} nodes but input has {num_nodes}"
+            )
+        source_mask = _get_combined_surface_mask(sample, matrix.shape[1])
+        matrix = matrix[:, source_mask if task == "surface_pressure" else ~source_mask]
+        row_sum = matrix.sum(axis=1, keepdims=True)
+        nonempty = row_sum[:, 0] > 0.0
+        matrix = matrix[nonempty]
+        matrix /= matrix.sum(axis=1, keepdims=True)
+    return torch.as_tensor(matrix, dtype=torch.float32)
+
+
+def _get_metadata(
+    sample,
+    sim_id,
+    data_root=None,
+    vtk_data_path=None,
+    predicted_feature_name="p_and_v",
+):
     source = sample.get("source", {})
     if vtk_data_path is not None:
         pressure_path = Path(vtk_data_path) / f"{sim_id}_pressure.vtk"
@@ -186,6 +299,7 @@ def _get_metadata(sample, sim_id, data_root=None, vtk_data_path=None):
         "sample_id": sample.get("sample_id", str(sim_id)),
         "pressure_path": pressure_path,
         "has_seg_matrix": "seg_matrix" in sample,
+        "task": canonical_task_name(predicted_feature_name),
     }
 
 
@@ -216,6 +330,7 @@ class PerFileVTKDataset(Dataset):
             raise TypeError("data_root must be a directory or a non-empty sequence of directories")
         self.data_roots = [Path(root) for root in data_root]
         self.indices = indices
+        self.predicted_feature_name = predicted_feature_name
         self.vtk_data_path = Path(vtk_data_path) if vtk_data_path else None
         if self.vtk_data_path is not None and not self.vtk_data_path.is_dir():
             raise FileNotFoundError(f"VTK data directory not found: {self.vtk_data_path}")
@@ -243,25 +358,21 @@ class PerFileVTKDataset(Dataset):
         # Map from dataset index to simulation id
         sim_id = self.indices[idx]
         sample = self._load_sample(sim_id)
-        model_input = _get_input(sample)
+        model_input = _get_input(sample, self.predicted_feature_name)
 
-        # Ensure seg_matrix is dense (mirror behavior of VTKDataset)
-        if "seg_matrix" in sample:
-            seg_matrix = sample["seg_matrix"]
-            if isinstance(seg_matrix, csr_matrix):
-                seg_matrix = seg_matrix.toarray()
-            seg_matrix = torch.as_tensor(seg_matrix, dtype=torch.float32)
-        else:
-            # Non-segmented models ignore this tensor.  A normalized global
-            # token keeps the batch format uniform without allocating N x N.
-            seg_matrix = torch.full((1, len(model_input)), 1.0 / len(model_input))
-        target = _get_output(sample)
-        surface_mask = _get_surface_mask(sample, len(target))
+        seg_matrix = _get_seg_matrix(
+            sample, len(model_input), self.predicted_feature_name
+        )
+        target = _get_output(sample, self.predicted_feature_name)
+        surface_mask = _get_surface_mask(
+            sample, len(target), self.predicted_feature_name
+        )
         metadata = _get_metadata(
             sample,
             sim_id,
             self._sample_path(sim_id).parent,
             vtk_data_path=self.vtk_data_path,
+            predicted_feature_name=self.predicted_feature_name,
         )
 
         return model_input, seg_matrix, target, surface_mask, sim_id, metadata

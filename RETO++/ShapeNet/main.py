@@ -1,4 +1,4 @@
-from dataloader import create_data_loaders
+from dataloader import canonical_task_name, create_data_loaders, task_shapes
 from models.transolver_model import Model as Transolver_Model
 from models.CANO import Model as CANO
 from models.LinearAttnNeuralOperator import LinearAttentionNeuralOperator as LinearNO
@@ -159,31 +159,40 @@ def main():
 
     with open(DATA_PATH + "normalization_scalars.pkl", "rb") as f:
         normalization_scalars = pickle.load(f)
-    output_mean_shape = tuple(np.asarray(normalization_scalars.get("output_mean", [])).shape)
-    output_std_shape = tuple(np.asarray(normalization_scalars.get("output_std", [])).shape)
-    if output_mean_shape != (4,) or output_std_shape != (4,):
-        raise ValueError(
-            "ShapeNet-Car training requires output_mean/output_std for four fields "
-            "[velocity_x, velocity_y, velocity_z, pressure]."
-        )
-
     with open(os.path.join(DATA_PATH, f"{ALL_INDEX[0]}.pkl"), "rb") as f:
         first_sample = pickle.load(f)
-    first_input = first_sample.get("input", first_sample.get("x"))
-    if first_input is None:
-        raise KeyError("Sample pickle must contain input or x")
-    input_dim = int(np.asarray(first_input).shape[-1])
+    task_name = canonical_task_name(predicted_feature_name)
+    input_shape, target_shape = task_shapes(first_sample, predicted_feature_name)
+    input_dim = int(input_shape[-1])
+    output_dim = int(target_shape[-1])
     if args.space_dim != input_dim:
         raise ValueError(
-            f"YAML model.space_dim={args.space_dim}, but the dataset provides "
-            f"{input_dim} input channels"
+            f"Task {task_name!r} provides {input_dim} input channels, but "
+            f"YAML model.space_dim={args.space_dim}."
         )
-    if model_name in {"RETO", "RETO_plus", "RETO_plus_v2", "CANO", "Transolver"} and input_dim != 7:
+    if args.out_dim != output_dim:
         raise ValueError(
-            f"ShapeNet {model_name} expects seven input channels "
-            "[x, y, z, sdf, normal_x, normal_y, normal_z], "
-            f"but the dataset provides {input_dim}."
+            f"Task {task_name!r} provides {output_dim} target channels, but "
+            f"YAML model.out_dim={args.out_dim}."
         )
+    scalar_keys = {
+        "combined": ("output_mean", "output_std", 4),
+        "surface_pressure": ("y_spressure_mean", "y_spressure_std", 1),
+        "volume_velocity": ("y_velocity_mean", "y_velocity_std", 3),
+    }
+    mean_key, std_key, components = scalar_keys[task_name]
+    mean_shape = tuple(np.asarray(normalization_scalars.get(mean_key, [])).shape)
+    std_shape = tuple(np.asarray(normalization_scalars.get(std_key, [])).shape)
+    if mean_shape != (components,) or std_shape != (components,):
+        raise ValueError(
+            f"Task {task_name!r} requires {mean_key}/{std_key} with shape "
+            f"({components},), got {mean_shape}/{std_shape}. Run "
+            "preprocess/process_mlcfd_split.py first."
+        )
+    print(
+        f"Task: {task_name} | input={input_shape} | target={target_shape} | "
+        f"normalization={mean_key}/{std_key}"
+    )
     if model_name in {"transolver_seg", "transolver_seg_v2", "SegLinearNO", "SegLinearNO_v2"}:
         if "seg_matrix" not in first_sample:
             raise ValueError(

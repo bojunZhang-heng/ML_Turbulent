@@ -27,6 +27,9 @@ __pycache__/
 !RETO++/DrivAerStar/config_RETO.yml
 !RETO++/DrivAerNet/config_RETO.yml
 !RETO++/ShapeNet/config_RETO.yml
+!RETO++/ShapeNet/config_mlcfd_combined.yml
+!RETO++/ShapeNet/config_mlcfd_surface_pressure.yml
+!RETO++/ShapeNet/config_mlcfd_volume_velocity.yml
 
 .vscode
 

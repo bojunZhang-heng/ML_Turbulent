@@ -6,6 +6,7 @@ import torch.optim as optim
 from torch.amp import GradScaler, autocast
 from tqdm import tqdm
 
+from dataloader import canonical_task_name
 from utils.drag_coefficient import calculate_cd
 
 
@@ -137,13 +138,19 @@ def _physics_loss(output, target, surface_mask, pressure_weight):
     if output.shape != target.shape:
         raise ValueError(
             f"Model output shape {tuple(output.shape)} != target shape {tuple(target.shape)}. "
-            "ShapeNet-Car requires out_dim=4."
+            "Check predicted_feature_name and model.out_dim."
         )
     if output.shape[-1] == 1:
         pressure_loss = nn.functional.mse_loss(output, target)
-        return pressure_weight * pressure_loss, output.new_zeros(()), pressure_loss
+        return pressure_loss, output.new_zeros(()), pressure_loss
+    if output.shape[-1] == 3:
+        velocity_loss = nn.functional.mse_loss(output, target)
+        return velocity_loss, velocity_loss, output.new_zeros(())
     if output.shape[-1] != 4:
-        raise ValueError(f"Expected [u, v, w, p] output, got {output.shape[-1]} channels")
+        raise ValueError(
+            f"Expected pressure (1), velocity (3), or [u,v,w,p] (4) output; "
+            f"got {output.shape[-1]} channels"
+        )
     if not surface_mask.any():
         raise ValueError("surface_mask contains no surface nodes")
     velocity_loss = nn.functional.mse_loss(output[..., :3], target[..., :3])
@@ -154,16 +161,26 @@ def _physics_loss(output, target, surface_mask, pressure_weight):
     return total_loss, velocity_loss, pressure_loss
 
 
-def _output_statistics(normalization_scalars, reference):
+def _output_statistics(normalization_scalars, reference, predicted_feature_name):
     if normalization_scalars is None:
         raise ValueError("normalization_scalars.pkl is required for physical-scale metrics")
-    if "output_mean" not in normalization_scalars or "output_std" not in normalization_scalars:
-        raise KeyError("normalization_scalars must contain output_mean and output_std")
+    task = canonical_task_name(predicted_feature_name)
+    keys = {
+        "combined": ("output_mean", "output_std"),
+        "surface_pressure": ("y_spressure_mean", "y_spressure_std"),
+        "volume_velocity": ("y_velocity_mean", "y_velocity_std"),
+    }
+    mean_key, std_key = keys[task]
+    if mean_key not in normalization_scalars or std_key not in normalization_scalars:
+        raise KeyError(
+            f"normalization_scalars must contain {mean_key} and {std_key} "
+            f"for task {task!r}"
+        )
     mean = torch.as_tensor(
-        normalization_scalars["output_mean"], device=reference.device, dtype=reference.dtype
+        normalization_scalars[mean_key], device=reference.device, dtype=reference.dtype
     )
     std = torch.as_tensor(
-        normalization_scalars["output_std"], device=reference.device, dtype=reference.dtype
+        normalization_scalars[std_key], device=reference.device, dtype=reference.dtype
     )
     expected_shape = (reference.shape[-1],)
     if tuple(mean.shape) != expected_shape or tuple(std.shape) != expected_shape:
@@ -174,8 +191,10 @@ def _output_statistics(normalization_scalars, reference):
     return mean, std
 
 
-def denormalize_output(normalized, normalization_scalars):
-    mean, std = _output_statistics(normalization_scalars, normalized)
+def denormalize_output(normalized, normalization_scalars, predicted_feature_name="p_and_v"):
+    mean, std = _output_statistics(
+        normalization_scalars, normalized, predicted_feature_name
+    )
     return normalized * std + mean
 
 
@@ -192,47 +211,82 @@ def _empty_metrics():
         "cd_relative_error": 0.0,
         "velocity_rmse": 0.0,
         "pressure_rmse": 0.0,
+        "velocity_samples": 0,
+        "pressure_samples": 0,
+        "cd_samples": 0,
     }
 
 
 def _accumulate_physics_metrics(
-    totals, output, target, surface_mask, metadata, normalization_scalars
+    totals,
+    output,
+    target,
+    surface_mask,
+    metadata,
+    normalization_scalars,
+    predicted_feature_name,
 ):
-    output = denormalize_output(output.float(), normalization_scalars)
-    target = denormalize_output(target.float(), normalization_scalars)
+    task = canonical_task_name(predicted_feature_name)
+    output = denormalize_output(
+        output.float(), normalization_scalars, predicted_feature_name
+    )
+    target = denormalize_output(
+        target.float(), normalization_scalars, predicted_feature_name
+    )
     for batch_index in range(output.shape[0]):
-        mask = surface_mask[batch_index]
-        volume_mask = ~mask
-        if not mask.any() or not volume_mask.any():
-            raise ValueError("Each ShapeNet-Car sample needs both volume and surface nodes")
+        pred_velocity = true_velocity = None
+        pred_pressure = true_pressure = None
+        surface_velocity_pred = surface_velocity_true = None
+        if task == "combined":
+            mask = surface_mask[batch_index]
+            volume_mask = ~mask
+            if not mask.any() or not volume_mask.any():
+                raise ValueError("Combined task requires both volume and surface nodes")
+            pred_velocity = output[batch_index, volume_mask, :3]
+            true_velocity = target[batch_index, volume_mask, :3]
+            pred_pressure = output[batch_index, mask, 3]
+            true_pressure = target[batch_index, mask, 3]
+            surface_velocity_pred = output[batch_index, mask, :3]
+            surface_velocity_true = target[batch_index, mask, :3]
+        elif task == "surface_pressure":
+            pred_pressure = output[batch_index, :, 0]
+            true_pressure = target[batch_index, :, 0]
+            surface_velocity_pred = torch.zeros(
+                (len(pred_pressure), 3), device=output.device, dtype=output.dtype
+            )
+            surface_velocity_true = torch.zeros_like(surface_velocity_pred)
+        else:
+            pred_velocity = output[batch_index, :, :3]
+            true_velocity = target[batch_index, :, :3]
 
-        pred_velocity = output[batch_index, volume_mask, :3]
-        true_velocity = target[batch_index, volume_mask, :3]
-        pred_pressure = output[batch_index, mask, 3]
-        true_pressure = target[batch_index, mask, 3]
-        totals["velocity_relative_l2"] += _relative_l2(pred_velocity, true_velocity)
-        totals["pressure_relative_l2"] += _relative_l2(pred_pressure, true_pressure)
-        totals["velocity_rmse"] += torch.sqrt(
-            nn.functional.mse_loss(pred_velocity, true_velocity)
-        ).item()
-        totals["pressure_rmse"] += torch.sqrt(
-            nn.functional.mse_loss(pred_pressure, true_pressure)
-        ).item()
-
-        pressure_path = metadata[batch_index].get("pressure_path")
-        if not pressure_path:
-            raise ValueError("Sample metadata does not contain pressure_path required for Cd")
-        pred_cd = calculate_cd(
-            pressure_path,
-            pred_pressure.detach().cpu().numpy(),
-            output[batch_index, mask, :3].detach().cpu().numpy(),
-        )
-        true_cd = calculate_cd(
-            pressure_path,
-            true_pressure.detach().cpu().numpy(),
-            target[batch_index, mask, :3].detach().cpu().numpy(),
-        )
-        totals["cd_relative_error"] += abs(pred_cd - true_cd) / max(abs(true_cd), 1e-12)
+        if pred_velocity is not None:
+            totals["velocity_relative_l2"] += _relative_l2(pred_velocity, true_velocity)
+            totals["velocity_rmse"] += torch.sqrt(
+                nn.functional.mse_loss(pred_velocity, true_velocity)
+            ).item()
+            totals["velocity_samples"] += 1
+        if pred_pressure is not None:
+            totals["pressure_relative_l2"] += _relative_l2(pred_pressure, true_pressure)
+            totals["pressure_rmse"] += torch.sqrt(
+                nn.functional.mse_loss(pred_pressure, true_pressure)
+            ).item()
+            totals["pressure_samples"] += 1
+            pressure_path = metadata[batch_index].get("pressure_path")
+            if pressure_path:
+                pred_cd = calculate_cd(
+                    pressure_path,
+                    pred_pressure.detach().cpu().numpy(),
+                    surface_velocity_pred.detach().cpu().numpy(),
+                )
+                true_cd = calculate_cd(
+                    pressure_path,
+                    true_pressure.detach().cpu().numpy(),
+                    surface_velocity_true.detach().cpu().numpy(),
+                )
+                totals["cd_relative_error"] += abs(pred_cd - true_cd) / max(
+                    abs(true_cd), 1e-12
+                )
+                totals["cd_samples"] += 1
         totals["samples"] += 1
 
 
@@ -240,7 +294,30 @@ def _average_metrics(totals):
     samples = totals["samples"]
     if samples == 0:
         raise ValueError("No samples were evaluated")
-    return {key: value / samples for key, value in totals.items() if key != "samples"}
+    velocity_samples = totals["velocity_samples"]
+    pressure_samples = totals["pressure_samples"]
+    cd_samples = totals["cd_samples"]
+    return {
+        "velocity_relative_l2": (
+            totals["velocity_relative_l2"] / velocity_samples
+            if velocity_samples else float("nan")
+        ),
+        "pressure_relative_l2": (
+            totals["pressure_relative_l2"] / pressure_samples
+            if pressure_samples else float("nan")
+        ),
+        "cd_relative_error": (
+            totals["cd_relative_error"] / cd_samples if cd_samples else float("nan")
+        ),
+        "velocity_rmse": (
+            totals["velocity_rmse"] / velocity_samples
+            if velocity_samples else float("nan")
+        ),
+        "pressure_rmse": (
+            totals["pressure_rmse"] / pressure_samples
+            if pressure_samples else float("nan")
+        ),
+    }
 
 
 @torch.no_grad()
@@ -253,6 +330,7 @@ def validate(
     pressure_weight=0.5,
     description="Validation",
     collect_outputs=False,
+    predicted_feature_name="p_and_v",
 ):
     model.eval()
     amp_enabled, amp_dtype, _ = configure_amp(device)
@@ -285,11 +363,21 @@ def validate(
         loss_totals["velocity_loss"] += velocity_loss.item()
         loss_totals["pressure_loss"] += pressure_loss.item()
         _accumulate_physics_metrics(
-            physics_totals, output, target, surface_mask, metadata, normalization_scalars
+            physics_totals,
+            output,
+            target,
+            surface_mask,
+            metadata,
+            normalization_scalars,
+            predicted_feature_name,
         )
         if collect_outputs:
-            output_denormalized = denormalize_output(output.float(), normalization_scalars).cpu()
-            target_denormalized = denormalize_output(target.float(), normalization_scalars).cpu()
+            output_denormalized = denormalize_output(
+                output.float(), normalization_scalars, predicted_feature_name
+            ).cpu()
+            target_denormalized = denormalize_output(
+                target.float(), normalization_scalars, predicted_feature_name
+            ).cpu()
             for index, sim_id in enumerate(sim_ids):
                 predictions[sim_id] = output_denormalized[index]
                 targets[sim_id] = target_denormalized[index]
@@ -307,11 +395,14 @@ def validate(
 
 def _print_metrics(prefix, results):
     print(f"  {prefix} normalized loss: {results['loss']:.6e}")
-    print(f"  {prefix} velocity relative L2: {results['velocity_relative_l2']:.6f}")
-    print(f"  {prefix} pressure relative L2: {results['pressure_relative_l2']:.6f}")
-    print(f"  {prefix} Cd relative error: {results['cd_relative_error']:.6f}")
-    print(f"  {prefix} velocity RMSE: {results['velocity_rmse']:.6e}")
-    print(f"  {prefix} pressure RMSE: {results['pressure_rmse']:.6e}")
+    if not torch.isnan(torch.tensor(results["velocity_relative_l2"])):
+        print(f"  {prefix} velocity relative L2: {results['velocity_relative_l2']:.6f}")
+        print(f"  {prefix} velocity RMSE: {results['velocity_rmse']:.6e}")
+    if not torch.isnan(torch.tensor(results["pressure_relative_l2"])):
+        print(f"  {prefix} pressure relative L2: {results['pressure_relative_l2']:.6f}")
+        print(f"  {prefix} pressure RMSE: {results['pressure_rmse']:.6e}")
+    if not torch.isnan(torch.tensor(results["cd_relative_error"])):
+        print(f"  {prefix} Cd relative error: {results['cd_relative_error']:.6f}")
 
 
 def train(
@@ -427,21 +518,32 @@ def train(
                 device,
                 pressure_weight=pressure_weight,
                 description=f"Epoch {epoch + 1}/{num_epochs} - Val",
+                predicted_feature_name=predicted_feature_name,
             )
             history["val_loss"].append(val_results["loss"])
             history["val_velocity_relative_l2"].append(val_results["velocity_relative_l2"])
             history["val_pressure_relative_l2"].append(val_results["pressure_relative_l2"])
             history["val_cd_relative_error"].append(val_results["cd_relative_error"])
-            selection_error = (
-                val_results["velocity_relative_l2"] + val_results["pressure_relative_l2"]
-            )
+            task = canonical_task_name(predicted_feature_name)
+            if task == "combined":
+                selection_error = (
+                    val_results["velocity_relative_l2"]
+                    + val_results["pressure_relative_l2"]
+                )
+            elif task == "surface_pressure":
+                selection_error = val_results["pressure_relative_l2"]
+            else:
+                selection_error = val_results["velocity_relative_l2"]
             _print_metrics("Val", val_results)
             if selection_error < history["best_val_error"]:
                 history["best_val_error"] = selection_error
                 torch.save(model.state_dict(), save_path)
                 print(f"  New best model saved: {save_path}")
 
-    print(f"Training completed. Best velocity+pressure relative L2: {history['best_val_error']:.6f}")
+    print(
+        f"Training completed. Best physical relative L2 selection score: "
+        f"{history['best_val_error']:.6f}"
+    )
     return history
 
 
@@ -470,6 +572,7 @@ def test(
         pressure_weight=pressure_weight,
         description="Testing",
         collect_outputs=True,
+        predicted_feature_name=predicted_feature_name,
     )
     print("Test Results (relative errors use denormalized physical values):")
     _print_metrics("Test", results)
