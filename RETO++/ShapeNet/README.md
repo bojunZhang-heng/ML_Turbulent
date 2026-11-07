@@ -1,6 +1,12 @@
 # 模型记录
 ## ShapeNet
 
+### RETO_plus_v2
+#### best_model_RETO_plus_v2_p_and_v_20261105_0918.pth
+  Test velocity relative L2: 0.026872
+  Test pressure relative L2: 0.078786
+  Test Cd relative error: 0.014630
+
 ### Transolver
 #### best_model_Transolver_p_and_v_2026-1101.pth
   Test velocity relative L2: 0.025799
