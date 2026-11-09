@@ -1,0 +1,37 @@
+# Auto-generated task configuration for DrivAerNet.
+# Model: SATO; task: pressure; input XYZ -> 1 output channel(s).
+# Run from RETO++/DrivAerNet: python main.py --config config_SATO_pressure.yml
+
+experiment:
+  exp: DrivAerNet_SATO_pressure
+  model_name: SATO
+  predicted_feature_name: pressure
+  phase: restart_train
+model:
+  space_dim: 3
+  out_dim: 1
+  n_layers: 8
+  n_hidden: 256
+  dropout: 0.0
+  act: gelu
+  fun_dim: 0
+  ref: 8
+  unified_pos: false
+  isregular: false
+attention:
+  n_head: 8
+  mlp_ratio: 2
+  key_ratio: 1
+  slice_num: 64
+serialization:
+  patch_size: 20
+  shift: 2
+  n_iter: 1
+training:
+  num_epochs: 200
+  eval_freq: 1
+  learning_rate: 0.001
+  batch_size: 1
+  shuffle: true
+data:
+  data_path: /Users/zhangbojun/ML_Turbulent/preprocess/E_S_WW_WM_small/pklFile

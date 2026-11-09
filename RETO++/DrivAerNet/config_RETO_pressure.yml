@@ -1,0 +1,69 @@
+# Auto-generated task configuration for DrivAerNet.
+# Model: RETO; task: pressure; input XYZ -> 1 output channel(s).
+# Run from RETO++/DrivAerNet: python main.py --config config_RETO_pressure.yml
+
+experiment:
+  exp: DrivAerNet_RETO_pressure
+  model_name: RETO
+  predicted_feature_name: pressure
+  phase: restart_train
+model:
+  space_dim: 3
+  out_dim: 1
+  n_layers: 8
+  n_hidden: 256
+  dropout: 0.0
+  act: gelu
+  mlp_ratio: 2
+position_encoding:
+  sincos_max_wavelength: 10000
+  rope_max_wavelength: 10000
+checkpoint:
+  checkpoint_segment_size: 2
+  checkpoint_num_blocks: 6
+training:
+  num_epochs: 200
+  eval_freq: 1
+  learning_rate: 0.001
+  batch_size: 1
+  shuffle: true
+data:
+  dataset_root: /data/zhangbojun/DrivAerNet_dataset/PressureVTK
+  selection_mode: random
+  selection_seed: 42
+  train_ratio: 0.6
+  val_ratio: 0.3
+  test_ratio: 0.1
+  vehicle_datasets:
+    E_S_WWC_WM:
+      path: E_S_WWC_WMpklFile_10k
+      count: 100
+      enabled: true
+    E_S_WW_WM:
+      path: E_S_WW_WMpklFile_10k
+      count: 100
+      enabled: true
+    F_S_WWC_WM:
+      path: F_S_WWC_WMpklFile_10k
+      count: 100
+      enabled: true
+    F_S_WWS_WM:
+      path: F_S_WWS_WMpklFile_10k
+      count: 100
+      enabled: true
+    N_S_WWS_WM:
+      path: N_S_WWS_WMpklFile_10k
+      count: 100
+      enabled: true
+    N_S_WWC_WM:
+      path: N_S_WWC_WMpklFile_10k
+      count: 100
+      enabled: true
+    N_S_WW_WM:
+      path: N_S_WW_WMpklFile_10k
+      count: 100
+      enabled: true
+    F_D_WM_WW:
+      path: F_D_WM_WWpklFile_10k
+      count: 100
+      enabled: true
