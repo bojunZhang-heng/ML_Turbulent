@@ -1,0 +1,12 @@
+# Paths are resolved relative to this manifest file.
+runs:
+  - label: Transolver
+    config: ../config_Transolver.yml
+    checkpoint: ../experiment_DrivAerStar_Transolver/best_model.pth
+  - label: LinearNO
+    config: ../config_LinearNO.yml
+    checkpoint: ../experiment_DrivAerStar_LinearNO/best_model.pth
+  - label: RETO_plus_v2
+    config: ../config_RETO_plus_v2.yml
+    checkpoint: ../experiment_DrivAerStar_RETO_plus_v2/best_model.pth
+
