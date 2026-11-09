@@ -1,12 +1,18 @@
 # Paths are resolved relative to this manifest file.
 runs:
   - label: Transolver
-    config: ../config_Transolver.yml
-    checkpoint: ../experiment_ShapeNet/best_model_Transolver.pth
-  - label: LinearNO
-    config: ../config_LinearNO.yml
-    checkpoint: ../experiment_ShapeNet/best_model_LinearNO.pth
+    config: ../config_Transolver_surface_pressure.yml
+    checkpoint: ../experiment_ShapeNet_Transolver/best_model_Transolver_surface_pressure_20261107_1652.pth
   - label: RETO_plus_v2
-    config: ../config_RETO_plus_v2.yml
-    checkpoint: ../experiment_ShapeNet/best_model_RETO_plus_v2.pth
+    config: ../config_RETO_plus_v2_surface_pressure.yml
+    checkpoint: ../experiment_ShapeNet_RETO_plus_v2/best_model_RETO_plus_v2_surface_pressure_20261107_1652.pth
+  - label: RETO_plus
+    config: ../config_RETO_plus_surface_pressure.yml
+    checkpoint: ../experiment_ShapeNet_RETO_plus/best_model_RETO_plus_surface_pressure_20261107_1653.pth
+  - label: CANO
+    config: ../config_CANO_surface_pressure.yml
+    checkpoint: ../experiment_ShapeNet_CANO/best_model_CANO_surface_pressure_20261107_1652.pth
+  - label: LinearNO
+    config: ../config_LinearNO_surface_pressure.yml
+    checkpoint: ../experiment_ShapeNet_LinearNO/best_model_LinearNO_surface_pressure_20261107_1653.pth
 
