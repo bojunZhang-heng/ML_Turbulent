@@ -1,0 +1,33 @@
+# Auto-generated task configuration for ShapeNet.
+# Model: RETO; task: surface_pressure; input XYZ -> 1 output channel(s).
+# Run from RETO++/ShapeNet: python main.py --config config_RETO_surface_pressure.yml
+
+experiment:
+  exp: ShapeNet_RETO_surface_pressure
+  model_name: RETO
+  predicted_feature_name: surface_pressure
+  phase: restart_train
+model:
+  space_dim: 3
+  out_dim: 1
+  n_layers: 8
+  n_hidden: 256
+  dropout: 0.0
+  act: gelu
+  mlp_ratio: 2
+position_encoding:
+  sincos_max_wavelength: 10000
+  rope_max_wavelength: 10000
+checkpoint:
+  checkpoint_segment_size: 2
+  checkpoint_num_blocks: 6
+training:
+  num_epochs: 200
+  eval_freq: 1
+  learning_rate: 0.001
+  pressure_weight: 0.5
+  batch_size: 1
+  shuffle: true
+data:
+  data_path: /data/zhangbojun/mlcfd_data/pkl_data
+  vtk_data_path: /data/zhangbojun/mlcfd_data/raw_data
