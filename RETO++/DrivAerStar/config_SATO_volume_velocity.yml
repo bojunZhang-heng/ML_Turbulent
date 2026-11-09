@@ -1,0 +1,38 @@
+# Auto-generated task configuration for DrivAerStar.
+# Model: SATO; task: volume_velocity; input XYZ -> 3 output channel(s).
+# Run from RETO++/DrivAerStar: python main.py --config config_SATO_volume_velocity.yml
+
+experiment:
+  exp: DrivAerStar_SATO_volume_velocity
+  model_name: SATO
+  predicted_feature_name: volume_velocity
+  phase: restart_train
+model:
+  space_dim: 3
+  out_dim: 3
+  n_layers: 8
+  n_hidden: 256
+  dropout: 0.0
+  act: gelu
+  fun_dim: 0
+attention:
+  n_head: 8
+  mlp_ratio: 2
+  slice_num: 64
+serialization:
+  patch_size: 20
+  shift: 2
+  n_iter: 1
+training:
+  num_epochs: 200
+  eval_freq: 1
+  learning_rate: 0.001
+  batch_size: 1
+  shuffle: true
+data:
+  data_path: /Users/zhangbojun/ML_Turbulent/preprocess/DrivAerStar
+  selection_mode: random
+  selection_seed: 42
+  train_ratio: 0.6
+  val_ratio: 0.3
+  test_ratio: 0.1

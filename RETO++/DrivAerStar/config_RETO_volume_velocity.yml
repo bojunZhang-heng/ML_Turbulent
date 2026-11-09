@@ -1,0 +1,36 @@
+# Auto-generated task configuration for DrivAerStar.
+# Model: RETO; task: volume_velocity; input XYZ -> 3 output channel(s).
+# Run from RETO++/DrivAerStar: python main.py --config config_RETO_volume_velocity.yml
+
+experiment:
+  exp: DrivAerStar_RETO_volume_velocity
+  model_name: RETO
+  predicted_feature_name: volume_velocity
+  phase: restart_train
+model:
+  space_dim: 3
+  out_dim: 3
+  n_layers: 8
+  n_hidden: 256
+  dropout: 0.0
+  act: gelu
+  mlp_ratio: 2
+position_encoding:
+  sincos_max_wavelength: 10000
+  rope_max_wavelength: 10000
+checkpoint:
+  checkpoint_segment_size: 2
+  checkpoint_num_blocks: 6
+training:
+  num_epochs: 200
+  eval_freq: 1
+  learning_rate: 0.001
+  batch_size: 1
+  shuffle: true
+data:
+  data_path: /data/zhangbojun/DrivAerStar/pklFile_10k/
+  selection_mode: random
+  selection_seed: 42
+  train_ratio: 0.6
+  val_ratio: 0.3
+  test_ratio: 0.1
