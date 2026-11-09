@@ -2,11 +2,13 @@
 experiment:
   exp: DrivAerML_RETO_plus_v2
   model_name: RETO_plus_v2
-  predicted_feature_name: surface_pressure
+  ## volume_velocity
+  ## surface_wss
+  predicted_feature_name:  volume_velocity 
   phase: restart_train
 model:
   space_dim: 3
-  out_dim: 1
+  out_dim: 3
   n_layers: 8
   n_hidden: 256
   dropout: 0.0

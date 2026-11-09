@@ -1,32 +1,73 @@
 # 模型记录
 ## ShapeNet
-
 ### RETO_plus_v2
 #### best_model_RETO_plus_v2_p_and_v_20261105_0918.pth
   Test velocity relative L2: 0.026872
   Test pressure relative L2: 0.078786
   Test Cd relative error: 0.014630
+#### best_model_RETO_plus_v2_p_and_v_20261106_0956.pth
+  Test velocity relative L2: 0.026422
+  Test pressure relative L2: 0.076814
+  Test Cd relative error: 0.014836
+#### best_model_RETO_plus_v2_surface_pressure_20261107_1652.pth
+  Test pressure relative L2: 0.090393
+  Test Cd relative error: 0.020546
+
+
+
 
 ### Transolver
 #### best_model_Transolver_p_and_v_2026-1101.pth
   Test velocity relative L2: 0.025799
   Test pressure relative L2: 0.078387
   Test Cd relative error: 0.013380
+#### best_model_Transolver_surface_pressure_20261107_1652.pth
+  Test pressure relative L2: 0.091752
+  Test Cd relative error: 0.018949
+
+
+
+
 
 ### RETO++
 #### best_model_RETO_plus_p_and_v_2026-1101.pth
   Test velocity relative L2: 0.024785
   Test pressure relative L2: 0.075845
   Test Cd relative error: 0.015862
+#### best_model_RETO_plus_surface_pressure_20261107_1653.pth
+  Test pressure relative L2: 0.082857
+  Test Cd relative error: 0.020483
 
-2763192 RETO_plus_v2
-2801581 RETO_plus_v2
+
+
 
 ### CANO
 #### best_model_CANO_p_and_v_2026-1101.pth
   Test velocity relative L2: 0.025350
   Test pressure relative L2: 0.078819
   Test Cd relative error: 0.014891
+
+#### best_model_CANO_surface_pressure_20261107_1652.pth
+  Test pressure relative L2: 0.092158
+  Test Cd relative error: 0.017829
+
+
+
+
+### LinearNO
+#### best_model_LinearNO_surface_pressure_20261107_1653.pth
+  Test pressure relative L2: 0.088630
+  Test Cd relative error: 0.017017
+
+
+
+
+### train ing PID
+"cuda 1" 1109
+2962035
+2962947
+2962948
+2962949
 
 ## MLCFD 三种训练任务
 
