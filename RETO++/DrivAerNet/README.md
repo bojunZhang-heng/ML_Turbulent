@@ -45,6 +45,6 @@
 
 ### 8种车型-全车-pressure
 #### PID
-2223406 RETO_plus
-2114390 Transolver
-2352559 CANO
+2223406 RETO_plus   RETO_plus_DrivAerNet_2026_1029_1557
+2114390 Transolver  Transolver_DrivAerNet_2026_1030_1249
+2352559 CANO        CANO_DrivAerNet_2026_1101_1047
