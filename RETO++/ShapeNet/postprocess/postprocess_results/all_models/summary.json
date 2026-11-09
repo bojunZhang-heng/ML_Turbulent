@@ -191,9 +191,9 @@
         "checkpoint_size_mb": 14.813158988952637,
         "device": "cuda",
         "amp_enabled": true,
-        "inference_seconds": 2.2619727523997426,
-        "milliseconds_per_case": 25.133030582219362,
-        "points_per_second": 146500.43845507718,
+        "inference_seconds": 2.244953499175608,
+        "milliseconds_per_case": 24.94392776861787,
+        "points_per_second": 147611.07529473968,
         "peak_cuda_memory_gb": 0.05900096893310547
       }
     },
@@ -388,9 +388,9 @@
         "checkpoint_size_mb": 18.65384006500244,
         "device": "cuda",
         "amp_enabled": true,
-        "inference_seconds": 3.4888627380132675,
-        "milliseconds_per_case": 38.76514153348075,
-        "points_per_second": 94982.24059932616,
+        "inference_seconds": 3.4990700352936983,
+        "milliseconds_per_case": 38.87855594770776,
+        "points_per_second": 94705.16355989006,
         "peak_cuda_memory_gb": 0.09444665908813477
       }
     },
@@ -585,9 +585,9 @@
         "checkpoint_size_mb": 19.163076400756836,
         "device": "cuda",
         "amp_enabled": true,
-        "inference_seconds": 3.4885134110227227,
-        "milliseconds_per_case": 38.761260122474695,
-        "points_per_second": 94991.75177395972,
+        "inference_seconds": 3.4612815249711275,
+        "milliseconds_per_case": 38.4586836107903,
+        "points_per_second": 95739.1063423436,
         "peak_cuda_memory_gb": 0.08992433547973633
       }
     },
@@ -782,9 +782,9 @@
         "checkpoint_size_mb": 19.16047954559326,
         "device": "cuda",
         "amp_enabled": true,
-        "inference_seconds": 3.1540627852082253,
-        "milliseconds_per_case": 35.04514205786917,
-        "points_per_second": 105064.49064809055,
+        "inference_seconds": 3.16041168384254,
+        "milliseconds_per_case": 35.11568537602822,
+        "points_per_second": 104853.42833472142,
         "peak_cuda_memory_gb": 0.08465576171875
       }
     },
@@ -979,9 +979,9 @@
         "checkpoint_size_mb": 14.74820613861084,
         "device": "cuda",
         "amp_enabled": true,
-        "inference_seconds": 2.3892834139987826,
-        "milliseconds_per_case": 26.547593488875364,
-        "points_per_second": 138694.30393165105,
+        "inference_seconds": 2.3810808630660176,
+        "milliseconds_per_case": 26.456454034066862,
+        "points_per_second": 139172.08992780527,
         "peak_cuda_memory_gb": 0.0528874397277832
       }
     }
