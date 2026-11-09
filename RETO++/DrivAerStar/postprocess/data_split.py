@@ -8,10 +8,20 @@ from pathlib import Path
 import numpy as np
 import yaml
 
-from dataloader import discover_drivaerstar_samples, discover_multi_vehicle_samples
-
 CONFIG_SECTIONS = ("experiment", "model", "attention", "position_encoding",
                    "serialization", "checkpoint", "training", "data")
+
+
+TASK_FIELD_ALIASES = {
+    "surface_pressure": (("x_surface", "coor", "features_6d"), ("y_spressure", "pressure")),
+    "pressure": (("x_surface", "coor", "features_6d"), ("y_spressure", "pressure")),
+    "surface_wss": (("x_surface", "coor", "features_6d"), ("y_wss", "wss")),
+    "wss": (("x_surface", "coor", "features_6d"), ("y_wss", "wss")),
+    "volume_velocity": (("x_volume",), ("y_velocity", "velocity")),
+    "velocity": (("x_volume",), ("y_velocity", "velocity")),
+    "p_and_v": (("input", "x"), ("output", "y")),
+    "combined": (("input", "x"), ("output", "y")),
+}
 
 
 def load_config(path: Path):
@@ -55,13 +65,71 @@ def load_config(path: Path):
         if not isinstance(values, dict):
             raise TypeError(f"YAML section {section!r} must be a mapping")
         flat.update(values)
+    flat["_config_dir"] = str(path.parent.resolve())
     return raw, flat
+
+
+def _numeric_sample_ids(data_path: Path, task: str) -> tuple[list[int], list[int]]:
+    """Discover numbered PKLs without tying postprocess to one dataset loader."""
+    if not data_path.is_dir():
+        raise NotADirectoryError(f"Data directory not found: {data_path}")
+    paths = {
+        int(path.stem): path
+        for path in data_path.glob("*.pkl")
+        if path.stem.isdigit()
+    }
+    if not paths:
+        raise FileNotFoundError(f"No numbered PKL samples found in {data_path}")
+
+    aliases = TASK_FIELD_ALIASES.get(str(task).strip().lower())
+    if aliases is None:
+        raise ValueError(f"Unsupported task for split discovery: {task!r}")
+    input_keys, target_keys = aliases
+    valid, skipped = [], []
+    scalar_path = data_path / "normalization_scalars.pkl"
+    manifest_ids = None
+    if scalar_path.is_file():
+        try:
+            import pickle
+
+            with scalar_path.open("rb") as handle:
+                scalars = pickle.load(handle)
+            manifest = scalars.get("samples") if isinstance(scalars, dict) else None
+            if manifest:
+                manifest_ids = {
+                    int(item["sample_id"])
+                    for item in manifest
+                    if isinstance(item, dict) and str(item.get("sample_id", "")).isdigit()
+                }
+        except (OSError, EOFError, pickle.UnpicklingError, AttributeError, TypeError, ValueError):
+            manifest_ids = None
+    for sample_id, path in sorted(paths.items()):
+        if manifest_ids is not None and sample_id not in manifest_ids:
+            skipped.append(sample_id)
+            continue
+        try:
+            import pickle
+
+            with path.open("rb") as handle:
+                sample = pickle.load(handle)
+            has_input = any(key in sample for key in input_keys)
+            has_target = any(key in sample for key in target_keys)
+            (valid if has_input and has_target else skipped).append(sample_id)
+        except (OSError, EOFError, pickle.UnpicklingError, AttributeError, TypeError):
+            skipped.append(sample_id)
+    if not valid:
+        raise FileNotFoundError(
+            f"No valid PKL samples for task {task!r} in {data_path}"
+        )
+    return valid, skipped
 
 
 def resolve_test_data(raw_cfg: dict, cfg: dict, override: Path | None = None):
     data_cfg = raw_cfg.get("data", {}) or {}
     vehicle_cfg = data_cfg.get("vehicle_datasets")
     if vehicle_cfg:
+        from dataloader import discover_multi_vehicle_samples
+
         roots, _, _, test_ids, _ = discover_multi_vehicle_samples(
             vehicle_configs=vehicle_cfg,
             data_root=str(override) if override else cfg.get("dataset_root") or None,
@@ -76,8 +144,11 @@ def resolve_test_data(raw_cfg: dict, cfg: dict, override: Path | None = None):
     path_value = override if override is not None else cfg.get("data_path")
     if not path_value:
         raise ValueError("Set data.data_path in YAML or pass --data-path")
-    data_path = Path(path_value)
-    all_ids, _ = discover_drivaerstar_samples(
+    data_path = Path(path_value).expanduser()
+    if not data_path.is_absolute():
+        data_path = Path(cfg.get("_config_dir", Path.cwd())) / data_path
+    data_path = data_path.resolve()
+    all_ids, _ = _numeric_sample_ids(
         data_path, str(cfg.get("predicted_feature_name", "surface_pressure"))
     )
     selected = list(all_ids)
