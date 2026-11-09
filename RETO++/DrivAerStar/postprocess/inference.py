@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import time
+import inspect
+import pickle
 from pathlib import Path
 
 import numpy as np
@@ -10,10 +12,7 @@ import torch
 from torch.amp import autocast
 from tqdm import tqdm
 
-from SATO_dataset.Dataset import pos_to_order_inverse_index
 from dataloader import create_data_loaders
-from utils.metric import denormalize_field
-from utils.ml_SATO import SEGMENTED_MODELS, SERIALIZED_MODELS, configure_amp, forward_model, serialization_coordinates
 
 from data_split import display_case_id, resolve_test_data
 from metrics.efficiency import model_size_summary
@@ -25,7 +24,167 @@ OUTPUT_COMPONENTS = {
     "surface_pressure": 1, "pressure": 1, "y_spressure": 1,
     "surface_wss": 3, "wss": 3, "y_wss": 3,
     "volume_velocity": 3, "velocity": 3, "y_velocity": 3,
+    "p_and_v": 4, "combined": 4, "output": 4,
 }
+
+SEGMENTED_MODELS = {
+    "Transolver_seg", "Transolver_seg_v2", "transolver_seg",
+    "transolver_seg_v2", "SegLinearNO", "SegLinearNO_v2",
+}
+RAW_COORD_MODELS = {
+    "RopeLinearNO_v2", "RopeLinearNO_v3", "RETO_plus",
+    "RETO_plus_v2", "CANO_GatedRope",
+}
+SERIALIZED_MODELS = {"LinearNO_se", "SATO", "Transolver_seg_ser"}
+
+
+def configure_amp(device):
+    enabled = device.type == "cuda"
+    dtype = (
+        torch.bfloat16
+        if enabled and torch.cuda.is_bf16_supported()
+        else torch.float16
+    )
+    return enabled, dtype
+
+
+def _normalization_keys(task):
+    task = str(task).strip().lower()
+    if task in {"surface_pressure", "pressure", "y_spressure"}:
+        return (("y_spressure_mean", "y_spressure_std"),
+                ("pressure_mean", "pressure_std"))
+    if task in {"surface_wss", "wss", "y_wss"}:
+        return (("y_wss_mean", "y_wss_std"),)
+    if task in {"volume_velocity", "velocity", "y_velocity"}:
+        return (("y_velocity_mean", "y_velocity_std"),)
+    if task in {"p_and_v", "combined", "output"}:
+        return (("output_mean", "output_std"),)
+    raise ValueError(f"Unsupported task {task!r}")
+
+
+def denormalize_field(values, scalars, task):
+    for mean_key, std_key in _normalization_keys(task):
+        if mean_key in scalars and std_key in scalars:
+            values = np.asarray(values)
+            return (
+                values * np.asarray(scalars[std_key], dtype=values.dtype)
+                + np.asarray(scalars[mean_key], dtype=values.dtype)
+            )
+    expected = [f"{mean}/{std}" for mean, std in _normalization_keys(task)]
+    raise KeyError(f"Missing normalization statistics for {task!r}; expected {expected}")
+
+
+def _load_scalars(data_source):
+    if isinstance(data_source, dict):
+        by_vehicle = {}
+        for vehicle, root in data_source.items():
+            path = Path(root) / "normalization_scalars.pkl"
+            with path.open("rb") as handle:
+                by_vehicle[vehicle] = pickle.load(handle)
+        return {"schema_version": "multi-vehicle-normalization-v1", "by_vehicle": by_vehicle}
+    roots = [data_source] if isinstance(data_source, (str, Path)) else list(data_source)
+    for root in roots:
+        path = Path(root) / "normalization_scalars.pkl"
+        if path.is_file():
+            with path.open("rb") as handle:
+                return pickle.load(handle)
+    return None
+
+
+def _coordinate_stats(scalars, task):
+    task = str(task).lower()
+    if task in {"surface_pressure", "pressure", "y_spressure", "surface_wss", "wss", "y_wss"}:
+        candidates = (("surface_coords_min", "surface_coords_range"),
+                      ("coords_min", "coords_range"))
+    elif task in {"volume_velocity", "velocity", "y_velocity"}:
+        candidates = (("volume_coords_min", "volume_coords_range"),
+                      ("coords_min", "coords_range"))
+    else:
+        candidates = (("coords_min", "coords_range"),)
+    for min_key, range_key in candidates:
+        if min_key in scalars and range_key in scalars:
+            return np.asarray(scalars[min_key]), np.asarray(scalars[range_key])
+    return None
+
+
+def _raw_from_normalized(coords, scalars, task, surface_mask=None):
+    coords_np = coords.detach().cpu().numpy()
+    if str(task).lower() in {"p_and_v", "combined", "output"} and surface_mask is not None:
+        raw = coords_np.copy()
+        mask = surface_mask.detach().cpu().numpy().astype(bool)
+        for is_surface, prefix in ((True, "surface_coords"), (False, "volume_coords")):
+            min_key, range_key = f"{prefix}_min", f"{prefix}_range"
+            if min_key in scalars and range_key in scalars:
+                selected = mask if is_surface else ~mask
+                raw[selected] = raw[selected] * np.asarray(scalars[range_key]) + np.asarray(scalars[min_key])
+        return torch.as_tensor(raw, dtype=coords.dtype)
+    stats = _coordinate_stats(scalars, task)
+    if stats is None:
+        return coords.detach().cpu()
+    minimum, values_range = stats
+    return torch.as_tensor(coords_np * values_range + minimum, dtype=coords.dtype)
+
+
+def _unpack_batch(batch, scalars, task):
+    """Adapt DrivAerStar/ML/Net five-tuples and ShapeNet six-tuples."""
+    if len(batch) == 5:
+        coorf, raw_coords, seg_matrix, target, sim_ids = batch
+        return coorf, raw_coords, seg_matrix, target, sim_ids
+    if len(batch) == 6:
+        coorf, seg_matrix, target, surface_mask, sim_ids, _metadata = batch
+        raw_batches = []
+        for index, sim_id in enumerate(sim_ids):
+            sample_scalars = _sample_scalars(scalars, sim_id)
+            raw_batches.append(
+                _raw_from_normalized(
+                    coorf[index, :, :3], sample_scalars, task,
+                    surface_mask[index] if surface_mask is not None else None,
+                )
+            )
+        return coorf, torch.stack(raw_batches), seg_matrix, target, sim_ids
+    raise ValueError(f"Unsupported DataLoader batch with {len(batch)} fields")
+
+
+def _serialization_indices(coords, device):
+    try:
+        from SATO_dataset.Dataset import pos_to_order_inverse_index
+    except ImportError as error:
+        raise ImportError(
+            "This serialized model requires SATO_dataset in the training directory"
+        ) from error
+    return pos_to_order_inverse_index(coords, device, tensor=True)
+
+
+def forward_model(model_name, model, coorf, raw_coords, seg_matrix, cfg):
+    mode = str(cfg.get("forward_mode", "auto")).lower()
+    if mode == "auto":
+        if model_name in SEGMENTED_MODELS:
+            mode = "segmented"
+        elif model_name in RAW_COORD_MODELS:
+            mode = "raw_coords"
+        elif model_name in SERIALIZED_MODELS:
+            mode = "serialized"
+        else:
+            mode = "direct"
+    if mode == "direct":
+        output = model(coorf)
+    elif mode == "raw_coords":
+        output = model(coorf, rope_coords=raw_coords)
+    elif mode == "segmented":
+        output = model((coorf, seg_matrix))
+    elif mode == "serialized":
+        order, inverse = _serialization_indices(raw_coords, coorf.device)
+        if model_name == "Transolver_seg_ser":
+            output = model(coorf, seg_matrix, order, inverse)
+        else:
+            output = model(coorf, order, inverse)
+    else:
+        raise ValueError(
+            f"Unknown forward_mode={mode!r}; choose auto/direct/raw_coords/segmented/serialized"
+        )
+    if output.ndim == 2 and coorf.shape[0] == 1:
+        output = output.unsqueeze(0)
+    return output
 
 
 def select_device(name):
@@ -60,6 +219,8 @@ def _sample_scalars(all_scalars, sim_id):
 
 
 def _component_names(task, count):
+    if count == 4:
+        return ["velocity_x", "velocity_y", "velocity_z", "pressure"]
     if count == 1:
         return ["pressure" if "pressure" in task else "scalar"]
     prefix = "wss" if "wss" in task else "velocity"
@@ -102,10 +263,15 @@ def evaluate_run(label, config_path, checkpoint, raw_cfg, cfg, args):
         test_ids = test_ids[:args.max_test_samples]
     if not test_ids:
         raise ValueError("Reconstructed test split is empty")
-    _, _, loader, scalars = create_data_loaders(
-        data_source, batch_size=1, train_index=[], val_index=[], test_index=test_ids,
-        shuffle=False, predicted_feature_name=task, coordinate_only=True,
+    loader_kwargs = dict(
+        batch_size=1, train_index=[], val_index=[], test_index=test_ids,
+        shuffle=False, predicted_feature_name=task,
     )
+    if "coordinate_only" in inspect.signature(create_data_loaders).parameters:
+        loader_kwargs["coordinate_only"] = True
+    _, _, loader, scalars = create_data_loaders(data_source, **loader_kwargs)
+    if scalars is None:
+        scalars = _load_scalars(data_source)
     if scalars is None:
         raise FileNotFoundError("normalization_scalars.pkl is required")
 
@@ -113,7 +279,7 @@ def evaluate_run(label, config_path, checkpoint, raw_cfg, cfg, args):
     model = build_model(model_name, cfg)
     load_checkpoint(model, checkpoint, expected_model_name=model_name)
     model = model.float().to(device).eval()
-    amp_available, amp_dtype, _ = configure_amp(device)
+    amp_available, amp_dtype = configure_amp(device)
     amp_enabled = bool(args.amp and amp_available)
     parameter_count = sum(parameter.numel() for parameter in model.parameters())
     _print_run_setup(
@@ -134,17 +300,17 @@ def evaluate_run(label, config_path, checkpoint, raw_cfg, cfg, args):
     warmed_up = False
 
     def invoke(coorf, raw_coords, seg_matrix):
-        order = inverse = None
-        if model_name in SERIALIZED_MODELS:
-            positions = serialization_coordinates(model_name, coorf, raw_coords)
-            order, inverse = pos_to_order_inverse_index(positions, device, tensor=True)
         with autocast(device_type=device.type, dtype=amp_dtype, enabled=amp_enabled):
-            return forward_model(model_name, model, coorf, raw_coords, seg_matrix, order, inverse)
+            return forward_model(model_name, model, coorf, raw_coords, seg_matrix, cfg)
 
     prediction_dir = Path(args.output_dir) / "predictions"
     with torch.inference_mode():
-        for coorf, raw_coords, seg_matrix, target, sim_ids in tqdm(loader, desc=f"{label} ({model_name})", unit="case"):
-            coorf = coorf[..., :3].to(device)
+        for batch in tqdm(loader, desc=f"{label} ({model_name})", unit="case"):
+            coorf, raw_coords, seg_matrix, target, sim_ids = _unpack_batch(
+                batch, scalars, task
+            )
+            expected_space_dim = int(cfg.get("space_dim", coorf.shape[-1]))
+            coorf = coorf[..., :expected_space_dim].to(device)
             raw_coords_device = raw_coords.to(device)
             target_device = target.to(device)
             if model_name in SEGMENTED_MODELS:

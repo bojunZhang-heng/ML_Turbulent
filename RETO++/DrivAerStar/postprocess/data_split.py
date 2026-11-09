@@ -1,4 +1,4 @@
-"""Reconstruct exactly the test split encoded in a training YAML."""
+"""Reconstruct exactly the dataset-local test split encoded in a training YAML."""
 
 from __future__ import annotations
 
@@ -9,7 +9,8 @@ import numpy as np
 import yaml
 
 CONFIG_SECTIONS = ("experiment", "model", "attention", "position_encoding",
-                   "serialization", "checkpoint", "training", "data")
+                   "serialization", "checkpoint", "training", "data",
+                   "postprocess")
 
 
 TASK_FIELD_ALIASES = {
@@ -96,11 +97,14 @@ def _numeric_sample_ids(data_path: Path, task: str) -> tuple[list[int], list[int
                 scalars = pickle.load(handle)
             manifest = scalars.get("samples") if isinstance(scalars, dict) else None
             if manifest:
-                manifest_ids = {
-                    int(item["sample_id"])
-                    for item in manifest
-                    if isinstance(item, dict) and str(item.get("sample_id", "")).isdigit()
-                }
+                resolved_ids = set()
+                for item in manifest:
+                    if not isinstance(item, dict):
+                        continue
+                    value = item.get("sample_index", item.get("sample_id", item.get("run_id")))
+                    if str(value if value is not None else "").isdigit():
+                        resolved_ids.add(int(value))
+                manifest_ids = resolved_ids or None
         except (OSError, EOFError, pickle.UnpicklingError, AttributeError, TypeError, ValueError):
             manifest_ids = None
     for sample_id, path in sorted(paths.items()):
@@ -146,7 +150,8 @@ def resolve_test_data(raw_cfg: dict, cfg: dict, override: Path | None = None):
         raise ValueError("Set data.data_path in YAML or pass --data-path")
     data_path = Path(path_value).expanduser()
     if not data_path.is_absolute():
-        data_path = Path(cfg.get("_config_dir", Path.cwd())) / data_path
+        base = Path.cwd() if override is not None else Path(cfg.get("_config_dir", Path.cwd()))
+        data_path = base / data_path
     data_path = data_path.resolve()
     all_ids, _ = _numeric_sample_ids(
         data_path, str(cfg.get("predicted_feature_name", "surface_pressure"))

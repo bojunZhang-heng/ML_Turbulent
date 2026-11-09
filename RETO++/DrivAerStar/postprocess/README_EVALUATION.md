@@ -240,3 +240,48 @@ CANO,128,0.077
 - `metrics/statistics.py`：bootstrap CI 和配对比较；
 - `metrics/efficiency.py`：参数量和 checkpoint 大小；
 - `plots/`：所有论文风格图。
+# Multi-model manifests
+
+For a small comparison, repeat `--run LABEL CONFIG CHECKPOINT`. For many
+models, create a YAML manifest and pass it with `--runs-file`:
+
+```yaml
+runs:
+  - label: Transolver
+    config: ../config_Transolver.yml
+    checkpoint: ../experiment_Transolver/best_model.pth
+  - label: NewModel
+    config: ../config_NewModel.yml
+    checkpoint: ../experiment_NewModel/best_model.pth
+```
+
+```bash
+python postprocess/evaluate_models.py \
+  --runs-file postprocess/runs.example.yml \
+  --output-dir postprocess_results/all_models
+```
+
+Manifest paths are relative to the manifest file. Every label must be unique.
+All runs must use the same task and identical test case IDs.
+
+## Future custom models
+
+Built-in models are registered by name. A later model can be loaded without
+editing `model_registry.py` by adding the following YAML keys:
+
+```yaml
+model:
+  model_name: NewModel
+  model_module: models.NewModel
+  model_class: Model
+  model_kwargs:
+    space_dim: 3
+    out_dim: 1
+    n_hidden: 256
+postprocess:
+  forward_mode: direct
+```
+
+`forward_mode` supports `direct`, `raw_coords`, `segmented`, `serialized`, or
+`auto`. Checkpoint loading remains strict so architecture mismatches are not
+silently hidden.

@@ -1,4 +1,4 @@
-"""Construct DrivAerStar models from the same YAML keys as training."""
+"""Construct dataset-local models from the same YAML keys as training."""
 
 from __future__ import annotations
 
@@ -11,10 +11,11 @@ from models.LinearAttnNeuralOperator import LinearAttentionNeuralOperator as Lin
 from models.RETO import Model as RETO
 from models.RETO_plus import Model as RETOPlus
 from models.RETO_plus_v2 import Model as RETOPlusV2
-from models.SATO import Model as SATO
 from models.transolver_model import Model as Transolver
 
-SUPPORTED_MODELS = {"Transolver", "LinearNO", "CANO", "RETO", "RETO_plus", "RETO_plus_v2", "SATO"}
+BUILTIN_MODELS = {
+    "Transolver", "LinearNO", "CANO", "RETO", "RETO_plus", "RETO_plus_v2", "SATO"
+}
 
 
 def checkpoint_model_hint(state_dict: dict[str, torch.Tensor]) -> str | None:
@@ -112,11 +113,32 @@ def build_model(model_name: str, cfg: dict) -> torch.nn.Module:
                     checkpoint_segment_size=int(value(cfg, "checkpoint_segment_size", 2)),
                     checkpoint_num_blocks=value(cfg, "checkpoint_num_blocks", None))
     if model_name == "SATO":
+        try:
+            from models.SATO import Model as SATO
+        except ImportError as error:
+            raise ImportError(
+                "SATO is requested but models/SATO.py is unavailable in this dataset directory"
+            ) from error
         return SATO(**common, fun_dim=int(value(cfg, "fun_dim", 0)),
                     slice_num=int(value(cfg, "slice_num", 64)),
                     patch_size=int(value(cfg, "patch_size", 20)),
                     shift=int(value(cfg, "shift", 2)), n_iter=int(value(cfg, "n_iter", 1)))
-    raise ValueError(f"Unsupported model {model_name!r}; choose from {sorted(SUPPORTED_MODELS)}")
+    module_name = cfg.get("model_module")
+    class_name = str(value(cfg, "model_class", "Model"))
+    if not module_name:
+        raise ValueError(
+            f"Unsupported model {model_name!r}. Built-ins are {sorted(BUILTIN_MODELS)}. "
+            "For a future model, set model.model_module and optionally model.model_class "
+            "in its YAML; constructor arguments are read from model.model_kwargs."
+        )
+    import importlib
+
+    module = importlib.import_module(str(module_name))
+    model_class = getattr(module, class_name)
+    kwargs = cfg.get("model_kwargs", {}) or {}
+    if not isinstance(kwargs, dict):
+        raise TypeError("model.model_kwargs must be a mapping")
+    return model_class(**kwargs)
 
 
 def load_checkpoint(

@@ -30,6 +30,10 @@ __pycache__/
 !RETO++/ShapeNet/config_mlcfd_combined.yml
 !RETO++/ShapeNet/config_mlcfd_surface_pressure.yml
 !RETO++/ShapeNet/config_mlcfd_volume_velocity.yml
+!RETO++/DrivAerStar/postprocess/runs.example.yml
+!RETO++/ShapeNet/postprocess/runs.example.yml
+!RETO++/DrivAerNet/postprocess/runs.example.yml
+!RETO++/DrivAerML/postprocess/runs.example.yml
 
 .vscode
 

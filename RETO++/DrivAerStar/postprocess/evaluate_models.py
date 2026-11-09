@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compare DrivAerStar models with CANO/LinearNO/Transolver-style evaluation."""
+"""Compare any number of models using a dataset-local training configuration."""
 
 from __future__ import annotations
 
@@ -34,6 +34,13 @@ def parse_args():
         "--run", nargs=3, action="append", metavar=("LABEL", "CONFIG", "CHECKPOINT"),
         help="Model label, YAML and checkpoint. Repeat this option to compare models.",
     )
+    parser.add_argument(
+        "--runs-file", type=Path, default=None,
+        help=(
+            "YAML/JSON model manifest containing a runs list. This is easier "
+            "than repeating --run when comparing many models."
+        ),
+    )
     parser.add_argument("--config", type=Path, help="Backward-compatible single-run YAML")
     parser.add_argument("--checkpoint", type=Path, help="Backward-compatible single-run checkpoint")
     parser.add_argument("--label", default=None, help="Label used with --config/--checkpoint")
@@ -63,6 +70,26 @@ def parse_args():
     if bool(args.config) != bool(args.checkpoint):
         parser.error("--config and --checkpoint must be supplied together")
     runs = list(args.run or [])
+    if args.runs_file:
+        import yaml
+
+        manifest_path = args.runs_file.expanduser().resolve()
+        manifest = yaml.safe_load(manifest_path.read_text(encoding="utf-8")) or {}
+        manifest_runs = manifest if isinstance(manifest, list) else manifest.get("runs")
+        if not isinstance(manifest_runs, list):
+            parser.error("--runs-file must contain a list or a mapping with key 'runs'")
+        for index, item in enumerate(manifest_runs, start=1):
+            if not isinstance(item, dict):
+                parser.error(f"runs-file entry {index} must be a mapping")
+            try:
+                label = str(item["label"])
+                config = Path(item["config"])
+                checkpoint = Path(item["checkpoint"])
+            except KeyError as error:
+                parser.error(f"runs-file entry {index} is missing {error.args[0]!r}")
+            config = config if config.is_absolute() else manifest_path.parent / config
+            checkpoint = checkpoint if checkpoint.is_absolute() else manifest_path.parent / checkpoint
+            runs.append((label, str(config), str(checkpoint)))
     if args.config:
         runs.append((args.label or args.config.stem.replace("config_", ""), str(args.config), str(args.checkpoint)))
     if not runs:
@@ -89,6 +116,7 @@ def _print_launch_configuration(args):
             }
             for label, config, checkpoint in args.runs
         ],
+        "runs_file": str(args.runs_file.resolve()) if args.runs_file else None,
         "data_path_override": str(args.data_path.resolve()) if args.data_path else None,
         "output_dir": str(args.output_dir.resolve()),
         "max_test_samples": args.max_test_samples or "all",
