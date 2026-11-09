@@ -34,6 +34,10 @@ __pycache__/
 !RETO++/ShapeNet/postprocess/runs.example.yml
 !RETO++/DrivAerNet/postprocess/runs.example.yml
 !RETO++/DrivAerML/postprocess/runs.example.yml
+!RETO++/*/config_*_surface_pressure.yml
+!RETO++/*/config_*_volume_velocity.yml
+!RETO++/*/config_*_surface_wss.yml
+!RETO++/DrivAerNet/config_*_pressure.yml
 
 .vscode
 
