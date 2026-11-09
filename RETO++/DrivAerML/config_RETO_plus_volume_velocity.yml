@@ -1,0 +1,45 @@
+# Auto-generated task configuration for DrivAerML.
+# Model: RETO_plus; task: volume_velocity; input XYZ -> 3 output channel(s).
+# Run from RETO++/DrivAerML: python main.py --config config_RETO_plus_volume_velocity.yml
+
+experiment:
+  exp: DrivAerML_RETO_plus_volume_velocity
+  model_name: RETO_plus
+  predicted_feature_name: volume_velocity
+  phase: restart_train
+model:
+  space_dim: 3
+  out_dim: 3
+  n_layers: 8
+  n_hidden: 256
+  dropout: 0.0
+  act: gelu
+  fun_dim: 0
+  time_input: false
+  unified_pos: false
+  isregular: false
+attention:
+  n_head: 8
+  mlp_ratio: 2
+  key_ratio: 1
+  cluster_num: 64
+  cluster_temperature_init: 1.0
+  layer_scale_init: 0.1
+position_encoding:
+  num_position_frequencies: 6
+checkpoint:
+  checkpoint_segment_size: 2
+  checkpoint_num_blocks: 6
+training:
+  num_epochs: 200
+  eval_freq: 1
+  learning_rate: 0.001
+  batch_size: 1
+  shuffle: true
+data:
+  data_path: /data/zhangbojun/DrivAerML/pklFile_10k/
+  selection_mode: random
+  selection_seed: 42
+  train_ratio: 0.6
+  val_ratio: 0.3
+  test_ratio: 0.1
