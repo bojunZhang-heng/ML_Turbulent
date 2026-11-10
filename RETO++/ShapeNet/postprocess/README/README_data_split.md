@@ -27,9 +27,18 @@ raw_config, flat_config
 
 支持：
 
-1. 单数据目录：发现全部编号 PKL，按 `selection_mode` 和 `selection_seed` 排序，再按 train/val/test 比例切分；
+1. ShapeNet 单数据目录：默认严格复现 `main.py` 的模十划分，即排序后位置 `0-6` 为训练、`7` 为验证、`8-9` 为测试；
 2. 多车型目录：调用 `discover_multi_vehicle_samples()`，返回车型到目录的映射和组合测试 ID；
 3. `override`：用命令行 `--data-path` 覆盖 YAML 路径。
+
+如需对历史实验显式使用通用随机比例划分，可在 YAML 中设置：
+
+```yaml
+postprocess:
+  postprocess_split_mode: random_ratio
+```
+
+默认值 `shapenet_modulo_7_1_2` 与当前 ShapeNet 训练主函数一致。任务 YAML 中即使存在 `train_ratio` 等字段，也不会覆盖这个默认训练划分。
 
 ### `display_case_id(sim_id)`
 
@@ -37,4 +46,4 @@ raw_config, flat_config
 
 ## 关键保证
 
-随机划分使用固定 seed，不依赖 NumPy/PyTorch 的全局随机状态。比例必须非负且总和为 1。
+模十划分只依赖排序后的有效样本 ID，结果稳定且与训练一致。选择 `random_ratio` 时，随机划分使用固定 seed，不依赖 NumPy/PyTorch 的全局随机状态；比例必须非负且总和为 1。

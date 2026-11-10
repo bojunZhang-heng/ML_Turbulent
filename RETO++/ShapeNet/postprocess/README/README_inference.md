@@ -1,5 +1,17 @@
 # `inference.py`
 
+## ShapeNet 前向一致性
+
+ShapeNet 的训练函数对 RETO_plus 和 RETO_plus_v2 使用
+`model(normalized_input)`。后处理默认采用同一调用方式，让模型内部从归一化输入取得位置坐标；不会额外把反归一化真实坐标传入 `rope_coords`。
+
+只有训练阶段也显式使用真实坐标的未来实验，才应在 YAML 中设置：
+
+```yaml
+postprocess:
+  forward_mode: raw_coords
+```
+
 ## 作用
 
 执行一个模型的一次完整测试：重建 DataLoader、加载模型、推理、反归一化、累计指标、测量效率并返回绘图所需案例。

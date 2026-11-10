@@ -31,10 +31,13 @@ SEGMENTED_MODELS = {
     "Transolver_seg", "Transolver_seg_v2", "transolver_seg",
     "transolver_seg_v2", "SegLinearNO", "SegLinearNO_v2",
 }
-RAW_COORD_MODELS = {
-    "RopeLinearNO_v2", "RopeLinearNO_v3", "RETO_plus",
-    "RETO_plus_v2", "CANO_GatedRope",
-}
+# ShapeNet training calls every non-segmented model as ``model(model_input)``.
+# In particular, RETO_plus/v2 therefore derive their positional coordinates
+# from the normalized input. Passing reconstructed physical coordinates here
+# would change the learned function at evaluation time. A future experiment
+# that is also trained with explicit raw coordinates can still opt in through
+# ``postprocess.forward_mode: raw_coords`` in its YAML.
+RAW_COORD_MODELS = set()
 SERIALIZED_MODELS = {"LinearNO_se", "SATO", "Transolver_seg_ser"}
 
 

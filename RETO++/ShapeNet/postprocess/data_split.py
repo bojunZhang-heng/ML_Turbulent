@@ -156,6 +156,25 @@ def resolve_test_data(raw_cfg: dict, cfg: dict, override: Path | None = None):
     all_ids, _ = _numeric_sample_ids(
         data_path, str(cfg.get("predicted_feature_name", "surface_pressure"))
     )
+
+    # ShapeNet/main.py uses the position of each sorted sample ID modulo ten:
+    # positions 0-6 train, 7 validation and 8-9 test. Do not reconstruct this
+    # split from the generic random-ratio settings used by other datasets.
+    split_mode = str(
+        cfg.get("postprocess_split_mode", "shapenet_modulo_7_1_2")
+    ).strip().lower()
+    if split_mode == "shapenet_modulo_7_1_2":
+        return str(data_path), [
+            sample_id
+            for position, sample_id in enumerate(all_ids)
+            if position % 10 >= 8
+        ]
+    if split_mode != "random_ratio":
+        raise ValueError(
+            "postprocess_split_mode must be 'shapenet_modulo_7_1_2' or "
+            "'random_ratio'"
+        )
+
     selected = list(all_ids)
     mode = str(cfg.get("selection_mode", "random"))
     if mode == "random":
