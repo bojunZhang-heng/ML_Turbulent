@@ -1,40 +1,24 @@
-"""Preprocess full-volume DrivAerNet-CFD legacy VTK files.
+"""Preprocess DrivAerNet-CFD volume velocity fields.
 
 The DrivAerNet-CFD files in this project are unstructured CFD meshes rather
-than car-only surface meshes.  They contain point and cell fields named
-``p``, ``wallShearStress`` and ``U``.  This script supports two regions:
+than car-only surface meshes.  This dedicated script saves only full-volume
+coordinates and the three-component velocity field ``U``.  The exterior
+vehicle surface is extracted only to define the coordinate normalization
+scale; it is not written to the sample PKL files.
 
-``car_surface`` (default)
-    Extract the exterior boundary, identify the vehicle wall from non-zero
-    wall-shear stress while excluding the ground plane, and save normalized
-    coordinates, unit point normals and the selected physical fields.
-
-``volume``
-    Save all volume points and the selected point fields.  Normals are not
-    defined for volume points and are therefore not written.
-
-Coordinates are normalized with one global min-max transform.  Every
-physical field is normalized component-wise with one global mean/std
+Volume coordinates are normalized with the global min/max of all selected
+vehicle surfaces, so far-field coordinates may legitimately extend beyond
+``[0, 1]``.  Velocity is normalized component-wise with one global mean/std
 transform.  Statistics are accumulated over all selected files and stored in
 ``normalization_scalars.pkl``.  The source VTK files are never modified.
 
 Examples
 --------
-Car-surface pressure, compatible with the existing DrivAerNet pressure
-training data format::
-
-    python preprocess/process_NetCFD.py --overwrite
-
-Car-surface pressure and WSS::
+Full-volume velocity::
 
     python preprocess/process_NetCFD.py \
-        --fields pressure wss --overwrite
-
-Full-volume pressure and velocity::
-
-    python preprocess/process_NetCFD.py \
-        --region volume --fields pressure velocity \
-        --output-dir preprocess/DrivAerNet-CFD/volume_pklFile --overwrite
+        --output-dir preprocess/DrivAerNet-CFD/volume_velocity_pklFile \
+        --save-point-ids --overwrite
 """
 
 from __future__ import annotations
@@ -56,11 +40,10 @@ from vtk.util.numpy_support import numpy_to_vtk, vtk_to_numpy
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 DEFAULT_INPUT_DIR = SCRIPT_DIR / "DrivAerNet-CFD"
-DEFAULT_OUTPUT_DIR = DEFAULT_INPUT_DIR / "pklFile"
+DEFAULT_OUTPUT_DIR = DEFAULT_INPUT_DIR / "volume_velocity_pklFile"
 LOGGER = logging.getLogger("process_NetCFD")
 
 FIELD_ALIASES = {
-    "pressure": ("p", "pressure", "static_pressure", "surface_pressure"),
     "wss": (
         "wallShearStress",
         "wss",
@@ -88,6 +71,8 @@ def print_run_configuration(args: argparse.Namespace) -> None:
     print("Preprocessing configuration: process_NetCFD.py")
     for name, value in sorted(vars(args).items()):
         print(f"{name:<24}: {value}")
+    print(f"{'region':<24}: volume (fixed)")
+    print(f"{'fields':<24}: velocity (fixed)")
     print("=" * 72)
 
 
@@ -313,6 +298,8 @@ class ExtractedSample:
     vtk_field_names: dict[str, str]
     normals: np.ndarray | None = None
     source_point_ids: np.ndarray | None = None
+    surface_coords_min: np.ndarray | None = None
+    surface_coords_max: np.ndarray | None = None
 
 
 def extract_sample(
@@ -323,10 +310,14 @@ def extract_sample(
     ground_tolerance: float,
     wss_threshold: float,
     save_point_ids: bool,
+    collect_surface_bounds: bool = False,
 ) -> ExtractedSample:
     dataset = read_dataset(path)
-    # car_surface selection always needs WSS, even if WSS is not an output.
-    required = tuple(dict.fromkeys((*fields, *(('wss',) if region == 'car_surface' else ()))))
+    # Vehicle-surface selection needs WSS even when WSS is not an output.  In
+    # volume mode it is also needed during the statistics pass because the
+    # volume coordinates use the global vehicle-surface min/max transform.
+    needs_surface = region == "car_surface" or collect_surface_bounds
+    required = tuple(dict.fromkeys((*fields, *(("wss",) if needs_surface else ()))))
     dataset = ensure_point_fields(dataset, required, path)
 
     if region == "volume":
@@ -336,7 +327,24 @@ def extract_sample(
         for field in fields:
             arrays[field], names[field] = numpy_point_field(dataset, field, path)
         source_ids = np.arange(coords.shape[0], dtype=np.int64) if save_point_ids else None
-        return ExtractedSample(coords, arrays, names, source_point_ids=source_ids)
+        surface_min = None
+        surface_max = None
+        if collect_surface_bounds:
+            surface = extract_surface(dataset)
+            mask = car_surface_mask(
+                surface, path, ground_axis, ground_tolerance, wss_threshold
+            )
+            surface_coords = point_coordinates(surface, path)[mask]
+            surface_min = surface_coords.min(axis=0)
+            surface_max = surface_coords.max(axis=0)
+        return ExtractedSample(
+            coords,
+            arrays,
+            names,
+            source_point_ids=source_ids,
+            surface_coords_min=surface_min,
+            surface_coords_max=surface_max,
+        )
 
     surface = add_unit_normals(extract_surface(dataset), path)
     mask = car_surface_mask(
@@ -367,7 +375,17 @@ def extract_sample(
                 "--save-point-ids was requested, but VTK did not preserve original IDs"
             )
         source_ids = vtk_to_numpy(id_match[1]).astype(np.int64, copy=False)[mask].copy()
-    return ExtractedSample(coords, arrays, names, normals, source_ids)
+    surface_min = coords.min(axis=0) if collect_surface_bounds else None
+    surface_max = coords.max(axis=0) if collect_surface_bounds else None
+    return ExtractedSample(
+        coords,
+        arrays,
+        names,
+        normals,
+        source_ids,
+        surface_min,
+        surface_max,
+    )
 
 
 @dataclass
@@ -420,8 +438,10 @@ def collect_statistics(
     ground_tolerance: float,
     wss_threshold: float,
 ) -> dict:
-    coords_min = np.full(3, np.inf, dtype=np.float64)
-    coords_max = np.full(3, -np.inf, dtype=np.float64)
+    surface_coords_min = np.full(3, np.inf, dtype=np.float64)
+    surface_coords_max = np.full(3, -np.inf, dtype=np.float64)
+    region_coords_min = np.full(3, np.inf, dtype=np.float64)
+    region_coords_max = np.full(3, -np.inf, dtype=np.float64)
     moments = {field: RunningMoments() for field in fields}
     inspected: list[dict] = []
 
@@ -435,9 +455,18 @@ def collect_statistics(
             ground_tolerance,
             wss_threshold,
             save_point_ids=False,
+            collect_surface_bounds=True,
         )
-        coords_min = np.minimum(coords_min, sample.coords.min(axis=0))
-        coords_max = np.maximum(coords_max, sample.coords.max(axis=0))
+        if sample.surface_coords_min is None or sample.surface_coords_max is None:
+            raise RuntimeError(f"Missing vehicle-surface bounds for {path.name}")
+        surface_coords_min = np.minimum(
+            surface_coords_min, sample.surface_coords_min
+        )
+        surface_coords_max = np.maximum(
+            surface_coords_max, sample.surface_coords_max
+        )
+        region_coords_min = np.minimum(region_coords_min, sample.coords.min(axis=0))
+        region_coords_max = np.maximum(region_coords_max, sample.coords.max(axis=0))
         for field in fields:
             moments[field].update(sample.fields[field])
         inspected.append(
@@ -457,30 +486,52 @@ def collect_statistics(
         )
         del sample
 
-    coords_range = coords_max - coords_min
+    coords_range = surface_coords_max - surface_coords_min
     constant = coords_range <= np.finfo(np.float32).eps
     if np.any(constant):
         LOGGER.warning("Constant coordinate axes %s get range=1", np.flatnonzero(constant).tolist())
         coords_range[constant] = 1.0
 
     scalars: dict = {
-        "schema_version": "drivaernet-cfd-v1",
+        "schema_version": "drivaernet-cfd-v2-surface-scale",
         "region": region,
-        "fields": list(fields),
-        "coords_min": coords_min.astype(np.float32)[None, :],
-        "coords_max": coords_max.astype(np.float32)[None, :],
+        "fields": ["y_velocity" if field == "velocity" else field for field in fields],
+        # Compatibility keys used by existing dataloaders.  They deliberately
+        # point to the surface scale even when the saved region is volume.
+        "coords_min": surface_coords_min.astype(np.float32)[None, :],
+        "coords_max": surface_coords_max.astype(np.float32)[None, :],
         "coords_range": coords_range.astype(np.float32)[None, :],
+        "surface_coords_min": surface_coords_min.astype(np.float32)[None, :],
+        "surface_coords_max": surface_coords_max.astype(np.float32)[None, :],
+        "surface_coords_range": coords_range.astype(np.float32)[None, :],
+        "region_coords_min": region_coords_min.astype(np.float32)[None, :],
+        "region_coords_max": region_coords_max.astype(np.float32)[None, :],
+        "coordinate_scale_policy": "surface_scale_for_surface_and_volume",
+        "volume_coordinates_may_exceed_unit_interval": region == "volume",
         "samples": inspected,
         "normalization": {
-            "coor": "global_min_max",
+            "x_volume": "global_vehicle_surface_min_max",
             "normals": "unit_vectors_unchanged" if region == "car_surface" else None,
-            **{field: "global_mean_std_per_component" for field in fields},
+            **{
+                ("y_velocity" if field == "velocity" else field):
+                "global_mean_std_per_component"
+                for field in fields
+            },
         },
     }
     for field, state in moments.items():
-        scalars[f"{field}_mean"] = state.mean.astype(np.float32)[None, :]
-        scalars[f"{field}_std"] = state.population_std().astype(np.float32)[None, :]
-        scalars[f"{field}_point_count"] = int(state.count)
+        output_field = "y_velocity" if field == "velocity" else field
+        mean = state.mean.astype(np.float32)[None, :]
+        std = state.population_std().astype(np.float32)[None, :]
+        scalars[f"{output_field}_mean"] = mean
+        scalars[f"{output_field}_std"] = std
+        scalars[f"{output_field}_point_count"] = int(state.count)
+        # Retain aliases for older utilities while the canonical PKL schema
+        # matches DrivAerML/DrivAerStar.
+        if output_field != field:
+            scalars[f"{field}_mean"] = mean
+            scalars[f"{field}_std"] = std
+            scalars[f"{field}_point_count"] = int(state.count)
     return scalars
 
 
@@ -523,28 +574,49 @@ def write_normalized_samples(
             ground_tolerance,
             wss_threshold,
             save_point_ids,
+            collect_surface_bounds=False,
         )
         normalized_coords = (
             (extracted.coords - scalars["coords_min"]) / scalars["coords_range"]
         ).astype(np.float32, copy=False)
-        sample: dict[str, np.ndarray] = {"coor": normalized_coords}
+        sample: dict[str, np.ndarray] = {
+            "x_volume": normalized_coords[None, ...]
+        }
         if extracted.normals is not None:
             sample["normals"] = extracted.normals.astype(np.float32, copy=False)
         for field in fields:
-            sample[field] = (
+            output_field = "y_velocity" if field == "velocity" else field
+            normalized_field = (
                 (extracted.fields[field] - scalars[f"{field}_mean"])
                 / scalars[f"{field}_std"]
             ).astype(np.float32, copy=False)
+            sample[output_field] = normalized_field[None, ...]
         if extracted.source_point_ids is not None:
-            sample["source_point_ids"] = extracted.source_point_ids
+            sample["source_point_ids"] = extracted.source_point_ids[None, ...]
 
-        arrays = list(sample.values())
-        if not all(array.shape[0] == normalized_coords.shape[0] for array in arrays):
+        if sample["x_volume"].shape != (1, normalized_coords.shape[0], 3):
+            raise RuntimeError(f"Unexpected x_volume shape for {path.name}")
+        if not all(
+            sample["x_volume"].shape[1] == value.shape[1]
+            for value in sample.values()
+        ):
             raise RuntimeError(f"Point arrays are not aligned for {path.name}")
-        if not all(np.isfinite(array).all() for array in arrays):
+        if not all(np.isfinite(array).all() for array in sample.values()):
             raise RuntimeError(f"Normalized sample contains NaN/Inf for {path.name}")
-        if np.any(normalized_coords < -1e-5) or np.any(normalized_coords > 1.0 + 1e-5):
-            raise RuntimeError(f"Normalized coordinates outside [0, 1] for {path.name}")
+        if region == "car_surface" and (
+            np.any(normalized_coords < -1e-5)
+            or np.any(normalized_coords > 1.0 + 1e-5)
+        ):
+            raise RuntimeError(
+                f"Vehicle-surface coordinates outside [0, 1] for {path.name}"
+            )
+        if region == "volume":
+            LOGGER.info(
+                "%s: surface-scaled volume coordinate range min=%s, max=%s",
+                path.name,
+                np.array2string(normalized_coords.min(axis=0), precision=4),
+                np.array2string(normalized_coords.max(axis=0), precision=4),
+            )
 
         output_name = f"{sample_id(path)}.pkl"
         if output_name in used_names:
@@ -648,14 +720,6 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input-dir", type=Path, default=DEFAULT_INPUT_DIR)
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
-    parser.add_argument("--region", choices=("car_surface", "volume"), default="car_surface")
-    parser.add_argument(
-        "--fields",
-        nargs="+",
-        choices=tuple(FIELD_ALIASES),
-        default=["pressure"],
-        help="One or more fields to normalize and save",
-    )
     parser.add_argument("--pattern", default="*.vtk", help="Input filename glob")
     parser.add_argument(
         "--ground-axis",
@@ -689,7 +753,6 @@ def parse_args() -> argparse.Namespace:
     args = parser.parse_args()
     if args.ground_tolerance < 0 or args.wss_threshold < 0:
         parser.error("ground-tolerance and wss-threshold must be non-negative")
-    args.fields = tuple(args.fields)
     return args
 
 
@@ -699,8 +762,8 @@ def main() -> None:
     process_dataset(
         input_dir=args.input_dir,
         output_dir=args.output_dir,
-        region=args.region,
-        fields=args.fields,
+        region="volume",
+        fields=("velocity",),
         pattern=args.pattern,
         overwrite=args.overwrite,
         ground_axis=args.ground_axis,
