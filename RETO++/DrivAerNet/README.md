@@ -8,6 +8,36 @@
 # 模型记录
 ## DrivAerNet
 
+## 体场速度预测
+
+`preprocess/process_NetCFD.py` 生成的样本采用：
+
+```text
+x_volume: 归一化体场坐标，PKL 中形状 (1, N, 3)
+y_velocity: 归一化速度，PKL 中形状 (1, N, 3)
+```
+
+训练目录支持任务名 `volume_velocity`。对应 YAML 必须显式配置 `out_dim: 3`；`main.py` 只负责校验，不会自动覆盖 YAML。可用配置：
+
+```text
+config_LinearNO_volume_velocity.yml
+config_Transolver_volume_velocity.yml
+config_CANO_volume_velocity.yml
+config_RETO_plus_volume_velocity.yml
+config_RETO_plus_v2_volume_velocity.yml
+config_RETO_volume_velocity.yml
+config_SATO_volume_velocity.yml
+```
+
+运行示例：
+
+```bash
+cd ~/ML_Turbulent/RETO++/DrivAerNet
+python main.py --config config_RETO_plus_volume_velocity.yml
+```
+
+根据服务器上的实际位置修改配置中的 `data.data_path`。验证与测试阶段会先反归一化到物理速度，再报告总体相对 L2 误差以及 `u/v/w` 三个速度分量的相对误差。
+
 ### "cuda 1"  1109
 2969323
 2969324

@@ -5,8 +5,7 @@ from torch.amp import autocast, GradScaler
 import os
 import numpy as np
 from tqdm import tqdm
-from utils.metric import compute_relative_error
-from utils.metric import denormalize_pressure
+from utils.metric import compute_component_relative_errors, compute_relative_error
 from SATO_dataset.Dataset import pos_to_order_inverse_index
 
 SEGMENTED_MODELS = {
@@ -40,7 +39,9 @@ def serialization_coordinates(model_name, normalized_coords, raw_coords):
     return normalized_coords
 
 
-def batch_relative_error(outputs, targets, sim_ids, normalization_scalars):
+def batch_relative_error(
+    outputs, targets, sim_ids, normalization_scalars, predicted_feature_name
+):
     """Compute physical-scale error with the correct scalars for each vehicle."""
     outputs_np = outputs.detach().float().cpu().numpy()
     targets_np = targets.detach().cpu().numpy()
@@ -50,7 +51,12 @@ def batch_relative_error(outputs, targets, sim_ids, normalization_scalars):
         else None
     )
     if by_vehicle is None:
-        return compute_relative_error(outputs_np, targets_np, normalization_scalars)
+        return compute_relative_error(
+            outputs_np,
+            targets_np,
+            normalization_scalars,
+            predicted_feature_name,
+        )
     errors = []
     for batch_index, composite_id in enumerate(sim_ids):
         if not isinstance(composite_id, tuple) or len(composite_id) != 2:
@@ -63,6 +69,7 @@ def batch_relative_error(outputs, targets, sim_ids, normalization_scalars):
                 outputs_np[batch_index:batch_index + 1],
                 targets_np[batch_index:batch_index + 1],
                 by_vehicle[vehicle],
+                predicted_feature_name,
             )
         )
     return float(np.mean(errors))
@@ -371,7 +378,11 @@ def train(model_name, model, train_loader, val_loader,
 
                     # Compute relative error
                     relative_error = batch_relative_error(
-                        outputs, target, sim_ids, normalization_scalars
+                        outputs,
+                        target,
+                        sim_ids,
+                        normalization_scalars,
+                        predicted_feature_name,
                     )
                     val_relative_error += relative_error
                     val_progress.set_postfix(loss=f"{loss.item():.4e}")
@@ -472,15 +483,21 @@ def test(model_name, model, test_loader, normalization_scalars, model_path="mode
 
             # Compute field-level relative error
             relative_error = batch_relative_error(
-                outputs, target, sim_ids, normalization_scalars
+                outputs,
+                target,
+                sim_ids,
+                normalization_scalars,
+                predicted_feature_name,
             )
             test_relative_error += relative_error
             test_progress.set_postfix(loss=f"{loss.item():.4e}")
 
             # Store predictions and targets for detailed analysis
-            SIM_ID = sim_ids[0]
-            all_predictions[SIM_ID] = outputs.detach().float().cpu()
-            all_targets[SIM_ID] = target.detach().cpu()
+            outputs_cpu = outputs.detach().float().cpu()
+            targets_cpu = target.detach().cpu()
+            for batch_index, sim_id in enumerate(sim_ids):
+                all_predictions[sim_id] = outputs_cpu[batch_index:batch_index + 1]
+                all_targets[sim_id] = targets_cpu[batch_index:batch_index + 1]
 
     test_loss /= len(test_loader)
     test_relative_error /= len(test_loader)
@@ -495,5 +512,30 @@ def test(model_name, model, test_loader, normalization_scalars, model_path="mode
     print(f"Test Results:")
     print(f"  Test Loss: {test_loss:.6f}")
     print(f"  Test Relative Error: {test_relative_error:.6f}")
+
+    if all_predictions:
+        component_errors = []
+        for sim_id in all_predictions:
+            scalars = normalization_scalars
+            if isinstance(scalars, dict) and "by_vehicle" in scalars:
+                scalars = scalars["by_vehicle"][sim_id[0]]
+            component_errors.append(
+                compute_component_relative_errors(
+                    all_predictions[sim_id].numpy(),
+                    all_targets[sim_id].numpy(),
+                    scalars,
+                    predicted_feature_name,
+                )
+            )
+        component_errors = np.mean(component_errors, axis=0)
+        results["test_component_relative_errors"] = component_errors
+        names = ["u", "v", "w"] if len(component_errors) == 3 else ["scalar"]
+        print(
+            "  Component Relative Errors: "
+            + ", ".join(
+                f"{name}={value:.6f}"
+                for name, value in zip(names, component_errors)
+            )
+        )
 
     return results

@@ -10,6 +10,74 @@ from collections.abc import Sequence
 from scipy.sparse import csr_matrix
 
 
+TASK_SPECS = {
+    "surface_pressure": ("x_surface", "y_spressure"),
+    "pressure": ("x_surface", "y_spressure"),
+    "y_spressure": ("x_surface", "y_spressure"),
+    "volume_velocity": ("x_volume", "y_velocity"),
+    "velocity": ("x_volume", "y_velocity"),
+    "y_velocity": ("x_volume", "y_velocity"),
+}
+
+
+def resolve_task(predicted_feature_name):
+    task = str(predicted_feature_name).strip().lower()
+    if task not in TASK_SPECS:
+        choices = ", ".join(sorted(TASK_SPECS))
+        raise ValueError(
+            f"Unknown DrivAerNet task {predicted_feature_name!r}; "
+            f"choose one of: {choices}"
+        )
+    input_key, target_key = TASK_SPECS[task]
+    return task, input_key, target_key
+
+
+def _remove_saved_sample_axis(values, field_name):
+    """Convert saved (1, N, C) arrays to per-sample (N, C) arrays."""
+    array = np.asarray(values, dtype=np.float32)
+    if array.ndim == 3:
+        if array.shape[0] != 1:
+            raise ValueError(
+                f"Expected {field_name} saved batch dimension to equal 1, "
+                f"got {array.shape}"
+            )
+        array = array[0]
+    return array
+
+
+def discover_drivaernet_samples(data_root, predicted_feature_name):
+    """Return numbered PKLs containing the fields required by the task."""
+    root = Path(data_root).expanduser().resolve()
+    if not root.is_dir():
+        raise NotADirectoryError(f"DrivAerNet data directory not found: {root}")
+    _, input_key, target_key = resolve_task(predicted_feature_name)
+    valid, skipped = [], []
+    for path in sorted(
+        root.glob("*.pkl"),
+        key=lambda item: int(item.stem) if item.stem.isdigit() else 10**18,
+    ):
+        if not path.stem.isdigit():
+            continue
+        try:
+            with path.open("rb") as handle:
+                sample = pickle.load(handle)
+            has_input = input_key in sample or (
+                input_key == "x_surface"
+                and ("coor" in sample or "features_6d" in sample)
+            )
+            has_target = target_key in sample or (
+                target_key == "y_spressure" and "pressure" in sample
+            )
+            (valid if has_input and has_target else skipped).append(int(path.stem))
+        except (OSError, pickle.UnpicklingError, EOFError, AttributeError, TypeError):
+            skipped.append(int(path.stem))
+    if not valid:
+        raise FileNotFoundError(
+            f"No PKL contains {input_key!r}/{target_key!r} in {root}"
+        )
+    return valid, skipped
+
+
 def custom_collate_fn(batch):
     """
     Custom collate function for batch processing.
@@ -87,7 +155,9 @@ class VTKDataset(Dataset):
         for idx in indices:
             if idx in data_dict and idx != "normalization_scalars":
                 sample = data_dict[idx]
-                model_input = _get_input(sample, coordinate_only=coordinate_only)
+                model_input = _get_input(
+                    sample, predicted_feature_name, coordinate_only=coordinate_only
+                )
 
                 if "seg_matrix" in sample:
                     # Check if seg_matrix is already a sparse matrix
@@ -101,8 +171,11 @@ class VTKDataset(Dataset):
                     # Create empty tensor if no seg_matrix
                     seg_matrix = torch.zeros((1, model_input.shape[0]), dtype=torch.float32)
 
-                raw_coords = _get_raw_coords(sample, data_dict.get("normalization_scalars"))
-                target = _get_pressure(sample)
+                raw_coords = _get_raw_coords(
+                    sample, data_dict.get("normalization_scalars"),
+                    predicted_feature_name,
+                )
+                target = _get_target(sample, predicted_feature_name)
                 self.data.append((model_input, raw_coords, seg_matrix, target))
                 self.sim_ids.append(idx)  # Store the simulation ID
 
@@ -116,8 +189,16 @@ class VTKDataset(Dataset):
         return model_input, raw_coords, seg_matrix, target, sim_id
 
 
-def _get_input(sample, coordinate_only=False):
-    """Return normalized XYZ, optionally followed by the three normals."""
+def _get_input(sample, predicted_feature_name="surface_pressure", coordinate_only=False):
+    """Return normalized coordinates for the selected field."""
+    _, input_key, _ = resolve_task(predicted_feature_name)
+    if input_key in sample:
+        features = _remove_saved_sample_axis(sample[input_key], input_key)
+        if features.ndim != 2 or features.shape[1] != 3:
+            raise ValueError(f"Expected {input_key} shape (N, 3), got {features.shape}")
+        return torch.as_tensor(features, dtype=torch.float32)
+
+    # Legacy DrivAerNet surface-pressure schema.
     if coordinate_only:
         if "coor" in sample:
             features = np.asarray(sample["coor"], dtype=np.float32)
@@ -142,20 +223,44 @@ def _get_input(sample, coordinate_only=False):
     return torch.as_tensor(features, dtype=torch.float32)
 
 
-def _get_pressure(sample):
-    if "pressure" not in sample:
-        raise KeyError("Sample must contain the pressure field")
-    pressure = np.asarray(sample["pressure"], dtype=np.float32)
-    if pressure.ndim == 1:
-        pressure = pressure[:, None]
-    if pressure.ndim != 2 or pressure.shape[1] != 1:
-        raise ValueError(f"Expected pressure shape (N, 1), got {pressure.shape}")
-    return torch.as_tensor(pressure, dtype=torch.float32)
+def _get_target(sample, predicted_feature_name="surface_pressure"):
+    """Return an already standardized scalar or vector target."""
+    _, _, target_key = resolve_task(predicted_feature_name)
+    if target_key not in sample and target_key == "y_spressure" and "pressure" in sample:
+        target_key = "pressure"
+    if target_key not in sample:
+        raise KeyError(f"Sample must contain target field {target_key!r}")
+    target = _remove_saved_sample_axis(sample[target_key], target_key)
+    if target.ndim == 1:
+        target = target[:, None]
+    if target.ndim != 2:
+        raise ValueError(f"Expected {target_key} shape (N, C), got {target.shape}")
+    return torch.as_tensor(target, dtype=torch.float32)
 
 
-def _get_raw_coords(sample, normalization_scalars=None):
+def _get_raw_coords(
+    sample, normalization_scalars=None,
+    predicted_feature_name="surface_pressure",
+):
     """Return unnormalized XYZ coordinates for relative-position encoding."""
-    if "coor_raw" in sample:
+    _, input_key, _ = resolve_task(predicted_feature_name)
+    if input_key in sample:
+        coords = _remove_saved_sample_axis(sample[input_key], input_key)
+        if normalization_scalars is None:
+            raw_coords = coords
+        else:
+            prefix = "surface_coords" if input_key == "x_surface" else "volume_coords"
+            min_key = f"{prefix}_min"
+            range_key = f"{prefix}_range"
+            if min_key not in normalization_scalars:
+                min_key = "coords_min"
+            if range_key not in normalization_scalars:
+                range_key = "coords_range"
+            raw_coords = (
+                coords * np.asarray(normalization_scalars[range_key], dtype=np.float32)
+                + np.asarray(normalization_scalars[min_key], dtype=np.float32)
+            )
+    elif "coor_raw" in sample:
         raw_coords = np.asarray(sample["coor_raw"], dtype=np.float32)
     elif "coor" in sample and normalization_scalars is not None:
         coords = np.asarray(sample["coor"], dtype=np.float32)
@@ -225,6 +330,7 @@ class PerFileVTKDataset(Dataset):
             )
         self.indices = indices
         self.coordinate_only = coordinate_only
+        self.predicted_feature_name = predicted_feature_name
         self.normalization_scalars = self._load_normalization_scalars()
 
     def _load_normalization_scalars(self):
@@ -286,12 +392,17 @@ class PerFileVTKDataset(Dataset):
         # Map from dataset index to simulation id
         sim_id = self.indices[idx]
         sample = self._load_sample(sim_id)
-        coorf = _get_input(sample, coordinate_only=self.coordinate_only)
+        coorf = _get_input(
+            sample, self.predicted_feature_name,
+            coordinate_only=self.coordinate_only,
+        )
         sample_scalars = self.normalization_scalars
         if isinstance(sample_scalars, dict) and "by_vehicle" in sample_scalars:
             vehicle, _ = sim_id
             sample_scalars = sample_scalars["by_vehicle"][vehicle]
-        raw_coords = _get_raw_coords(sample, sample_scalars)
+        raw_coords = _get_raw_coords(
+            sample, sample_scalars, self.predicted_feature_name
+        )
 
         # Ensure seg_matrix is dense (mirror behavior of VTKDataset)
         seg_matrix = sample.get("seg_matrix")
@@ -300,7 +411,7 @@ class PerFileVTKDataset(Dataset):
         if isinstance(seg_matrix, csr_matrix):
             seg_matrix = seg_matrix.toarray()
         seg_matrix = torch.as_tensor(seg_matrix, dtype=torch.float32)
-        p = _get_pressure(sample)
+        p = _get_target(sample, self.predicted_feature_name)
 
         return coorf, raw_coords, seg_matrix, p, sim_id
 

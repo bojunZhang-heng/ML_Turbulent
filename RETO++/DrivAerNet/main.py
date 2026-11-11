@@ -1,4 +1,8 @@
-from dataloader import create_data_loaders, discover_multi_vehicle_samples
+from dataloader import (
+    create_data_loaders,
+    discover_drivaernet_samples,
+    discover_multi_vehicle_samples,
+)
 from models.transolver_model import Model as Transolver_Model
 
 from models.LinearAttnNeuralOperator import LinearAttentionNeuralOperator as LinearNO
@@ -167,22 +171,29 @@ def main():
             )
         if not DATA_PATH.endswith(os.sep):
             DATA_PATH += os.sep
-        sample_files = [f for f in os.listdir(DATA_PATH) if f.endswith('.pkl')]
-        ALL_INDEX = sorted(
-            int(os.path.splitext(file)[0])
-            for file in sample_files
-            if os.path.splitext(file)[0].isdigit()
+        ALL_INDEX, skipped = discover_drivaernet_samples(
+            DATA_PATH, predicted_feature_name
         )
-        print(f"Total samples found in {DATA_PATH}: {len(ALL_INDEX)}")
-        TRAIN_index, VAL_index, TEST_index = [], [], []
-        for position, sample_id in enumerate(ALL_INDEX):
-            ratio_position = position % 10
-            if ratio_position < 6:
-                TRAIN_index.append(sample_id)
-            elif ratio_position < 9:
-                VAL_index.append(sample_id)
-            else:
-                TEST_index.append(sample_id)
+        print(
+            f"Usable samples in {DATA_PATH}: {len(ALL_INDEX)} "
+            f"(skipped for missing/corrupt task fields: {len(skipped)})"
+        )
+        selected = ALL_INDEX[:]
+        if args.selection_mode == "random":
+            import random
+            random.Random(args.selection_seed).shuffle(selected)
+        ratios = (args.train_ratio, args.val_ratio, args.test_ratio)
+        if any(value < 0 for value in ratios) or abs(sum(ratios) - 1.0) > 1.0e-8:
+            raise ValueError(
+                f"train/val/test ratios must be non-negative and sum to 1, got {ratios}"
+            )
+        train_count = int(len(selected) * args.train_ratio)
+        val_count = int(len(selected) * args.val_ratio)
+        TRAIN_index = selected[:train_count]
+        VAL_index = selected[train_count:train_count + val_count]
+        TEST_index = selected[train_count + val_count:]
+        if not TRAIN_index or not VAL_index or not TEST_index:
+            raise ValueError("Train, validation and test splits must all be non-empty")
         DATA_SOURCE = DATA_PATH
         print(
             f"Train: {len(TRAIN_index)}, Val: {len(VAL_index)}, "
@@ -211,6 +222,25 @@ def main():
         raise FileNotFoundError(
             "normalization_scalars.pkl was not found for the selected data. "
             "Run preprocess/process_data.py before training."
+        )
+
+    output_dimensions = {
+        "surface_pressure": 1,
+        "pressure": 1,
+        "y_spressure": 1,
+        "volume_velocity": 3,
+        "velocity": 3,
+        "y_velocity": 3,
+    }
+    task_key = predicted_feature_name.strip().lower()
+    expected_out_dim = output_dimensions.get(task_key)
+    if expected_out_dim is None:
+        raise ValueError(f"Unsupported DrivAerNet task: {predicted_feature_name}")
+    if args.out_dim != expected_out_dim:
+        raise ValueError(
+            f"Task {predicted_feature_name!r} requires model.out_dim="
+            f"{expected_out_dim}, but the YAML config sets out_dim={args.out_dim}. "
+            "Fix the YAML instead of relying on an automatic override."
         )
 
     # Create model
@@ -342,6 +372,7 @@ def main():
             patch_size=args.patch_size,
             shift=args.shift,
             n_iter=args.n_iter,
+            out_dim=args.out_dim,
         )
     else:
         raise ValueError(f"Model name {model_name} not supported")

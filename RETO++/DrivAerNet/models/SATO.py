@@ -159,7 +159,8 @@ class SATO_block(nn.Module):
             last_layer=False,
             slice_num=32,
             patch_size=20,
-            shift=1
+            shift=1,
+            out_dim=1,
     ):
         super().__init__()
         self.last_layer = last_layer
@@ -178,7 +179,7 @@ class SATO_block(nn.Module):
 
         if self.last_layer:
             self.ln_4 = nn.LayerNorm(hidden_dim)
-            self.mlp2 = nn.Linear(hidden_dim, 1)
+            self.mlp2 = nn.Linear(hidden_dim, out_dim)
 
     def forward(self, fx, order, inverse):
         x0 = fx
@@ -216,7 +217,8 @@ class Model(nn.Module):
                  slice_num=32,
                  patch_size=20,
                  shift=1,
-                 n_iter=1
+                 n_iter=1,
+                 out_dim=1,
                  ):
         super(Model, self).__init__()
         self.__name__ = 'SATO'
@@ -235,6 +237,7 @@ class Model(nn.Module):
                                       slice_num=slice_num,
                                       patch_size=patch_size,
                                       shift=shift,
+                                      out_dim=out_dim,
                                       last_layer=(_ == n_layers - 1))
                                      for _ in range(n_layers)])
         self.initialize_weights()
@@ -271,4 +274,4 @@ class Model(nn.Module):
                 serialization_type = int(i % order.shape[1])
                 fx_surf = self.blocks[i](fx_surf, order[:, serialization_type, :], inverse[:, serialization_type, :])
 
-        return fx_surf[0]
+        return fx_surf
