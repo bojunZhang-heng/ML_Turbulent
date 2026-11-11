@@ -15,7 +15,7 @@
 normalization_scalars.pkl
 ```
 
-并且 `normalization_scalars.pkl` 必须包含两套独立坐标统计：
+并且 `normalization_scalars.pkl` 必须包含表面和体场坐标统计键：
 
 ```text
 surface_coords_min / surface_coords_max / surface_coords_range
@@ -33,6 +33,11 @@ volume_coords_min  / volume_coords_max  / volume_coords_range
 ```
 
 下采样脚本会拒绝直接处理共享坐标尺度的 v1 数据，避免继续传播错误尺度。
+
+脚本同时支持 surface-scale v3 数据，即 `x_surface` 和 `x_volume` 都使用
+汽车表面 `surface_coords_min/range`。这种格式下外流场坐标超出 `[0,1]`
+属于正常情况，不会被裁剪或拒绝。脚本会检查表面和体场统计量确实相同，
+并把输出 schema 统一修正为 `drivaerml-normalized-surface-scale-v3`。
 
 ## 2. 推荐命令：表面和体场保存在同一 PKL
 

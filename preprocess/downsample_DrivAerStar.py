@@ -387,7 +387,15 @@ def verify_output(
     groups: tuple[str, ...],
     targets: dict[str, int],
     path: Path,
+    scalars: dict[str, Any],
 ) -> None:
+    surface_scale = (
+        scalars.get("coordinate_scale_policy")
+        == "surface_scale_for_surface_and_volume"
+        or bool(scalars.get("volume_coordinates_may_exceed_unit_interval"))
+        or scalars.get("normalization", {}).get("x_volume")
+        == "global_surface_minmax"
+    )
     for group in groups:
         spec = GROUPS[group]
         target = targets[group]
@@ -400,7 +408,13 @@ def verify_output(
             if not np.isfinite(values).all():
                 raise RuntimeError(f"NaN/Inf in {key} of {path}")
         coords = sample[spec["coordinate"]]
-        if np.any(coords < -1.0e-5) or np.any(coords > 1.0 + 1.0e-5):
+        # With a shared surface scale, the larger wind-tunnel volume is
+        # expected to extend outside [0, 1]. Surface coordinates still use the
+        # defining min-max range and must remain inside the unit interval.
+        require_unit_interval = group == "surface" or not surface_scale
+        if require_unit_interval and (
+            np.any(coords < -1.0e-5) or np.any(coords > 1.0 + 1.0e-5)
+        ):
             raise RuntimeError(f"Coordinates outside [0,1] in {path}")
 
 
@@ -475,6 +489,10 @@ def main() -> int:
     print(f"Point sets  : {groups}")
     print(f"Point counts: {targets}")
     print(f"Method      : {args.method}")
+    print(
+        "Coord policy: "
+        f"{output_scalars.get('coordinate_scale_policy', 'separate_scales')}"
+    )
     for position, path in enumerate(paths, start=1):
         with path.open("rb") as stream:
             sample = pickle.load(stream)
@@ -492,7 +510,7 @@ def main() -> int:
         )
         destination = output_dir / path.name
         atomic_pickle_dump(result, destination)
-        verify_output(result, groups, targets, destination)
+        verify_output(result, groups, targets, destination, output_scalars)
         print(f"[{position}/{len(paths)}] {path.name}")
         del sample, result
 

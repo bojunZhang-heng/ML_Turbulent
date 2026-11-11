@@ -316,10 +316,20 @@ def downsample_sample(
     return downsample_drivaerml(sample, targets, method, point_set, rng)
 
 
+def uses_surface_scale(scalars: dict[str, Any]) -> bool:
+    return (
+        scalars.get("coordinate_scale_policy")
+        == "surface_scale_for_surface_and_volume"
+        or bool(scalars.get("volume_coordinates_may_exceed_unit_interval"))
+        or scalars.get("normalization", {}).get("x_volume")
+        == "global_surface_minmax"
+    )
+
+
 def verify_coordinate_scalars(
     scalars: dict[str, Any], groups: tuple[str, ...]
 ) -> None:
-    """Reject legacy shared-coordinate statistics before any output is written."""
+    """Validate either separate scales or one shared surface scale."""
 
     for group in groups:
         prefix = GROUPS[group]["scalar_prefix"]
@@ -327,7 +337,7 @@ def verify_coordinate_scalars(
         missing = [key for key in keys if key not in scalars]
         if missing:
             raise RuntimeError(
-                f"Missing independent {group} coordinate statistics {missing}. "
+                f"Missing {group} coordinate statistics {missing}. "
                 "Migrate the input with process_DrivAerML.py --source-pkl-dir first."
             )
         minimum, maximum, values_range = (
@@ -342,8 +352,20 @@ def verify_coordinate_scalars(
         ):
             raise RuntimeError(f"Invalid {group} min-max coordinate statistics")
 
+    if uses_surface_scale(scalars) and {"surface", "volume"}.issubset(groups):
+        for suffix in ("min", "max", "range"):
+            surface = np.asarray(scalars[f"surface_coords_{suffix}"])
+            volume = np.asarray(scalars[f"volume_coords_{suffix}"])
+            if not np.array_equal(surface, volume):
+                raise RuntimeError(
+                    "Surface-scale policy requires identical surface and "
+                    f"volume coordinate statistics; mismatch in {suffix}"
+                )
 
-def verify_downsampled_sample(sample: dict[str, Any], source: Path) -> None:
+
+def verify_downsampled_sample(
+    sample: dict[str, Any], source: Path, scalars: dict[str, Any]
+) -> None:
     """Verify alignment and index counts after writing one sample."""
 
     info = sample.get("downsampling", {}).get("groups", {})
@@ -356,8 +378,22 @@ def verify_downsampled_sample(sample: dict[str, Any], source: Path) -> None:
         if not isinstance(indices, np.ndarray) or indices.shape != (target,):
             raise RuntimeError(f"Invalid {group} indices in {source}")
         for field in spec["fields"]:
-            if field in sample and len(sample[field]) != target:
+            if field not in sample:
+                continue
+            values = sample[field]
+            if len(values) != target:
                 raise RuntimeError(f"Misaligned {field} in {source}")
+            if not np.isfinite(values).all():
+                raise RuntimeError(f"NaN/Inf in {field} of {source}")
+        coordinates = np.asarray(sample[spec["coordinate"]])
+        require_unit_interval = group == "surface" or not uses_surface_scale(scalars)
+        if require_unit_interval and (
+            np.any(coordinates < -1.0e-5)
+            or np.any(coordinates > 1.0 + 1.0e-5)
+        ):
+            raise RuntimeError(
+                f"Coordinates outside [0,1] in {source}: {spec['coordinate']}"
+            )
 
 
 def atomic_pickle_dump(data: Any, destination: Path) -> None:
@@ -439,6 +475,10 @@ def main() -> int:
     print(f"Target points   : {targets}")
     print(f"Method          : {args.method}")
     print(f"Samples         : {len(sample_files)}")
+    print(
+        "Coordinate policy: "
+        f"{output_scalars.get('coordinate_scale_policy', 'separate_scales')}"
+    )
     print("=" * 72)
 
     child_seeds = np.random.SeedSequence(args.seed).spawn(len(sample_files))
@@ -457,8 +497,10 @@ def main() -> int:
             point_set=args.point_set,
             rng=np.random.default_rng(child_seed),
         )
+        if uses_surface_scale(output_scalars):
+            result["schema_version"] = "drivaerml-normalized-surface-scale-v3"
         atomic_pickle_dump(result, destination)
-        verify_downsampled_sample(result, destination)
+        verify_downsampled_sample(result, destination, output_scalars)
         print(
             f"[{position:>4}/{len(sample_files)}] {source.name}: "
             f"{result_summary(result)}"
@@ -471,6 +513,8 @@ def main() -> int:
         "method": args.method,
         "seed": args.seed,
     }
+    if uses_surface_scale(output_scalars):
+        output_scalars["schema_version"] = "drivaerml-normalized-surface-scale-v3"
     manifest = output_scalars.get("samples")
     if isinstance(manifest, list):
         for record in manifest:
