@@ -69,8 +69,9 @@ def parse_args() -> argparse.Namespace:
         default="auto",
         help=(
             "DrivAerML point set to retain. 'surface' drops volume arrays; "
-            "'volume' drops surface arrays; 'both' requires both; 'auto' "
-            "retains every point set available in each complete or partial sample."
+            "'volume' requires volume arrays and drops surface arrays; "
+            "'both' and 'auto' retain every available point set, so legal "
+            "surface-only partial samples are preserved without fake volume data."
         ),
     )
     parser.add_argument(
@@ -88,10 +89,19 @@ def parse_args() -> argparse.Namespace:
         default=42,
         help="Base seed; every sample receives a deterministic child seed.",
     )
-    parser.add_argument(
+    output_group = parser.add_mutually_exclusive_group()
+    output_group.add_argument(
         "--overwrite",
         action="store_true",
         help="Replace existing output PKL files.",
+    )
+    output_group.add_argument(
+        "--resume",
+        action="store_true",
+        help=(
+            "Continue an interrupted run. Existing numbered outputs are "
+            "validated and skipped; missing outputs are generated."
+        ),
     )
     args = parser.parse_args()
     for name in ("num_points", "surface_num_points", "volume_num_points"):
@@ -259,15 +269,26 @@ def downsample_drivaerml(
         "surface": "x_surface" in sample,
         "volume": "x_volume" in sample,
     }
-    selected = (
-        [name for name, exists in available.items() if exists]
-        if point_set == "auto"
-        else ["surface", "volume"] if point_set == "both"
+    requested = (
+        ["surface", "volume"]
+        if point_set in {"auto", "both"}
         else [point_set]
     )
-    missing = [name for name in selected if not available[name]]
-    if missing:
-        raise KeyError(f"Selected DrivAerML point set(s) missing: {missing}")
+    selected = (
+        [name for name, exists in available.items() if exists]
+        if point_set in {"auto", "both"}
+        else [point_set]
+    )
+    missing = [name for name in requested if not available[name]]
+    # Explicit volume-only mode must not silently turn into an empty sample.
+    # In both/auto mode, surface-only records are valid DrivAerML partial runs.
+    required_missing = missing if point_set in {"surface", "volume"} else []
+    if required_missing:
+        raise KeyError(
+            f"Selected DrivAerML point set(s) missing: {required_missing}"
+        )
+    if not selected:
+        raise KeyError("Sample contains neither surface nor volume coordinates")
 
     result = sample.copy()
     # Removing the unused group is essential: otherwise a surface-only output
@@ -289,7 +310,9 @@ def downsample_drivaerml(
 
     result["downsampling"] = {
         "schema": "drivaerml",
+        "requested_point_set": point_set,
         "point_set": selected,
+        "missing_point_sets": missing,
         "method": method,
         "groups": group_info,
     }
@@ -409,11 +432,15 @@ def atomic_pickle_dump(data: Any, destination: Path) -> None:
 
 def result_summary(result: dict[str, Any]) -> str:
     info = result["downsampling"]
-    return ", ".join(
+    summary = ", ".join(
         f"{group}: {values['original_num_points']} -> "
         f"{values['sampled_num_points']}"
         for group, values in info["groups"].items()
     )
+    missing = info.get("missing_point_sets", [])
+    if missing:
+        summary += f"; missing source point sets: {missing}"
+    return summary
 
 
 def main() -> int:
@@ -456,9 +483,10 @@ def main() -> int:
     planned_outputs = [output_dir / path.name for path in sample_files]
     planned_outputs.append(output_dir / SCALARS_FILENAME)
     existing_outputs = [path for path in planned_outputs if path.exists()]
-    if existing_outputs and not args.overwrite:
+    if existing_outputs and not (args.overwrite or args.resume):
         raise FileExistsError(
-            f"Output exists: {existing_outputs[0]}; pass --overwrite to replace it"
+            f"Output exists: {existing_outputs[0]}; pass --overwrite to replace "
+            "all outputs or --resume to continue"
         )
     if args.overwrite:
         for path in planned_outputs:
@@ -482,10 +510,30 @@ def main() -> int:
     print("=" * 72)
 
     child_seeds = np.random.SeedSequence(args.seed).spawn(len(sample_files))
+    completed_by_group = {group: 0 for group in GROUPS}
+    partial_samples = 0
+    resumed_samples = 0
     for position, (source, child_seed) in enumerate(
         zip(sample_files, child_seeds), start=1
     ):
         destination = output_dir / source.name
+        if args.resume and destination.is_file():
+            with destination.open("rb") as stream:
+                existing_result = pickle.load(stream)
+            verify_downsampled_sample(
+                existing_result, destination, output_scalars
+            )
+            present = existing_result.get("downsampling", {}).get("groups", {})
+            for group in present:
+                completed_by_group[group] += 1
+            if len(present) < len(targets):
+                partial_samples += 1
+            resumed_samples += 1
+            print(
+                f"[{position:>4}/{len(sample_files)}] {source.name}: "
+                f"resume validated, {result_summary(existing_result)}"
+            )
+            continue
         with source.open("rb") as stream:
             sample = pickle.load(stream)
         if not isinstance(sample, dict):
@@ -501,6 +549,11 @@ def main() -> int:
             result["schema_version"] = "drivaerml-normalized-surface-scale-v3"
         atomic_pickle_dump(result, destination)
         verify_downsampled_sample(result, destination, output_scalars)
+        present = result["downsampling"]["groups"]
+        for group in present:
+            completed_by_group[group] += 1
+        if result["downsampling"].get("missing_point_sets"):
+            partial_samples += 1
         print(
             f"[{position:>4}/{len(sample_files)}] {source.name}: "
             f"{result_summary(result)}"
@@ -512,6 +565,9 @@ def main() -> int:
         "num_points": dict(targets),
         "method": args.method,
         "seed": args.seed,
+        "samples_by_point_set": completed_by_group,
+        "partial_samples": partial_samples,
+        "resumed_samples": resumed_samples,
     }
     if uses_surface_scale(output_scalars):
         output_scalars["schema_version"] = "drivaerml-normalized-surface-scale-v3"
@@ -529,6 +585,9 @@ def main() -> int:
     atomic_pickle_dump(output_scalars, destination)
     print(f"Updated: {SCALARS_FILENAME}")
 
+    print(f"Samples by point set: {completed_by_group}")
+    print(f"Partial samples      : {partial_samples}")
+    print(f"Resumed samples      : {resumed_samples}")
     print("Downsampling complete.")
     return 0
 

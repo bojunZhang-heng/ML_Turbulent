@@ -55,11 +55,32 @@ volume_coords_min  / volume_coords_max  / volume_coords_range
   --overwrite
 ```
 
-`auto` 适合 DrivAerML，因为数据中既有完整样本，也可能有只有表面场的部分样本：
+`auto` 和 `both` 都适合 DrivAerML，因为数据中既有完整样本，也有只有表面场的部分样本：
 
 - 完整样本同时采样 surface 和 volume；
 - 只有表面场的样本只采样 surface；
 - 不会为缺失的体场生成零数组。
+
+因此，`both` 表示“尽可能保留两类场”，而不是要求每个源样本必须同时
+具有两类场。速度训练的数据发现逻辑会自动跳过没有 `x_volume/y_velocity`
+的部分样本，压力和 WSS 训练仍可使用这些样本。
+
+### 2.1 中断后继续
+
+如果任务中途退出，可使用完全相同的参数并增加 `--resume`：
+
+```bash
+python preprocess/downsample_DrivAerML.py \
+  --input-dir /data/zhangbojun/DrivAerML/pklFile_100k \
+  --output-dir /data/zhangbojun/DrivAerML/pklFile_10k \
+  --point-set both \
+  --surface-num-points 10000 \
+  --volume-num-points 10000 \
+  --method random \
+  --resume
+```
+
+已有编号 PKL 会先通过字段、点数、有限值和坐标范围校验，然后跳过；只生成缺失文件。`--resume` 与 `--overwrite` 不能同时使用。
 
 ## 3. 输出字段
 
