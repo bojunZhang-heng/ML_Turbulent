@@ -4,14 +4,13 @@
 # File  : README.md
 # -----------------------------------------------------------------------
 
-# cuda 4 1109
-2963529
-2966052
-2966053
-2966054
-2966055
-2966056
-2968997
+# cuda 4 1111-velocity
+3082591
+3082592
+3082593
+3082594
+3082595
+3083349
 
 ### DrivAerML 500组
 #### 100k
@@ -22,6 +21,7 @@
 #### 10k
 ##### RETO_plus_v2
 0.126745 best_model_RETO_plus_v2_surface_pressure_20261106_1037.pth
+0.103997 best_model_RETO_plus_v2_surface_pressure_20261109_1332.pth
 
 ##### Transolver
 0.159050 best_model_Transolver_surface_pressure_20261106_1037.pth
