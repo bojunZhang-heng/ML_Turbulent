@@ -25,6 +25,9 @@
   Test pressure relative L2: 0.091752
   Test Cd relative error: 0.018949
 
+#### best_model_Transolver_volume_velocity_20261109_1327.pth
+  Test velocity relative L2: 0.033376
+
 
 
 
@@ -38,7 +41,13 @@
   Test pressure relative L2: 0.082857
   Test Cd relative error: 0.020483
 
+#### best_model_RETO_plus_v2_surface_pressure_20261109_1012.pth
+  Test pressure relative L2: 0.136628
+  Test Cd relative error: 0.034242
 
+#### best_model_RETO_plus_v2_surface_pressure_20261109_1324.pth
+  Test pressure relative L2: 0.093887
+  Test Cd relative error: 0.020106
 
 
 ### CANO
@@ -50,8 +59,9 @@
 #### best_model_CANO_surface_pressure_20261107_1652.pth
   Test pressure relative L2: 0.092158
   Test Cd relative error: 0.017829
-
-
+  
+#### best_model_CANO_volume_velocity_20261109_1327.pth
+  Test velocity relative L2: 0.029975
 
 
 ### LinearNO
@@ -61,13 +71,6 @@
 
 
 
-
-### train ing PID
-"cuda 1" 1109
-2962035
-2962947
-2962948
-2962949
 
 ## MLCFD 三种训练任务
 

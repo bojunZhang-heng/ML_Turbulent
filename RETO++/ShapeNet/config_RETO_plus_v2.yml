@@ -3,15 +3,15 @@ experiment:
   exp: ShapeNet_RETO_plus_v2
   model_name: RETO_plus_v2
   # Active task: surface coordinates -> pressure.
-  predicted_feature_name: surface_pressure
+  predicted_feature_name: p_and_v
   # Volume velocity task: predicted_feature_name: volume_velocity
   # Seven-input/four-output task: predicted_feature_name: p_and_v
   phase: restart_train
 
 model:
   # Active surface-pressure task: 3 -> 1.
-  space_dim: 3
-  out_dim: 1
+  space_dim: 7
+  out_dim: 4
   # Volume velocity task: space_dim: 3, out_dim: 3
   # Seven-to-four task: space_dim: 7, out_dim: 4
   n_layers: 8

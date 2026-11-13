@@ -38,15 +38,12 @@ python main.py --config config_RETO_plus_volume_velocity.yml
 
 根据服务器上的实际位置修改配置中的 `data.data_path`。验证与测试阶段会先反归一化到物理速度，再报告总体相对 L2 误差以及 `u/v/w` 三个速度分量的相对误差。
 
-### "cuda 1"  1109
-2969323
-2969324
-2969325
+### "cuda 5"  1112
+3204421
+3204422
+3204748
+3204749
 
-2971245
-2971246
-2971247
-2971248
 ### 8种车型-800组-10k-pressure
 #### RETO_plus_v2
 0.177    best_model_RETO_plus_v2_pressure_20261105_0910.pth
@@ -62,15 +59,23 @@ python main.py --config config_RETO_plus_volume_velocity.yml
 #### Transolver
 0.180    best_model_Transolver_pressure_20261029_1231.pth
 
+
 ### 8种车型-1600组-10k-pressure
+#### RETO_plus
+0.176748 best_model_RETO_plus_pressure_20261109_1348.pth
+
 #### RETO_plus_v2
-0.167174 best_model_RETO_plus_v2_pressure_20261107_1036.pth
+0.164616 best_model_RETO_plus_v2_pressure_20261109_1345.pth
+0.164769 best_model_RETO_plus_v2_pressure_20261109_1348.pth
 
 #### Transolver
 0.167438 best_model_Transolver_pressure_20261107_1036.pth
+0.167230 best_model_Transolver_pressure_20261109_1345.pth
 
 #### CANO
 0.172074 best_model_CANO_pressure_20261107_1036.pth
+0.170248 best_model_CANO_pressure_20261109_1345.pth
+0.172148 best_model_CANO_pressure_20261109_1348.pth
 
 
 ### 8种车型-全车-pressure

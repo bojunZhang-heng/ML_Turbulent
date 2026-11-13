@@ -5,14 +5,14 @@
 # -----------------------------------------------------------------------
 
 # cuda 4 1111-velocity
-3082591
-3082592
-3082593
-3082594
-3082595
-3083349
+3203269
+3203270
+3203271
+3203272
+3203273
+3203274
 
-### DrivAerML 500组
+### DrivAerML pressure 500组
 #### 100k
 0.135239 best_model_RETO_plus_surface_pressure_20261101_1229.pth
 0.135692 best_model_CANO_surface_pressure_20261101_1229.pth
@@ -38,3 +38,29 @@
 ##### RETO
 0.150961 best_model_RETO_surface_pressure_20261107_1032.pth
 
+### DrivAerML velocity 500组
+#### 10k
+
+
+##### RETO_plus_v2
+0.132977  best_model_RETO_plus_v2_volume_velocity_20261111_1415.pth
+
+
+##### RETO_plus
+0.165590 best_model_RETO_plus_volume_velocity_20261111_1415.pth
+
+
+##### Transolver 
+0.181496 best_model_Transolver_volume_velocity_20261111_1415.pth
+
+
+##### CANO
+0.163131 best_model_CANO_volume_velocity_20261111_1415.pth
+
+
+##### LinearNO
+0.253063 best_model_SATO_surface_pressure_20261111_1416.pth
+
+
+##### LinearNO
+0.177369 best_model_LinearNO_volume_velocity_20261111_1415.pth

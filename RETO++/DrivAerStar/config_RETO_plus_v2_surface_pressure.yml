@@ -32,7 +32,7 @@ checkpoint:
   checkpoint_segment_size: 2
   checkpoint_num_blocks: 6
 training:
-  num_epochs: 3
+  num_epochs: 200
   eval_freq: 1
   learning_rate: 0.001
   batch_size: 1
