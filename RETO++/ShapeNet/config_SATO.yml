@@ -36,7 +36,8 @@ training:
   shuffle: true
 
 data:
-  data_path: ../../preprocess/mlcfd_data/pkl_test_v2
+  #data_path: ../../preprocess/mlcfd_data/pkl_test_v2
+  #vtk_data_path: ../../preprocess/mlcfd_data/raw_test
   # Remote example:
-  # data_path: /data/zhangbojun/mlcfd_data/pkl_data_v2
-  vtk_data_path: ../../preprocess/mlcfd_data/raw_test
+  data_path: /data/zhangbojun/mlcfd_data/pkl_data_v2
+  vtk_data_path: /data/zhangbojun/mlcfd_data/raw_data
