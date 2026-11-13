@@ -7,7 +7,8 @@ from two-dimensional parts carrying both Pressure and WallShearStress while
 excluding wind-tunnel ``Block.*`` boundaries. Three-dimensional parts carrying
 Velocity form the volume field.
 
-Surface and volume coordinates use separate dataset-wide min-max statistics.
+Surface and volume coordinates share the dataset-wide automotive-surface
+min-max statistics.  Volume coordinates may therefore extend beyond [0, 1].
 The script can also migrate old ``drivaerstar-normalized-v1`` PKLs without the
 deleted EnSight sources: it reverses the old shared min-max transform, computes
 separate surface/volume statistics, and writes ``v2`` PKLs. Physical fields are
@@ -22,7 +23,6 @@ import gc
 import os
 import pickle
 import re
-import shutil
 import sys
 import time
 from dataclasses import dataclass
@@ -102,31 +102,11 @@ def parse_args() -> argparse.Namespace:
         help="Defaults to data-dir so numbered PKLs are placed at its root.",
     )
     parser.add_argument("--overwrite", action="store_true")
-    parser.add_argument(
-        "--remove-source-directories",
-        action="store_true",
-        help=(
-            "After verification, retain a small number of cases in raw_data/ "
-            "and permanently remove the original case_E_batch_* directories."
-        ),
-    )
-    parser.add_argument(
-        "--keep-source-cases",
-        type=int,
-        default=10,
-        help=(
-            "Number of complete raw EnSight cases retained for topology-based "
-            "visualization when --remove-source-directories is enabled."
-        ),
-    )
     return parser.parse_args()
 
 
 COORDINATE_FIELDS = ("x_surface", "x_volume")
-COORDINATE_PREFIX = {
-    "x_surface": "surface_coords",
-    "x_volume": "volume_coords",
-}
+COORDINATE_PREFIX = {field: "surface_coords" for field in COORDINATE_FIELDS}
 
 
 def coordinate_scalar_keys(field: str) -> tuple[str, str, str]:
@@ -140,8 +120,19 @@ def coordinate_scalar_keys(field: str) -> tuple[str, str, str]:
 def coordinate_scalars(
     scalars: dict[str, Any], field: str
 ) -> tuple[np.ndarray, np.ndarray]:
-    """Resolve v2 field-specific or legacy v1 shared coordinate statistics."""
+    """Resolve new shared-surface or legacy coordinate statistics."""
 
+    if (
+        field == "x_volume"
+        and scalars.get("coordinate_scale_policy")
+        != "surface_scale_for_surface_and_volume"
+        and "volume_coords_min" in scalars
+        and "volume_coords_range" in scalars
+    ):
+        return (
+            np.asarray(scalars["volume_coords_min"], dtype=np.float32),
+            np.asarray(scalars["volume_coords_range"], dtype=np.float32),
+        )
     min_key, _, range_key = coordinate_scalar_keys(field)
     if min_key in scalars and range_key in scalars:
         return (
@@ -361,12 +352,13 @@ def extract_case(case_path: Path) -> tuple[dict[str, np.ndarray], dict[str, Any]
 def collect_statistics(
     case_paths: list[Path],
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
-    coordinate_bounds = {
-        field: {
-            "min": np.full(3, np.inf, dtype=np.float64),
-            "max": np.full(3, -np.inf, dtype=np.float64),
-        }
-        for field in COORDINATE_FIELDS
+    surface_bounds = {
+        "min": np.full(3, np.inf, dtype=np.float64),
+        "max": np.full(3, -np.inf, dtype=np.float64),
+    }
+    volume_domain_bounds = {
+        "min": np.full(3, np.inf, dtype=np.float64),
+        "max": np.full(3, -np.inf, dtype=np.float64),
     }
     moments = {
         "y_spressure": RunningMoments(),
@@ -377,13 +369,18 @@ def collect_statistics(
     for position, case_path in enumerate(case_paths, start=1):
         started = time.monotonic()
         arrays, metadata = extract_case(case_path)
-        for field in COORDINATE_FIELDS:
-            coordinate_bounds[field]["min"] = np.minimum(
-                coordinate_bounds[field]["min"], arrays[field].min(axis=0)
-            )
-            coordinate_bounds[field]["max"] = np.maximum(
-                coordinate_bounds[field]["max"], arrays[field].max(axis=0)
-            )
+        surface_bounds["min"] = np.minimum(
+            surface_bounds["min"], arrays["x_surface"].min(axis=0)
+        )
+        surface_bounds["max"] = np.maximum(
+            surface_bounds["max"], arrays["x_surface"].max(axis=0)
+        )
+        volume_domain_bounds["min"] = np.minimum(
+            volume_domain_bounds["min"], arrays["x_volume"].min(axis=0)
+        )
+        volume_domain_bounds["max"] = np.maximum(
+            volume_domain_bounds["max"], arrays["x_volume"].max(axis=0)
+        )
         for field, accumulator in moments.items():
             accumulator.update(arrays[field])
         records.append(
@@ -405,7 +402,7 @@ def collect_statistics(
         gc.collect()
 
     scalars: dict[str, Any] = {
-        "schema_version": "drivaerstar-normalized-v2",
+        "schema_version": "drivaerstar-normalized-v3-surface-scale",
         "coordinate_fields": COORDINATE_FIELDS,
         "physical_fields": ("y_spressure", "y_velocity", "y_wss"),
         "field_mapping": {
@@ -417,7 +414,7 @@ def collect_statistics(
         },
         "normalization": {
             "x_surface": "global_surface_minmax",
-            "x_volume": "global_volume_minmax",
+            "x_volume": "global_surface_minmax",
             "y_spressure": "global_componentwise_mean_std",
             "y_velocity": "global_componentwise_mean_std",
             "y_wss": "global_componentwise_mean_std",
@@ -428,8 +425,8 @@ def collect_statistics(
                 "population": "all selected automotive surface cell centers",
             },
             "x_volume": {
-                "statistics_prefix": "volume_coords",
-                "population": "all selected volume cell centers",
+                "statistics_prefix": "surface_coords",
+                "population": "all selected automotive surface cell centers",
             },
         },
         "coordinate_semantics": "cell_centers",
@@ -438,16 +435,23 @@ def collect_statistics(
             "Block.* wind-tunnel boundaries and interface parts"
         ),
         "volume_selection": "3D EnSight parts with Velocity",
+        "coordinate_scale_policy": "surface_scale_for_surface_and_volume",
+        "volume_coordinates_may_exceed_unit_interval": True,
         "samples": records,
         "num_samples": len(records),
     }
-    for field, bounds in coordinate_bounds.items():
-        values_range = bounds["max"] - bounds["min"]
-        values_range[values_range <= np.finfo(np.float32).eps] = 1.0
-        min_key, max_key, range_key = coordinate_scalar_keys(field)
-        scalars[min_key] = bounds["min"].astype(np.float32)
-        scalars[max_key] = bounds["max"].astype(np.float32)
-        scalars[range_key] = values_range.astype(np.float32)
+    surface_range = surface_bounds["max"] - surface_bounds["min"]
+    surface_range[surface_range <= np.finfo(np.float32).eps] = 1.0
+    scalars["surface_coords_min"] = surface_bounds["min"].astype(np.float32)
+    scalars["surface_coords_max"] = surface_bounds["max"].astype(np.float32)
+    scalars["surface_coords_range"] = surface_range.astype(np.float32)
+    # Compatibility aliases: downstream volume loaders use volume_coords_*.
+    # These intentionally contain the same automotive-surface scale.
+    scalars["volume_coords_min"] = scalars["surface_coords_min"].copy()
+    scalars["volume_coords_max"] = scalars["surface_coords_max"].copy()
+    scalars["volume_coords_range"] = scalars["surface_coords_range"].copy()
+    scalars["volume_domain_min"] = volume_domain_bounds["min"].astype(np.float32)
+    scalars["volume_domain_max"] = volume_domain_bounds["max"].astype(np.float32)
     for field, accumulator in moments.items():
         mean, std = accumulator.statistics()
         scalars[f"{field}_mean"] = mean
@@ -471,9 +475,6 @@ def normalized_sample(
             (arrays[field] - scalars[f"{field}_mean"])
             / scalars[f"{field}_std"]
         ).astype(np.float32, copy=False)
-    retained_case = scalars.get("retained_source_cases", {}).get(case_id(case_path))
-    if retained_case is not None:
-        metadata["visualization_case"] = retained_case
     return {
         "schema_version": scalars["schema_version"],
         "sample_id": case_id(case_path),
@@ -514,7 +515,7 @@ def verify_sample(path: Path, sample_id: int) -> None:
             raise RuntimeError(f"Invalid shape/dtype for {field} in {path}")
         if not np.isfinite(values).all():
             raise RuntimeError(f"NaN/Inf in {field} of {path}")
-        if field in COORDINATE_FIELDS and (
+        if field == "x_surface" and (
             np.any(values < -1.0e-5) or np.any(values > 1.0 + 1.0e-5)
         ):
             raise RuntimeError(f"Normalized {field} is outside [0,1] in {path}")
@@ -627,13 +628,13 @@ def migrate_processed_pkls(
     new_scalars.pop("coords_min", None)
     new_scalars.pop("coords_max", None)
     new_scalars.pop("coords_range", None)
-    new_scalars["schema_version"] = "drivaerstar-normalized-v2"
+    new_scalars["schema_version"] = "drivaerstar-normalized-v3-surface-scale"
     new_scalars["coordinate_fields"] = COORDINATE_FIELDS
     normalization = dict(new_scalars.get("normalization", {}))
     normalization.update(
         {
             "x_surface": "global_surface_minmax",
-            "x_volume": "global_volume_minmax",
+            "x_volume": "global_surface_minmax",
         }
     )
     new_scalars["normalization"] = normalization
@@ -643,10 +644,14 @@ def migrate_processed_pkls(
             "population": "all surface coordinates reconstructed from source PKLs",
         },
         "x_volume": {
-            "statistics_prefix": "volume_coords",
-            "population": "all volume coordinates reconstructed from source PKLs",
+            "statistics_prefix": "surface_coords",
+            "population": "all surface coordinates reconstructed from source PKLs",
         },
     }
+    new_scalars["coordinate_scale_policy"] = (
+        "surface_scale_for_surface_and_volume"
+    )
+    new_scalars["volume_coordinates_may_exceed_unit_interval"] = True
     new_scalars["migrated_from_schema"] = source_scalars.get("schema_version")
     new_scalars["migrated_from_directory"] = str(source_dir)
     new_scalars["output_dir"] = str(output_dir)
@@ -665,13 +670,16 @@ def migrate_processed_pkls(
         new_scalars["samples"] = filtered_records or records
     else:
         new_scalars["samples"] = records
-    for field, field_bounds in bounds.items():
-        values_range = field_bounds["max"] - field_bounds["min"]
-        values_range[values_range <= np.finfo(np.float32).eps] = 1.0
-        min_key, max_key, range_key = coordinate_scalar_keys(field)
-        new_scalars[min_key] = field_bounds["min"].astype(np.float32)
-        new_scalars[max_key] = field_bounds["max"].astype(np.float32)
-        new_scalars[range_key] = values_range.astype(np.float32)
+    surface_range = bounds["x_surface"]["max"] - bounds["x_surface"]["min"]
+    surface_range[surface_range <= np.finfo(np.float32).eps] = 1.0
+    new_scalars["surface_coords_min"] = bounds["x_surface"]["min"].astype(np.float32)
+    new_scalars["surface_coords_max"] = bounds["x_surface"]["max"].astype(np.float32)
+    new_scalars["surface_coords_range"] = surface_range.astype(np.float32)
+    new_scalars["volume_coords_min"] = new_scalars["surface_coords_min"].copy()
+    new_scalars["volume_coords_max"] = new_scalars["surface_coords_max"].copy()
+    new_scalars["volume_coords_range"] = new_scalars["surface_coords_range"].copy()
+    new_scalars["volume_domain_min"] = bounds["x_volume"]["min"].astype(np.float32)
+    new_scalars["volume_domain_max"] = bounds["x_volume"]["max"].astype(np.float32)
 
     # Pass 2: reconstruct with old statistics and normalize with v2 statistics.
     for position, path in enumerate(sample_paths, start=1):
@@ -684,8 +692,9 @@ def migrate_processed_pkls(
             sample[field] = ((physical - new_min) / new_range).astype(
                 np.float32, copy=False
             )
-            if np.any(sample[field] < -1.0e-5) or np.any(
-                sample[field] > 1.0 + 1.0e-5
+            if field == "x_surface" and (
+                np.any(sample[field] < -1.0e-5)
+                or np.any(sample[field] > 1.0 + 1.0e-5)
             ):
                 raise RuntimeError(f"Migrated {field} outside [0,1] in {path}")
         sample["schema_version"] = new_scalars["schema_version"]
@@ -693,7 +702,7 @@ def migrate_processed_pkls(
         sample_normalization.update(
             {
                 "x_surface": "global_surface_minmax",
-                "x_volume": "global_volume_minmax",
+                "x_volume": "global_surface_minmax",
             }
         )
         sample["normalization"] = sample_normalization
@@ -718,8 +727,6 @@ def main() -> int:
     for name, value in sorted(vars(args).items()):
         print(f"{name:<24}: {value}")
     print("=" * 72)
-    if args.keep_source_cases < 0:
-        raise ValueError("--keep-source-cases must be greater than or equal to 0")
     data_dir = args.data_dir.expanduser().resolve()
     output_dir = (
         args.output_dir.expanduser().resolve()
@@ -727,10 +734,6 @@ def main() -> int:
         else data_dir
     )
     if args.source_pkl_dir is not None:
-        if args.remove_source_directories:
-            raise ValueError(
-                "--remove-source-directories cannot be used with --source-pkl-dir"
-            )
         if args.output_dir is None:
             raise ValueError(
                 "PKL migration requires --output-dir different from the source"
@@ -741,13 +744,8 @@ def main() -> int:
     if not data_dir.is_dir():
         raise NotADirectoryError(f"Dataset directory not found: {data_dir}")
     output_dir.mkdir(parents=True, exist_ok=True)
-    raw_data_dir = output_dir / "raw_data"
     discovered_cases = sorted(
-        (
-            path
-            for path in data_dir.rglob("*.case")
-            if not path.is_relative_to(raw_data_dir)
-        ),
+        data_dir.rglob("*.case"),
         key=case_id,
     )
     if not discovered_cases:
@@ -783,25 +781,7 @@ def main() -> int:
     scalars["num_complete_cases"] = len(case_paths)
     scalars["num_incomplete_cases"] = len(incomplete_cases)
     scalars["incomplete_cases"] = incomplete_cases
-    retained_case_paths = (
-        case_paths[: min(args.keep_source_cases, len(case_paths))]
-        if args.remove_source_directories
-        else case_paths
-    )
-    retained_case_ids = [case_id(path) for path in retained_case_paths]
-    scalars["source_cleanup_requested"] = args.remove_source_directories
-    scalars["retained_source_case_ids"] = retained_case_ids
-    if args.remove_source_directories:
-        scalars["retained_source_cases"] = {
-            case_id(path): str(
-                raw_data_dir / f"{case_id(path):05d}" / path.name
-            )
-            for path in retained_case_paths
-        }
-    else:
-        scalars["retained_source_cases"] = {
-            case_id(path): str(path) for path in retained_case_paths
-        }
+    scalars["source_files_preserved"] = True
 
     for position, case_path in enumerate(case_paths, start=1):
         identifier = case_id(case_path)
@@ -853,69 +833,9 @@ def main() -> int:
         if not (output_dir / f"{case_id(case_path)}.pkl").is_file():
             raise RuntimeError(f"Missing output for {case_path}")
 
-    if args.remove_source_directories:
-        # Keep deletion all-or-nothing: first verify every PKL, then move the
-        # selected raw cases to raw_data/<id>/ and remove all batch folders.
-        if incomplete_cases:
-            raise RuntimeError(
-                "Refusing to remove source directories because incomplete "
-                "cases were discovered"
-            )
-        batch_directories = sorted(
-            path
-            for path in data_dir.glob("case_E_batch_*")
-            if path.is_dir()
-        )
-        if not batch_directories:
-            raise RuntimeError("No case_E_batch_* source directories resolved")
-
-        raw_data_dir.mkdir(parents=True, exist_ok=True)
-        retained_ids = set(retained_case_ids)
-        for position, case_path in enumerate(retained_case_paths, start=1):
-            identifier = case_id(case_path)
-            destination = raw_data_dir / f"{identifier:05d}"
-            if destination.exists():
-                if not args.overwrite:
-                    raise FileExistsError(
-                        f"Retained source output exists: {destination}; "
-                        "use --overwrite to replace it"
-                    )
-                shutil.rmtree(destination)
-            shutil.move(str(case_path.parent), str(destination))
-            expected_case = destination / case_path.name
-            retained_files = {
-                ".case": expected_case,
-                **case_companions(expected_case),
-            }
-            missing_retained = [
-                suffix
-                for suffix, path in retained_files.items()
-                if not path.is_file()
-            ]
-            if missing_retained:
-                raise RuntimeError(
-                    f"Retained visualization case is incomplete: "
-                    f"{expected_case}, missing={missing_retained}"
-                )
-            print(
-                f"[retain {position}/{len(retained_case_paths)}] "
-                f"case {identifier} -> {destination}"
-            )
-
-        for position, directory in enumerate(batch_directories, start=1):
-            shutil.rmtree(directory)
-            print(
-                f"[remove {position}/{len(batch_directories)}] {directory}"
-            )
-        print(
-            f"Retained {len(retained_ids)} raw cases for visualization in "
-            f"{raw_data_dir}"
-        )
-
     print(f"Conversion complete: {len(case_paths)} samples")
     print(f"Normalization scalars: {scalars_path}")
-    if not args.remove_source_directories:
-        print("Original EnSight case directories were preserved.")
+    print("Original EnSight case directories were preserved.")
     return 0
 
 
