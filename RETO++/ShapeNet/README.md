@@ -2,6 +2,15 @@
 
 SATO 已适配 MLCFD 的 7 推 4 联合任务。使用 `config_SATO.yml`，模型结构和
 运行说明见 `models/README_SATO.md`。
+
+## cuda 1 1113
+3208779
+3208780
+3208781
+3208782
+3208783
+3210160
+
 ## ShapeNet
 ### RETO_plus_v2
 #### best_model_RETO_plus_v2_p_and_v_20261105_0918.pth
@@ -30,9 +39,6 @@ SATO 已适配 MLCFD 的 7 推 4 联合任务。使用 `config_SATO.yml`，模�
 
 #### best_model_Transolver_volume_velocity_20261109_1327.pth
   Test velocity relative L2: 0.033376
-
-
-
 
 
 ### RETO++
