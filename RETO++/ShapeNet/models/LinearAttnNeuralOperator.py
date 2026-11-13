@@ -249,4 +249,4 @@ class LinearAttentionNeuralOperator(nn.Module):
         for block in self.blocks:
             fx = block(fx)
 
-        return fx[0]
+        return fx

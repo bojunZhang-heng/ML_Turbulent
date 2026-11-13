@@ -123,7 +123,7 @@ def _forward_model(model_name, model, model_input, seg_matrix):
         output = model(model_input)
     elif model_name in SEGMENTED_MODELS:
         output = model((model_input, seg_matrix))
-    elif model_name in ("LinearNO", "RopeLinearNO", "RopeLinearNO_v2", "RETO", "RETO_plus", "RETO_plus_v2", "CANO"):
+    elif model_name in ("LinearNO", "RopeLinearNO", "RopeLinearNO_v2", "RETO", "RETO_plus", "RETO_plus_v2", "CANO", "SATO"):
         output = model(model_input)
     else:
         raise ValueError(f"Model name {model_name} not supported")

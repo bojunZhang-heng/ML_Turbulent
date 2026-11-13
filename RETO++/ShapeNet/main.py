@@ -5,6 +5,7 @@ from models.LinearAttnNeuralOperator import LinearAttentionNeuralOperator as Lin
 from models.RETO_plus import Model as RETO_plus
 from models.RETO_plus_v2 import Model as RETO_plus_v2
 from models.RETO import Model as RETO
+from models.SATO import Model as SATO
 
 
 # from models.mlp import MLP as MLP_Model
@@ -91,6 +92,9 @@ parser.add_argument('--W', type=int, default=config.get('W', 85))
 parser.add_argument('--unified_pos', action=argparse.BooleanOptionalAction, default=config.get('unified_pos', False))
 parser.add_argument('--isregular', action=argparse.BooleanOptionalAction, default=config.get('isregular', False))
 parser.add_argument('--time_input', action=argparse.BooleanOptionalAction, default=config.get('time_input', False))
+parser.add_argument('--patch_size', type=int, default=config.get('patch_size', 20))
+parser.add_argument('--shift', type=int, default=config.get('shift', 2))
+parser.add_argument('--n_iter', type=int, default=config.get('n_iter', 1))
 parser.add_argument('--cluster_num', type=int, default=config.get('cluster_num', 64))
 parser.add_argument('--cluster_temperature_init', type=float, default=config.get('cluster_temperature_init', 1.0))
 parser.add_argument('--num_position_frequencies', type=int, default=config.get('num_position_frequencies', 6))
@@ -329,6 +333,22 @@ def main():
             rope_max_wavelength=args.rope_max_wavelength,
             checkpoint_segment_size=args.checkpoint_segment_size,
             checkpoint_num_blocks=args.checkpoint_num_blocks,
+        )
+    elif model_name == 'SATO':
+        model = SATO(
+            space_dim=args.space_dim,
+            n_layers=args.n_layers,
+            n_hidden=args.n_hidden,
+            dropout=args.dropout,
+            n_head=args.n_head,
+            act=args.act,
+            mlp_ratio=args.mlp_ratio,
+            fun_dim=args.fun_dim,
+            slice_num=args.slice_num,
+            patch_size=args.patch_size,
+            shift=args.shift,
+            n_iter=args.n_iter,
+            out_dim=args.out_dim,
         )
     else:
         raise ValueError(f"Model name {model_name} not supported")

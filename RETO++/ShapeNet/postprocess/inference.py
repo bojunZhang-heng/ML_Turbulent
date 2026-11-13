@@ -176,7 +176,8 @@ def forward_model(model_name, model, coorf, raw_coords, seg_matrix, cfg):
     elif mode == "segmented":
         output = model((coorf, seg_matrix))
     elif mode == "serialized":
-        order, inverse = _serialization_indices(raw_coords, coorf.device)
+        serialization_coords = coorf[..., :3] if model_name == "SATO" else raw_coords
+        order, inverse = _serialization_indices(serialization_coords, coorf.device)
         if model_name == "Transolver_seg_ser":
             output = model(coorf, seg_matrix, order, inverse)
         else:
