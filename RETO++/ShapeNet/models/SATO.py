@@ -76,7 +76,7 @@ class SerializedAttention(nn.Module):
         )
 
         restored = torch.empty_like(x_pad)
-        restored[:, patch_index, :] = output
+        restored[:, patch_index, :] = output.to(dtype=restored.dtype)
         return self.out_proj(restored[:, :num_points, :])
 
 
