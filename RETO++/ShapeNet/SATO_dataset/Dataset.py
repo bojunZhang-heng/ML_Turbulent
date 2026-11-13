@@ -74,7 +74,7 @@ def _morton_encode(locations, num_bits):
     return code
 
 
-@torch.inference_mode()
+@torch.no_grad()
 def pos_to_order_inverse_index(pos, device, tensor=False, grid_size=0.05):
     """Build four locality-preserving orders from the first three coordinates."""
     if pos.ndim == 2:
