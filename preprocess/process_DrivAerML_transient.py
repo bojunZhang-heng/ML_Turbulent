@@ -30,23 +30,142 @@ from typing import Iterable
 import numpy as np
 from numpy.lib.format import open_memmap
 
-from ML_preprocess import (
-    PreprocessError,
-    compact_face_layout,
-    file_format,
-    has_cell_list,
-    header_arch,
-    list_data_start,
-    numeric_time_directories,
-    parse_mesh_counts,
-    read_header,
-)
-
-
 SCRIPT_DIR = Path(__file__).resolve().parent
 DEFAULT_CASE_DIR = SCRIPT_DIR / "run_3"
 DEFAULT_OUTPUT_DIR = DEFAULT_CASE_DIR / "pklFile_transient"
 LOGGER = logging.getLogger("process_DrivAerML_transient")
+HEADER_BYTES = 128 * 1024
+
+
+class PreprocessError(RuntimeError):
+    """Raised when an OpenFOAM file is missing or structurally inconsistent."""
+
+
+def read_header(path: Path) -> str:
+    """Read enough of an OpenFOAM file to parse its FoamFile/list header."""
+    with path.open("rb") as stream:
+        return stream.read(HEADER_BYTES).decode("latin-1")
+
+
+def file_format(path: Path) -> str:
+    """Return the OpenFOAM FoamFile format: ``ascii`` or ``binary``."""
+    match = re.search(
+        r"\bformat\s+(ascii|binary)\s*;",
+        read_header(path),
+        re.IGNORECASE,
+    )
+    if match is None:
+        raise PreprocessError(f"{path}: FoamFile.format is missing or unsupported")
+    return match.group(1).lower()
+
+
+def header_number(path: Path, pattern: str, description: str) -> int:
+    match = re.search(pattern, read_header(path), re.MULTILINE)
+    if match is None:
+        raise PreprocessError(f"{path}: cannot find {description}")
+    return int(match.group(1))
+
+
+def header_arch(path: Path) -> tuple[str, int, int]:
+    """Return endian marker, label bytes and scalar bytes from FoamFile.arch."""
+    header = read_header(path)
+    arch_match = re.search(r'\barch\s+"([^"]+)"\s*;', header)
+    arch = arch_match.group(1) if arch_match else "LSB;label=32;scalar=64"
+    endian = "<" if "LSB" in arch.upper() else ">"
+    label_match = re.search(r"label\s*=\s*(32|64)", arch)
+    scalar_match = re.search(r"scalar\s*=\s*(32|64)", arch)
+    label_bytes = int(label_match.group(1)) // 8 if label_match else 4
+    scalar_bytes = int(scalar_match.group(1)) // 8 if scalar_match else 8
+    return endian, label_bytes, scalar_bytes
+
+
+def list_data_start(path: Path) -> tuple[int, int]:
+    """Return list element count and byte offset immediately after ``(``."""
+    with path.open("rb") as stream:
+        data = stream.read(HEADER_BYTES)
+    text = data.decode("latin-1")
+    matches = list(re.finditer(r"(?m)^\s*(\d+)\s*\(", text))
+    if not matches:
+        raise PreprocessError(f"{path}: cannot locate OpenFOAM list data")
+    match = matches[-1]
+    return int(match.group(1)), match.end()
+
+
+def compact_face_layout(path: Path, label_bytes: int) -> tuple[int, int, int, int]:
+    """Locate offsets and vertex labels in a binary faceCompactList."""
+    offset_count, offsets_start = list_data_start(path)
+    if offset_count < 2:
+        raise PreprocessError(
+            f"{path}: invalid faceCompactList offset count {offset_count}"
+        )
+    separator_start = offsets_start + offset_count * label_bytes
+    with path.open("rb") as stream:
+        stream.seek(separator_start)
+        separator = stream.read(128)
+    match = re.match(rb"\)\s*(\d+)\s*\(", separator)
+    if match is None:
+        raise PreprocessError(
+            f"{path}: cannot locate vertex-label list in binary faceCompactList"
+        )
+    label_count = int(match.group(1))
+    labels_start = separator_start + match.end()
+    return offset_count - 1, offsets_start, labels_start, label_count
+
+
+def parse_mesh_counts(
+    mesh_dir: Path,
+) -> tuple[Path, Path, Path, Path, int, int]:
+    """Validate polyMesh files and return paths, cell count and face count."""
+    poly_mesh = mesh_dir / "constant" / "polyMesh"
+    points = poly_mesh / "points"
+    faces = poly_mesh / "faces"
+    owner = poly_mesh / "owner"
+    neighbour = poly_mesh / "neighbour"
+    for path in (points, faces, owner, neighbour):
+        if not path.is_file():
+            raise PreprocessError(f"Mesh file does not exist: {path}")
+        print(f"[format] {path.name}: {file_format(path)}")
+
+    owner_count = header_number(
+        owner, r"(?m)^\s*(\d+)\s*\(", "owner count"
+    )
+    cell_match = re.search(r"\bnCells\s*:\s*(\d+)", read_header(owner))
+    if cell_match is None:
+        raise PreprocessError(f"{owner}: cannot find nCells in FoamFile.note")
+    cell_count = int(cell_match.group(1))
+    if file_format(faces) == "binary":
+        face_count, _, _, _ = compact_face_layout(faces, header_arch(faces)[1])
+    else:
+        face_count, _ = list_data_start(faces)
+    if owner_count != face_count:
+        raise PreprocessError(
+            f"Mesh owner has {owner_count} entries, but faces has "
+            f"{face_count} faces"
+        )
+    return points, faces, owner, neighbour, cell_count, face_count
+
+
+def numeric_time_directories(case_dir: Path) -> list[Path]:
+    """Return numeric OpenFOAM time directories sorted by numeric value."""
+    directories: list[Path] = []
+    for path in case_dir.iterdir():
+        if not path.is_dir():
+            continue
+        try:
+            float(path.name)
+        except ValueError:
+            continue
+        directories.append(path)
+    return sorted(directories, key=lambda item: float(item.name))
+
+
+def has_cell_list(path: Path) -> bool:
+    """Return whether a field contains a nonuniform internal list."""
+    try:
+        list_data_start(path)
+    except PreprocessError:
+        return False
+    return True
 
 
 @dataclass(frozen=True)

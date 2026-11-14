@@ -6,7 +6,8 @@
 preprocess/process_DrivAerML_transient.py
 ```
 
-该脚本参考 `ML_preprocess.py`，直接读取 `run_3` 的 OpenFOAM
+该脚本参考 `ML_preprocess.py`，并已将所需的 OpenFOAM 文件解析逻辑直接集成
+到自身，不会在运行时导入或依赖 `ML_preprocess.py`。脚本直接读取 `run_3` 的 OpenFOAM
 `constant/polyMesh` 和各时间目录中的 `p/U`，生成适合神经网络读取的编号 PKL。
 源 OpenFOAM 文件始终只读，不会删除或修改。
 
