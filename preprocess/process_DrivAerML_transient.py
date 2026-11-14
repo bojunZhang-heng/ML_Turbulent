@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 """Convert a transient DrivAerML OpenFOAM case into normalized PKL samples.
 
-Each usable numeric time directory becomes one numbered PKL file containing:
+Geometry is shared by every time step and is stored once in ``geometry.pkl``:
 
     x_surface:  vehicle boundary-face centres, normalized by surface min/max
-    y_spressure: pressure at the owner cell of each vehicle boundary face
     x_volume:   cell centres, normalized by the same surface min/max
+
+Each usable numeric time directory becomes one numbered PKL containing only:
+
+    y_spressure: pressure at the owner cell of each vehicle boundary face
     y_velocity: cell-centred velocity
 
 Pressure and velocity use dataset-wide component-wise mean/std normalization.
@@ -91,6 +94,35 @@ def list_data_start(path: Path) -> tuple[int, int]:
     return int(match.group(1)), match.end()
 
 
+def field_list_data_start(path: Path, components: int | None = None) -> tuple[int, int]:
+    """Locate the internalField list, never scanning binary payload bytes.
+
+    A generic ``^count (`` search is safe for ASCII mesh lists but can match a
+    random newline/number/parenthesis sequence inside a binary vector field.
+    Anchoring the search to ``internalField nonuniform List<...>`` avoids that
+    ambiguity.
+    """
+    header = read_header(path)
+    match = re.search(
+        r"internalField\s+nonuniform\s+List\s*<\s*([A-Za-z0-9_]+)\s*>"
+        r"\s*(\d+)\s*\(",
+        header,
+        re.IGNORECASE,
+    )
+    if match is None:
+        raise PreprocessError(
+            f"{path}: cannot locate a nonuniform internalField list"
+        )
+    field_type = match.group(1).lower()
+    expected_type = {1: "scalar", 3: "vector"}.get(components)
+    if expected_type is not None and field_type != expected_type:
+        raise PreprocessError(
+            f"{path}: internalField is List<{field_type}>, expected "
+            f"List<{expected_type}>"
+        )
+    return int(match.group(2)), match.end()
+
+
 def compact_face_layout(path: Path, label_bytes: int) -> tuple[int, int, int, int]:
     """Locate offsets and vertex labels in a binary faceCompactList."""
     offset_count, offsets_start = list_data_start(path)
@@ -162,7 +194,7 @@ def numeric_time_directories(case_dir: Path) -> list[Path]:
 def has_cell_list(path: Path) -> bool:
     """Return whether a field contains a nonuniform internal list."""
     try:
-        list_data_start(path)
+        field_list_data_start(path)
     except PreprocessError:
         return False
     return True
@@ -359,8 +391,8 @@ def discover_times(
         if not has_cell_list(pressure) or not has_cell_list(velocity):
             LOGGER.info("Skip time %s: p or U internalField is uniform", time_dir.name)
             continue
-        pressure_count, _ = list_data_start(pressure)
-        velocity_count, _ = list_data_start(velocity)
+        pressure_count, _ = field_list_data_start(pressure, components=1)
+        velocity_count, _ = field_list_data_start(velocity, components=3)
         if pressure_count != cell_count or velocity_count != cell_count:
             raise PreprocessError(
                 f"{time_dir}: cells={cell_count}, p={pressure_count}, U={velocity_count}"
@@ -636,7 +668,7 @@ def read_ascii_internal_field(
     output: np.memmap,
     chunk_bytes: int,
 ) -> None:
-    count, data_start = list_data_start(path)
+    count, data_start = field_list_data_start(path, components=components)
     if count != expected_count:
         raise PreprocessError(f"{path}: count={count}, expected={expected_count}")
     translation = bytes.maketrans(b"();", b"   ")
@@ -700,7 +732,7 @@ def read_internal_field_to_npy(
     if file_format(path) == "ascii":
         read_ascii_internal_field(path, components, expected_count, output, chunk_bytes)
     else:
-        count, data_start = list_data_start(path)
+        count, data_start = field_list_data_start(path, components=components)
         if count != expected_count:
             raise PreprocessError(f"{path}: count={count}, expected={expected_count}")
         endian, _, scalar_bytes = header_arch(path)
@@ -716,7 +748,10 @@ def read_internal_field_to_npy(
         rows_per_chunk = max(1, chunk_bytes // (scalar_bytes * components))
         for start in range(0, count, rows_per_chunk):
             end = min(start + rows_per_chunk, count)
-            output[start:end] = np.asarray(source[start:end], dtype=np.float32)
+            values = np.asarray(source[start:end], dtype=np.float32)
+            if components == 1:
+                values = values[:, None]
+            output[start:end] = values
         output.flush()
     del output
     return output_path
@@ -752,20 +787,48 @@ def atomic_pickle_dump(value: object, path: Path) -> None:
     temporary.replace(path)
 
 
-def validate_sample(sample: dict, path: Path, chunk_size: int) -> None:
-    required = {"x_surface", "y_spressure", "x_volume", "y_velocity"}
+def validate_finite_array(
+    values: np.ndarray, name: str, path: Path, chunk_size: int
+) -> None:
+    for start in range(0, len(values), chunk_size):
+        if not np.isfinite(values[start : start + chunk_size]).all():
+            raise RuntimeError(f"{path}: {name} contains NaN/Inf")
+
+
+def validate_geometry(geometry: dict, path: Path, chunk_size: int) -> None:
+    required = {"x_surface", "x_volume"}
+    missing = required - set(geometry)
+    if missing:
+        raise RuntimeError(f"{path}: missing geometry fields {sorted(missing)}")
+    for name in required:
+        values = geometry[name]
+        if values.ndim != 2 or values.shape[1] != 3 or len(values) == 0:
+            raise RuntimeError(f"{path}: invalid {name} shape {values.shape}")
+        validate_finite_array(values, name, path, chunk_size)
+
+
+def validate_time_sample(
+    sample: dict,
+    path: Path,
+    surface_points: int,
+    volume_points: int,
+    chunk_size: int,
+) -> None:
+    required = {"y_spressure", "y_velocity"}
     missing = required - set(sample)
     if missing:
-        raise RuntimeError(f"{path}: missing fields {sorted(missing)}")
-    if sample["x_surface"].shape[0] != sample["y_spressure"].shape[0]:
-        raise RuntimeError(f"{path}: surface arrays are misaligned")
-    if sample["x_volume"].shape[0] != sample["y_velocity"].shape[0]:
-        raise RuntimeError(f"{path}: volume arrays are misaligned")
+        raise RuntimeError(f"{path}: missing physical fields {sorted(missing)}")
+    expected_shapes = {
+        "y_spressure": (surface_points, 1),
+        "y_velocity": (volume_points, 3),
+    }
     for name in required:
         values = sample[name]
-        for start in range(0, len(values), chunk_size):
-            if not np.isfinite(values[start : start + chunk_size]).all():
-                raise RuntimeError(f"{path}: {name} contains NaN/Inf")
+        if tuple(values.shape) != expected_shapes[name]:
+            raise RuntimeError(
+                f"{path}: {name} shape {values.shape} != {expected_shapes[name]}"
+            )
+        validate_finite_array(values, name, path, chunk_size)
 
 
 def field_dimensions(path: Path) -> str | None:
@@ -780,7 +843,7 @@ def process(args: argparse.Namespace) -> None:
     cache_dir = (
         args.cache_dir.expanduser().resolve()
         if args.cache_dir is not None
-        else output_dir / ".cache"
+        else case_dir / ".process_DrivAerML_transient_cache"
     )
     if args.face_chunk_size <= 0 or args.array_chunk_size <= 0:
         raise ValueError("Chunk sizes must be positive")
@@ -809,7 +872,8 @@ def process(args: argparse.Namespace) -> None:
     print(f"Cells/faces       : {cell_count:,} / {face_count:,}")
     print(f"Selected patches  : {len(selected)} ({sum(p.num_faces for p in selected):,} faces)")
     print(f"Times             : {[item[0].name for item in times]}")
-    print("Coordinates       : shared vehicle-surface min/max")
+    print("Coordinates       : geometry.pkl, shared vehicle-surface min/max")
+    print("Time fields       : one numbered PKL per time, without coordinates")
     print("Physical fields   : global component-wise mean/std")
     print("=" * 80)
     for patch in selected:
@@ -821,14 +885,16 @@ def process(args: argparse.Namespace) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
     cache_dir.mkdir(parents=True, exist_ok=True)
     existing = list(output_dir.glob("[0-9]*.pkl"))
+    geometry_path = output_dir / "geometry.pkl"
     scalar_path = output_dir / "normalization_scalars.pkl"
-    if (existing or scalar_path.exists()) and not args.overwrite:
+    if (existing or geometry_path.exists() or scalar_path.exists()) and not args.overwrite:
         raise FileExistsError(
             f"{output_dir} already contains outputs; use --overwrite"
         )
     if args.overwrite:
         for path in existing:
             path.unlink()
+        geometry_path.unlink(missing_ok=True)
         scalar_path.unlink(missing_ok=True)
         for path in output_dir.glob("*.pkl.tmp"):
             path.unlink()
@@ -913,6 +979,7 @@ def process(args: argparse.Namespace) -> None:
         records.append(
             {
                 "sample_id": sample_id,
+                "output_file": f"{sample_id}.pkl",
                 "time_name": time_dir.name,
                 "time_value": float(time_dir.name),
                 "pressure_file": pressure.name,
@@ -934,7 +1001,8 @@ def process(args: argparse.Namespace) -> None:
     pressure_mean, pressure_std = pressure_moments.statistics()
     velocity_mean, velocity_std = velocity_moments.statistics()
     scalars = {
-        "schema_version": "drivaerml-transient-surface-scale-v1",
+        "schema_version": "drivaerml-transient-split-geometry-v2",
+        "geometry_file": geometry_path.name,
         "coordinate_scale_policy": "surface_scale_for_surface_and_volume",
         "coords_min": surface_min,
         "coords_max": surface_max,
@@ -966,6 +1034,29 @@ def process(args: argparse.Namespace) -> None:
 
     x_surface_normalized = np.load(x_surface_normalized_path, mmap_mode="r")
     x_volume_normalized = np.load(x_volume_normalized_path, mmap_mode="r")
+    geometry_sample = {
+        "schema_version": scalars["schema_version"],
+        "x_surface": np.asarray(x_surface_normalized),
+        "x_volume": np.asarray(x_volume_normalized),
+        "surface_patches": geometry["patch_records"],
+        "surface_representation": geometry["surface_representation"],
+        "volume_representation": geometry["volume_representation"],
+        "coordinate_scale_policy": scalars["coordinate_scale_policy"],
+        "normalization": {
+            "x_surface": scalars["normalization"]["x_surface"],
+            "x_volume": scalars["normalization"]["x_volume"],
+        },
+    }
+    validate_geometry(geometry_sample, geometry_path, args.array_chunk_size)
+    atomic_pickle_dump(geometry_sample, geometry_path)
+    LOGGER.info(
+        "Write %s: surface=%d, volume=%d",
+        geometry_path.name,
+        len(geometry_sample["x_surface"]),
+        len(geometry_sample["x_volume"]),
+    )
+    del geometry_sample
+
     for record, (surface_pressure_path, velocity_path) in zip(records, raw_fields):
         sample_id = record["sample_id"]
         pressure_raw = np.load(surface_pressure_path, mmap_mode="r")
@@ -991,27 +1082,36 @@ def process(args: argparse.Namespace) -> None:
             "sample_id": sample_id,
             "time_name": record["time_name"],
             "time_value": record["time_value"],
-            "x_surface": np.asarray(x_surface_normalized),
             "y_spressure": np.asarray(pressure_normalized),
-            "x_volume": np.asarray(x_volume_normalized),
             "y_velocity": np.asarray(velocity_normalized),
+            "geometry_file": geometry_path.name,
+            "normalization_scalars_file": scalar_path.name,
             "source": {
                 "case_dir": str(case_dir),
                 "time_directory": record["time_name"],
                 "pressure_file": record["pressure_file"],
                 "velocity_file": record["velocity_file"],
             },
-            "normalization": scalars["normalization"],
+            "normalization": {
+                "y_spressure": scalars["normalization"]["y_spressure"],
+                "y_velocity": scalars["normalization"]["y_velocity"],
+            },
         }
         destination = output_dir / f"{sample_id}.pkl"
-        validate_sample(sample, destination, args.array_chunk_size)
+        validate_time_sample(
+            sample,
+            destination,
+            surface_points=len(x_surface_normalized),
+            volume_points=len(x_volume_normalized),
+            chunk_size=args.array_chunk_size,
+        )
         atomic_pickle_dump(sample, destination)
         LOGGER.info(
-            "Write %s: time=%s, surface=%d, volume=%d",
+            "Write %s: time=%s, pressure=%d, velocity=%d",
             destination.name,
             record["time_name"],
-            len(sample["x_surface"]),
-            len(sample["x_volume"]),
+            len(sample["y_spressure"]),
+            len(sample["y_velocity"]),
         )
         del sample, pressure_normalized, velocity_normalized
         Path(pressure_normalized_path).unlink(missing_ok=True)
@@ -1019,7 +1119,8 @@ def process(args: argparse.Namespace) -> None:
 
     atomic_pickle_dump(scalars, scalar_path)
     print("Conversion complete.")
-    print(f"Samples              : {len(records)}")
+    print(f"Geometry             : {geometry_path}")
+    print(f"Time samples         : {len(records)}")
     print(f"Output               : {output_dir}")
     print(f"Normalization scalars: {scalar_path}")
     print("Source OpenFOAM files were preserved.")
