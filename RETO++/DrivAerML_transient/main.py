@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import random
+from datetime import datetime
 from pathlib import Path
 
 import numpy as np
@@ -27,6 +28,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--phase", choices=("inspect", "train", "resume", "test"))
     parser.add_argument("--device", default=None, help="auto, cpu, cuda or mps")
     parser.add_argument("--model-name", choices=SUPPORTED_MODELS, default=None)
+    parser.add_argument(
+        "--run-timestamp",
+        default=None,
+        help="Existing YYYYMMDD_HHMM run for resume/test; latest is used if omitted.",
+    )
     args = parser.parse_args()
     selected = (
         args.config_option
@@ -71,6 +77,21 @@ def set_seed(seed: int) -> None:
     torch.manual_seed(seed)
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(seed)
+
+
+def latest_checkpoint(
+    output_dir: Path, model_name: str, task: str
+) -> tuple[Path, str]:
+    prefix = f"best_model_{model_name}_{task}_"
+    candidates = sorted(output_dir.glob(f"{prefix}*.pth"))
+    if not candidates:
+        raise FileNotFoundError(
+            f"No timestamped checkpoint found for {model_name}/{task} under "
+            f"{output_dir}"
+        )
+    checkpoint = candidates[-1]
+    timestamp = checkpoint.stem.removeprefix(prefix)
+    return checkpoint, timestamp
 
 
 def main() -> int:
@@ -144,9 +165,27 @@ def main() -> int:
     output_dir = Path(experiment.get("output_dir", "experiments")).expanduser()
     if not output_dir.is_absolute():
         output_dir = (ROOT / output_dir).resolve()
-    name = str(experiment.get("name", f"temporal_{task}"))
-    run_dir = output_dir / name
-    checkpoint_path = run_dir / "best_model.pth"
+    name = str(experiment.get("name", f"{model_name}_{task}"))
+    if phase in {"resume", "test"}:
+        if cli.run_timestamp:
+            run_timestamp = cli.run_timestamp
+            model_flag = f"{model_name}_{task}_{run_timestamp}"
+            checkpoint_path = output_dir / f"best_model_{model_flag}.pth"
+        else:
+            checkpoint_path, run_timestamp = latest_checkpoint(
+                output_dir, model_name, task
+            )
+    else:
+        run_timestamp = cli.run_timestamp or datetime.now().strftime("%Y%m%d_%H%M")
+        model_flag = f"{model_name}_{task}_{run_timestamp}"
+        checkpoint_path = output_dir / f"best_model_{model_flag}.pth"
+    model_flag = f"{model_name}_{task}_{run_timestamp}"
+    print(f"Run timestamp: {run_timestamp}")
+    print(f"Experiment: {name}")
+    print(f"Experiment directory: {output_dir}")
+    print(f"Checkpoint: {checkpoint_path}")
+
+    output_dir.mkdir(parents=True, exist_ok=True)
 
     if phase in {"train", "resume"}:
         history = train_model(
@@ -158,8 +197,8 @@ def main() -> int:
             checkpoint_path,
             resume=(phase == "resume"),
         )
-        run_dir.mkdir(parents=True, exist_ok=True)
-        with (run_dir / "history.json").open("w", encoding="utf-8") as stream:
+        history_path = output_dir / f"history_{model_flag}.json"
+        with history_path.open("w", encoding="utf-8") as stream:
             json.dump(history, stream, indent=2)
     elif phase != "test":
         raise ValueError(f"Unsupported phase: {phase}")
@@ -172,7 +211,7 @@ def main() -> int:
         device=device,
         config=config,
         checkpoint_path=checkpoint_path,
-        output_dir=run_dir / "test",
+        output_dir=output_dir / f"test_{model_flag}",
     )
     return 0
 

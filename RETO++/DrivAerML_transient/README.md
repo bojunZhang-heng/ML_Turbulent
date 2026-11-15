@@ -188,7 +188,53 @@ config_<MODEL>_volume_velocity.yml
 例如比较全部压力模型时，依次运行 7 个 `*_surface_pressure.yml`；每个配置使用
 独立实验目录，不会覆盖其他模型的 checkpoint。
 
-## 7. AMP 设置
+训练和验证均使用批次进度条：
+
+```text
+Epoch 12/200 - Train: 68%|...| loss=..., mse=..., relL2=..., lr=...
+Epoch 12/200 - Val:   44%|...| mse=..., relL2=...
+```
+
+使用 `nohup` 重定向到日志时也会保留这些进度信息。
+
+## 7. 时间戳与断点续训
+
+程序启动训练时生成和稳态目录相同形式的时间戳：
+
+```text
+YYYYMMDD_HHMM
+```
+
+每个模型的压力任务和速度任务也分别使用独立实验目录：
+
+```text
+experiment_DrivAerML_transient_RETO_plus_v2_surface_pressure/
+├── best_model_RETO_plus_v2_surface_pressure_20261115_1030.pth
+├── history_RETO_plus_v2_surface_pressure_20261115_1030.json
+└── test_RETO_plus_v2_surface_pressure_20261115_1030/
+```
+
+断点续训指定原时间戳：
+
+```bash
+python main.py config_RETO_plus_v2_surface_pressure.yml \
+  --phase resume \
+  --run-timestamp 20261115_1030
+```
+
+单独测试指定原时间戳：
+
+```bash
+python main.py config_RETO_plus_v2_surface_pressure.yml \
+  --phase test \
+  --run-timestamp 20261115_1030
+```
+
+对于 `resume/test`，省略 `--run-timestamp` 时，会在该模型独立实验目录中自动
+选择当前任务最新的 `best_model_*.pth`。训练时也可以显式传入时间戳，但通常
+让程序自动生成即可。
+
+## 8. AMP 设置
 
 ```text
 V100:      amp_type: fp16
@@ -199,15 +245,15 @@ CPU:       amp_type: none
 
 V100 不支持原生 BF16，远端使用 V100 时必须把 YAML 中的 `bf16` 改为 `fp16`。
 
-## 8. 输出
+## 9. 输出
 
-每项任务默认输出：
+每个模型、每种任务拥有独立实验目录，文件名再带时间戳：
 
 ```text
-experiments/<experiment.name>/
-├── best_model.pth
-├── history.json
-└── test/
+experiment_DrivAerML_transient_<model>_<task>/
+├── best_model_<model>_<task>_<timestamp>.pth
+├── history_<model>_<task>_<timestamp>.json
+└── test_<model>_<task>_<timestamp>/
     ├── test_metrics.json
     └── rollout_predictions.npz
 ```
@@ -224,7 +270,17 @@ physical_relative_l2
 
 `rollout_predictions.npz` 保存归一化预测、反归一化预测、真实值和对应样本编号。
 
-## 9. 文件职责
+本工程不再生成 `run_metadata.json`。保留的 JSON 文件用途如下：
+
+```text
+history_*.json      每个 epoch 的 train loss、val MSE、val relative L2 和学习率
+test_metrics.json   最佳模型自回归测试的误差汇总
+```
+
+它们只是轻量结果记录，便于画训练曲线和比较模型，不参与模型前向计算，也不是
+恢复训练所必需的文件。恢复训练使用带时间戳的 `.pth` checkpoint。
+
+## 10. 文件职责
 
 ```text
 main.py                         配置解析、数据/模型构建、流程入口

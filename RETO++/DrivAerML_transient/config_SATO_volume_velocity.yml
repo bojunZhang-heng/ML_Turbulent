@@ -3,7 +3,7 @@ experiment:
   phase: train
   device: auto
   seed: 42
-  output_dir: experiments
+  output_dir: experiment_DrivAerML_transient_SATO_volume_velocity
 data:
   path: /data/zhangbojun/transient/run_1_pklFile_10k
   task: volume_velocity

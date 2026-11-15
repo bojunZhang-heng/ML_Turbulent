@@ -11,6 +11,7 @@ from typing import Any
 import numpy as np
 import torch
 from torch import nn
+from tqdm import tqdm
 
 from dataloader import TASKS, TransientSequence
 
@@ -49,6 +50,7 @@ def evaluate_loader(
     loader,
     device: torch.device,
     amp_type: str,
+    description: str = "Validation",
 ) -> dict[str, float]:
     model.eval()
     squared_error = 0.0
@@ -56,7 +58,13 @@ def evaluate_loader(
     relative_sum = 0.0
     sample_count = 0
     with torch.inference_mode():
-        for batch in loader:
+        progress = tqdm(
+            loader,
+            desc=description,
+            unit="batch",
+            leave=False,
+        )
+        for batch in progress:
             batch = move_batch(batch, device)
             with amp_context(device, amp_type):
                 prediction = forward_batch(model, batch)
@@ -68,6 +76,10 @@ def evaluate_loader(
                 prediction.float(), batch["target_state"].float()
             ).item() * batch_size
             sample_count += batch_size
+            progress.set_postfix(
+                mse=f"{squared_error / max(value_count, 1):.4e}",
+                relL2=f"{relative_sum / max(sample_count, 1):.4e}",
+            )
     return {
         "mse": squared_error / max(value_count, 1),
         "relative_l2": relative_sum / max(sample_count, 1),
@@ -153,7 +165,13 @@ def train_model(
         model.train()
         loss_sum = 0.0
         batches = 0
-        for batch in train_loader:
+        train_progress = tqdm(
+            train_loader,
+            desc=f"Epoch {epoch}/{epochs} - Train",
+            unit="batch",
+            leave=False,
+        )
+        for batch in train_progress:
             batch = move_batch(batch, device)
             optimizer.zero_grad(set_to_none=True)
             with amp_context(device, amp_type):
@@ -169,9 +187,21 @@ def train_model(
             scaler.update()
             loss_sum += loss.detach().float().item()
             batches += 1
+            train_progress.set_postfix(
+                loss=f"{loss.detach().float().item():.4e}",
+                mse=f"{mse.detach().float().item():.4e}",
+                relL2=f"{rel.detach().float().item():.4e}",
+                lr=f"{optimizer.param_groups[0]['lr']:.3e}",
+            )
         scheduler.step()
 
-        validation = evaluate_loader(model, val_loader, device, amp_type)
+        validation = evaluate_loader(
+            model,
+            val_loader,
+            device,
+            amp_type,
+            description=f"Epoch {epoch}/{epochs} - Val",
+        )
         record = {
             "epoch": float(epoch),
             "learning_rate": float(optimizer.param_groups[0]["lr"]),
@@ -224,7 +254,9 @@ def rollout(
     model.eval()
     with torch.inference_mode():
         segment_start = 0
+        segment_number = 0
         while segment_start < len(pair_starts):
+            segment_number += 1
             segment_end = segment_start + 1
             while (
                 segment_end < len(pair_starts)
@@ -236,7 +268,13 @@ def rollout(
                 sequence.field(index).to(device)
                 for index in range(segment[0], segment[0] + context_steps)
             ]
-            for start in segment:
+            segment_progress = tqdm(
+                segment,
+                desc=f"Rollout segment {segment_number}",
+                unit="step",
+                leave=False,
+            )
+            for start in segment_progress:
                 target_index = start + context_steps
                 current_time = sequence.frames[target_index - 1].time_value
                 target_time = sequence.frames[target_index].time_value
@@ -254,6 +292,9 @@ def rollout(
                 targets.append(sequence.field(target_index))
                 sample_ids.append(sequence.frames[target_index].sample_id)
                 context.append(prediction.squeeze(0))
+                segment_progress.set_postfix(
+                    target=sequence.frames[target_index].sample_id
+                )
             segment_start = segment_end
     return torch.stack(predictions), torch.stack(targets), sample_ids
 
