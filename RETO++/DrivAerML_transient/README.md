@@ -66,7 +66,7 @@ volume_velocity : x_volume  + U(t) -> U(t + delta_t)
 224 帧，共缺少 67 个时间点并形成 49 处断档。程序会打印并跳过这些断档；如能
 补齐缺失帧，可获得更长的连续自回归训练和测试区间。
 
-## 3. 为什么没有直接使用 P3D 的 Conv3D
+## 3. 多模型对比
 
 P3D 原模型输入是规则三维体素：
 
@@ -81,16 +81,29 @@ P3D 原模型输入是规则三维体素：
 ```
 
 把随机点编号直接 reshape 成立方体会制造不存在的空间邻接关系。因此本工程
-沿用 P3D 的时间预测和 rollout 方法，但空间模型采用适合点云的线性注意力算子。
-其复杂度随点数近似线性增长，不构造 `N x N` 注意力矩阵。
+沿用 P3D 的时间预测和 rollout 方法，并使用与稳态目录一致的非结构点云模型：
+
+```text
+Transolver
+LinearNO
+CANO
+RETO
+RETO_plus
+RETO_plus_v2
+SATO
+```
+
+七种模型共用完全相同的数据配对、时间切分、loss、反归一化与自回归测试逻辑。
+模型差异只保留在空间算子内部。需要注意，`RETO` 使用完整点对点 attention，
+复杂度为 `O(N²)`；其余模型使用切片、线性、聚类或局部序列机制，更适合大量
+点。`N=10000` 时 RETO 仍可测试，但显存和运行时间会明显高于其他模型。
 
 ## 4. 模型输入与输出
 
-模型输入包括：
+所有模型的统一输入包括：
 
 ```text
 归一化坐标
-连续正余弦坐标编码
 最近 context_steps 帧的归一化物理场
 归一化当前时间
 归一化 delta_t
@@ -102,8 +115,9 @@ P3D 原模型输入是规则三维体素：
 state(t + delta_t) = state(t) + learned_update
 ```
 
-增量预测适合相邻瞬态场。模型包含独立 Q/K/V 的线性注意力、MLP、残差连接
-和 block checkpoint，不会生成点数平方级的注意力矩阵。
+增量预测适合相邻瞬态场。`RETO、RETO_plus、RETO_plus_v2` 的位置编码严格只
+作用于前三维 XYZ；`SATO` 的序列化顺序也只由 XYZ 计算。物理场与时间条件作为
+额外特征进入空间主干，不会被错误解释为坐标。
 
 ## 5. 数据切分
 
@@ -115,8 +129,8 @@ val  : 中间的连续时间对
 test : 最晚的连续时间对
 ```
 
-数据量仍然很小，只适合打通流程和初步过拟合测试。要评估时间泛化能力，建议
-准备几十到几百个连续时间步，并保证输出时间间隔满足研究需求。
+当前数据来自同一条 CFD 轨迹，因此测试结果衡量的是同一算例后段的时间外推，
+不是跨车型泛化能力。
 
 ## 6. 运行方法
 
@@ -126,27 +140,27 @@ test : 最晚的连续时间对
 cd /Users/zhangbojun/ML_Turbulent/RETO++/DrivAerML_transient
 
 /opt/anaconda3/envs/pgd-no/bin/python main.py \
-  config_surface_pressure.yml \
+  config_Transolver_surface_pressure.yml \
   --phase inspect
 ```
 
 训练表面压力：
 
 ```bash
-/opt/anaconda3/envs/pgd-no/bin/python main.py config_surface_pressure.yml
+/opt/anaconda3/envs/pgd-no/bin/python main.py config_Transolver_surface_pressure.yml
 ```
 
 训练体场速度：
 
 ```bash
-/opt/anaconda3/envs/pgd-no/bin/python main.py config_volume_velocity.yml
+/opt/anaconda3/envs/pgd-no/bin/python main.py config_Transolver_volume_velocity.yml
 ```
 
 断点续训：
 
 ```bash
 /opt/anaconda3/envs/pgd-no/bin/python main.py \
-  config_volume_velocity.yml \
+  config_LinearNO_volume_velocity.yml \
   --phase resume
 ```
 
@@ -154,15 +168,25 @@ cd /Users/zhangbojun/ML_Turbulent/RETO++/DrivAerML_transient
 
 ```bash
 /opt/anaconda3/envs/pgd-no/bin/python main.py \
-  config_volume_velocity.yml \
+  config_CANO_volume_velocity.yml \
   --phase test
 ```
 
 也兼容：
 
 ```text
-python main.py --config config_volume_velocity.yml
+python main.py --config config_RETO_plus_v2_volume_velocity.yml
 ```
+
+配置命名统一为：
+
+```text
+config_<MODEL>_surface_pressure.yml
+config_<MODEL>_volume_velocity.yml
+```
+
+例如比较全部压力模型时，依次运行 7 个 `*_surface_pressure.yml`；每个配置使用
+独立实验目录，不会覆盖其他模型的 checkpoint。
 
 ## 7. AMP 设置
 
@@ -205,8 +229,9 @@ physical_relative_l2
 ```text
 main.py                         配置解析、数据/模型构建、流程入口
 dataloader.py                   时间排序、相邻帧配对、按时间切分
-models/temporal_point_operator.py  瞬态点云算子
+models/temporal_adapter.py       统一瞬态输入、模型注册和残差预测
+models/*.py                     七种原始空间模型的瞬态适配版本
+SATO_dataset/                   SATO 的 XYZ 序列化工具
 utils/training.py               训练、验证、checkpoint、自回归测试
-config_surface_pressure.yml     表面压力配置
-config_volume_velocity.yml      体场速度配置
+config_<MODEL>_<TASK>.yml       模型与任务专用配置
 ```

@@ -13,7 +13,7 @@ import torch
 import yaml
 
 from dataloader import TASKS, TransientSequence, create_data_loaders
-from models import TemporalPointOperator
+from models import SUPPORTED_MODELS, build_temporal_model
 from utils import inspect_model, test_rollout, train_model
 
 
@@ -26,8 +26,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--config", dest="config_option", default=None)
     parser.add_argument("--phase", choices=("inspect", "train", "resume", "test"))
     parser.add_argument("--device", default=None, help="auto, cpu, cuda or mps")
+    parser.add_argument("--model-name", choices=SUPPORTED_MODELS, default=None)
     args = parser.parse_args()
-    selected = args.config_option or args.config or "config_surface_pressure.yml"
+    selected = (
+        args.config_option
+        or args.config
+        or "config_Transolver_surface_pressure.yml"
+    )
     args.config_path = Path(selected)
     if not args.config_path.is_absolute():
         args.config_path = (ROOT / args.config_path).resolve()
@@ -106,19 +111,16 @@ def main() -> int:
 
     context_steps = int(data.get("context_steps", 1))
     model_config = config["model"]
-    model = TemporalPointOperator(
+    model_name = cli.model_name or str(model_config.get("name", "Transolver"))
+    model = build_temporal_model(
+        model_name=model_name,
         state_channels=sequence.channels,
         context_steps=context_steps,
-        hidden_dim=int(model_config.get("hidden_dim", 128)),
-        layers=int(model_config.get("layers", 6)),
-        heads=int(model_config.get("heads", 8)),
-        mlp_ratio=float(model_config.get("mlp_ratio", 2.0)),
-        dropout=float(model_config.get("dropout", 0.0)),
-        position_frequencies=int(model_config.get("position_frequencies", 6)),
-        time_frequencies=int(model_config.get("time_frequencies", 8)),
-        checkpoint_blocks=bool(model_config.get("checkpoint_blocks", True)),
-        residual_prediction=bool(model_config.get("residual_prediction", True)),
+        coordinates=sequence.coordinates.unsqueeze(0),
+        config=model_config,
     )
+    print(f"Model: {model_name}")
+    print(f"Transient input channels: {model.input_channels}")
     print(f"Model parameters: {sum(parameter.numel() for parameter in model.parameters()):,}")
     if phase == "inspect":
         inspect_model(model, sequence, context_steps, device)

@@ -1,0 +1,44 @@
+experiment:
+  name: CANO_volume_velocity
+  phase: train
+  device: auto
+  seed: 42
+  output_dir: experiments
+data:
+  path: ../../preprocess/run_1_pklFile_10k
+  task: volume_velocity
+  start_sample_id: 10
+  context_steps: 1
+  expected_delta_t: 0.005
+  delta_t_tolerance: 1.0e-8
+  batch_size: 1
+  train_ratio: 0.7
+  val_ratio: 0.15
+  test_ratio: 0.15
+  shuffle: true
+  num_workers: 0
+  cache_frames: true
+model:
+  name: CANO
+  n_layers: 8
+  n_hidden: 256
+  n_head: 8
+  dropout: 0.0
+  act: gelu
+  mlp_ratio: 2
+  key_ratio: 1
+  cluster_num: 64
+  cluster_temperature_init: 1.0
+  layer_scale_init: 0.1
+  checkpoint_segment_size: 2
+  residual_prediction: true
+training:
+  epochs: 200
+  learning_rate: 0.001
+  min_lr: 1.0e-6
+  weight_decay: 1.0e-5
+  relative_loss_weight: 0.1
+  gradient_clip: 1.0
+  amp_type: fp16
+evaluation:
+  save_predictions: true
