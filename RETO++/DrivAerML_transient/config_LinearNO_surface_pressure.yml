@@ -5,7 +5,7 @@ experiment:
   seed: 42
   output_dir: experiments
 data:
-  path: ../../preprocess/run_1_pklFile_10k
+  path: /data/zhangbojun/transient/run_1_pklFile_10k
   task: surface_pressure
   start_sample_id: 10
   end_sample_id: null
