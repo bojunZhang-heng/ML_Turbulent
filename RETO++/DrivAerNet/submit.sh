@@ -22,6 +22,7 @@ mkdir -p $LOG_DIR
 TIMESTAMP=$(date "+%Y_%m%d_%H%M")
 
 
+
 # 启动训练（后台）
 # DrivAerNet pressure
 nohup python main.py --config config_CANO_pressure.yml > ${LOG_DIR}/CANO_DrivAerNet_pressure_${TIMESTAMP}.log 2>&1 &
