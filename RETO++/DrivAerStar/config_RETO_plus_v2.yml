@@ -36,10 +36,22 @@ training:
   batch_size: 1
   shuffle: true
 data:
-  data_path: /data/zhangbojun/DrivAerStar/pklFile_10k
-  #data_path: /Users/zhangbojun/ML_Turbulent/preprocess/DrivAerStar
+  dataset_root: /data/zhangbojun/DrivAerStar
   selection_mode: random
   selection_seed: 42
   train_ratio: 0.6
   val_ratio: 0.3
   test_ratio: 0.1
+  vehicle_datasets:
+    case_E:
+      path: case_E_pklFile_10k
+      count: all
+      enabled: true
+    case_F:
+      path: case_F_pklFile_10k
+      count: all
+      enabled: true
+    case_N:
+      path: case_N_pklFile_10k
+      count: all
+      enabled: true

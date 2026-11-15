@@ -18,7 +18,7 @@ from datetime import datetime
 # from models.figconv import Multi_grid_model
 
 #from utils.ml import train, test
-from utils.ml_SATO import train, test
+from utils.ml_SATO import checkpoint_paths, train, test
 
 import os
 import torch
@@ -384,19 +384,22 @@ def main():
         raise ValueError(f"Model name {model_name} not supported")
     print(f"Model parameters: {sum(p.numel() for p in model.parameters())}")
 
-    # load the pre-trained model if it exists
-    if phase != 'restart_train' and save_path.exists():
+    model_paths = checkpoint_paths(save_path)
+
+    # Prefer the loss-selected checkpoint when continuing an existing run.
+    resume_path = model_paths['val_loss']
+    if phase != 'restart_train' and resume_path.exists():
         try:
             model.load_state_dict(
                 torch.load(
-                    save_path,
+                    resume_path,
                     map_location=torch.device('cpu'),
                     weights_only=True,
                 )
             )
-            print(f"Loaded pre-trained model from {save_path}")
+            print(f"Loaded pre-trained model from {resume_path}")
         except (RuntimeError, TypeError, ValueError) as error:
-            print(f"No compatible pre-trained model found at {save_path}: {error}")
+            print(f"No compatible pre-trained model found at {resume_path}: {error}")
 
     # Training
     if phase == 'train' or phase == 'restart_train':
@@ -416,15 +419,42 @@ def main():
 
     # Testing
     print("\n🧪 Starting testing...")
-    print("\n Testing on test dataset...")
-    _ = test(
-        model_name=model_name,
-        model=model,
-        test_loader=test_loader,
-        normalization_scalars=normalization_scalars,
-        model_path=save_path,
-        predicted_feature_name=predicted_feature_name
-    )
+    comparison = {}
+    for selection_metric, model_path in model_paths.items():
+        if not model_path.is_file():
+            print(
+                f"\nSkipping {selection_metric} checkpoint; file not found: "
+                f"{model_path}"
+            )
+            continue
+        print(f"\nTesting checkpoint selected by {selection_metric}...")
+        result = test(
+            model_name=model_name,
+            model=model,
+            test_loader=test_loader,
+            normalization_scalars=normalization_scalars,
+            model_path=model_path,
+            predicted_feature_name=predicted_feature_name,
+        )
+        comparison[selection_metric] = {
+            'test_relative_error': result['test_relative_error'],
+            'test_r2': result['test_r2'],
+        }
+
+    if comparison:
+        print("\nCheckpoint test comparison:")
+        print(f"  {'Selected by':<20} {'Relative L2':>16} {'R2':>14}")
+        for selection_metric, metrics in comparison.items():
+            print(
+                f"  {selection_metric:<20} "
+                f"{metrics['test_relative_error']:>16.6f} "
+                f"{metrics['test_r2']:>14.6f}"
+            )
+    else:
+        raise FileNotFoundError(
+            "Neither dual checkpoint exists. Train the model first or verify "
+            f"the experiment path: {save_path.parent}"
+        )
     print("\n✅ Pipeline completed!")
 
 
