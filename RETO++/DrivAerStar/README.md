@@ -62,7 +62,17 @@ Checkpoint test comparison:
 矢量任务还会分别打印三个分量的相对 L2 和 R²。旧版单一
 `best_model_*.pth` 不会自动拆分成两份，需要重新训练。
 
-### "cuda 3" 1113-velocity
+### "cuda 3" 1115-pressure
+3290772
+3290773
+3290774
+3290775
+3290776
+3290777
+
+
+
+### 900组-10k-pressure
 
 ### 569组-10k-pressure
 #### RETO_plus_v2

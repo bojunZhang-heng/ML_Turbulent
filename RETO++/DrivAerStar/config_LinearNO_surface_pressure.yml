@@ -39,13 +39,13 @@ data:
   vehicle_datasets:
     case_E:
       path: case_E_pklFile_10k
-      count: all
+      count: 300
       enabled: true
     case_F:
       path: case_F_pklFile_10k
-      count: all
+      count: 300
       enabled: true
     case_N:
       path: case_N_pklFile_10k
-      count: all
+      count: 300
       enabled: true
