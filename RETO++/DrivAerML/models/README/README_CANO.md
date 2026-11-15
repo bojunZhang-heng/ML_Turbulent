@@ -277,7 +277,7 @@ cluster_num: 32, 64, 128
 
 ## 11. 公平对比要求
 
-对比 CANO、CANO_Rope 和 CANO_GatedRope 时，应保持以下参数一致：
+对比 CANO 和 CANO_Rope 时，应保持以下参数一致：
 
 ```text
 n_layers

@@ -6,15 +6,10 @@ from dataloader import (
 from models.transolver_model import Model as Transolver_Model
 
 from models.LinearAttnNeuralOperator import LinearAttentionNeuralOperator as LinearNO
-from models.RopeLinearNO import LinearAttentionNeuralOperator as RopeLinearNO
-from models.RopeLinearNO_v2 import LinearAttentionNeuralOperator as RopeLinearNO_v2
-from models.RopeLinearNO_v3 import LinearAttentionNeuralOperator as RopeLinearNO_v3
 from models.CANO import LinearAttentionNeuralOperator as CANO
 from models.RETO_plus import Model as RETO_plus
 from models.RETO_plus_v2 import Model as RETO_plus_v2
 from models.RETO import Model as RETO
-from models.CANO_GatedRope import LinearAttentionNeuralOperator as CANO_GatedRope
-from models.LinearNO_se import LinearAttentionNeuralOperator as LinearNO_se
 from models.SATO import Model as SATO
 from datetime import datetime
 
@@ -23,7 +18,7 @@ from datetime import datetime
 # from models.figconv import Multi_grid_model
 
 #from utils.ml import train, test
-from utils.ml_SATO import train, test
+from utils.ml_SATO import checkpoint_paths, train, test
 
 import os
 import torch
@@ -108,14 +103,11 @@ parser.add_argument('--patch_size', type=int, default=config.get('patch_size', 2
 parser.add_argument('--shift', type=int, default=config.get('shift', 2))
 parser.add_argument('--n_iter', type=int, default=config.get('n_iter', 1))
 parser.add_argument('--num_position_frequencies', type=int, default=config.get('num_position_frequencies', 6))
-parser.add_argument('--initial_relative_gate', type=float, default=config.get('initial_relative_gate', 0.05))
-parser.add_argument('--checkpoint_relative_terms', action=argparse.BooleanOptionalAction, default=config.get('checkpoint_relative_terms', True))
 parser.add_argument('--cluster_num', type=int, default=config.get('cluster_num', 64))
 parser.add_argument('--cluster_temperature_init', type=float, default=config.get('cluster_temperature_init', 1.0))
 parser.add_argument('--checkpoint_segment_size', type=int, default=config.get('checkpoint_segment_size', 2))
 parser.add_argument('--checkpoint_num_blocks', type=int, default=config.get('checkpoint_num_blocks', None))
 parser.add_argument('--layer_scale_init', type=float, default=config.get('layer_scale_init', 0.1))
-parser.add_argument('--initial_rope_gate', type=float, default=config.get('initial_rope_gate', 0.05))
 parser.add_argument('--sincos_max_wavelength', type=int, default=config.get('sincos_max_wavelength', 10000))
 parser.add_argument('--rope_max_wavelength', type=int, default=config.get('rope_max_wavelength', 10000))
 args = parser.parse_args()
@@ -208,15 +200,10 @@ def main():
     coordinate_only_models = {
         'Transolver',
         'LinearNO',
-        'RopeLinearNO',
-        'RopeLinearNO_v2',
-        'RopeLinearNO_v3',
         'CANO',
         'RETO_plus',
         'RETO_plus_v2',
         'RETO',
-        'CANO_GatedRope',
-        'LinearNO_se',
     }
     train_loader, val_loader, test_loader, normalization_scalars = create_data_loaders(
         DATA_SOURCE,
@@ -287,44 +274,6 @@ def main():
             H=args.H,
             W=args.W,
             isregular=args.isregular,
-        )
-    elif model_name in {'RopeLinearNO', 'RopeLinearNO_v2'}:
-        rope_class = RopeLinearNO if model_name == 'RopeLinearNO' else RopeLinearNO_v2
-        model = rope_class(
-            space_dim=args.space_dim,
-            n_layers=args.n_layers,
-            n_hidden=args.n_hidden,
-            dropout=args.dropout,
-            n_head=args.n_head,
-            Time_Input=args.time_input,
-            act=args.act,
-            mlp_ratio=args.mlp_ratio,
-            fun_dim=args.fun_dim,
-            out_dim=args.out_dim,
-            key_ratio=args.key_ratio,
-            ref=args.ref,
-            unified_pos=args.unified_pos,
-            H=args.H,
-            W=args.W,
-            isregular=args.isregular,
-        )
-    elif model_name == 'RopeLinearNO_v3':
-        model = RopeLinearNO_v3(
-            space_dim=args.space_dim,
-            n_layers=args.n_layers,
-            n_hidden=args.n_hidden,
-            dropout=args.dropout,
-            n_head=args.n_head,
-            Time_Input=args.time_input,
-            act=args.act,
-            mlp_ratio=args.mlp_ratio, fun_dim=args.fun_dim,
-            out_dim=args.out_dim, key_ratio=args.key_ratio,
-            ref=args.ref, unified_pos=args.unified_pos,
-            H=args.H, W=args.W, isregular=args.isregular,
-            num_position_frequencies=args.num_position_frequencies,
-            initial_relative_gate=args.initial_relative_gate,
-            checkpoint_segment_size=args.checkpoint_segment_size,
-            checkpoint_relative_terms=args.checkpoint_relative_terms,
         )
     elif model_name == 'CANO':
         model = CANO(
@@ -403,43 +352,6 @@ def main():
             checkpoint_segment_size=args.checkpoint_segment_size,
             checkpoint_num_blocks=args.checkpoint_num_blocks,
         )
-    elif model_name == 'CANO_GatedRope':
-        model = CANO_GatedRope(
-            space_dim=args.space_dim,
-            n_layers=args.n_layers,
-            n_hidden=args.n_hidden,
-            dropout=args.dropout,
-            n_head=args.n_head,
-            Time_Input=args.time_input,
-            act=args.act,
-            mlp_ratio=args.mlp_ratio, fun_dim=args.fun_dim,
-            out_dim=args.out_dim, key_ratio=args.key_ratio,
-            ref=args.ref, unified_pos=args.unified_pos,
-            H=args.H, W=args.W, isregular=args.isregular,
-            cluster_num=args.cluster_num,
-            num_position_frequencies=args.num_position_frequencies,
-            initial_rope_gate=args.initial_rope_gate,
-            cluster_temperature_init=args.cluster_temperature_init,
-            checkpoint_segment_size=args.checkpoint_segment_size,
-            checkpoint_num_blocks=args.checkpoint_num_blocks,
-            layer_scale_init=args.layer_scale_init,
-        )
-    elif model_name == 'LinearNO_se':
-        model = LinearNO_se(
-            space_dim=args.space_dim,
-            n_layers=args.n_layers,
-            n_hidden=args.n_hidden,
-            dropout=args.dropout,
-            n_head=args.n_head,
-            Time_Input=args.time_input,
-            act=args.act,
-            mlp_ratio=args.mlp_ratio, fun_dim=args.fun_dim,
-            out_dim=args.out_dim, key_ratio=args.key_ratio,
-            ref=args.ref, unified_pos=args.unified_pos,
-            H=args.H, W=args.W, isregular=args.isregular,
-            patch_size=args.patch_size,
-            shift=args.shift,
-        )
     elif model_name == 'SATO':
         model = SATO(
             space_dim=args.space_dim,
@@ -459,19 +371,22 @@ def main():
         raise ValueError(f"Model name {model_name} not supported")
     print(f"Model parameters: {sum(p.numel() for p in model.parameters())}")
 
-    # load the pre-trained model if it exists
-    if phase != 'restart_train' and save_path.exists():
+    model_paths = checkpoint_paths(save_path)
+
+    # Prefer the validation-loss checkpoint when continuing an existing run.
+    resume_path = model_paths['val_loss']
+    if phase != 'restart_train' and resume_path.exists():
         try:
             model.load_state_dict(
                 torch.load(
-                    save_path,
+                    resume_path,
                     map_location=torch.device('cpu'),
                     weights_only=True,
                 )
             )
-            print(f"Loaded pre-trained model from {save_path}")
+            print(f"Loaded pre-trained model from {resume_path}")
         except (RuntimeError, TypeError, ValueError) as error:
-            print(f"No compatible pre-trained model found at {save_path}: {error}")
+            print(f"No compatible pre-trained model found at {resume_path}: {error}")
 
     # Training
     if phase == 'train' or phase == 'restart_train':
@@ -491,15 +406,42 @@ def main():
 
     # Testing
     print("\n🧪 Starting testing...")
-    print("\n Testing on test dataset...")
-    _ = test(
-        model_name=model_name,
-        model=model,
-        test_loader=test_loader,
-        normalization_scalars=normalization_scalars,
-        model_path=save_path,
-        predicted_feature_name=predicted_feature_name
-    )
+    comparison = {}
+    for selection_metric, model_path in model_paths.items():
+        if not model_path.is_file():
+            print(
+                f"\nSkipping {selection_metric} checkpoint; file not found: "
+                f"{model_path}"
+            )
+            continue
+        print(f"\nTesting checkpoint selected by {selection_metric}...")
+        result = test(
+            model_name=model_name,
+            model=model,
+            test_loader=test_loader,
+            normalization_scalars=normalization_scalars,
+            model_path=model_path,
+            predicted_feature_name=predicted_feature_name,
+        )
+        comparison[selection_metric] = {
+            'test_relative_error': result['test_relative_error'],
+            'test_r2': result['test_r2'],
+        }
+
+    if comparison:
+        print("\nCheckpoint test comparison:")
+        print(f"  {'Selected by':<20} {'Relative L2':>16} {'R2':>14}")
+        for selection_metric, metrics in comparison.items():
+            print(
+                f"  {selection_metric:<20} "
+                f"{metrics['test_relative_error']:>16.6f} "
+                f"{metrics['test_r2']:>14.6f}"
+            )
+    else:
+        raise FileNotFoundError(
+            "Neither dual checkpoint exists. Train the model first or verify "
+            f"the experiment path: {save_path.parent}"
+        )
     print("\n✅ Pipeline completed!")
 
 

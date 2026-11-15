@@ -13,7 +13,7 @@ PKL 已由预处理阶段完成归一化，训练代码不会再次归一化：
 - `x_surface`：使用 `surface_coords_min/range` 做全数据集 min-max；
 - `x_volume`：使用 `volume_coords_min/range` 做全数据集 min-max；
 - `y_spressure`、`y_wss`、`y_velocity`、`volume_cell_totalpcoeff`：全数据集逐分量 mean-std；
-- 验证和测试：使用 `normalization_scalars.pkl` 反归一化后计算物理尺度相对 L2。
+- 验证和测试：使用 `normalization_scalars.pkl` 反归一化后计算物理尺度相对 L2 和 R²。
 
 可选任务：
 
@@ -33,14 +33,9 @@ DataLoader 会按任务自动选择坐标标尺：表面压力/WSS 使用 surfac
 ```text
 Transolver
 LinearNO
-RopeLinearNO
-RopeLinearNO_v2
-RopeLinearNO_v3
 CANO
 RETO_plus
 RETO_plus_v2
-CANO_GatedRope
-LinearNO_se
 SATO
 ```
 
@@ -89,6 +84,7 @@ RETO+ v2 将输入预处理替换为连续正余弦坐标编码：
 ## 指标
 
 - 训练损失：归一化空间中的逐点 MSE；
-- 验证/测试主指标：反归一化后的整体相对 L2；
-- 三分量速度和 WSS：额外打印 x、y、z 分量各自的相对 L2；
-- 最优权重：按验证集物理尺度相对 L2 保存。
+- 验证阶段同时维护验证 MSE 和反归一化物理场相对 L2；
+- 每次训练分别保存 `<模型名>_val_loss.pth` 和 `<模型名>_relative_error.pth`；
+- 测试阶段依次加载两份权重，并打印两者的整体相对 L2 和 R² 对比表；
+- 三分量速度和 WSS：额外打印 x、y、z 分量各自的相对 L2 和 R²。

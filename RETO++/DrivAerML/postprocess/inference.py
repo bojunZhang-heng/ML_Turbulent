@@ -32,10 +32,9 @@ SEGMENTED_MODELS = {
     "transolver_seg_v2", "SegLinearNO", "SegLinearNO_v2",
 }
 RAW_COORD_MODELS = {
-    "RopeLinearNO_v2", "RopeLinearNO_v3", "RETO_plus",
-    "RETO_plus_v2", "CANO_GatedRope",
+    "RETO_plus", "RETO_plus_v2",
 }
-SERIALIZED_MODELS = {"LinearNO_se", "SATO", "Transolver_seg_ser"}
+SERIALIZED_MODELS = {"SATO", "Transolver_seg_ser"}
 
 
 def configure_amp(device):

@@ -31,6 +31,6 @@ data:
   data_path: /data/zhangbojun/DrivAerML/pklFile_10k/
   selection_mode: random
   selection_seed: 42
-  train_ratio: 0.8
-  val_ratio: 0.1
+  train_ratio: 0.6
+  val_ratio: 0.3
   test_ratio: 0.1

@@ -166,11 +166,10 @@ class Model(nn.Module):
                                                       mlp_ratio=mlp_ratio,
                                                       out_dim=out_dim,
                                                       slice_num=slice_num,
-                                                      last_layer=False)
+                                                      last_layer=(_ == n_layers - 1))
                                      for _ in range(n_layers)])
         self.initialize_weights()
         self.placeholder = nn.Parameter((1 / (n_hidden)) * torch.rand(n_hidden, dtype=torch.float))
-        self.Cp_decoder = nn.Linear(n_hidden, out_dim)
         self.integrated_cp_decoder = nn.Linear(1, 1)
 
     def initialize_weights(self):
@@ -226,8 +225,5 @@ class Model(nn.Module):
 
         for block in self.blocks:
             fx = block(fx)
-        
-        # Make the prediction for surface pressure
-        Cp_pred = self.Cp_decoder(fx)
 
-        return Cp_pred
+        return fx
