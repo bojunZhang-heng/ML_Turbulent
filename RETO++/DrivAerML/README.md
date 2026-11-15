@@ -38,29 +38,37 @@
 ##### RETO
 0.150961 best_model_RETO_surface_pressure_20261107_1032.pth
 
+##### SATO
+0.253063 best_model_SATO_surface_pressure_20261111_1416.pth
+0.161826 best_model_SATO_surface_pressure_20261113_1059.pth
+
 ### DrivAerML velocity 500组
 #### 10k
 
 
 ##### RETO_plus_v2
 0.132977  best_model_RETO_plus_v2_volume_velocity_20261111_1415.pth
+0.142055  best_model_RETO_plus_v2_volume_velocity_20261113_1059.pth
 
 
 ##### RETO_plus
 0.165590 best_model_RETO_plus_volume_velocity_20261111_1415.pth
+0.164116 best_model_RETO_plus_volume_velocity_20261113_1059.pth
 
 
 ##### Transolver 
 0.181496 best_model_Transolver_volume_velocity_20261111_1415.pth
+0.182950 best_model_Transolver_volume_velocity_20261113_1059.pth
 
 
 ##### CANO
 0.163131 best_model_CANO_volume_velocity_20261111_1415.pth
+0.163143 best_model_CANO_volume_velocity_20261113_1059
 
 
-##### LinearNO
-0.253063 best_model_SATO_surface_pressure_20261111_1416.pth
+##### SATO
 
 
 ##### LinearNO
 0.177369 best_model_LinearNO_volume_velocity_20261111_1415.pth
+0.162814 best_model_LinearNO_volume_velocity_20261113_1059.pth
