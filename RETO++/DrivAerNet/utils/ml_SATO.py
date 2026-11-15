@@ -3,9 +3,14 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.amp import autocast, GradScaler
 import os
+from pathlib import Path
 import numpy as np
 from tqdm import tqdm
-from utils.metric import compute_component_relative_errors, compute_relative_error
+from utils.metric import (
+    compute_component_relative_errors,
+    compute_relative_error,
+    denormalize_field,
+)
 from SATO_dataset.Dataset import pos_to_order_inverse_index
 
 SEGMENTED_MODELS = {
@@ -25,6 +30,19 @@ RAW_COORD_ROPE_MODELS = {
 }
 SEGMENTED_SER = {"Transolver_seg_ser"}
 SERIALIZED_MODELS = LINEAR_MODEL_SE | SEGMENTED_SER
+
+
+def checkpoint_paths(save_path):
+    """Return the two checkpoint files maintained for every model."""
+    base_path = Path(save_path)
+    return {
+        "val_loss": base_path.with_name(
+            f"{base_path.stem}_val_loss{base_path.suffix}"
+        ),
+        "relative_error": base_path.with_name(
+            f"{base_path.stem}_relative_error{base_path.suffix}"
+        ),
+    }
 
 
 def serialization_coordinates(model_name, normalized_coords, raw_coords):
@@ -74,6 +92,48 @@ def batch_relative_error(
         )
     return float(np.mean(errors))
 
+
+def batch_physical_fields(
+    outputs, targets, sim_ids, normalization_scalars, predicted_feature_name
+):
+    """Yield per-sample prediction/target arrays restored to physical units."""
+    outputs_np = outputs.detach().float().cpu().numpy()
+    targets_np = targets.detach().float().cpu().numpy()
+    by_vehicle = (
+        normalization_scalars.get("by_vehicle")
+        if isinstance(normalization_scalars, dict)
+        else None
+    )
+    for batch_index, sim_id in enumerate(sim_ids):
+        scalars = normalization_scalars
+        if by_vehicle is not None:
+            if not isinstance(sim_id, tuple) or len(sim_id) != 2:
+                raise TypeError(
+                    "Multi-vehicle metrics require (vehicle_name, sample_id) IDs"
+                )
+            scalars = by_vehicle[sim_id[0]]
+        predicted = denormalize_field(
+            outputs_np[batch_index], scalars, predicted_feature_name
+        )
+        target = denormalize_field(
+            targets_np[batch_index], scalars, predicted_feature_name
+        )
+        yield np.asarray(predicted, dtype=np.float64), np.asarray(
+            target, dtype=np.float64
+        )
+
+
+def r2_from_sufficient_statistics(count, target_sum, target_sum_sq, error_sum_sq):
+    """Compute R² without retaining every point prediction in memory."""
+    target_sum = np.asarray(target_sum, dtype=np.float64)
+    target_sum_sq = np.asarray(target_sum_sq, dtype=np.float64)
+    error_sum_sq = np.asarray(error_sum_sq, dtype=np.float64)
+    total_sum_sq = target_sum_sq - np.square(target_sum) / max(int(count), 1)
+    r2 = np.full_like(total_sum_sq, np.nan, dtype=np.float64)
+    valid = total_sum_sq > np.finfo(np.float64).eps
+    r2[valid] = 1.0 - error_sum_sq[valid] / total_sum_sq[valid]
+    return r2
+
 def forward_model(model_name, model, coorf, raw_coords, seg_matrix, order, inverse):
     if model_name == "Transolver":
         return model(coorf)
@@ -102,6 +162,14 @@ def configure_amp(device):
         enabled=amp_enabled and amp_dtype == torch.float16,
     )
     return amp_enabled, amp_dtype, scaler
+
+
+def select_device():
+    if torch.cuda.is_available():
+        return torch.device("cuda")
+    if hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
+        return torch.device("mps")
+    return torch.device("cpu")
 
 
 def register_mem_hooks(model):
@@ -215,7 +283,7 @@ def train(model_name, model, train_loader, val_loader,
     Returns:
         dict: Training history
     """
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = select_device()
     print(f"Using device: {device}")
     amp_enabled, amp_dtype, scaler = configure_amp(device)
     if amp_enabled:
@@ -247,18 +315,24 @@ def train(model_name, model, train_loader, val_loader,
     #     optimizer, factor=0.7, patience=20)
     # optimizer = optim.SGD(model.parameters(), lr=learning_rate)
 
-    # Create save directory
-    os.makedirs(os.path.dirname(save_path), exist_ok=True)
+    model_paths = checkpoint_paths(save_path)
+    for model_path in model_paths.values():
+        model_path.parent.mkdir(parents=True, exist_ok=True)
 
     # Training history
     history = {
         'train_loss': [],
         'val_loss': [],
         'val_relative_error': [],
-        'best_val_error': float('inf')
+        'best_val_error': float('inf'),
+        'best_val_loss': float('inf'),
+        'checkpoint_paths': {
+            name: str(path) for name, path in model_paths.items()
+        },
     }
 
     print(f"Starting training for {num_epochs} epochs (model_name='{model_name}')...")
+    print("Saving independent best checkpoints for val_loss and relative_error")
 
     memory_report_pending = device.type == "cuda"
     memory_hooks = []
@@ -402,13 +476,31 @@ def train(model_name, model, train_loader, val_loader,
             print(f"  Val Loss: {val_loss:.6f}")
             print(f"  Val Relative Error: {val_relative_error:.6f}")
 
-            # Save best model based on validation relative error
+            if val_loss < history['best_val_loss']:
+                history['best_val_loss'] = val_loss
+                torch.save(model.state_dict(), model_paths['val_loss'])
+                print(
+                    "  ✅ Saved val_loss checkpoint: "
+                    f"{model_paths['val_loss']} ({val_loss:.6f})"
+                )
+
             if val_relative_error < history['best_val_error']:
                 history['best_val_error'] = val_relative_error
-                torch.save(model.state_dict(), save_path)
-                print(f"  ✅ New best model saved! (Relative Error: {val_relative_error:.6f})")
+                torch.save(model.state_dict(), model_paths['relative_error'])
+                print(
+                    "  ✅ Saved relative_error checkpoint: "
+                    f"{model_paths['relative_error']} "
+                    f"({val_relative_error:.6f})"
+                )
 
-    print(f"Training completed! Best validation relative error: {history['best_val_error']:.6f}")
+    print("Training completed!")
+    print(f"  Best validation loss: {history['best_val_loss']:.6f}")
+    print(
+        "  Best validation relative error: "
+        f"{history['best_val_error']:.6f}"
+    )
+    print(f"  val_loss checkpoint: {model_paths['val_loss']}")
+    print(f"  relative_error checkpoint: {model_paths['relative_error']}")
     return history
 
 def test(model_name, model, test_loader, normalization_scalars, model_path="models/best_model.pth", predicted_feature_name="pressure"):
@@ -424,7 +516,7 @@ def test(model_name, model, test_loader, normalization_scalars, model_path="mode
     Returns:
         dict: Test results
     """
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = select_device()
     amp_enabled, amp_dtype, _ = configure_amp(device)
 
     # Load the best model
@@ -444,6 +536,10 @@ def test(model_name, model, test_loader, normalization_scalars, model_path="mode
     test_relative_error = 0.0
     all_predictions = {}
     all_targets = {}
+    r2_count = 0
+    r2_target_sum = None
+    r2_target_sum_sq = None
+    r2_error_sum_sq = None
 
     with torch.no_grad():
         test_progress = tqdm(
@@ -492,6 +588,31 @@ def test(model_name, model, test_loader, normalization_scalars, model_path="mode
             test_relative_error += relative_error
             test_progress.set_postfix(loss=f"{loss.item():.4e}")
 
+            for predicted_physical, target_physical in batch_physical_fields(
+                outputs,
+                target,
+                sim_ids,
+                normalization_scalars,
+                predicted_feature_name,
+            ):
+                predicted_flat = predicted_physical.reshape(
+                    -1, predicted_physical.shape[-1]
+                )
+                target_flat = target_physical.reshape(
+                    -1, target_physical.shape[-1]
+                )
+                error_sum_sq = np.square(predicted_flat - target_flat).sum(axis=0)
+                target_sum = target_flat.sum(axis=0)
+                target_sum_sq = np.square(target_flat).sum(axis=0)
+                if r2_target_sum is None:
+                    r2_target_sum = np.zeros_like(target_sum, dtype=np.float64)
+                    r2_target_sum_sq = np.zeros_like(target_sum_sq, dtype=np.float64)
+                    r2_error_sum_sq = np.zeros_like(error_sum_sq, dtype=np.float64)
+                r2_count += target_flat.shape[0]
+                r2_target_sum += target_sum
+                r2_target_sum_sq += target_sum_sq
+                r2_error_sum_sq += error_sum_sq
+
             # Store predictions and targets for detailed analysis
             outputs_cpu = outputs.detach().float().cpu()
             targets_cpu = target.detach().cpu()
@@ -501,17 +622,27 @@ def test(model_name, model, test_loader, normalization_scalars, model_path="mode
 
     test_loss /= len(test_loader)
     test_relative_error /= len(test_loader)
+    component_r2 = r2_from_sufficient_statistics(
+        r2_count,
+        r2_target_sum,
+        r2_target_sum_sq,
+        r2_error_sum_sq,
+    )
+    test_r2 = float(np.mean(component_r2))
 
     results = {
         'test_loss': test_loss,
         'test_relative_error': test_relative_error,
+        'test_r2': test_r2,
+        'test_component_r2': component_r2,
         'predictions': all_predictions,
         'targets': all_targets
     }
 
     print(f"Test Results:")
     print(f"  Test Loss: {test_loss:.6f}")
-    print(f"  Test Relative Error: {test_relative_error:.6f}")
+    print(f"  Test Relative L2 Error: {test_relative_error:.6f}")
+    print(f"  Test R2: {test_r2:.6f}")
 
     if all_predictions:
         component_errors = []
@@ -535,6 +666,13 @@ def test(model_name, model, test_loader, normalization_scalars, model_path="mode
             + ", ".join(
                 f"{name}={value:.6f}"
                 for name, value in zip(names, component_errors)
+            )
+        )
+        print(
+            "  Component R2: "
+            + ", ".join(
+                f"{name}={value:.6f}"
+                for name, value in zip(names, component_r2)
             )
         )
 
