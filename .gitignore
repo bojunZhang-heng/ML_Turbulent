@@ -55,3 +55,7 @@ preprocess/DrivAerNet-CFD
 preprocess/drivaerML_N10k
 preprocess/DrivAerStar_pklTest
 preprocess/DrivAerML_pkl100k_test/
+preprocess/DrivAerML
+preprocess/DrivAerNet
+preprocess/run_1_pklFile
+preprocess/run_1_pklFile_10k
