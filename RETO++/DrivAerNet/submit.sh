@@ -25,12 +25,12 @@ TIMESTAMP=$(date "+%Y_%m%d_%H%M")
 
 # 启动训练（后台）
 # DrivAerNet pressure
-nohup python main.py --config config_CANO_pressure.yml > ${LOG_DIR}/CANO_DrivAerNet_pressure_${TIMESTAMP}.log 2>&1 &
-nohup python main.py --config config_Transolver_pressure.yml > ${LOG_DIR}/Transolver_DrivAerNet_pressure_${TIMESTAMP}.log 2>&1 &
+#nohup python main.py --config config_CANO_pressure.yml > ${LOG_DIR}/CANO_DrivAerNet_pressure_${TIMESTAMP}.log 2>&1 &
+#nohup python main.py --config config_Transolver_pressure.yml > ${LOG_DIR}/Transolver_DrivAerNet_pressure_${TIMESTAMP}.log 2>&1 &
 nohup python main.py --config config_RETO_plus_v2_pressure.yml > ${LOG_DIR}/RETO_plus_v2_DrivAerNet_pressure_${TIMESTAMP}.log 2>&1 &
-nohup python main.py --config config_RETO_plus_pressure.yml > ${LOG_DIR}/RETO_plus_DrivAerNet_pressure_${TIMESTAMP}.log 2>&1 &
-nohup python main.py --config config_LinearNO_pressure.yml > ${LOG_DIR}/LinearNO_DrivAerNet_pressure_${TIMESTAMP}.log 2>&1 &
-nohup python main.py --config config_SATO_pressure.yml > ${LOG_DIR}/SATO_DrivAerNet_pressure_${TIMESTAMP}.log 2>&1 &
+#nohup python main.py --config config_RETO_plus_pressure.yml > ${LOG_DIR}/RETO_plus_DrivAerNet_pressure_${TIMESTAMP}.log 2>&1 &
+#nohup python main.py --config config_LinearNO_pressure.yml > ${LOG_DIR}/LinearNO_DrivAerNet_pressure_${TIMESTAMP}.log 2>&1 &
+#nohup python main.py --config config_SATO_pressure.yml > ${LOG_DIR}/SATO_DrivAerNet_pressure_${TIMESTAMP}.log 2>&1 &
 #nohup python main.py --config config_RETO.yml > ${LOG_DIR}/RETO_DrivAerNet_pressure_${TIMESTAMP}.log 2>&1 &
 
 
