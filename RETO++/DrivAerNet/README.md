@@ -57,7 +57,15 @@ python main.py --config config_RETO_plus_volume_velocity.yml
 3316898
 3317767
 
+### "cuda 4"  1116 2400组
+3328777
+3328778
+3328779
+3328780
+3328781
+3328782
 
+3329576
 
 ### 8种车型-800组-10k-pressure
 #### RETO_plus_v2
