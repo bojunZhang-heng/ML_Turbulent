@@ -264,6 +264,44 @@ python postprocess/evaluate_models.py \
 Manifest paths are relative to the manifest file. Every label must be unique.
 All runs must use the same task and identical test case IDs.
 
+### 旧 checkpoint 与五种训练协议
+
+已有 checkpoint 不需要重命名。`checkpoint` 指向明确的 `.pth` 文件时，后处理会直接
+加载它，并兼容纯 `state_dict`、`model_state_dict`/`state_dict`/`model` 封装、
+`module.`（DataParallel）、`_orig_mod.`（compile）和完整 `nn.Module`。完整模型使用
+Python pickle，只应加载自己训练的可信文件。
+
+新训练分别保存 `_val_loss.pth` 与 `_relative_error.pth`。比较五种协议时，推荐指定实验
+目录、协议和选模指标：
+
+```yaml
+runs:
+  - label: RETO_plus_v2_cosine_val
+    config: ../config_RETO_plus_v2_surface_pressure.yml
+    checkpoint_dir: ../experiment_DrivAerStar_RETO_plus_v2_surface_pressure
+    training_protocol: adamw_cosine_warmup
+    selection_metric: val_loss
+  - label: RETO_plus_v2_cosine_relL2
+    config: ../config_RETO_plus_v2_surface_pressure.yml
+    checkpoint_dir: ../experiment_DrivAerStar_RETO_plus_v2_surface_pressure
+    training_protocol: adamw_cosine_warmup
+    selection_metric: relative_error
+```
+
+`training_protocol` 可取 `adamw_cosine_warmup`、`adam_onecycle`、`adamw_step`、
+`adamw_plateau`、`adamw_onecycle`。目录内有多份结果时按文件名时间戳选择最新一份。
+目录模式应同时设置 `training_protocol` 和 `selection_metric`，实际识别信息会写入
+`summary.json` 的 `checkpoint_info`。
+
+完整的“五协议 x 两种选模指标”清单见
+`postprocess/runs.five_protocols.example.yaml`，运行方式：
+
+```bash
+python postprocess/evaluate_models.py \
+  --runs-file postprocess/runs.five_protocols.example.yaml \
+  --output-dir postprocess_results/five_protocols
+```
+
 ## Future custom models
 
 Built-in models are registered by name. A later model can be loaded without

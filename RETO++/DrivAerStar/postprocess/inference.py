@@ -277,7 +277,17 @@ def evaluate_run(label, config_path, checkpoint, raw_cfg, cfg, args):
 
     device = select_device(args.device)
     model = build_model(model_name, cfg)
-    load_checkpoint(model, checkpoint, expected_model_name=model_name)
+    checkpoint_info = load_checkpoint(
+        model, checkpoint, expected_model_name=model_name
+    )
+    checkpoint_info["training_protocol"] = (
+        checkpoint_info["training_protocol"]
+        or cfg.get("_evaluation_training_protocol")
+    )
+    checkpoint_info["selection_metric"] = (
+        checkpoint_info["selection_metric"]
+        or cfg.get("_evaluation_selection_metric")
+    )
     model = model.float().to(device).eval()
     amp_available, amp_dtype = configure_amp(device)
     amp_enabled = bool(args.amp and amp_available)
@@ -382,6 +392,7 @@ def evaluate_run(label, config_path, checkpoint, raw_cfg, cfg, args):
     result = {
         "label": label, "model": model_name, "task": task,
         "config": str(Path(config_path).resolve()), "checkpoint": str(Path(checkpoint).resolve()),
+        "checkpoint_info": checkpoint_info,
         "test_case_ids": [row["case_id"] for row in rows], "test_cases": len(rows),
         "test_points": int(total_points), "normalized_mse": normalized_sse / max(normalized_count, 1),
         "physical_metrics": physical, "efficiency": efficiency,

@@ -1,12 +1,20 @@
 # Paths are resolved relative to this manifest file.
 runs:
-  - label: Transolver
-    config: ../config_Transolver.yml
-    checkpoint: ../experiment_DrivAerStar_Transolver/best_model.pth
-  - label: LinearNO
-    config: ../config_LinearNO.yml
-    checkpoint: ../experiment_DrivAerStar_LinearNO/best_model.pth
-  - label: RETO_plus_v2
-    config: ../config_RETO_plus_v2.yml
-    checkpoint: ../experiment_DrivAerStar_RETO_plus_v2/best_model.pth
+  # Old checkpoint: an explicit file remains fully supported.
+  - label: RETO_plus_v2_legacy
+    config: ../config_RETO_plus_v2_surface_pressure.yml
+    checkpoint: ../experiment_DrivAerStar_RETO_plus_v2/best_model_RETO_plus_v2_surface_pressure_20261106_1109.pth
+
+  # New checkpoints: select the newest matching file in the experiment folder.
+  # Repeat this block for each protocol. Labels must be unique.
+  - label: RETO_plus_v2_cosine_val_loss
+    config: ../config_RETO_plus_v2_surface_pressure.yml
+    checkpoint_dir: ../experiment_DrivAerStar_RETO_plus_v2_surface_pressure
+    training_protocol: adamw_cosine_warmup
+    selection_metric: val_loss
+  - label: RETO_plus_v2_onecycle_relative_l2
+    config: ../config_RETO_plus_v2_surface_pressure.yml
+    checkpoint_dir: ../experiment_DrivAerStar_RETO_plus_v2_surface_pressure
+    training_protocol: adam_onecycle
+    selection_metric: relative_error
 
