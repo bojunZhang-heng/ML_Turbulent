@@ -24,9 +24,41 @@ serialization:
   shift: 2
   n_iter: 1
 training:
+  # 稳态场推荐测试顺序（从优先到补充）：
+  # adamw_cosine_warmup -> adam_onecycle -> adamw_step -> adamw_plateau -> adamw_onecycle
+  # 只需修改 training_protocol；未被选中协议的专用参数不会参与训练。
+  #
+  # 1. adamw_cosine_warmup（推荐默认）：
+  #    learning_rate=1e-3，weight_decay=1e-4，min_learning_rate=1e-6。
+  #    warmup_epochs 建议为总 epoch 的 2.5%-10%（200 epoch 可取 5-20，默认 10）；
+  #    初期不稳定时增加 warmup_epochs 或降低 warmup_start_factor（默认 0.1）。
+  # 2. adam_onecycle（Transolver/LinearNO 官方风格基线）：
+  #    learning_rate 是峰值，建议搜索 3e-4、5e-4、1e-3；weight_decay 通常取 0。
+  #    onecycle_pct_start 建议 0.1-0.3，onecycle_div_factor=25，
+  #    onecycle_final_div_factor 建议 1e3-1e4。
+  # 3. adamw_step（RETO/SATO 风格基线）：
+  #    learning_rate=1e-3，weight_decay=1e-4；scheduler_step 按 epoch 计，
+  #    200 epoch 建议 30-50，scheduler_gamma 建议 0.5-0.7。
+  # 4. adamw_plateau（平台期明显时）：
+  #    learning_rate=1e-3，weight_decay=1e-4，plateau_factor 建议 0.5-0.7；
+  #    plateau_patience 按验证次数计，eval_freq=1 时建议 10-20，min_learning_rate=1e-6。
+  # 5. adamw_onecycle（检验 AdamW 正则化）：
+  #    OneCycle 参数与 adam_onecycle 相同；weight_decay 建议搜索 1e-5、1e-4、5e-4。
+  training_protocol: adamw_cosine_warmup
   num_epochs: 200
   eval_freq: 1
   learning_rate: 0.001
+  weight_decay: 0.0001
+  min_learning_rate: 1.0e-06
+  warmup_epochs: 10
+  warmup_start_factor: 0.1
+  onecycle_pct_start: 0.3
+  onecycle_div_factor: 25.0
+  onecycle_final_div_factor: 1000.0
+  plateau_factor: 0.5
+  plateau_patience: 10
+  scheduler_step: 30
+  scheduler_gamma: 0.5
   batch_size: 1
   shuffle: true
 data:
@@ -39,13 +71,13 @@ data:
   vehicle_datasets:
     case_E:
       path: case_E_pklFile_10k
-      count: 300
+      count: all
       enabled: true
     case_F:
       path: case_F_pklFile_10k
-      count: 300
+      count: all
       enabled: true
     case_N:
       path: case_N_pklFile_10k
-      count: 300
+      count: all
       enabled: true

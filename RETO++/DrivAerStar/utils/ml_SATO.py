@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.amp import autocast, GradScaler
+import math
 import os
 from pathlib import Path
 import numpy as np
@@ -30,6 +31,108 @@ RAW_COORD_ROPE_MODELS = {
 }
 SEGMENTED_SER = {"Transolver_seg_ser"}
 SERIALIZED_MODELS = LINEAR_MODEL_SE | SEGMENTED_SER
+
+
+def build_training_protocol(model, args, train_loader, num_epochs):
+    """Build an optimizer and scheduler from the selected YAML protocol."""
+    protocol = args.training_protocol
+    learning_rate = args.learning_rate
+    weight_decay = args.weight_decay
+
+    if learning_rate <= 0:
+        raise ValueError(f"learning_rate must be positive, got {learning_rate}")
+    if weight_decay < 0:
+        raise ValueError(f"weight_decay must be non-negative, got {weight_decay}")
+    if args.min_learning_rate < 0 or args.min_learning_rate > learning_rate:
+        raise ValueError(
+            "min_learning_rate must be between zero and learning_rate, got "
+            f"{args.min_learning_rate} and {learning_rate}"
+        )
+
+    if protocol == "adam_onecycle":
+        optimizer = optim.Adam(
+            model.parameters(), lr=learning_rate, weight_decay=weight_decay
+        )
+        scheduler = torch.optim.lr_scheduler.OneCycleLR(
+            optimizer,
+            max_lr=learning_rate,
+            total_steps=max(1, len(train_loader) * num_epochs),
+            pct_start=args.onecycle_pct_start,
+            div_factor=args.onecycle_div_factor,
+            final_div_factor=args.onecycle_final_div_factor,
+        )
+        step_mode = "batch"
+    elif protocol in {
+        "adamw_onecycle",
+        "adamw_cosine_warmup",
+        "adamw_plateau",
+        "adamw_step",
+    }:
+        optimizer = optim.AdamW(
+            model.parameters(), lr=learning_rate, weight_decay=weight_decay
+        )
+        if protocol == "adamw_onecycle":
+            scheduler = torch.optim.lr_scheduler.OneCycleLR(
+                optimizer,
+                max_lr=learning_rate,
+                total_steps=max(1, len(train_loader) * num_epochs),
+                pct_start=args.onecycle_pct_start,
+                div_factor=args.onecycle_div_factor,
+                final_div_factor=args.onecycle_final_div_factor,
+            )
+            step_mode = "batch"
+        elif protocol == "adamw_cosine_warmup":
+            if not 0 < args.warmup_start_factor <= 1:
+                raise ValueError("warmup_start_factor must be in (0, 1]")
+            if not 0 <= args.warmup_epochs < num_epochs:
+                raise ValueError(
+                    "warmup_epochs must be non-negative and smaller than num_epochs"
+                )
+            min_factor = args.min_learning_rate / learning_rate
+
+            def warmup_cosine_factor(epoch):
+                if args.warmup_epochs and epoch < args.warmup_epochs:
+                    progress = epoch / max(1, args.warmup_epochs)
+                    return args.warmup_start_factor + (
+                        1.0 - args.warmup_start_factor
+                    ) * progress
+                cosine_epochs = max(1, num_epochs - args.warmup_epochs)
+                progress = min(
+                    1.0,
+                    (epoch - args.warmup_epochs) / cosine_epochs,
+                )
+                return min_factor + 0.5 * (1.0 - min_factor) * (
+                    1.0 + math.cos(math.pi * progress)
+                )
+
+            scheduler = torch.optim.lr_scheduler.LambdaLR(
+                optimizer, lr_lambda=warmup_cosine_factor
+            )
+            step_mode = "epoch"
+        elif protocol == "adamw_plateau":
+            scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+                optimizer,
+                mode="min",
+                factor=args.plateau_factor,
+                patience=args.plateau_patience,
+                min_lr=args.min_learning_rate,
+            )
+            step_mode = "validation"
+        else:
+            if args.scheduler_step <= 0:
+                raise ValueError("scheduler_step must be positive")
+            if not 0 < args.scheduler_gamma <= 1:
+                raise ValueError("scheduler_gamma must be in (0, 1]")
+            scheduler = torch.optim.lr_scheduler.StepLR(
+                optimizer,
+                step_size=args.scheduler_step,
+                gamma=args.scheduler_gamma,
+            )
+            step_mode = "epoch"
+    else:
+        raise ValueError(f"Unsupported training protocol: {protocol}")
+
+    return optimizer, scheduler, step_mode
 
 
 def checkpoint_paths(save_path):
@@ -288,28 +391,9 @@ def train(model_name, model, train_loader, val_loader,
     model = model.float().to(device)
     criterion = nn.MSELoss()
 
-    # RETO module
-    #optimizer = optim.AdamW(
-    #    model.parameters(), lr=args.learning_rate, weight_decay=args.weight_decay
-    #)
-    #lr_scheduler = torch.optim.lr_scheduler.StepLR(
-    #    optimizer,
-    #    step_size=args.scheduler_step,
-    #    gamma=args.scheduler_gamma
-    #)
-
-    # PGD-NO module
-    optimizer = optim.Adam(model.parameters(), lr=args.learning_rate)
-    lr_scheduler = torch.optim.lr_scheduler.OneCycleLR(
-        optimizer,
-        max_lr=args.learning_rate,
-        total_steps=max(1, len(train_loader) * num_epochs),
-        final_div_factor=1000.,
+    optimizer, lr_scheduler, scheduler_step_mode = build_training_protocol(
+        model, args, train_loader, num_epochs
     )
-
-    # lr_scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
-    #     optimizer, factor=0.7, patience=20)
-    # optimizer = optim.SGD(model.parameters(), lr=learning_rate)
 
     model_paths = checkpoint_paths(save_path)
     for model_path in model_paths.values():
@@ -328,6 +412,16 @@ def train(model_name, model, train_loader, val_loader,
     }
 
     print(f"Starting training for {num_epochs} epochs (model_name='{model_name}')...")
+    print(
+        f"Training protocol: {args.training_protocol} "
+        f"(optimizer={optimizer.__class__.__name__}, "
+        f"scheduler={lr_scheduler.__class__.__name__}, "
+        f"scheduler_step={scheduler_step_mode})"
+    )
+    print(
+        f"Initial LR={optimizer.param_groups[0]['lr']:.6e}, "
+        f"weight_decay={args.weight_decay:.6e}"
+    )
     print("Saving independent best checkpoints for val_loss and relative_error")
 
     memory_report_pending = device.type == "cuda"
@@ -398,7 +492,8 @@ def train(model_name, model, train_loader, val_loader,
             scaler.scale(loss).backward()
             scaler.step(optimizer)
             scaler.update()
-            lr_scheduler.step()
+            if scheduler_step_mode == "batch":
+                lr_scheduler.step()
 
             train_loss += loss.item()
             train_progress.set_postfix(loss=f"{loss.item():.4e}")
@@ -485,6 +580,12 @@ def train(model_name, model, train_loader, val_loader,
                     f"{model_paths['relative_error']} "
                     f"({val_relative_error:.6f})"
                 )
+
+            if scheduler_step_mode == "validation":
+                lr_scheduler.step(val_loss)
+
+        if scheduler_step_mode == "epoch":
+            lr_scheduler.step()
 
     print("Training completed!")
     print(f"  Best validation loss: {history['best_val_loss']:.6f}")

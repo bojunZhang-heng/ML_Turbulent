@@ -158,3 +158,33 @@ cuda 4
 #### SATO
 0.130762 best_model_SATO_volume_velocity_20261111_1433.pth
 0.130746 best_model_SATO_volume_velocity_20261113_1117.pth
+
+# Selectable training protocols
+
+The optimizer and learning-rate scheduler are selected in the `training`
+section of each YAML file. For example:
+
+```yaml
+training:
+  training_protocol: adamw_cosine_warmup
+  num_epochs: 200
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  min_learning_rate: 0.000001
+  warmup_epochs: 10
+  warmup_start_factor: 0.1
+```
+
+Available protocols:
+
+- `adam_onecycle`: Adam with OneCycleLR stepped after every optimizer update.
+- `adamw_onecycle`: AdamW with OneCycleLR and decoupled weight decay.
+- `adamw_cosine_warmup`: AdamW with linear warmup followed by cosine decay.
+- `adamw_plateau`: AdamW with validation-loss-driven ReduceLROnPlateau.
+- `adamw_step`: AdamW with fixed-interval StepLR decay.
+
+Protocol-specific optional keys are `onecycle_pct_start`,
+`onecycle_div_factor`, `onecycle_final_div_factor`, `plateau_factor`,
+`plateau_patience`, `scheduler_step`, and `scheduler_gamma`. The selected
+protocol is included in the checkpoint filename so that protocol comparisons
+do not overwrite one another.

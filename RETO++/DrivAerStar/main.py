@@ -74,6 +74,29 @@ parser.add_argument('--num_epochs', type=int, default=config.get('num_epochs', 5
 parser.add_argument('--eval_freq', type=int, default=config.get('eval_freq', 10))
 parser.add_argument('--learning_rate', type=float, default=config.get('learning_rate', 2e-5))
 parser.add_argument(
+    '--training_protocol',
+    type=str,
+    default=config.get('training_protocol', 'adam_onecycle'),
+    choices=[
+        'adam_onecycle',
+        'adamw_onecycle',
+        'adamw_cosine_warmup',
+        'adamw_plateau',
+        'adamw_step',
+    ],
+)
+parser.add_argument('--weight_decay', type=float, default=config.get('weight_decay', 0.0))
+parser.add_argument('--min_learning_rate', type=float, default=config.get('min_learning_rate', 1e-6))
+parser.add_argument('--warmup_epochs', type=int, default=config.get('warmup_epochs', 10))
+parser.add_argument('--warmup_start_factor', type=float, default=config.get('warmup_start_factor', 0.1))
+parser.add_argument('--onecycle_pct_start', type=float, default=config.get('onecycle_pct_start', 0.3))
+parser.add_argument('--onecycle_div_factor', type=float, default=config.get('onecycle_div_factor', 25.0))
+parser.add_argument('--onecycle_final_div_factor', type=float, default=config.get('onecycle_final_div_factor', 1000.0))
+parser.add_argument('--plateau_factor', type=float, default=config.get('plateau_factor', 0.5))
+parser.add_argument('--plateau_patience', type=int, default=config.get('plateau_patience', 10))
+parser.add_argument('--scheduler_step', type=int, default=config.get('scheduler_step', 30))
+parser.add_argument('--scheduler_gamma', type=float, default=config.get('scheduler_gamma', 0.5))
+parser.add_argument(
     '--data_path', type=str,
     default=config.get(
         'data_path',
@@ -128,7 +151,9 @@ phase = args.phase
 num_epochs = args.num_epochs
 
 ts = datetime.now().strftime('%Y%m%d_%H%M')  # 整个实验共用一个时间戳
-model_flag = f"{model_name}_{predicted_feature_name}_{ts}"
+model_flag = (
+    f"{model_name}_{predicted_feature_name}_{args.training_protocol}_{ts}"
+)
 
 save_path = Path(f"experiment_{args.exp}") / f"best_model_{model_flag}.pth"
 
