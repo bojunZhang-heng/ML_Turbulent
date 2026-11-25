@@ -52,7 +52,7 @@ training:
   #    plateau_patience 按验证次数计，eval_freq=1 时建议 10-20，min_learning_rate=1e-6。
   # 5. adamw_onecycle（检验 AdamW 正则化）：
   #    OneCycle 参数与 adam_onecycle 相同；weight_decay 建议搜索 1e-5、1e-4、5e-4。
-  training_protocol: adamw_cosine_warmup
+  training_protocol: adamw_onecycle
   num_epochs: 200
   eval_freq: 1
   learning_rate: 0.001
