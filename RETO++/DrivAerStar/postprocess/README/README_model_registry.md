@@ -51,6 +51,8 @@ RETO_plus_v2  -> ContinuousSincosEmbed，额外使用 sincos_max_wavelength
 
 显式 `.pth` 文件直接使用。传入实验目录时，按 `training_protocol`（五种协议之一）与
 `selection_metric`（`val_loss` 或 `relative_error`）过滤，并选择时间戳最新的文件。
+旧 DrivAerStar checkpoint 未在文件名记录协议；选择 `adam_onecycle` 且没有新格式匹配时，
+会回退到这些无协议标记的旧文件，其他协议不会回退。
 
 加载始终使用 `strict=True`。模型版本错配时给出明确错误，不会静默忽略 missing/unexpected keys。
 

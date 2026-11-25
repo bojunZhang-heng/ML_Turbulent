@@ -75,16 +75,25 @@ def resolve_checkpoint_path(
         (path for path in checkpoint.glob("*.pth") if path.is_file()),
         key=_checkpoint_sort_key,
     )
-    if training_protocol:
-        candidates = [
-            path for path in candidates
-            if f"_{training_protocol}_" in path.name
-        ]
     if selection_metric:
         candidates = [
             path for path in candidates
             if path.name.endswith(f"_{selection_metric}.pth")
         ]
+    if training_protocol:
+        protocol_candidates = [
+            path for path in candidates
+            if f"_{training_protocol}_" in path.name
+        ]
+        # Before protocols were added to filenames, DrivAerStar used
+        # adam_onecycle. Keep those checkpoints usable without allowing the
+        # other four protocols to claim an unlabelled legacy file.
+        if not protocol_candidates and training_protocol == "adam_onecycle":
+            protocol_candidates = [
+                path for path in candidates
+                if _infer_checkpoint_metadata(path)["training_protocol"] is None
+            ]
+        candidates = protocol_candidates
     if not candidates:
         raise FileNotFoundError(
             f"No checkpoint matched directory={checkpoint}, "

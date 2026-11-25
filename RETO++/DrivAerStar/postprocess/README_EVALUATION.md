@@ -293,6 +293,10 @@ runs:
 目录模式应同时设置 `training_protocol` 和 `selection_metric`，实际识别信息会写入
 `summary.json` 的 `checkpoint_info`。
 
+DrivAerStar 旧实验的文件名没有协议字段，但这些 checkpoint 使用的是
+`adam_onecycle`。因此选择 `training_protocol: adam_onecycle` 时，如果目录中没有带协议名的
+新 checkpoint，程序会回退到无协议字段的旧文件；另外四种协议不会使用该回退，避免误选。
+
 完整的“五协议 x 两种选模指标”清单见
 `postprocess/runs.five_protocols.example.yaml`，运行方式：
 
