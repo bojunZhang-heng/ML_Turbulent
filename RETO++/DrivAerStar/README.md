@@ -62,6 +62,8 @@ Checkpoint test comparison:
 矢量任务还会分别打印三个分量的相对 L2 和 R²。旧版单一
 `best_model_*.pth` 不会自动拆分成两份，需要重新训练。
 
+900组-1116-1028
+
 ### cuda 0 1125
 3786843
 3786844
@@ -72,7 +74,6 @@ Checkpoint test comparison:
 3787479
 3787480
 
-### cuda 3
 
 ### 569组-10k-pressure
 #### RETO_plus_v2
