@@ -15,7 +15,6 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from data_split import load_config
 from inference import evaluate_run
-from model_registry import resolve_checkpoint_path
 from metrics.coefficient_metrics import read_coefficient_csv
 from metrics.statistics import paired_bootstrap_difference
 from plots.ablation_plots import plot_ablation_csv
@@ -70,7 +69,7 @@ def parse_args():
         parser.error("sample counts must be non-negative")
     if bool(args.config) != bool(args.checkpoint):
         parser.error("--config and --checkpoint must be supplied together")
-    runs = [(*run, None, None) for run in (args.run or [])]
+    runs = list(args.run or [])
     if args.runs_file:
         import yaml
 
@@ -85,30 +84,20 @@ def parse_args():
             try:
                 label = str(item["label"])
                 config = Path(item["config"])
+                checkpoint = Path(item["checkpoint"])
             except KeyError as error:
                 parser.error(f"runs-file entry {index} is missing {error.args[0]!r}")
-            checkpoint_value = item.get("checkpoint", item.get("checkpoint_dir"))
-            if checkpoint_value is None:
-                parser.error(
-                    f"runs-file entry {index} needs 'checkpoint' or 'checkpoint_dir'"
-                )
-            checkpoint = Path(checkpoint_value)
-            protocol = item.get("training_protocol")
-            selection_metric = item.get("selection_metric")
             config = config if config.is_absolute() else manifest_path.parent / config
             checkpoint = checkpoint if checkpoint.is_absolute() else manifest_path.parent / checkpoint
-            runs.append((label, str(config), str(checkpoint), protocol, selection_metric))
+            runs.append((label, str(config), str(checkpoint)))
     if args.config:
-        runs.append((args.label or args.config.stem.replace("config_", ""), str(args.config), str(args.checkpoint), None, None))
+        runs.append((args.label or args.config.stem.replace("config_", ""), str(args.config), str(args.checkpoint)))
     if not runs:
         parser.error("provide at least one --run, or --config together with --checkpoint")
     labels = [run[0] for run in runs]
     if len(labels) != len(set(labels)):
         parser.error("every run LABEL must be unique")
-    args.runs = [
-        (label, Path(config), Path(checkpoint), protocol, selection_metric)
-        for label, config, checkpoint, protocol, selection_metric in runs
-    ]
+    args.runs = [(label, Path(config), Path(checkpoint)) for label, config, checkpoint in runs]
     return args
 
 
@@ -124,10 +113,8 @@ def _print_launch_configuration(args):
                 "label": label,
                 "config": str(config.resolve()),
                 "checkpoint": str(checkpoint.resolve()),
-                "training_protocol": protocol,
-                "selection_metric": selection_metric,
             }
-            for label, config, checkpoint, protocol, selection_metric in args.runs
+            for label, config, checkpoint in args.runs
         ],
         "runs_file": str(args.runs_file.resolve()) if args.runs_file else None,
         "data_path_override": str(args.data_path.resolve()) if args.data_path else None,
@@ -189,21 +176,8 @@ def main():
     figure_dir = args.output_dir / "figures"
     summaries, all_rows, cases = {}, {}, {}
 
-    for label, config_path, checkpoint, protocol, selection_metric in args.runs:
+    for label, config_path, checkpoint in args.runs:
         raw_cfg, cfg = load_config(config_path)
-        effective_protocol = protocol or cfg.get("training_protocol")
-        checkpoint = resolve_checkpoint_path(
-            checkpoint,
-            training_protocol=effective_protocol,
-            selection_metric=selection_metric,
-        )
-        cfg["_evaluation_training_protocol"] = effective_protocol
-        cfg["_evaluation_selection_metric"] = selection_metric
-        print(
-            f"[checkpoint] {label}: protocol={effective_protocol or 'legacy/unknown'}, "
-            f"selection={selection_metric or 'explicit/legacy'}, file={checkpoint}",
-            flush=True,
-        )
         _print_json(f"FLATTENED YAML: {label}", cfg)
         summary, rows, selected_case = evaluate_run(
             label, config_path, checkpoint, raw_cfg, cfg, args

@@ -264,47 +264,64 @@ python postprocess/evaluate_models.py \
 Manifest paths are relative to the manifest file. Every label must be unique.
 All runs must use the same task and identical test case IDs.
 
-### 旧 checkpoint 与五种训练协议
+## 五个旧 checkpoint 的比较
 
-已有 checkpoint 不需要重命名。`checkpoint` 指向明确的 `.pth` 文件时，后处理会直接
-加载它，并兼容纯 `state_dict`、`model_state_dict`/`state_dict`/`model` 封装、
-`module.`（DataParallel）、`_orig_mod.`（compile）和完整 `nn.Module`。完整模型使用
-Python pickle，只应加载自己训练的可信文件。
-
-新训练分别保存 `_val_loss.pth` 与 `_relative_error.pth`。比较五种协议时，推荐指定实验
-目录、协议和选模指标：
+DrivAerStar 现在与 DrivAerNet、DrivAerML 使用完全相同的后处理清单格式。每一项只包含：
 
 ```yaml
-runs:
-  - label: RETO_plus_v2_cosine_val
-    config: ../config_RETO_plus_v2_surface_pressure.yml
-    checkpoint_dir: ../experiment_DrivAerStar_RETO_plus_v2_surface_pressure
-    training_protocol: adamw_cosine_warmup
-    selection_metric: val_loss
-  - label: RETO_plus_v2_cosine_relL2
-    config: ../config_RETO_plus_v2_surface_pressure.yml
-    checkpoint_dir: ../experiment_DrivAerStar_RETO_plus_v2_surface_pressure
-    training_protocol: adamw_cosine_warmup
-    selection_metric: relative_error
+- label: 模型显示名称
+  config: 对应的训练配置文件
+  checkpoint: 需要测试的完整 checkpoint 文件路径
 ```
 
-`training_protocol` 可取 `adamw_cosine_warmup`、`adam_onecycle`、`adamw_step`、
-`adamw_plateau`、`adamw_onecycle`。目录内有多份结果时按文件名时间戳选择最新一份。
-目录模式应同时设置 `training_protocol` 和 `selection_metric`，实际识别信息会写入
-`summary.json` 的 `checkpoint_info`。
+后处理不会扫描实验目录，也不会根据协议、时间戳、`val_loss` 或 `relative_error` 自动选文件。
+清单写的是哪一个 `.pth`，程序就严格加载哪一个 `.pth`。因此旧 checkpoint 的使用不依赖当前
+yml 中新增的训练协议配置。
 
-DrivAerStar 旧实验的文件名没有协议字段，但这些 checkpoint 使用的是
-`adam_onecycle`。因此选择 `training_protocol: adam_onecycle` 时，如果目录中没有带协议名的
-新 checkpoint，程序会回退到无协议字段的旧文件；另外四种协议不会使用该回退，避免误选。
+本项目已有五个体速度模型使用相同时间戳 `20261113_1117`，对应清单为：
 
-完整的“五协议 x 两种选模指标”清单见
-`postprocess/runs.five_protocols.example.yaml`，运行方式：
+```text
+postprocess/runs_old_checkpoints.yaml
+```
+
+清单包括：
+
+```text
+RETO_plus
+CANO
+LinearNO
+Transolver
+SATO
+```
+
+运行命令：
 
 ```bash
+cd RETO++/DrivAerStar
+
 python postprocess/evaluate_models.py \
-  --runs-file postprocess/runs.five_protocols.example.yaml \
-  --output-dir postprocess_results/five_protocols
+  --runs-file postprocess/runs_old_checkpoints.yaml \
+  --output-dir postprocess_results/old_velocity_models
 ```
+
+后台运行并保存日志：
+
+```bash
+nohup python postprocess/evaluate_models.py \
+  --runs-file postprocess/runs_old_checkpoints.yaml \
+  --output-dir postprocess_results/old_velocity_models \
+  > logs/postprocess_old_velocity_models.log 2>&1 &
+```
+
+如果远端 checkpoint 的目录与示例不同，只修改清单中的 `checkpoint` 完整相对路径。不要改成
+`checkpoint_dir`，也不要增加 `training_protocol`、`selection_metric` 或时间戳字段。配置文件与
+checkpoint 必须属于同一个模型、同一个预测任务，并具有相同的层数、隐藏维度和注意力参数。
+
+公平比较还要求五个模型使用相同的数据集、训练/验证/测试划分、输入点数、预测任务和测试 case。
+程序会验证任务与测试 case 是否一致；模型训练阶段是否完全同条件，需要结合原训练日志确认。
+
+旧 checkpoint 默认是纯 `state_dict`。加载使用 `strict=True`，如果模型结构与配置不一致，会
+明确报告 missing keys、unexpected keys 或 size mismatch，不会静默忽略权重。
 
 ## Future custom models
 
