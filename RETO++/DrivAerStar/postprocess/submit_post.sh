@@ -34,7 +34,7 @@ TIMESTAMP=$(date "+%Y_%m%d_%H%M")
 # postprocess
 nohup python ./evaluate_models.py \
   --runs-file runs_checkpoint.yml \
-  --output-dir postprocess_results/pressure_600 \
+  --output-dir postprocess_results/pressure_900 \
   > ${LOG_DIR}/post-Multi_model_DrivAerStar_${TIMESTAMP}.log 2>&1 &
 
 
