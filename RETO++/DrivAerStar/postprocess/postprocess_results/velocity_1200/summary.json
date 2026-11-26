@@ -285,9 +285,9 @@
         "checkpoint_size_mb": 18.65803050994873,
         "device": "cuda",
         "amp_enabled": true,
-        "inference_seconds": 59.19908223859966,
-        "milliseconds_per_case": 405.47316601780585,
-        "points_per_second": 24662.544498840798,
+        "inference_seconds": 59.12516992725432,
+        "milliseconds_per_case": 404.9669173099611,
+        "points_per_second": 24693.375119197735,
         "peak_cuda_memory_gb": 0.19731473922729492
       }
     },
@@ -576,9 +576,9 @@
         "checkpoint_size_mb": 19.16475772857666,
         "device": "cuda",
         "amp_enabled": true,
-        "inference_seconds": 53.556324265897274,
-        "milliseconds_per_case": 366.82413880751557,
-        "points_per_second": 27261.019496994777,
+        "inference_seconds": 53.92606619000435,
+        "milliseconds_per_case": 369.3566177397558,
+        "points_per_second": 27074.105403049467,
         "peak_cuda_memory_gb": 0.1694478988647461
       }
     },
@@ -867,9 +867,9 @@
         "checkpoint_size_mb": 14.752484321594238,
         "device": "cuda",
         "amp_enabled": true,
-        "inference_seconds": 46.887802213430405,
-        "milliseconds_per_case": 321.1493302289754,
-        "points_per_second": 31138.16240211408,
+        "inference_seconds": 46.05632087215781,
+        "milliseconds_per_case": 315.45425254902614,
+        "points_per_second": 31700.317618783272,
         "peak_cuda_memory_gb": 0.09248971939086914
       }
     },
@@ -1158,9 +1158,9 @@
         "checkpoint_size_mb": 14.821030616760254,
         "device": "cuda",
         "amp_enabled": true,
-        "inference_seconds": 37.79891730286181,
-        "milliseconds_per_case": 258.89669385521785,
-        "points_per_second": 38625.44496451652,
+        "inference_seconds": 36.492960285395384,
+        "milliseconds_per_case": 249.95178277668072,
+        "points_per_second": 40007.71624395452,
         "peak_cuda_memory_gb": 0.11072540283203125
       }
     },
@@ -1449,9 +1449,9 @@
         "checkpoint_size_mb": 22.90640354156494,
         "device": "cuda",
         "amp_enabled": true,
-        "inference_seconds": 117.93479808233678,
-        "milliseconds_per_case": 807.7725896050465,
-        "points_per_second": 12379.721878021901,
+        "inference_seconds": 113.90358428098261,
+        "milliseconds_per_case": 780.1615361711138,
+        "points_per_second": 12817.858272119029,
         "peak_cuda_memory_gb": 0.1379222869873047
       }
     }
@@ -1542,5 +1542,31 @@
     "physical_units": true,
     "global_aggregation": "node weighted",
     "case_aggregation": "each vehicle has equal weight"
+  },
+  "final_test_metrics": {
+    "metric_space": "physical_units",
+    "aggregation": "equal_case_mean",
+    "models": {
+      "RETO_plus_v2": {
+        "relative_l2": 0.12160152782243051,
+        "r2": 0.9800048884968835
+      },
+      "CANO": {
+        "relative_l2": 0.119239388232915,
+        "r2": 0.9807915312607571
+      },
+      "LinearNO": {
+        "relative_l2": 0.11837874978667445,
+        "r2": 0.9810962598088822
+      },
+      "Transolver": {
+        "relative_l2": 0.11991414044994038,
+        "r2": 0.9806002332288053
+      },
+      "SATO": {
+        "relative_l2": 0.12019805088777383,
+        "r2": 0.9804993236567632
+      }
+    }
   }
 }
