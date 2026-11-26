@@ -40,6 +40,8 @@
 5. 写 `summary.json` 和 `per_case_metrics.csv`；
 6. 生成雨云图、场图、效率图及可选图。
 
+`summary.json` 最后写入 `final_test_metrics`。该字段汇总所有测试模型在物理单位下、每个 case 等权计算的平均 `relative_l2` 和平均 `r2`，便于不展开完整模型结果即可直接比较。
+
 ## 主要输出
 
 ```text

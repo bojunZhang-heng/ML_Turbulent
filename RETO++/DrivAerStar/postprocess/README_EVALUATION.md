@@ -174,6 +174,23 @@ figures/field_comparison_<case>.png
 figures/efficiency_bubble.png
 ```
 
+`summary.json` 的最后包含 `final_test_metrics`，用于直接比较本次测试的全部模型。该字段使用反归一化后的物理单位，并对每个测试 case 等权取均值：
+
+```json
+"final_test_metrics": {
+  "metric_space": "physical_units",
+  "aggregation": "equal_case_mean",
+  "models": {
+    "RETO_plus_v2": {
+      "relative_l2": 0.0,
+      "r2": 0.0
+    }
+  }
+}
+```
+
+以上数值仅用于展示结构，实际值由测试结果写入。终端以及重定向日志末尾也会打印相同的 `FINAL TEST METRICS` 汇总。
+
 使用 `--save-predictions` 时，每个 case 的物理坐标、真实场和预测场保存为压缩 NPZ。
 
 ## 可选的气动系数评价

@@ -169,6 +169,21 @@ def _validate_comparison(summaries):
             )
 
 
+def _final_test_metrics(summaries):
+    metrics = {}
+    for label, summary in summaries.items():
+        case_metrics = summary["physical_metrics"]["case_equal_weighted"]
+        metrics[label] = {
+            "relative_l2": case_metrics["relative_l2"]["mean"],
+            "r2": case_metrics["r2"]["mean"],
+        }
+    return {
+        "metric_space": "physical_units",
+        "aggregation": "equal_case_mean",
+        "models": metrics,
+    }
+
+
 def main():
     args = parse_args()
     args.output_dir.mkdir(parents=True, exist_ok=True)
@@ -217,6 +232,7 @@ def main():
         comparison["aerodynamic_coefficients"] = coefficient_metrics
         _print_json("AERODYNAMIC COEFFICIENT METRICS", coefficient_metrics)
 
+    comparison["final_test_metrics"] = _final_test_metrics(summaries)
     summary_path = args.output_dir / "summary.json"
     with summary_path.open("w", encoding="utf-8") as stream:
         json.dump(comparison, stream, ensure_ascii=False, indent=2)
@@ -246,11 +262,18 @@ def main():
         plot_ablation_csv(args.ablation_csv, figure_dir / "ablation.png")
 
     _print_json("PAIRED MODEL COMPARISON", comparison["paired_relative_l2"])
+    _print_json("FINAL TEST METRICS", comparison["final_test_metrics"])
 
-    print("\nModel comparison (physical-unit, equal-case relative L2)")
-    for label, summary in summaries.items():
-        metric = summary["physical_metrics"]["case_equal_weighted"]["relative_l2"]
-        print(f"  {label:20s} mean={metric['mean']:.6g}  median={metric['median']:.6g}  p95={metric['p95']:.6g}")
+    print("\nModel comparison (physical-unit, equal-case mean)")
+    for label, metrics in comparison["final_test_metrics"]["models"].items():
+        relative_l2 = metrics["relative_l2"]
+        r2 = metrics["r2"]
+        relative_l2_text = "null" if relative_l2 is None else f"{relative_l2:.6g}"
+        r2_text = "null" if r2 is None else f"{r2:.6g}"
+        print(
+            f"  {label:20s} relative_L2={relative_l2_text}  "
+            f"R2={r2_text}"
+        )
     print(f"\nSummary: {summary_path.resolve()}")
     print(f"Per-case CSV: {(args.output_dir / 'per_case_metrics.csv').resolve()}")
     print(f"Figures: {figure_dir.resolve()}")
