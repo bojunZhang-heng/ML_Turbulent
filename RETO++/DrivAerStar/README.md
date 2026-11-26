@@ -63,6 +63,7 @@ Checkpoint test comparison:
 `best_model_*.pth` 不会自动拆分成两份，需要重新训练。
 
 900组-1116-1028
+600组-1116-1028
 
 ### cuda 0 1125
 3786843
